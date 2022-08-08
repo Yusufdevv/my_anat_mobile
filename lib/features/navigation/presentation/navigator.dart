@@ -1,3 +1,4 @@
+import 'package:anatomica/features/map/presentation/map_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'home.dart';
@@ -20,7 +21,7 @@ class _TabNavigatorState extends State<TabNavigator> with AutomaticKeepAliveClie
   Map<String, WidgetBuilder> _routeBuilders({required BuildContext context, required RouteSettings routeSettings}) {
     switch (widget.tabItem) {
       case NavItemEnum.map:
-        return {TabNavigatorRoutes.root: (context) => Container()};
+        return {TabNavigatorRoutes.root: (context) => MapScreen()};
       case NavItemEnum.magazine:
         return {
           TabNavigatorRoutes.root: (context) => Container(),
