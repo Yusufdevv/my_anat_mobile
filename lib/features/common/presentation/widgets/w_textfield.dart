@@ -138,7 +138,8 @@ class _WTextFieldState extends State<WTextField> with SingleTickerProviderStateM
 
   @override
   void initState() {
-    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
+    animationController =
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
     super.initState();
     if (widget.isObscure != null) {
       isObscure = widget.isObscure!;
@@ -208,7 +209,8 @@ class _WTextFieldState extends State<WTextField> with SingleTickerProviderStateM
             child: Stack(
               children: [
                 ClipRRect(
-                  borderRadius: widget.detailedBorderRadius ?? BorderRadius.circular(widget.borderRadius),
+                  borderRadius:
+                      widget.detailedBorderRadius ?? BorderRadius.circular(widget.borderRadius),
                   child: TextFormField(
                     autovalidateMode: widget.autoValidateMode,
                     validator: widget.validate,
@@ -234,11 +236,15 @@ class _WTextFieldState extends State<WTextField> with SingleTickerProviderStateM
                     },
                     focusNode: widget.focusNode ?? focusNode,
                     style: widget.textStyle ??
-                        Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                        Theme.of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(fontWeight: FontWeight.w400),
                     decoration: InputDecoration(
                       suffix: widget.suffix != null ? SizedBox(width: widget.suffixSize) : null,
                       border: OutlineInputBorder(
-                        borderRadius: widget.detailedBorderRadius ?? BorderRadius.circular(widget.borderRadius),
+                        borderRadius: widget.detailedBorderRadius ??
+                            BorderRadius.circular(widget.borderRadius),
                         borderSide: BorderSide(
                           width: 1,
                           color: widget.hasError
@@ -246,7 +252,8 @@ class _WTextFieldState extends State<WTextField> with SingleTickerProviderStateM
                               : widget.enabledBorderColor ?? primary,
                         ),
                       ),
-                      counterText: widget.hideCounterText != null && widget.hideCounterText! ? '' : null,
+                      counterText:
+                          widget.hideCounterText != null && widget.hideCounterText! ? '' : null,
                       hintText: widget.hintText,
                       hintStyle: widget.hintTextStyle ?? Theme.of(context).textTheme.bodyText1,
                       filled: true,
@@ -269,29 +276,36 @@ class _WTextFieldState extends State<WTextField> with SingleTickerProviderStateM
                               : widget.fillColor,
                       contentPadding: widget.contentPadding,
                       disabledBorder: OutlineInputBorder(
-                        borderRadius: widget.detailedBorderRadius ?? BorderRadius.circular(widget.borderRadius),
+                        borderRadius: widget.detailedBorderRadius ??
+                            BorderRadius.circular(widget.borderRadius),
                         borderSide: BorderSide(
                           width: 1,
                           color: widget.hasBorderColor != null && !widget.hasBorderColor!
                               ? Colors.transparent
                               : widget.hasError
                                   ? Theme.of(context).colorScheme.error
-                                  : widget.disabledBorderColor ?? widget.borderColor ?? Colors.transparent,
+                                  : widget.disabledBorderColor ??
+                                      widget.borderColor ??
+                                      Colors.transparent,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: widget.detailedBorderRadius ?? BorderRadius.circular(widget.borderRadius),
+                        borderRadius: widget.detailedBorderRadius ??
+                            BorderRadius.circular(widget.borderRadius),
                         borderSide: BorderSide(
                           width: 1,
                           color: widget.hasBorderColor != null && !widget.hasBorderColor!
                               ? Colors.transparent
                               : widget.hasError
                                   ? Theme.of(context).colorScheme.error
-                                  : widget.disabledBorderColor ?? widget.enabledBorderColor ?? Colors.transparent,
+                                  : widget.disabledBorderColor ??
+                                      widget.enabledBorderColor ??
+                                      Colors.transparent,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: widget.detailedBorderRadius ?? BorderRadius.circular(widget.borderRadius),
+                        borderRadius: widget.detailedBorderRadius ??
+                            BorderRadius.circular(widget.borderRadius),
                         borderSide: BorderSide(
                           width: 1,
                           color: widget.hasBorderColor != null && !widget.hasBorderColor!
@@ -312,7 +326,8 @@ class _WTextFieldState extends State<WTextField> with SingleTickerProviderStateM
                       padding: widget.prefixPadding ?? EdgeInsets.zero,
                       child: Text(
                         widget.prefixText,
-                        style: widget.prefixStyle ?? Theme.of(context).textTheme.headline1!.copyWith(fontSize: 15),
+                        style: widget.prefixStyle ??
+                            Theme.of(context).textTheme.headline1!.copyWith(fontSize: 15),
                       ),
                     ),
                   )

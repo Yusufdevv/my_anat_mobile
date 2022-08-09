@@ -1,4 +1,7 @@
 import 'package:anatomica/assets/themes/theme.dart';
+import 'package:anatomica/features/auth/prezentation/pages/login.dart';
+import 'package:anatomica/features/auth/prezentation/pages/register.dart';
+import 'package:anatomica/features/auth/prezentation/pages/splash.dart';
 import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme(),
-      home: HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }
