@@ -11,4 +11,6 @@ class AppIcons {
   static const minusIcon = 'assets/icons/map_screen/minus_icon.svg';
   static const currentLocation = 'assets/icons/map_screen/current_location.svg';
   static const mainLogo = 'assets/icons/map_screen/main_logo.svg';
+  static const star = 'assets/icons/map_screen/star.svg';
+  static const mapIcon = 'assets/icons/map_screen/map_icon.svg';
 }

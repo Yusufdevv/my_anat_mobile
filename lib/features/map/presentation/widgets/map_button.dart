@@ -24,8 +24,8 @@ class MapButton extends StatelessWidget {
         _padding = const EdgeInsets.fromLTRB(4, 4, 12, 4),
         super(key: key);
 
-  MapButton.defaultButton({required this.title, required this.onTap, Key? key})
-      : _leading = SvgPicture.asset(AppIcons.listIcon),
+  MapButton.defaultButton({required this.title, required this.onTap, String icon = AppIcons.listIcon, Key? key})
+      : _leading = SvgPicture.asset(icon),
         _padding = const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         super(key: key);
 
