@@ -1,3 +1,4 @@
+import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'home.dart';
@@ -27,7 +28,7 @@ class _TabNavigatorState extends State<TabNavigator> with AutomaticKeepAliveClie
         };
       case NavItemEnum.vacancies:
         return {
-          TabNavigatorRoutes.root: (context) => Container(),
+          TabNavigatorRoutes.root: (context) => const VacancyScreen(),
         };
       case NavItemEnum.account:
         return {

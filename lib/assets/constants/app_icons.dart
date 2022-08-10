@@ -20,4 +20,11 @@ class AppIcons {
   static const shield = 'assets/icons/auth/shield.svg';
   static const deviceMobile = 'assets/icons/auth/device_mobile.svg';
   static const arrowLeft = 'assets/icons/auth/arrow_left.svg';
+
+  //vacancy
+  static const arrowRight = 'assets/icons/vacancy/arror_right.svg';
+  static const filter = 'assets/icons/vacancy/filter.svg';
+  static const star = 'assets/icons/vacancy/star.svg';
+  static const mapPin = 'assets/icons/vacancy/map_pin.svg';
+  static const briefCase = 'assets/icons/vacancy/briefcase.svg';
 }
