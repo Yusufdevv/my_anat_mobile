@@ -98,38 +98,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             return isFirstRouteInCurrentTab;
           },
           child: Scaffold(
+            extendBody: true,
             resizeToAvoidBottomInset: true,
             bottomNavigationBar: Container(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-              height: 72 + MediaQuery.of(context).padding.bottom,
-              decoration: BoxDecoration(
-                color: white,
-                border: Border.all(color: textFieldColor),
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(16),
-                  topLeft: Radius.circular(16),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xff8898AA).withOpacity(0.08),
-                    blurRadius: 30,
-                    offset: const Offset(0, -4),
+              color: Colors.transparent,
+              child: Container(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+                height: 72 + MediaQuery.of(context).padding.bottom,
+                decoration: BoxDecoration(
+                  color: white,
+                  border: Border.all(color: textFieldColor),
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(16),
+                    topLeft: Radius.circular(16),
                   ),
-                ],
-              ),
-              child: TabBar(
-                enableFeedback: true,
-                onTap: (index) {},
-                controller: _controller,
-                indicatorPadding: EdgeInsets.zero,
-                padding: EdgeInsets.zero,
-                indicator: CustomTabIndicator(radius: 3, color: primary),
-                labelPadding: EdgeInsets.zero,
-                tabs: List.generate(
-                  lables.length,
-                  (index) => NavItemWidget(
-                    navBar: lables[index],
-                    currentIndex: _currentIndex,
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xff8898AA).withOpacity(0.08),
+                      blurRadius: 30,
+                      offset: const Offset(0, -4),
+                    ),
+                  ],
+                ),
+                child: TabBar(
+                  enableFeedback: true,
+                  onTap: (index) {},
+                  controller: _controller,
+                  indicatorPadding: EdgeInsets.zero,
+                  padding: EdgeInsets.zero,
+                  indicator: const CustomTabIndicator(radius: 3, color: primary),
+                  labelPadding: EdgeInsets.zero,
+                  tabs: List.generate(
+                    lables.length,
+                    (index) => NavItemWidget(
+                      navBar: lables[index],
+                      currentIndex: _currentIndex,
+                    ),
                   ),
                 ),
               ),
