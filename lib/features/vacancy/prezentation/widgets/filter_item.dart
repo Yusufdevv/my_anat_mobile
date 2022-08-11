@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class FilterItem extends StatelessWidget {
   const FilterItem({Key? key}) : super(key: key);
@@ -8,33 +9,20 @@ class FilterItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: const EdgeInsets.fromLTRB(16, 11, 16, 13),
+      height: 44,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: primary,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(width: 1, color: lilyWhite),
       ),
       child: Row(
         children: [
           Text(
-            'До 3 000 000',
-            style: Theme.of(context).textTheme.headline2!.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                ),
+            'Зарплата',
+            style: Theme.of(context).textTheme.headline1!.copyWith(),
           ),
-          const SizedBox(width: 8),
-          WScaleAnimation(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              height: 16,
-              width: 16,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: white.withOpacity(0.04),
-              ),
-            ),
-          )
+          const Spacer(),
+          SvgPicture.asset(AppIcons.arrowRight),
         ],
       ),
     );

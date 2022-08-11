@@ -4,19 +4,44 @@ import 'package:flutter/cupertino.dart';
 
 class ImageCard extends StatelessWidget {
   final String imageUrl;
+  final double? height;
+  final double? width;
+  final double? radius;
+  final bool hasBorder;
+  final bool hasShadow;
 
-  const ImageCard({required this.imageUrl, Key? key}) : super(key: key);
+  const ImageCard(
+      {this.width,
+      this.height,
+      this.hasBorder = false,
+      this.radius,
+      this.hasShadow = false,
+      required this.imageUrl,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 44,
-      width: 44,
+      height: height ?? 44,
+      width: width ?? 44,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(radius ?? 8),
         border: Border.all(width: 1, color: aqua),
+        boxShadow: [
+          hasShadow
+              ? BoxShadow(
+                  color: chipShadowColor.withOpacity(0.12),
+                  offset: const Offset(0, 4),
+                  blurRadius: 10,
+                )
+              : const BoxShadow(),
+        ],
       ),
-      child: CachedNetworkImage(imageUrl: imageUrl),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+      ),
     );
   }
 }
