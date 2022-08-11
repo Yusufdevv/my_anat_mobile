@@ -26,7 +26,7 @@ class WButton extends StatelessWidget {
     this.text = '',
     this.color = primary,
     this.textColor = white,
-    this.borderRadius = 12,
+    this.borderRadius = 6,
     this.disabledColor = Colors.green,
     this.isDisabled = false,
     this.isLoading = false,
@@ -45,7 +45,7 @@ class WButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WScaleAnimation(
-      scaleValue: scaleValue ?? 0.95,
+      scaleValue: scaleValue ?? 0.98,
       onTap: () {
         if (!(isLoading || isDisabled)) {
           onTap();
@@ -55,7 +55,7 @@ class WButton extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         width: width,
-        height: height ?? 46,
+        height: height ?? 40,
         margin: margin,
         padding: padding ?? EdgeInsets.zero,
         alignment: Alignment.center,
