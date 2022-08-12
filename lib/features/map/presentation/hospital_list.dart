@@ -2,7 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
-import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
+import 'package:anatomica/features/map/presentation/result_list.dart';
+import 'package:anatomica/features/map/presentation/suggestion_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,13 +85,8 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                   child: AnimatedCrossFade(
                     crossFadeState: state.screenState,
                     duration: const Duration(milliseconds: 150),
-                    secondChild: Container(),
-                    firstChild: ListView.separated(
-                      itemCount: 10,
-                      itemBuilder: (context, index) => const HospitalItem(),
-                      padding: const EdgeInsets.all(16).copyWith(bottom: 266),
-                      separatorBuilder: (context, index) => const SizedBox(height: 12),
-                    ),
+                    secondChild: const SuggestionListScreen(),
+                    firstChild: const ResultList(),
                   ),
                 ),
                 AnimatedPositioned(

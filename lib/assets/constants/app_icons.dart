@@ -1,10 +1,10 @@
 class AppIcons {
-  static const search = 'assets/icons/search.svg';
-  static const clearRounded = 'assets/icons/clear_rounded.svg';
-  static const map = 'assets/icons/map.svg';
-  static const magazine = 'assets/icons/magazine.svg';
-  static const vacancies = 'assets/icons/vacancies.svg';
-  static const profile = 'assets/icons/profile.svg';
+  static const search = 'assets/icons/global/search.svg';
+  static const clearRounded = 'assets/icons/global/clear_rounded.svg';
+  static const map = 'assets/icons/global/map.svg';
+  static const magazine = 'assets/icons/global/magazine.svg';
+  static const vacancies = 'assets/icons/global/vacancies.svg';
+  static const profile = 'assets/icons/global/profile.svg';
   // MapScreen
   static const listIcon = 'assets/icons/map_screen/list_icon.svg';
   static const plusIcon = 'assets/icons/map_screen/plus_icon.svg';
@@ -28,6 +28,8 @@ class AppIcons {
   static const shield = 'assets/icons/auth/shield.svg';
   static const deviceMobile = 'assets/icons/auth/device_mobile.svg';
   static const arrowLeft = 'assets/icons/auth/arrow_left.svg';
+  static const bigKey = 'assets/icons/auth/big_key.svg';
+  static const refresh = 'assets/icons/auth/refresh.svg';
 
   //vacancy
   static const arrowRight = 'assets/icons/vacancy/arror_right.svg';

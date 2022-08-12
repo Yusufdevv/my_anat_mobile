@@ -18,11 +18,11 @@ class StrokePaint extends CustomPainter {
     final paint = Paint()
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 2
-      ..color = const Color.fromRGBO(140, 151, 171, 1);
+      ..color = const Color.fromRGBO(130, 143, 137, 1);
     final paint2 = Paint()
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 5
-      ..color = const Color.fromRGBO(255, 255, 255, 1);
+      ..color = const Color.fromRGBO(240, 245, 243, 1);
     final finalPainter = progress == 1 ? Paint() : paint;
     final path = Path()
       ..moveTo(interpolateH.eval(progress), interpolateW.eval(progress) - 3)
