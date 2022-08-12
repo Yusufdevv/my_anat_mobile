@@ -3,6 +3,7 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_plus/share_plus.dart';
 
 class VacancySingleAppBar extends StatelessWidget {
   const VacancySingleAppBar({Key? key}) : super(key: key);
@@ -48,7 +49,12 @@ class VacancySingleAppBar extends StatelessWidget {
                   const Spacer(),
                   SvgPicture.asset(AppIcons.vacancySingleStar),
                   const SizedBox(width: 20),
-                  SvgPicture.asset(AppIcons.share),
+                  WScaleAnimation(
+                    onTap: () {
+                      Share.share('something');
+                    },
+                    child: SvgPicture.asset(AppIcons.share),
+                  ),
                 ],
               ),
             ],

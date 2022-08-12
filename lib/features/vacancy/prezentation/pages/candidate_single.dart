@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_contact_info.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/condidate_single_appbar.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/education_item.dart';
@@ -10,7 +11,9 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/licence_item_lis
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CandidateSingleScreen extends StatefulWidget {
   const CandidateSingleScreen({Key? key}) : super(key: key);
@@ -25,7 +28,7 @@ class _CandidateSingleScreenState extends State<CandidateSingleScreen>
 
   @override
   initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
 
@@ -41,11 +44,15 @@ class _CandidateSingleScreenState extends State<CandidateSingleScreen>
         body: NestedScrollView(
       headerSliverBuilder: (context, item) {
         return [
-          const SliverPersistentHeader(
+          SliverPersistentHeader(
             delegate: SliverTabBarDelegate(
               height: 440,
               color: primary,
-              child: CandidateSingleAppBar(),
+              child: CandidateSingleAppBar(
+                onTapShare: () {
+                  Share.share('something');
+                },
+              ),
             ),
           )
         ];
@@ -94,6 +101,7 @@ class _CandidateSingleScreenState extends State<CandidateSingleScreen>
                 Tab(text: 'О кандидате'),
                 Tab(text: 'Образование'),
                 Tab(text: 'Лицензии и сертификаты'),
+                Tab(text: 'Контактные данные'),
               ],
             ),
           ),
@@ -168,6 +176,7 @@ class _CandidateSingleScreenState extends State<CandidateSingleScreen>
                     CandidateItemList(margin: EdgeInsets.zero),
                   ],
                 ),
+                CandidateContactInfo()
               ],
             ),
           )

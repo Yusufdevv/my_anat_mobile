@@ -5,9 +5,19 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CandidateSingleAppBar extends StatelessWidget {
-  const CandidateSingleAppBar({Key? key}) : super(key: key);
+  final VoidCallback onTapShare;
+
+  CandidateSingleAppBar({required this.onTapShare, Key? key}) : super(key: key);
+  final Uri _url = Uri.parse('tel:999999999');
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw 'Could not launch $_url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +118,7 @@ class CandidateSingleAppBar extends StatelessWidget {
                       const SizedBox(height: 14),
                       WButton(
                         borderRadius: 6,
-                        onTap: () {},
+                        onTap: _launchUrl,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -149,7 +159,7 @@ class CandidateSingleAppBar extends StatelessWidget {
                     child: SvgPicture.asset(AppIcons.chevronLeft),
                   ),
                   WScaleAnimation(
-                    onTap: () {},
+                    onTap: onTapShare,
                     child: SvgPicture.asset(AppIcons.share),
                   ),
                 ],

@@ -26,7 +26,7 @@ class WButton extends StatelessWidget {
     this.text = '',
     this.color = primary,
     this.textColor = white,
-    this.borderRadius = 12,
+    this.borderRadius = 6,
     this.disabledColor = Colors.green,
     this.isDisabled = false,
     this.isLoading = false,

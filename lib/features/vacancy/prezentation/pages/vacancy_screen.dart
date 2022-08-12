@@ -8,8 +8,9 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item.d
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/category_container.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/company_card.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/filter_bottom_sheet.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filter_card.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/filter_item_list.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/filter_card_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filtr_container.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_appbar.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_card.dart';
@@ -158,15 +159,11 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
             const SizedBox(height: 16),
             FilterContainer(
               onTap: () {
-                setState(
-                  () {
-                    hasFilter = !hasFilter;
-                  },
-                );
+                showFilterBottomSheet(context);
               },
             ),
             const SizedBox(height: 12),
-            hasFilter ? const FilterItemList() : const SizedBox(),
+            hasFilter ? const FilterCardList() : const SizedBox(),
             Expanded(
               child: TabBarView(
                 physics: const BouncingScrollPhysics(),

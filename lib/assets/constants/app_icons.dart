@@ -47,4 +47,9 @@ class AppIcons {
   static const numberList = 'assets/icons/vacancy/list_numbers.svg';
   static const vacancySearch = 'assets/icons/vacancy/search.svg';
   static const vacancyItemStar = 'assets/icons/vacancy/vacancy_item_star.svg';
+  static const clock = 'assets/icons/vacancy/clock.svg';
+  static const x = 'assets/icons/vacancy/x.svg';
+  static const vacancyMail = 'assets/icons/vacancy/mail.svg';
+  static const instagram = 'assets/icons/vacancy/instagram.svg';
+  static const telegram = 'assets/icons/vacancy/telegram.svg';
 }
