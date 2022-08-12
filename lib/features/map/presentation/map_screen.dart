@@ -75,15 +75,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
               opacity: 1,
               mapId: MapObjectId(e.latitude.toString()),
               point: e,
-              onTap: (object, point) {
-                Navigator.of(context).push(
-                  fade(
-                    page: HospitalList(
-                      controller: _controller,
-                    ),
-                  ),
-                );
-              },
+              onTap: (object, point) {},
               icon: PlacemarkIcon.single(
                   PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon), scale: 3))),
         )
@@ -249,7 +241,17 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                               separatorBuilder: (context, index) => const SizedBox(width: 12),
                               physics: const BouncingScrollPhysics(),
                               padding: const EdgeInsets.symmetric(horizontal: 16),
-                              itemBuilder: (context, index) => MapButton.chip(title: 'Стомотология', onTap: () {}),
+                              itemBuilder: (context, index) => MapButton.chip(
+                                  title: 'Стомотология',
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      fade(
+                                        page: HospitalList(
+                                          controller: _controller,
+                                        ),
+                                      ),
+                                    );
+                                  }),
                               itemCount: 10,
                             ),
                           ),
