@@ -17,6 +17,7 @@ const solitude = _solitude;
 const lilyWhite = _lilyWhite;
 const pattensBlue = _pattensBlue;
 const aqua = _aqua;
+const dividerColor = _lilyWhite2;
 const montana = _montana;
 
 //  http://www.color-blindness.com/color-name-hue/
@@ -38,3 +39,4 @@ const _aqua = Color(0xffEFEFEF);
 const _seaGreen = Color(0xff2B8364);
 const _eden = Color(0xff246A52);
 const _montana = Color(0xff3C3D3D);
+const _lilyWhite2 = Color(0xffE6EAE8);

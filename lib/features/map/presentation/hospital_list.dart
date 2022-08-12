@@ -82,11 +82,11 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
             return Stack(
               children: [
                 Positioned.fill(
-                  child: AnimatedCrossFade(
-                    crossFadeState: state.screenState,
+                  child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 150),
-                    secondChild: const SuggestionListScreen(),
-                    firstChild: const ResultList(),
+                    child: state.screenState == CrossFadeState.showFirst
+                        ? const ResultList()
+                        : const SuggestionListScreen(),
                   ),
                 ),
                 AnimatedPositioned(
