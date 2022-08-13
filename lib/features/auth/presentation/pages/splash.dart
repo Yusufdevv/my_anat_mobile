@@ -18,8 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(),
+          const Spacer(),
           SvgPicture.asset(AppIcons.anatomica),
+          const Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -32,6 +33,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               )
             ],
+          ),
+          SizedBox(
+            height: 20 + mediaQuery.padding.bottom,
           )
         ],
       ),
