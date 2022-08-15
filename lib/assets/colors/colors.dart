@@ -17,6 +17,9 @@ const solitude = _solitude;
 const lilyWhite = _lilyWhite;
 const pattensBlue = _pattensBlue;
 const aqua = _aqua;
+const unFollowButton = _downy10;
+const white1 = _white1;
+const yellowHighlightedText = _oasis;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -36,3 +39,6 @@ const _pattensBlue = Color(0xffDCF2F1);
 const _aqua = Color(0xffEFEFEF);
 const _seaGreen = Color(0xff2B8364);
 const _eden = Color(0xff246A52);
+const _downy10 = Color(0x1A70D4B0);
+const _white1 = Color(0xFFFDFDFD);
+const _oasis = Color(0xFFFBEAC8);

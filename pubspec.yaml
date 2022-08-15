@@ -44,6 +44,7 @@ flutter:
     - assets/fonts/averta_cy/
     - assets/icons/
     - assets/images/
+    - assets/icons/magazine/
     - assets/icons/auth/
     - assets/icons/vacancy/
     - assets/icons/map_screen/
