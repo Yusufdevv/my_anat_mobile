@@ -1,9 +1,14 @@
 import 'package:anatomica/assets/themes/theme.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/auth/data/repositories/authentication_repository_impl.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/domain/usecases/get_authentication_status_usecase.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
+import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
+import 'package:anatomica/features/navigation/presentation/home.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,30 +32,37 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthenticationBloc(
-          statusUseCase: GetAuthenticationStatusUseCase(repository: serviceLocator<AuthenticationRepositoryImpl>())),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthenticationBloc(
+              statusUseCase:
+                  GetAuthenticationStatusUseCase(repository: serviceLocator<AuthenticationRepositoryImpl>())),
+        ),
+        BlocProvider(
+          create: (context) => ShowPopUpBloc(),
+        ),
+      ],
       child: MaterialApp(
         navigatorKey: _navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme(),
-        home: const SplashScreen(),
-        // builder: (context, child) {
-        //   return BlocListener<AuthenticationBloc, AuthenticationState>(
-        //     listener: (context, state) {
-        //       switch (state.status) {
-        //         case AuthenticationStatus.authenticated:
-        //           navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
-        //           break;
-        //         case AuthenticationStatus.unauthenticated:
-        //           navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
-        //           break;
-        //       }
-        //     },
-        //     child: child,
-        //   );
-        // },
-        // onGenerateRoute: (_) => MaterialPageRoute(builder: (_) => const SplashScreen()),
+        builder: (context, child) {
+          return BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              switch (state.status) {
+                case AuthenticationStatus.authenticated:
+                  navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
+                  break;
+                case AuthenticationStatus.unauthenticated:
+                  navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
+                  break;
+              }
+            },
+            child: child,
+          );
+        },
+        onGenerateRoute: (_) => MaterialPageRoute(builder: (_) => const SplashScreen()),
       ),
     );
   }

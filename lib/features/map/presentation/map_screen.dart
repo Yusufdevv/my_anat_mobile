@@ -9,6 +9,7 @@ import 'package:anatomica/features/common/presentation/widgets/search_field.dart
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_controller_bloc/map_controller_bloc.dart';
 import 'package:anatomica/features/map/presentation/hospital_list.dart';
+import 'package:anatomica/features/map/presentation/widgets/hospital_single_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_controller_buttons.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -75,7 +76,15 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
               opacity: 1,
               mapId: MapObjectId(e.latitude.toString()),
               point: e,
-              onTap: (object, point) {},
+              onTap: (object, point) {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useRootNavigator: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => const HospitalSingleBottomSheet(),
+                );
+              },
               icon: PlacemarkIcon.single(
                   PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon), scale: 3))),
         )
@@ -127,7 +136,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
           body: Builder(builder: (context) {
             return BlocConsumer<MapControllerBloc, MapControllerState>(
               listener: (context, state) {
-                print('come to bloc listener');
                 addHospitals(state.points);
               },
               builder: (context, state) {
@@ -205,7 +213,16 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                MapButton.defaultButton(title: 'Списком', onTap: () {}),
+                                MapButton.defaultButton(
+                                  title: 'Списком',
+                                  onTap: () => Navigator.of(context).push(
+                                    fade(
+                                      page: HospitalList(
+                                        controller: _controller,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 MapControllerButtons(
                                   onCurrentLocationTap: () async {
                                     final position = await _determinePosition();
