@@ -18,6 +18,11 @@ const lilyWhite = _lilyWhite;
 const pattensBlue = _pattensBlue;
 const aqua = _aqua;
 const dividerColor = _lilyWhite2;
+const inactiveStar = _lilyWhite3;
+const lightRed = _roseWhite;
+const errorBorder = _mistyRose;
+const errorIconContainer = _bittersweet;
+const errorTextColor = _woodSmoke;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -38,3 +43,8 @@ const _aqua = Color(0xffEFEFEF);
 const _seaGreen = Color(0xff2B8364);
 const _eden = Color(0xff246A52);
 const _lilyWhite2 = Color(0xffE6EAE8);
+const _lilyWhite3 = Color(0xffDCE5E2);
+const _roseWhite = Color(0xffFCECEC);
+const _mistyRose = Color(0xffFFD6D6);
+const _bittersweet = Color(0xffFA6161);
+const _woodsmoke = Color(0xff373C3B);
