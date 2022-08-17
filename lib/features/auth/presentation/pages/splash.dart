@@ -1,4 +1,5 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/auth/presentation/widgets/four_dot_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -21,19 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
           const Spacer(),
           SvgPicture.asset(AppIcons.anatomica),
           const Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...List.generate(
-                4,
-                (index) => Container(
-                  height: 10,
-                  width: 10,
-                  decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.black),
-                ),
-              )
-            ],
-          ),
+          const FourDotLoadingIndicator(),
           SizedBox(
             height: 20 + mediaQuery.padding.bottom,
           )
