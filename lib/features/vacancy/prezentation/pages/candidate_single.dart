@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_contact_info.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/condidate_single_appbar.dart';
@@ -10,6 +11,7 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/experience_item.
 import 'package:anatomica/features/vacancy/prezentation/widgets/licence_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -25,15 +27,25 @@ class CandidateSingleScreen extends StatefulWidget {
 class _CandidateSingleScreenState extends State<CandidateSingleScreen>
     with TickerProviderStateMixin {
   late TabController tabController;
+  late ScrollController _scrollController;
+  late HeaderManagerBloc _headerManagerBloc;
+
+  _scrollListener() {
+    _headerManagerBloc.add(ChangeVacancyScrollPosition(headerPosition: _scrollController.offset));
+  }
 
   @override
   initState() {
     tabController = TabController(length: 4, vsync: this);
+    _scrollController = ScrollController();
+    _headerManagerBloc = HeaderManagerBloc();
+    _scrollController.addListener(_scrollListener);
     super.initState();
   }
 
   @override
   dispose() {
+    _scrollController.removeListener(_scrollListener);
     super.dispose();
   }
 
@@ -42,6 +54,8 @@ class _CandidateSingleScreenState extends State<CandidateSingleScreen>
     final mediaQuery = MediaQuery.of(context);
     return Scaffold(
         body: NestedScrollView(
+      floatHeaderSlivers: false,
+      controller: _scrollController,
       headerSliverBuilder: (context, item) {
         return [
           SliverPersistentHeader(
@@ -63,21 +77,30 @@ class _CandidateSingleScreenState extends State<CandidateSingleScreen>
           const WDivider(margin: EdgeInsets.only(top: 16)),
           Column(
             children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
-                width: double.infinity,
-                height: 80,
-                color: darkGreen,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Иргашев Дильмурад Саатович',
-                      style: Theme.of(context).textTheme.headline2!.copyWith(),
-                    ),
-                    const SizedBox(height: 4),
-                    Text('Репродуктолог', style: Theme.of(context).textTheme.headline2!.copyWith())
-                  ],
+              BlocProvider.value(
+                value: _headerManagerBloc,
+                child: BlocBuilder<HeaderManagerBloc, HeaderManagerState>(
+                  builder: (context, state) {
+                    return state.isScrolled
+                        ? Container(
+                            padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                            width: double.infinity,
+                            color: darkGreen,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Иргашев Дильмурад Саатович',
+                                  style: Theme.of(context).textTheme.headline2!.copyWith(),
+                                ),
+                                const SizedBox(height: 4),
+                                Text('Репродуктолог',
+                                    style: Theme.of(context).textTheme.headline2!.copyWith())
+                              ],
+                            ),
+                          )
+                        : Container();
+                  },
                 ),
               ),
               Container(
