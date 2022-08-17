@@ -6,6 +6,7 @@ import 'package:anatomica/features/auth/domain/usecases/get_authentication_statu
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
+import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
@@ -31,9 +32,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthenticationBloc(
-          statusUseCase: GetAuthenticationStatusUseCase(repository: serviceLocator<AuthenticationRepositoryImpl>())),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthenticationBloc(
+              statusUseCase:
+                  GetAuthenticationStatusUseCase(repository: serviceLocator<AuthenticationRepositoryImpl>())),
+        ),
+        BlocProvider(
+          create: (context) => ShowPopUpBloc(),
+        ),
+      ],
       child: MaterialApp(
         navigatorKey: _navigatorKey,
         debugShowCheckedModeBanner: false,
@@ -46,7 +55,7 @@ class _MyAppState extends State<MyApp> {
                   navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
                   break;
                 case AuthenticationStatus.unauthenticated:
-                  navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
+                  navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
                   break;
               }
             },

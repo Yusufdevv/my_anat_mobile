@@ -1,12 +1,14 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
 import 'package:anatomica/features/map/presentation/result_list.dart';
 import 'package:anatomica/features/map/presentation/suggestion_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HospitalList extends StatefulWidget {
   final TabController controller;
@@ -46,35 +48,47 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
         appBar: AppBar(
           elevation: 1,
           shadowColor: textFieldColor,
-          toolbarHeight: 60,
+          toolbarHeight: 104,
           titleSpacing: 0,
           leadingWidth: 0,
-          title: Container(
-            height: 36,
-            padding: const EdgeInsets.all(2),
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: textFieldColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: TabBar(
-              controller: _controller,
-              padding: EdgeInsets.zero,
-              indicatorPadding: EdgeInsets.zero,
-              indicator: BoxDecoration(
-                color: white,
-                borderRadius: BorderRadius.circular(6),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              WScaleAnimation(
+                onTap: () => Navigator.of(context).pop(),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                  child: SvgPicture.asset(AppIcons.chevronRight),
+                ),
               ),
-              labelPadding: EdgeInsets.zero,
-              labelStyle: Theme.of(context).textTheme.headline3,
-              labelColor: textColor,
-              onTap: (index) {},
-              unselectedLabelColor: textSecondary,
-              tabs: const [
-                Tab(text: 'Организации'),
-                Tab(text: 'Врачи'),
-              ],
-            ),
+              Container(
+                height: 36,
+                padding: const EdgeInsets.all(2),
+                margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
+                decoration: BoxDecoration(
+                  color: textFieldColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: TabBar(
+                  controller: _controller,
+                  padding: EdgeInsets.zero,
+                  indicatorPadding: EdgeInsets.zero,
+                  indicator: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  labelPadding: EdgeInsets.zero,
+                  labelStyle: Theme.of(context).textTheme.headline3,
+                  labelColor: textColor,
+                  onTap: (index) {},
+                  unselectedLabelColor: textSecondary,
+                  tabs: const [
+                    Tab(text: 'Организации'),
+                    Tab(text: 'Врачи'),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
         body: BlocBuilder<HospitalListBloc, HospitalListState>(
@@ -82,11 +96,22 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
             return Stack(
               children: [
                 Positioned.fill(
-                  child: AnimatedCrossFade(
-                    crossFadeState: state.screenState,
-                    duration: const Duration(milliseconds: 150),
-                    secondChild: const SuggestionListScreen(),
-                    firstChild: const ResultList(),
+                  child: TabBarView(
+                    controller: _controller,
+                    children: [
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 150),
+                        child: state.screenState == CrossFadeState.showFirst
+                            ? const ResultList()
+                            : const SuggestionListScreen(),
+                      ),
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 150),
+                        child: state.screenState == CrossFadeState.showFirst
+                            ? const ResultList()
+                            : const SuggestionListScreen(),
+                      ),
+                    ],
                   ),
                 ),
                 AnimatedPositioned(

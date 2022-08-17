@@ -103,6 +103,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
               child: Container(
                 color: white,
                 child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
                   onPageChanged: (index) {
                     setState(() {
                       currentPage = index;

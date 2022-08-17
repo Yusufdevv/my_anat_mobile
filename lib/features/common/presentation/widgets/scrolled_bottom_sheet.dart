@@ -15,12 +15,14 @@ class ScrolledBottomSheet extends StatelessWidget {
   final bool escapeBottomNavbar;
   final bool isSubScreen;
   final WButton? stackedWButton;
+  final bool hasCancelButton;
 
   const ScrolledBottomSheet(
       {required this.title,
       required this.hasHeader,
       this.escapeBottomNavbar = true,
       this.isSubScreen = false,
+      this.hasCancelButton = true,
       this.child,
       this.children,
       this.pinnedChild,
@@ -51,12 +53,11 @@ class ScrolledBottomSheet extends StatelessWidget {
                           )),
                       height: 55,
                       child: Row(
-                        mainAxisAlignment:
-                            isSubScreen ? MainAxisAlignment.start : MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           if (isSubScreen)
                             WScaleAnimation(
-                              child: SvgPicture.asset(AppIcons.chevronLeft),
+                              child: SvgPicture.asset(AppIcons.leftArrow),
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
@@ -69,9 +70,10 @@ class ScrolledBottomSheet extends StatelessWidget {
                                 .headline1!
                                 .copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                           ),
-                          if (!isSubScreen)
+                          const Spacer(),
+                          if (hasCancelButton)
                             WScaleAnimation(
-                              child: SvgPicture.asset(AppIcons.cancelButton),
+                              child: SvgPicture.asset(AppIcons.bottomSheetCancel),
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
@@ -81,6 +83,7 @@ class ScrolledBottomSheet extends StatelessWidget {
                     ),
                   )
                 : const SliverToBoxAdapter(child: SizedBox()),
+            const SliverToBoxAdapter( child: WDivider()),
             pinnedChild != null
                 ? SliverToBoxAdapter(
                     child: Container(
@@ -104,13 +107,11 @@ class ScrolledBottomSheet extends StatelessWidget {
                         shrinkWrap: true,
                         children: [
                           ...children!,
-
                           escapeBottomNavbar
                               ? SizedBox(
                                   height: MediaQuery.of(context).padding.bottom + 8,
                                 )
                               : const SizedBox(),
-
                         ],
                       ),
                     ),

@@ -13,7 +13,13 @@ class AppIcons {
   static const mainLogo = 'assets/icons/map_screen/main_logo.svg';
   static const star = 'assets/icons/map_screen/star.svg';
   static const mapIcon = 'assets/icons/map_screen/map_icon.svg';
-
+  static const chevronRight = 'assets/icons/map_screen/chevron_right.svg';
+  static const location = 'assets/icons/map_screen/location.svg';
+  static const phone = 'assets/icons/map_screen/phone.svg';
+  static const mapRoute = 'assets/icons/map_screen/map_route.svg';
+  static const close = 'assets/icons/map_screen/close.svg';
+  static const share = 'assets/icons/map_screen/share.svg';
+  static const boldPhone = 'assets/icons/map_screen/bold_phone.svg';
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';
   static const edit = 'assets/icons/auth/edit.svg';
@@ -30,6 +36,8 @@ class AppIcons {
   static const arrowLeft = 'assets/icons/auth/arrow_left.svg';
   static const bigKey = 'assets/icons/auth/big_key.svg';
   static const refresh = 'assets/icons/auth/refresh.svg';
+  static const errorIcon = 'assets/icons/auth/error_icon.svg';
+  static const errorClose = 'assets/icons/auth/error_close.svg';
 
   //vacancy
   static const arrowRight = 'assets/icons/vacancy/arror_right.svg';
@@ -42,8 +50,8 @@ class AppIcons {
   static const cashBanknote = 'assets/icons/vacancy/cash_banknote.svg';
   static const vacancySingleStar =
       'assets/icons/vacancy/vacancy_single_star.svg';
-  static const share = 'assets/icons/vacancy/share.svg';
-  static const phone = 'assets/icons/vacancy/phone.svg';
+  //static const share = 'assets/icons/vacancy/share.svg';
+ // static const phone = 'assets/icons/vacancy/phone.svg';
   static const chevronLeft = 'assets/icons/vacancy/chevron_left.svg';
   static const calendar = 'assets/icons/vacancy/calendar.svg';
   static const numberList = 'assets/icons/vacancy/list_numbers.svg';
@@ -54,4 +62,6 @@ class AppIcons {
   static const vacancyMail = 'assets/icons/vacancy/mail.svg';
   static const instagram = 'assets/icons/vacancy/instagram.svg';
   static const telegram = 'assets/icons/vacancy/telegram.svg';
+  static const leftArrow='assets/icons/vacancy/arrow_left.svg';
+  static const bottomSheetCancel='assets/icons/vacancy/bottomsheet_cancel.svg';
 }
