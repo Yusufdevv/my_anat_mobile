@@ -54,4 +54,6 @@ class AppIcons {
   static const vacancyMail = 'assets/icons/vacancy/mail.svg';
   static const instagram = 'assets/icons/vacancy/instagram.svg';
   static const telegram = 'assets/icons/vacancy/telegram.svg';
+  static const leftArrow='assets/icons/vacancy/arrow_left.svg';
+  static const bottomSheetCancel='assets/icons/vacancy/bottomsheet_cancel.svg';
 }

@@ -1,28 +1,26 @@
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
 import 'package:flutter/material.dart';
 
-class SalaryBottomSheet extends StatefulWidget {
-  const SalaryBottomSheet({Key? key}) : super(key: key);
+class ExperienceBottomSheet extends StatefulWidget {
+  const ExperienceBottomSheet({Key? key}) : super(key: key);
 
   @override
-  State<SalaryBottomSheet> createState() => _SalaryBottomSheetState();
+  State<ExperienceBottomSheet> createState() => _ExperienceBottomSheetState();
 }
 
-class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
+class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
   final List<String> list = [
-    'Не имеет значение',
-    'До 3 000 000',
-    '3 000 000 - 6 500 000',
-    '6 500 000 - 9 900 000',
-    'Свыше 9 900 000',
+    'меньше 1 года',
+    '1 - 5 лет',
+    '5 - 10 лет',
+    '10 - 15 лет',
   ];
-  final List<bool> checkList = [false, false, false, false, false];
-  bool isChecked = false;
 
-  selectSalary(int index) {
+  final List<bool> checkList = [false, false, false, false];
+
+  void isChecked(int index) {
     setState(() {
       checkList[index] = !checkList[index];
     });
@@ -32,21 +30,20 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return ScrolledBottomSheet(
-      title: 'Зарплата',
+      title: 'Опыт работы',
       hasHeader: true,
+      isSubScreen: true,
       children: [
-        const WDivider(),
         const SizedBox(height: 16),
         ...List.generate(
-          5,
+          list.length,
           (index) => CheckBoxTitle(
+            isChecked: checkList[index],
             onTap: () {
-              print('tap');
-              selectSalary(index);
+              isChecked(index);
             },
             title: list[index],
             isLast: index == 4 ? true : false,
-            isChecked: checkList[index],
           ),
         ),
         WButton(
@@ -56,17 +53,17 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
             Navigator.of(context).pop();
           },
         ),
-        //    SizedBox(height: 4 + mediaQuery.padding.bottom)
+        const SizedBox(height: 4)
       ],
     );
   }
 }
 
-void showSalaryBottomSheet(BuildContext context) {
+void showExperienceBottomSheet(BuildContext context) {
   showModalBottomSheet(
+    context: context,
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
-    context: context,
-    builder: (context) => const SalaryBottomSheet(),
+    builder: (context) => const ExperienceBottomSheet(),
   );
 }

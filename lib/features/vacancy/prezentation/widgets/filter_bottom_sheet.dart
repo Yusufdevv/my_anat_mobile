@@ -1,6 +1,7 @@
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/experience_bottomsheet.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filter_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/region_bottom_sheet.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/salary_bottom_sheet.dart';
@@ -15,7 +16,7 @@ class FilterBottomSheet extends StatelessWidget {
       title: 'Фильтр',
       hasHeader: true,
       children: [
-        const WDivider(margin: EdgeInsets.only(left: 16, bottom: 16)),
+        const SizedBox(height: 16),
         FilterItem(
             onTap: () {
               Navigator.of(context).pop();
@@ -23,7 +24,12 @@ class FilterBottomSheet extends StatelessWidget {
             },
             title: 'Зарплата'),
         const SizedBox(height: 12),
-        FilterItem(onTap: () {}, title: 'Опыт работы'),
+        FilterItem(
+            onTap: () {
+              Navigator.of(context).pop();
+              showExperienceBottomSheet(context);
+            },
+            title: 'Опыт работы'),
         const SizedBox(height: 12),
         FilterItem(
             onTap: () {
@@ -47,6 +53,6 @@ void showFilterBottomSheet(BuildContext context) {
     context: context,
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
-    builder: (context) => FilterBottomSheet(),
+    builder: (context) => const FilterBottomSheet(),
   );
 }

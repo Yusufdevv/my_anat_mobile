@@ -61,49 +61,70 @@ class _CandidateSingleScreenState extends State<CandidateSingleScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const WDivider(margin: EdgeInsets.only(top: 16)),
-          Container(
-            height: 46,
-            decoration: BoxDecoration(
-              color: white,
-              boxShadow: [
-                BoxShadow(
-                  color: darkerGreen.withOpacity(0.08),
-                  offset: const Offset(0, 4),
-                  blurRadius: 24,
-                )
-              ],
-            ),
-            child: TabBar(
-              controller: tabController,
-              indicatorWeight: 3,
-              indicatorSize: TabBarIndicatorSize.label,
-              isScrollable: true,
-              physics: const BouncingScrollPhysics(),
-              unselectedLabelColor: black,
-              unselectedLabelStyle: Theme.of(context)
-                  .textTheme
-                  .bodyText2!
-                  .copyWith(fontSize: 16, fontWeight: FontWeight.w500),
-              labelColor: darkGreen,
-              labelStyle:
-                  Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w600),
-              indicatorColor: primary,
-              indicator: MaterialIndicator(
-                height: 3,
-                color: primary,
-                bottomLeftRadius: 2,
-                bottomRightRadius: 2,
-                topLeftRadius: 2,
-                topRightRadius: 2,
-                tabPosition: TabPosition.bottom,
+          Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                width: double.infinity,
+                height: 80,
+                color: darkGreen,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Иргашев Дильмурад Саатович',
+                      style: Theme.of(context).textTheme.headline2!.copyWith(),
+                    ),
+                    const SizedBox(height: 4),
+                    Text('Репродуктолог', style: Theme.of(context).textTheme.headline2!.copyWith())
+                  ],
+                ),
               ),
-              tabs: const [
-                Tab(text: 'О кандидате'),
-                Tab(text: 'Образование'),
-                Tab(text: 'Лицензии и сертификаты'),
-                Tab(text: 'Контактные данные'),
-              ],
-            ),
+              Container(
+                height: 46,
+                decoration: BoxDecoration(
+                  color: white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: darkerGreen.withOpacity(0.08),
+                      offset: const Offset(0, 4),
+                      blurRadius: 24,
+                    )
+                  ],
+                ),
+                child: TabBar(
+                  controller: tabController,
+                  indicatorWeight: 3,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  isScrollable: true,
+                  physics: const BouncingScrollPhysics(),
+                  unselectedLabelColor: black,
+                  unselectedLabelStyle: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(fontSize: 16, fontWeight: FontWeight.w500),
+                  labelColor: darkGreen,
+                  labelStyle:
+                      Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w600),
+                  indicatorColor: primary,
+                  indicator: MaterialIndicator(
+                    height: 3,
+                    color: primary,
+                    bottomLeftRadius: 2,
+                    bottomRightRadius: 2,
+                    topLeftRadius: 2,
+                    topRightRadius: 2,
+                    tabPosition: TabPosition.bottom,
+                  ),
+                  tabs: const [
+                    Tab(text: 'О кандидате'),
+                    Tab(text: 'Образование'),
+                    Tab(text: 'Лицензии и сертификаты'),
+                    Tab(text: 'Контактные данные'),
+                  ],
+                ),
+              ),
+            ],
           ),
           const WDivider(),
           Expanded(

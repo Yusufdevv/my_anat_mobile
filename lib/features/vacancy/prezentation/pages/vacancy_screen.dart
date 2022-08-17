@@ -163,7 +163,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
               },
             ),
             const SizedBox(height: 12),
-            hasFilter ? const FilterCardList() : const SizedBox(),
+            hasFilter ? const FilterCardList() :const SizedBox(),
             Expanded(
               child: TabBarView(
                 physics: const BouncingScrollPhysics(),
