@@ -53,7 +53,7 @@ class AppIcons {
   static const vacancySingleStar =
       'assets/icons/vacancy/vacancy_single_star.svg';
   //static const share = 'assets/icons/vacancy/share.svg';
- // static const phone = 'assets/icons/vacancy/phone.svg';
+  // static const phone = 'assets/icons/vacancy/phone.svg';
   static const chevronLeft = 'assets/icons/vacancy/chevron_left.svg';
   static const calendar = 'assets/icons/vacancy/calendar.svg';
   static const numberList = 'assets/icons/vacancy/list_numbers.svg';
@@ -76,6 +76,7 @@ class AppIcons {
   static const failure = 'assets/icons/magazine/failure.svg';
   static const success = 'assets/icons/magazine/success.svg';
 //  static const refresh = 'assets/icons/magazine/refresh.svg';
-  static const leftArrow='assets/icons/vacancy/arrow_left.svg';
-  static const bottomSheetCancel='assets/icons/vacancy/bottomsheet_cancel.svg';
+  static const leftArrow = 'assets/icons/vacancy/arrow_left.svg';
+  static const bottomSheetCancel =
+      'assets/icons/vacancy/bottomsheet_cancel.svg';
 }
