@@ -36,6 +36,8 @@ class AppIcons {
   static const filter = 'assets/icons/vacancy/filter.svg';
 
 //  static const star = 'assets/icons/vacancy/star.svg';
+
+  //static const star = 'assets/icons/vacancy/star.svg';
   static const mapPin = 'assets/icons/vacancy/map_pin.svg';
   static const briefCase = 'assets/icons/vacancy/briefcase.svg';
   static const cancelButton = 'assets/icons/vacancy/cancel_button.svg';
@@ -54,4 +56,16 @@ class AppIcons {
   static const vacancyMail = 'assets/icons/vacancy/mail.svg';
   static const instagram = 'assets/icons/vacancy/instagram.svg';
   static const telegram = 'assets/icons/vacancy/telegram.svg';
+
+  //magazine
+  static const magazineFilter = 'assets/icons/magazine/filter.svg';
+  static const magazineSearch = 'assets/icons/magazine/search.svg';
+  static const close = 'assets/icons/magazine/close.svg';
+  static const userPlus = 'assets/icons/magazine/user_plus.svg';
+//  static const cashBanknote = 'assets/icons/magazine/cash_banknote.svg';
+  static const copy = 'assets/icons/magazine/copy.svg';
+  static const expect = 'assets/icons/magazine/expect.svg';
+  static const failure = 'assets/icons/magazine/failure.svg';
+  static const success = 'assets/icons/magazine/success.svg';
+//  static const refresh = 'assets/icons/magazine/refresh.svg';
 }

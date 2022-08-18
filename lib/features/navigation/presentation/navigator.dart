@@ -1,3 +1,4 @@
+import 'package:anatomica/features/magazine/presentation/pages/magazine_screen.dart';
 import 'package:anatomica/features/map/presentation/map_screen.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +30,7 @@ class _TabNavigatorState extends State<TabNavigator>
         return {TabNavigatorRoutes.root: (context) => MapScreen()};
       case NavItemEnum.magazine:
         return {
-          TabNavigatorRoutes.root: (context) => Container(),
+          TabNavigatorRoutes.root: (context) => const MagazineScreen(),
         };
       case NavItemEnum.vacancies:
         return {

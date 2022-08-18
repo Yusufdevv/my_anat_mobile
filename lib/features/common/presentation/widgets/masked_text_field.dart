@@ -49,8 +49,8 @@ class _WMaskedTextFieldState extends State<WMaskedTextField> {
         onChanged: (text) {
           if (text.length < lastTextSize) {
             if (widget.mask[text.length] != widget.escapeCharacter) {
-              widget.controller.selection =
-                  TextSelection.fromPosition(TextPosition(offset: widget.controller.text.length));
+              widget.controller.selection = TextSelection.fromPosition(
+                  TextPosition(offset: widget.controller.text.length));
             }
           } else {
             // its typing
@@ -62,17 +62,20 @@ class _WMaskedTextFieldState extends State<WMaskedTextField> {
                 widget.controller.text = _buildText(text);
               }
 
-              if (widget.maxLength != position && widget.mask[position] != widget.escapeCharacter) {
-                widget.controller.text = '${widget.controller.text}${widget.mask[position]}';
+              if (widget.maxLength != position &&
+                  widget.mask[position] != widget.escapeCharacter) {
+                widget.controller.text =
+                    '${widget.controller.text}${widget.mask[position]}';
               }
             }
 
             // Android on change resets cursor position(cursor goes to 0)
             // so you have to check if it reset, then put in the end(just on android)
             // as IOS bugs if you simply put it in the end
-            if (widget.controller.selection.start < widget.controller.text.length) {
-              widget.controller.selection =
-                  TextSelection.fromPosition(TextPosition(offset: widget.controller.text.length));
+            if (widget.controller.selection.start <
+                widget.controller.text.length) {
+              widget.controller.selection = TextSelection.fromPosition(
+                  TextPosition(offset: widget.controller.text.length));
             }
           }
 
