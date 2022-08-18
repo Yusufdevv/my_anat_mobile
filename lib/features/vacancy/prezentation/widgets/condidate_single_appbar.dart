@@ -43,6 +43,8 @@ class CandidateSingleAppBar extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
                           colors: [
                             darkGreen,
                             darkGreen.withOpacity(0),

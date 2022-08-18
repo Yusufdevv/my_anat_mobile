@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_highlighted_text.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_textfield.dart';
@@ -117,7 +118,7 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                             3, (index) => SearchItem(isLast: index == 2 ? true : false)),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
