@@ -46,4 +46,9 @@ class AppIcons {
   static const close = 'assets/icons/magazine/close.svg';
   static const userPlus = 'assets/icons/magazine/user_plus.svg';
   static const cashBanknote = 'assets/icons/magazine/cash_banknote.svg';
+  static const copy = 'assets/icons/magazine/copy.svg';
+  static const expect = 'assets/icons/magazine/expect.svg';
+  static const failure = 'assets/icons/magazine/failure.svg';
+  static const success = 'assets/icons/magazine/success.svg';
+  static const refresh = 'assets/icons/magazine/refresh.svg';
 }

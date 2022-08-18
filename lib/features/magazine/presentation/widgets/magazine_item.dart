@@ -141,6 +141,7 @@ class _MagazineItemState extends State<MagazineItem> {
                   children: [
                     Expanded(
                       child: WButton(
+                        borderRadius: 6,
                         margin: const EdgeInsets.only(top: 12),
                         onTap: () {},
                         child: Text(
@@ -156,6 +157,7 @@ class _MagazineItemState extends State<MagazineItem> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: WButton(
+                        borderRadius: 6,
                         border: Border.all(color: primary),
                         color: unFollowButton,
                         margin: const EdgeInsets.only(top: 12),
