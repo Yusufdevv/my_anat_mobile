@@ -35,11 +35,10 @@ class _OneTimePaymentTabsState extends State<OneTimePaymentTabs>
 
   @override
   Widget build(BuildContext context) {
-    bool? isConnected;
+    bool? isConnected = true;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -76,6 +75,7 @@ class _OneTimePaymentTabsState extends State<OneTimePaymentTabs>
                   ),
                   const SizedBox(width: 12),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(widget.magazineItemEntity.date,
                           style:
@@ -109,36 +109,45 @@ class _OneTimePaymentTabsState extends State<OneTimePaymentTabs>
               style: Theme.of(context).textTheme.headline1,
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Expanded(
             child: GridView(
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 16,
                   mainAxisExtent: 54),
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  decoration: BoxDecoration(
-                      color: lilyWhite,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Image.asset(AppImages.payMe),
+                WScaleAnimation(
+                  onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    decoration: BoxDecoration(
+                        color: lilyWhite,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Image.asset(AppImages.payMe),
+                  ),
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 14),
-                  decoration: BoxDecoration(
-                      color: lilyWhite,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Image.asset(AppImages.click),
+                WScaleAnimation(
+                  onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    decoration: BoxDecoration(
+                        color: lilyWhite,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Image.asset(AppImages.click),
+                  ),
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  decoration: BoxDecoration(
-                      color: lilyWhite,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Image.asset(AppImages.apelsin),
+                WScaleAnimation(
+                  onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                        color: lilyWhite,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Image.asset(AppImages.apelsin),
+                  ),
                 )
               ],
             ),
@@ -151,10 +160,10 @@ class _OneTimePaymentTabsState extends State<OneTimePaymentTabs>
                   context,
                   fade(
                       page: isConnected == true
-                          ? OneTimeCheck()
+                          ? const OneTimeCheck()
                           : isConnected == false
-                              ? OneTimeFailure()
-                              : OneTimeExpect()));
+                              ? const OneTimeFailure()
+                              : const OneTimeExpect()));
             },
             text: 'Подтвердить',
           ),

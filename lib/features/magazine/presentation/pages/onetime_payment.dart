@@ -60,7 +60,7 @@ class _OneTimePaymentState extends State<OneTimePayment>
                   ],
                 ),
               ),
-              Divider(),
+              const Divider(),
               Container(
                 height: 36,
                 padding: const EdgeInsets.all(2),
