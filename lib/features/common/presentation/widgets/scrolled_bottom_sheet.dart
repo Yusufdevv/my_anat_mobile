@@ -16,6 +16,7 @@ class ScrolledBottomSheet extends StatelessWidget {
   final bool isSubScreen;
   final WButton? stackedWButton;
   final bool hasCancelButton;
+  final bool hasDivider;
 
   const ScrolledBottomSheet(
       {required this.title,
@@ -23,6 +24,7 @@ class ScrolledBottomSheet extends StatelessWidget {
       this.escapeBottomNavbar = true,
       this.isSubScreen = false,
       this.hasCancelButton = true,
+        this.hasDivider=true,
       this.child,
       this.children,
       this.pinnedChild,
@@ -83,7 +85,7 @@ class ScrolledBottomSheet extends StatelessWidget {
                     ),
                   )
                 : const SliverToBoxAdapter(child: SizedBox()),
-            const SliverToBoxAdapter( child: WDivider()),
+             SliverToBoxAdapter( child: hasDivider? WDivider():SizedBox()),
             pinnedChild != null
                 ? SliverToBoxAdapter(
                     child: Container(

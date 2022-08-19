@@ -14,4 +14,10 @@ abstract class MyFunctions {
     buffer.write(seconds);
     return buffer.toString();
   }
+
+  static String formatBirthDate(DateTime? date) {
+    return date != null
+        ? '${date.day < 10 ? '0${date.day}' : date.day}.${date.month < 10 ? '0${date.month}' : date.month}.${date.year}'
+        : '';
+  }
 }

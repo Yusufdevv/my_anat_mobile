@@ -5,6 +5,7 @@ class AppIcons {
   static const magazine = 'assets/icons/global/magazine.svg';
   static const vacancies = 'assets/icons/global/vacancies.svg';
   static const profile = 'assets/icons/global/profile.svg';
+
   // MapScreen
   static const listIcon = 'assets/icons/map_screen/list_icon.svg';
   static const plusIcon = 'assets/icons/map_screen/plus_icon.svg';
@@ -20,6 +21,7 @@ class AppIcons {
   static const close = 'assets/icons/map_screen/close.svg';
   static const share = 'assets/icons/map_screen/share.svg';
   static const boldPhone = 'assets/icons/map_screen/bold_phone.svg';
+
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';
   static const edit = 'assets/icons/auth/edit.svg';
@@ -44,14 +46,13 @@ class AppIcons {
   static const filter = 'assets/icons/vacancy/filter.svg';
 
 //  static const star = 'assets/icons/vacancy/star.svg';
-
-  //static const star = 'assets/icons/vacancy/star.svg';
   static const mapPin = 'assets/icons/vacancy/map_pin.svg';
   static const briefCase = 'assets/icons/vacancy/briefcase.svg';
   static const cancelButton = 'assets/icons/vacancy/cancel_button.svg';
   static const cashBanknote = 'assets/icons/vacancy/cash_banknote.svg';
   static const vacancySingleStar =
       'assets/icons/vacancy/vacancy_single_star.svg';
+
   //static const share = 'assets/icons/vacancy/share.svg';
   // static const phone = 'assets/icons/vacancy/phone.svg';
   static const chevronLeft = 'assets/icons/vacancy/chevron_left.svg';
@@ -64,19 +65,43 @@ class AppIcons {
   static const vacancyMail = 'assets/icons/vacancy/mail.svg';
   static const instagram = 'assets/icons/vacancy/instagram.svg';
   static const telegram = 'assets/icons/vacancy/telegram.svg';
+  static const leftArrow = 'assets/icons/vacancy/arrow_left.svg';
+  static const bottomSheetCancel =
+      'assets/icons/vacancy/bottomsheet_cancel.svg';
+
+  //profile
+  static const scope = 'assets/icons/profile/scope.svg';
+  static const setting = 'assets/icons/profile/setting.svg';
+  static const lock = 'assets/icons/profile/lock.svg';
+  static const profileStar = 'assets/icons/profile/star.svg';
+  static const help = 'assets/icons/profile/help.svg';
+  static const logout = 'assets/icons/profile/logout.svg';
+  static const at = 'assets/icons/profile/at.svg';
+  static const trash = 'assets/icons/profile/trash.svg';
+  static const chevronUp = 'assets/icons/profile/chevron_up.svg';
+  static const chevronDown = 'assets/icons/profile/chevron_down.svg';
+  static const flagRu = 'assets/icons/profile/flug_ru.svg';
+  static const mobileDevice = 'assets/icons/profile/device_mobile.svg';
+  static const deviceLaptop = 'assets/icons/profile/device_laptop.svg';
+  static const cancelX = 'assets/icons/profile/cancel_x.svg';
+  static const check = 'assets/icons/profile/check.svg';
+  static const flagUz = 'assets/icons/profile/flag_uz.svg';
+  static const medicalDoctor = 'assets/icons/profile/medical_doctor.svg';
+  static const icHospital = 'assets/icons/profile/ic_hospital.svg';
 
   //magazine
   static const magazineFilter = 'assets/icons/magazine/filter.svg';
   static const magazineSearch = 'assets/icons/magazine/search.svg';
+
   //static const close = 'assets/icons/magazine/close.svg';
   static const userPlus = 'assets/icons/magazine/user_plus.svg';
+
 //  static const cashBanknote = 'assets/icons/magazine/cash_banknote.svg';
   static const copy = 'assets/icons/magazine/copy.svg';
   static const expect = 'assets/icons/magazine/expect.svg';
   static const failure = 'assets/icons/magazine/failure.svg';
   static const success = 'assets/icons/magazine/success.svg';
+
 //  static const refresh = 'assets/icons/magazine/refresh.svg';
-  static const leftArrow = 'assets/icons/vacancy/arrow_left.svg';
-  static const bottomSheetCancel =
-      'assets/icons/vacancy/bottomsheet_cancel.svg';
+
 }
