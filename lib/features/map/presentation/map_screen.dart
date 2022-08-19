@@ -8,7 +8,7 @@ import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_controller_bloc/map_controller_bloc.dart';
-import 'package:anatomica/features/map/presentation/hospital_list.dart';
+import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_controller_buttons.dart';

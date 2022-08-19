@@ -24,6 +24,7 @@ const errorBorder = _mistyRose;
 const errorIconContainer = _bittersweet;
 const errorTextColor = _woodSmoke;
 const montana = _montana;
+const commentButton = _swansDown;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -50,3 +51,4 @@ const _roseWhite = Color(0xffFCECEC);
 const _mistyRose = Color(0xffFFD6D6);
 const _bittersweet = Color(0xffFA6161);
 const _woodsmoke = Color(0xff373C3B);
+const _swansDown = Color(0xffDEE8E4);
