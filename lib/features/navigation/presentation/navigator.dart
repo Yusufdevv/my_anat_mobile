@@ -1,4 +1,5 @@
 import 'package:anatomica/features/map/presentation/map_screen.dart';
+import 'package:anatomica/features/profile/prezentation/pages/profile.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_screen.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -12,16 +13,14 @@ class TabNavigator extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final NavItemEnum tabItem;
 
-  const TabNavigator(
-      {required this.tabItem, required this.navigatorKey, Key? key})
+  const TabNavigator({required this.tabItem, required this.navigatorKey, Key? key})
       : super(key: key);
 
   @override
   State<TabNavigator> createState() => _TabNavigatorState();
 }
 
-class _TabNavigatorState extends State<TabNavigator>
-    with AutomaticKeepAliveClientMixin {
+class _TabNavigatorState extends State<TabNavigator> with AutomaticKeepAliveClientMixin {
   Map<String, WidgetBuilder> _routeBuilders(
       {required BuildContext context, required RouteSettings routeSettings}) {
     switch (widget.tabItem) {
@@ -37,7 +36,7 @@ class _TabNavigatorState extends State<TabNavigator>
         };
       case NavItemEnum.account:
         return {
-          TabNavigatorRoutes.root: (context) => Container(),
+          TabNavigatorRoutes.root: (context) => const ProfileScreen(),
         };
 
       default:
@@ -54,8 +53,7 @@ class _TabNavigatorState extends State<TabNavigator>
       key: widget.navigatorKey,
       initialRoute: TabNavigatorRoutes.root,
       onGenerateRoute: (routeSettings) {
-        final routeBuilders =
-            _routeBuilders(context: context, routeSettings: routeSettings);
+        final routeBuilders = _routeBuilders(context: context, routeSettings: routeSettings);
         return CupertinoPageRoute(
           builder: (context) => routeBuilders.containsKey(routeSettings.name)
               ? routeBuilders[routeSettings.name]!(context)
@@ -69,18 +67,16 @@ class _TabNavigatorState extends State<TabNavigator>
   bool get wantKeepAlive => true;
 }
 
-PageRouteBuilder fade({required Widget page, RouteSettings? settings}) =>
-    PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 200),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            FadeTransition(
-              opacity: CurvedAnimation(
-                curve: const Interval(0, 1, curve: Curves.linear),
-                parent: animation,
-              ),
-              child: child,
-            ),
-        settings: settings,
-        pageBuilder: (BuildContext context, Animation<double> animation,
-                Animation<double> secondaryAnimation) =>
+PageRouteBuilder fade({required Widget page, RouteSettings? settings}) => PageRouteBuilder(
+    transitionDuration: const Duration(milliseconds: 200),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
+          opacity: CurvedAnimation(
+            curve: const Interval(0, 1, curve: Curves.linear),
+            parent: animation,
+          ),
+          child: child,
+        ),
+    settings: settings,
+    pageBuilder:
+        (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
             page);

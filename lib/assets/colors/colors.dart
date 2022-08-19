@@ -24,6 +24,17 @@ const lightRed = _roseWhite;
 const errorBorder = _mistyRose;
 const errorIconContainer = _bittersweet;
 const errorTextColor = _woodSmoke;
+const clearDay = _clearDay;
+const snow = _snow;
+const persianIndigo = _persianIndigo;
+const whiteSmoke2 = _whiteSmoke2;
+const whiteIce = _whiteIce;
+const bastille = _bastille;
+const conch = _conch;
+const manatee = _manate;
+const frostedMint = _frostedMint;
+const mediumSeaGreen = _mediumSeaGreen;
+const steelBlue=_steelBlue;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -50,3 +61,14 @@ const _roseWhite = Color(0xffFCECEC);
 const _mistyRose = Color(0xffFFD6D6);
 const _bittersweet = Color(0xffFA6161);
 const _woodsmoke = Color(0xff373C3B);
+const _clearDay = Color(0xffECF7F6);
+const _snow = Color(0xffFFEEEE);
+const _persianIndigo = Color(0xffF0F5F3);
+const _whiteSmoke2 = Color(0xffF9F9F9);
+const _whiteIce = Color(0xffE5F5F4);
+const _bastille = Color(0xff2B2B30);
+const _conch = Color(0xffA0AFAB);
+const _manate = Color(0xff8A939A);
+const _frostedMint = Color(0xffE8F6EE);
+const _mediumSeaGreen = Color(0xff43B778);
+const _steelBlue = Color(0xff437FB7);
