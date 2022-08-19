@@ -62,7 +62,9 @@ class _MyAppState extends State<MyApp> {
             child: child,
           );
         },
-        onGenerateRoute: (_) => MaterialPageRoute(builder: (_) => const SplashScreen()),
+        onGenerateRoute: (_) => MaterialPageRoute(
+          builder: (_) => const SplashScreen(),
+        ),
       ),
     );
   }

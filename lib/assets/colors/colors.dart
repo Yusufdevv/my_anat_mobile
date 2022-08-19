@@ -27,6 +27,8 @@ const montana = _montana;
 const unFollowButton = _downy10;
 const white1 = _white1;
 const yellowHighlightedText = _oasis;
+const commentButton = _swansDown;
+
 //  http://www.color-blindness.com/color-name-hue/
 
 const _puertoRico = Color(0xff43B7B1);
@@ -55,3 +57,4 @@ const _woodsmoke = Color(0xff373C3B);
 const _downy10 = Color(0x1A70D4B0);
 const _white1 = Color(0xFFFDFDFD);
 const _oasis = Color(0xFFFBEAC8);
+const _swansDown = Color(0xffDEE8E4);
