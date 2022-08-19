@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
                   navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
                   break;
                 case AuthenticationStatus.unauthenticated:
-                  navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
+                  navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
                   break;
               }
             },

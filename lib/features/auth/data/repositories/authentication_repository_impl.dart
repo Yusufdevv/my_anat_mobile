@@ -5,6 +5,6 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   @override
   Stream<AuthenticationStatus> statusStream() async* {
     await Future.delayed(const Duration(seconds: 3));
-    yield AuthenticationStatus.authenticated;
+    yield AuthenticationStatus.unauthenticated;
   }
 }
