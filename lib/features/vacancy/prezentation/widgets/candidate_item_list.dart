@@ -14,7 +14,7 @@ class CandidateItemList extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.only(top: 20),
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) => CandidateItem(
         margin: margin,
         onTap: () {
