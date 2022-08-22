@@ -20,6 +20,7 @@ class AppIcons {
   static const close = 'assets/icons/map_screen/close.svg';
   static const share = 'assets/icons/map_screen/share.svg';
   static const boldPhone = 'assets/icons/map_screen/bold_phone.svg';
+  static const smile = 'assets/icons/map_screen/smile.svg';
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';
   static const edit = 'assets/icons/auth/edit.svg';

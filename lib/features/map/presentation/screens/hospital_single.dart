@@ -6,7 +6,9 @@ import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismis
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/about_hospital.dart';
+import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_conditions.dart';
 import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_sevices.dart';
+import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_specialists.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:anatomica/features/map/presentation/widgets/image_slider_indicator.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
@@ -353,8 +355,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
             children: [
               const AboutHospital(),
               const HospitalServices(),
-              Container(),
-              Container(),
+              const HospitalSpecialists(),
+              const HospitalConditions(),
               Container(),
               Container(),
               Container(),

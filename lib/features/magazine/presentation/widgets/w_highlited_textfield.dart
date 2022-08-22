@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 class WHighlightedText extends StatelessWidget {
   final String allText;
   final String highlightedText;
@@ -60,23 +60,14 @@ class WHighlightedText extends StatelessWidget {
       );
     }
   }
+
   List<InlineSpan> getOtherText() {
     final list = [];
     for (final currentText in allText.split(highlightedText).skip(1).toList()) {
-      list.add(
-        WidgetSpan(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(3),
-            ),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              currentText,
-              style: textStyle,
-            ),
-          ),
-        ),
-      );
+      list.add(TextSpan(
+        text: currentText,
+        style: textStyle,
+      ));
       if (list.length >= 2) {
         list.insert(
           1,
@@ -101,14 +92,3 @@ class WHighlightedText extends StatelessWidget {
     return list.cast<InlineSpan>();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
