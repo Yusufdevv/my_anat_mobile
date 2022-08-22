@@ -5,7 +5,6 @@ class AppIcons {
   static const magazine = 'assets/icons/global/magazine.svg';
   static const vacancies = 'assets/icons/global/vacancies.svg';
   static const profile = 'assets/icons/global/profile.svg';
-
   // MapScreen
   static const listIcon = 'assets/icons/map_screen/list_icon.svg';
   static const plusIcon = 'assets/icons/map_screen/plus_icon.svg';
@@ -21,7 +20,6 @@ class AppIcons {
   static const close = 'assets/icons/map_screen/close.svg';
   static const share = 'assets/icons/map_screen/share.svg';
   static const boldPhone = 'assets/icons/map_screen/bold_phone.svg';
-
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';
   static const edit = 'assets/icons/auth/edit.svg';

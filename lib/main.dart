@@ -4,6 +4,7 @@ import 'package:anatomica/features/auth/data/repositories/authentication_reposit
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/domain/usecases/get_authentication_status_usecase.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/navigation/presentation/home.dart';
