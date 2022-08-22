@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,34 +16,37 @@ class OtherProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      height: 56,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: backgroundColor ?? frostedMint,
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(6),
-            height: 32,
-            width: 32,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              color: iconBackgroundColor ?? mediumSeaGreen,
+    return WScaleAnimation(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        height: 56,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: backgroundColor ?? frostedMint,
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(6),
+              height: 32,
+              width: 32,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: iconBackgroundColor ?? mediumSeaGreen,
+              ),
+              child: SvgPicture.asset(icon ?? AppIcons.medicalDoctor),
             ),
-            child: SvgPicture.asset(icon ?? AppIcons.medicalDoctor),
-          ),
-          const SizedBox(width: 12),
-          Text(
-            title ?? 'Получить профиль врача',
-            style: Theme.of(context).textTheme.headline1!.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-          )
-        ],
+            const SizedBox(width: 12),
+            Text(
+              title ?? 'Получить профиль врача',
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+            )
+          ],
+        ),
       ),
     );
   }

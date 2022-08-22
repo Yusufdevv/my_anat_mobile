@@ -132,7 +132,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(AppIcons.phone),
+                            SvgPicture.asset(AppIcons.phone, color: white),
                             const SizedBox(width: 8),
                             Text(
                               'Показать номер',

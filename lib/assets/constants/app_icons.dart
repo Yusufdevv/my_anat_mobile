@@ -88,6 +88,7 @@ class AppIcons {
   static const flagUz = 'assets/icons/profile/flag_uz.svg';
   static const medicalDoctor = 'assets/icons/profile/medical_doctor.svg';
   static const icHospital = 'assets/icons/profile/ic_hospital.svg';
+  static const editImage='assets/icons/profile/edit.svg';
 
   //magazine
   static const magazineFilter = 'assets/icons/magazine/filter.svg';
