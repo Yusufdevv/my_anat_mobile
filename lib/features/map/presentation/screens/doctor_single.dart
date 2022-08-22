@@ -1,46 +1,40 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
+import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/about_hospital.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_articles.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_comments.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_conditions.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_contacts.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_sevices.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_specialists.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_vacancies.dart';
+import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/about_doctor.dart';
+import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/doctor_articles.dart';
+import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/doctor_comments.dart';
+import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/doctor_contacts.dart';
+import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/doctor_interviews.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
-import 'package:anatomica/features/map/presentation/widgets/image_slider_indicator.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HospitalSingleScreen extends StatefulWidget {
-  const HospitalSingleScreen({Key? key}) : super(key: key);
+class DoctorSingleScreen extends StatefulWidget {
+  const DoctorSingleScreen({Key? key}) : super(key: key);
 
   @override
-  State<HospitalSingleScreen> createState() => _HospitalSingleScreenState();
+  State<DoctorSingleScreen> createState() => _DoctorSingleScreenState();
 }
 
-class _HospitalSingleScreenState extends State<HospitalSingleScreen> with TickerProviderStateMixin {
+class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
   late PageController _pageController;
   int currentImage = 0;
   final tabs = [
-    'О клинике',
-    'Услуги',
-    'Специалисты',
-    'Удобства',
+    'О враче',
     'Статьи',
+    'Интервью',
     'Отзывы',
-    'Вакансии',
     'Контакты',
   ];
 
@@ -54,7 +48,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 8, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
     _pageController = PageController();
@@ -103,42 +97,64 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                             alignment: Alignment.bottomCenter,
                             children: [
                               Positioned.fill(
-                                bottom: 219,
+                                bottom: 178,
                                 child: Stack(
                                   children: [
                                     Positioned.fill(
-                                      child: PageView.builder(
-                                        itemBuilder: (context, index) => Stack(
-                                          children: [
-                                            Positioned.fill(
-                                              child: Image.asset(
-                                                AppImages.hospitalImage,
-                                                fit: BoxFit.cover,
-                                                height: 277,
-                                              ),
+                                      child: Stack(
+                                        children: [
+                                          Positioned.fill(
+                                            child: Image.asset(
+                                              AppImages.doctor,
+                                              fit: BoxFit.cover,
+                                              height: 277,
                                             ),
-                                            Positioned.fill(
-                                                child: Container(
+                                          ),
+                                          Positioned.fill(
+                                            child: DecoratedBox(
                                               decoration: BoxDecoration(
                                                 gradient: LinearGradient(
                                                   begin: Alignment.topCenter,
                                                   end: Alignment.bottomCenter,
                                                   colors: [
-                                                    textColor.withOpacity(0.48),
-                                                    textColor.withOpacity(0.24),
+                                                    darkGreen.withOpacity(0),
+                                                    darkGreen,
                                                   ],
                                                 ),
                                               ),
-                                            ))
-                                          ],
-                                        ),
-                                        itemCount: 10,
-                                        controller: _pageController,
-                                        onPageChanged: (index) {
-                                          setState(() {
-                                            currentImage = index;
-                                          });
-                                        },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      left: 16,
+                                      right: 16,
+                                      bottom: 46,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Иргашев Дильмурад\nСаатович',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline1!
+                                                .copyWith(color: white, fontSize: 22),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          Container(
+                                            padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+                                            decoration: BoxDecoration(
+                                              color: white.withOpacity(0.12),
+                                              borderRadius: BorderRadius.circular(10),
+                                              border: Border.all(color: primary),
+                                            ),
+                                            child: Text(
+                                              'Репродуктолог',
+                                              style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
                                     // Positioned.fill(
@@ -174,15 +190,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                         ],
                                       ),
                                     ),
-                                    Positioned(
-                                      left: 0,
-                                      right: 0,
-                                      bottom: 32,
-                                      child: ImageSliderIndicator(
-                                        itemCount: 10,
-                                        currentIndex: currentImage,
-                                      ),
-                                    )
                                   ],
                                 ),
                               ),
@@ -204,37 +211,12 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                           children: [
                                             Row(
                                               children: [
-                                                Container(
-                                                  height: 40,
-                                                  width: 40,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(6),
-                                                    border: Border.all(color: divider),
-                                                    image: const DecorationImage(
-                                                      image: AssetImage(AppImages.companyLogo),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 12),
-                                                Expanded(
-                                                  child: Text(
-                                                    '7-я Центральная Семейная поликлиника',
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style:
-                                                        Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(height: 16),
-                                            Row(
-                                              children: [
                                                 SvgPicture.asset(AppIcons.location),
                                                 const SizedBox(width: 6),
                                                 Text(
                                                   'г. Ташкент, улица Содика Азимова, 74',
-                                                  style: Theme.of(context).textTheme.headline3,
+                                                  style:
+                                                      Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                                 ),
                                               ],
                                             ),
@@ -245,7 +227,20 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                                 const SizedBox(width: 6),
                                                 Text(
                                                   '+998 71 200-70-07',
-                                                  style: Theme.of(context).textTheme.headline3,
+                                                  style:
+                                                      Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Row(
+                                              children: [
+                                                SvgPicture.asset(AppIcons.building),
+                                                const SizedBox(width: 6),
+                                                Text(
+                                                  'Doctor-D',
+                                                  style:
+                                                      Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                                 ),
                                               ],
                                             ),
@@ -258,20 +253,9 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                                       Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
                                                 ),
                                                 const SizedBox(width: 8),
-                                                ...List.generate(
-                                                  4,
-                                                  (index) => Padding(
-                                                    padding: const EdgeInsets.only(right: 4),
-                                                    child: SvgPicture.asset(AppIcons.star),
-                                                  ),
-                                                ),
-                                                ...List.generate(
-                                                  5 - 4,
-                                                  (index) => Padding(
-                                                    padding: const EdgeInsets.only(right: 4),
-                                                    child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
-                                                  ),
-                                                ),
+                                                const RatingStars(
+                                                  rate: 4,
+                                                )
                                               ],
                                             ),
                                             const SizedBox(height: 16),
@@ -367,14 +351,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
           body: TabBarView(
             controller: _tabController,
             children: const [
-              AboutHospital(),
-              HospitalServices(),
-              HospitalSpecialists(),
-              HospitalConditions(),
-              HospitalArticles(),
-              HospitalComments(),
-              HospitalVacancies(),
-              HospitalContacts(),
+              AboutDoctor(),
+              DoctorArticles(),
+              DoctorInterviews(),
+              DoctorComments(),
+              DoctorContacts(),
             ],
           ),
         ),

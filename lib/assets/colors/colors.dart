@@ -40,6 +40,7 @@ const manatee = _manate;
 const frostedMint = _frostedMint;
 const mediumSeaGreen = _mediumSeaGreen;
 const steelBlue = _steelBlue;
+const deleteButton = _sunsetOrange2;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -81,3 +82,4 @@ const _manate = Color(0xff8A939A);
 const _frostedMint = Color(0xffE8F6EE);
 const _mediumSeaGreen = Color(0xff43B778);
 const _steelBlue = Color(0xff437FB7);
+const _sunsetOrange2 = Color(0xffFF4C4C);

@@ -9,7 +9,7 @@ class HospitalConditions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16, mainAxisExtent: 102),
       itemBuilder: (context, index) => Container(
@@ -32,7 +32,7 @@ class HospitalConditions extends StatelessWidget {
           ],
         ),
       ),
-      itemCount: 5,
+      itemCount: 20,
     );
   }
 }

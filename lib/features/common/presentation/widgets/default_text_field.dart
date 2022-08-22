@@ -20,6 +20,8 @@ class DefaultTextField extends StatelessWidget {
   final InputDecoration? inputDecoration;
   final TextInputType? keyboardType;
   final String title;
+  final double height;
+  final int? maxLines;
   const DefaultTextField({
     required this.controller,
     required this.onChanged,
@@ -38,6 +40,8 @@ class DefaultTextField extends StatelessWidget {
     this.prefixText = '',
     this.inputDecoration,
     this.keyboardType,
+    this.height = 40,
+    this.maxLines,
     Key? key,
   }) : super(key: key);
 
@@ -54,7 +58,7 @@ class DefaultTextField extends StatelessWidget {
           const SizedBox(height: 8),
         ],
         SizedBox(
-          height: 40,
+          height: height,
           child: TextField(
             controller: controller,
             onChanged: onChanged,
@@ -62,6 +66,7 @@ class DefaultTextField extends StatelessWidget {
             inputFormatters: inputFormatters,
             obscureText: isObscure,
             keyboardType: keyboardType,
+            maxLines: maxLines,
             decoration: inputDecoration ??
                 InputDecoration(
                   border: OutlineInputBorder(
