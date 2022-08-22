@@ -7,9 +7,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 class SearchField extends StatefulWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
+  final Color fillColor;
   const SearchField({
     required this.controller,
     required this.onChanged,
+    this.fillColor = textFieldColor,
     Key? key,
   }) : super(key: key);
 
@@ -19,9 +21,21 @@ class SearchField extends StatefulWidget {
 
 class _SearchFieldState extends State<SearchField> {
   late TextEditingController _controller;
+  bool showClear = false;
   @override
   void initState() {
     _controller = widget.controller;
+    _controller.addListener(() {
+      if (_controller.text.isNotEmpty && !showClear) {
+        setState(() {
+          showClear = true;
+        });
+      } else if (_controller.text.isEmpty && showClear) {
+        setState(() {
+          showClear = false;
+        });
+      }
+    });
     super.initState();
   }
 
@@ -35,7 +49,7 @@ class _SearchFieldState extends State<SearchField> {
         style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
-          fillColor: textFieldColor,
+          fillColor: widget.fillColor,
           filled: true,
           suffixIconConstraints: const BoxConstraints(maxWidth: 40),
           prefixIcon: Padding(
@@ -47,7 +61,7 @@ class _SearchFieldState extends State<SearchField> {
           hintText: 'Поиск',
           hintStyle: Theme.of(context).textTheme.headline3,
           prefixIconConstraints: const BoxConstraints(maxWidth: 40),
-          suffixIcon: _controller.text.isNotEmpty
+          suffixIcon: showClear
               ? WScaleAnimation(
                   onTap: () {
                     _controller.clear();

@@ -27,6 +27,8 @@ const montana = _montana;
 const unFollowButton = _downy10;
 const white1 = _white1;
 const yellowHighlightedText = _oasis;
+const commentButton = _swansDown;
+
 const clearDay = _clearDay;
 const snow = _snow;
 const persianIndigo = _persianIndigo;
@@ -67,6 +69,7 @@ const _woodsmoke = Color(0xff373C3B);
 const _downy10 = Color(0x1A70D4B0);
 const _white1 = Color(0xFFFDFDFD);
 const _oasis = Color(0xFFFBEAC8);
+const _swansDown = Color(0xffDEE8E4);
 const _clearDay = Color(0xffECF7F6);
 const _snow = Color(0xffFFEEEE);
 const _persianIndigo = Color(0xffF0F5F3);
