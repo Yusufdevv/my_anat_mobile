@@ -100,6 +100,4 @@ class AppIcons {
   static const success = 'assets/icons/magazine/success.svg';
 
 //  static const refresh = 'assets/icons/magazine/refresh.svg';
-  static const leftArrow = 'assets/icons/vacancy/arrow_left.svg';
-  static const bottomSheetCancel = 'assets/icons/vacancy/bottomsheet_cancel.svg';
 }
