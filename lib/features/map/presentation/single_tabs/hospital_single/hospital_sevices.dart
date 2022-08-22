@@ -13,6 +13,7 @@ class HospitalServices extends StatefulWidget {
 
 class _HospitalServicesState extends State<HospitalServices> {
   late TextEditingController _textController;
+  String searchValue = '';
   @override
   void initState() {
     _textController = TextEditingController();
@@ -26,7 +27,11 @@ class _HospitalServicesState extends State<HospitalServices> {
       children: [
         SearchField(
           controller: _textController,
-          onChanged: (value) {},
+          onChanged: (value) {
+            setState(() {
+              searchValue = value;
+            });
+          },
           fillColor: white,
         ),
         const SizedBox(height: 16),
@@ -40,6 +45,8 @@ class _HospitalServicesState extends State<HospitalServices> {
               20,
               (index) => ServiceItem(
                 isLast: index == 19,
+                allText: 'Профилактический осмотр и медицинское освидетельствование',
+                searchText: searchValue,
               ),
             ),
           ),
