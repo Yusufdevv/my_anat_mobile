@@ -12,7 +12,16 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      color: white,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            offset: const Offset(0, 4),
+            blurRadius: 24,
+            color: darkerGreen.withOpacity(0.08),
+          ),
+        ],
+        color: white,
+      ),
       child: TabBar(
         controller: tabController,
         labelStyle: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 15),

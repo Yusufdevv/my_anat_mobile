@@ -9,18 +9,14 @@ class SearchedModelsItem extends StatelessWidget {
   final TextEditingController controller;
   final MagazineItemEntity magazineItemEntity;
 
-  const SearchedModelsItem(
-      {required this.controller, required this.magazineItemEntity, Key? key})
-      : super(key: key);
+  const SearchedModelsItem({required this.controller, required this.magazineItemEntity, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: divider),
-                borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImage(
@@ -32,30 +28,18 @@ class SearchedModelsItem extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          Row(
-            children: [
-              WHighlightedText(
-                highlightedTextStyle: Theme.of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
-                allText: magazineItemEntity.date,
-                highlightedText: controller.text,
-                highlightColor: yellowHighlightedText,
-              ),
-            ],
+          WHighlightedText(
+            highlightedTextStyle:
+                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
+            textStyle: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
+            allText: magazineItemEntity.date,
+            highlightedText: controller.text,
+            highlightColor: yellowHighlightedText,
           ),
           const SizedBox(height: 4),
           Text(
             magazineItemEntity.authorName,
-            style: Theme.of(context)
-                .textTheme
-                .headline3!
-                .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+            style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
           ),
           WButton(
             width: 164,
@@ -63,10 +47,7 @@ class SearchedModelsItem extends StatelessWidget {
             onTap: () {},
             child: Text(
               magazineItemEntity.price.toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline2!
-                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
         ],

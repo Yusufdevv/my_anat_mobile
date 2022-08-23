@@ -17,16 +17,18 @@ const solitude = _solitude;
 const lilyWhite = _lilyWhite;
 const pattensBlue = _pattensBlue;
 const aqua = _aqua;
-const montana = _montana;
-const unFollowButton = _downy10;
-const white1 = _white1;
-const yellowHighlightedText = _oasis;
 const dividerColor = _lilyWhite2;
 const inactiveStar = _lilyWhite3;
 const lightRed = _roseWhite;
 const errorBorder = _mistyRose;
 const errorIconContainer = _bittersweet;
 const errorTextColor = _woodSmoke;
+const montana = _montana;
+const unFollowButton = _downy10;
+const white1 = _white1;
+const yellowHighlightedText = _oasis;
+const commentButton = _swansDown;
+
 const clearDay = _clearDay;
 const snow = _snow;
 const persianIndigo = _persianIndigo;
@@ -38,6 +40,7 @@ const manatee = _manate;
 const frostedMint = _frostedMint;
 const mediumSeaGreen = _mediumSeaGreen;
 const steelBlue = _steelBlue;
+const deleteButton = _sunsetOrange2;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -67,6 +70,7 @@ const _woodsmoke = Color(0xff373C3B);
 const _downy10 = Color(0x1A70D4B0);
 const _white1 = Color(0xFFFDFDFD);
 const _oasis = Color(0xFFFBEAC8);
+const _swansDown = Color(0xffDEE8E4);
 const _clearDay = Color(0xffECF7F6);
 const _snow = Color(0xffFFEEEE);
 const _persianIndigo = Color(0xffF0F5F3);
@@ -78,3 +82,4 @@ const _manate = Color(0xff8A939A);
 const _frostedMint = Color(0xffE8F6EE);
 const _mediumSeaGreen = Color(0xff43B778);
 const _steelBlue = Color(0xff437FB7);
+const _sunsetOrange2 = Color(0xffFF4C4C);

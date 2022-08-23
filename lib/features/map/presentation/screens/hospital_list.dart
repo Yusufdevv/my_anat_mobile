@@ -3,8 +3,9 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
-import 'package:anatomica/features/map/presentation/result_list.dart';
-import 'package:anatomica/features/map/presentation/suggestion_list.dart';
+import 'package:anatomica/features/map/presentation/screens/result_list.dart';
+import 'package:anatomica/features/map/presentation/screens/suggestion_list.dart';
+import 'package:anatomica/features/map/presentation/widgets/doctors_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,7 +109,7 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 150),
                         child: state.screenState == CrossFadeState.showFirst
-                            ? const ResultList()
+                            ? const DoctorsList()
                             : const SuggestionListScreen(),
                       ),
                     ],

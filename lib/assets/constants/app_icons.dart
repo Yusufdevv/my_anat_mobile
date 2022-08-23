@@ -5,7 +5,6 @@ class AppIcons {
   static const magazine = 'assets/icons/global/magazine.svg';
   static const vacancies = 'assets/icons/global/vacancies.svg';
   static const profile = 'assets/icons/global/profile.svg';
-
   // MapScreen
   static const listIcon = 'assets/icons/map_screen/list_icon.svg';
   static const plusIcon = 'assets/icons/map_screen/plus_icon.svg';
@@ -21,7 +20,16 @@ class AppIcons {
   static const close = 'assets/icons/map_screen/close.svg';
   static const share = 'assets/icons/map_screen/share.svg';
   static const boldPhone = 'assets/icons/map_screen/bold_phone.svg';
-
+  static const smile = 'assets/icons/map_screen/smile.svg';
+  static const mapCalendar = 'assets/icons/map_screen/calendar.svg';
+  static const commentSucces = 'assets/icons/map_screen/comment_success.svg';
+  static const checkLottie = 'assets/icons/map_screen/check_lottie.json';
+  static const website = 'assets/icons/map_screen/website.svg';
+  static const facebook = 'assets/icons/map_screen/facebook.svg';
+  static const building = 'assets/icons/map_screen/building.svg';
+  static const interviewTime = 'assets/icons/map_screen/clock.svg';
+  static const delete = 'assets/icons/map_screen/delete.svg';
+  static const commentEmpty = 'assets/icons/map_screen/comment_empty.svg';
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';
   static const edit = 'assets/icons/auth/edit.svg';
@@ -50,11 +58,9 @@ class AppIcons {
   static const briefCase = 'assets/icons/vacancy/briefcase.svg';
   static const cancelButton = 'assets/icons/vacancy/cancel_button.svg';
   static const cashBanknote = 'assets/icons/vacancy/cash_banknote.svg';
-  static const vacancySingleStar =
-      'assets/icons/vacancy/vacancy_single_star.svg';
-
-  //static const share = 'assets/icons/vacancy/share.svg';
-  // static const phone = 'assets/icons/vacancy/phone.svg';
+  static const vacancySingleStar = 'assets/icons/vacancy/vacancy_single_star.svg';
+  static const vacancyShare = 'assets/icons/vacancy/share.svg';
+  static const vacancyShone = 'assets/icons/vacancy/phone.svg';
   static const chevronLeft = 'assets/icons/vacancy/chevron_left.svg';
   static const calendar = 'assets/icons/vacancy/calendar.svg';
   static const numberList = 'assets/icons/vacancy/list_numbers.svg';
@@ -66,8 +72,7 @@ class AppIcons {
   static const instagram = 'assets/icons/vacancy/instagram.svg';
   static const telegram = 'assets/icons/vacancy/telegram.svg';
   static const leftArrow = 'assets/icons/vacancy/arrow_left.svg';
-  static const bottomSheetCancel =
-      'assets/icons/vacancy/bottomsheet_cancel.svg';
+  static const bottomSheetCancel = 'assets/icons/vacancy/bottomsheet_cancel.svg';
 
   //profile
   static const scope = 'assets/icons/profile/scope.svg';
@@ -88,7 +93,7 @@ class AppIcons {
   static const flagUz = 'assets/icons/profile/flag_uz.svg';
   static const medicalDoctor = 'assets/icons/profile/medical_doctor.svg';
   static const icHospital = 'assets/icons/profile/ic_hospital.svg';
-  static const editImage='assets/icons/profile/edit.svg';
+  static const editImage = 'assets/icons/profile/edit.svg';
 
   //magazine
   static const magazineFilter = 'assets/icons/magazine/filter.svg';
@@ -104,5 +109,4 @@ class AppIcons {
   static const success = 'assets/icons/magazine/success.svg';
 
 //  static const refresh = 'assets/icons/magazine/refresh.svg';
-
 }
