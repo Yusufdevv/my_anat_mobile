@@ -41,6 +41,7 @@ dependencies:
   animated_size_and_fade: ^3.0.0
   jiffy: ^5.0.0
   image_picker: ^0.8.5+3
+  lottie: ^1.4.1
 
 dev_dependencies:
   flutter_test:

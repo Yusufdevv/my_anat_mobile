@@ -3,8 +3,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_about_hospital.dart';
 import 'package:flutter/material.dart';
 
-class AboutHospital extends StatelessWidget {
-  const AboutHospital({Key? key}) : super(key: key);
+class AboutDoctor extends StatelessWidget {
+  const AboutDoctor({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

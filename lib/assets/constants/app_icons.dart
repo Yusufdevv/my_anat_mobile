@@ -21,6 +21,15 @@ class AppIcons {
   static const share = 'assets/icons/map_screen/share.svg';
   static const boldPhone = 'assets/icons/map_screen/bold_phone.svg';
   static const smile = 'assets/icons/map_screen/smile.svg';
+  static const mapCalendar = 'assets/icons/map_screen/calendar.svg';
+  static const commentSucces = 'assets/icons/map_screen/comment_success.svg';
+  static const checkLottie = 'assets/icons/map_screen/check_lottie.json';
+  static const website = 'assets/icons/map_screen/website.svg';
+  static const facebook = 'assets/icons/map_screen/facebook.svg';
+  static const building = 'assets/icons/map_screen/building.svg';
+  static const interviewTime = 'assets/icons/map_screen/clock.svg';
+  static const delete = 'assets/icons/map_screen/delete.svg';
+  static const commentEmpty = 'assets/icons/map_screen/comment_empty.svg';
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';
   static const edit = 'assets/icons/auth/edit.svg';

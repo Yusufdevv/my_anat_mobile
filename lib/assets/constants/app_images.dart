@@ -8,5 +8,6 @@ class AppImages {
   static const payMe = 'assets/images/payme.png';
   static const click = 'assets/images/click.png';
   static const apelsin = 'assets/images/apelsin.png';
+  static const doctor = 'assets/images/doctor.png';
   // static const placeMarkCluster = 'assets/icons/map_screen/placemark_cluster.png';
 }

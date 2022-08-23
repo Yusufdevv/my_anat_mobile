@@ -44,6 +44,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> with TickerProvid
       onChanged: widget.onChanged,
       isObscure: isObscure,
       hintText: widget.hintText,
+      maxLines: 1,
       suffix: GestureDetector(
         onTap: () {
           setState(() {
