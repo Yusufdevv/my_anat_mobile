@@ -44,6 +44,8 @@ dependencies:
   lottie: ^1.4.1
   formz: ^0.4.1
   json_annotation: ^4.6.0
+  visibility_detector: ^0.2.2
+
 
 dev_dependencies:
   json_serializable: ^6.3.1

@@ -12,14 +12,15 @@ class VacancyItemList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: const EdgeInsets.only(top: 20),
-      physics: const BouncingScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemBuilder: (context, index) => VacancyItem(
-        margin: margin,
-        onTap: () {
-          Navigator.of(context).push(fade(page: const VacancySingleScreen()));
-        },
-      ),
+      itemBuilder: (context, index) =>SizedBox(),
+      //     VacancyItem(
+      //   margin: margin,
+      //   onTap: () {
+      //     Navigator.of(context).push(fade(page: const VacancySingleScreen()));
+      //   },
+      // ),
       separatorBuilder: (context, index) => const SizedBox(height: 12),
       itemCount: 10,
     );

@@ -1,19 +1,25 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jiffy/jiffy.dart';
 
 class VacancyItem extends StatelessWidget {
   final EdgeInsets? margin;
   final VoidCallback onTap;
+  final VacancyListEntity vacancyEntity;
 
-  const VacancyItem({this.margin, required this.onTap, Key? key}) : super(key: key);
+  const VacancyItem({required this.vacancyEntity, this.margin, required this.onTap, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return WScaleAnimation(
       onTap: onTap,
       child: Container(
@@ -28,44 +34,54 @@ class VacancyItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Стоматолог',
-                      style: Theme.of(context).textTheme.headline1!.copyWith(),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'SMALTO Dental Clinic',
-                      style: Theme.of(context).textTheme.headline1,
-                    )
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        vacancyEntity.title,
+                        style: Theme.of(context).textTheme.headline1!.copyWith(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        vacancyEntity.organization.title,
+                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ],
+                  ),
                 ),
-                const Spacer(),
-                const ImageCard(
-                    imageUrl:
-                        'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8bW9kZWxzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60')
+                ImageCard(imageUrl: vacancyEntity.organization.logo.middle)
               ],
             ),
             const SizedBox(height: 20),
-            const VacancyItemTextWidget(title: '2 - 5 лет', icon: AppIcons.briefCase),
+            VacancyItemTextWidget(
+                title: '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} лет',
+                icon: AppIcons.briefCase),
             const SizedBox(height: 4),
-            const VacancyItemTextWidget(
-                title: 'ул.Чехова 32 Ташкент Ташкент UZ Tashkent UZ, '
-                    '100015',
-                icon: AppIcons.mapPin),
+            VacancyItemTextWidget(title: vacancyEntity.address, icon: AppIcons.mapPin),
             const SizedBox(height: 4),
-            const VacancyItemTextWidget(
-                title: '3.000 .000 - 4.500.000', icon: AppIcons.cashBanknote),
+            VacancyItemTextWidget(
+                title: '${vacancyEntity.salaryFrom} - ${vacancyEntity.salaryTo}',
+                icon: AppIcons.cashBanknote),
             const SizedBox(height: 12),
             Row(
               children: [
                 Text('Опубликовано:', style: Theme.of(context).textTheme.subtitle2),
                 const SizedBox(width: 4),
-                Text('20 июнь, 2022', style: Theme.of(context).textTheme.subtitle2),
+                Text(Jiffy(vacancyEntity.publishedAt).format('dd MMMM , yyyy'),
+                    style: Theme.of(context).textTheme.subtitle2),
                 const Spacer(),
-                SvgPicture.asset(AppIcons.vacancyItemStar),
+                FavouriteButton(
+                  isFavourite: vacancyEntity.isFavorite,
+                  onTap: () {},
+                ),
               ],
             )
           ],

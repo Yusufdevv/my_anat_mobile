@@ -5,6 +5,7 @@ class AppIcons {
   static const magazine = 'assets/icons/global/magazine.svg';
   static const vacancies = 'assets/icons/global/vacancies.svg';
   static const profile = 'assets/icons/global/profile.svg';
+
   // MapScreen
   static const listIcon = 'assets/icons/map_screen/list_icon.svg';
   static const plusIcon = 'assets/icons/map_screen/plus_icon.svg';
@@ -30,6 +31,7 @@ class AppIcons {
   static const interviewTime = 'assets/icons/map_screen/clock.svg';
   static const delete = 'assets/icons/map_screen/delete.svg';
   static const commentEmpty = 'assets/icons/map_screen/comment_empty.svg';
+
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';
   static const edit = 'assets/icons/auth/edit.svg';
@@ -107,6 +109,8 @@ class AppIcons {
   static const expect = 'assets/icons/magazine/expect.svg';
   static const failure = 'assets/icons/magazine/failure.svg';
   static const success = 'assets/icons/magazine/success.svg';
+  static const favourite = 'assets/icons/profile/favourite.svg';
+  static const favouriteActive = 'assets/icons/profile/favourite_active.svg';
 
 //  static const refresh = 'assets/icons/magazine/refresh.svg';
 }

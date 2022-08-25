@@ -1,7 +1,7 @@
 import 'package:anatomica/features/magazine/presentation/pages/magazine_screen.dart';
 import 'package:anatomica/features/map/presentation/map_screen.dart';
 import 'package:anatomica/features/profile/prezentation/pages/profile.dart';
-import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_screen.dart';
+import 'package:anatomica/features/vacancy/prezentation/pages/vacancy.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'home.dart';
