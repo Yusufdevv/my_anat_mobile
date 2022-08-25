@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_textfield.dart';
@@ -42,7 +43,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       child: Scaffold(
         appBar: const WAppBar(title: 'Безопасность', hasUnderline: true),
         bottomNavigationBar: WButton(
-          margin: EdgeInsets.fromLTRB(16, 0, 16, 12 + mediaQuery.padding.bottom),
+          margin:
+              EdgeInsets.fromLTRB(16, 0, 16, 12 + mediaQuery.padding.bottom),
           text: 'Далее',
           onTap: () {},
         ),
@@ -55,19 +57,22 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 children: [
                   Text(
                     'Придумайте новый пароль  и постарайтесь не забыть',
-                    style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 14),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1!
+                        .copyWith(fontSize: 14),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
-              WTextField(
+              DefaultTextField(
                 controller: oldPasswordController,
                 title: 'Старый пароль',
                 hintText: 'Введите старый пароль',
-                hintTextStyle: Theme.of(context)
-                    .textTheme
-                    .subtitle2!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                // hintTextStyle: Theme.of(context)
+                //     .textTheme
+                //     .subtitle2!
+                //     .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 prefix: Padding(
                   padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                   child: SvgPicture.asset(AppIcons.lock, color: textSecondary),
@@ -75,14 +80,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 onChanged: (v) {},
               ),
               const SizedBox(height: 16),
-              WTextField(
+              DefaultTextField(
                 controller: newPasswordController,
                 title: 'Новый пароль',
                 hintText: 'Введите пароль',
-                hintTextStyle: Theme.of(context)
-                    .textTheme
-                    .subtitle2!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                // hintTextStyle: Theme.of(context)
+                //     .textTheme
+                //     .subtitle2!
+                //     .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 prefix: Padding(
                   padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                   child: SvgPicture.asset(AppIcons.lock, color: textSecondary),
@@ -90,14 +95,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 onChanged: (v) {},
               ),
               const SizedBox(height: 16),
-              WTextField(
+              DefaultTextField(
                 controller: confirmNewPasswordController,
                 title: 'Подтверждение пароля',
                 hintText: 'Введите пароль ещё раз',
-                hintTextStyle: Theme.of(context)
-                    .textTheme
-                    .subtitle2!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                // hintTextStyle: Theme.of(context)
+                //     .textTheme
+                //     .subtitle2!
+                //     .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 prefix: Padding(
                   padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                   child: SvgPicture.asset(AppIcons.lock, color: textSecondary),

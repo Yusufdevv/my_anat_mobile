@@ -8,8 +8,8 @@ import YandexMapsMobile
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    YMKMapKit.setApiKey("cf2d8184-12c4-4ea7-8691-44a340630019")
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+     YMKMapKit.setApiKey("cf2d8184-12c4-4ea7-8691-44a340630019") // Your generated API key
+     GeneratedPluginRegistrant.register(with: self)
+     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

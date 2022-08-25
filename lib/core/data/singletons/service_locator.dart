@@ -13,7 +13,7 @@ final serviceLocator = GetIt.I;
 Future<void> setupLocator() async {
   await StorageRepository.getInstance();
   serviceLocator.registerLazySingleton(() => DioSettings());
-   serviceLocator.registerLazySingleton(() => PaginationDatasource());
+  serviceLocator.registerLazySingleton(() => PaginationDatasource());
   serviceLocator.registerLazySingleton(() =>
       VacancyRemoteDataSourceImpl(paginationDatasource: serviceLocator()));
   serviceLocator.registerLazySingleton(() => VacancyRepositoryImpl(
