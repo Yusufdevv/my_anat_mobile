@@ -41,18 +41,18 @@ class ProfileEntity extends Equatable {
       required this.doctor,
       required this.organization});
 
-  factory ProfileEntity.empty() => ProfileEntity(
-      id: 0,
-      fullName: '',
-      email: '',
-      username: '',
-      image: ImageEntity.empty(),
-      phoneNumber: '',
-      isDoctor: false,
-      isOrganization: false,
-      isSubscribed: false,
-      doctor: DoctorEntity.empty(),
-      organization: OrganizationEntity.empty());
+  // const ProfileEntity.empty(
+  //     [this.id = 0,
+  //     this.fullName = '',
+  //     this.email = '',
+  //     this.username = '',
+  //     this.image = ImageEntity.empty(),
+  //     this.phoneNumber = '',
+  //     this.isDoctor = false,
+  //     this.isOrganization = false,
+  //     this.isSubscribed = false,
+  //     this.doctor = DoctorEntity.empty(),
+  //     this.organization = OrganizationEntity.empty()]);
 
   @override
   List<Object?> get props => [
