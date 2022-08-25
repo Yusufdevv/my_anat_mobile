@@ -6,7 +6,7 @@ abstract class Failure extends Equatable {
 }
 
 class ServerFailure extends Failure {
-  final int statusCode;
+  final num statusCode;
   final String errorMessage;
   ServerFailure({required this.errorMessage, required this.statusCode});
 }

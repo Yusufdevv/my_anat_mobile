@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_controller_bloc/map_controller_bloc.dart';
@@ -187,6 +188,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           labelStyle: Theme.of(context).textTheme.headline3,
                           labelColor: textColor,
                           onTap: (index) {
+                            print('something from user: ${context.read<AuthenticationBloc>().state.user.img.small}');
                             if (index == 1) {
                               context.read<MapControllerBloc>().add(GetDoctorPoints());
                             } else {

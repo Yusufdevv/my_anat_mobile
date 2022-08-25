@@ -3,6 +3,7 @@ import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/auth/data/repositories/authentication_repository_impl.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/domain/usecases/get_authentication_status_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/get_user_data_usecase.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
@@ -36,8 +37,13 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(
           create: (context) => AuthenticationBloc(
-              statusUseCase:
-                  GetAuthenticationStatusUseCase(repository: serviceLocator<AuthenticationRepositoryImpl>())),
+            statusUseCase: GetAuthenticationStatusUseCase(
+              repository: serviceLocator<AuthenticationRepositoryImpl>(),
+            ),
+            getUserDataUseCase: GetUserDataUseCase(
+              repository: serviceLocator<AuthenticationRepositoryImpl>(),
+            ),
+          ),
         ),
         BlocProvider(
           create: (context) => ShowPopUpBloc(),

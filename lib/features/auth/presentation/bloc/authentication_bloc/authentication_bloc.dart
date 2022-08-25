@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
+import 'package:anatomica/features/auth/domain/entities/user_entity.dart';
 import 'package:anatomica/features/auth/domain/usecases/get_authentication_status_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/get_user_data_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,17 +13,25 @@ part 'authentication_state.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final GetAuthenticationStatusUseCase _statusUseCase;
+  final GetUserDataUseCase _getUserDataUseCase;
   late StreamSubscription<AuthenticationStatus> statusSubscription;
-  AuthenticationBloc({required GetAuthenticationStatusUseCase statusUseCase})
+  AuthenticationBloc(
+      {required GetAuthenticationStatusUseCase statusUseCase, required GetUserDataUseCase getUserDataUseCase})
       : _statusUseCase = statusUseCase,
+        _getUserDataUseCase = getUserDataUseCase,
         super(const AuthenticationState.unauthenticated()) {
     statusSubscription = _statusUseCase.call(NoParams()).listen((event) {
       add(AuthenticationStatusChanged(status: event));
     });
-    on<AuthenticationStatusChanged>((event, emit) {
+    on<AuthenticationStatusChanged>((event, emit) async {
       switch (event.status) {
         case AuthenticationStatus.authenticated:
-          emit(const AuthenticationState.authenticated());
+          final userData = await _getUserDataUseCase.call(NoParams());
+          if (userData.isRight) {
+            emit(AuthenticationState.authenticated(userData.right));
+          } else {
+            emit(const AuthenticationState.unauthenticated());
+          }
           break;
         case AuthenticationStatus.unauthenticated:
           emit(const AuthenticationState.unauthenticated());
