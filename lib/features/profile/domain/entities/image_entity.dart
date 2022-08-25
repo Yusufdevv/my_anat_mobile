@@ -15,8 +15,11 @@ class ImageEntity extends Equatable {
     required this.small,
   });
 
-  factory ImageEntity.empty() =>
-      const ImageEntity(origin: '', middle: '', small: '');
+  const ImageEntity.empty([
+    this.origin = '',
+    this.middle = '',
+    this.small = '',
+  ]);
 
   @override
   List<Object?> get props => [origin, middle, small];
