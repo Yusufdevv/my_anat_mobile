@@ -1,3 +1,4 @@
+import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,9 +9,9 @@ class VacancyListModel extends VacancyListEntity {
   const VacancyListModel({
     required super.workType,
     required super.title,
-    required super.categoryEntity,
+    required super.category,
     required super.id,
-    required super.organizationEntity,
+    required super.organization,
     required super.address,
     required super.slug,
     required super.salaryFrom,
@@ -22,6 +23,7 @@ class VacancyListModel extends VacancyListEntity {
     required super.isFavorite,
     required super.obligations,
     required super.publishedAt,
+    required super.experienceTo,
   });
 
   factory VacancyListModel.fromJson(Map<String, dynamic> json) => _$VacancyListModelFromJson(json);
@@ -48,6 +50,7 @@ class OrganizationModel extends OrganizationEntity {
     required super.rating,
     required super.speciazilation,
     required super.types,
+    required super.logo,
   });
 
   factory OrganizationModel.fromJson(Map<String, dynamic> json) =>
@@ -81,4 +84,11 @@ class WorkTypeModel extends WorkType {
   const WorkTypeModel({required super.title, required super.name});
 
   factory WorkTypeModel.fromJson(Map<String, dynamic> json) => _$WorkTypeModelFromJson(json);
+}
+
+@JsonSerializable()
+class ImageModel extends ImageEntity {
+  ImageModel({required super.origin, required super.small, required super.middle});
+
+  factory ImageModel.fromJson(Map<String, dynamic> json) => _$ImageModelFromJson(json);
 }

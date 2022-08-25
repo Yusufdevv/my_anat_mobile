@@ -12,7 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class VacancySingleScreen extends StatefulWidget {
-  const VacancySingleScreen({Key? key}) : super(key: key);
+  final String slug;
+
+  const VacancySingleScreen({required this.slug, Key? key}) : super(key: key);
 
   @override
   State<VacancySingleScreen> createState() => _VacancySingleScreenState();

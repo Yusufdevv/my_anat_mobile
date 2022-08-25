@@ -11,11 +11,11 @@ VacancyListModel _$VacancyListModelFromJson(Map<String, dynamic> json) =>
       workType: const WorkTypeConverter()
           .fromJson(json['workType'] as Map<String, dynamic>?),
       title: json['title'] as String? ?? '',
-      categoryEntity: const CategoryEntityConverter()
-          .fromJson(json['categoryEntity'] as Map<String, dynamic>?),
+      category: const CategoryEntityConverter()
+          .fromJson(json['category'] as Map<String, dynamic>?),
       id: json['id'] as int? ?? 0,
-      organizationEntity: const OrganizationEntityConverter()
-          .fromJson(json['organizationEntity'] as Map<String, dynamic>?),
+      organization: const OrganizationEntityConverter()
+          .fromJson(json['organization'] as Map<String, dynamic>?),
       address: json['address'] as String? ?? '',
       slug: json['slug'] as String? ?? '',
       salaryFrom: json['salary_from'] as int? ?? 0,
@@ -27,12 +27,13 @@ VacancyListModel _$VacancyListModelFromJson(Map<String, dynamic> json) =>
           [],
       employerInfo: json['employer_info'] as String? ?? '',
       experienceFrom: json['experience_from'] as int? ?? 0,
-      isFavorite: json['is_favorite'] as String? ?? '',
+      isFavorite: json['is_favorite'] as bool? ?? false,
       obligations: (json['obligations'] as List<dynamic>?)
               ?.map((e) => e as int)
               .toList() ??
           [],
       publishedAt: json['published_at'] as String? ?? '',
+      experienceTo: json['experience_to'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$VacancyListModelToJson(VacancyListModel instance) =>
@@ -40,15 +41,15 @@ Map<String, dynamic> _$VacancyListModelToJson(VacancyListModel instance) =>
       'id': instance.id,
       'title': instance.title,
       'slug': instance.slug,
-      'organizationEntity': const OrganizationEntityConverter()
-          .toJson(instance.organizationEntity),
+      'organization':
+          const OrganizationEntityConverter().toJson(instance.organization),
       'salary_from': instance.salaryFrom,
       'salary_to': instance.salaryTo,
       'experience_from': instance.experienceFrom,
+      'experience_to': instance.experienceTo,
       'description': instance.description,
       'address': instance.address,
-      'categoryEntity':
-          const CategoryEntityConverter().toJson(instance.categoryEntity),
+      'category': const CategoryEntityConverter().toJson(instance.category),
       'workType': const WorkTypeConverter().toJson(instance.workType),
       'employer_info': instance.employerInfo,
       'published_at': instance.publishedAt,
@@ -81,11 +82,11 @@ OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
       slug: json['slug'] as String? ?? '',
       address: json['address'] as String? ?? '',
       images: (json['images'] as List<dynamic>?)
-              ?.map((e) => e as String)
+              ?.map((e) => ImageModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       locationUrl: json['location_url'] as String? ?? '',
-      rating: json['rating'] as int? ?? 0,
+      rating: (json['rating'] as num?)?.toDouble() ?? 0,
       speciazilation: (json['specialization'] as List<dynamic>?)
               ?.map((e) =>
                   SpecializationModel.fromJson(e as Map<String, dynamic>))
@@ -95,6 +96,8 @@ OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => TypesModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      logo: const LogoEntityConverter()
+          .fromJson(json['logo'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
@@ -102,6 +105,7 @@ Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
       'id': instance.id,
       'title': instance.title,
       'slug': instance.slug,
+      'logo': const LogoEntityConverter().toJson(instance.logo),
       'images': instance.images,
       'address': instance.address,
       'phone_number': instance.phoneNumber,
@@ -114,12 +118,12 @@ Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
 
 PhoneNumberModel _$PhoneNumberModelFromJson(Map<String, dynamic> json) =>
     PhoneNumberModel(
-      phoneNumber: json[''] as String? ?? '',
+      phoneNumber: json['phone_number'] as String? ?? '',
     );
 
 Map<String, dynamic> _$PhoneNumberModelToJson(PhoneNumberModel instance) =>
     <String, dynamic>{
-      '': instance.phoneNumber,
+      'phone_number': instance.phoneNumber,
     };
 
 SpecializationModel _$SpecializationModelFromJson(Map<String, dynamic> json) =>
@@ -156,4 +160,17 @@ Map<String, dynamic> _$WorkTypeModelToJson(WorkTypeModel instance) =>
     <String, dynamic>{
       'name': instance.name,
       'title': instance.title,
+    };
+
+ImageModel _$ImageModelFromJson(Map<String, dynamic> json) => ImageModel(
+      origin: json['origin'] as String? ?? '',
+      small: json['small'] as String? ?? '',
+      middle: json['middle'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$ImageModelToJson(ImageModel instance) =>
+    <String, dynamic>{
+      'origin': instance.origin,
+      'middle': instance.middle,
+      'small': instance.small,
     };
