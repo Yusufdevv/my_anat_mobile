@@ -1,4 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/password.dart';
 import 'package:anatomica/features/auth/presentation/pages/reset_password.dart';
 import 'package:anatomica/features/auth/presentation/widgets/auth_header.dart';
@@ -9,9 +10,12 @@ import 'package:anatomica/features/auth/presentation/widgets/registration_progre
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  final LoginSignUpBloc bloc;
+
+  const RegisterScreen({required this.bloc, Key? key}) : super(key: key);
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -38,105 +42,105 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return WKeyboardDismisser(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: darkGreen,
-        body: Column(
-          children: [
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Container(
-                      height: 69,
-                      decoration: const BoxDecoration(
-                        color: primary,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          topRight: Radius.circular(16),
+    return BlocProvider.value(
+      value: widget.bloc,
+      child: WKeyboardDismisser(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: darkGreen,
+          body: Column(
+            children: [
+              Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Container(
+                        height: 69,
+                        decoration: const BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 16,
-                      decoration: BoxDecoration(
-                        color: white,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, -4),
-                            blurRadius: 20,
-                            color: woodSmoke.withOpacity(0.06),
-                          )
-                        ],
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          topRight: Radius.circular(16),
+                      Container(
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, -4),
+                              blurRadius: 20,
+                              color: woodSmoke.withOpacity(0.06),
+                            )
+                          ],
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 276,
-                      child: AuthHeader(
+                      )
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AuthHeader(
                         title: _getTitle(currentPage),
                         subTitle: _getSubtitle(currentPage),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 42),
-                      child: RegistrationProgress(
-                        currentPosition: currentPage,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 42),
+                        child: RegistrationProgress(
+                          currentPosition: currentPage,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              Expanded(
+                child: Container(
+                  color: white,
+                  child: PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    onPageChanged: (index) {
+                      setState(() {
+                        currentPage = index;
+                      });
+                    },
+                    controller: pageController,
+                    children: [
+                      RegisterFeed(
+                        onTap: () {
+                          pageController.nextPage(duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                        },
                       ),
-                    )
-                  ],
-                )
-              ],
-            ),
-            Expanded(
-              child: Container(
-                color: white,
-                child: PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  onPageChanged: (index) {
-                    setState(() {
-                      currentPage = index;
-                    });
-                  },
-                  controller: pageController,
-                  children: [
-                    RegisterFeed(
-                      onTap: () {
-                        pageController.nextPage(duration: const Duration(milliseconds: 100), curve: Curves.linear);
-                      },
-                    ),
-                    RegisterPhone(
-                      tabController: tabController,
-                      onTap: () {
-                        pageController.nextPage(duration: const Duration(milliseconds: 100), curve: Curves.linear);
-                      },
-                    ),
-                    RegisterVerify(
-                      onTap: () {
-                        pageController.nextPage(duration: const Duration(milliseconds: 100), curve: Curves.linear);
-                      },
-                    ),
-                    PasswordScreen(
-                      onTap: () {
-                        Navigator.of(context).push(fade(page: const ResetPasswordScreen()));
-                      },
-                    )
-                  ],
+                      RegisterPhone(
+                        tabController: tabController,
+                        onTap: () {
+                          pageController.nextPage(duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                        },
+                      ),
+                      RegisterVerify(
+                        onTap: () {
+                          pageController.nextPage(duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                        },
+                      ),
+                      PasswordScreen(
+                        onTap: () {
+                          Navigator.of(context).push(fade(page: const ResetPasswordScreen()));
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
