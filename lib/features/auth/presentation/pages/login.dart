@@ -2,7 +2,14 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/auth/data/repositories/authentication_repository_impl.dart';
+import 'package:anatomica/features/auth/domain/usecases/check_username_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/confirm_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/create_new_state_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/login_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/submit_email_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/submit_name_username_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/submit_password_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/submit_phone_usecase.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/register.dart';
 import 'package:anatomica/features/auth/presentation/widgets/auth_header.dart';
@@ -43,8 +50,32 @@ class _LoginScreenState extends State<LoginScreen> {
     final mediaQuery = MediaQuery.of(context);
     return CustomScreen(
       child: BlocProvider(
-        create: (_) =>
-            LoginSignUpBloc(loginUseCase: LoginUseCase(repository: serviceLocator<AuthenticationRepositoryImpl>())),
+        create: (_) => LoginSignUpBloc(
+          loginUseCase: LoginUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+          checkUsernameUseCase: CheckUsernameUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+          confirmUseCase: ConfirmUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+          createNewStateUseCase: CreateNewStateUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+          submitEmailUseCase: SubmitEmailUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+          submitNameUsernameUseCase: SubmitNameUserNameUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+          submitPasswordUseCase: SubmitPasswordUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+          submitPhoneUseCase: SubmitPhoneUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+        ),
         child: AnnotatedRegion(
           value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
           child: WKeyboardDismisser(
