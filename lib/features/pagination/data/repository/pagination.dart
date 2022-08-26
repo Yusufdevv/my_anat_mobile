@@ -52,7 +52,7 @@ class PaginationDatasource {
   /// Give empty String for "next" if you don't have next link
   Future<GenericPagination<T>> fetchMore<T>({
     required String url,
-    required int page,
+     String? next,
     required T Function(Map<String, dynamic>) fromJson,
     Map<String, dynamic>? query,
     int size = 15,
@@ -62,8 +62,8 @@ class PaginationDatasource {
       if (query != null) {
         queryParams = query;
       }
-      queryParams.putIfAbsent('page', () => page);
-      final result = await dio.get(url,
+
+      final result = await dio.get(next??url,
           queryParameters: queryParams,
           options: Options(
               headers: {'Authorization': 'Bearer ${StorageRepository.getString('token')}'}));

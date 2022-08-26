@@ -17,7 +17,7 @@ abstract class VacancyRemoteDataSource {
 
   VacancyRemoteDataSource({required this.paginationDatasource, int? organizationId});
 
-  Future<VacancyModel> getVacancyList({required int next});
+  Future<VacancyModel> getVacancyList({required String next});
 
   Future<TopOrganizationModel> getTopOrganization();
 
@@ -34,7 +34,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   VacancyRemoteDataSourceImpl({required super.paginationDatasource});
 
   @override
-  Future<VacancyModel> getVacancyList({required int next, int? organizationId}) async {
+  Future<VacancyModel> getVacancyList({required String next, int? organizationId}) async {
     try {
       const url = '/vacancy/vacancy/list/';
 
@@ -44,14 +44,13 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       }
       final result = await paginationDatasource.fetchMore(
         url: url,
-        page: next,
+        next: next.isNotEmpty?next:null,
         fromJson: VacancyListModel.fromJson,
         query: query,
       );
 
       final vacancies = VacancyModel(
-        currentPage: result.currentPage,
-        totalPages: result.totalPages,
+        next:result.next,
         results: result.results,
         count: result.count,
       );
