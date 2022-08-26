@@ -5,21 +5,14 @@ import 'package:anatomica/features/vacancy/domain/entities/vacancy.dart';
 import 'package:anatomica/features/vacancy/domain/repositories/vacancy_repository.dart';
 import 'package:equatable/equatable.dart';
 
-class VacancyListUseCase extends UseCase<VacancyEntity, VacancyListParams> {
+class VacancyListUseCase extends UseCase<VacancyEntity, String> {
   final VacancyRepository repository;
 
   VacancyListUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, VacancyEntity>> call(VacancyListParams params) async =>
-      await repository.getVacancies(next: params.next);
+  Future<Either<Failure, VacancyEntity>> call(String next) async =>
+      await repository.getVacancies(next:next);
 }
 
-class VacancyListParams extends Equatable {
-  final int next;
 
-  const VacancyListParams({required this.next});
-
-  @override
-  List<Object?> get props => [];
-}

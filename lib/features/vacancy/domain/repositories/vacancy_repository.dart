@@ -7,7 +7,7 @@ import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
 
 abstract class VacancyRepository {
-  Future<Either<Failure, VacancyEntity>> getVacancies({required int next});
+  Future<Either<Failure, VacancyEntity>> getVacancies({required String next});
   Future<Either<Failure, TopOrganizationEntity>> getTopOrganization();
   Future<Either<Failure, VacancyListEntity>> getSingleVacancy({required String slug});
   Future<Either<Failure, GenericPagination>> getSpecizationList();

@@ -20,7 +20,7 @@ class VacancyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    return WScaleAnimation(
+    return GestureDetector(behavior: HitTestBehavior.translucent,
       onTap: onTap,
       child: Container(
         margin: margin ?? const EdgeInsets.fromLTRB(16, 0, 16, 0),

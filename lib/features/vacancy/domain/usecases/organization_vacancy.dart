@@ -18,7 +18,7 @@ class OrganizationVacancyUseCase extends UseCase<VacancyEntity, OrganizationVaca
 
 class OrganizationVacancyParams extends Equatable {
   final int organizationId;
-  final int next;
+  final String next;
 
   const OrganizationVacancyParams({required this.organizationId, required this.next});
 
