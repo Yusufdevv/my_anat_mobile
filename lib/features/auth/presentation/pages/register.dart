@@ -1,14 +1,12 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/password.dart';
-import 'package:anatomica/features/auth/presentation/pages/reset_password.dart';
 import 'package:anatomica/features/auth/presentation/widgets/auth_header.dart';
 import 'package:anatomica/features/auth/presentation/widgets/register_feed.dart';
 import 'package:anatomica/features/auth/presentation/widgets/register_phone.dart';
 import 'package:anatomica/features/auth/presentation/widgets/register_verify.dart';
 import 'package:anatomica/features/auth/presentation/widgets/registration_progress.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: widget.bloc,
-      child: WKeyboardDismisser(
+      child: CustomScreen(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: darkGreen,
@@ -115,26 +113,16 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
                     controller: pageController,
                     children: [
                       RegisterFeed(
-                        onTap: () {
-                          pageController.nextPage(duration: const Duration(milliseconds: 100), curve: Curves.linear);
-                        },
+                        pageController: pageController,
                       ),
                       RegisterPhone(
                         tabController: tabController,
-                        onTap: () {
-                          pageController.nextPage(duration: const Duration(milliseconds: 100), curve: Curves.linear);
-                        },
+                        pageController: pageController,
                       ),
                       RegisterVerify(
-                        onTap: () {
-                          pageController.nextPage(duration: const Duration(milliseconds: 100), curve: Curves.linear);
-                        },
+                        pageController: pageController,
                       ),
-                      PasswordScreen(
-                        onTap: () {
-                          Navigator.of(context).push(fade(page: const ResetPasswordScreen()));
-                        },
-                      )
+                      const PasswordScreen()
                     ],
                   ),
                 ),

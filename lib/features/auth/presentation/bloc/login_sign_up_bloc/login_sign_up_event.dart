@@ -72,6 +72,28 @@ class SubmitEmail extends LoginSignUpEvent {
   });
 }
 
+class SubmitChangedPhone extends LoginSignUpEvent {
+  final String phone;
+  final ValueChanged<String> onError;
+  final VoidCallback onSuccess;
+  SubmitChangedPhone({
+    required this.phone,
+    required this.onError,
+    required this.onSuccess,
+  });
+}
+
+class SubmitChangedEmail extends LoginSignUpEvent {
+  final String email;
+  final ValueChanged<String> onError;
+  final VoidCallback onSuccess;
+  SubmitChangedEmail({
+    required this.email,
+    required this.onError,
+    required this.onSuccess,
+  });
+}
+
 class ChangeConfirmationType extends LoginSignUpEvent {
   final String type;
   ChangeConfirmationType({required this.type});
@@ -98,4 +120,11 @@ class SubmitPassword extends LoginSignUpEvent {
     required this.password,
     required this.onError,
   });
+}
+
+class ResendCode extends LoginSignUpEvent {}
+
+class SetTimer extends LoginSignUpEvent {
+  final int secondsLeft;
+  SetTimer({required this.secondsLeft});
 }
