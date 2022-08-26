@@ -31,8 +31,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       : super(VacancyState(
           paginatorStatus: PaginatorStatus.PAGINATOR_LOADING,
           count: 0,
-          totalPages: 0,
-          currentPage: 0,
+          next: '',
           fetchMore: false,
           vacancyList: const [],
           vacancyOptionStatus: FormzStatus.pure,
@@ -42,19 +41,18 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
           topOrganizationEntity: TopOrganizationModel.fromJson(const {}),
           paginatorStatusOrganization: PaginatorStatus.PAGINATOR_LOADING,
           organizationVacancyList: const [],
-          totalPageOrganization: 0,
-          currentPageOrganization: 0,
-          fetchMoreOrganization: false,
+    organizationNext:'',
+          fetchMoreOrganization: false, organizationCount: 0,
         )) {
     on<GetVacancyListEvent>((event, emit) async {
-      final result = await vacancyListUseCase.call(VacancyListParams(next: state.currentPage));
+      final result = await vacancyListUseCase.call(state.next);
       if (result.isRight) {
+        print(result.right.count.toString()+'lenght141');
         emit(
           state.copyWith(
-            currentPage: result.right.currentPage,
-            totalPages: result.right.totalPages,
+           next:'',
             paginatorStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-            fetchMore: result.right.totalPages > result.right.currentPage ? true : false,
+            fetchMore: result.right.count > state.vacancyList.length ? true : false,
             vacancyList: result.right.results,
           ),
         );
@@ -65,16 +63,15 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     on<GetMoreVacancyListEvent>((event, emit) async {
       print('come to get more ');
       final response =
-          await vacancyListUseCase.call(VacancyListParams(next: state.currentPage + 1));
+          await vacancyListUseCase.call(state.next);
       if (response.isRight) {
         final result = response.right;
         emit(
           state.copyWith(
-            currentPage: result.currentPage,
-            totalPages: result.totalPages,
+            next: state.next,
             vacancyList: [...state.vacancyList, ...result.results],
             paginatorStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-            fetchMore: result.totalPages > result.currentPage ? true : false,
+            fetchMore: result.count > state.vacancyList.length ? true : false,
           ),
         );
       } else {
@@ -104,14 +101,14 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     });
     on<GetOrganizationVacancyEvent>((event, emit) async {
       final response = await organizationVacancyUseCase.call(OrganizationVacancyParams(
-          organizationId: state.topOrganizationEntity.id, next: state.currentPageOrganization));
+          organizationId: state.topOrganizationEntity.id, next: state.organizationNext));
       if (response.isRight) {
         final result = response.right;
         emit(state.copyWith(
-          currentPageOrganization: result.currentPage,
+
           paginatorStatusOrganization: PaginatorStatus.PAGINATOR_SUCCESS,
-          totalPageOrganization: result.totalPages,
-          fetchMoreOrganization: result.totalPages > result.currentPage ? true : false,
+          organizationCount: result.count,
+          fetchMoreOrganization: result.count > state.organizationVacancyList.length ? true : false,
           organizationVacancyList: result.results,
         ));
       } else {
@@ -120,14 +117,14 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     });
     on<GetMoreOrganizationVacancyEvent>((event, emit) async {
       final response = await organizationVacancyUseCase.call(OrganizationVacancyParams(
-          organizationId: state.topOrganizationEntity.id, next: state.currentPageOrganization));
+          organizationId: state.topOrganizationEntity.id, next: state.organizationNext));
       if (response.isRight) {
         final result = response.right;
         emit(state.copyWith(
-          currentPageOrganization: result.currentPage,
+          organizationNext: result.next,
           paginatorStatusOrganization: PaginatorStatus.PAGINATOR_SUCCESS,
-          totalPageOrganization: result.totalPages,
-          fetchMoreOrganization: result.totalPages > result.currentPage ? true : false,
+          organizationCount: result.count,
+          fetchMoreOrganization: result.count > state.organizationVacancyList.length ? true : false,
           organizationVacancyList: [...state.organizationVacancyList, ...result.results],
         ));
       } else {

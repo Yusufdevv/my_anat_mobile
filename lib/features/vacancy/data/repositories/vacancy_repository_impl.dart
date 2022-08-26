@@ -19,7 +19,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   VacancyRepositoryImpl({required this.dataSource});
 
   @override
-  Future<Either<Failure, VacancyEntity>> getVacancies({required int next}) async {
+  Future<Either<Failure, VacancyEntity>> getVacancies({required String next}) async {
     try {
       final result = await dataSource.getVacancyList(next: next);
       return Right(result);
