@@ -47,8 +47,7 @@ class VacancyTabBar extends StatelessWidget {
         unselectedLabelColor: textSecondary,
         labelColor: black,
         tabs: const [
-          Text('Вакансии'),
-          Text('Кандидаты'),
+
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -66,8 +67,8 @@ class CandidateItem extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 10),
-            SvgPicture.asset(AppIcons.star),
+            // const SizedBox(width: 10),
+            FavouriteButton(onTap: () {})
           ],
         ),
       ),

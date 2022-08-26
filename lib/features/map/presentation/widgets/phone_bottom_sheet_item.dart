@@ -5,7 +5,10 @@ import 'package:anatomica/features/map/presentation/widgets/contact_item.dart';
 import 'package:flutter/material.dart';
 
 class PhoneBottomSheetItem extends StatelessWidget {
+  final String phone;
+
   const PhoneBottomSheetItem({
+    this.phone = '',
     Key? key,
   }) : super(key: key);
 
@@ -26,9 +29,9 @@ class PhoneBottomSheetItem extends StatelessWidget {
             )
           ],
         ),
-        child: const ContactItem(
+        child:  ContactItem(
           icon: AppIcons.boldPhone,
-          content: '+998 71 200-70-07',
+          content: phone,
           isLast: true,
         ),
       ),

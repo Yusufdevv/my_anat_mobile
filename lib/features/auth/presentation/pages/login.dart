@@ -12,6 +12,7 @@ import 'package:anatomica/features/auth/domain/usecases/submit_password_usecase.
 import 'package:anatomica/features/auth/domain/usecases/submit_phone_usecase.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/register.dart';
+import 'package:anatomica/features/auth/presentation/pages/reset_password.dart';
 import 'package:anatomica/features/auth/presentation/widgets/auth_header.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
@@ -128,8 +129,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               WScaleAnimation(
                                 onTap: () {
-                                  context.read<ShowPopUpBloc>().add(ShowPopUp(message: 'Error'));
-                                  // Navigator.of(context).push(fade(page: const ResetPasswordScreen()));
+                                 // context.read<ShowPopUpBloc>().add(ShowPopUp(message: 'Error'));
+                                  Navigator.of(context).push(fade(page: const ResetPasswordScreen()));
                                 },
                                 scaleValue: 0.98,
                                 child: Padding(

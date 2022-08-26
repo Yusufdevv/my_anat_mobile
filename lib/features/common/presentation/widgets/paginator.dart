@@ -30,6 +30,7 @@ class Paginator extends StatelessWidget {
       return errorWidget;
     } else {
       return ListView.separated(
+
         physics: const BouncingScrollPhysics(),
         padding: padding,
         itemBuilder: (context, index) {

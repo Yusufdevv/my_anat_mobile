@@ -20,7 +20,7 @@ class ProfileImage extends StatelessWidget {
         border: Border.all(width: 1, color: primary),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(height == 92 ? 41 : 24),
+        borderRadius: BorderRadius.circular(height == 92 ? 41 : 21),
         child: CachedNetworkImage(
           imageUrl:url?? 'https://media.istockphoto'
               '.com/photos/beautiful-woman-soft-makeup-and-perfect-skin-picture'

@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
           return BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               switch (state.status) {
-                case AuthenticationStatus.authenticated:
+                case AuthenticationStatus.unauthenticated:
                   navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
                   break;
                 case AuthenticationStatus.unauthenticated:

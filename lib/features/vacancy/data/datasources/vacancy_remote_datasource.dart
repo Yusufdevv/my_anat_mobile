@@ -3,13 +3,15 @@ import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
-import 'package:anatomica/features/vacancy/data/models/choices.dart';
+import 'package:anatomica/features/vacancy/data/models/candidate_list.dart';
+import 'package:anatomica/features/vacancy/data/models/candidate_single.dart';
+import 'package:anatomica/features/vacancy/data/models/district.dart';
+import 'package:anatomica/features/vacancy/data/models/region.dart';
 import 'package:anatomica/features/vacancy/data/models/specization.dart';
 import 'package:anatomica/features/vacancy/data/models/top_organization.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_option.dart';
-import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
 import 'package:dio/dio.dart';
 
 abstract class VacancyRemoteDataSource {
@@ -26,6 +28,16 @@ abstract class VacancyRemoteDataSource {
   Future<GenericPagination> getSpecizationList();
 
   Future<List<VacancyOptionModel>> getVacancyOption();
+
+  Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug});
+
+  Future<GenericPagination<CandidateListModel>> getCandidateList();
+
+  Future<CandidateSingleModel> getCandidateSingle({required int id});
+
+  Future<GenericPagination<RegionModel>> getRegion();
+
+  Future<GenericPagination<DistrictModel>> getDistrict();
 }
 
 class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
@@ -111,6 +123,60 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       return (response.requestOptions.data as List)
           .map((e) => VacancyOptionModel.fromJson(e))
           .toList();
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug}) async {
+    final response = await dio.get('/vacancy/vacancy/$slug/related/');
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return GenericPagination.fromJson(
+          response.data, (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<GenericPagination<CandidateListModel>> getCandidateList() async {
+    final response = await dio.get('/doctor/');
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return GenericPagination.fromJson(
+          response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<CandidateSingleModel> getCandidateSingle({required int id}) async {
+    final response = await dio.get('/doctor/$id/detail/');
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return CandidateSingleModel.fromJson(response.data);
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<GenericPagination<DistrictModel>> getDistrict() async {
+    final response = await dio.get('/district/');
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return GenericPagination.fromJson(
+          response.data, (p0) => DistrictModel.fromJson(p0 as Map<String, dynamic>));
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<GenericPagination<RegionModel>> getRegion() async {
+    final response = await dio.get('/region/');
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return GenericPagination.fromJson(
+          response.data, (p0) => RegionModel.fromJson(p0 as Map<String, dynamic>));
     }
     throw ServerException(
         statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');

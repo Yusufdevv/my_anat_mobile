@@ -81,7 +81,7 @@ class TypesModel extends TypesEntity {
 
 @JsonSerializable()
 class WorkTypeModel extends WorkType {
-  const WorkTypeModel({required super.title, required super.name});
+  const WorkTypeModel({required super.label, required super.name});
 
   factory WorkTypeModel.fromJson(Map<String, dynamic> json) => _$WorkTypeModelFromJson(json);
 }

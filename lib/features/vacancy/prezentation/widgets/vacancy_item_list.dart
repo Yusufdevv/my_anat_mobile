@@ -18,7 +18,10 @@ class VacancyItemList extends StatelessWidget {
       //     VacancyItem(
       //   margin: margin,
       //   onTap: () {
-      //     Navigator.of(context).push(fade(page: const VacancySingleScreen()));
+      //     Navigator.of(context).push(fade(
+      //         page: const VacancySingleScreen(
+      //       slug: '',
+      //     )));
       //   },
       // ),
       separatorBuilder: (context, index) => const SizedBox(height: 12),

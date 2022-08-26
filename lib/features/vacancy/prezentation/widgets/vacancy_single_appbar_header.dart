@@ -1,10 +1,13 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class VacancySingleAppBarHeader extends StatelessWidget {
-  const VacancySingleAppBarHeader({Key? key}) : super(key: key);
+  final VacancyListEntity vacancyEntity;
+
+  const VacancySingleAppBarHeader({required this.vacancyEntity, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class VacancySingleAppBarHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Требуется стоматолог',
+                    vacancyEntity.title,
                     style: Theme.of(context)
                         .textTheme
                         .headline2!
@@ -36,7 +39,7 @@ class VacancySingleAppBarHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'SMALTO Dental Clinic',
+                    vacancyEntity.organization.title,
                     style: Theme.of(context).textTheme.headline2!.copyWith(
                           fontWeight: FontWeight.w400,
                         ),
@@ -53,7 +56,9 @@ class VacancySingleAppBarHeader extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: CachedNetworkImage(
-                      imageUrl: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8bW9kZWxzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60', fit: BoxFit.cover),
+                    imageUrl: vacancyEntity.organization.logo.middle,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               )
             ],
