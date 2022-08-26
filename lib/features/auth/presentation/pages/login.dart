@@ -6,12 +6,16 @@ import 'package:anatomica/features/auth/domain/usecases/check_username_usecase.d
 import 'package:anatomica/features/auth/domain/usecases/confirm_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/create_new_state_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/login_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/resend_code_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/submit_changed_email_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/submit_changed_phone_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_email_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_name_username_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_password_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_phone_usecase.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/register.dart';
+import 'package:anatomica/features/auth/presentation/pages/reset_password.dart';
 import 'package:anatomica/features/auth/presentation/widgets/auth_header.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
@@ -75,6 +79,15 @@ class _LoginScreenState extends State<LoginScreen> {
           submitPhoneUseCase: SubmitPhoneUseCase(
             repository: serviceLocator<AuthenticationRepositoryImpl>(),
           ),
+          resendCodeUseCase: ResendCodeUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+          submitChangedEmailUseCase: SubmitChangedEmailUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
+          submitChangedPhoneUseCase: SubmitChangedPhoneUseCase(
+            repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          ),
         ),
         child: AnnotatedRegion(
           value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
@@ -113,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 title: 'Логин',
                                 controller: loginController,
                                 onChanged: (value) {},
+                                hasError: state.loginStatus.isSubmissionFailure,
                                 hintText: 'Введите логин',
                                 prefix: Padding(
                                   padding: const EdgeInsets.only(left: 12, right: 8),
@@ -123,13 +137,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               PasswordTextField(
                                 title: 'Пароль',
                                 hintText: 'Введите пароль',
+                                hasError: state.loginStatus.isSubmissionFailure,
                                 onChanged: (value) {},
                                 controller: passwordController,
                               ),
                               WScaleAnimation(
                                 onTap: () {
-                                  context.read<ShowPopUpBloc>().add(ShowPopUp(message: 'Error'));
-                                  // Navigator.of(context).push(fade(page: const ResetPasswordScreen()));
+                                  Navigator.of(context).push(fade(page: const ResetPasswordScreen()));
                                 },
                                 scaleValue: 0.98,
                                 child: Padding(

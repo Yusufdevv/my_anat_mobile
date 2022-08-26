@@ -1,6 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
+import 'package:anatomica/features/auth/presentation/bloc/reset_password_bloc/reset_password_bloc.dart';
 import 'package:anatomica/features/auth/presentation/widgets/pin_code_body.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
@@ -10,19 +10,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 
-class RegisterVerify extends StatefulWidget {
+class ResetPasswordVerify extends StatefulWidget {
   final PageController pageController;
 
-  const RegisterVerify({required this.pageController, Key? key}) : super(key: key);
+  const ResetPasswordVerify({required this.pageController, Key? key}) : super(key: key);
 
   @override
-  State<RegisterVerify> createState() => _RegisterVerifyState();
+  State<ResetPasswordVerify> createState() => _ResetPasswordVerifyState();
 }
 
-class _RegisterVerifyState extends State<RegisterVerify> {
+class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
   late TextEditingController pinCodeController;
   int secondsLeft = 0;
-
   @override
   initState() {
     pinCodeController = TextEditingController();
@@ -31,8 +30,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
 
   @override
   Widget build(BuildContext context) {
-    print(DateTime.now());
-    return BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
+    return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       builder: (context, state) {
         return Padding(
           padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
@@ -43,7 +41,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                 children: [
                   WScaleAnimation(
                     onTap: () {
-                      context.read<LoginSignUpBloc>().add(SetTimer(secondsLeft: secondsLeft));
+                      context.read<ResetPasswordBloc>().add(SetTime(secondsLeft: secondsLeft));
                       widget.pageController
                           .previousPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
                     },
@@ -65,7 +63,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                       child: Row(
                         children: [
                           Text(
-                            state.phoneEmail,
+                            state.emailPhoneNumber,
                             style: Theme.of(context).textTheme.headline1!.copyWith(),
                           ),
                           const SizedBox(width: 8),
@@ -81,10 +79,10 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                 onTimeChanged: (seconds) {
                   secondsLeft = seconds;
                 },
-                pinCodeController: pinCodeController,
                 secondsLeft: state.secondsLeft,
+                pinCodeController: pinCodeController,
                 onRefresh: () {
-                  context.read<LoginSignUpBloc>().add(ResendCode());
+                  context.read<ResetPasswordBloc>().add(ResendCode());
                 },
               ),
               const Spacer(),
@@ -92,17 +90,15 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                 text: 'Подтвердить',
                 isLoading: state.submitCodeStatus.isSubmissionInProgress,
                 onTap: () {
-                  context.read<LoginSignUpBloc>().add(
-                        SubmitCode(
+                  context.read<ResetPasswordBloc>().add(
+                        VerifyCode(
                           code: pinCodeController.text,
                           onSuccess: () {
                             widget.pageController
                                 .nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
                           },
                           onError: (message) {
-                            context.read<ShowPopUpBloc>().add(
-                                  ShowPopUp(message: message.replaceAll(RegExp(r'\{?\[?\]?\.?}?'), '')),
-                                );
+                            context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
                           },
                         ),
                       );
