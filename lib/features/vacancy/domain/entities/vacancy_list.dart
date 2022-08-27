@@ -1,7 +1,7 @@
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 class VacancyListEntity extends Equatable {
   @JsonKey(name: 'id', defaultValue: 0)
@@ -107,7 +107,7 @@ class CategoryEntity extends Equatable {
   @JsonKey(name: 'title', defaultValue: '')
   final String title;
 
-  const CategoryEntity({required this.id, required this.title});
+  const CategoryEntity({this.id = 0, this.title = ''});
 
   @override
   List<Object?> get props => [id, title];
@@ -165,20 +165,8 @@ class OrganizationEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        title,
-        id,
-        phoneNumber,
-        phoneNumbers,
-        slug,
-        address,
-        images,
-        locationUrl,
-        rating,
-        speciazilation,
-        types,
-        logo
-      ];
+  List<Object?> get props =>
+      [title, id, phoneNumber, phoneNumbers, slug, address, images, locationUrl, rating, speciazilation, types, logo];
 }
 
 class OrganizationEntityConverter extends JsonConverter<OrganizationEntity, Map<String, dynamic>?> {
@@ -223,18 +211,4 @@ class TypesEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, title];
-}
-
-class ImageEntity extends Equatable {
-  @JsonKey(name: 'origin', defaultValue: '')
-  final String origin;
-  @JsonKey(name: 'middle', defaultValue: '')
-  final String middle;
-  @JsonKey(name: 'small', defaultValue: '')
-  final String small;
-
-  const ImageEntity({required this.origin, required this.small, required this.middle});
-
-  @override
-  List<Object?> get props => [origin, middle, small];
 }

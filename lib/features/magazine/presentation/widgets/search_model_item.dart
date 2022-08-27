@@ -1,13 +1,13 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/features/common/presentation/widgets/highlighted_text.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/magazine/domain/entity/magazine_item_entity.dart';
-import 'package:anatomica/features/magazine/presentation/widgets/w_highlited_textfield.dart';
+import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class SearchedModelsItem extends StatelessWidget {
   final TextEditingController controller;
-  final MagazineItemEntity magazineItemEntity;
+  final JournalEntity magazineItemEntity;
 
   const SearchedModelsItem({required this.controller, required this.magazineItemEntity, Key? key}) : super(key: key);
 
@@ -20,7 +20,7 @@ class SearchedModelsItem extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImage(
-                imageUrl: magazineItemEntity.imageUrl,
+                imageUrl: magazineItemEntity.image.middle,
                 fit: BoxFit.cover,
                 height: 232,
                 width: 164,
@@ -28,17 +28,17 @@ class SearchedModelsItem extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          WHighlightedText(
-            highlightedTextStyle:
+          HighlightedText(
+            textStyleHighlight:
                 Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
             textStyle: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
-            allText: magazineItemEntity.date,
+            allText: magazineItemEntity.name,
             highlightedText: controller.text,
             highlightColor: yellowHighlightedText,
           ),
           const SizedBox(height: 4),
           Text(
-            magazineItemEntity.authorName,
+            magazineItemEntity.redaction,
             style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
           ),
           WButton(
@@ -53,30 +53,3 @@ class SearchedModelsItem extends StatelessWidget {
         ],
       );
 }
-
-/*Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
-        margin: const EdgeInsets.only(bottom: 1),
-        color: black,
-        child: Row(
-          children: [
-            Image.asset(magazineItemEntity.imageUrl),
-            const SizedBox(
-              width: 12,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                Text(
-                  'Автомобили',
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: divider),
-                )
-              ],
-            ),
-          ],
-        ),
-      );*/
