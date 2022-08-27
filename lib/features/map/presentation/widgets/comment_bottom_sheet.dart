@@ -11,6 +11,7 @@ import 'package:lottie/lottie.dart';
 
 class CommentBottomSheet extends StatefulWidget {
   final BuildContext parentContext;
+
   const CommentBottomSheet({
     required this.parentContext,
     Key? key,
@@ -23,6 +24,7 @@ class CommentBottomSheet extends StatefulWidget {
 class _CommentBottomSheetState extends State<CommentBottomSheet> {
   int rating = 0;
   late TextEditingController _controller;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -49,12 +51,16 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               children: [
                 Text(
                   'Добавить отзыв',
-                  style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(fontSize: 20),
                 ),
                 WScaleAnimation(
                   onTap: () => Navigator.of(context).pop(),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     child: SvgPicture.asset(
                       AppIcons.bottomSheetCancel,
                       height: 28,
@@ -91,7 +97,10 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                   ),
                   Text(
                     rating.toDouble().toString(),
-                    style: Theme.of(context).textTheme.headline1!.copyWith(color: primary, fontSize: 32),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(color: primary, fontSize: 32),
                   )
                 ],
               ),
@@ -101,7 +110,8 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               child: DefaultTextField(
                 controller: _controller,
                 maxLines: 40,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
                 onChanged: (value) {},
                 title: 'Ваше мнение',
                 height: 120,
@@ -122,7 +132,9 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               text: 'Оставить отзыв',
             ),
             SizedBox(
-              height: 16 + MediaQuery.of(context).padding.bottom + MediaQuery.of(context).viewInsets.bottom,
+              height: 16 +
+                  MediaQuery.of(context).padding.bottom +
+                  MediaQuery.of(context).viewInsets.bottom,
             )
           ],
         ),
@@ -139,7 +151,8 @@ class CommentSuccessBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+      padding: EdgeInsets.fromLTRB(
+          16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
       decoration: const BoxDecoration(
         color: white,
         borderRadius: BorderRadius.vertical(
@@ -154,12 +167,14 @@ class CommentSuccessBottomSheet extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             'Успешно отправлено',
-            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+            style:
+                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
           ),
           const SizedBox(height: 8),
           Text(
             'Ваш отзыв был успешно передан в проверку и вскоребудет опубликован при успешной модерации',
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+            style:
+                Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
