@@ -6,11 +6,17 @@ part of 'organization_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
-    OrganizationModel(
+HospitalModel _$HospitalModelFromJson(Map<String, dynamic> json) =>
+    HospitalModel(
       id: json['id'] as int? ?? 0,
+      imagesList: (json['images'] as List<dynamic>?)
+              ?.map((e) => AssetModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       title: json['title'] as String? ?? '',
-      logo: LogoModel.fromJson(json['logo'] as Map<String, dynamic>),
+      logo: json['logo'] == null
+          ? null
+          : AssetModel.fromJson(json['logo'] as Map<String, dynamic>),
       types: (json['types'] as List<dynamic>?)
               ?.map((e) => TitlerModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -23,14 +29,14 @@ OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => PhoneNumberModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      rating: json['rating'] as int? ?? 0,
+      rating: (json['rating'] as num?)?.toDouble() ?? 0,
       specialization: (json['specialization'] as List<dynamic>?)
               ?.map((e) => TitlerModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
 
-Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
+Map<String, dynamic> _$HospitalModelToJson(HospitalModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
@@ -41,6 +47,7 @@ Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
       'location_url': instance.locationUrl,
       'logo': instance.logo,
       'phone_numbers': instance.phoneNumbers,
+      'images': instance.imagesList,
       'specialization': instance.specialization,
       'types': instance.types,
     };

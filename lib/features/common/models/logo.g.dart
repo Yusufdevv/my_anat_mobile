@@ -6,13 +6,14 @@ part of 'logo.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-LogoModel _$LogoModelFromJson(Map<String, dynamic> json) => LogoModel(
+AssetModel _$AssetModelFromJson(Map<String, dynamic> json) => AssetModel(
       small: json['small'] as String? ?? '',
       middle: json['middle'] as String? ?? '',
       origin: json['origin'] as String? ?? '',
     );
 
-Map<String, dynamic> _$LogoModelToJson(LogoModel instance) => <String, dynamic>{
+Map<String, dynamic> _$AssetModelToJson(AssetModel instance) =>
+    <String, dynamic>{
       'origin': instance.origin,
       'middle': instance.middle,
       'small': instance.small,

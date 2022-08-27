@@ -8,6 +8,8 @@ class LoginSignUpState extends Equatable {
   final FormzStatus submitPhoneEmailStatus;
   final FormzStatus submitCodeStatus;
   final FormzStatus submitPasswordStatus;
+  final String phoneEmail;
+  final int secondsLeft;
   const LoginSignUpState({
     required this.loginStatus,
     required this.checkUsernameStatus,
@@ -16,15 +18,19 @@ class LoginSignUpState extends Equatable {
     required this.submitCodeStatus,
     required this.submitPhoneEmailStatus,
     required this.submitPasswordStatus,
+    required this.phoneEmail,
+    required this.secondsLeft,
   });
   const LoginSignUpState.empty([
     this.loginStatus = FormzStatus.pure,
     this.checkUsernameStatus = FormzStatus.pure,
     this.stateId = '',
-    this.confirmationType = '',
+    this.confirmationType = 'phone',
     this.submitCodeStatus = FormzStatus.pure,
     this.submitPhoneEmailStatus = FormzStatus.pure,
     this.submitPasswordStatus = FormzStatus.pure,
+    this.phoneEmail = '',
+    this.secondsLeft = 0,
   ]);
   LoginSignUpState copyWith({
     FormzStatus? loginStatus,
@@ -34,6 +40,8 @@ class LoginSignUpState extends Equatable {
     FormzStatus? submitPasswordStatus,
     String? stateId,
     String? confirmationType,
+    String? phoneEmail,
+    int? secondsLeft,
   }) =>
       LoginSignUpState(
         loginStatus: loginStatus ?? this.loginStatus,
@@ -43,6 +51,8 @@ class LoginSignUpState extends Equatable {
         submitCodeStatus: submitCodeStatus ?? this.submitCodeStatus,
         submitPhoneEmailStatus: submitPhoneEmailStatus ?? this.submitPhoneEmailStatus,
         submitPasswordStatus: submitPasswordStatus ?? this.submitPasswordStatus,
+        phoneEmail: phoneEmail ?? this.phoneEmail,
+        secondsLeft: secondsLeft ?? this.secondsLeft,
       );
 
   @override
@@ -54,5 +64,7 @@ class LoginSignUpState extends Equatable {
         submitPhoneEmailStatus,
         submitCodeStatus,
         submitPasswordStatus,
+        phoneEmail,
+        secondsLeft
       ];
 }

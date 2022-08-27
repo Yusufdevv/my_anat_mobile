@@ -6,17 +6,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileItem extends StatelessWidget {
   final String title;
-  final String icon;
+  final String? icon;
   final VoidCallback onTap;
   final Color color;
   final Color? iconColor;
+  final String? image;
 
   const ProfileItem(
       {required this.onTap,
       this.color = clearDay,
       this.iconColor,
       required this.title,
-      required this.icon,
+      this.icon,
+      this.image,
       Key? key})
       : super(key: key);
 
@@ -36,7 +38,9 @@ class ProfileItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
                 color: color,
               ),
-              child: SvgPicture.asset(icon, color: iconColor),
+              child: icon == null
+                  ? Image.asset(image!)
+                  : SvgPicture.asset(icon!, color: iconColor),
             ),
             const SizedBox(width: 12),
             Text(

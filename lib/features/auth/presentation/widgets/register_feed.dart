@@ -1,23 +1,35 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/widgets/info_container.dart';
+import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:formz/formz.dart';
 
 class RegisterFeed extends StatefulWidget {
-  final VoidCallback onTap;
+  final PageController pageController;
 
-  const RegisterFeed({required this.onTap, Key? key}) : super(key: key);
+  const RegisterFeed({required this.pageController, Key? key}) : super(key: key);
 
   @override
   State<RegisterFeed> createState() => _RegisterFeedState();
 }
 
 class _RegisterFeedState extends State<RegisterFeed> {
+  late TextEditingController loginController;
+  late TextEditingController nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+    loginController = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
@@ -33,8 +45,9 @@ class _RegisterFeedState extends State<RegisterFeed> {
                   children: [
                     DefaultTextField(
                       title: 'Имя',
-                      controller: TextEditingController(),
+                      controller: nameController,
                       onChanged: (value) {},
+                      hasError: nameController.text.isEmpty && state.checkUsernameStatus.isSubmissionFailure,
                       prefix: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 8),
                         child: SvgPicture.asset(AppIcons.user),
@@ -44,8 +57,9 @@ class _RegisterFeedState extends State<RegisterFeed> {
                     const SizedBox(height: 16),
                     DefaultTextField(
                       title: 'Логин',
-                      controller: TextEditingController(),
+                      controller: loginController,
                       onChanged: (value) {},
+                      hasError: state.checkUsernameStatus.isSubmissionFailure,
                       prefix: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 8),
                         child: SvgPicture.asset(AppIcons.user),
@@ -58,7 +72,24 @@ class _RegisterFeedState extends State<RegisterFeed> {
               const InfoContainer(),
               WButton(
                 text: 'Продолжить',
-                onTap: widget.onTap,
+                isLoading: state.checkUsernameStatus.isSubmissionInProgress,
+                onTap: () {
+                  context.read<LoginSignUpBloc>().add(
+                        CheckUsername(
+                          username: loginController.text,
+                          fullName: nameController.text,
+                          onError: (message) {
+                            context
+                                .read<ShowPopUpBloc>()
+                                .add(ShowPopUp(message: message.replaceAll(RegExp(r'{?}?'), '')));
+                          },
+                          onSuccess: () {
+                            widget.pageController
+                                .animateToPage(1, duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                          },
+                        ),
+                      );
+                },
               ),
               const SizedBox(height: 16),
               Row(

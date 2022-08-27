@@ -10,12 +10,14 @@ class PasswordTextField extends StatefulWidget {
   final TextEditingController controller;
   final String title;
   final String hintText;
+  final bool hasError;
 
   const PasswordTextField(
       {required this.controller,
       required this.onChanged,
       this.hintText = '',
       this.title = '',
+      this.hasError = false,
       this.prefixIcon = AppIcons.key,
       Key? key})
       : super(key: key);
@@ -43,6 +45,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> with TickerProvid
       controller: widget.controller,
       onChanged: widget.onChanged,
       isObscure: isObscure,
+      hasError: widget.hasError,
       hintText: widget.hintText,
       maxLines: 1,
       suffix: GestureDetector(

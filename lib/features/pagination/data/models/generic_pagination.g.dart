@@ -12,7 +12,7 @@ GenericPagination<T> _$GenericPaginationFromJson<T>(
 ) =>
     GenericPagination<T>(
       next: json['next_link'] as String?,
-      previous: json['previous_link'] as String? ?? '',
+      previous: json['previous_link'] as String?,
       results:
           (json['results'] as List<dynamic>?)?.map(fromJsonT).toList() ?? [],
       count: json['total_count'] as int? ?? 0,

@@ -31,10 +31,7 @@ class PhoneTextField extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: textColor),
+                style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
               ),
               if (hasError) ...[
                 const SizedBox(width: 16),
@@ -44,10 +41,7 @@ class PhoneTextField extends StatelessWidget {
                     textAlign: TextAlign.right,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(color: red),
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: red),
                   ),
                 )
               ]
@@ -59,10 +53,8 @@ class PhoneTextField extends StatelessWidget {
           height: 40,
           child: WMaskedTextField(
             controller: controller,
-            style: Theme.of(context)
-                .textTheme
-                .headline3!
-                .copyWith(color: textColor),
+            keyboardType: TextInputType.number,
+            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -95,10 +87,7 @@ class PhoneTextField extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 1.5),
                     child: Text(
                       '+998',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(color: textColor),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                     ),
                   ),
                   const SizedBox(width: 4)

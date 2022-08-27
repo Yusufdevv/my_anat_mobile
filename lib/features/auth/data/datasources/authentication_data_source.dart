@@ -11,8 +11,11 @@ abstract class AuthenticationDataSource {
   Future<String> submitNameUsername({required String username, required String fullName, required String stateId});
   Future<String> submitPhone({required String phone, required String stateId});
   Future<String> submitEmail({required String email, required String stateId});
+  Future<String> submitChangedPhone({required String phone, required String stateId});
+  Future<String> submitChangedEmail({required String email, required String stateId});
   Future<String> confirmCode({required String code, required String stateId});
   Future<String> submitPassword({required String password, required String confirmPassword, required String stateId});
+  Future<void> resendCode({required String stateId});
 }
 
 class AuthenticationDataSourceImpl extends AuthenticationDataSource {
@@ -26,7 +29,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         "password": password,
       });
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        print(response.data);
         await StorageRepository.putString('token', response.data['token']);
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -45,10 +47,10 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     try {
       final response = await _dio.get('/user/profile/',
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
-      print(response.data);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return UserModel.fromJson(response.data);
       } else {
+        await StorageRepository.deleteString('token');
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
@@ -56,7 +58,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -64,7 +65,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   @override
   Future<bool> checkUserName({required String username}) async {
     try {
-      final response = await _dio.get('/auth/check/username/$username/');
+      final response = await _dio.get('/auth/check/username/$username');
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return true;
       } else {
@@ -75,7 +76,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -94,7 +94,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -118,7 +117,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -137,7 +135,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -160,7 +157,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -170,7 +166,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       {required String password, required String confirmPassword, required String stateId}) async {
     if (password.isEmpty) {
       throw const ParsingException(errorMessage: "Parol bo'sh bo'lishi mumkin emas");
-    } else if (confirmPassword.isNotEmpty) {
+    } else if (confirmPassword.isEmpty) {
       throw const ParsingException(errorMessage: "Takrorlangan parol bo'sh bo'lishi mumkin emas");
     } else if (password != confirmPassword) {
       throw const ParsingException(errorMessage: "Parollar mos kelmadi");
@@ -180,8 +176,10 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           "state_id": stateId,
           "password": password,
         });
+
         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-          return response.data['state_id'] as String;
+          await StorageRepository.putString('token', response.data['token']);
+          return '';
         } else {
           throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
         }
@@ -190,7 +188,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       } on DioError {
         throw DioException();
       } on Exception catch (e) {
-        print(e.toString());
         throw ParsingException(errorMessage: e.toString());
       }
     }
@@ -214,7 +211,69 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<void> resendCode({required String stateId}) async {
+    try {
+      final response = await _dio.post('/auth/registration/resend-code/', data: {
+        "state_id": stateId,
+      });
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<String> submitChangedEmail({required String email, required String stateId}) async {
+    try {
+      final response = await _dio.post('/auth/registration/back/', data: {
+        "state_id": stateId,
+        "confirmation_type": 'email',
+        "email": email,
+      });
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return response.data['state_id'] as String;
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<String> submitChangedPhone({required String phone, required String stateId}) async {
+    try {
+      final response = await _dio.post('/auth/registration/back/', data: {
+        "state_id": stateId,
+        "confirmation_type": 'phone',
+        "phone": phone,
+      });
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return response.data['state_id'] as String;
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
       throw ParsingException(errorMessage: e.toString());
     }
   }

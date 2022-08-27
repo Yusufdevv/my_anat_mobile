@@ -15,7 +15,6 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
     on<GetImageEvent>((event, emit) async {
       XFile? image;
       XFile? photo;
-
       File? images = state.image;
       if (event.isFromGallery) {
         image = await picker.pickImage(source: ImageSource.gallery, imageQuality: 100);

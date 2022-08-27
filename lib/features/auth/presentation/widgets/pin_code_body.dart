@@ -13,11 +13,17 @@ class PinCodeBody extends StatefulWidget {
     required this.pinCodeController,
     this.hasError = false,
     this.errorText = '',
+    this.secondsLeft,
+    required this.onRefresh,
+    required this.onTimeChanged,
   }) : super(key: key);
 
   final TextEditingController pinCodeController;
   final bool hasError;
   final String errorText;
+  final VoidCallback onRefresh;
+  final ValueChanged<int> onTimeChanged;
+  final int? secondsLeft;
   @override
   State<PinCodeBody> createState() => _PinCodeBodyState();
 }
@@ -35,11 +41,15 @@ class _PinCodeBodyState extends State<PinCodeBody> {
   @override
   void initState() {
     super.initState();
+    if (widget.secondsLeft != null && widget.secondsLeft! >= 10) {
+      secondsLeft = widget.secondsLeft!;
+    }
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (secondsLeft > 0 && mounted) {
         setState(() {
           secondsLeft--;
         });
+        widget.onTimeChanged(secondsLeft);
       } else {
         timer.cancel();
       }
@@ -123,15 +133,20 @@ class _PinCodeBodyState extends State<PinCodeBody> {
               if (_timer.isActive) {
                 _timer.cancel();
               }
+              setState(() {
+                secondsLeft = 120;
+              });
               _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
                 if (secondsLeft > 0) {
                   setState(() {
                     secondsLeft--;
                   });
+                  widget.onTimeChanged(secondsLeft);
                 } else {
                   timer.cancel();
                 }
               });
+              widget.onRefresh();
             },
             child: Padding(
               padding: const EdgeInsets.only(bottom: 16, right: 16),

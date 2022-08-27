@@ -6,8 +6,8 @@ part 'generic_pagination.g.dart';
 class GenericPagination<T> {
   @JsonKey(name: 'next_link')
   final String? next;
-  @JsonKey(name: 'previous_link', defaultValue: '')
-  final String previous;
+  @JsonKey(name: 'previous_link')
+  final String? previous;
   @JsonKey(name: 'results', defaultValue: [])
   final List<T> results;
   @JsonKey(
@@ -17,8 +17,11 @@ class GenericPagination<T> {
   final int count;
 
   GenericPagination(
-      {this.next, required this.previous, required this.results, required this.count});
-
-  factory GenericPagination.fromJson(Map<String, dynamic> json, T Function(Object?) fetch) =>
+      {required this.next,
+      required this.previous,
+      required this.results,
+      required this.count});
+  factory GenericPagination.fromJson(
+          Map<String, dynamic> json, T Function(Object?) fetch) =>
       _$GenericPaginationFromJson(json, fetch);
 }

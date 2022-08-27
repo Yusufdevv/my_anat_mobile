@@ -119,17 +119,17 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                             ),
                                             Positioned.fill(
                                                 child: Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    textColor.withOpacity(0.48),
-                                                    textColor.withOpacity(0.24),
-                                                  ],
-                                                ),
-                                              ),
-                                            ))
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      begin: Alignment.topCenter,
+                                                      end: Alignment.bottomCenter,
+                                                      colors: [
+                                                        textColor.withOpacity(0.48),
+                                                        textColor.withOpacity(0.24),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ))
                                           ],
                                         ),
                                         itemCount: 10,
@@ -222,7 +222,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
                                                     style:
-                                                        Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                                                    Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
                                                   ),
                                                 )
                                               ],
@@ -255,19 +255,19 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                                 Text(
                                                   '4,0',
                                                   style:
-                                                      Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
+                                                  Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
                                                 ),
                                                 const SizedBox(width: 8),
                                                 ...List.generate(
                                                   4,
-                                                  (index) => Padding(
+                                                      (index) => Padding(
                                                     padding: const EdgeInsets.only(right: 4),
                                                     child: SvgPicture.asset(AppIcons.star),
                                                   ),
                                                 ),
                                                 ...List.generate(
                                                   5 - 4,
-                                                  (index) => Padding(
+                                                      (index) => Padding(
                                                     padding: const EdgeInsets.only(right: 4),
                                                     child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
                                                   ),

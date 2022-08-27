@@ -1,17 +1,13 @@
 part of 'hospital_list_bloc.dart';
 
-class HospitalListState extends Equatable {
-  final CrossFadeState screenState;
-  const HospitalListState({
-    required this.screenState,
-  });
+@Freezed()
+class HospitalListState with _$HospitalListState  {
+  factory HospitalListState({
+    @Default(CrossFadeState.showFirst) CrossFadeState crossFadeState,
+    @Default([]) List<HospitalEntity> hospitals,
+    @Default(FormzStatus.pure) FormzStatus status,
+    @Default('') String next,
+    @Default(0) int  totalCount,
+})=_HospitalListState;
 
-  const HospitalListState.empty([
-    this.screenState = CrossFadeState.showFirst,
-  ]);
-
-  HospitalListState copyWith({CrossFadeState? screenState}) =>
-      HospitalListState(screenState: screenState ?? this.screenState);
-  @override
-  List<Object?> get props => [screenState];
 }

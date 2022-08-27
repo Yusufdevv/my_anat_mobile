@@ -1,9 +1,13 @@
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/usecases/check_username_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/confirm_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/create_new_state_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/login_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/resend_code_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/submit_changed_email_usecase.dart';
+import 'package:anatomica/features/auth/domain/usecases/submit_changed_phone_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_email_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_name_username_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_password_usecase.dart';
@@ -25,6 +29,9 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
   final SubmitEmailUseCase _submitEmailUseCase;
   final ConfirmUseCase _confirmUseCase;
   final SubmitPasswordUseCase _submitPasswordUseCase;
+  final ResendCodeUseCase _resendCodeUseCase;
+  final SubmitChangedEmailUseCase _submitChangedEmailUseCase;
+  final SubmitChangedPhoneUseCase _submitChangedPhoneUseCase;
   LoginSignUpBloc({
     required LoginUseCase loginUseCase,
     required CheckUsernameUseCase checkUsernameUseCase,
@@ -34,6 +41,9 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
     required SubmitEmailUseCase submitEmailUseCase,
     required ConfirmUseCase confirmUseCase,
     required SubmitPasswordUseCase submitPasswordUseCase,
+    required ResendCodeUseCase resendCodeUseCase,
+    required SubmitChangedEmailUseCase submitChangedEmailUseCase,
+    required SubmitChangedPhoneUseCase submitChangedPhoneUseCase,
   })  : _loginUseCase = loginUseCase,
         _checkUsernameUseCase = checkUsernameUseCase,
         _createNewStateUseCase = createNewStateUseCase,
@@ -42,7 +52,11 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         _submitEmailUseCase = submitEmailUseCase,
         _confirmUseCase = confirmUseCase,
         _submitPasswordUseCase = submitPasswordUseCase,
+        _resendCodeUseCase = resendCodeUseCase,
+        _submitChangedEmailUseCase = submitChangedEmailUseCase,
+        _submitChangedPhoneUseCase = submitChangedPhoneUseCase,
         super(const LoginSignUpState.empty()) {
+    print('create bloc');
     on<Login>((event, emit) async {
       emit(state.copyWith(loginStatus: FormzStatus.submissionInProgress));
       final loginResult = await _loginUseCase.call(LoginParams(password: event.password, username: event.username));
@@ -60,6 +74,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
       }
     });
     on<CheckUsername>((event, emit) async {
+      print('come to check username');
       emit(state.copyWith(checkUsernameStatus: FormzStatus.submissionInProgress));
       final result = await _checkUsernameUseCase.call(UsernameParams(username: event.username));
       if (result.isRight) {
@@ -72,6 +87,8 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
+        } else {
+          event.onError(result.left.toString());
         }
         emit(state.copyWith(checkUsernameStatus: FormzStatus.submissionFailure));
       }
@@ -110,7 +127,11 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
       emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionInProgress));
       final result = await _submitPhoneUseCase.call(PhoneParams(stateId: state.stateId, phone: event.phone));
       if (result.isRight) {
-        emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionSuccess, stateId: result.right));
+        emit(state.copyWith(
+            submitPhoneEmailStatus: FormzStatus.submissionSuccess,
+            stateId: result.right,
+            phoneEmail: MyFunctions.formatPhone(event.phone),
+            secondsLeft: 0));
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
@@ -127,7 +148,11 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
       emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionInProgress));
       final result = await _submitEmailUseCase.call(EmailParams(stateId: state.stateId, email: event.email));
       if (result.isRight) {
-        emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionSuccess, stateId: result.right));
+        emit(state.copyWith(
+            submitPhoneEmailStatus: FormzStatus.submissionSuccess,
+            stateId: result.right,
+            phoneEmail: event.email,
+            secondsLeft: 0));
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
@@ -172,6 +197,56 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
           event.onError((result.left as ServerFailure).errorMessage);
         }
         emit(state.copyWith(submitPasswordStatus: FormzStatus.submissionFailure));
+      }
+    });
+    on<ResendCode>((event, emit) async {
+      await _resendCodeUseCase.call(state.stateId);
+    });
+    on<SetTimer>((event, emit) {
+      emit(state.copyWith(secondsLeft: event.secondsLeft));
+    });
+    on<SubmitChangedEmail>((event, emit) async {
+      emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionInProgress));
+      final result = await _submitChangedEmailUseCase.call(EmailParams(stateId: state.stateId, email: event.email));
+      if (result.isRight) {
+        emit(state.copyWith(
+          submitPhoneEmailStatus: FormzStatus.submissionSuccess,
+          stateId: result.right,
+          phoneEmail: event.email,
+          secondsLeft: 0,
+        ));
+        event.onSuccess();
+      } else {
+        if (result.left is DioFailure) {
+          event.onError('Tarmoqqa ulanishda muammo');
+        } else if (result.left is ParsingFailure) {
+          event.onError((result.left as ParsingFailure).errorMessage);
+        } else if (result.left is ServerFailure) {
+          event.onError((result.left as ServerFailure).errorMessage);
+        }
+        emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionFailure));
+      }
+    });
+    on<SubmitChangedPhone>((event, emit) async {
+      emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionInProgress));
+      final result = await _submitChangedPhoneUseCase.call(PhoneParams(stateId: state.stateId, phone: event.phone));
+      if (result.isRight) {
+        emit(state.copyWith(
+          submitPhoneEmailStatus: FormzStatus.submissionSuccess,
+          stateId: result.right,
+          phoneEmail: MyFunctions.formatPhone(event.phone),
+          secondsLeft: 0,
+        ));
+        event.onSuccess();
+      } else {
+        if (result.left is DioFailure) {
+          event.onError('Tarmoqqa ulanishda muammo');
+        } else if (result.left is ParsingFailure) {
+          event.onError((result.left as ParsingFailure).errorMessage);
+        } else if (result.left is ServerFailure) {
+          event.onError((result.left as ServerFailure).errorMessage);
+        }
+        emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionFailure));
       }
     });
   }

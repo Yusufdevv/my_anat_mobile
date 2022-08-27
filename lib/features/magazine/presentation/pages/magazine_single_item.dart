@@ -1,7 +1,6 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/magazine/domain/entity/magazine_item_entity.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/article_item.dart';
-import 'package:anatomica/features/magazine/presentation/widgets/magazine_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -37,31 +36,28 @@ class _MagazineSingleItemState extends State<MagazineSingleItem> {
       ),
       body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: MagazineItem(
-                isBuyText: true,
-                magazineItemEntity: MagazineItemEntity(
-                    today: 'Сегодня, 16:48',
-                    imageUrl:
-                        'https://images.unsplash.com/photo-1657299141942-3dab1b224686?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
-                    date: 'Июнь 2022',
-                    authorName: 'Феруза Алавия',
-                    price: 22222,
-                    title: 'Главный врач клиники Doctor D.'),
-              ),
-            ),
-          ),
+          // const SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: EdgeInsets.all(16),
+          //     child: MagazineItem(
+          //       isBuyText: true,
+          //       magazineItemEntity: MagazineItemEntity(
+          //           today: 'Сегодня, 16:48',
+          //           imageUrl:
+          //               'https://images.unsplash.com/photo-1657299141942-3dab1b224686?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
+          //           date: 'Июнь 2022',
+          //           authorName: 'Феруза Алавия',
+          //           price: 22222,
+          //           title: 'Главный врач клиники Doctor D.'),
+          //     ),
+          //   ),
+          // ),
           SliverToBoxAdapter(
             child: Padding(
                 padding: EdgeInsets.only(left: 16, bottom: 12, top: 20),
                 child: Text(
                   'Статьи из выпуска',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(fontSize: 18),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
                 )),
           ),
           SliverPadding(
@@ -83,8 +79,7 @@ class _MagazineSingleItemState extends State<MagazineSingleItem> {
                         date: 'Июнь 2022',
                         authorName: 'Феруза Алавия',
                         price: 123123,
-                        title:
-                            'Главный врач клиники Doctor D.Главный врач клиники Doct'),
+                        title: 'Главный врач клиники Doctor D.Главный врач клиники Doct'),
                   );
                 },
                 childCount: 4, // 1000 list items

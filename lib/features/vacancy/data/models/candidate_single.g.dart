@@ -28,8 +28,8 @@ CandidateSingleModel _$CandidateSingleModelFromJson(
           .fromJson(json['region'] as Map<String, dynamic>?),
       bio: json['bio'] as String? ?? '',
       fullName: json['full_name'] as String? ?? '',
-      img: const ImageEntityConverter()
-          .fromJson(json['img'] as Map<String, dynamic>?),
+      img:
+          const ImageConverter().fromJson(json['img'] as Map<String, dynamic>?),
       license: const LicenceEntityConverter()
           .fromJson(json['license'] as Map<String, dynamic>?),
       moderationStatus: json['moderation_status'] as String? ?? '',
@@ -62,7 +62,7 @@ Map<String, dynamic> _$CandidateSingleModelToJson(
       'instagram': instance.instagram,
       'telegram': instance.telegram,
       'moderation_status': instance.moderationStatus,
-      'img': const ImageEntityConverter().toJson(instance.img),
+      'img': const ImageConverter().toJson(instance.img),
     };
 
 WorkHistoryModel _$WorkHistoryModelFromJson(Map<String, dynamic> json) =>

@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomScreen extends StatelessWidget {
   final Widget child;
+
   const CustomScreen({required this.child, Key? key}) : super(key: key);
 
   @override
@@ -16,7 +18,7 @@ class CustomScreen extends StatelessWidget {
       builder: (context, state) => Material(
         child: Stack(
           children: [
-            Positioned.fill(child: child),
+            Positioned.fill(child: WKeyboardDismisser(child: child)),
             AnimatedPositioned(
               top: state.showPopUp
                   ? MediaQuery.of(context).padding.top + 12
@@ -25,7 +27,6 @@ class CustomScreen extends StatelessWidget {
               right: 16,
               duration: const Duration(milliseconds: 150),
               child: Container(
-                height: 56,
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: lightRed,
@@ -48,7 +49,7 @@ class CustomScreen extends StatelessWidget {
                     Expanded(
                       child: Text(
                         state.message,
-                        maxLines: 2,
+                        maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.headline3!.copyWith(color: errorTextColor),
                       ),

@@ -1,13 +1,17 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/auth/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/map/presentation/screens/doctor_single.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DoctorItem extends StatelessWidget {
+  final DoctorsEntity entity;
   const DoctorItem({
+    required this.entity,
     Key? key,
   }) : super(key: key);
 

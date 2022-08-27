@@ -14,6 +14,11 @@ abstract class AuthenticationRepository {
   Future<Either<Failure, String>> submitCode({required String stateId, required String code});
   Future<Either<Failure, String>> submitPhone({required String stateId, required String phone});
   Future<Either<Failure, String>> submitEmail({required String stateId, required String email});
+  Future<Either<Failure, String>> submitChangedPhone({required String stateId, required String phone});
+  Future<Either<Failure, String>> submitChangedEmail({required String stateId, required String email});
+  Future<Either<Failure, void>> resendCode({required String stateId});
   Future<Either<Failure, String>> submitPassword(
+      {required String stateId, required String password, required String confirmPassword});
+  Future<Either<Failure, void>> submitResetPassword(
       {required String stateId, required String password, required String confirmPassword});
 }
