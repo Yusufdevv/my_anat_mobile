@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
