@@ -1,7 +1,7 @@
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 class VacancyListEntity extends Equatable {
   @JsonKey(name: 'id', defaultValue: 0)
@@ -95,7 +95,8 @@ class WorkTypeConverter extends JsonConverter<WorkType, Map<String, dynamic>?> {
   const WorkTypeConverter();
 
   @override
-  WorkType fromJson(Map<String, dynamic>? json) => WorkTypeModel.fromJson(json ?? {});
+  WorkType fromJson(Map<String, dynamic>? json) =>
+      WorkTypeModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(WorkType object) => {};
@@ -107,17 +108,19 @@ class CategoryEntity extends Equatable {
   @JsonKey(name: 'title', defaultValue: '')
   final String title;
 
-  const CategoryEntity({required this.id, required this.title});
+  const CategoryEntity({this.id = 0, this.title = ''});
 
   @override
   List<Object?> get props => [id, title];
 }
 
-class CategoryEntityConverter extends JsonConverter<CategoryEntity, Map<String, dynamic>?> {
+class CategoryEntityConverter
+    extends JsonConverter<CategoryEntity, Map<String, dynamic>?> {
   const CategoryEntityConverter();
 
   @override
-  CategoryEntity fromJson(Map<String, dynamic>? json) => CategoryModel.fromJson(json ?? {});
+  CategoryEntity fromJson(Map<String, dynamic>? json) =>
+      CategoryModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(CategoryEntity object) => {};
@@ -181,11 +184,13 @@ class OrganizationEntity extends Equatable {
       ];
 }
 
-class OrganizationEntityConverter extends JsonConverter<OrganizationEntity, Map<String, dynamic>?> {
+class OrganizationEntityConverter
+    extends JsonConverter<OrganizationEntity, Map<String, dynamic>?> {
   const OrganizationEntityConverter();
 
   @override
-  OrganizationEntity fromJson(Map<String, dynamic>? json) => OrganizationModel.fromJson(json ?? {});
+  OrganizationEntity fromJson(Map<String, dynamic>? json) =>
+      OrganizationModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(OrganizationEntity object) => {};
@@ -212,16 +217,18 @@ class Specialization extends Equatable {
   @override
   List<Object?> get props => [id, title];
 }
-class SpecializationConverter extends JsonConverter<Specialization, Map<String, dynamic>?> {
+
+class SpecializationConverter
+    extends JsonConverter<Specialization, Map<String, dynamic>?> {
   const SpecializationConverter();
 
   @override
-  Specialization fromJson(Map<String, dynamic>? json) => SpecializationModel.fromJson(json ?? {});
+  Specialization fromJson(Map<String, dynamic>? json) =>
+      SpecializationModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(Specialization object) => {};
 }
-
 
 class TypesEntity extends Equatable {
   @JsonKey(name: 'id', defaultValue: 0)
@@ -243,17 +250,20 @@ class ImageEntity extends Equatable {
   @JsonKey(name: 'small', defaultValue: '')
   final String small;
 
-  const ImageEntity({required this.origin, required this.small, required this.middle});
+  const ImageEntity(
+      {required this.origin, required this.small, required this.middle});
 
   @override
   List<Object?> get props => [origin, middle, small];
 }
 
-class ImageEntityConverter extends JsonConverter<ImageEntity, Map<String, dynamic>?> {
+class ImageEntityConverter
+    extends JsonConverter<ImageEntity, Map<String, dynamic>?> {
   const ImageEntityConverter();
 
   @override
-  ImageEntity fromJson(Map<String, dynamic>? json) => ImageModel.fromJson(json ?? {});
+  ImageEntity fromJson(Map<String, dynamic>? json) =>
+      ImageModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(ImageEntity object) => {};

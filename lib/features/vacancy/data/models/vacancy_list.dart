@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -53,8 +54,7 @@ class OrganizationModel extends OrganizationEntity {
     required super.logo,
   });
 
-  factory OrganizationModel.fromJson(Map<String, dynamic> json) =>
-      _$OrganizationModelFromJson(json);
+  factory OrganizationModel.fromJson(Map<String, dynamic> json) => _$OrganizationModelFromJson(json);
 }
 
 @JsonSerializable()
@@ -68,8 +68,7 @@ class PhoneNumberModel extends PhoneNumberEntity {
 class SpecializationModel extends Specialization {
   const SpecializationModel({required super.id, required super.title});
 
-  factory SpecializationModel.fromJson(Map<String, dynamic> json) =>
-      _$SpecializationModelFromJson(json);
+  factory SpecializationModel.fromJson(Map<String, dynamic> json) => _$SpecializationModelFromJson(json);
 }
 
 @JsonSerializable()
@@ -88,7 +87,7 @@ class WorkTypeModel extends WorkType {
 
 @JsonSerializable()
 class ImageModel extends ImageEntity {
-  ImageModel({required super.origin, required super.small, required super.middle});
+  const ImageModel({required super.origin, required super.small, required super.middle});
 
   factory ImageModel.fromJson(Map<String, dynamic> json) => _$ImageModelFromJson(json);
 }
