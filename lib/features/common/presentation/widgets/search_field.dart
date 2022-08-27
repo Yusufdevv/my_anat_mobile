@@ -7,10 +7,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class SearchField extends StatefulWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
+  final VoidCallback? onClear;
   final Color fillColor;
   const SearchField({
     required this.controller,
     required this.onChanged,
+    this.onClear,
     this.fillColor = textFieldColor,
     Key? key,
   }) : super(key: key);
@@ -65,6 +67,9 @@ class _SearchFieldState extends State<SearchField> {
               ? WScaleAnimation(
                   onTap: () {
                     _controller.clear();
+                    if (widget.onClear != null) {
+                      widget.onClear!();
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10),

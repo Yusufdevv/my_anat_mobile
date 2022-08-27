@@ -1,20 +1,17 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/magazine/domain/entity/magazine_item_entity.dart';
+import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/buy_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class MagazineItem extends StatefulWidget {
-  final MagazineItemEntity magazineItemEntity;
+  final JournalEntity journalEntity;
   final EdgeInsets margin;
   final bool isBuyText;
 
-  const MagazineItem(
-      {required this.magazineItemEntity,
-      this.margin = EdgeInsets.zero,
-      this.isBuyText = false,
-      Key? key})
+  const MagazineItem({required this.journalEntity, this.margin = EdgeInsets.zero, this.isBuyText = false, Key? key})
       : super(key: key);
 
   @override
@@ -33,14 +30,12 @@ class _MagazineItemState extends State<MagazineItem> {
             children: [
               Container(
                 height: 492,
-                decoration: BoxDecoration(
-                    border: Border.all(color: divider),
-                    borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
                     width: double.infinity,
-                    imageUrl: widget.magazineItemEntity.imageUrl,
+                    imageUrl: widget.journalEntity.image.middle,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -55,47 +50,23 @@ class _MagazineItemState extends State<MagazineItem> {
                     color: black.withOpacity(0.4),
                   ),
                   child: Text(
-                    widget.magazineItemEntity.today,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                    MyFunctions.getPublishedDate(widget.journalEntity.publishDate),
+                    style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
                   ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 12),
-          Text(widget.magazineItemEntity.date,
+          Text(widget.journalEntity.redaction,
               style: Theme.of(context).textTheme.headline1!.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   )),
           const SizedBox(height: 8),
-          Row(
-            children: [
-              Text(
-                widget.magazineItemEntity.authorName,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                height: 3,
-                width: 3,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: textSecondary),
-              ),
-              Text(
-                widget.magazineItemEntity.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
-              ),
-            ],
+          Text(
+            widget.journalEntity.name,
+            style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
           ),
           widget.isBuyText
               ? Row(
@@ -108,10 +79,7 @@ class _MagazineItemState extends State<MagazineItem> {
                         onTap: () {},
                         child: Text(
                           'Предпросмотр',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(fontSize: 14),
+                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ),
                     ),
@@ -130,8 +98,7 @@ class _MagazineItemState extends State<MagazineItem> {
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
-                              .copyWith(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
+                              .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -145,12 +112,11 @@ class _MagazineItemState extends State<MagazineItem> {
                         margin: const EdgeInsets.only(top: 12),
                         onTap: () {},
                         child: Text(
-                          widget.magazineItemEntity.price.toString(),
+                          widget.journalEntity.price.toString(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
-                              .copyWith(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
+                              .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -164,10 +130,7 @@ class _MagazineItemState extends State<MagazineItem> {
                         onTap: () {},
                         child: Text(
                           'Оформить подписку',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(fontSize: 14),
+                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ),
                     ),
