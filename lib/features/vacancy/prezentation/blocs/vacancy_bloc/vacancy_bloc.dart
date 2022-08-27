@@ -2,10 +2,12 @@ import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/vacancy/data/models/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
+import 'package:anatomica/features/vacancy/domain/entities/category_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/category_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/organization_vacancy.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
@@ -25,6 +27,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
   final VacancyOptionUseCase vacancyOptionUseCase;
   final OrganizationVacancyUseCase organizationVacancyUseCase;
   final CandidateListUseCase candidateListUseCase;
+  final CategoryListUseCase categoryListUseCase;
 
   VacancyBloc({
     required this.vacancyListUseCase,
@@ -32,6 +35,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     required this.vacancyOptionUseCase,
     required this.organizationVacancyUseCase,
     required this.candidateListUseCase,
+    required this.categoryListUseCase,
   }) : super(VacancyState(
           paginatorStatus: PaginatorStatus.PAGINATOR_LOADING,
           count: 0,
@@ -51,7 +55,8 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
           candidatePaginatorStatus: PaginatorStatus.PAGINATOR_LOADING,
           candidateList: const [],
           organizationStatus: FormzStatus.submissionSuccess,
-          categoryList: [],
+          categoryList: const [],
+          categoryStatus: FormzStatus.pure,
         )) {
     on<GetVacancyListEvent>((event, emit) async {
       final result = await vacancyListUseCase.call(null);
@@ -173,6 +178,18 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
           fetchMoreCandidate: response.right.next != null,
           candidateNext: response.right.next,
         ));
+      }
+    });
+    on<GetCategoryListEvent>((event, emit) async {
+      emit(state.copyWith(categoryStatus: FormzStatus.submissionInProgress));
+      final result = await categoryListUseCase.call(const CategoryListParams());
+      if (result.isRight) {
+        emit(state.copyWith(
+          categoryList: result.right.results.cast<CategoryListEntity>(),
+          categoryStatus: FormzStatus.submissionSuccess,
+        ));
+      } else {
+        emit(state.copyWith(categoryStatus: FormzStatus.submissionFailure));
       }
     });
   }

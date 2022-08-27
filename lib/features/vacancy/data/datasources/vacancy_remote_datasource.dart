@@ -5,6 +5,7 @@ import 'package:anatomica/features/pagination/data/models/generic_pagination.dar
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_list.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_single.dart';
+import 'package:anatomica/features/vacancy/data/models/category_list.dart';
 import 'package:anatomica/features/vacancy/data/models/district.dart';
 import 'package:anatomica/features/vacancy/data/models/region.dart';
 import 'package:anatomica/features/vacancy/data/models/specization.dart';
@@ -38,6 +39,8 @@ abstract class VacancyRemoteDataSource {
   Future<GenericPagination<RegionModel>> getRegion({String? next});
 
   Future<GenericPagination<DistrictModel>> getDistrict({String? next});
+
+  Future<GenericPagination<CategoryListModel>> getCategoryList({String? next});
 }
 
 class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
@@ -175,6 +178,17 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => RegionModel.fromJson(p0 as Map<String, dynamic>));
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<GenericPagination<CategoryListModel>> getCategoryList({String? next}) async {
+    final response = await dio.get('/vacancy/vacancy/specization/list/');
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return GenericPagination.fromJson(
+          response.data, (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
     }
     throw ServerException(
         statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');

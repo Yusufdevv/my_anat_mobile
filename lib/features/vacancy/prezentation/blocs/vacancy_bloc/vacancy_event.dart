@@ -19,4 +19,4 @@ class GetCandidateListEvent extends VacancyEvent {}
 
 class GetMoreCandidateList extends VacancyEvent {}
 
-class GetCategoryList extends VacancyEvent {}
+class GetCategoryListEvent extends VacancyEvent {}
