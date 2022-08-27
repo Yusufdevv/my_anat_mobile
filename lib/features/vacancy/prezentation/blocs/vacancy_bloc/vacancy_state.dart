@@ -1,7 +1,7 @@
 part of 'vacancy_bloc.dart';
 
 class VacancyState extends Equatable {
-  final String next;
+  final String? next;
   final PaginatorStatus paginatorStatus;
   final bool fetchMore;
   final int count;
@@ -16,12 +16,18 @@ class VacancyState extends Equatable {
   final bool fetchMoreOrganization;
   final PaginatorStatus paginatorStatusOrganization;
   final List<VacancyListEntity> organizationVacancyList;
+  final String? candidateNext;
+  final PaginatorStatus candidatePaginatorStatus;
+  final bool fetchMoreCandidate;
+  final List<CandidateListEntity> candidateList;
+  final FormzStatus organizationStatus;
+  final List<Specialization> categoryList;
 
   const VacancyState({
     required this.organizationNext,
     required this.paginatorStatus,
     required this.count,
-    required this.next,
+    this.next,
     required this.fetchMore,
     required this.vacancyList,
     required this.topOrganizationStatus,
@@ -33,46 +39,59 @@ class VacancyState extends Equatable {
     required this.organizationCount,
     required this.paginatorStatusOrganization,
     required this.organizationVacancyList,
+    this.candidateNext,
+    required this.candidateList,
+    required this.candidatePaginatorStatus,
+    required this.fetchMoreCandidate,
+    required this.organizationStatus,
+    required this.categoryList,
   });
 
-  VacancyState copyWith({
-    String? next,
-    String? organizationNext,
-    PaginatorStatus? paginatorStatus,
-    bool? fetchMore,
-    int? count,
-    List<VacancyListEntity>? vacancyList,
-    FormzStatus? topOrganizationStatus,
-    TopOrganizationEntity? topOrganizationEntity,
-    FormzStatus? vacancyOptionStatus,
-    List<VacancyOptionEntity>? vacancyOptionList,
-    FormzStatus? organizationVacancyStatus,
-    int? organizationCount,
-    bool? fetchMoreOrganization,
-    PaginatorStatus? paginatorStatusOrganization,
-    List<VacancyListEntity>? organizationVacancyList,
-  }) =>
+  VacancyState copyWith(
+          {String? next,
+          String? organizationNext,
+          PaginatorStatus? paginatorStatus,
+          bool? fetchMore,
+          int? count,
+          List<VacancyListEntity>? vacancyList,
+          FormzStatus? topOrganizationStatus,
+          TopOrganizationEntity? topOrganizationEntity,
+          FormzStatus? vacancyOptionStatus,
+          List<VacancyOptionEntity>? vacancyOptionList,
+          FormzStatus? organizationVacancyStatus,
+          int? organizationCount,
+          bool? fetchMoreOrganization,
+          PaginatorStatus? paginatorStatusOrganization,
+          List<VacancyListEntity>? organizationVacancyList,
+          String? candidateNext,
+          PaginatorStatus? candidatePaginatorStatus,
+          bool? fetchMoreCandidate,
+          List<CandidateListEntity>? candidateList,
+          FormzStatus? organizationStatus,
+          List<Specialization>? categoryList}) =>
       VacancyState(
         paginatorStatus: paginatorStatus ?? this.paginatorStatus,
         fetchMore: fetchMore ?? this.fetchMore,
-        next: next ?? this.next,
+        next: next,
         count: count ?? this.count,
         vacancyList: vacancyList ?? this.vacancyList,
-        topOrganizationStatus:
-            topOrganizationStatus ?? this.topOrganizationStatus,
-        topOrganizationEntity:
-            topOrganizationEntity ?? this.topOrganizationEntity,
+        topOrganizationStatus: topOrganizationStatus ?? this.topOrganizationStatus,
+        topOrganizationEntity: topOrganizationEntity ?? this.topOrganizationEntity,
         vacancyOptionStatus: vacancyOptionStatus ?? this.vacancyOptionStatus,
         vacancyOptionList: vacancyOptionList ?? this.vacancyOptionList,
-        organizationVacancyStatus:
-            organizationVacancyStatus ?? this.organizationVacancyStatus,
-        fetchMoreOrganization:
-            fetchMoreOrganization ?? this.fetchMoreOrganization,
+        organizationVacancyStatus: organizationVacancyStatus ?? this.organizationVacancyStatus,
+        fetchMoreOrganization: fetchMoreOrganization ?? this.fetchMoreOrganization,
         paginatorStatusOrganization:
             paginatorStatusOrganization ?? this.paginatorStatusOrganization,
-        organizationVacancyList:
-            organizationVacancyList ?? this.organizationVacancyList,
-        organizationCount: organizationCount ?? this.organizationCount, organizationNext: organizationNext??this.organizationNext,
+        organizationVacancyList: organizationVacancyList ?? this.organizationVacancyList,
+        organizationCount: organizationCount ?? this.organizationCount,
+        organizationNext: organizationNext ?? this.organizationNext,
+        candidateNext: candidateNext,
+        candidateList: candidateList ?? this.candidateList,
+        candidatePaginatorStatus: candidatePaginatorStatus ?? this.candidatePaginatorStatus,
+        fetchMoreCandidate: fetchMoreCandidate ?? this.fetchMoreCandidate,
+        organizationStatus: organizationStatus ?? this.organizationStatus,
+        categoryList: categoryList ?? this.categoryList,
       );
 
   @override
@@ -91,5 +110,11 @@ class VacancyState extends Equatable {
         fetchMoreOrganization,
         paginatorStatusOrganization,
         organizationVacancyList,
+        candidateNext,
+        candidateList,
+        candidatePaginatorStatus,
+        fetchMoreCandidate,
+        organizationStatus,
+        categoryList
       ];
 }

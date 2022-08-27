@@ -1,20 +1,24 @@
-  import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'generic_pagination.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true)
-class GenericPagination<T>{
-  @JsonKey(name: 'next_link',defaultValue: '')
-  final String next;
-  @JsonKey(name: 'previous_link',defaultValue: '')
+class GenericPagination<T> {
+  @JsonKey(name: 'next_link')
+  final String? next;
+  @JsonKey(name: 'previous_link', defaultValue: '')
   final String previous;
-  @JsonKey(name: 'results',defaultValue: [])
+  @JsonKey(name: 'results', defaultValue: [])
   final List<T> results;
-  @JsonKey(name:'total_count', defaultValue:0,)
+  @JsonKey(
+    name: 'total_count',
+    defaultValue: 0,
+  )
   final int count;
 
+  GenericPagination(
+      {this.next, required this.previous, required this.results, required this.count});
 
-  GenericPagination({required this.next,required this.previous,required this.results,
-    required this.count});
-  factory GenericPagination.fromJson(Map<String,dynamic> json,T Function(Object?) fetch)=>_$GenericPaginationFromJson(json,fetch);
+  factory GenericPagination.fromJson(Map<String, dynamic> json, T Function(Object?) fetch) =>
+      _$GenericPaginationFromJson(json, fetch);
 }

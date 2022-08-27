@@ -17,9 +17,9 @@ import 'package:dio/dio.dart';
 abstract class VacancyRemoteDataSource {
   final PaginationDatasource paginationDatasource;
 
-  VacancyRemoteDataSource({required this.paginationDatasource, int? organizationId});
+  VacancyRemoteDataSource({required this.paginationDatasource});
 
-  Future<VacancyModel> getVacancyList({required String next});
+  Future<VacancyModel> getVacancyList({String? next, int? organizationId});
 
   Future<TopOrganizationModel> getTopOrganization();
 
@@ -31,13 +31,13 @@ abstract class VacancyRemoteDataSource {
 
   Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug});
 
-  Future<GenericPagination<CandidateListModel>> getCandidateList();
+  Future<GenericPagination<CandidateListModel>> getCandidateList({String? next});
 
   Future<CandidateSingleModel> getCandidateSingle({required int id});
 
-  Future<GenericPagination<RegionModel>> getRegion();
+  Future<GenericPagination<RegionModel>> getRegion({String? next});
 
-  Future<GenericPagination<DistrictModel>> getDistrict();
+  Future<GenericPagination<DistrictModel>> getDistrict({String? next});
 }
 
 class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
@@ -46,27 +46,26 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   VacancyRemoteDataSourceImpl({required super.paginationDatasource});
 
   @override
-  Future<VacancyModel> getVacancyList({required String next, int? organizationId}) async {
+  Future<VacancyModel> getVacancyList({String? next, int? organizationId}) async {
     try {
       const url = '/vacancy/vacancy/list/';
-
       final Map<String, dynamic> query = {};
       if (organizationId != null) {
         query.putIfAbsent('organization', () => organizationId);
       }
+
       final result = await paginationDatasource.fetchMore(
         url: url,
-        next: next.isNotEmpty?next:null,
+        next: next,
         fromJson: VacancyListModel.fromJson,
         query: query,
       );
 
       final vacancies = VacancyModel(
-        next:result.next,
+        next: result.next,
         results: result.results,
         count: result.count,
       );
-      print(result.results.length);
       return vacancies;
     } on ServerException {
       rethrow;
@@ -117,7 +116,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   Future<List<VacancyOptionModel>> getVacancyOption() async {
     final response = await dio.get('/vacancy/vacancy/list/');
     response.requestOptions.data;
-    print(response.requestOptions.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return (response.requestOptions.data as List)
           .map((e) => VacancyOptionModel.fromJson(e))
@@ -139,8 +137,9 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CandidateListModel>> getCandidateList() async {
-    final response = await dio.get('/doctor/');
+  Future<GenericPagination<CandidateListModel>> getCandidateList({String? next}) async {
+    final response = await dio.get(next ?? '/doctor/');
+
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
@@ -160,7 +159,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<DistrictModel>> getDistrict() async {
+  Future<GenericPagination<DistrictModel>> getDistrict({String? next}) async {
     final response = await dio.get('/district/');
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
@@ -171,7 +170,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<RegionModel>> getRegion() async {
+  Future<GenericPagination<RegionModel>> getRegion({String? next}) async {
     final response = await dio.get('/region/');
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(

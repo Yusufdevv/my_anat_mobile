@@ -1,3 +1,4 @@
+import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:json_annotation/json_annotation.dart';

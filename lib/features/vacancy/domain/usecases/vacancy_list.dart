@@ -11,7 +11,7 @@ class VacancyListUseCase extends UseCase<VacancyEntity, String> {
   VacancyListUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, VacancyEntity>> call(String next) async =>
+  Future<Either<Failure, VacancyEntity>> call(String? next) async =>
       await repository.getVacancies(next:next);
 }
 

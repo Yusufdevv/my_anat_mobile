@@ -7,6 +7,7 @@ import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/organization_vacancy.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
@@ -49,6 +50,8 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
   initState() {
     tabController = TabController(length: 2, vsync: this);
     vacancyBloc = VacancyBloc(
+      candidateListUseCase:
+          CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       vacancyOptionUseCase:
           VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       organizationVacancyUseCase:
@@ -59,6 +62,8 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
     );
     vacancyBloc.add(GetVacancyListEvent());
     vacancyBloc.add(GetTopOrganizationEvent());
+    vacancyBloc.add(GetCandidateListEvent());
+
     super.initState();
   }
 
@@ -147,12 +152,10 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                             const SizedBox(height: 10),
                             Stack(
                               children: [
-                                VacancyCardList(
-                                  onTap: () {
-                                    // Navigator.of(context)
-                                    //     .push(fade(page: const VacancySingleScreen()));
-                                  },
-                                ),
+                                VacancyCardList(onTap: () {
+                                  // Navigator.of(context)
+                                  //     .push(fade(page: const VacancySingleScreen()));
+                                }),
                                 Positioned(
                                   right: 0,
                                   bottom: 0,
@@ -195,44 +198,15 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                   showFilterBottomSheet(context);
                 },
               ),
-             // const SizedBox(height: 20),
+              // const SizedBox(height: 20),
               hasFilter ? const FilterCardList() : const SizedBox(),
               Expanded(
                 child: TabBarView(
                   physics: const BouncingScrollPhysics(),
                   controller: tabController,
-                  children: [
-                    BlocBuilder<VacancyBloc, VacancyState>(
-                      builder: (context, state) {
-                        print('state :${state.paginatorStatus}');
-                        print(state.vacancyList);
-                        return Paginator(
-                          padding: EdgeInsets.only(bottom: 50 + mediaQuery.padding.bottom, top: 20),
-                          paginatorStatus: state.paginatorStatus,
-                          errorWidget: const Text('Fail'),
-                          itemBuilder: (context, index) {
-                            print('title: ${state.vacancyList[index].organization.title}');
-                            return VacancyItem(
-                              vacancyEntity: state.vacancyList[index],
-                              onTap: () {
-                                Navigator.of(context).push(fade(
-                                    page:
-                                        VacancySingleScreen(slug: state.vacancyList[index].slug)));
-                              },
-                            );
-                          },
-                          separateBuilder: (context, index) => const SizedBox(height: 12),
-                          hasMoreToFetch: state.fetchMore,
-                          fetchMoreFunction: () {
-                            context.read<VacancyBloc>().add(GetMoreVacancyListEvent());
-                          },
-                          itemCount: state.vacancyList.length,
-                        );
-                      },
-                    ),
-                    // VacancyItemList(),
-                    //VacancyItemList(),
-                    const CandidateItemList(),
+                  children: const [
+                    VacancyItemList(),
+                    CandidateItemList(),
                   ],
                 ),
               ),

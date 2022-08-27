@@ -2,12 +2,15 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CandidateContactInfo extends StatelessWidget {
-  const CandidateContactInfo({Key? key}) : super(key: key);
+  final CandidateSingleEntity candidate;
+
+  const CandidateContactInfo({required this.candidate, Key? key}) : super(key: key);
 
   Future<void> _launchUrl(String uri) async {
     if (!await launchUrl(Uri.parse(uri))) {
@@ -31,24 +34,24 @@ class CandidateContactInfo extends StatelessWidget {
             children: [
               CandidateContactItem(
                 onTap: () {
-                  _launchUrl('https://gmail.com');
+                  _launchUrl(candidate.email);
                 },
                 icon: AppIcons.vacancyMail,
-                title: '7SSP@anatomica.uz',
+                title: candidate.email,
               ),
               CandidateContactItem(
                 onTap: () {
-                  _launchUrl('https://www.instagram.com/ikhromov_');
+                  _launchUrl('https://www.instagram.com/${candidate.instagram}');
                 },
                 icon: AppIcons.instagram,
-                title: 'ikromov_',
+                title: candidate.instagram,
               ),
               CandidateContactItem(
                 onTap: () {
                   _launchUrl('https://telegram.me');
                 },
                 icon: AppIcons.telegram,
-                title: 'ikhromov',
+                title: candidate.telegram,
                 isLast: true,
               ),
             ],

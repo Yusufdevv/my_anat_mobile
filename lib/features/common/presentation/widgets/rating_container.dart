@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class RatingStars extends StatelessWidget {
-  final int rate;
+  final double rate;
   final double starSize;
   final double starSpacing;
   final Color activeStarColor;
   final Color inactiveStarColor;
-  final ValueChanged<int>? onChanged;
+  final ValueChanged<double>? onChanged;
   const RatingStars({
     required this.rate,
     this.activeStarColor = primary,
@@ -25,7 +25,7 @@ class RatingStars extends StatelessWidget {
     return Row(
       children: [
         ...List.generate(
-          rate,
+          rate.toInt() ,
           (index) => Row(
             children: [
               GestureDetector(
@@ -45,13 +45,13 @@ class RatingStars extends StatelessWidget {
           ),
         ),
         ...List.generate(
-          5 - rate,
+          5 - rate.toInt(),
           (index) => Row(
             children: [
               GestureDetector(
                 onTap: () {
                   if (onChanged != null) {
-                    onChanged!(rate + index + 1);
+                    onChanged!(rate.toInt() + index + 1);
                   }
                 },
                 child: SvgPicture.asset(

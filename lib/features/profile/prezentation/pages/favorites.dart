@@ -67,11 +67,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderSt
             padding: const EdgeInsets.only(top: 0),
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => CandidateItem(
-              onTap: () {
-                Navigator.of(context).push(fade(page: const CandidateSingleScreen()));
-              },
-            ),
+            itemBuilder: (context, index) => SizedBox(),
+            //     CandidateItem(
+            //   onTap: () {
+            //     Navigator.of(context).push(fade(page: const CandidateSingleScreen()));
+            //   },
+            // ),
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemCount: 10,
           )

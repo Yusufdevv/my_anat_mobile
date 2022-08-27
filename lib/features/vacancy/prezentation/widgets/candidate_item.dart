@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,8 +11,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CandidateItem extends StatelessWidget {
   final VoidCallback onTap;
   final EdgeInsets? margin;
+  final CandidateListEntity candidateListEntity;
 
-  const CandidateItem({this.margin, required this.onTap, Key? key}) : super(key: key);
+  const CandidateItem({
+    required this.candidateListEntity,
+    this.margin,
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +42,7 @@ class CandidateItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: CachedNetworkImage(
-                  imageUrl:
-                      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8bW9kZWxzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+                  imageUrl: candidateListEntity.image.middle,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -49,20 +55,22 @@ class CandidateItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Иргашев Дильмурад Саатович',
+                      candidateListEntity.fullName,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Стоматолог',
+                      candidateListEntity.specialization.title,
                       style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                     ),
                     const Spacer(),
-                    const VacancyItemTextWidget(title: '10 - 12 лет', icon: AppIcons.briefCase),
+                    VacancyItemTextWidget(
+                        title: '${candidateListEntity.workExperience} лет',
+                        icon: AppIcons.briefCase),
                     const SizedBox(height: 4),
-                    const VacancyItemTextWidget(
-                        title: 'г.Ташкент, Алмазарский р-н', icon: AppIcons.mapPin),
+                    VacancyItemTextWidget(
+                        title: candidateListEntity.address, icon: AppIcons.mapPin),
                   ],
                 ),
               ),

@@ -1,8 +1,10 @@
+import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/candidate_single.dart';
-import 'package:anatomica/features/vacancy/prezentation/pages/candidate_single_screen.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CandidateItemList extends StatelessWidget {
   final EdgeInsets? margin;
@@ -12,18 +14,28 @@ class CandidateItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.only(top: 20),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => CandidateItem(
-        margin: margin,
-        onTap: () {
-          Navigator.of(context).push(fade(page: const SingleCandidateScreen()));
-        },
-      ),
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
-      itemCount: 10,
+    final mediaQuery = MediaQuery.of(context);
+    return BlocBuilder<VacancyBloc, VacancyState>(
+      builder: (context, state) {
+        return Paginator(
+          padding: EdgeInsets.only(top: 20, bottom: 16 + mediaQuery.padding.bottom),
+          paginatorStatus: state.candidatePaginatorStatus,
+          itemBuilder: (context, index) => CandidateItem(
+            candidateListEntity: state.candidateList[index],
+            onTap: () {
+              Navigator.of(context)
+                  .push(fade(page: SingleCandidateScreen(id: state.candidateList[index].id)));
+            },
+          ),
+          fetchMoreFunction: () {
+            context.read<VacancyBloc>().add(GetMoreCandidateList());
+          },
+          separateBuilder: (context, index) => const SizedBox(height: 12),
+          hasMoreToFetch: state.fetchMoreCandidate,
+          errorWidget: const Center(child: Text('Fail')),
+          itemCount: state.candidateList.length,
+        );
+      },
     );
   }
 }

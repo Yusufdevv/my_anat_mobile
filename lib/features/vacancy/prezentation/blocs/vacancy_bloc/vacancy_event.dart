@@ -14,3 +14,9 @@ class GetVacancyOptionEvent extends VacancyEvent {}
 class GetOrganizationVacancyEvent extends VacancyEvent {}
 
 class GetMoreOrganizationVacancyEvent extends VacancyEvent {}
+
+class GetCandidateListEvent extends VacancyEvent {}
+
+class GetMoreCandidateList extends VacancyEvent {}
+
+class GetCategoryList extends VacancyEvent {}

@@ -47,8 +47,7 @@ class VacancySingleBloc extends Bloc<VacancySingleEvent, VacancySingleState> {
       if (result.isRight) {
         emit(state.copyWith(
           paginatorStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-          totalPages: result.right.totalPages,
-          currentPage: result.right.currentPage,
+          totalPages: result.right.count,
           relatedVacancyList: result.right.results.cast<VacancyListEntity>(),
         ));
       }
