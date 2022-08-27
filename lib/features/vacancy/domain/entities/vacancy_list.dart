@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:equatable/equatable.dart';
@@ -240,21 +241,6 @@ class TypesEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, title];
-}
-
-class ImageEntity extends Equatable {
-  @JsonKey(name: 'origin', defaultValue: '')
-  final String origin;
-  @JsonKey(name: 'middle', defaultValue: '')
-  final String middle;
-  @JsonKey(name: 'small', defaultValue: '')
-  final String small;
-
-  const ImageEntity(
-      {required this.origin, required this.small, required this.middle});
-
-  @override
-  List<Object?> get props => [origin, middle, small];
 }
 
 class ImageEntityConverter

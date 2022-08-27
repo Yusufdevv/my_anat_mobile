@@ -1,30 +1,29 @@
 import 'package:anatomica/features/common/models/logo.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-
 @JsonSerializable()
 class HospitalModel {
-  @JsonKey(name: 'id',defaultValue: '')
+  @JsonKey(name: 'id', defaultValue: '')
   final int id;
-  @JsonKey(name: 'title',defaultValue: '')
+  @JsonKey(name: 'title', defaultValue: '')
   final String title;
-  @JsonKey(name: 'slug',defaultValue: '')
+  @JsonKey(name: 'slug', defaultValue: '')
   final String slug;
-  @JsonKey(name: 'address',defaultValue: '')
+  @JsonKey(name: 'address', defaultValue: '')
   final String address;
-  @JsonKey(name: 'phone',defaultValue: '')
+  @JsonKey(name: 'phone', defaultValue: '')
   final String phone;
-  @JsonKey(name: 'description',defaultValue: '')
+  @JsonKey(name: 'description', defaultValue: '')
   final String description;
-  @JsonKey(name: 'logo',defaultValue: '')
+  @JsonKey(name: 'logo', defaultValue: '')
   final AssetModel logo;
-  @JsonKey(name: '',defaultValue: '')
+  @JsonKey(name: '', defaultValue: '')
   final AssetModel banner;
-  @JsonKey(name: '',defaultValue: '')
+  @JsonKey(name: '', defaultValue: '')
   final double latitude;
-  @JsonKey(name: '',defaultValue: '')
+  @JsonKey(name: '', defaultValue: '')
   final double longitude;
-  @JsonKey(name: '',defaultValue: '')
+  @JsonKey(name: '', defaultValue: '')
   final double rating;
 
   HospitalModel(

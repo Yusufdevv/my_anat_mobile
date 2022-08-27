@@ -23,7 +23,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
         emit(state.copyWith(
             status: FormzStatus.submissionSuccess,
             doctors: result.right.results,
-            next: result.right.next,
+            next: result.right.next ?? '',
             count: result.right.count));
       } else {
         emit(state.copyWith(
@@ -37,8 +37,8 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
       if (result.isRight) {
         emit(state.copyWith(
             status: FormzStatus.submissionSuccess,
-            doctors: [...state.doctors,...result.right.results],
-            next: result.right.next,
+            doctors: [...state.doctors, ...result.right.results],
+            next: result.right.next ?? '',
             count: result.right.count));
       } else {
         emit(state.copyWith(

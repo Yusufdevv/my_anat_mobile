@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
 import 'package:anatomica/features/vacancy/domain/entities/region.dart';
@@ -137,11 +138,13 @@ class WorkHistory extends Equatable {
       ];
 }
 
-class WorkHistoryConverter extends JsonConverter<WorkHistory, Map<String, dynamic>?> {
+class WorkHistoryConverter
+    extends JsonConverter<WorkHistory, Map<String, dynamic>?> {
   const WorkHistoryConverter();
 
   @override
-  WorkHistory fromJson(Map<String, dynamic>? json) => WorkHistoryModel.fromJson(json ?? {});
+  WorkHistory fromJson(Map<String, dynamic>? json) =>
+      WorkHistoryModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(WorkHistory object) => {};
@@ -159,11 +162,13 @@ class LicenceEntity extends Equatable {
   List<Object?> get props => [url, size];
 }
 
-class LicenceEntityConverter extends JsonConverter<LicenceEntity, Map<String, dynamic>?> {
+class LicenceEntityConverter
+    extends JsonConverter<LicenceEntity, Map<String, dynamic>?> {
   const LicenceEntityConverter();
 
   @override
-  LicenceEntity fromJson(Map<String, dynamic>? json) => LicenseModel.fromJson(json ?? {});
+  LicenceEntity fromJson(Map<String, dynamic>? json) =>
+      LicenseModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(LicenceEntity object) => {};
