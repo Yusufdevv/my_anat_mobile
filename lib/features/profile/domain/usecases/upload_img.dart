@@ -3,14 +3,15 @@ import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/auth/domain/entities/user_entity.dart';
 import 'package:anatomica/features/profile/domain/repositories/profile.dart';
+import 'package:dio/dio.dart';
 
-class GetProfileUseCase extends UseCase<UserEntity, NoParams> {
+class UploadImageUseCase extends UseCase<UserEntity, FormData> {
   final ProfileRepository profileRepository;
 
-  GetProfileUseCase({required this.profileRepository});
+  UploadImageUseCase({required this.profileRepository});
 
   @override
-  Future<Either<Failure, UserEntity>> call(NoParams params) async {
-    return await profileRepository.getProfile();
+  Future<Either<Failure, UserEntity>> call(FormData formData) async {
+    return await profileRepository.uploadImg(formData);
   }
 }
