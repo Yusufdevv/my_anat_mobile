@@ -2,20 +2,26 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:anatomica/features/map/presentation/screens/hospital_single.dart';
+import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
+import 'package:anatomica/features/map/domain/entities/hospital_entity.dart';
+
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HospitalItem extends StatelessWidget {
+  final HospitalEntity entity;
+
   const HospitalItem({
+    required this.entity,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return WScaleAnimation(
-      onTap: () => Navigator.of(context, rootNavigator: true).push(fade(page: const HospitalSingleScreen())),
+      onTap: () => Navigator.of(context, rootNavigator: true)
+          .push(fade(page: const HospitalSingleScreen())),
       child: DecoratedBox(
         decoration: BoxDecoration(
           boxShadow: [
@@ -45,12 +51,15 @@ class HospitalItem extends StatelessWidget {
                       child: ListView.separated(
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        separatorBuilder: (context, index) => const SizedBox(width: 8),
-                        itemBuilder: (context, index) => ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            AppImages.hospitalImage,
+                        itemCount: entity.images.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 8),
+                        itemBuilder: (context, index) => Container(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              entity.images[index].small,fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -62,15 +71,18 @@ class HospitalItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Центральная Семейная поликлиника',
+                        entity.title,
                           style: Theme.of(context).textTheme.headline1,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Центральная Семейная поликлиника',
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textSecondary),
+                          entity.addres,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: textSecondary),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -96,8 +108,11 @@ class HospitalItem extends StatelessWidget {
                     SvgPicture.asset(AppIcons.star),
                     const SizedBox(width: 4),
                     Text(
-                      '5.0',
-                      style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
+                     entity.rating.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(color: darkGreen, fontSize: 14),
                     ),
                     const SizedBox(width: 8),
                     Container(

@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'logo.g.dart';
 
 @JsonSerializable()
-class LogoModel {
+class AssetModel {
   @JsonKey(name: 'origin',defaultValue: '')
   final String origin;
   @JsonKey(name: 'middle',defaultValue: '')
@@ -12,6 +12,6 @@ class LogoModel {
   @JsonKey(name: 'small',defaultValue: '')
   final String small;
 
-  LogoModel({required this.small, required this.middle, required this.origin});
-  factory LogoModel.fromJson(Map<String,dynamic> json)=>_$LogoModelFromJson(json);
+  AssetModel({required this.small, required this.middle, required this.origin});
+  factory AssetModel.fromJson(Map<String,dynamic> json)=>_$AssetModelFromJson(json);
 }

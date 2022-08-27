@@ -2,6 +2,9 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';
+import 'package:anatomica/features/map/domain/usecases/get_hospitals.dart';
+import 'package:anatomica/features/map/presentation/blocs/doctor_list/doctor_list_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/result_list.dart';
 import 'package:anatomica/features/map/presentation/screens/suggestion_list.dart';
@@ -24,16 +27,18 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
   late TabController _controller;
   late TextEditingController controller;
   late HospitalListBloc bloc;
+  late DoctorListBloc doctorListBloc;
 
   @override
   void initState() {
-    bloc = HospitalListBloc();
+    doctorListBloc =DoctorListBloc(GetDoctorsUseCase())..add(DoctorListEvent.getDoctors());
+    bloc = HospitalListBloc(GetHospitalsUseCase())..add(HospitalListEvent.getHospitals());
     controller = TextEditingController()
       ..addListener(() {
         if (controller.text.isNotEmpty) {
-          bloc.add(ChangeScreenState(crossFadeState: CrossFadeState.showSecond));
+          bloc.add(HospitalListEvent.changePage(CrossFadeState.showSecond));
         } else {
-          bloc.add(ChangeScreenState(crossFadeState: CrossFadeState.showFirst));
+          bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
         }
       });
     _controller = TabController(length: 2, vsync: this);
@@ -42,9 +47,16 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
+    return MultiBlocProvider(
+  providers: [
+    BlocProvider.value(
       value: bloc,
-      child: Scaffold(
+),
+    BlocProvider.value(
+      value: doctorListBloc,
+    ),
+  ],
+  child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
@@ -102,13 +114,13 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                     children: [
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 150),
-                        child: state.screenState == CrossFadeState.showFirst
+                        child: state.crossFadeState == CrossFadeState.showFirst
                             ? const ResultList()
                             : const SuggestionListScreen(),
                       ),
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 150),
-                        child: state.screenState == CrossFadeState.showFirst
+                        child: state.crossFadeState == CrossFadeState.showFirst
                             ? const DoctorsList()
                             : const SuggestionListScreen(),
                       ),
@@ -125,7 +137,7 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                   child: Column(
                     children: [
                       AnimatedCrossFade(
-                        crossFadeState: state.screenState,
+                        crossFadeState: state.crossFadeState,
                         secondChild: const SizedBox(),
                         duration: const Duration(milliseconds: 150),
                         firstChild: Row(
@@ -166,6 +178,6 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
           },
         ),
       ),
-    );
+);
   }
 }

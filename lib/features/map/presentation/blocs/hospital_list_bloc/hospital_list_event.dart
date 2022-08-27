@@ -1,9 +1,10 @@
 part of 'hospital_list_bloc.dart';
 
-@immutable
-abstract class HospitalListEvent {}
 
-class ChangeScreenState extends HospitalListEvent {
-  final CrossFadeState crossFadeState;
-  ChangeScreenState({required this.crossFadeState});
+@Freezed()
+class HospitalListEvent with _$HospitalListEvent {
+  factory HospitalListEvent.changePage(CrossFadeState crossFadeState) =
+      _ChangePage;
+  factory HospitalListEvent.getHospitals()=_GetHospitals;
+  factory HospitalListEvent.getMoreHospitals()=_GetMoreHospitals;
 }
