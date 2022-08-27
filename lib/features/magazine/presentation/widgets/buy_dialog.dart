@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
@@ -39,14 +40,13 @@ class BuyDialog extends StatelessWidget {
       ),
       content: Text(
         'Зарегистрируйтесь, чтобы в полной мере использовать возможности приложения',
-        style: Theme.of(context)
-            .textTheme
-            .headline3!
-            .copyWith(fontWeight: FontWeight.w400),
+        style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
       ),
       actions: [
         WButton(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(fade(page: const LoginScreen()));
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -81,10 +81,7 @@ class BuyDialog extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 'Единовременный платеж',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4!
-                    .copyWith(fontSize: 14),
+                style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
               ),
             ],
           ),

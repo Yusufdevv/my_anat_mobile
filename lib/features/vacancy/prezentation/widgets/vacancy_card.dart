@@ -2,13 +2,16 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
 import 'package:flutter/material.dart';
 
 class VacancyCard extends StatelessWidget {
   final VoidCallback onTap;
+  final VacancyListEntity vacancyListEntity;
 
-  const VacancyCard({required this.onTap, Key? key}) : super(key: key);
+  const VacancyCard({required this.onTap, required this.vacancyListEntity, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +31,11 @@ class VacancyCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Стоматолог',
+              vacancyListEntity.organization.speciazilation[0].title,
               style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
             ),
             const SizedBox(height: 4),
-            Text('3 000 000 - 4 500 000 UZS',
+            Text('${vacancyListEntity.salaryFrom} - ${vacancyListEntity.salaryTo} UZS',
                 style: Theme.of(context)
                     .textTheme
                     .headline4!
@@ -40,9 +43,13 @@ class VacancyCard extends StatelessWidget {
             const SizedBox(height: 1),
             const WDivider(margin: EdgeInsets.symmetric(vertical: 10)),
             const SizedBox(height: 10),
-            const VacancyItemTextWidget(title: '2 - 5 лет', icon: AppIcons.briefCase),
+            VacancyItemTextWidget(
+                title: '${vacancyListEntity.experienceFrom} - '
+                    '${vacancyListEntity.experienceTo} '
+                    'лет',
+                icon: AppIcons.briefCase),
             const SizedBox(height: 8),
-            const VacancyItemTextWidget(title: 'г. Ташкент, ул. Чехова 32', icon: AppIcons.mapPin),
+            VacancyItemTextWidget(title: vacancyListEntity.address, icon: AppIcons.mapPin),
           ],
         ),
       ),

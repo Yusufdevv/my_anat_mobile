@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PhonesBottomSheet extends StatelessWidget {
+  final List<String>? phones;
+
   const PhonesBottomSheet({
+    this.phones = const [],
     Key? key,
   }) : super(key: key);
 
@@ -52,12 +55,21 @@ class PhonesBottomSheet extends StatelessWidget {
           ListView.separated(
             padding: const EdgeInsets.fromLTRB(0, 16, 16, 0),
             shrinkWrap: true,
-            itemBuilder: (context, index) => const PhoneBottomSheetItem(),
+            itemBuilder: (context, index) => PhoneBottomSheetItem(phone: phones![index]),
             separatorBuilder: (context, index) => const SizedBox(height: 12),
-            itemCount: 2,
+            itemCount: phones!.length,
           )
         ],
       ),
     );
   }
+}
+
+void showPhonesBottomSheet(BuildContext context, List<String> phones) {
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.transparent,
+    useRootNavigator: true,
+    builder: (context) => PhonesBottomSheet(phones: phones),
+  );
 }

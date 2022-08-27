@@ -22,7 +22,7 @@ class CommentBottomSheet extends StatefulWidget {
 }
 
 class _CommentBottomSheetState extends State<CommentBottomSheet> {
-  int rating = 0;
+  double rating = 0;
   late TextEditingController _controller;
 
   @override

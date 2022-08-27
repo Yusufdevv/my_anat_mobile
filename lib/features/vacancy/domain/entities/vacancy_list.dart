@@ -35,9 +35,9 @@ class VacancyListEntity extends Equatable {
   @JsonKey(name: 'is_favorite', defaultValue: false)
   final bool isFavorite;
   @JsonKey(name: 'requirements', defaultValue: [])
-  final List<int> requirements;
+  final List<dynamic> requirements;
   @JsonKey(name: 'obligations', defaultValue: [])
-  final List<int> obligations;
+  final List<dynamic> obligations;
 
   const VacancyListEntity({
     required this.workType,
@@ -82,13 +82,13 @@ class VacancyListEntity extends Equatable {
 class WorkType extends Equatable {
   @JsonKey(name: 'name', defaultValue: '')
   final String name;
-  @JsonKey(name: 'title', defaultValue: '')
-  final String title;
+  @JsonKey(name: 'label', defaultValue: '')
+  final String label;
 
-  const WorkType({required this.title, required this.name});
+  const WorkType({required this.label, required this.name});
 
   @override
-  List<Object?> get props => [name, title];
+  List<Object?> get props => [name, label];
 }
 
 class WorkTypeConverter extends JsonConverter<WorkType, Map<String, dynamic>?> {
@@ -212,6 +212,16 @@ class Specialization extends Equatable {
   @override
   List<Object?> get props => [id, title];
 }
+class SpecializationConverter extends JsonConverter<Specialization, Map<String, dynamic>?> {
+  const SpecializationConverter();
+
+  @override
+  Specialization fromJson(Map<String, dynamic>? json) => SpecializationModel.fromJson(json ?? {});
+
+  @override
+  Map<String, dynamic> toJson(Specialization object) => {};
+}
+
 
 class TypesEntity extends Equatable {
   @JsonKey(name: 'id', defaultValue: 0)
@@ -237,4 +247,14 @@ class ImageEntity extends Equatable {
 
   @override
   List<Object?> get props => [origin, middle, small];
+}
+
+class ImageEntityConverter extends JsonConverter<ImageEntity, Map<String, dynamic>?> {
+  const ImageEntityConverter();
+
+  @override
+  ImageEntity fromJson(Map<String, dynamic>? json) => ImageModel.fromJson(json ?? {});
+
+  @override
+  Map<String, dynamic> toJson(ImageEntity object) => {};
 }

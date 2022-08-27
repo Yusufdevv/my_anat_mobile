@@ -33,7 +33,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(126),
+        preferredSize: const Size.fromHeight(117),
         child: Column(
           children: [
             const WAppBar(title: 'Избранные', hasUnderline: true),
@@ -51,28 +51,28 @@ class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderSt
         controller: tabController,
         children: [
           ListView.separated(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 16),
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
-            itemBuilder: (context, index) =>SizedBox(),
-
+            itemBuilder: (context, index) =>const SizedBox(),
             //     VacancyItem(
             //   onTap: () {
-            //     Navigator.of(context).push(fade(page: const VacancySingleScreen()));
+            //     Navigator.of(context).push(fade(page: VacancySingleScreen(slug: '')));
             //   },
             // ),
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemCount: 10,
           ),
           ListView.separated(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 0),
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => CandidateItem(
-              onTap: () {
-                Navigator.of(context).push(fade(page: const CandidateSingleScreen()));
-              },
-            ),
+            itemBuilder: (context, index) => SizedBox(),
+            //     CandidateItem(
+            //   onTap: () {
+            //     Navigator.of(context).push(fade(page: const CandidateSingleScreen()));
+            //   },
+            // ),
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemCount: 10,
           )

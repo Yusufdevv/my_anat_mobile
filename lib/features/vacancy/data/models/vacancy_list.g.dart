@@ -21,17 +21,11 @@ VacancyListModel _$VacancyListModelFromJson(Map<String, dynamic> json) =>
       salaryFrom: json['salary_from'] as int? ?? 0,
       description: json['description'] as String? ?? '',
       salaryTo: json['salary_to'] as int? ?? 0,
-      requirements: (json['requirements'] as List<dynamic>?)
-              ?.map((e) => e as int)
-              .toList() ??
-          [],
+      requirements: json['requirements'] as List<dynamic>? ?? [],
       employerInfo: json['employer_info'] as String? ?? '',
       experienceFrom: json['experience_from'] as int? ?? 0,
       isFavorite: json['is_favorite'] as bool? ?? false,
-      obligations: (json['obligations'] as List<dynamic>?)
-              ?.map((e) => e as int)
-              .toList() ??
-          [],
+      obligations: json['obligations'] as List<dynamic>? ?? [],
       publishedAt: json['published_at'] as String? ?? '',
       experienceTo: json['experience_to'] as int? ?? 0,
     );
@@ -152,14 +146,14 @@ Map<String, dynamic> _$TypesModelToJson(TypesModel instance) =>
 
 WorkTypeModel _$WorkTypeModelFromJson(Map<String, dynamic> json) =>
     WorkTypeModel(
-      title: json['title'] as String? ?? '',
+      label: json['label'] as String? ?? '',
       name: json['name'] as String? ?? '',
     );
 
 Map<String, dynamic> _$WorkTypeModelToJson(WorkTypeModel instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'title': instance.title,
+      'label': instance.label,
     };
 
 ImageModel _$ImageModelFromJson(Map<String, dynamic> json) => ImageModel(

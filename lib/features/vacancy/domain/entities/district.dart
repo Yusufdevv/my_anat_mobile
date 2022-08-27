@@ -1,3 +1,4 @@
+import 'package:anatomica/features/vacancy/data/models/district.dart';
 import 'package:anatomica/features/vacancy/data/models/region.dart';
 import 'package:anatomica/features/vacancy/domain/entities/region.dart';
 import 'package:equatable/equatable.dart';
@@ -13,15 +14,23 @@ class DistrictEntity extends Equatable {
   @RegionEntityConverter()
   final RegionEntity region;
 
-  DistrictEntity({
+  const DistrictEntity({
     required this.region,
     required this.soato,
     required this.title,
     required this.id,
-
   });
-
 
   @override
   List<Object?> get props => [id, title, soato, region];
+}
+
+class DistrictEntityConverter extends JsonConverter<DistrictEntity, Map<String, dynamic>?> {
+  const DistrictEntityConverter();
+
+  @override
+  DistrictEntity fromJson(Map<String, dynamic>? json) => DistrictModel.fromJson(json ?? {});
+
+  @override
+  Map<String, dynamic> toJson(DistrictEntity object) => {};
 }

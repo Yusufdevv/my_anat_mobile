@@ -15,9 +15,9 @@ class WTabBar extends StatelessWidget {
         color: lilyWhite,
         borderRadius: BorderRadius.circular(8),
       ),
-      height: 36,
+      height: 44,
       child: TabBar(
-        padding: const EdgeInsets.all(2),
+        padding: const EdgeInsets.all(6),
         indicator: ShapeDecoration(
           shadows: [
             BoxShadow(
