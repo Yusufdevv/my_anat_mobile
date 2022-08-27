@@ -3,6 +3,7 @@ import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/vacancy/data/datasources/vacancy_remote_datasource.dart';
+import 'package:anatomica/features/vacancy/data/models/category_list.dart';
 import 'package:anatomica/features/vacancy/data/models/district.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
@@ -19,9 +20,9 @@ class VacancyRepositoryImpl extends VacancyRepository {
   VacancyRepositoryImpl({required this.dataSource});
 
   @override
-  Future<Either<Failure, VacancyEntity>> getVacancies({ String? next, int? organizationId}) async {
+  Future<Either<Failure, VacancyEntity>> getVacancies({String? next, int? organizationId}) async {
     try {
-      final result = await dataSource.getVacancyList(next: next,organizationId:organizationId);
+      final result = await dataSource.getVacancyList(next: next, organizationId: organizationId);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(statusCode: 141, errorMessage: error.errorMessage));
@@ -82,8 +83,8 @@ class VacancyRepositoryImpl extends VacancyRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getCandidateList({String? next})
-  async {
+  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getCandidateList(
+      {String? next}) async {
     try {
       final result = await dataSource.getCandidateList();
       return Right(result);
@@ -116,6 +117,17 @@ class VacancyRepositoryImpl extends VacancyRepository {
   Future<Either<Failure, GenericPagination<RegionEntity>>> getRegion({String? next}) async {
     try {
       final result = await dataSource.getRegion();
+      return Right(result);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GenericPagination<CategoryListModel>>> getCategoryList(
+      {String? next}) async {
+    try {
+      final result = await dataSource.getCategoryList();
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));

@@ -8,6 +8,7 @@ import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/category_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/organization_vacancy.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
@@ -32,6 +33,7 @@ import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:formz/formz.dart';
 
 class VacancyScreen extends StatefulWidget {
   const VacancyScreen({Key? key}) : super(key: key);
@@ -50,6 +52,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
   initState() {
     tabController = TabController(length: 2, vsync: this);
     vacancyBloc = VacancyBloc(
+      categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       candidateListUseCase:
           CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       vacancyOptionUseCase:
@@ -63,6 +66,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
     vacancyBloc.add(GetVacancyListEvent());
     vacancyBloc.add(GetTopOrganizationEvent());
     vacancyBloc.add(GetCandidateListEvent());
+    vacancyBloc.add(GetCategoryListEvent());
 
     super.initState();
   }
@@ -108,20 +112,27 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                               ),
                         ),
                       ),
-                      SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          children: [
-                            ...List.generate(
-                              4,
-                              (index) => CategoryContainer(
-                                title: categoryList[index],
-                              ),
-                            )
-                          ],
-                        ),
+                      BlocBuilder<VacancyBloc, VacancyState>(
+                        builder: (context, state) {
+                          // if(state.categoryStatus.isSubmissionInProgress){
+                          //   return Lis
+                          // }
+                          return SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Row(
+                              children: [
+                                ...List.generate(
+                                  state.categoryList.length,
+                                  (index) => CategoryContainer(
+                                    title: state.categoryList[index].title,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        },
                       ),
                       //    const SizedBox(height: 20),
                       Padding(
