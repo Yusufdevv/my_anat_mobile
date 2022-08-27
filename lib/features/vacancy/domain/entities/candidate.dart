@@ -1,4 +1,4 @@
-import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
+import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -8,7 +8,7 @@ class CandidateListEntity extends Equatable {
   final int id;
   @JsonKey(defaultValue: '')
   final String fullName;
-  @ImageEntityConverter()
+  @ImageConverter()
   final ImageModel image;
   @SpecializationConverter()
   final Specialization specialization;

@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
 class HospitalModel {
-  @JsonKey(name: 'id', defaultValue: '')
+  @JsonKey(name: 'id', defaultValue: 0)
   final int id;
   @JsonKey(name: 'title', defaultValue: '')
   final String title;
@@ -15,15 +15,17 @@ class HospitalModel {
   final String phone;
   @JsonKey(name: 'description', defaultValue: '')
   final String description;
-  @JsonKey(name: 'logo', defaultValue: '')
+  @JsonKey(
+    name: 'logo',
+  )
   final AssetModel logo;
-  @JsonKey(name: '', defaultValue: '')
-  final AssetModel banner;
-  @JsonKey(name: '', defaultValue: '')
+  @JsonKey(name: 'images', defaultValue: [])
+  final List<AssetModel> banner;
+  @JsonKey(name: 'latitude', defaultValue: 0)
   final double latitude;
-  @JsonKey(name: '', defaultValue: '')
+  @JsonKey(name: 'longitude', defaultValue: 0)
   final double longitude;
-  @JsonKey(name: '', defaultValue: '')
+  @JsonKey(name: 'rating', defaultValue: 0)
   final double rating;
 
   HospitalModel(

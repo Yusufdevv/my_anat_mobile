@@ -242,15 +242,3 @@ class TypesEntity extends Equatable {
   @override
   List<Object?> get props => [id, title];
 }
-
-class ImageEntityConverter
-    extends JsonConverter<ImageEntity, Map<String, dynamic>?> {
-  const ImageEntityConverter();
-
-  @override
-  ImageEntity fromJson(Map<String, dynamic>? json) =>
-      ImageModel.fromJson(json ?? {});
-
-  @override
-  Map<String, dynamic> toJson(ImageEntity object) => {};
-}

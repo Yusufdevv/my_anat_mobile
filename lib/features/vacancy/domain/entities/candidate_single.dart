@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
@@ -49,7 +50,7 @@ class CandidateSingleEntity extends Equatable {
   final String telegram;
   @JsonKey(defaultValue: '')
   final String moderationStatus;
-  @ImageEntityConverter()
+  @ImageConverter()
   final ImageEntity img;
 
   const CandidateSingleEntity({
