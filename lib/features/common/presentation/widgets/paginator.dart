@@ -8,7 +8,7 @@ class Paginator extends StatelessWidget {
   final bool hasMoreToFetch;
   final Widget errorWidget;
   final EdgeInsets? padding;
-  final Widget Function(BuildContext context, int index)? separateBuilder;
+  final Widget Function(BuildContext context, int index)? separatorBuilder;
   final Axis scrollDirection;
 
   const Paginator({
@@ -20,7 +20,7 @@ class Paginator extends StatelessWidget {
     required this.errorWidget,
     this.padding = EdgeInsets.zero,
     this.scrollDirection = Axis.vertical,
-    this.separateBuilder,
+    this.separatorBuilder,
     Key? key,
   }) : super(key: key);
 
@@ -46,7 +46,7 @@ class Paginator extends StatelessWidget {
           }
           return itemBuilder(context, index);
         },
-        separatorBuilder: separateBuilder ?? (context, index) => const SizedBox(),
+        separatorBuilder: separatorBuilder ?? (context, index) => const SizedBox(),
         itemCount: itemCount + 1,
         shrinkWrap: true,
       );

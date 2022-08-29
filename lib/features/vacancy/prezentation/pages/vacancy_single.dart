@@ -224,7 +224,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               },
                             );
                           },
-                          separateBuilder: (context, index) => const SizedBox(height: 12),
+                          separatorBuilder: (context, index) => const SizedBox(height: 12),
                           hasMoreToFetch: state.fetchMore,
                           fetchMoreFunction: () {
                             context.read<VacancySingleBloc>().add(GetMoreRelatedVacancyList());

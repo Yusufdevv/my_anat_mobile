@@ -1,6 +1,6 @@
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/experience_bottomsheet.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filter_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/region_bottom_sheet.dart';
@@ -8,7 +8,9 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/salary_bottom_sh
 import 'package:flutter/material.dart';
 
 class FilterBottomSheet extends StatelessWidget {
-  const FilterBottomSheet({Key? key}) : super(key: key);
+  final RegionBloc regionBloc;
+
+  const FilterBottomSheet({required this.regionBloc, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class FilterBottomSheet extends StatelessWidget {
         FilterItem(
             onTap: () {
               Navigator.of(context).pop();
-              showRegionBottomSheet(context);
+              showRegionBottomSheet(context, regionBloc);
             },
             title: 'Город/район работы'),
         const SizedBox(height: 20),
@@ -48,11 +50,11 @@ class FilterBottomSheet extends StatelessWidget {
   }
 }
 
-void showFilterBottomSheet(BuildContext context) {
+void showFilterBottomSheet(BuildContext context, RegionBloc regionBloc) {
   showModalBottomSheet(
     context: context,
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
-    builder: (context) => const FilterBottomSheet(),
+    builder: (context) => FilterBottomSheet(regionBloc: regionBloc),
   );
 }

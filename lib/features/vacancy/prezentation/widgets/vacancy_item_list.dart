@@ -29,7 +29,7 @@ class VacancyItemList extends StatelessWidget {
               },
             );
           },
-          separateBuilder: (context, index) => const SizedBox(height: 12),
+          separatorBuilder: (context, index) => const SizedBox(height: 12),
           hasMoreToFetch: state.fetchMore,
           fetchMoreFunction: () {
             context.read<VacancyBloc>().add(GetMoreVacancyListEvent());

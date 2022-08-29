@@ -21,10 +21,11 @@ class CheckBoxTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:padding?? const EdgeInsets.symmetric(horizontal: 16),
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: onTap,
             child: Row(
               children: [
