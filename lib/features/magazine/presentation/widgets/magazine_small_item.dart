@@ -1,4 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
@@ -69,7 +70,7 @@ class _MagazineSmallItemState extends State<MagazineSmallItem> {
             margin: const EdgeInsets.only(top: 12),
             onTap: widget.onButtonTap,
             child: Text(
-              widget.journalEntity.price.toString(),
+              MyFunctions.getFormatCostFromInt(widget.journalEntity.price),
               style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),

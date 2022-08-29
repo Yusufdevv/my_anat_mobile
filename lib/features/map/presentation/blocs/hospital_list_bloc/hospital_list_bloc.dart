@@ -19,8 +19,7 @@ class HospitalListBloc extends Bloc<HospitalListEvent, HospitalListState> {
     });
     on<_GetHospitals>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result =
-          await getHospitals.call(SearchParam(next: '', search: event.search));
+      final result = await getHospitals.call(SearchParam(next: '', search: event.search));
       if (result.isRight) {
         emit(state.copyWith(hospitals: result.right.results, status: FormzStatus.submissionSuccess));
       } else {

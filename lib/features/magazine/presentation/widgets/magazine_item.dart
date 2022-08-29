@@ -139,7 +139,7 @@ class MagazineItem extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 12),
                         onTap: onLeftButtonTap,
                         child: Text(
-                          journalEntity.price.toString(),
+                          MyFunctions.getFormatCostFromInt(journalEntity.price),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
