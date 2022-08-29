@@ -41,6 +41,7 @@ const frostedMint = _frostedMint;
 const mediumSeaGreen = _mediumSeaGreen;
 const steelBlue = _steelBlue;
 const deleteButton = _sunsetOrange2;
+const appBarDivider = _whiteSmoke3;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -83,3 +84,4 @@ const _frostedMint = Color(0xffE8F6EE);
 const _mediumSeaGreen = Color(0xff43B778);
 const _steelBlue = Color(0xff437FB7);
 const _sunsetOrange2 = Color(0xffFF4C4C);
+const _whiteSmoke3 = Color(0xffF4F4F4);

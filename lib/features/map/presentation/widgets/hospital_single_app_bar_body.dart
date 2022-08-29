@@ -3,6 +3,7 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HospitalSingleAppBarBody extends StatelessWidget {
   final String shareValue;
@@ -28,7 +29,9 @@ class HospitalSingleAppBarBody extends StatelessWidget {
         ),
         SvgPicture.asset(AppIcons.mainLogo, height: 20),
         WScaleAnimation(
-          onTap: () {},
+          onTap: () async {
+            await Share.share(shareValue);
+          },
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: SvgPicture.asset(

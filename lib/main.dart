@@ -68,12 +68,10 @@ class _MyAppState extends State<MyApp> {
             listener: (context, state) {
               switch (state.status) {
                 case AuthenticationStatus.unauthenticated:
-                  navigator.pushAndRemoveUntil(
-                      fade(page: const LoginScreen()), (route) => false);
+                  navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
                   break;
                 case AuthenticationStatus.authenticated:
-                  navigator.pushAndRemoveUntil(
-                      fade(page: const HomeScreen()), (route) => false);
+                  navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
                   break;
               }
             },
