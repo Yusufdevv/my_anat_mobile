@@ -32,6 +32,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
   late TabController _controller;
   late TextEditingController _searchFieldController;
   final List<MapObject<dynamic>> _mapObjects = [];
+
   double latitude = 0;
   double longitude = 0;
   final clusterId = const MapObjectId('big_cluster_id');

@@ -12,6 +12,6 @@ class AssetModel {
   @JsonKey(name: 'small',defaultValue: '')
   final String small;
 
-  AssetModel({required this.small, required this.middle, required this.origin});
+  const AssetModel({required this.small, required this.middle, required this.origin});
   factory AssetModel.fromJson(Map<String,dynamic> json)=>_$AssetModelFromJson(json);
 }

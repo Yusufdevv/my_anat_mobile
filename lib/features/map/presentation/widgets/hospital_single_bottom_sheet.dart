@@ -107,11 +107,11 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         Expanded(
                           child: WButton(
                             onTap: () {
-                              Navigator.of(context, rootNavigator: true).pushReplacement(
-                                fade(
-                                  page: const HospitalSingleScreen(),
-                                ),
-                              );
+                              // Navigator.of(context, rootNavigator: true).pushReplacement(
+                              //   fade(
+                              //     page: const HospitalSingleScreen(),
+                              //   ),
+                              // );
                             },
                             text: 'Подробнее',
                             textColor: white,

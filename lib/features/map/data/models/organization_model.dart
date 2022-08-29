@@ -48,7 +48,7 @@ class HospitalModel extends HospitalEntity {
       required this.locationUrl,
       required this.phoneNumbers,
       required this.rating,
-      required this.specialization}):super(title: title,addres: address,images: imagesList,rating: rating);
+      required this.specialization}):super(title: title,addres: address,images: imagesList,rating: rating,slug: slug);
 
   factory HospitalModel.fromJson(Map<String, dynamic> json) =>
       _$HospitalModelFromJson(json);

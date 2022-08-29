@@ -8,7 +8,7 @@ class HospitalSingleEntity {
 
   final String name;
 
-  final String icon;
+  final AssetModel icon;
 
   final String address;
 
@@ -17,20 +17,17 @@ class HospitalSingleEntity {
   final String phone;
 
   final MapPosition location;
-
   final AssetModel bannerImage;
-
   final String description;
 
-  HospitalSingleEntity(
-      {required this.rating,
-      required this.address,
-      required this.id,
-      required this.name,
-      required this.slug,
-      required this.phone,
-      required this.location,
-      required this.description,
-      required this.icon,
-      required this.bannerImage});
+  const HospitalSingleEntity({ this.rating = 0,
+    this.address = '',
+    this.id =0,
+    this.name = '',
+    this.slug = '',
+    this.phone = '',
+    this.location = const MapPosition(lat: 0, long: 0, zoomLevel: 10),
+    this.description = '',
+    this.icon =  const AssetModel(small: '', middle: '', origin: ''),
+    this.bannerImage = const AssetModel(small: '', middle: '', origin: '')});
 }

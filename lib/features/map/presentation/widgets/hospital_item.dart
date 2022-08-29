@@ -21,7 +21,7 @@ class HospitalItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return WScaleAnimation(
       onTap: () => Navigator.of(context, rootNavigator: true)
-          .push(fade(page: const HospitalSingleScreen())),
+          .push(fade(page:  HospitalSingleScreen(slug: entity.slug,))),
       child: DecoratedBox(
         decoration: BoxDecoration(
           boxShadow: [

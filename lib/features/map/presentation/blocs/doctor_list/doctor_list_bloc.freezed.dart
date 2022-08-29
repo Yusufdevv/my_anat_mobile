@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DoctorListEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getDoctors,
+    required TResult Function(String search) getDoctors,
     required TResult Function() getMoreDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getDoctors,
+    TResult Function(String search)? getDoctors,
     TResult Function()? getMoreDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getDoctors,
+    TResult Function(String search)? getDoctors,
     TResult Function()? getMoreDoctors,
     required TResult orElse(),
   }) =>
@@ -78,6 +78,7 @@ abstract class _$$_GetDoctorsCopyWith<$Res> {
   factory _$$_GetDoctorsCopyWith(
           _$_GetDoctors value, $Res Function(_$_GetDoctors) then) =
       __$$_GetDoctorsCopyWithImpl<$Res>;
+  $Res call({String search});
 }
 
 /// @nodoc
@@ -90,54 +91,77 @@ class __$$_GetDoctorsCopyWithImpl<$Res>
 
   @override
   _$_GetDoctors get _value => super._value as _$_GetDoctors;
+
+  @override
+  $Res call({
+    Object? search = freezed,
+  }) {
+    return _then(_$_GetDoctors(
+      search: search == freezed
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_GetDoctors implements _GetDoctors {
-  _$_GetDoctors();
+  _$_GetDoctors({required this.search});
+
+  @override
+  final String search;
 
   @override
   String toString() {
-    return 'DoctorListEvent.getDoctors()';
+    return 'DoctorListEvent.getDoctors(search: $search)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_GetDoctors);
+        (other.runtimeType == runtimeType &&
+            other is _$_GetDoctors &&
+            const DeepCollectionEquality().equals(other.search, search));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(search));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_GetDoctorsCopyWith<_$_GetDoctors> get copyWith =>
+      __$$_GetDoctorsCopyWithImpl<_$_GetDoctors>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getDoctors,
+    required TResult Function(String search) getDoctors,
     required TResult Function() getMoreDoctors,
   }) {
-    return getDoctors();
+    return getDoctors(search);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getDoctors,
+    TResult Function(String search)? getDoctors,
     TResult Function()? getMoreDoctors,
   }) {
-    return getDoctors?.call();
+    return getDoctors?.call(search);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getDoctors,
+    TResult Function(String search)? getDoctors,
     TResult Function()? getMoreDoctors,
     required TResult orElse(),
   }) {
     if (getDoctors != null) {
-      return getDoctors();
+      return getDoctors(search);
     }
     return orElse();
   }
@@ -175,7 +199,12 @@ class _$_GetDoctors implements _GetDoctors {
 }
 
 abstract class _GetDoctors implements DoctorListEvent {
-  factory _GetDoctors() = _$_GetDoctors;
+  factory _GetDoctors({required final String search}) = _$_GetDoctors;
+
+  String get search;
+  @JsonKey(ignore: true)
+  _$$_GetDoctorsCopyWith<_$_GetDoctors> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -219,7 +248,7 @@ class _$_GetMoreDoctors implements _GetMoreDoctors {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getDoctors,
+    required TResult Function(String search) getDoctors,
     required TResult Function() getMoreDoctors,
   }) {
     return getMoreDoctors();
@@ -228,7 +257,7 @@ class _$_GetMoreDoctors implements _GetMoreDoctors {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getDoctors,
+    TResult Function(String search)? getDoctors,
     TResult Function()? getMoreDoctors,
   }) {
     return getMoreDoctors?.call();
@@ -237,7 +266,7 @@ class _$_GetMoreDoctors implements _GetMoreDoctors {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getDoctors,
+    TResult Function(String search)? getDoctors,
     TResult Function()? getMoreDoctors,
     required TResult orElse(),
   }) {

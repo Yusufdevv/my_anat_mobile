@@ -11,7 +11,8 @@ DoctorsModel _$DoctorsModelFromJson(Map<String, dynamic> json) => DoctorsModel(
           ? null
           : AssetModel.fromJson(json['image'] as Map<String, dynamic>),
       id: json['id'] as int? ?? 0,
-      specialization: json['specialization'] as String? ?? '',
+      specializations:
+          TitlerModel.fromJson(json['specialization'] as Map<String, dynamic>),
       rating: (json['rating'] as num?)?.toDouble() ?? 0,
       address: json['address'] as String? ?? '',
       position: json['position'] as String? ?? '',
@@ -30,5 +31,5 @@ Map<String, dynamic> _$DoctorsModelToJson(DoctorsModel instance) =>
       'rating': instance.rating,
       'lat': instance.lat,
       'long': instance.long,
-      'specialization': instance.specialization,
+      'specialization': instance.specializations,
     };

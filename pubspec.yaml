@@ -23,7 +23,7 @@ dependencies:
   bloc_concurrency: ^0.2.0
   cached_network_image: ^3.2.1
   yandex_mapkit: ^3.0.3
-  geolocator: ^9.0.1
+  geolocator: ^8.2.0
   permission_handler: ^10.0.0
   pin_code_fields: ^7.4.0
   keyboard_dismisser: ^3.0.0
