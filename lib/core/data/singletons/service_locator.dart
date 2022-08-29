@@ -38,7 +38,7 @@ Future<void> setupLocator() async {
       () => JournalDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(() => JournalRepositoryImpl(
       datasource: serviceLocator<JournalDatasourceImpl>()));
-  serviceLocator.registerLazySingleton(
-      () => ProfileDatasourceImpl(serviceLocator<DioSettings>().dio));
-
+  serviceLocator.registerLazySingleton(() => ProfileDatasourceImpl(
+      serviceLocator<DioSettings>().dio,
+      paginationDatasource: serviceLocator()));
 }

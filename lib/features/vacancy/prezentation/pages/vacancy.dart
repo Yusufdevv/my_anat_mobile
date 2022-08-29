@@ -1,11 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/category_list.dart';
@@ -14,26 +11,17 @@ import 'package:anatomica/features/vacancy/domain/usecases/top_organization.dart
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_option.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
-import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_single.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/category_container.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/company_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filter_bottom_sheet.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/filter_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filter_card_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filtr_container.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_appbar.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_card_list.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_list.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_tab_bar.dart';
-import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:formz/formz.dart';
 
 class VacancyScreen extends StatefulWidget {
   const VacancyScreen({Key? key}) : super(key: key);
@@ -80,7 +68,6 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: vacancyBloc),

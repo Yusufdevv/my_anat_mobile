@@ -10,7 +10,10 @@ import 'navigator.dart';
 
 enum NavItemEnum { map, magazine, vacancies, account }
 
+
 class HomeScreen extends StatefulWidget {
+
+
   const HomeScreen({Key? key}) : super(key: key);
 
   static Route route() => MaterialPageRoute<void>(builder: (_) => const HomeScreen());
