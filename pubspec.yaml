@@ -80,7 +80,7 @@ flutter:
     - assets/icons/map_screen/
     - assets/icons/global/
     - assets/icons/profile/
-    - lib/assets/translations
+    - lib/assets/translations/
   fonts:
     - family: Averta CY
       fonts:
