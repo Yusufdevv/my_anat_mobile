@@ -6,7 +6,7 @@ import 'package:anatomica/features/hospital_single/data/models/hospital_model.da
 import 'package:anatomica/features/hospital_single/data/repository/hospital_repository.dart';
 
 class GetSingleHospitalUseCase extends UseCase<HospitalModel, String> {
-  final GlobalRequestRepopsitory repository = GlobalRequestRepopsitory();
+  final GlobalRequestRepository repository = GlobalRequestRepository();
 
   @override
   Future<Either<Failure, HospitalModel>> call(String slug) async {
