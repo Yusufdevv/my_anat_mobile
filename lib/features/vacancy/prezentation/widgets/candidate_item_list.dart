@@ -30,7 +30,7 @@ class CandidateItemList extends StatelessWidget {
           fetchMoreFunction: () {
             context.read<VacancyBloc>().add(GetMoreCandidateList());
           },
-          separateBuilder: (context, index) => const SizedBox(height: 12),
+          separatorBuilder: (context, index) => const SizedBox(height: 12),
           hasMoreToFetch: state.fetchMoreCandidate,
           errorWidget: const Center(child: Text('Fail')),
           itemCount: state.candidateList.length,

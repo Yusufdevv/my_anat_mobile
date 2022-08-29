@@ -21,7 +21,7 @@ class VacancyCardList extends StatelessWidget {
               onTap: onTap,
               vacancyListEntity: state.organizationVacancyList[index],
             ),
-            separateBuilder: (context, index) => const SizedBox(width: 12),
+            separatorBuilder: (context, index) => const SizedBox(width: 12),
             itemCount: state.organizationVacancyList.length,
             errorWidget: const Center(child: Text('Fail')),
             fetchMoreFunction: () {

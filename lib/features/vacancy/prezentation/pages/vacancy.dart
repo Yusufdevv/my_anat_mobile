@@ -9,10 +9,13 @@ import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/category_list.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/district.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/organization_vacancy.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/region.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_option.dart';
+import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_single.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item.dart';
@@ -47,6 +50,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
   bool hasFilter = false;
   List<String> categoryList = ['Стоматолог', 'Кардиолог', 'Терапевт', 'Пулмонолг'];
   late VacancyBloc vacancyBloc;
+  late RegionBloc regionBloc;
 
   @override
   initState() {
@@ -63,6 +67,9 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
       topOrganizationUseCase:
           TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
     );
+    regionBloc = RegionBloc(
+        districtUseCase: DistrictUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        regionUseCase: RegionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
     vacancyBloc.add(GetVacancyListEvent());
     vacancyBloc.add(GetTopOrganizationEvent());
     vacancyBloc.add(GetCandidateListEvent());
@@ -75,6 +82,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
   dispose() {
     tabController.dispose();
     vacancyBloc.close();
+    regionBloc.close();
     super.dispose();
   }
 
@@ -206,7 +214,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
               const SizedBox(height: 16),
               FilterContainer(
                 onTap: () {
-                  showFilterBottomSheet(context);
+                  showFilterBottomSheet(context, regionBloc);
                 },
               ),
               // const SizedBox(height: 20),

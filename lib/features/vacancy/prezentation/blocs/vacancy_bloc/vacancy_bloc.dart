@@ -61,11 +61,12 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     on<GetVacancyListEvent>((event, emit) async {
       final result = await vacancyListUseCase.call(null);
       if (result.isRight) {
+        print('result.right.next ${result.right.next}');
         emit(
           state.copyWith(
             next: result.right.next,
             paginatorStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-            fetchMore: result.right.count > state.vacancyList.length ? true : false,
+            fetchMore: result.right.next != null,
             vacancyList: result.right.results,
           ),
         );
@@ -74,6 +75,8 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       }
     });
     on<GetMoreVacancyListEvent>((event, emit) async {
+      print('state.next ${state.next}');
+      print(' come to getMore vancacies event');
       final response = await vacancyListUseCase.call(state.next);
       if (response.isRight) {
         final result = response.right;
@@ -82,8 +85,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
             next: result.next,
             vacancyList: [...state.vacancyList, ...result.results],
             paginatorStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-            fetchMore:
-                result.count > [...state.vacancyList, ...result.results].length ? true : false,
+            fetchMore: result.next != null,
           ),
         );
       } else {
