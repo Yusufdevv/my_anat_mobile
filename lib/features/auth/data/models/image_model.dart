@@ -13,12 +13,3 @@ class ImageModel extends ImageEntity {
   factory ImageModel.fromJson(Map<String, dynamic> json) => _$ImageModelFromJson(json);
   Map<String, dynamic> toJson() => _$ImageModelToJson(this);
 }
-
-class ImageConverter implements JsonConverter<ImageEntity, Map<String, dynamic>?> {
-  const ImageConverter();
-  @override
-  ImageEntity fromJson(Map<String, dynamic>? json) => ImageModel.fromJson(json ?? {});
-
-  @override
-  Map<String, dynamic> toJson(ImageEntity object) => {};
-}

@@ -13,3 +13,27 @@ class SearchJournals extends JournalEvent {
 }
 
 class MoreSearchJournals extends JournalEvent {}
+
+class GetJournalArticles extends JournalEvent {}
+
+class GetMoreJournalArticles extends JournalEvent {}
+
+class GetFirstArticleDetail extends JournalEvent {
+  final String slug;
+  GetFirstArticleDetail({required this.slug});
+}
+
+class GetJournalSingleArticles extends JournalEvent {
+  final int id;
+  GetJournalSingleArticles({required this.id});
+}
+
+class GetMoreJournalSingleArticles extends JournalEvent {
+  final int id;
+  GetMoreJournalSingleArticles({required this.id});
+}
+
+class GetSingleArticle extends JournalEvent {
+  final String slug;
+  GetSingleArticle({required this.slug});
+}
