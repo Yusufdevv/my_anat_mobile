@@ -9,6 +9,18 @@ class JournalState extends Equatable {
   final String? searchNext;
   final List<JournalEntity> searchJournals;
   final bool searchFetchMore;
+  final PaginatorStatus journalArticleStatus;
+  final String? journalArticleNext;
+  final List<JournalArticleEntity> journalArticles;
+  final bool journalArticleFetchMore;
+  final PaginatorStatus journalSingleArticleStatus;
+  final String? journalSingleArticleNext;
+  final List<JournalArticleEntity> journalSingleArticles;
+  final bool journalSingleArticleFetchMore;
+  final JournalArticleSingleEntity firstArticle;
+  final FormzStatus getFirstArticleStatus;
+  final JournalArticleSingleEntity articleSingle;
+  final FormzStatus articleSingleStatus;
   const JournalState({
     this.status = PaginatorStatus.PAGINATOR_INITIAL,
     this.next,
@@ -18,6 +30,18 @@ class JournalState extends Equatable {
     this.searchNext,
     this.searchJournals = const [],
     this.searchFetchMore = false,
+    this.journalArticleStatus = PaginatorStatus.PAGINATOR_SUCCESS,
+    this.journalArticleNext,
+    this.journalArticles = const [],
+    this.journalArticleFetchMore = false,
+    this.journalSingleArticleStatus = PaginatorStatus.PAGINATOR_SUCCESS,
+    this.journalSingleArticleNext,
+    this.journalSingleArticles = const [],
+    this.journalSingleArticleFetchMore = false,
+    this.firstArticle = const JournalArticleSingleEntity(),
+    this.getFirstArticleStatus = FormzStatus.pure,
+    this.articleSingle = const JournalArticleSingleEntity(),
+    this.articleSingleStatus = FormzStatus.pure,
   });
 
   JournalState copyWith({
@@ -29,6 +53,18 @@ class JournalState extends Equatable {
     String? searchNext,
     List<JournalEntity>? searchJournals,
     bool? searchFetchMore,
+    PaginatorStatus? journalArticleStatus,
+    String? journalArticleNext,
+    List<JournalArticleEntity>? journalArticles,
+    bool? journalArticleFetchMore,
+    PaginatorStatus? journalSingleArticleStatus,
+    String? journalSingleArticleNext,
+    List<JournalArticleEntity>? journalSingleArticles,
+    bool? journalSingleArticleFetchMore,
+    JournalArticleSingleEntity? firstArticle,
+    FormzStatus? getFirstArticleStatus,
+    JournalArticleSingleEntity? articleSingle,
+    FormzStatus? articleSingleStatus,
   }) =>
       JournalState(
         next: next,
@@ -39,6 +75,18 @@ class JournalState extends Equatable {
         searchJournals: searchJournals ?? this.searchJournals,
         searchStatus: searchStatus ?? this.searchStatus,
         searchFetchMore: searchFetchMore ?? this.searchFetchMore,
+        journalArticleStatus: journalArticleStatus ?? this.journalArticleStatus,
+        journalArticleNext: journalArticleNext ?? this.journalArticleNext,
+        journalArticles: journalArticles ?? this.journalArticles,
+        journalArticleFetchMore: journalArticleFetchMore ?? this.journalArticleFetchMore,
+        journalSingleArticleStatus: journalSingleArticleStatus ?? this.journalSingleArticleStatus,
+        journalSingleArticleNext: journalSingleArticleNext ?? this.journalSingleArticleNext,
+        journalSingleArticles: journalSingleArticles ?? this.journalSingleArticles,
+        journalSingleArticleFetchMore: journalSingleArticleFetchMore ?? this.journalSingleArticleFetchMore,
+        firstArticle: firstArticle ?? this.firstArticle,
+        getFirstArticleStatus: getFirstArticleStatus ?? this.getFirstArticleStatus,
+        articleSingle: articleSingle ?? this.articleSingle,
+        articleSingleStatus: articleSingleStatus ?? this.articleSingleStatus,
       );
 
   @override
@@ -51,5 +99,17 @@ class JournalState extends Equatable {
         searchNext,
         searchJournals,
         searchFetchMore,
+        journalArticleStatus,
+        journalArticleNext,
+        journalArticles,
+        journalArticleFetchMore,
+        firstArticle,
+        getFirstArticleStatus,
+        journalArticleStatus,
+        journalArticleNext,
+        journalArticles,
+        journalArticleFetchMore,
+        articleSingle,
+        articleSingleStatus,
       ];
 }

@@ -1,4 +1,5 @@
 import 'package:anatomica/features/auth/data/models/image_model.dart';
+import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';

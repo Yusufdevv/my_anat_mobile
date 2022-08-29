@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OneTimeExpect extends StatelessWidget {
-  const OneTimeExpect({Key? key}) : super(key: key);
+  final bool isRegistered;
+  const OneTimeExpect({required this.isRegistered, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class OneTimeExpect extends StatelessWidget {
         leadingWidth: 0,
         automaticallyImplyLeading: false,
         title: Text(
-          'Единовременный платеж',
+          isRegistered ? 'Покупка журнала' : 'Единовременный платеж',
           style: Theme.of(context).textTheme.headline1,
         ),
         actions: [
@@ -27,7 +28,7 @@ class OneTimeExpect extends StatelessWidget {
             padding: const EdgeInsets.only(right: 16),
             child: WScaleAnimation(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.popUntil(context, (route) => route.isFirst);
               },
               child: SvgPicture.asset(
                 AppIcons.close,
@@ -45,34 +46,23 @@ class OneTimeExpect extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Ожидание',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
             Text(
               'Ваш платеж на покупку журнала\n"Май 2022" в ожидании',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline3!
-                  .copyWith(fontWeight: FontWeight.w400),
+              style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
               textAlign: TextAlign.center,
             ),
           ],
         ),
       ),
       bottomNavigationBar: WButton(
-        margin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).padding.bottom, left: 16, right: 16),
+        margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
         onTap: () {},
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(AppIcons.refresh),
-            const SizedBox(width: 8),
-            const Text('Обновить страницу')
-          ],
+          children: [SvgPicture.asset(AppIcons.refresh), const SizedBox(width: 8), const Text('Обновить страницу')],
         ),
       ),
     );

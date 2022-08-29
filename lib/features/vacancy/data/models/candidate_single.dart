@@ -1,5 +1,4 @@
-import 'package:anatomica/features/auth/data/models/image_model.dart';
-import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
+import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
 import 'package:anatomica/features/vacancy/domain/entities/region.dart';
@@ -34,8 +33,7 @@ class CandidateSingleModel extends CandidateSingleEntity {
       required super.showInProfileBio,
       required super.work});
 
-  factory CandidateSingleModel.fromJson(Map<String, dynamic> json) =>
-      _$CandidateSingleModelFromJson(json);
+  factory CandidateSingleModel.fromJson(Map<String, dynamic> json) => _$CandidateSingleModelFromJson(json);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
