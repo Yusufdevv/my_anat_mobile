@@ -1,12 +1,21 @@
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/auth/data/models/user_model.dart';
+import 'package:anatomica/features/pagination/data/repository/pagination.dart';
+import 'package:anatomica/features/vacancy/data/models/vacancy.dart';
+import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:dio/dio.dart';
 
 abstract class ProfileDatasource {
   /// Calls the https://anatomika.xn--h28h.uz/... endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
+  final PaginationDatasource paginationDatasource;
+
+  ProfileDatasource({required this.paginationDatasource});
+
+  Future<VacancyModel> getLikedVacancyList({String? next, int? organizationId});
+
   Future<UserModel> getProfile();
 
   Future<UserModel> editProfile(Map<String, dynamic> data);
@@ -17,7 +26,46 @@ abstract class ProfileDatasource {
 class ProfileDatasourceImpl extends ProfileDatasource {
   final Dio _dio;
 
-  ProfileDatasourceImpl(this._dio);
+  ProfileDatasourceImpl(this._dio, {required super.paginationDatasource});
+
+  @override
+  Future<VacancyModel> getLikedVacancyList(
+      {String? next, int? organizationId}) async {
+    try {
+      const url = '/vacancy/vacancy/liked/';
+      final Map<String, dynamic> query = {};
+      if (organizationId != null) {
+        query.putIfAbsent('organization', () => organizationId);
+      }
+
+      final result = await paginationDatasource.fetchMore(
+        url: url,
+        next: next,
+        fromJson: VacancyListModel.fromJson,
+        query: query,
+      );
+
+      final vacancies = VacancyModel(
+        next: result.next,
+        results: result.results,
+        count: result.count,
+      );
+      return vacancies;
+    } on ServerException {
+      rethrow;
+    } on DioError catch (error) {
+      throw ServerException(
+        errorMessage:
+            'Authentication Repository Dio Error. Error message: ${error.message}',
+        statusCode: 141,
+      );
+    } on Exception catch (error) {
+      throw ServerException(
+        errorMessage: 'Authentication Repository Error. Error message: $error',
+        statusCode: 141,
+      );
+    }
+  }
 
   @override
   Future<UserModel> getProfile() async {
@@ -66,7 +114,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
 
   @override
   Future<UserModel> uploadImg(FormData formData) async {
-    final response = await _dio.post('/image/create/',data: formData,
+    final response = await _dio.post('/image/create/',
+        data: formData,
         options: Options(headers: {
           'Authorization': 'Bearer ${StorageRepository.getString('token')}'
         }));

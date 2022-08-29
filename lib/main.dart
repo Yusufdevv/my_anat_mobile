@@ -10,13 +10,23 @@ import 'package:anatomica/features/auth/presentation/pages/splash.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await setupLocator();
-  runApp(const MyApp());
+  runApp(EasyLocalization(
+      path: 'lib/assets/translations',
+      supportedLocales: const [
+        Locale('ru'),
+        Locale('uz'),
+        Locale('uz_kr'),
+      ],
+      fallbackLocale: Locale('ru'),
+      child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -58,10 +68,12 @@ class _MyAppState extends State<MyApp> {
             listener: (context, state) {
               switch (state.status) {
                 case AuthenticationStatus.unauthenticated:
-                  navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
+                  navigator.pushAndRemoveUntil(
+                      fade(page: const LoginScreen()), (route) => false);
                   break;
-                case AuthenticationStatus.unauthenticated:
-                  navigator.pushAndRemoveUntil(fade(page: const  HomeScreen()), (route) => false);
+                case AuthenticationStatus.authenticated:
+                  navigator.pushAndRemoveUntil(
+                      fade(page: const HomeScreen()), (route) => false);
                   break;
               }
             },

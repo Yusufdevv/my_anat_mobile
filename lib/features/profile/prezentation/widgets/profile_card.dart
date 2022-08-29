@@ -43,7 +43,9 @@ class _ProfileCardState extends State<ProfileCard>
               context.read<ProfileBloc>().add(GetProfileEvent());
             }
             if (state.getProfileStatus == FormzStatus.submissionInProgress) {
-              return const SizedBox();
+              return const SizedBox(
+                height: 80,
+              );
             } else if (state.getProfileStatus ==
                 FormzStatus.submissionSuccess) {
               return WScaleAnimation(

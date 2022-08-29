@@ -46,7 +46,7 @@ dependencies:
   formz: ^0.4.1
   json_annotation: ^4.6.0
   visibility_detector: ^0.2.2
-
+  easy_localization: ^3.0.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
@@ -78,6 +78,7 @@ flutter:
     - assets/icons/map_screen/
     - assets/icons/global/
     - assets/icons/profile/
+    - lib/assets/translations
   fonts:
     - family: Averta CY
       fonts:

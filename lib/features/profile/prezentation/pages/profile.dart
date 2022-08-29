@@ -31,15 +31,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
-
   late ImagePicker imagePicker;
   late ProfileBloc _profileBloc;
 
-
-
   @override
   void initState() {
-    imagePicker=ImagePicker();
+    imagePicker = ImagePicker();
     _profileBloc = ProfileBloc(
         getProfileUseCase: GetProfileUseCase(
             profileRepository:
@@ -70,10 +67,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                   if (state.getProfileStatus.isPure) {
                     context.read<ProfileBloc>().add(GetProfileEvent());
                   }
-                  if (state.getProfileStatus ==
-                      FormzStatus.submissionInProgress) {
-                    return const Center(
-                      child: CupertinoActivityIndicator(),
+                  if (state.getProfileStatus == FormzStatus.submissionInProgress) {
+                    return const SizedBox(
+                      height: 48,
                     );
                   } else if (state.getProfileStatus ==
                       FormzStatus.submissionSuccess) {
