@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
@@ -216,7 +217,7 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              widget.price.toString(),
+                              MyFunctions.getFormatCostFromInt(widget.price),
                               style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20),
                             ),
                           ],

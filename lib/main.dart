@@ -18,15 +18,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await setupLocator();
-  runApp(EasyLocalization(
-      path: 'lib/assets/translations',
-      supportedLocales: const [
-        Locale('ru'),
-        Locale('uz'),
-        Locale('uz_kr'),
-      ],
-      fallbackLocale: Locale('ru'),
-      child: const MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
