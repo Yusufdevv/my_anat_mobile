@@ -4,7 +4,7 @@ import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:dio/dio.dart';
 
-class GlobalRequestRepopsitory {
+class GlobalRequestRepository {
   final dio = serviceLocator<DioSettings>().dio;
 
   String token = 'fe977373806790366944dac3f8206452fc79441b';
