@@ -67,4 +67,19 @@ abstract class MyFunctions {
         return '';
     }
   }
+
+  static String getFormatCostFromInt(int price) {
+    if (price == 0) {
+      return '0 UZS';
+    } else {
+      final oldCost = StringBuffer(price.toString());
+      final newCost = StringBuffer();
+
+      for (var i = 0; i < oldCost.length; i++) {
+        if ((oldCost.length - i) % 3 == 0 && i != 0) newCost.write(' ');
+        newCost.write(oldCost.toString()[i]);
+      }
+      return '$newCost UZS';
+    }
+  }
 }
