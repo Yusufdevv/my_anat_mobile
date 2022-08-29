@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';
+import 'package:anatomica/features/map/domain/usecases/get_hospitals.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'doctor_list_event.dart';
 
@@ -18,7 +20,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
   DoctorListBloc(this.useCase) : super(DoctorListState()) {
     on<_GetDoctors>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await useCase('');
+      final result = await useCase(SearchParam(next: '',search: event.search));
       if (result.isRight) {
         emit(state.copyWith(
             status: FormzStatus.submissionSuccess,
@@ -33,7 +35,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
     });
     on<_GetMoreDoctors>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await useCase(state.next);
+      final result = await useCase(SearchParam(next: state.next, ));
       if (result.isRight) {
         emit(state.copyWith(
             status: FormzStatus.submissionSuccess,
@@ -47,4 +49,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
       }
     });
   }
+
+  EventTransformer<MyEvent> debounce<MyEvent>(Duration duration) =>
+          (events, mapper) => events.debounceTime(duration).flatMap(mapper);
 }

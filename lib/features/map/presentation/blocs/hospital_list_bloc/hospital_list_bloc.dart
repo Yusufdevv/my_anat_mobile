@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'hospital_list_event.dart';
 
@@ -21,7 +22,8 @@ class HospitalListBloc extends Bloc<HospitalListEvent, HospitalListState> {
     });
     on<_GetHospitals>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await getHospitals.call('');
+      final result =
+          await getHospitals.call(SearchParam(next: '', search: event.search));
       if (result.isRight) {
         emit(state.copyWith(
             hospitals: result.right.results,
@@ -29,10 +31,12 @@ class HospitalListBloc extends Bloc<HospitalListEvent, HospitalListState> {
       } else {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
       }
-    });
+    }, transformer: debounce(const Duration(milliseconds: 300)));
     on<_GetMoreHospitals>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await getHospitals(state.next);
+      final result = await getHospitals(SearchParam(
+        next: state.next,
+      ));
       if (result.isRight) {
         emit(state.copyWith(
             hospitals: [...state.hospitals, ...result.right.results],
@@ -42,4 +46,7 @@ class HospitalListBloc extends Bloc<HospitalListEvent, HospitalListState> {
       }
     });
   }
+
+  EventTransformer<MyEvent> debounce<MyEvent>(Duration duration) =>
+      (events, mapper) => events.debounceTime(duration).flatMap(mapper);
 }

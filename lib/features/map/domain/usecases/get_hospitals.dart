@@ -7,11 +7,27 @@ import 'package:anatomica/features/pagination/data/models/generic_pagination.dar
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 
-class GetHospitalsUseCase extends UseCase<GenericPagination<HospitalModel>,String>{
-  final PaginationRepository repo=PaginationRepository();
+class GetHospitalsUseCase
+    extends UseCase<GenericPagination<HospitalModel>, SearchParam> {
+  final PaginationRepository repo = PaginationRepository();
+
   @override
-  Future<Either<Failure, GenericPagination<HospitalModel>>> call(String next) {
-return repo.fetchMore(url: '/organization/', next: next.isNotEmpty?next:null, fromJson: HospitalModel.fromJson);
+  Future<Either<Failure, GenericPagination<HospitalModel>>> call(
+      SearchParam param) {
+    return repo.fetchMore(url: '/organization/',
+        next: param.next.isNotEmpty ? param.next : null,
+        fromJson: HospitalModel.fromJson,
+        query: param.search != null ? {
+          "search": param.search
+        }:{});
   }
 
+}
+
+class SearchParam {
+  final String next;
+
+  final String? search;
+
+  SearchParam({required this.next, this.search});
 }

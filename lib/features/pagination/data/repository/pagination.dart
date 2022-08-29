@@ -24,7 +24,7 @@ class PaginationRepository {
 
       final result = await dio.get(
        next?? url,options: Options(headers: {
-         "Authorization":"Token ff26814f95f82e9fdc9e202d9b46a736e24a6c3b"
+         "Authorization":"Token fe977373806790366944dac3f8206452fc79441b"
       }),
         queryParameters: queryParams,
       );
@@ -68,7 +68,7 @@ class PaginationDatasource {
       final result = await dio.get(next??url,
           queryParameters: queryParams,
           options: Options(
-              headers: {'Authorization': 'Bearer ${StorageRepository.getString('token')}'}));
+              headers: {'Authorization': 'Bearer fe977373806790366944dac3f8206452fc79441b'}));
 
       // print(queryParams);
       // print(result.realUri);

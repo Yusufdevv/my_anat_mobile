@@ -19,21 +19,21 @@ mixin _$HospitalListEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CrossFadeState crossFadeState) changePage,
-    required TResult Function() getHospitals,
+    required TResult Function(String search) getHospitals,
     required TResult Function() getMoreHospitals,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function()? getHospitals,
+    TResult Function(String search)? getHospitals,
     TResult Function()? getMoreHospitals,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function()? getHospitals,
+    TResult Function(String search)? getHospitals,
     TResult Function()? getMoreHospitals,
     required TResult orElse(),
   }) =>
@@ -146,7 +146,7 @@ class _$_ChangePage implements _ChangePage {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CrossFadeState crossFadeState) changePage,
-    required TResult Function() getHospitals,
+    required TResult Function(String search) getHospitals,
     required TResult Function() getMoreHospitals,
   }) {
     return changePage(crossFadeState);
@@ -156,7 +156,7 @@ class _$_ChangePage implements _ChangePage {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function()? getHospitals,
+    TResult Function(String search)? getHospitals,
     TResult Function()? getMoreHospitals,
   }) {
     return changePage?.call(crossFadeState);
@@ -166,7 +166,7 @@ class _$_ChangePage implements _ChangePage {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function()? getHospitals,
+    TResult Function(String search)? getHospitals,
     TResult Function()? getMoreHospitals,
     required TResult orElse(),
   }) {
@@ -225,6 +225,7 @@ abstract class _$$_GetHospitalsCopyWith<$Res> {
   factory _$$_GetHospitalsCopyWith(
           _$_GetHospitals value, $Res Function(_$_GetHospitals) then) =
       __$$_GetHospitalsCopyWithImpl<$Res>;
+  $Res call({String search});
 }
 
 /// @nodoc
@@ -237,57 +238,80 @@ class __$$_GetHospitalsCopyWithImpl<$Res>
 
   @override
   _$_GetHospitals get _value => super._value as _$_GetHospitals;
+
+  @override
+  $Res call({
+    Object? search = freezed,
+  }) {
+    return _then(_$_GetHospitals(
+      search: search == freezed
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_GetHospitals implements _GetHospitals {
-  _$_GetHospitals();
+  _$_GetHospitals({required this.search});
+
+  @override
+  final String search;
 
   @override
   String toString() {
-    return 'HospitalListEvent.getHospitals()';
+    return 'HospitalListEvent.getHospitals(search: $search)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_GetHospitals);
+        (other.runtimeType == runtimeType &&
+            other is _$_GetHospitals &&
+            const DeepCollectionEquality().equals(other.search, search));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(search));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_GetHospitalsCopyWith<_$_GetHospitals> get copyWith =>
+      __$$_GetHospitalsCopyWithImpl<_$_GetHospitals>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CrossFadeState crossFadeState) changePage,
-    required TResult Function() getHospitals,
+    required TResult Function(String search) getHospitals,
     required TResult Function() getMoreHospitals,
   }) {
-    return getHospitals();
+    return getHospitals(search);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function()? getHospitals,
+    TResult Function(String search)? getHospitals,
     TResult Function()? getMoreHospitals,
   }) {
-    return getHospitals?.call();
+    return getHospitals?.call(search);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function()? getHospitals,
+    TResult Function(String search)? getHospitals,
     TResult Function()? getMoreHospitals,
     required TResult orElse(),
   }) {
     if (getHospitals != null) {
-      return getHospitals();
+      return getHospitals(search);
     }
     return orElse();
   }
@@ -328,7 +352,12 @@ class _$_GetHospitals implements _GetHospitals {
 }
 
 abstract class _GetHospitals implements HospitalListEvent {
-  factory _GetHospitals() = _$_GetHospitals;
+  factory _GetHospitals({required final String search}) = _$_GetHospitals;
+
+  String get search;
+  @JsonKey(ignore: true)
+  _$$_GetHospitalsCopyWith<_$_GetHospitals> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -373,7 +402,7 @@ class _$_GetMoreHospitals implements _GetMoreHospitals {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CrossFadeState crossFadeState) changePage,
-    required TResult Function() getHospitals,
+    required TResult Function(String search) getHospitals,
     required TResult Function() getMoreHospitals,
   }) {
     return getMoreHospitals();
@@ -383,7 +412,7 @@ class _$_GetMoreHospitals implements _GetMoreHospitals {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function()? getHospitals,
+    TResult Function(String search)? getHospitals,
     TResult Function()? getMoreHospitals,
   }) {
     return getMoreHospitals?.call();
@@ -393,7 +422,7 @@ class _$_GetMoreHospitals implements _GetMoreHospitals {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function()? getHospitals,
+    TResult Function(String search)? getHospitals,
     TResult Function()? getMoreHospitals,
     required TResult orElse(),
   }) {

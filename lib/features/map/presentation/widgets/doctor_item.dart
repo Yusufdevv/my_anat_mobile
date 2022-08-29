@@ -52,7 +52,7 @@ class DoctorItem extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
-                      'https://picsum.photos/200/300',
+                      entity.image.middle,errorBuilder: (context,reason,good)=>Container(height: 100,width: 82,),
                       height: 100,
                       width: 82,
                       fit: BoxFit.cover,
@@ -65,12 +65,12 @@ class DoctorItem extends StatelessWidget {
                       children: [
                         const SizedBox(height: 8),
                         Text(
-                          'Иргашев Дильмурад Саатович',
+                          entity.name,
                           style: Theme.of(context).textTheme.headline1,
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Репродуктолог',
+                          entity.specialization,
                           style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ],

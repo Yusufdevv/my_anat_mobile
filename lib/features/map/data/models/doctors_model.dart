@@ -1,4 +1,5 @@
 import 'package:anatomica/features/common/models/logo.dart';
+import 'package:anatomica/features/common/models/titler.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -22,19 +23,19 @@ class DoctorsModel extends DoctorsEntity {
   final double lat;
   @JsonKey(name: 'long',defaultValue: 0)
   final double long;
-  @JsonKey(name: 'specialization',defaultValue: '')
-  final String specialization;
+  @JsonKey(name: 'specialization',)
+  final TitlerModel specializations;
 
   DoctorsModel(
       {required this.photo,
       required this.id,
-      required this.specialization,
+      required this.specializations,
       required this.rating,
       required this.address,
       required this.position,
       required this.long,
       required this.lat,
-      required this.fullName}):super(id: id,image: photo??AssetModel(small: '', middle: '', origin: ''),name: fullName,lat: 0,long: 0,rating: rating,specialization: specialization);
+      required this.fullName}):super(id: id,image: photo??AssetModel(small: '', middle: '', origin: ''),name: fullName,lat: 0,long: 0,rating: rating,specialization: specializations.title);
 
   factory DoctorsModel.fromJson(Map<String,dynamic> json)=>_$DoctorsModelFromJson(json);
 }

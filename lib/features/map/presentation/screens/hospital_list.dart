@@ -23,7 +23,8 @@ class HospitalList extends StatefulWidget {
   State<HospitalList> createState() => _HospitalListState();
 }
 
-class _HospitalListState extends State<HospitalList> with TickerProviderStateMixin {
+class _HospitalListState extends State<HospitalList>
+    with TickerProviderStateMixin {
   late TabController _controller;
   late TextEditingController controller;
   late HospitalListBloc bloc;
@@ -31,8 +32,10 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
 
   @override
   void initState() {
-    doctorListBloc =DoctorListBloc(GetDoctorsUseCase())..add(DoctorListEvent.getDoctors());
-    bloc = HospitalListBloc(GetHospitalsUseCase())..add(HospitalListEvent.getHospitals());
+    doctorListBloc = DoctorListBloc(GetDoctorsUseCase())
+      ..add(DoctorListEvent.getDoctors(search: ''));
+    bloc = HospitalListBloc(GetHospitalsUseCase())
+      ..add(HospitalListEvent.getHospitals(search: ''));
     controller = TextEditingController()
       ..addListener(() {
         if (controller.text.isNotEmpty) {
@@ -48,15 +51,15 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-  providers: [
-    BlocProvider.value(
-      value: bloc,
-),
-    BlocProvider.value(
-      value: doctorListBloc,
-    ),
-  ],
-  child: Scaffold(
+      providers: [
+        BlocProvider.value(
+          value: bloc,
+        ),
+        BlocProvider.value(
+          value: doctorListBloc,
+        ),
+      ],
+      child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
@@ -77,7 +80,8 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
               Container(
                 height: 36,
                 padding: const EdgeInsets.all(2),
-                margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
+                margin: const EdgeInsets.symmetric(horizontal: 16)
+                    .copyWith(bottom: 16),
                 decoration: BoxDecoration(
                   color: textFieldColor,
                   borderRadius: BorderRadius.circular(8),
@@ -161,8 +165,16 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                           color: white,
                         ),
                         child: SearchField(
-                          controller: controller,
-                          onChanged: (value) {},
+                          controller: TextEditingController(),
+                          onChanged: (value) {
+                            if (_controller.index == 0) {
+                              bloc.add(HospitalListEvent.getHospitals(
+                                  search: value));
+                            } else {
+                              doctorListBloc.add(
+                                  DoctorListEvent.getDoctors(search: value));
+                            }
+                          },
                         ),
                       ),
                       // Expanded(
@@ -178,6 +190,6 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
           },
         ),
       ),
-);
+    );
   }
 }
