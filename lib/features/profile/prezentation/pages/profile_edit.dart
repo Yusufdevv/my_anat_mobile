@@ -20,7 +20,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class ProfileEditScreen extends StatefulWidget {
   const ProfileEditScreen({Key? key}) : super(key: key);
 
@@ -103,11 +104,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       value: editBloc,
       child: KeyboardDismisser(
         child: Scaffold(
-          appBar: const WAppBar(title: 'Редактировать'),
+          appBar:   WAppBar(title: LocaleKeys.edit.tr()),
           bottomNavigationBar: WButton(
             margin:
                 EdgeInsets.fromLTRB(16, 0, 16, 12 + mediaQuery.padding.bottom),
-            text: 'Сохранить',
+            text: LocaleKeys.save.tr(),
             onTap: () {
               editBloc.add(EditProfileEvent.saveData());
               Navigator.pop(context);
@@ -169,7 +170,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       DefaultTextField(
                         controller: nameController,
                         onChanged: (v) {},
-                        title: 'Имя',
+                        title: LocaleKeys.name.tr(),
                         prefix: Padding(
                           padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                           child:
@@ -180,7 +181,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       DefaultTextField(
                         controller: soNameController,
                         onChanged: (v) {},
-                        title: 'Фамилия',
+                        title: LocaleKeys.surname.tr(),
                         prefix: Padding(
                           padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                           child:
@@ -191,7 +192,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       DefaultTextField(
                         controller: phoneController,
                         onChanged: (v) {},
-                        title: 'Номер телефона',
+                        title: LocaleKeys.phone_number.tr(),
                         prefix: Padding(
                           padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                           child:
@@ -210,7 +211,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Дата рождения',
+                        LocaleKeys.birthday.tr(),
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,

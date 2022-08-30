@@ -2,7 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class HospitalConditions extends StatelessWidget {
   const HospitalConditions({Key? key}) : super(key: key);
 
@@ -26,7 +27,7 @@ class HospitalConditions extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              'Вежливый персонал',
+              LocaleKeys.polite.tr(),
               style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
             )
           ],

@@ -5,6 +5,8 @@ import 'package:anatomica/features/auth/presentation/widgets/pin_code_body.dart'
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -89,7 +91,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
               ),
               const Spacer(),
               WButton(
-                text: 'Подтвердить',
+                text: LocaleKeys.confirm.tr(),
                 isLoading: state.submitCodeStatus.isSubmissionInProgress,
                 onTap: () {
                   context.read<LoginSignUpBloc>().add(

@@ -5,7 +5,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/profile/prezentation/widgets/device_bottomsheet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class DeviceBottomSheet extends StatelessWidget {
   DeviceBottomSheet({Key? key}) : super(key: key);
   final List<String> titleList = [
@@ -77,7 +78,7 @@ class DeviceBottomSheet extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         WButton(
-          text: 'Выйти из устройства',
+          text: LocaleKeys.sing_out_device.tr(),
           onTap: () {
             Navigator.of(context).pop();
           },

@@ -4,7 +4,8 @@ import 'package:anatomica/features/map/domain/entities/contact_entity.dart';
 import 'package:anatomica/features/map/presentation/widgets/contacts_container.dart';
 import 'package:anatomica/features/map/presentation/widgets/phones_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class HospitalContacts extends StatefulWidget {
   const HospitalContacts({Key? key}) : super(key: key);
 
@@ -51,7 +52,7 @@ class _HospitalContactsState extends State<HospitalContacts> {
                 builder: (_) => PhonesBottomSheet(),
               );
             },
-            text: 'Позвонить',
+            text: LocaleKeys.call.tr(),
           );
         }
       },

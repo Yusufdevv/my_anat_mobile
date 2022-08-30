@@ -25,6 +25,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,10 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   body: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const AuthHeader(
-                        title: 'Войти',
-                        subTitle:
-                            'Уже есть аккаунт? Войдите, чтобы пользоваться всеми возможностями приложения',
+                      AuthHeader(
+                        title: LocaleKeys.enter.tr(),
+                        subTitle: LocaleKeys.has_account.tr(),
                       ),
                       Expanded(
                         child: Container(
@@ -127,11 +128,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               DefaultTextField(
-                                title: 'Логин',
+                                title: LocaleKeys.login.tr(),
                                 controller: loginController,
                                 onChanged: (value) {},
                                 hasError: state.loginStatus.isSubmissionFailure,
-                                hintText: 'Введите логин',
+                                hintText: LocaleKeys.write_login.tr(),
                                 prefix: Padding(
                                   padding:
                                       const EdgeInsets.only(left: 12, right: 8),
@@ -140,8 +141,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               const SizedBox(height: 16),
                               PasswordTextField(
-                                title: 'Пароль',
-                                hintText: 'Введите пароль',
+                                title: LocaleKeys.password.tr(),
+                                hintText: LocaleKeys.write_password.tr(),
                                 hasError: state.loginStatus.isSubmissionFailure,
                                 onChanged: (value) {},
                                 controller: passwordController,
@@ -157,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 16, 16, 16),
                                   child: Text(
-                                    'Забыли пароль?',
+                                    LocaleKeys.forgot_password.tr(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline1!
@@ -167,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               const Spacer(),
                               WButton(
-                                text: 'Войти',
+                                text: LocaleKeys.enter.tr(),
                                 isLoading:
                                     state.loginStatus.isSubmissionInProgress,
                                 onTap: () =>
@@ -193,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Нет аккаунта?',
+                                    LocaleKeys.no_account.tr(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle2!
@@ -212,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       );
                                     },
                                     child: Text(
-                                      'Зарегистрироваться',
+                                      LocaleKeys.za_register.tr(),
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline4!

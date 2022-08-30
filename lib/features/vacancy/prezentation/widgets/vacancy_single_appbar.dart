@@ -4,7 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class VacancySingleAppBar extends StatelessWidget {
   const VacancySingleAppBar({Key? key}) : super(key: key);
 
@@ -45,7 +46,7 @@ class VacancySingleAppBar extends StatelessWidget {
                       },
                       child: SvgPicture.asset(AppIcons.chevronLeft)),
                   const Spacer(),
-                  Text('Вакансии', style: Theme.of(context).textTheme.headline2),
+                  Text(LocaleKeys.vacancy.tr(), style: Theme.of(context).textTheme.headline2),
                   const Spacer(),
                   SvgPicture.asset(AppIcons.vacancySingleStar),
                   const SizedBox(width: 20),

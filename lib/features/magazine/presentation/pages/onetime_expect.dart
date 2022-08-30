@@ -4,7 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class OneTimeExpect extends StatelessWidget {
   const OneTimeExpect({Key? key}) : super(key: key);
 
@@ -19,7 +20,7 @@ class OneTimeExpect extends StatelessWidget {
         leadingWidth: 0,
         automaticallyImplyLeading: false,
         title: Text(
-          'Единовременный платеж',
+          LocaleKeys.only_pay.tr(),
           style: Theme.of(context).textTheme.headline1,
         ),
         actions: [
@@ -44,7 +45,7 @@ class OneTimeExpect extends StatelessWidget {
             SvgPicture.asset(AppIcons.expect),
             const SizedBox(height: 16),
             Text(
-              'Ожидание',
+              LocaleKeys.expect.tr(),
               style: Theme.of(context)
                   .textTheme
                   .headline1!
@@ -52,7 +53,7 @@ class OneTimeExpect extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Ваш платеж на покупку журнала\n"Май 2022" в ожидании',
+              LocaleKeys.realization_expect.tr(),
               style: Theme.of(context)
                   .textTheme
                   .headline3!
@@ -71,7 +72,7 @@ class OneTimeExpect extends StatelessWidget {
           children: [
             SvgPicture.asset(AppIcons.refresh),
             const SizedBox(width: 8),
-            const Text('Обновить страницу')
+            Text(LocaleKeys.update_page.tr())
           ],
         ),
       ),

@@ -4,6 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/profile/prezentation/widgets/language_item.dart';
 import 'package:flutter/material.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LanguageBottomSheet extends StatefulWidget {
   const LanguageBottomSheet({Key? key}) : super(key: key);
@@ -20,7 +22,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
     return WBottomSheet(
       children: [
         Text(
-          'Язык приложения',
+          LocaleKeys.language_app.tr(),
           style: Theme.of(context).textTheme.headline1!.copyWith(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -31,11 +33,12 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
         LanguageItem(
           status: currentStatus,
           language: Language(
-            title: 'Русский',
+            title: LocaleKeys.rus.tr(),
             icon: AppIcons.flagRu,
             status: 1,
           ),
-          onTap: () {
+          onTap: () async {
+            await context.setLocale(const Locale('ru'));
             setState(() {
               currentStatus = 1;
             });
@@ -45,11 +48,12 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
         LanguageItem(
           status: currentStatus,
           language: Language(
-            title: 'Ўзбекча',
+            title: LocaleKeys.uzb_kr.tr(),
             icon: AppIcons.flagUz,
             status: 2,
           ),
-          onTap: () {
+          onTap: () async {
+            await context.setLocale(const Locale('fr'));
             setState(() {
               currentStatus = 2;
             });
@@ -59,11 +63,12 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
         LanguageItem(
           status: currentStatus,
           language: Language(
-            title: 'O‘zbekcha',
+            title: LocaleKeys.uzb.tr(),
             icon: AppIcons.flagUz,
             status: 3,
           ),
-          onTap: () {
+          onTap: () async {
+            await context.setLocale(const Locale('uz'));
             setState(() {
               currentStatus = 3;
             });
@@ -71,7 +76,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
         ),
         const SizedBox(height: 24),
         WButton(
-          text: 'Применить',
+          text: LocaleKeys.apply.tr(),
           onTap: () {
             Navigator.of(context).pop();
           },

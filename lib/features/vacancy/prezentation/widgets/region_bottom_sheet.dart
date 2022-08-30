@@ -2,7 +2,8 @@ import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_s
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/region_item.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class RegionBottomSheet extends StatefulWidget {
   const RegionBottomSheet({Key? key}) : super(key: key);
 
@@ -62,7 +63,7 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
     final mediaQuery = MediaQuery.of(context);
     return ScrolledBottomSheet(
       isSubScreen: true,
-      title: currentPage == 0 ? 'Регион' : 'г.Ташкент',
+      title: currentPage == 0 ? LocaleKeys.region.tr() : 'г.Ташкент',
       hasHeader: true,
       child: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -75,13 +76,14 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
         children: [
           ListView.separated(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
+            padding:
+                EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
             shrinkWrap: true,
             itemBuilder: (context, index) {
               if (index == 0) {
                 return CheckBoxTitle(
                   onTap: selectAll,
-                  title: 'Весь Узбекистан',
+                  title: LocaleKeys.all_uzb.tr(),
                   padding: EdgeInsets.zero,
                 );
               }
@@ -89,7 +91,8 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                 title: regionList[index],
                 onTap: () {
                   pageController.nextPage(
-                      duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.bounceIn);
                 },
               );
             },
@@ -97,23 +100,24 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
             itemCount: regionList.length + 1,
           ),
           ListView.separated(
-            padding: EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
+            padding:
+                EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
             shrinkWrap: true,
             itemBuilder: (context, index) {
               if (index == 0) {
                 return CheckBoxTitle(
                   onTap: selectAll,
-                  title: 'Все',
+                  title: LocaleKeys.all.tr(),
                   padding: EdgeInsets.zero,
                 );
               }
               return RegionItem(
-              title: districtList[index],
-              onTap: () {},
-            );
+                title: districtList[index],
+                onTap: () {},
+              );
             },
             separatorBuilder: (context, index) => const SizedBox(height: 16),
-            itemCount: districtList.length+1,
+            itemCount: districtList.length + 1,
           ),
         ],
       ),

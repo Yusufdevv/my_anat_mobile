@@ -13,7 +13,8 @@ import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class HospitalList extends StatefulWidget {
   final TabController controller;
 
@@ -95,9 +96,9 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                   labelColor: textColor,
                   onTap: (index) {},
                   unselectedLabelColor: textSecondary,
-                  tabs: const [
-                    Tab(text: 'Организации'),
-                    Tab(text: 'Врачи'),
+                  tabs:   [
+                    Tab(text: LocaleKeys.organization.tr()),
+                    Tab(text: LocaleKeys.doctor.tr()),
                   ],
                 ),
               ),
@@ -145,7 +146,7 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                             Padding(
                               padding: const EdgeInsets.all(16),
                               child: MapButton.defaultButton(
-                                title: 'На карте',
+                                title: LocaleKeys.on_map.tr(),
                                 onTap: () {},
                                 icon: AppIcons.mapIcon,
                               ),

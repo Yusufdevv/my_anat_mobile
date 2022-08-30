@@ -2,7 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class ServiceSingleScreen extends StatelessWidget {
   const ServiceSingleScreen({Key? key}) : super(key: key);
 
@@ -36,7 +37,7 @@ class ServiceSingleScreen extends StatelessWidget {
             bottom: MediaQuery.of(context).padding.bottom + 16,
             child: WButton(
               onTap: () {},
-              text: 'Заказать услугу',
+              text: LocaleKeys.order_service.tr(),
             ),
           )
         ],

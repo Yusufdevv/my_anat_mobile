@@ -12,7 +12,6 @@ import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_single/vac
 import 'package:anatomica/features/vacancy/prezentation/widgets/category_container.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/dot_text_widget.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_single_appbar.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_single_appbar_header.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_single_textwidget.dart';
@@ -23,7 +22,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 import 'package:jiffy/jiffy.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class VacancySingleScreen extends StatefulWidget {
   final String slug;
 
@@ -39,10 +39,10 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
   @override
   initState() {
     _vacancySingleBloc = VacancySingleBloc(
-        relatedVacancyUseCase:
-            RelatedVacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        vacancySingleUseCase:
-            VacancySingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        relatedVacancyUseCase: RelatedVacancyListUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        vacancySingleUseCase: VacancySingleUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()));
     _vacancySingleBloc.add(GetRelatedVacancyList(slug: widget.slug));
     super.initState();
   }
@@ -72,7 +72,9 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
         body: BlocBuilder<VacancySingleBloc, VacancySingleState>(
           builder: (context, state) {
             if (state.status.isPure) {
-              context.read<VacancySingleBloc>().add(GetSingleVacancyEvent(slug: widget.slug));
+              context
+                  .read<VacancySingleBloc>()
+                  .add(GetSingleVacancyEvent(slug: widget.slug));
             } else if (state.status.isSubmissionInProgress) {
               return const Center(child: CupertinoActivityIndicator());
             } else if (state.status.isSubmissionSuccess) {
@@ -80,11 +82,13 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                 headerSliverBuilder: (context, index) {
                   return [
                     const VacancySingleAppBar(),
-                    VacancySingleAppBarHeader(vacancyEntity: state.vacancyListEntity),
+                    VacancySingleAppBarHeader(
+                        vacancyEntity: state.vacancyListEntity),
                   ];
                 },
                 body: ListView(
-                  padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
+                  padding: EdgeInsets.fromLTRB(
+                      16, 16, 16, 16 + mediaQuery.padding.bottom),
                   physics: const BouncingScrollPhysics(),
                   children: [
                     Column(
@@ -96,7 +100,8 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                             icon: AppIcons.briefCase),
                         const SizedBox(height: 10),
                         VacancySingleTextWidget(
-                            title: state.vacancyListEntity.address, icon: AppIcons.mapPin),
+                            title: state.vacancyListEntity.address,
+                            icon: AppIcons.mapPin),
                         const SizedBox(height: 10),
                         VacancySingleTextWidget(
                             title:
@@ -104,10 +109,11 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                             icon: AppIcons.cashBanknote),
                         const SizedBox(height: 24),
                         Text(
-                          'О вакансии',
-                          style: Theme.of(context).textTheme.headline1!.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                          LocaleKeys.about_vacancy.tr(),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -118,7 +124,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               .copyWith(color: montana, fontSize: 13),
                         ),
                         const SizedBox(height: 16),
-                        const VacancyTitleText(title: 'Категория'),
+                        VacancyTitleText(title: LocaleKeys.category.tr()),
                         const SizedBox(height: 8),
                         Row(
                           children: [
@@ -128,23 +134,25 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        VacancyTitleText(title: state.vacancyListEntity.workType.label),
+                        VacancyTitleText(
+                            title: state.vacancyListEntity.workType.label),
                         const SizedBox(height: 8),
                         Text(
                           state.vacancyListEntity.workType.name,
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                fontSize: 13,
-                                color: montana,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontSize: 13,
+                                    color: montana,
+                                  ),
                         ),
                         const SizedBox(height: 16),
-                        const VacancyTitleText(title: 'Требования'),
+                        VacancyTitleText(title: LocaleKeys.requirement.tr()),
                         DotTextWidget(list: tList),
                         const SizedBox(height: 16),
-                        const VacancyTitleText(title: 'Обязанности'),
+                        VacancyTitleText(title: LocaleKeys.responsible.tr()),
                         DotTextWidget(list: tList),
                         const SizedBox(height: 16),
-                        const VacancyTitleText(title: 'Обязанности'),
+                        VacancyTitleText(title: LocaleKeys.responsible.tr()),
                         DotTextWidget(list: tList),
                         const SizedBox(height: 16),
                         Container(
@@ -163,42 +171,52 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const VacancyTitleText(title: 'Сведения о работодателе'),
+                              VacancyTitleText(
+                                  title: LocaleKeys.information_work.tr()),
                               const SizedBox(height: 8),
                               Text(
                                 '''Стоматологическая клиника Smalto Dente предлагает Вашему вниманию услуги высокого качества.
 У нас Вы можете качественно и быстро получить полный спектр стоматологических услуг. Мы проводим 
 полное обследование для выявления причины того или иного заболевания, используя при этом исключительно высокотехнологичное оборудование''',
-                                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(
                                       color: montana,
                                     ),
                               ),
                               const SizedBox(height: 12),
                               Text(
-                                'Опубликовано: ${Jiffy(state.vacancyListEntity.publishedAt).format('dd MMMM , yyyy')}',
-                                style:
-                                    Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                                '${LocaleKeys.published.tr()} ${Jiffy(state.vacancyListEntity.publishedAt).format('dd MMMM , yyyy')}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2!
+                                    .copyWith(fontSize: 14),
                               ),
                               const SizedBox(height: 16),
                               WButton(
                                 onTap: () {
                                   showPhonesBottomSheet(
                                       context,
-                                      state.vacancyListEntity.organization.phoneNumbers
+                                      state.vacancyListEntity.organization
+                                          .phoneNumbers
                                           .map((e) => e.phoneNumber)
                                           .toList());
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SvgPicture.asset(AppIcons.phone, color: white),
+                                    SvgPicture.asset(AppIcons.phone,
+                                        color: white),
                                     const SizedBox(width: 8),
                                     Text(
-                                      'Показать номер',
+                                      LocaleKeys.show_number.tr(),
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline2!
-                                          .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                                          .copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
                                     )
                                   ],
                                 ),
@@ -207,10 +225,12 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const VacancyTitleText(title: '7 похожих вакансий'),
+                        VacancyTitleText(
+                            title: '7 ${LocaleKeys.similar_vacancy.tr()}'),
                         const SizedBox(height: 16),
                         Paginator(
-                          padding: EdgeInsets.only(bottom: 16 + mediaQuery.padding.bottom, top: 20),
+                          padding: EdgeInsets.only(
+                              bottom: 16 + mediaQuery.padding.bottom, top: 20),
                           paginatorStatus: state.paginatorStatus,
                           errorWidget: const Text('Fail'),
                           itemBuilder: (context, index) {
@@ -220,14 +240,18 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               onTap: () {
                                 Navigator.of(context).push(fade(
                                     page: VacancySingleScreen(
-                                        slug: state.relatedVacancyList[index].slug)));
+                                        slug: state
+                                            .relatedVacancyList[index].slug)));
                               },
                             );
                           },
-                          separateBuilder: (context, index) => const SizedBox(height: 12),
+                          separateBuilder: (context, index) =>
+                              const SizedBox(height: 12),
                           hasMoreToFetch: state.fetchMore,
                           fetchMoreFunction: () {
-                            context.read<VacancySingleBloc>().add(GetMoreRelatedVacancyList());
+                            context
+                                .read<VacancySingleBloc>()
+                                .add(GetMoreRelatedVacancyList());
                           },
                           itemCount: state.relatedVacancyList.length,
                         )

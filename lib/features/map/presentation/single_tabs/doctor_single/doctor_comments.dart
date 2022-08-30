@@ -5,9 +5,11 @@ import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet
 import 'package:anatomica/features/map/presentation/widgets/comment_empty.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_item.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class DoctorComments extends StatelessWidget {
   final bool isEmpty;
+
   const DoctorComments({this.isEmpty = true, Key? key}) : super(key: key);
 
   @override
@@ -50,8 +52,11 @@ class DoctorComments extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        '7 отзывов',
-                        style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                        '7 ${LocaleKeys.review.tr()}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(color: textColor, fontSize: 13),
                       ),
                     ],
                   ),
@@ -63,10 +68,11 @@ class DoctorComments extends StatelessWidget {
                         context: context,
                         backgroundColor: Colors.transparent,
                         isScrollControlled: true,
-                        builder: (_) => CommentBottomSheet(parentContext: context),
+                        builder: (_) =>
+                            CommentBottomSheet(parentContext: context),
                       );
                     },
-                    text: 'Добавить отзыв',
+                    text: LocaleKeys.add_reviews.tr(),
                   ),
                 )
               ],
@@ -74,7 +80,8 @@ class DoctorComments extends StatelessWidget {
           ),
           Expanded(
             child: ListView.separated(
-              padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+              padding: const EdgeInsets.all(16)
+                  .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
               separatorBuilder: (context, index) => const SizedBox(height: 16),
               itemBuilder: (context, index) => const CommentItem(),
               itemCount: 10,

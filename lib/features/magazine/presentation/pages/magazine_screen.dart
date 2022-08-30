@@ -21,7 +21,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class MagazineScreen extends StatefulWidget {
   const MagazineScreen({Key? key}) : super(key: key);
 
@@ -60,7 +61,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                             Row(
                               children: [
                                 Text(
-                                  'Выпуски',
+                                  LocaleKeys.issues.tr(),
                                   style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 24),
                                 ),
                                 const Spacer(),
@@ -69,7 +70,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        'Все',
+                                        LocaleKeys.all.tr(),
                                         style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 15),
                                       ),
                                       SvgPicture.asset(AppIcons.arrowRight)
@@ -126,12 +127,12 @@ class _MagazineScreenState extends State<MagazineScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Активируйте подписку',
+                              LocaleKeys.active_follow.tr(),
                               style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Получите доступ ко всем  платным материалам и функциям приложеним.',
+                              LocaleKeys.get_access.tr(),
                               style: Theme.of(context)
                                   .textTheme
                                   .headline1!
@@ -146,7 +147,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                                   padding: const EdgeInsets.symmetric(horizontal: 12),
                                   onTap: () {},
                                   child: Text(
-                                    'Подробнее',
+                                    LocaleKeys.more.tr(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline2!
@@ -168,7 +169,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                           Row(
                             children: [
                               Text(
-                                'Статьи',
+                                LocaleKeys.articles.tr(),
                                 style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 24),
                               ),
                               const Spacer(),
@@ -177,7 +178,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      'Все',
+                                      LocaleKeys.all.tr(),
                                       style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 15),
                                     ),
                                     const SizedBox(width: 1),
@@ -205,7 +206,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Анатомика',
+                              LocaleKeys.anatomy.tr(),
                               style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
                             ),
                           ),

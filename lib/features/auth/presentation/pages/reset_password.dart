@@ -17,6 +17,8 @@ import 'package:anatomica/features/auth/presentation/widgets/reset_password_body
 import 'package:anatomica/features/auth/presentation/widgets/reset_password_verify.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -53,10 +55,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         createResetPasswordNewStateUseCase: CreateResetPasswordNewStateUseCase(
           repository: serviceLocator<ResetPasswordRepositoryImpl>(),
         ),
-        submitChangedResetPasswordEmailUseCase: SubmitChangedResetPasswordEmailUseCase(
+        submitChangedResetPasswordEmailUseCase:
+            SubmitChangedResetPasswordEmailUseCase(
           repository: serviceLocator<ResetPasswordRepositoryImpl>(),
         ),
-        submitChangedResetPasswordPhoneUseCase: SubmitChangedResetPasswordPhoneUseCase(
+        submitChangedResetPasswordPhoneUseCase:
+            SubmitChangedResetPasswordPhoneUseCase(
           repository: serviceLocator<ResetPasswordRepositoryImpl>(),
         ),
         submitResetPasswordEmailUseCase: SubmitResetPasswordEmailUseCase(
@@ -92,7 +96,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         Navigator.of(context).pop();
                       },
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(16, mediaQuery.padding.top + 32, 16, 36),
+                        padding: EdgeInsets.fromLTRB(
+                            16, mediaQuery.padding.top + 32, 16, 36),
                         child: SvgPicture.asset(AppIcons.arrowLeft),
                       ),
                     ),
@@ -106,15 +111,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2!
-                                .copyWith(fontSize: 28, fontWeight: FontWeight.w700),
+                                .copyWith(
+                                    fontSize: 28, fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             _getSubtitle(currentPage),
-                            style: Theme.of(context).textTheme.headline2!.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.headline2!.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                           )
                         ],
                       ),
@@ -160,11 +167,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   String _getTitle(int currentPage) {
     switch (currentPage) {
       case 0:
-        return 'Восстановление пароля';
+        return LocaleKeys.recovery_password.tr();
       case 1:
-        return 'Верификация';
+        return LocaleKeys.verify.tr();
       case 2:
-        return 'Восстановление пароля';
+        return LocaleKeys.recovery_password.tr();
       default:
         return '';
     }
@@ -173,11 +180,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   String _getSubtitle(int currentPage) {
     switch (currentPage) {
       case 0:
-        return 'Забыли свой пароль? Восстановите его быстро и наслаждайтесь приложением';
+        return LocaleKeys.forgot_recovery.tr();
       case 1:
-        return 'Введите код который был отправлен на номер';
+        return LocaleKeys.write_sms_code.tr();
       case 2:
-        return 'Забыли свой пароль? Восстановите его быстро и наслаждайтесь приложением';
+        return LocaleKeys.forgot_recovery.tr();
       default:
         return '';
     }

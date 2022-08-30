@@ -19,6 +19,8 @@ import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_deleg
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HospitalSingleScreen extends StatefulWidget {
   const HospitalSingleScreen({Key? key}) : super(key: key);
@@ -293,7 +295,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                                         ),
                                                         const SizedBox(width: 8),
                                                         Text(
-                                                          'Позвонть',
+                                                          LocaleKeys.call.tr(),
                                                           style: Theme.of(context)
                                                               .textTheme
                                                               .headline3!
@@ -320,7 +322,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                                         ),
                                                         const SizedBox(width: 8),
                                                         Text(
-                                                          'Добраться',
+                                                            LocaleKeys.get.tr(),
                                                           style: Theme.of(context)
                                                               .textTheme
                                                               .headline3!

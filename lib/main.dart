@@ -23,9 +23,10 @@ Future<void> main() async {
       supportedLocales: const [
         Locale('ru'),
         Locale('uz'),
-        Locale('uz_kr'),
+        Locale('fr'),
       ],
-      fallbackLocale: Locale('ru'),
+      fallbackLocale: const Locale('ru'),
+      startLocale: const Locale('ru'),
       child: const MyApp()));
 }
 
@@ -60,6 +61,9 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       child: MaterialApp(
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        locale: context.locale,
         navigatorKey: _navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme(),

@@ -4,7 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:anatomica/features/map/presentation/widgets/phone_bottom_sheet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class PhonesBottomSheet extends StatelessWidget {
   final List<String>? phones;
 
@@ -30,7 +31,7 @@ class PhonesBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Позвонить',
+                LocaleKeys.call.tr(),
                 style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
               ),
               WScaleAnimation(

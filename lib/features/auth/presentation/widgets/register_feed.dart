@@ -5,6 +5,8 @@ import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop
 import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,7 +15,8 @@ import 'package:formz/formz.dart';
 class RegisterFeed extends StatefulWidget {
   final PageController pageController;
 
-  const RegisterFeed({required this.pageController, Key? key}) : super(key: key);
+  const RegisterFeed({required this.pageController, Key? key})
+      : super(key: key);
 
   @override
   State<RegisterFeed> createState() => _RegisterFeedState();
@@ -35,7 +38,8 @@ class _RegisterFeedState extends State<RegisterFeed> {
     return BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.fromLTRB(
+              16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
           child: Column(
             children: [
               Expanded(
@@ -44,19 +48,20 @@ class _RegisterFeedState extends State<RegisterFeed> {
                   padding: EdgeInsets.zero,
                   children: [
                     DefaultTextField(
-                      title: 'Имя',
+                      title: LocaleKeys.name.tr(),
                       controller: nameController,
                       onChanged: (value) {},
-                      hasError: nameController.text.isEmpty && state.checkUsernameStatus.isSubmissionFailure,
+                      hasError: nameController.text.isEmpty &&
+                          state.checkUsernameStatus.isSubmissionFailure,
                       prefix: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 8),
                         child: SvgPicture.asset(AppIcons.user),
                       ),
-                      hintText: 'Введите полное имя',
+                      hintText: LocaleKeys.write_full_name.tr(),
                     ),
                     const SizedBox(height: 16),
                     DefaultTextField(
-                      title: 'Логин',
+                      title: LocaleKeys.login.tr(),
                       controller: loginController,
                       onChanged: (value) {},
                       hasError: state.checkUsernameStatus.isSubmissionFailure,
@@ -64,14 +69,14 @@ class _RegisterFeedState extends State<RegisterFeed> {
                         padding: const EdgeInsets.only(left: 12, right: 8),
                         child: SvgPicture.asset(AppIcons.user),
                       ),
-                      hintText: 'Придумайте логин',
+                      hintText: LocaleKeys.create_login.tr(),
                     ),
                   ],
                 ),
               ),
               const InfoContainer(),
               WButton(
-                text: 'Продолжить',
+                text: LocaleKeys.proceed.tr(),
                 isLoading: state.checkUsernameStatus.isSubmissionInProgress,
                 onTap: () {
                   context.read<LoginSignUpBloc>().add(
@@ -79,13 +84,14 @@ class _RegisterFeedState extends State<RegisterFeed> {
                           username: loginController.text,
                           fullName: nameController.text,
                           onError: (message) {
-                            context
-                                .read<ShowPopUpBloc>()
-                                .add(ShowPopUp(message: message.replaceAll(RegExp(r'{?}?'), '')));
+                            context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                message:
+                                    message.replaceAll(RegExp(r'{?}?'), '')));
                           },
                           onSuccess: () {
-                            widget.pageController
-                                .animateToPage(1, duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                            widget.pageController.animateToPage(1,
+                                duration: const Duration(milliseconds: 150),
+                                curve: Curves.linear);
                           },
                         ),
                       );
@@ -97,7 +103,7 @@ class _RegisterFeedState extends State<RegisterFeed> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Уже есть аккаунт?',
+                    LocaleKeys.already_has.tr(),
                     style: Theme.of(context).textTheme.subtitle2!.copyWith(),
                   ),
                   const SizedBox(width: 4),
@@ -106,7 +112,7 @@ class _RegisterFeedState extends State<RegisterFeed> {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'Войти',
+                      LocaleKeys.enter.tr(),
                       style: Theme.of(context).textTheme.headline4!.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,

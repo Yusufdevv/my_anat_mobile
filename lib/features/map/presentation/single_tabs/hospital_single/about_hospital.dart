@@ -2,7 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_about_hospital.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class AboutHospital extends StatelessWidget {
   const AboutHospital({Key? key}) : super(key: key);
 
@@ -19,7 +20,7 @@ class AboutHospital extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 32, 0, 12),
           child: Text(
-            'Отзывы',
+            LocaleKeys.reviews.tr(),
             style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
           ),
         ),
@@ -28,7 +29,7 @@ class AboutHospital extends StatelessWidget {
           onTap: () {},
           margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom),
           color: commentButton,
-          text: 'Все отзывы',
+          text: LocaleKeys.all_reviews.tr(),
           textColor: textSecondary,
         )
       ],

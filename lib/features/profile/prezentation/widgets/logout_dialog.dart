@@ -4,7 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class LogOutDialog extends StatelessWidget {
   final double? height;
   final String? title;
@@ -27,7 +28,7 @@ class LogOutDialog extends StatelessWidget {
           Row(
             children: [
               Text(
-                title ?? 'Выйти из аккаунта',
+                title ?? LocaleKeys.sing_out.tr(),
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -42,7 +43,7 @@ class LogOutDialog extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            subTitle ?? 'Вы действительно хотите выйти из аккаунта?',
+            subTitle ?? LocaleKeys.you_sure.tr(),
             style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
           ),
           const SizedBox(height: 32),
@@ -52,7 +53,7 @@ class LogOutDialog extends StatelessWidget {
                 child: WButton(
                   color: conch.withOpacity(0.2),
                   height: 40,
-                  text: 'Нет',
+                  text: LocaleKeys.no.tr(),
                   textColor: textSecondary,
                   onTap: () {
                     Navigator.of(context).pop();
@@ -63,7 +64,7 @@ class LogOutDialog extends StatelessWidget {
               Expanded(
                 child: WButton(
                   color: red,
-                  text: 'Да',
+                  text: LocaleKeys.yes.tr(),
                   height: 40,
                   onTap: () {
                     Navigator.of(context).pop();

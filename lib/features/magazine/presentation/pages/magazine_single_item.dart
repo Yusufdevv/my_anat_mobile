@@ -3,7 +3,8 @@ import 'package:anatomica/features/magazine/domain/entity/magazine_item_entity.d
 import 'package:anatomica/features/magazine/presentation/widgets/article_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class MagazineSingleItem extends StatefulWidget {
   const MagazineSingleItem({Key? key}) : super(key: key);
 
@@ -56,7 +57,7 @@ class _MagazineSingleItemState extends State<MagazineSingleItem> {
             child: Padding(
                 padding: EdgeInsets.only(left: 16, bottom: 12, top: 20),
                 child: Text(
-                  'Статьи из выпуска',
+                  LocaleKeys.article_issue.tr(),
                   style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
                 )),
           ),

@@ -5,7 +5,8 @@ import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart'
 import 'package:anatomica/features/magazine/presentation/widgets/buy_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class MagazineItem extends StatefulWidget {
   final JournalEntity journalEntity;
   final EdgeInsets margin;
@@ -78,7 +79,7 @@ class _MagazineItemState extends State<MagazineItem> {
                         margin: const EdgeInsets.only(top: 12),
                         onTap: () {},
                         child: Text(
-                          'Предпросмотр',
+                          LocaleKeys.preview.tr(),
                           style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ),
@@ -94,7 +95,7 @@ class _MagazineItemState extends State<MagazineItem> {
                           );
                         },
                         child: Text(
-                          'Купить',
+                          LocaleKeys.buy.tr(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -129,7 +130,7 @@ class _MagazineItemState extends State<MagazineItem> {
                         margin: const EdgeInsets.only(top: 12),
                         onTap: () {},
                         child: Text(
-                          'Оформить подписку',
+                          LocaleKeys.subscribe.tr(),
                           style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ),

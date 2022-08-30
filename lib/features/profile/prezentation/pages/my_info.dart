@@ -12,7 +12,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({Key? key}) : super(key: key);
 
@@ -39,7 +40,7 @@ class _MyInfoScreenState extends State<MyInfoScreen>
     return BlocProvider.value(
       value: _profileBloc,
       child: Scaffold(
-        appBar: const WAppBar(title: 'Мои данные', hasUnderline: true),
+        appBar:   WAppBar(title: LocaleKeys.my_details.tr(), hasUnderline: true),
         body: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
             if (state.getProfileStatus.isPure) {
@@ -67,21 +68,21 @@ class _MyInfoScreenState extends State<MyInfoScreen>
                     ),
                     const SizedBox(height: 24),
                     InfoItem(
-                        title: 'Имя', subTitle: state.profileEntity.fullName),
+                        title: LocaleKeys.name.tr(), subTitle: state.profileEntity.fullName),
                     const SizedBox(height: 20),
                     InfoItem(
-                        title: 'Номер телефона',
+                        title: LocaleKeys.phone_number.tr(),
                         subTitle: state.profileEntity.phoneNumber),
                     const SizedBox(height: 20),
                     InfoItem(
-                        title: 'Логин', subTitle: state.profileEntity.username),
+                        title: LocaleKeys.login.tr(), subTitle: state.profileEntity.username),
                     const SizedBox(height: 20),
                     InfoItem(
-                        title: 'Электронная почта',
+                        title: LocaleKeys.mail.tr(),
                         subTitle: state.profileEntity.email),
                     const Spacer(),
                     WButton(
-                      text: 'Редактировать',
+                      text: LocaleKeys.edit.tr(),
                       onTap: () {
                         Navigator.of(context)
                             .push(fade(page: const ProfileEditScreen()));

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -24,6 +26,7 @@ class PinCodeBody extends StatefulWidget {
   final VoidCallback onRefresh;
   final ValueChanged<int> onTimeChanged;
   final int? secondsLeft;
+
   @override
   State<PinCodeBody> createState() => _PinCodeBodyState();
 }
@@ -64,8 +67,11 @@ class _PinCodeBodyState extends State<PinCodeBody> {
         Row(
           children: [
             Text(
-              'Введите код',
-              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+              LocaleKeys.write_code.tr(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
             ),
             if (widget.hasError) ...[
               const SizedBox(width: 16),
@@ -75,7 +81,10 @@ class _PinCodeBodyState extends State<PinCodeBody> {
                   textAlign: TextAlign.right,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(color: red),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: red),
                 ),
               )
             ],
@@ -91,7 +100,10 @@ class _PinCodeBodyState extends State<PinCodeBody> {
           autoDismissKeyboard: true,
           autoDisposeControllers: false,
           autoFocus: true,
-          textStyle: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 26),
+          textStyle: Theme.of(context)
+              .textTheme
+              .headline3!
+              .copyWith(color: textColor, fontSize: 26),
           length: 6,
           animationType: AnimationType.scale,
           showCursor: true,
@@ -108,7 +120,8 @@ class _PinCodeBodyState extends State<PinCodeBody> {
             selectedFillColor: textFieldColor,
             fieldHeight: 56,
             fieldWidth: 47,
-            fieldOuterPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+            fieldOuterPadding:
+                const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
           ),
           animationDuration: const Duration(milliseconds: 200),
           enableActiveFill: true,
@@ -119,11 +132,15 @@ class _PinCodeBodyState extends State<PinCodeBody> {
         if (secondsLeft > 0) ...{
           Row(
             children: [
-              Text('Отправить снова:', style: Theme.of(context).textTheme.headline3),
+              Text(LocaleKeys.again.tr(),
+                  style: Theme.of(context).textTheme.headline3),
               const SizedBox(width: 6),
               Text(
                 _printDuration(secondsLeft),
-                style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(color: textColor),
               ),
             ],
           ),
@@ -154,7 +171,11 @@ class _PinCodeBodyState extends State<PinCodeBody> {
                 children: [
                   SvgPicture.asset(AppIcons.refresh),
                   const SizedBox(width: 4),
-                  Text('Отправить снова', style: Theme.of(context).textTheme.headline3!.copyWith(color: primary))
+                  Text(LocaleKeys.send_again.tr(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(color: primary))
                 ],
               ),
             ),

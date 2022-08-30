@@ -9,7 +9,8 @@ import 'package:anatomica/features/magazine/presentation/widgets/search_model_it
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class MagazineSearchScreen extends StatefulWidget {
   final JournalBloc bloc;
   const MagazineSearchScreen({required this.bloc, Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class _MagazineSearchScreenState extends State<MagazineSearchScreen> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      'Закрыть',
+                      LocaleKeys.close.tr(),
                       style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 12),
                     ),
                   ),
@@ -131,11 +132,11 @@ class _MagazineSearchScreenState extends State<MagazineSearchScreen> {
                       children: [
                         SizedBox(height: 160, width: 160, child: Image.asset(AppImages.illustrations)),
                         Text(
-                          'Пока нет результатов',
+                          LocaleKeys.no_results.tr(),
                           style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
                         ),
                         Text(
-                          'По вашему запросу мы не могли найти ничего',
+                          LocaleKeys.could_not_find.tr(),
                           style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
                         ),
                       ],

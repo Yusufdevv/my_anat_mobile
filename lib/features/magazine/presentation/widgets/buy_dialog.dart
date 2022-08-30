@@ -7,7 +7,8 @@ import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.d
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class BuyDialog extends StatelessWidget {
   const BuyDialog({Key? key}) : super(key: key);
 
@@ -24,7 +25,7 @@ class BuyDialog extends StatelessWidget {
       title: Row(
         children: [
           Text(
-            'Покупка журнала',
+            LocaleKeys.buy_magazine.tr(),
             style: Theme.of(context)
                 .textTheme
                 .headline1!
@@ -39,7 +40,7 @@ class BuyDialog extends StatelessWidget {
         ],
       ),
       content: Text(
-        'Зарегистрируйтесь, чтобы в полной мере использовать возможности приложения',
+        LocaleKeys.sing_up_to_full.tr(),
         style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
       ),
       actions: [
@@ -53,7 +54,7 @@ class BuyDialog extends StatelessWidget {
               SvgPicture.asset(AppIcons.userPlus),
               const SizedBox(width: 8),
               Text(
-                'Регистрация',
+                LocaleKeys.register.tr(),
                 style: Theme.of(context)
                     .textTheme
                     .headline2!
@@ -80,7 +81,7 @@ class BuyDialog extends StatelessWidget {
               SvgPicture.asset(AppIcons.cashBanknote),
               const SizedBox(width: 8),
               Text(
-                'Единовременный платеж',
+                LocaleKeys.only_pay.tr(),
                 style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
               ),
             ],

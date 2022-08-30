@@ -7,7 +7,8 @@ import 'package:anatomica/features/hospital_single/presentation/hospital_single_
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class HospitalSingleBottomSheet extends StatelessWidget {
   const HospitalSingleBottomSheet({Key? key}) : super(key: key);
 
@@ -113,7 +114,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                                 ),
                               );
                             },
-                            text: 'Подробнее',
+                            text: LocaleKeys.more.tr(),
                             textColor: white,
                           ),
                         ),

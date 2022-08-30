@@ -1,16 +1,14 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/common/presentation/widgets/shimmer_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/company_shimmer_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class CompanyCard extends StatelessWidget {
   final VacancyBloc vacancyBloc;
 
@@ -42,7 +40,7 @@ class CompanyCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '${state.topOrganizationEntity.vacancyCount} вакансий',
+                        '${state.topOrganizationEntity.vacancyCount} ${LocaleKeys.vacancies.tr()}',
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 13),
                       ),
                     ],

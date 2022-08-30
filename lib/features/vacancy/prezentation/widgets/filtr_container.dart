@@ -3,7 +3,8 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class FilterContainer extends StatelessWidget {
   final VoidCallback onTap;
 
@@ -25,7 +26,7 @@ class FilterContainer extends StatelessWidget {
           children: [
             SvgPicture.asset(AppIcons.filter),
             const SizedBox(width: 12),
-            const Text('Фильтр'),
+            Text(LocaleKeys.filter.tr()),
             const Spacer(),
             SvgPicture.asset(AppIcons.arrowRight)
           ],

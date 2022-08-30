@@ -22,7 +22,8 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_card_lis
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class VacancyScreen extends StatefulWidget {
   const VacancyScreen({Key? key}) : super(key: key);
 
@@ -30,26 +31,34 @@ class VacancyScreen extends StatefulWidget {
   State<VacancyScreen> createState() => _VacancyScreenState();
 }
 
-class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateMixin {
+class _VacancyScreenState extends State<VacancyScreen>
+    with TickerProviderStateMixin {
   late TabController tabController;
   bool hasFilter = false;
-  List<String> categoryList = ['Стоматолог', 'Кардиолог', 'Терапевт', 'Пулмонолг'];
+  List<String> categoryList = [
+    'Стоматолог',
+    'Кардиолог',
+    'Терапевт',
+    'Пулмонолг'
+  ];
   late VacancyBloc vacancyBloc;
 
   @override
   initState() {
     tabController = TabController(length: 2, vsync: this);
     vacancyBloc = VacancyBloc(
-      categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      candidateListUseCase:
-          CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyOptionUseCase:
-          VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      organizationVacancyUseCase:
-          OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      topOrganizationUseCase:
-          TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      categoryListUseCase: CategoryListUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      candidateListUseCase: CandidateListUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyOptionUseCase: VacancyOptionUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      organizationVacancyUseCase: OrganizationVacancyUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyListUseCase: VacancyListUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      topOrganizationUseCase: TopOrganizationUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
     );
     vacancyBloc.add(GetVacancyListEvent());
     vacancyBloc.add(GetTopOrganizationEvent());
@@ -91,12 +100,14 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 16, bottom: 12, top: 16),
+                        padding: const EdgeInsets.only(
+                            left: 16, bottom: 12, top: 16),
                         child: Text(
-                          'Категории',
-                          style: Theme.of(context).textTheme.headline1!.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                          LocaleKeys.categories.tr(),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                       ),
                       BlocBuilder<VacancyBloc, VacancyState>(
@@ -125,10 +136,11 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                       Padding(
                         padding: const EdgeInsets.only(left: 16, bottom: 12),
                         child: Text(
-                          'Топ вакансии от компании',
-                          style: Theme.of(context).textTheme.headline1!.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                          LocaleKeys.vacancy_company.tr(),
+                          style:
+                              Theme.of(context).textTheme.headline1!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                       ),
                       Container(
@@ -185,9 +197,9 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
             children: [
               WTabBar(
                 tabController: tabController,
-                tabs: const [
-                  Text('Вакансии'),
-                  Text('Кандидаты'),
+                tabs: [
+                  Text(LocaleKeys.vacancy.tr()),
+                  Text(LocaleKeys.candidate.tr()),
                 ],
               ),
               const SizedBox(height: 16),

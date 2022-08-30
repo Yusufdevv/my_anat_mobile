@@ -6,7 +6,8 @@ import 'package:anatomica/features/magazine/presentation/widgets/onetime_payment
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class OneTimePayment extends StatefulWidget {
   const OneTimePayment({Key? key}) : super(key: key);
 
@@ -44,7 +45,7 @@ class _OneTimePaymentState extends State<OneTimePayment>
                   children: [
                     const Spacer(),
                     Text(
-                      'Единовременный платеж',
+                      LocaleKeys.only_pay.tr(),
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     const Spacer(),
@@ -82,9 +83,9 @@ class _OneTimePaymentState extends State<OneTimePayment>
                   labelColor: textColor,
                   onTap: (index) {},
                   unselectedLabelColor: textSecondary,
-                  tabs: const [
-                    Tab(text: 'Организации'),
-                    Tab(text: 'Врачи'),
+                  tabs: [
+                    Tab(text: LocaleKeys.organization.tr()),
+                    Tab(text: LocaleKeys.doctor.tr()),
                   ],
                 ),
               ),

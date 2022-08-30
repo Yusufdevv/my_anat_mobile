@@ -10,7 +10,8 @@ import 'package:anatomica/features/magazine/presentation/pages/onetime_failure.d
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class OneTimePaymentTabs extends StatefulWidget {
   final MagazineItemEntity magazineItemEntity;
   final VoidCallback onTap;
@@ -43,7 +44,7 @@ class _OneTimePaymentTabsState extends State<OneTimePaymentTabs>
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Номер телефона',
+              LocaleKeys.phone_number.tr(),
               style: Theme.of(context).textTheme.headline1,
             ),
           ),
@@ -105,7 +106,7 @@ class _OneTimePaymentTabsState extends State<OneTimePaymentTabs>
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Номер телефона',
+              LocaleKeys.phone_number.tr(),
               style: Theme.of(context).textTheme.headline1,
             ),
           ),
@@ -165,7 +166,7 @@ class _OneTimePaymentTabsState extends State<OneTimePaymentTabs>
                               ? const OneTimeFailure()
                               : const OneTimeExpect()));
             },
-            text: 'Подтвердить',
+            text: LocaleKeys.confirm.tr(),
           ),
         ],
       ),

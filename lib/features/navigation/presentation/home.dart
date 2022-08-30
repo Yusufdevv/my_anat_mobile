@@ -5,18 +5,17 @@ import 'package:anatomica/features/navigation/presentation/widgets/nav_bar_item.
 import 'package:anatomica/features/navigation/presentation/widgets/tab_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'navigator.dart';
 
 enum NavItemEnum { map, magazine, vacancies, account }
 
-
 class HomeScreen extends StatefulWidget {
-
-
   const HomeScreen({Key? key}) : super(key: key);
 
-  static Route route() => MaterialPageRoute<void>(builder: (_) => const HomeScreen());
+  static Route route() =>
+      MaterialPageRoute<void>(builder: (_) => const HomeScreen());
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -33,23 +32,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   };
 
   final List<NavBar> lables = [
-    const NavBar(
-      title: 'Карта',
+    NavBar(
+      title: LocaleKeys.map.tr(),
       id: 0,
       icon: AppIcons.map,
     ),
-    const NavBar(
-      title: 'Журнал',
+    NavBar(
+      title: LocaleKeys.magazine.tr(),
       id: 1,
       icon: AppIcons.magazine,
     ),
-    const NavBar(
-      title: 'Вакансии',
+    NavBar(
+      title: LocaleKeys.vacancy.tr(),
       id: 2,
       icon: AppIcons.vacancies,
     ),
-    const NavBar(
-      title: 'Аккаунт',
+    NavBar(
+      title: LocaleKeys.account.tr(),
       id: 3,
       icon: AppIcons.profile,
     ),
@@ -71,7 +70,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark),
     );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
+        overlays: SystemUiOverlay.values);
     super.initState();
   }
 
@@ -93,7 +93,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: WillPopScope(
           onWillPop: () async {
             final isFirstRouteInCurrentTab =
-                !await _navigatorKeys[NavItemEnum.values[_currentIndex]]!.currentState!.maybePop();
+                !await _navigatorKeys[NavItemEnum.values[_currentIndex]]!
+                    .currentState!
+                    .maybePop();
             if (isFirstRouteInCurrentTab) {
               changePage(0);
               return false;
@@ -106,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             bottomNavigationBar: Container(
               color: Colors.transparent,
               child: Container(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).padding.bottom),
                 height: 72 + MediaQuery.of(context).padding.bottom,
                 decoration: BoxDecoration(
                   color: white,
@@ -129,7 +132,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   controller: _controller,
                   indicatorPadding: EdgeInsets.zero,
                   padding: EdgeInsets.zero,
-                  indicator: const CustomTabIndicator(radius: 3, color: primary),
+                  indicator:
+                      const CustomTabIndicator(radius: 3, color: primary),
                   labelPadding: EdgeInsets.zero,
                   tabs: List.generate(
                     lables.length,
@@ -166,7 +170,8 @@ class HomeTabControllerProvider extends InheritedWidget {
   }) : super(key: key, child: child);
 
   static HomeTabControllerProvider of(BuildContext context) {
-    final result = context.dependOnInheritedWidgetOfExactType<HomeTabControllerProvider>();
+    final result =
+        context.dependOnInheritedWidgetOfExactType<HomeTabControllerProvider>();
     assert(result != null, 'No HomeTabControllerProvider found in context');
     return result!;
   }

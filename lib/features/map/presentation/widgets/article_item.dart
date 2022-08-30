@@ -5,7 +5,8 @@ import 'package:anatomica/features/map/presentation/screens/hospital_article_sin
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class HospitalArticleItem extends StatelessWidget {
   const HospitalArticleItem({
     Key? key,
@@ -52,7 +53,7 @@ class HospitalArticleItem extends StatelessWidget {
                 children: [
                   const SizedBox(height: 8),
                   Text(
-                    'Развеиваем миф: все натуральное – безопасно',
+                    LocaleKeys.all_natural.tr(),
                     style: Theme.of(context).textTheme.headline1,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
