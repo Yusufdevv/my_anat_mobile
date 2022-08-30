@@ -6,6 +6,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismis
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_single_hospital.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_single/hospital_single_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/comment_list.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_sevices.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/about_hospital.dart';
 import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_articles.dart';
@@ -21,6 +23,7 @@ import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_deleg
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HospitalSingleScreen extends StatefulWidget {
   final String slug;
@@ -83,8 +86,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
           child: NestedScrollView(
             floatHeaderSlivers: false,
             controller: _scrollController,
-            headerSliverBuilder: (context, isHeaderScrolled) =>
-            [
+            headerSliverBuilder: (context, isHeaderScrolled) => [
               BlocProvider.value(
                 value: _headerManagerBloc,
                 child: BlocBuilder<HeaderManagerBloc, HeaderManagerState>(
@@ -125,35 +127,31 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                         child: PageView.builder(
                                           itemBuilder: (context, index) =>
                                               Stack(
-                                                children: [
-                                                  Positioned.fill(
-                                                    child: Image.asset(
-                                                      AppImages.hospitalImage,
-                                                      fit: BoxFit.cover,
-                                                      height: 277,
-                                                    ),
-                                                  ),
-                                                  Positioned.fill(
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          gradient: LinearGradient(
-                                                            begin: Alignment
-                                                                .topCenter,
-                                                            end: Alignment
-                                                                .bottomCenter,
-                                                            colors: [
-                                                              textColor
-                                                                  .withOpacity(
-                                                                  0.48),
-                                                              textColor
-                                                                  .withOpacity(
-                                                                  0.24),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ))
-                                                ],
+                                            children: [
+                                              Positioned.fill(
+                                                child: Image.asset(
+                                                  AppImages.hospitalImage,
+                                                  fit: BoxFit.cover,
+                                                  height: 277,
+                                                ),
                                               ),
+                                              Positioned.fill(
+                                                  child: Container(
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: [
+                                                      textColor
+                                                          .withOpacity(0.48),
+                                                      textColor
+                                                          .withOpacity(0.24),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ))
+                                            ],
+                                          ),
                                           itemCount: 10,
                                           controller: _pageController,
                                           onPageChanged: (index) {
@@ -170,20 +168,19 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                       // ),
                                       Padding(
                                         padding: EdgeInsets.only(
-                                            top: MediaQuery
-                                                .of(context)
+                                            top: MediaQuery.of(context)
                                                 .padding
                                                 .top),
                                         child: Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             WScaleAnimation(
                                               onTap: () =>
                                                   Navigator.of(context).pop(),
                                               child: Padding(
                                                 padding:
-                                                const EdgeInsets.all(16),
+                                                    const EdgeInsets.all(16),
                                                 child: SvgPicture.asset(
                                                   AppIcons.chevronRight,
                                                   color: white,
@@ -194,7 +191,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                               onTap: () {},
                                               child: Padding(
                                                 padding:
-                                                const EdgeInsets.all(16),
+                                                    const EdgeInsets.all(16),
                                                 child: SvgPicture.asset(
                                                   AppIcons.share,
                                                   color: white,
@@ -204,8 +201,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           ],
                                         ),
                                       ),
-                                      BlocBuilder<
-                                          HospitalSingleBloc,
+                                      BlocBuilder<HospitalSingleBloc,
                                           HospitalSingleState>(
                                         builder: (context, state) {
                                           return Positioned(
@@ -213,7 +209,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                             right: 0,
                                             bottom: 32,
                                             child: ImageSliderIndicator(
-                                              itemCount:10,
+                                              itemCount: 10,
                                               currentIndex: currentImage,
                                             ),
                                           );
@@ -239,9 +235,9 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           children: [
                                             Padding(
                                               padding:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 20,
-                                                  horizontal: 16),
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20,
+                                                      horizontal: 16),
                                               child: Column(
                                                 children: [
                                                   Row(
@@ -250,16 +246,19 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                         height: 40,
                                                         width: 40,
                                                         decoration:
-                                                        BoxDecoration(
+                                                            BoxDecoration(
                                                           borderRadius:
-                                                          BorderRadius
-                                                              .circular(6),
+                                                              BorderRadius
+                                                                  .circular(6),
                                                           border: Border.all(
                                                               color: divider),
                                                           image:
-                                                           DecorationImage(
+                                                              DecorationImage(
                                                             image: NetworkImage(
-                                                                state.hospital.icon.middle),
+                                                                state
+                                                                    .hospital
+                                                                    .icon
+                                                                    .middle),
                                                           ),
                                                         ),
                                                       ),
@@ -271,13 +270,12 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           style:
-                                                          Theme
-                                                              .of(context)
-                                                              .textTheme
-                                                              .headline1!
-                                                              .copyWith(
-                                                              fontSize:
-                                                              20),
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .headline1!
+                                                                  .copyWith(
+                                                                      fontSize:
+                                                                          20),
                                                         ),
                                                       )
                                                     ],
@@ -290,80 +288,82 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                       const SizedBox(width: 6),
                                                       Text(
                                                         state.hospital.address,
-                                                        style: Theme
-                                                            .of(context)
+                                                        style: Theme.of(context)
                                                             .textTheme
                                                             .headline3,
                                                       ),
                                                     ],
                                                   ),
-                                                  const SizedBox(height: 10),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
                                                   state.hospital.phone.isEmpty
                                                       ? const SizedBox()
-                                                      : Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                          AppIcons.phone),
-                                                      const SizedBox(
-                                                          width: 6),
-                                                      Text(
-                                                        state.hospital
-                                                            .phone,
-                                                        style: Theme
-                                                            .of(
-                                                            context)
-                                                            .textTheme
-                                                            .headline3,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  const SizedBox(height: 16),
+                                                      : Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  bottom: 16),
+                                                          child: Row(
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                  AppIcons
+                                                                      .phone),
+                                                              const SizedBox(
+                                                                  width: 6),
+                                                              Text(
+                                                                state.hospital
+                                                                    .phone,
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .headline3,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
                                                   Row(
                                                     children: [
                                                       Text(
                                                         state.hospital.rating
                                                             .toString(),
-                                                        style: Theme
-                                                            .of(context)
+                                                        style: Theme.of(context)
                                                             .textTheme
                                                             .headline3!
                                                             .copyWith(
-                                                            color:
-                                                            darkGreen),
+                                                                color:
+                                                                    darkGreen),
                                                       ),
                                                       const SizedBox(width: 8),
                                                       ...List.generate(
                                                         state.hospital.rating
                                                             .truncate(),
-                                                            (index) =>
-                                                            Padding(
-                                                              padding:
+                                                        (index) => Padding(
+                                                          padding:
                                                               const EdgeInsets
-                                                                  .only(
+                                                                      .only(
                                                                   right: 4),
-                                                              child:
+                                                          child:
                                                               SvgPicture.asset(
                                                                   AppIcons
                                                                       .star),
-                                                            ),
+                                                        ),
                                                       ),
                                                       ...List.generate(
                                                         5 -
                                                             state
                                                                 .hospital.rating
                                                                 .truncate(),
-                                                            (index) =>
-                                                            Padding(
-                                                              padding:
+                                                        (index) => Padding(
+                                                          padding:
                                                               const EdgeInsets
-                                                                  .only(
+                                                                      .only(
                                                                   right: 4),
-                                                              child: SvgPicture
-                                                                  .asset(
-                                                                  AppIcons.star,
-                                                                  color:
+                                                          child: SvgPicture.asset(
+                                                              AppIcons.star,
+                                                              color:
                                                                   inactiveStar),
-                                                            ),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -373,13 +373,26 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                       Expanded(
                                                         child: WButton(
                                                           color: primary,
-                                                          onTap: () {},
+                                                          onTap: () async {
+                                                            if (state
+                                                                .hospital
+                                                                .phone
+                                                                .isNotEmpty) {
+                                                              await canLaunchUrl(
+                                                                      Uri.parse(
+                                                                          'tel:${state.hospital.phone}'))
+                                                                  ? await launchUrl(
+                                                                      Uri.parse(
+                                                                          'tel:${state.hospital.phone}'))
+                                                                  : throw 'Can not open phone number';
+                                                            }
+                                                          },
                                                           padding:
-                                                          EdgeInsets.zero,
+                                                              EdgeInsets.zero,
                                                           child: Row(
                                                             mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                                MainAxisAlignment
+                                                                    .center,
                                                             children: [
                                                               SvgPicture.asset(
                                                                 AppIcons.phone,
@@ -391,14 +404,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                                   width: 8),
                                                               Text(
                                                                 'Позвонть',
-                                                                style: Theme
-                                                                    .of(
-                                                                    context)
+                                                                style: Theme.of(
+                                                                        context)
                                                                     .textTheme
                                                                     .headline3!
                                                                     .copyWith(
-                                                                    color:
-                                                                    white),
+                                                                        color:
+                                                                            white),
                                                               )
                                                             ],
                                                           ),
@@ -408,15 +420,23 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                       Expanded(
                                                         child: WButton(
                                                           color: white,
-                                                          onTap: () {},
+                                                          onTap: () async {
+                                                            await canLaunchUrl(
+                                                                    Uri.parse(
+                                                                        'geo:${state.hospital.location.lat},${state.hospital.location.long}'))
+                                                                ? await launchUrl(
+                                                                    Uri.parse(
+                                                                        'geo:${state.hospital.location.lat},${state.hospital.location.long}'))
+                                                                : throw 'Can not open location';
+                                                          },
                                                           padding:
-                                                          EdgeInsets.zero,
+                                                              EdgeInsets.zero,
                                                           border: Border.all(
                                                               color: primary),
                                                           child: Row(
                                                             mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                                MainAxisAlignment
+                                                                    .center,
                                                             children: [
                                                               SvgPicture.asset(
                                                                 AppIcons
@@ -428,14 +448,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                                   width: 8),
                                                               Text(
                                                                 'Добраться',
-                                                                style: Theme
-                                                                    .of(
-                                                                    context)
+                                                                style: Theme.of(
+                                                                        context)
                                                                     .textTheme
                                                                     .headline3!
                                                                     .copyWith(
-                                                                    color:
-                                                                    primary),
+                                                                        color:
+                                                                            primary),
                                                               )
                                                             ],
                                                           ),
@@ -482,15 +501,21 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
             ],
             body: TabBarView(
               controller: _tabController,
-              children: const [
-                AboutHospital(),
-                HospitalServices(),
-                HospitalSpecialists(),
-                HospitalConditions(),
-                HospitalArticles(),
-                HospitalComments(),
-                HospitalVacancies(),
-                HospitalContacts(),
+              children: [
+                BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                  builder: (context, state) {
+                    return HospitalCommentList(
+                      description: state.hospital.description,
+                    );
+                  },
+                ),
+                const HospitalServices(),
+                const HospitalSpecialists(),
+                const HospitalConditions(),
+                const HospitalArticles(),
+                const HospitalComments(),
+                const HospitalVacancies(),
+                const HospitalContacts(),
               ],
             ),
           ),

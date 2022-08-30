@@ -1,17 +1,18 @@
 import 'package:anatomica/features/auth/data/models/district_model.dart';
-import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/license_model.dart';
 import 'package:anatomica/features/auth/data/models/region_model.dart';
+import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/district_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/license_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/region_entity.dart';
+import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'doctor_model.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake,createToJson: false)
 class DoctorModel extends DoctorEntity {
   const DoctorModel({
     required super.region,
@@ -36,7 +37,7 @@ class DoctorModel extends DoctorEntity {
     required super.telegram,
   });
   factory DoctorModel.fromJson(Map<String, dynamic> json) => _$DoctorModelFromJson(json);
-  Map<String, dynamic> toJson() => _$DoctorModelToJson(this);
+
 }
 
 class DoctorConverter implements JsonConverter<DoctorEntity, Map<String, dynamic>?> {

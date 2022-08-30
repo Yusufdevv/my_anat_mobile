@@ -1,10 +1,13 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/hospital_single/data/models/comments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentAboutHospital extends StatelessWidget {
+  final CommentModel entity;
   const CommentAboutHospital({
+    required this.entity,
     Key? key,
   }) : super(key: key);
 
@@ -25,14 +28,14 @@ class CommentAboutHospital extends StatelessWidget {
         ],
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Column(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(18),
                 child: Image.network(
-                  'https://picsum.photos/200',
+                 entity.userImage.middle,
                   height: 36,
                   width: 36,
                   errorBuilder: (_, __, ___) => Container(
@@ -52,7 +55,7 @@ class CommentAboutHospital extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Жасурбек Пулатов',
+                    entity.fullName,
                     style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 15),
                   ),
                   const SizedBox(height: 2),
@@ -65,7 +68,7 @@ class CommentAboutHospital extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '4.0',
+                        entity.rating.toString(),
                         style: Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
                       ),
                     ],
@@ -76,7 +79,7 @@ class CommentAboutHospital extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Кровь на гепатит В и С не берут отправляют в платные мед.центры',
+            entity.comment,
             style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 13),
           )
         ],

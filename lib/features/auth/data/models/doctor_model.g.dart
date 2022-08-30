@@ -21,7 +21,10 @@ DoctorModel _$DoctorModelFromJson(Map<String, dynamic> json) => DoctorModel(
       email: json['email'] as String? ?? '',
       rating: (json['rating'] as num?)?.toDouble() ?? 0,
       address: json['address'] as String? ?? '',
-      specialization: json['specialization'] as String? ?? '',
+      specialization: json['specialization'] == null
+          ? const SpecializationEntity()
+          : const SpecializationConverter()
+              .fromJson(json['specialization'] as Map<String, dynamic>?),
       workExperience: json['work_experience'] as int? ?? 0,
       work: json['work'] as String? ?? '',
       showInProfileBio: json['show_in_profile_bio'] as bool? ?? false,
@@ -36,31 +39,10 @@ DoctorModel _$DoctorModelFromJson(Map<String, dynamic> json) => DoctorModel(
           : const DistrictConverter()
               .fromJson(json['district'] as Map<String, dynamic>?),
       bio: json['bio'] as String? ?? '',
-      position: json['position'] as String? ?? '',
+      position: json['position'] == null
+          ? const SpecializationEntity()
+          : const SpecializationConverter()
+              .fromJson(json['position'] as Map<String, dynamic>?),
       instagram: json['instagram'] as String? ?? '',
       telegram: json['telegram'] as String? ?? '',
     );
-
-Map<String, dynamic> _$DoctorModelToJson(DoctorModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'full_name': instance.fullName,
-      'position': instance.position,
-      'work_experience': instance.workExperience,
-      'work': instance.work,
-      'region': const RegionConverter().toJson(instance.region),
-      'district': const DistrictConverter().toJson(instance.district),
-      'address': instance.address,
-      'specialization': instance.specialization,
-      'phone_number': instance.phoneNumber,
-      'email': instance.email,
-      'rating': instance.rating,
-      'open_to_work': instance.openToWork,
-      'bio': instance.bio,
-      'show_in_profile_bio': instance.showInProfileBio,
-      'license': const LicenseConverter().toJson(instance.license),
-      'instagram': instance.instagram,
-      'telegram': instance.telegram,
-      'moderation_status': instance.moderationStatus,
-      'img': const ImageConverter().toJson(instance.img),
-    };

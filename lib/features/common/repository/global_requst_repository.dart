@@ -1,5 +1,6 @@
 import 'package:anatomica/core/data/singletons/dio_settings.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:dio/dio.dart';
@@ -19,7 +20,7 @@ class GlobalRequestRepository {
       final result = await dio.get(endpoint,
           queryParameters: query,
           options: Options(
-              headers: sendToken ? {"Authorization": "Token $token"} : {}));
+              headers: sendToken ? {"Authorization": "Token ${StorageRepository.getString('token',defValue: '')}"} : {}));
       print(result.realUri);
       print(result.data);
       return Right(fromJson(result.data));
@@ -42,7 +43,9 @@ class GlobalRequestRepository {
       final result = await dio.get(endpoint,
           queryParameters: query,
           options: Options(
-              headers: sendToken ? {"Authorization": "Token $token"} : {}));
+              headers: sendToken ? {"Authorization": "Token ${StorageRepository.getString('token',defValue: '')}"} : {}));
+
+
       print(result.realUri);
       print(result.data);
       List<S> list = [];
@@ -73,7 +76,7 @@ class GlobalRequestRepository {
           queryParameters: query,
           data: data,
           options: Options(
-              headers: sendToken ? {"Authorization": "Token $token"} : {}));
+              headers: sendToken ? {"Authorization": "Token ${StorageRepository.getString('token',defValue: '')}"} : {}));
       print(result.realUri);
       print(result.data);
       if (responseDataKey != null && responseDataKey.isNotEmpty) {
@@ -99,7 +102,7 @@ class GlobalRequestRepository {
           queryParameters: query,
           data: data,
           options: Options(
-              headers: sendToken ? {"Authorization": "Token $token"} : {}));
+              headers: sendToken ? {"Authorization": "Token ${StorageRepository.getString('token',defValue: '')}"} : {}));
       print(result.realUri);
       print(result.data);
       List<S> list = [];

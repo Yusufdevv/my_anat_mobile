@@ -1,10 +1,26 @@
+import 'dart:io';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class ServiceSingleScreen extends StatelessWidget {
-  const ServiceSingleScreen({Key? key}) : super(key: key);
+class ServiceSingleScreen extends StatefulWidget {
+  final String url;
+
+  const ServiceSingleScreen({Key? key, required this.url}) : super(key: key);
+
+  @override
+  State<ServiceSingleScreen> createState() => _ServiceSingleScreenState();
+}
+
+class _ServiceSingleScreenState extends State<ServiceSingleScreen> {
+  @override
+  void initState() {
+    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +37,9 @@ class ServiceSingleScreen extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 72),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: const Text('Bunch of html code here'),
-              ),
+            child: WebView(
+              initialUrl: widget.url,
+              javascriptMode: JavascriptMode.unrestricted,
             ),
           ),
           Positioned(
