@@ -10,7 +10,10 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class FilterBottomSheet extends StatelessWidget {
-  const FilterBottomSheet({Key? key}) : super(key: key);
+  final RegionBloc regionBloc;
+
+  const FilterBottomSheet({required this.regionBloc, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
