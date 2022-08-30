@@ -6,7 +6,8 @@ import 'package:anatomica/features/profile/prezentation/pages/change_password.da
 import 'package:anatomica/features/profile/prezentation/widgets/logout_dialog.dart';
 import 'package:anatomica/features/profile/prezentation/widgets/profile_item.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class SafetyScreen extends StatelessWidget {
   const SafetyScreen({Key? key}) : super(key: key);
 
@@ -14,12 +15,13 @@ class SafetyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return Scaffold(
-      appBar: const WAppBar(
-        title: 'Безопасность',
+      appBar: WAppBar(
+        title: LocaleKeys.safety.tr(),
         hasUnderline: true,
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(16, 20, 16, 20 + mediaQuery.padding.bottom),
+        padding:
+            EdgeInsets.fromLTRB(16, 20, 16, 20 + mediaQuery.padding.bottom),
         child: Column(
           children: [
             ProfileItem(
@@ -27,7 +29,7 @@ class SafetyScreen extends StatelessWidget {
                 Navigator.of(context, rootNavigator: true)
                     .push(fade(page: const ChangePasswordScreen()));
               },
-              title: 'Изменить пароль аккаунта',
+              title: LocaleKeys.edit_password_acc.tr(),
               icon: AppIcons.key,
               iconColor: primary,
             ),
@@ -37,12 +39,11 @@ class SafetyScreen extends StatelessWidget {
                 showLogOutDialog(
                   context,
                   height: 225,
-                  title: 'Удалить аккаунт?',
-                  subTitle: 'После выполнения данного действия, вся информация связанная с вашим '
-                      'аккаунтом будет безвозвратно удалена. Восстановление всех ваших данных будет невозможным.',
+                  title: LocaleKeys.delete_acc.tr(),
+                  subTitle: LocaleKeys.info_about_delete_acc.tr(),
                 );
               },
-              title: 'Удалить аккаунт',
+              title: LocaleKeys.delete_account.tr(),
               icon: AppIcons.trash,
               color: snow,
             ),

@@ -14,11 +14,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class MagazineSingleItem extends StatelessWidget {
   final JournalBloc bloc;
   final JournalEntity journal;
-  const MagazineSingleItem({required this.bloc, required this.journal, Key? key}) : super(key: key);
+
+  const MagazineSingleItem(
+      {required this.bloc, required this.journal, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +75,8 @@ class MagazineSingleItem extends StatelessWidget {
                           imageUrl: journal.image.middle,
                           isJournal: false,
                           isRegistered:
-                              context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated,
+                              context.read<AuthenticationBloc>().state.status ==
+                                  AuthenticationStatus.authenticated,
                           subtitle: journal.redaction,
                           id: journal.id,
                         )));
@@ -81,14 +87,19 @@ class MagazineSingleItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (state.journalSingleArticleStatus == PaginatorStatus.PAGINATOR_SUCCESS) ...[
+                if (state.journalSingleArticleStatus ==
+                    PaginatorStatus.PAGINATOR_SUCCESS) ...[
                   if (state.journalSingleArticles.isNotEmpty) ...{
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 16, bottom: 12, top: 20),
+                        padding: const EdgeInsets.only(
+                            left: 16, bottom: 12, top: 20),
                         child: Text(
                           'Статьи из выпуска',
-                          style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1!
+                              .copyWith(fontSize: 18),
                         ),
                       ),
                     ),
@@ -105,20 +116,24 @@ class MagazineSingleItem extends StatelessWidget {
                         (BuildContext context, int index) {
                           return ArticleItem(
                             margin: const EdgeInsets.only(bottom: 12),
-                            magazineItemEntity: state.journalSingleArticles[index],
+                            magazineItemEntity:
+                                state.journalSingleArticles[index],
                           );
                         },
-                        childCount: state.journalSingleArticles.length, // 1000 list items
+                        childCount: state
+                            .journalSingleArticles.length, // 1000 list items
                       ),
                     ),
                   )
-                ] else if (state.journalSingleArticleStatus == PaginatorStatus.PAGINATOR_LOADING) ...{
+                ] else if (state.journalSingleArticleStatus ==
+                    PaginatorStatus.PAGINATOR_LOADING) ...{
                   const SliverToBoxAdapter(
                     child: Center(
                       child: CupertinoActivityIndicator(),
                     ),
                   )
-                } else if (state.journalSingleArticleStatus == PaginatorStatus.PAGINATOR_ERROR) ...{
+                } else if (state.journalSingleArticleStatus ==
+                    PaginatorStatus.PAGINATOR_ERROR) ...{
                   const SliverToBoxAdapter(
                     child: Center(
                       child: Text('Error'),

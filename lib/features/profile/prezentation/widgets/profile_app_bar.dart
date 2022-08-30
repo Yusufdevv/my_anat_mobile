@@ -2,7 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class ProfileAppBar extends StatelessWidget {
   const ProfileAppBar({Key? key}) : super(key: key);
 
@@ -26,7 +27,7 @@ class ProfileAppBar extends StatelessWidget {
           SvgPicture.asset(AppIcons.logo, color: black),
           const SizedBox(width: 12),
           Text(
-            'Аккаунт',
+            LocaleKeys.account.tr(),
             style: Theme.of(context).textTheme.headline1!.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 22,

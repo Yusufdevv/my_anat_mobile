@@ -1,6 +1,7 @@
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class SearchItem extends StatelessWidget {
   final bool isLast;
 
@@ -12,7 +13,7 @@ class SearchItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Терапевт',
+          LocaleKeys.therapist.tr(),
           style: Theme.of(context).textTheme.headline1!.copyWith(
                 fontWeight: FontWeight.w400,
               ),

@@ -6,6 +6,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class BuyDialog extends StatelessWidget {
   const BuyDialog({Key? key}) : super(key: key);
@@ -18,12 +20,16 @@ class BuyDialog extends StatelessWidget {
       actionsPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: const RoundedRectangleBorder(
-          side: BorderSide(color: textFieldColor), borderRadius: BorderRadius.all(Radius.circular(12.0))),
+          side: BorderSide(color: textFieldColor),
+          borderRadius: BorderRadius.all(Radius.circular(12.0))),
       title: Row(
         children: [
           Text(
-            'Покупка журнала',
-            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+            LocaleKeys.buy_magazine.tr(),
+            style: Theme.of(context)
+                .textTheme
+                .headline1!
+                .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
           ),
           const Spacer(),
           WScaleAnimation(
@@ -34,8 +40,11 @@ class BuyDialog extends StatelessWidget {
         ],
       ),
       content: Text(
-        'Зарегистрируйтесь, чтобы в полной мере использовать возможности приложения',
-        style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+        LocaleKeys.sing_up_to_full.tr(),
+        style: Theme.of(context)
+            .textTheme
+            .headline3!
+            .copyWith(fontWeight: FontWeight.w400),
       ),
       actions: [
         WButton(
@@ -48,8 +57,11 @@ class BuyDialog extends StatelessWidget {
               SvgPicture.asset(AppIcons.userPlus),
               const SizedBox(width: 8),
               Text(
-                'Регистрация',
-                style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                LocaleKeys.register.tr(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline2!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -72,8 +84,11 @@ class BuyDialog extends StatelessWidget {
               SvgPicture.asset(AppIcons.cashBanknote),
               const SizedBox(width: 8),
               Text(
-                'Единовременный платеж',
-                style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                LocaleKeys.only_pay.tr(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .copyWith(fontSize: 14),
               ),
             ],
           ),

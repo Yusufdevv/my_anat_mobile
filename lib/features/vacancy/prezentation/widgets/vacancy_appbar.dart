@@ -5,7 +5,8 @@ import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class VacancyAppBar extends StatelessWidget {
   const VacancyAppBar({Key? key}) : super(key: key);
 
@@ -29,7 +30,7 @@ class VacancyAppBar extends StatelessWidget {
           SvgPicture.asset(AppIcons.logo, color: black),
           const SizedBox(width: 12),
           Text(
-            'Вакансии',
+            LocaleKeys.vacancy.tr(),
             style: Theme.of(context).textTheme.headline1!.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 22,
@@ -38,7 +39,8 @@ class VacancyAppBar extends StatelessWidget {
           const Spacer(),
           WScaleAnimation(
             onTap: () {
-              Navigator.of(context).push(fade(page: const VacancySearchScreen()));
+              Navigator.of(context)
+                  .push(fade(page: const VacancySearchScreen()));
             },
             child: Container(
               height: 40,

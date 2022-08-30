@@ -7,6 +7,8 @@ import 'package:anatomica/features/auth/presentation/widgets/register_phone.dart
 import 'package:anatomica/features/auth/presentation/widgets/register_verify.dart';
 import 'package:anatomica/features/auth/presentation/widgets/registration_progress.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +21,8 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStateMixin {
+class _RegisterScreenState extends State<RegisterScreen>
+    with TickerProviderStateMixin {
   late PageController pageController;
   late TabController tabController;
   int currentPage = 0;
@@ -91,7 +94,8 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
                         subTitle: _getSubtitle(currentPage),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 42),
+                        padding: const EdgeInsets.symmetric(horizontal: 16)
+                            .copyWith(bottom: 42),
                         child: RegistrationProgress(
                           currentPosition: currentPage,
                         ),
@@ -137,13 +141,13 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
   String _getTitle(int currentPage) {
     switch (currentPage) {
       case 0:
-        return 'Регистрация';
+        return LocaleKeys.register.tr();
       case 1:
-        return 'Контактные данные';
+        return LocaleKeys.contact_details.tr();
       case 2:
-        return 'Верификация';
+        return LocaleKeys.verify.tr();
       case 3:
-        return 'Безопасность';
+        return LocaleKeys.safety.tr();
       default:
         return '';
     }
@@ -152,13 +156,13 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
   String _getSubtitle(int currentPage) {
     switch (currentPage) {
       case 0:
-        return 'Чтобы воспользоваться всеми возможностями, пожалуйста, зарегистрируйтесь';
+        return LocaleKeys.register_text.tr();
       case 1:
-        return 'Чтобы зарегистрироваться, пожалуйста, введите контактные данные';
+        return LocaleKeys.enter_contact_details.tr();
       case 2:
-        return 'Введите код который был отправлен на номер';
+        return LocaleKeys.write_sms_code.tr();
       case 3:
-        return 'Ваш аккаунт, регистрирован. Осталось введит надежный пароль';
+        return LocaleKeys.registered_password.tr();
       default:
         return '';
     }

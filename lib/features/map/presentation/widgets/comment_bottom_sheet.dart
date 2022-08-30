@@ -8,7 +8,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class CommentBottomSheet extends StatefulWidget {
   final BuildContext parentContext;
 
@@ -50,7 +51,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Добавить отзыв',
+                  LocaleKeys.add_reviews.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headline1!
@@ -113,9 +114,9 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
                 onChanged: (value) {},
-                title: 'Ваше мнение',
+                title: LocaleKeys.opinion.tr(),
                 height: 120,
-                hintText: 'Введите свое мнение',
+                hintText: LocaleKeys.enter_opinion.tr(),
               ),
             ),
             WButton(
@@ -129,7 +130,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                 );
               },
               margin: const EdgeInsets.only(right: 16),
-              text: 'Оставить отзыв',
+              text: LocaleKeys.feedback.tr(),
             ),
             SizedBox(
               height: 16 +
@@ -166,13 +167,13 @@ class CommentSuccessBottomSheet extends StatelessWidget {
           Lottie.asset(AppIcons.checkLottie, width: 150, height: 150),
           const SizedBox(height: 24),
           Text(
-            'Успешно отправлено',
+            LocaleKeys.successfully_sent.tr(),
             style:
                 Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
           ),
           const SizedBox(height: 8),
           Text(
-            'Ваш отзыв был успешно передан в проверку и вскоребудет опубликован при успешной модерации',
+            LocaleKeys.your_review_successfully.tr(),
             style:
                 Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
             textAlign: TextAlign.center,
@@ -182,7 +183,7 @@ class CommentSuccessBottomSheet extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
             },
-            text: 'Понятно',
+            text: LocaleKeys.clear.tr(),
           )
         ],
       ),

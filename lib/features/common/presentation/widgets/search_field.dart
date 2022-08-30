@@ -3,6 +3,8 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SearchField extends StatefulWidget {
   final TextEditingController controller;
@@ -60,7 +62,7 @@ class _SearchFieldState extends State<SearchField> {
               child: SvgPicture.asset(AppIcons.search),
             ),
           ),
-          hintText: 'Поиск',
+          hintText: LocaleKeys.search.tr(),
           hintStyle: Theme.of(context).textTheme.headline3,
           prefixIconConstraints: const BoxConstraints(maxWidth: 40),
           suffixIcon: showClear

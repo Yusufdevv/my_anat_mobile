@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class SearchEmpty extends StatelessWidget {
   const SearchEmpty({Key? key}) : super(key: key);
 
@@ -12,7 +13,7 @@ class SearchEmpty extends StatelessWidget {
         SvgPicture.asset(''),
         const SizedBox(height: 16),
         Text(
-          'К сожалению по вашему запросу ничего не найдено',
+          LocaleKeys.return_results.tr(),
           style: Theme.of(context)
               .textTheme
               .subtitle2!

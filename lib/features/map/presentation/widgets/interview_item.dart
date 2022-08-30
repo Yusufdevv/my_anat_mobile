@@ -2,7 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class InterviewItem extends StatelessWidget {
   const InterviewItem({
     Key? key,
@@ -41,7 +42,7 @@ class InterviewItem extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Развеиваем миф: все натуральное – безопасно',
+                  LocaleKeys.all_natural.tr(),
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 const SizedBox(height: 10),

@@ -16,7 +16,8 @@ import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_deleg
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class DoctorSingleScreen extends StatefulWidget {
   const DoctorSingleScreen({Key? key}) : super(key: key);
 
@@ -31,11 +32,11 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
   late PageController _pageController;
   int currentImage = 0;
   final tabs = [
-    'О враче',
-    'Статьи',
-    'Интервью',
-    'Отзывы',
-    'Контакты',
+    LocaleKeys.about_doctor.tr(),
+    LocaleKeys.articles.tr(),
+    LocaleKeys.interview.tr(),
+    LocaleKeys.reviews.tr(),
+    LocaleKeys.contact.tr(),
   ];
 
   @override
@@ -277,7 +278,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                                                         ),
                                                         const SizedBox(width: 8),
                                                         Text(
-                                                          'Позвонть',
+                                                          LocaleKeys.call.tr(),
                                                           style: Theme.of(context)
                                                               .textTheme
                                                               .headline3!
@@ -304,7 +305,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                                                         ),
                                                         const SizedBox(width: 8),
                                                         Text(
-                                                          'Добраться',
+                                                          LocaleKeys.get.tr(),
                                                           style: Theme.of(context)
                                                               .textTheme
                                                               .headline3!

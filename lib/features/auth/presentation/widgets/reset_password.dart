@@ -1,6 +1,8 @@
 import 'package:anatomica/features/auth/presentation/bloc/reset_password_bloc/reset_password_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/password_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +16,7 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
+
   @override
   void initState() {
     super.initState();
@@ -26,21 +29,22 @@ class _ResetPasswordState extends State<ResetPassword> {
     return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.fromLTRB(
+              16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
           child: Column(
             children: [
               PasswordTextField(
-                title: 'Новый пароль',
+                title: LocaleKeys.new_password.tr(),
                 controller: passwordController,
                 onChanged: (value) {},
-                hintText: 'Введите новый пароль',
+                hintText: LocaleKeys.write_new_password.tr(),
               ),
               const SizedBox(height: 16),
               PasswordTextField(
-                title: 'Подтвердите новый пароль',
+                title: LocaleKeys.confirm_new_password.tr(),
                 controller: confirmPasswordController,
                 onChanged: (value) {},
-                hintText: 'Подтвердите новый пароль',
+                hintText: LocaleKeys.confirm_new_password.tr(),
               ),
               const Spacer(),
               WButton(
@@ -50,7 +54,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                       password: passwordController.text,
                       onError: (message) {}));
                 },
-                text: 'Сохранить',
+                text: LocaleKeys.save.tr(),
               ),
             ],
           ),

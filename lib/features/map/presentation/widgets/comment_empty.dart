@@ -3,7 +3,8 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class CommentEmpty extends StatelessWidget {
   const CommentEmpty({
     Key? key,
@@ -23,19 +24,19 @@ class CommentEmpty extends StatelessWidget {
         children: [
           SvgPicture.asset(AppIcons.commentEmpty),
           Text(
-            'Отзывы отсутствуют',
+            LocaleKeys.no_reviews.tr(),
             style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
           ),
           const SizedBox(height: 8),
           Text(
-            'Оставьте свой отзыв, чтобы внести свой вклад в развитие проекта',
+            LocaleKeys.write_reviews.tr(),
             style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
           WButton(
             onTap: () {},
-            text: 'Добавить отзыв',
+            text: LocaleKeys.add_reviews.tr(),
           ),
         ],
       ),

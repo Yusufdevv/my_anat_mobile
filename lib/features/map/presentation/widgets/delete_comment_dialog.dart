@@ -4,7 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class DeleteCommentDialog extends StatelessWidget {
   const DeleteCommentDialog({
     Key? key,
@@ -32,7 +33,7 @@ class DeleteCommentDialog extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: Text(
-                    'Внимание',
+                    LocaleKeys.attention.tr(),
                     style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
                   ),
                 ),
@@ -54,7 +55,7 @@ class DeleteCommentDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                'Напоминаем, что ваш отзыв будет удален навсегда',
+                LocaleKeys.note_attention.tr(),
                 style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 12),
               ),
             ),
@@ -69,7 +70,7 @@ class DeleteCommentDialog extends StatelessWidget {
                       },
                       color: unFollowButton.withOpacity(0.1),
                       border: Border.all(color: primary),
-                      text: 'Отмена',
+                      text: LocaleKeys.cancel.tr(),
                       textColor: primary,
                     ),
                   ),
@@ -80,7 +81,7 @@ class DeleteCommentDialog extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                       color: deleteButton,
-                      text: 'Удалить',
+                      text: LocaleKeys.delete.tr(),
                     ),
                   ),
                 ],

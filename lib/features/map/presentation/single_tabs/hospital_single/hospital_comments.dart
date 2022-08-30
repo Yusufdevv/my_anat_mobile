@@ -4,7 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_item.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class HospitalComments extends StatelessWidget {
   const HospitalComments({Key? key}) : super(key: key);
 
@@ -40,7 +41,7 @@ class HospitalComments extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      '7 отзывов',
+                      '7 ${LocaleKeys.review.tr()}',
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
                     ),
                   ],
@@ -56,7 +57,7 @@ class HospitalComments extends StatelessWidget {
                       builder: (_) => CommentBottomSheet(parentContext: context),
                     );
                   },
-                  text: 'Добавить отзыв',
+                  text: LocaleKeys.add_reviews.tr(),
                 ),
               )
             ],

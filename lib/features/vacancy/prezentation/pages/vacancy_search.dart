@@ -1,7 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_highlighted_text.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_textfield.dart';
@@ -9,7 +8,8 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/search_item.dart
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class VacancySearchScreen extends StatefulWidget {
   const VacancySearchScreen({Key? key}) : super(key: key);
 
@@ -17,7 +17,8 @@ class VacancySearchScreen extends StatefulWidget {
   State<VacancySearchScreen> createState() => _VacancySearchScreenState();
 }
 
-class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerProviderStateMixin {
+class _VacancySearchScreenState extends State<VacancySearchScreen>
+    with TickerProviderStateMixin {
   late TabController tabController;
   late TextEditingController controller;
 
@@ -43,7 +44,8 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(132),
           child: Container(
-            padding: EdgeInsets.fromLTRB(16, 8 + mediaQuery.padding.top, 16, 16),
+            padding:
+                EdgeInsets.fromLTRB(16, 8 + mediaQuery.padding.top, 16, 16),
             decoration: BoxDecoration(
               color: white,
               boxShadow: [
@@ -63,7 +65,7 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        'Отмена',
+                        LocaleKeys.cancel.tr(),
                         style: Theme.of(context)
                             .textTheme
                             .headline3!
@@ -90,9 +92,9 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                 ),
                 WTabBar(
                   tabController: tabController,
-                  tabs: const [
-                    Tab(text: 'Вакансии'),
-                    Tab(text: 'Кандидаты'),
+                  tabs: [
+                    Tab(text: LocaleKeys.vacancy.tr()),
+                    Tab(text: LocaleKeys.candidate.tr()),
                   ],
                 ),
               ],
@@ -107,7 +109,7 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const VacancyTitleText(title: 'Популярные запросы'),
+                  VacancyTitleText(title: LocaleKeys.popular.tr()),
                   const WDivider(margin: EdgeInsets.symmetric(vertical: 13)),
                   Container(
                     color: white,
@@ -115,7 +117,9 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ...List.generate(
-                            3, (index) => SearchItem(isLast: index == 2 ? true : false)),
+                            3,
+                            (index) =>
+                                SearchItem(isLast: index == 2 ? true : false)),
                       ],
                     ),
                   ),

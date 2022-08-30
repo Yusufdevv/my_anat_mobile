@@ -3,7 +3,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class SalaryBottomSheet extends StatefulWidget {
   const SalaryBottomSheet({Key? key}) : super(key: key);
 
@@ -30,9 +31,8 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return ScrolledBottomSheet(
-      title: 'Зарплата',
+      title: LocaleKeys.salary.tr(),
       hasHeader: true,
       children: [
         const WDivider(),
@@ -51,7 +51,7 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
         ),
         WButton(
           margin: const EdgeInsets.symmetric(horizontal: 16),
-          text: 'Сохранить',
+          text: LocaleKeys.save.tr(),
           onTap: () {
             Navigator.of(context).pop();
           },

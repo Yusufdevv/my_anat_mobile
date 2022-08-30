@@ -6,8 +6,8 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class CandidateItem extends StatelessWidget {
   final VoidCallback onTap;
   final EdgeInsets? margin;
@@ -62,15 +62,20 @@ class CandidateItem extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       candidateListEntity.specialization.title,
-                      style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .copyWith(fontSize: 14),
                     ),
                     const Spacer(),
                     VacancyItemTextWidget(
-                        title: '${candidateListEntity.workExperience} лет',
+                        title:
+                            '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
                         icon: AppIcons.briefCase),
                     const SizedBox(height: 4),
                     VacancyItemTextWidget(
-                        title: candidateListEntity.address, icon: AppIcons.mapPin),
+                        title: candidateListEntity.address,
+                        icon: AppIcons.mapPin),
                   ],
                 ),
               ),

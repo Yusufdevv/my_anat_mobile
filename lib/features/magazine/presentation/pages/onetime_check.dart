@@ -7,7 +7,8 @@ import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class OneTimeCheck extends StatelessWidget {
   const OneTimeCheck({Key? key}) : super(key: key);
 
@@ -23,7 +24,7 @@ class OneTimeCheck extends StatelessWidget {
         leadingWidth: 0,
         automaticallyImplyLeading: false,
         title: Text(
-          'Единовременный платеж',
+          LocaleKeys.only_pay.tr(),
           style: Theme.of(context).textTheme.headline1,
         ),
         actions: [
@@ -47,7 +48,7 @@ class OneTimeCheck extends StatelessWidget {
           SvgPicture.asset(AppIcons.success),
           const  SizedBox(height: 16),
           Text(
-            'Успешная покупка',
+            LocaleKeys.success_purchase.tr(),
             style: Theme.of(context)
                 .textTheme
                 .headline1!
@@ -55,7 +56,7 @@ class OneTimeCheck extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Вы реализовали покупку журнала\n“Май 2022” успешно',
+            LocaleKeys.realization_success.tr(),
             style: Theme.of(context)
                 .textTheme
                 .headline3!
@@ -68,7 +69,7 @@ class OneTimeCheck extends StatelessWidget {
             children: [
               RichText(
                 text: TextSpan(
-                  text: 'ID покупки: ',
+                  text: LocaleKeys.id_purchase.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headline3!
@@ -95,7 +96,7 @@ class OneTimeCheck extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: WButton(
-        text: 'В главную',
+        text: LocaleKeys.to_main.tr(),
         margin: EdgeInsets.only(
             bottom: MediaQuery.of(context).padding.bottom, left: 16, right: 16),
         onTap: () {

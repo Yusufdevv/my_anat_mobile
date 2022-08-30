@@ -21,7 +21,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -75,13 +76,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                       FormzStatus.submissionSuccess) {
                     if (state.profileEntity.isDoctor) {
                       return ProfileItem(
-                          title: 'Кабинет врача',
+                          title: LocaleKeys.doctor_office.tr(),
                           icon: AppIcons.scope,
                           onTap: () {});
                     }
                     if (state.profileEntity.isOrganization) {
                       return ProfileItem(
-                          title: 'Кабинет организации',
+                          title: LocaleKeys.organization_office.tr(),
                           image: AppImages.organization,
                           onTap: () {});
                     }
@@ -97,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 }),
                 const SizedBox(height: 12),
                 ProfileItem(
-                    title: 'Настройки',
+                    title: LocaleKeys.setting.tr(),
                     icon: AppIcons.setting,
                     onTap: () {
                       Navigator.of(context)
@@ -105,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     }),
                 const SizedBox(height: 12),
                 ProfileItem(
-                    title: 'Безопасность',
+                    title: LocaleKeys.safety.tr(),
                     icon: AppIcons.lock,
                     onTap: () {
                       Navigator.of(context)
@@ -113,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     }),
                 const SizedBox(height: 12),
                 ProfileItem(
-                    title: 'Избранные',
+                    title: LocaleKeys.favorite.tr(),
                     icon: AppIcons.profileStar,
                     onTap: () {
                       Navigator.of(context)
@@ -121,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     }),
                 const SizedBox(height: 12),
                 ProfileItem(
-                    title: 'Помощь',
+                    title: LocaleKeys.help.tr(),
                     icon: AppIcons.help,
                     onTap: () {
                       Navigator.of(context)
@@ -131,7 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 const WDivider(),
                 const SizedBox(height: 12),
                 ProfileItem(
-                    title: 'Выйти из аккаунта',
+                    title: LocaleKeys.sing_out.tr(),
                     icon: AppIcons.logout,
                     onTap: () {
                       showLogOutDialog(context);
@@ -155,14 +156,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                       return const SizedBox();
                     } else {
                       return Column(
-                        children: const [
-                          OtherProfileItem(),
-                          SizedBox(height: 12),
+                        children:   [
+                        const  OtherProfileItem(),
+                          const SizedBox(height: 12),
                           OtherProfileItem(
                             iconBackgroundColor: steelBlue,
                             icon: AppIcons.icHospital,
                             backgroundColor: pattensBlue,
-                            title: 'Получить профиль организации',
+                            title: LocaleKeys.get_organization.tr(),
                           ),
                         ],
                       );

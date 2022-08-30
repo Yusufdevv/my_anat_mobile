@@ -3,7 +3,8 @@ import 'package:anatomica/features/common/presentation/widgets/search_field.dart
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/sevice_item.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class HospitalServices extends StatefulWidget {
   const HospitalServices({Key? key}) : super(key: key);
 
@@ -45,7 +46,7 @@ class _HospitalServicesState extends State<HospitalServices> {
               20,
               (index) => ServiceItem(
                 isLast: index == 19,
-                allText: 'Профилактический осмотр и медицинское освидетельствование',
+                allText: LocaleKeys.prevention.tr(),
                 searchText: searchValue,
               ),
             ),
@@ -55,7 +56,7 @@ class _HospitalServicesState extends State<HospitalServices> {
         WButton(
           onTap: () {},
           color: commentButton,
-          text: 'Загрузить еще',
+          text: LocaleKeys.download_more.tr(),
           textColor: textSecondary,
         )
       ],

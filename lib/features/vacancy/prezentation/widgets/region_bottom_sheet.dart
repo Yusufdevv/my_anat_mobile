@@ -5,12 +5,15 @@ import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacan
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/region_item.dart';
 import 'package:flutter/material.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegionBottomSheet extends StatefulWidget {
   final RegionBloc regionBloc;
 
-  const RegionBottomSheet({required this.regionBloc, Key? key}) : super(key: key);
+  const RegionBottomSheet({required this.regionBloc, Key? key})
+      : super(key: key);
 
   @override
   State<RegionBottomSheet> createState() => _RegionBottomSheetState();
@@ -46,7 +49,7 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
       value: widget.regionBloc,
       child: ScrolledBottomSheet(
         isSubScreen: true,
-        title: currentPage == 0 ? 'Регион' : 'г.Ташкент',
+        title: currentPage == 0 ? LocaleKeys.region.tr() : 'г.Ташкент',
         hasHeader: true,
         child: PageView(
           physics: const NeverScrollableScrollPhysics(),
@@ -69,12 +72,13 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                   paginatorStatus: state.regionStatus,
                   fetchMoreFunction: () {},
                   errorWidget: const Text('Fail'),
-                  padding: EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
+                  padding: EdgeInsets.fromLTRB(
+                      16, 20, 16, 12 + mediaQuery.padding.bottom),
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return CheckBoxTitle(
                         onTap: selectAll,
-                        title: 'Весь Узбекистан',
+                        title: LocaleKeys.all_uzb.tr(),
                         padding: EdgeInsets.zero,
                       );
                     }
@@ -82,11 +86,13 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                       title: state.regions[index].title,
                       onTap: () {
                         pageController.nextPage(
-                            duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.bounceIn);
                       },
                     );
                   },
-                  separatorBuilder: (context, index) => const SizedBox(height: 16),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 16),
                   itemCount: state.regions.length,
                 );
               },
@@ -97,12 +103,13 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                   context.read<RegionBloc>().add(GetDistrictEvent());
                 }
                 return Paginator(
-                  padding: EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
+                  padding: EdgeInsets.fromLTRB(
+                      16, 20, 16, 12 + mediaQuery.padding.bottom),
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return CheckBoxTitle(
                         onTap: selectAll,
-                        title: 'Все',
+                        title: LocaleKeys.all.tr(),
                         padding: EdgeInsets.zero,
                       );
                     }
@@ -115,7 +122,8 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                   paginatorStatus: state.districtStatus,
                   hasMoreToFetch: state.fetchMoreDistrict,
                   errorWidget: const Center(child: Text('Fail')),
-                  separatorBuilder: (context, index) => const SizedBox(height: 16),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 16),
                   itemCount: state.districts.length,
                 );
               },

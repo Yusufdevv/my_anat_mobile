@@ -27,7 +27,7 @@ class SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) => Container(
         padding: padding ?? const EdgeInsets.only(bottom: 0, left: 0, right: 0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: [
             // BoxShadow(

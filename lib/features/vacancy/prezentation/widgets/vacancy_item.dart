@@ -1,14 +1,13 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jiffy/jiffy.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class VacancyItem extends StatelessWidget {
   final EdgeInsets? margin;
   final VoidCallback onTap;
@@ -19,7 +18,6 @@ class VacancyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return GestureDetector(behavior: HitTestBehavior.translucent,
       onTap: onTap,
       child: Container(
@@ -73,7 +71,7 @@ class VacancyItem extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Text('Опубликовано:', style: Theme.of(context).textTheme.subtitle2),
+                Text(LocaleKeys.published.tr(), style: Theme.of(context).textTheme.subtitle2),
                 const SizedBox(width: 4),
                 Text(Jiffy(vacancyEntity.publishedAt).format('dd MMMM , yyyy'),
                     style: Theme.of(context).textTheme.subtitle2),

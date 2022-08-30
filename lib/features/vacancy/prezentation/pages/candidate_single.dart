@@ -1,6 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
@@ -11,7 +10,6 @@ import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_single.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/candidate_single/candidate_single_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_contact_info.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/education_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/experience_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/licence_item_list.dart';
@@ -23,7 +21,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class SingleCandidateScreen extends StatefulWidget {
   final int id;
 
@@ -42,10 +41,10 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
   late PageController _pageController;
   int currentImage = 0;
   final tabs = [
-    'О кандидате',
-    'Образование',
-    'Лицензии и сертификаты',
-    'Контактные данные',
+    LocaleKeys.about_candidate.tr(),
+    LocaleKeys.edu.tr(),
+    LocaleKeys.license_certificate.tr(),
+    LocaleKeys.contact_detail.tr(),
   ];
 
   @override
@@ -57,8 +56,8 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
     _pageController = PageController();
     _scrollController.addListener(_scrollListener);
     _candidateSingleBloc = CandidateSingleBloc(
-        candidateSingleUseCase:
-            CandidateSingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        candidateSingleUseCase: CandidateSingleUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()));
   }
 
   @override
@@ -70,7 +69,8 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
+    _headerManagerBloc.add(
+        ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
   }
 
   @override
@@ -84,7 +84,9 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
         body: BlocBuilder<CandidateSingleBloc, CandidateSingleState>(
           builder: (context, state) {
             if (state.status.isPure) {
-              context.read<CandidateSingleBloc>().add(GetCandidateSingleEvent(id: widget.id));
+              context
+                  .read<CandidateSingleBloc>()
+                  .add(GetCandidateSingleEvent(id: widget.id));
             } else if (state.status.isSubmissionInProgress) {
               return const Center(child: CupertinoActivityIndicator());
             } else if (state.status.isSubmissionFailure) {
@@ -99,28 +101,36 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                     child: BlocBuilder<HeaderManagerBloc, HeaderManagerState>(
                       builder: (context, headerManageState) {
                         return SliverOverlapAbsorber(
-                          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                  context),
                           sliver: SliverSafeArea(
                             top: false,
                             bottom: false,
                             sliver: SliverAppBar(
                               title: headerManageState.isHeaderScrolled
                                   ? Container(
-                                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          16, 16, 16, 20),
                                       width: double.infinity,
                                       color: darkGreen,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             state.candidate.fullName,
-                                            style:
-                                                Theme.of(context).textTheme.headline2!.copyWith(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(),
                                           ),
                                           const SizedBox(height: 4),
                                           Text(state.candidate.position,
-                                              style:
-                                                  Theme.of(context).textTheme.headline2!.copyWith())
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline2!
+                                                  .copyWith())
                                         ],
                                       ),
                                     )
@@ -135,11 +145,13 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                               floating: true,
                               automaticallyImplyLeading: false,
                               backgroundColor: white,
-                              systemOverlayStyle:
-                                  const SystemUiOverlayStyle(statusBarColor: darkGreen),
+                              systemOverlayStyle: const SystemUiOverlayStyle(
+                                  statusBarColor: darkGreen),
                               collapsedHeight: 56,
                               flexibleSpace: FlexibleSpaceBar(
-                                stretchModes: const [StretchMode.blurBackground],
+                                stretchModes: const [
+                                  StretchMode.blurBackground
+                                ],
                                 background: Stack(
                                   alignment: Alignment.bottomCenter,
                                   children: [
@@ -153,7 +165,8 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                 Positioned.fill(
                                                   child: CachedNetworkImage(
                                                     height: 277,
-                                                    imageUrl: state.candidate.img.middle,
+                                                    imageUrl: state
+                                                        .candidate.img.middle,
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -161,10 +174,13 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                   child: DecoratedBox(
                                                     decoration: BoxDecoration(
                                                       gradient: LinearGradient(
-                                                        begin: Alignment.topCenter,
-                                                        end: Alignment.bottomCenter,
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter,
                                                         colors: [
-                                                          darkGreen.withOpacity(0),
+                                                          darkGreen
+                                                              .withOpacity(0),
                                                           darkGreen,
                                                         ],
                                                       ),
@@ -179,22 +195,31 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                             right: 16,
                                             bottom: 46,
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   state.candidate.fullName,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline1!
-                                                      .copyWith(color: white, fontSize: 22),
+                                                      .copyWith(
+                                                          color: white,
+                                                          fontSize: 22),
                                                 ),
                                                 const SizedBox(height: 16),
                                                 Container(
-                                                  padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          12, 6, 12, 8),
                                                   decoration: BoxDecoration(
-                                                    color: white.withOpacity(0.12),
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    border: Border.all(color: primary),
+                                                    color:
+                                                        white.withOpacity(0.12),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    border: Border.all(
+                                                        color: primary),
                                                   ),
                                                   child: Text(
                                                     state.candidate.position,
@@ -214,14 +239,22 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                           // ),
                                           Padding(
                                             padding: EdgeInsets.only(
-                                                top: MediaQuery.of(context).padding.top),
+                                                top: MediaQuery.of(context)
+                                                    .padding
+                                                    .top),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 WScaleAnimation(
-                                                  onTap: () => Navigator.of(context).pop(),
+                                                  onTap: () =>
+                                                      Navigator.of(context)
+                                                          .pop(),
                                                   child: Padding(
-                                                    padding: const EdgeInsets.all(16),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16),
                                                     child: SvgPicture.asset(
                                                       AppIcons.chevronRight,
                                                       color: white,
@@ -231,7 +264,9 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                 WScaleAnimation(
                                                   onTap: () {},
                                                   child: Padding(
-                                                    padding: const EdgeInsets.all(16),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16),
                                                     child: SvgPicture.asset(
                                                       AppIcons.share,
                                                       color: white,
@@ -257,48 +292,60 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                         child: Column(
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  vertical: 20, horizontal: 16),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20,
+                                                      horizontal: 16),
                                               child: Column(
                                                 children: [
                                                   Row(
                                                     children: [
-                                                      SvgPicture.asset(AppIcons.location),
+                                                      SvgPicture.asset(
+                                                          AppIcons.location),
                                                       const SizedBox(width: 6),
                                                       Text(
                                                         state.candidate.address,
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .headline3!
-                                                            .copyWith(color: textColor),
+                                                            .copyWith(
+                                                                color:
+                                                                    textColor),
                                                       ),
                                                     ],
                                                   ),
                                                   const SizedBox(height: 10),
                                                   Row(
                                                     children: [
-                                                      SvgPicture.asset(AppIcons.phone),
+                                                      SvgPicture.asset(
+                                                          AppIcons.phone),
                                                       const SizedBox(width: 6),
                                                       Text(
-                                                        state.candidate.phoneNumber,
+                                                        state.candidate
+                                                            .phoneNumber,
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .headline3!
-                                                            .copyWith(color: textColor),
+                                                            .copyWith(
+                                                                color:
+                                                                    textColor),
                                                       ),
                                                     ],
                                                   ),
                                                   const SizedBox(height: 10),
                                                   Row(
                                                     children: [
-                                                      SvgPicture.asset(AppIcons.building),
+                                                      SvgPicture.asset(
+                                                          AppIcons.building),
                                                       const SizedBox(width: 6),
                                                       Text(
                                                         'Doctor-D',
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .headline3!
-                                                            .copyWith(color: textColor),
+                                                            .copyWith(
+                                                                color:
+                                                                    textColor),
                                                       ),
                                                     ],
                                                   ),
@@ -306,15 +353,19 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                   Row(
                                                     children: [
                                                       Text(
-                                                        state.candidate.rating.toString(),
+                                                        state.candidate.rating
+                                                            .toString(),
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .headline3!
-                                                            .copyWith(color: darkGreen),
+                                                            .copyWith(
+                                                                color:
+                                                                    darkGreen),
                                                       ),
                                                       const SizedBox(width: 8),
                                                       RatingStars(
-                                                        rate: state.candidate.rating,
+                                                        rate: state
+                                                            .candidate.rating,
                                                       )
                                                     ],
                                                   ),
@@ -324,7 +375,9 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                     onTap: () {},
                                                     padding: EdgeInsets.zero,
                                                     child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
                                                       children: [
                                                         SvgPicture.asset(
                                                           AppIcons.phone,
@@ -332,13 +385,16 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                           width: 20,
                                                           color: white,
                                                         ),
-                                                        const SizedBox(width: 8),
+                                                        const SizedBox(
+                                                            width: 8),
                                                         Text(
-                                                          'Позвонть',
-                                                          style: Theme.of(context)
+                                                          LocaleKeys.call.tr(),
+                                                          style: Theme.of(
+                                                                  context)
                                                               .textTheme
                                                               .headline3!
-                                                              .copyWith(color: white),
+                                                              .copyWith(
+                                                                  color: white),
                                                         )
                                                       ],
                                                     ),
@@ -347,7 +403,9 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                               ),
                                             ),
                                             const Divider(
-                                                height: 0, thickness: 1, color: textFieldColor)
+                                                height: 0,
+                                                thickness: 1,
+                                                color: textFieldColor)
                                           ],
                                         ),
                                       ),
@@ -380,7 +438,8 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                   controller: _tabController,
                   children: [
                     ListView(
-                      padding: EdgeInsets.fromLTRB(0, 16, 0, 16 + mediaQuery.padding.bottom),
+                      padding: EdgeInsets.fromLTRB(
+                          0, 16, 0, 16 + mediaQuery.padding.bottom),
                       children: [
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -392,11 +451,16 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const VacancyTitleText(title: 'Обо мне', fontSize: 18),
+                              VacancyTitleText(
+                                  title: LocaleKeys.about_me.tr(),
+                                  fontSize: 18),
                               const SizedBox(height: 8),
                               Text(
                                 state.candidate.bio,
-                                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
                                       fontSize: 13,
                                       color: montana,
                                     ),
@@ -405,9 +469,10 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                           ),
                         ),
                         const SizedBox(height: 16),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 16, bottom: 12),
-                          child: VacancyTitleText(title: 'Опыт работы', fontSize: 18),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16, bottom: 12),
+                          child: VacancyTitleText(
+                              title: LocaleKeys.experience.tr(), fontSize: 18),
                         ),
                         const ExperienceItem(),
                         const SizedBox(height: 12),
@@ -415,31 +480,36 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                         Padding(
                           padding: const EdgeInsets.fromLTRB(16, 24, 0, 16),
                           child: Text(
-                            'Похожие кандидаты',
+                            LocaleKeys.candidates.tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .headline1!
-                                .copyWith(fontSize: 18, fontWeight: FontWeight.w700),
+                                .copyWith(
+                                    fontSize: 18, fontWeight: FontWeight.w700),
                           ),
                         ),
                         //  const CandidateItemList(),
                       ],
                     ),
                     ListView(
-                      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
-                      children: const [
-                        EducationItemList(),
-                        SizedBox(height: 24),
-                        VacancyTitleText(title: 'Похожие кандидаты', fontSize: 18),
+                      padding: EdgeInsets.fromLTRB(
+                          16, 16, 16, 16 + mediaQuery.padding.bottom),
+                      children: [
+                        const EducationItemList(),
+                        const SizedBox(height: 24),
+                        VacancyTitleText(
+                            title: LocaleKeys.candidates.tr(), fontSize: 18),
                         // CandidateItemList(margin: EdgeInsets.zero),
                       ],
                     ),
                     ListView(
-                      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
-                      children: const [
-                        LicenceItemList(),
-                        SizedBox(height: 24),
-                        VacancyTitleText(title: 'Похожие кандидаты', fontSize: 18),
+                      padding: EdgeInsets.fromLTRB(
+                          16, 16, 16, 16 + mediaQuery.padding.bottom),
+                      children: [
+                        const LicenceItemList(),
+                        const SizedBox(height: 24),
+                        VacancyTitleText(
+                            title: LocaleKeys.candidates.tr(), fontSize: 18),
                         //   CandidateItemList(margin: EdgeInsets.zero),
                       ],
                     ),

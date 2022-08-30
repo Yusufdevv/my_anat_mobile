@@ -1,12 +1,8 @@
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
-import 'package:anatomica/features/vacancy/prezentation/pages/candidate_single.dart';
-import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_single.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item.dart';
 import 'package:flutter/material.dart';
-
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
 
@@ -14,7 +10,8 @@ class FavoritesScreen extends StatefulWidget {
   State<FavoritesScreen> createState() => _FavoritesScreenState();
 }
 
-class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderStateMixin {
+class _FavoritesScreenState extends State<FavoritesScreen>
+    with TickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -36,12 +33,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderSt
         preferredSize: const Size.fromHeight(117),
         child: Column(
           children: [
-            const WAppBar(title: 'Избранные', hasUnderline: true),
+            WAppBar(title: LocaleKeys.favorite.tr(), hasUnderline: true),
             WTabBar(
               tabController: tabController,
-              tabs: const [
-                Tab(text: 'Вакансии'),
-                Tab(text: 'Кандидаты'),
+              tabs: [
+                Tab(text: LocaleKeys.vacancy.tr()),
+                Tab(text: LocaleKeys.candidate.tr()),
               ],
             )
           ],
@@ -54,7 +51,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderSt
             padding: const EdgeInsets.only(top: 16),
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
-            itemBuilder: (context, index) =>const SizedBox(),
+            itemBuilder: (context, index) => const SizedBox(),
             //     VacancyItem(
             //   onTap: () {
             //     Navigator.of(context).push(fade(page: VacancySingleScreen(slug: '')));
