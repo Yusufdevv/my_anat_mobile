@@ -13,5 +13,8 @@ class AssetModel {
   final String small;
 
   const AssetModel({required this.small, required this.middle, required this.origin});
+
+  static AssetModel empty()=>const AssetModel(small: '', middle: '', origin: '');
   factory AssetModel.fromJson(Map<String,dynamic> json)=>_$AssetModelFromJson(json);
+  Map<String, dynamic> toJson() => _$AssetModelToJson(this);
 }

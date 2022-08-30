@@ -2,10 +2,12 @@ import 'package:anatomica/features/auth/data/models/district_model.dart';
 import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/license_model.dart';
 import 'package:anatomica/features/auth/data/models/region_model.dart';
+import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/district_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/license_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/region_entity.dart';
+import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,8 +16,8 @@ class DoctorEntity extends Equatable {
   final int id;
   @JsonKey(defaultValue: '')
   final String fullName;
-  @JsonKey(defaultValue: '')
-  final String position;
+  @SpecializationConverter()
+  final SpecializationEntity position;
   @JsonKey(defaultValue: 0)
   final int workExperience;
   @JsonKey(defaultValue: '')
@@ -26,8 +28,8 @@ class DoctorEntity extends Equatable {
   final DistrictEntity district;
   @JsonKey(defaultValue: '')
   final String address;
-  @JsonKey(defaultValue: '')
-  final String specialization;
+  @SpecializationConverter()
+  final SpecializationEntity specialization;
   @JsonKey(defaultValue: '')
   final String phoneNumber;
   @JsonKey(defaultValue: '')
@@ -56,7 +58,7 @@ class DoctorEntity extends Equatable {
     this.telegram = '',
     this.instagram = '',
     this.rating = 0,
-    this.position = '',
+    this.position = const SpecializationEntity(),
     this.address = '',
     this.bio = '',
     this.district = const DistrictEntity(),
@@ -68,7 +70,7 @@ class DoctorEntity extends Equatable {
     this.openToWork = false,
     this.phoneNumber = '',
     this.showInProfileBio = false,
-    this.specialization = '',
+    this.specialization = const SpecializationEntity(),
     this.work = '',
     this.workExperience = 0,
   });

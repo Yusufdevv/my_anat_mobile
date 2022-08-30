@@ -24,7 +24,7 @@ class AboutDoctor extends StatelessWidget {
             style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
           ),
         ),
-        ...List.generate(3, (index) => const CommentAboutHospital()),
+        ...List.generate(3, (index) => Container()),
         WButton(
           onTap: () {},
           margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom),

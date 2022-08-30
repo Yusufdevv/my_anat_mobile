@@ -29,6 +29,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         "password": password,
       });
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+
         await StorageRepository.putString('token', response.data['token']);
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -47,7 +48,10 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     try {
       final response = await _dio.get('/user/profile/',
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      print(response.data);
+      print(response.realUri);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+
         return UserModel.fromJson(response.data);
       } else {
         await StorageRepository.deleteString('token');

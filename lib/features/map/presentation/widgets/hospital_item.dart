@@ -19,7 +19,7 @@ class HospitalItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(behavior: HitTestBehavior.translucent,
       onTap: () => Navigator.of(context, rootNavigator: true)
           .push(fade(page:  HospitalSingleScreen(slug: entity.slug,))),
       child: DecoratedBox(

@@ -1,4 +1,7 @@
 part of 'comments_bloc.dart';
 
-@immutable
-abstract class CommentsEvent {}
+@Freezed()
+ class CommentsEvent with _$CommentsEvent {
+factory CommentsEvent.getComments()=_GetComments;
+ }
+

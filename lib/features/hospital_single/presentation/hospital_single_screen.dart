@@ -6,6 +6,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismis
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_single_hospital.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_single/hospital_single_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/comment_list.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_sevices.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/about_hospital.dart';
 import 'package:anatomica/features/map/presentation/single_tabs/hospital_single/hospital_articles.dart';
@@ -21,6 +23,7 @@ import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_deleg
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -293,26 +296,34 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                       ),
                                                     ],
                                                   ),
-                                                  const SizedBox(height: 10),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
                                                   state.hospital.phone.isEmpty
                                                       ? const SizedBox()
-                                                      : Row(
-                                                          children: [
-                                                            SvgPicture.asset(
-                                                                AppIcons.phone),
-                                                            const SizedBox(
-                                                                width: 6),
-                                                            Text(
-                                                              state.hospital
-                                                                  .phone,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headline3,
-                                                            ),
-                                                          ],
+                                                      : Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  bottom: 16),
+                                                          child: Row(
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                  AppIcons
+                                                                      .phone),
+                                                              const SizedBox(
+                                                                  width: 6),
+                                                              Text(
+                                                                state.hospital
+                                                                    .phone,
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .headline3,
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                  const SizedBox(height: 16),
                                                   Row(
                                                     children: [
                                                       Text(
@@ -364,7 +375,20 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                       Expanded(
                                                         child: WButton(
                                                           color: primary,
-                                                          onTap: () {},
+                                                          onTap: () async {
+                                                            if (state
+                                                                .hospital
+                                                                .phone
+                                                                .isNotEmpty) {
+                                                              await canLaunchUrl(
+                                                                      Uri.parse(
+                                                                          'tel:${state.hospital.phone}'))
+                                                                  ? await launchUrl(
+                                                                      Uri.parse(
+                                                                          'tel:${state.hospital.phone}'))
+                                                                  : throw 'Can not open phone number';
+                                                            }
+                                                          },
                                                           padding:
                                                               EdgeInsets.zero,
                                                           child: Row(
@@ -399,7 +423,15 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                       Expanded(
                                                         child: WButton(
                                                           color: white,
-                                                          onTap: () {},
+                                                          onTap: () async {
+                                                            await canLaunchUrl(
+                                                                    Uri.parse(
+                                                                        'geo:${state.hospital.location.lat},${state.hospital.location.long}'))
+                                                                ? await launchUrl(
+                                                                    Uri.parse(
+                                                                        'geo:${state.hospital.location.lat},${state.hospital.location.long}'))
+                                                                : throw 'Can not open location';
+                                                          },
                                                           padding:
                                                               EdgeInsets.zero,
                                                           border: Border.all(
@@ -473,15 +505,21 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
             ],
             body: TabBarView(
               controller: _tabController,
-              children: const [
-                AboutHospital(),
-                HospitalServices(),
-                HospitalSpecialists(),
-                HospitalConditions(),
-                HospitalArticles(),
-                HospitalComments(),
-                HospitalVacancies(),
-                HospitalContacts(),
+              children: [
+                BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                  builder: (context, state) {
+                    return HospitalCommentList(
+                      description: state.hospital.description,
+                    );
+                  },
+                ),
+                const HospitalServices(),
+                const HospitalSpecialists(),
+                const HospitalConditions(),
+                const HospitalArticles(),
+                const HospitalComments(),
+                const HospitalVacancies(),
+                const HospitalContacts(),
               ],
             ),
           ),
