@@ -23,6 +23,7 @@ import 'package:formz/formz.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -68,7 +69,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   if (state.getProfileStatus.isPure) {
                     context.read<ProfileBloc>().add(GetProfileEvent());
                   }
-                  if (state.getProfileStatus == FormzStatus.submissionInProgress) {
+                  if (state.getProfileStatus ==
+                      FormzStatus.submissionInProgress) {
                     return const SizedBox(
                       height: 48,
                     );
@@ -94,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   } else {
                     return const SizedBox();
                   }
-                  return SizedBox();
+                  return const SizedBox();
                 }),
                 const SizedBox(height: 12),
                 ProfileItem(
@@ -156,8 +158,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       return const SizedBox();
                     } else {
                       return Column(
-                        children:   [
-                        const  OtherProfileItem(),
+                        children: [
+                          const OtherProfileItem(),
                           const SizedBox(height: 12),
                           OtherProfileItem(
                             iconBackgroundColor: steelBlue,
