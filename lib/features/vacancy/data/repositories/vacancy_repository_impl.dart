@@ -20,9 +20,15 @@ class VacancyRepositoryImpl extends VacancyRepository {
   VacancyRepositoryImpl({required this.dataSource});
 
   @override
-  Future<Either<Failure, VacancyEntity>> getVacancies({String? next, int? organizationId}) async {
+  Future<Either<Failure, VacancyEntity>> getVacancies({
+    String? next,
+    int? organizationId,
+    String? search,
+    String? category,
+  }) async {
     try {
-      final result = await dataSource.getVacancyList(next: next, organizationId: organizationId);
+      final result = await dataSource.getVacancyList(
+          next: next, organizationId: organizationId, search: search, category: category);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(statusCode: 141, errorMessage: error.errorMessage));
@@ -84,9 +90,9 @@ class VacancyRepositoryImpl extends VacancyRepository {
 
   @override
   Future<Either<Failure, GenericPagination<CandidateListEntity>>> getCandidateList(
-      {String? next}) async {
+      {String? next, String? search}) async {
     try {
-      final result = await dataSource.getCandidateList();
+      final result = await dataSource.getCandidateList(next: next, search: search);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));
@@ -128,6 +134,16 @@ class VacancyRepositoryImpl extends VacancyRepository {
       {String? next}) async {
     try {
       final result = await dataSource.getCategoryList();
+      return Right(result);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<VacancyOptionEntity>>> getVacancyFilter() async {
+    try {
+      final result = await dataSource.getVacancyFilter();
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));

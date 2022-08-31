@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
@@ -33,7 +34,8 @@ class CandidateSingleModel extends CandidateSingleEntity {
       required super.showInProfileBio,
       required super.work});
 
-  factory CandidateSingleModel.fromJson(Map<String, dynamic> json) => _$CandidateSingleModelFromJson(json);
+  factory CandidateSingleModel.fromJson(Map<String, dynamic> json) =>
+      _$CandidateSingleModelFromJson(json);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
@@ -58,4 +60,14 @@ class LicenseModel extends LicenceEntity {
   });
 
   factory LicenseModel.fromJson(Map<String, dynamic> json) => _$LicenseModelFromJson(json);
+}
+
+@JsonSerializable()
+class PositionModel extends PositionEntity {
+  const PositionModel({
+    required super.title,
+    required super.id,
+  });
+
+  factory PositionModel.fromJson(Map<String, dynamic> json) => _$PositionModelFromJson(json);
 }

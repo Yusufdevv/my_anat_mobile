@@ -12,13 +12,15 @@ CandidateSingleModel _$CandidateSingleModelFromJson(
       workHistory: const WorkHistoryConverter()
           .fromJson(json['work_history'] as Map<String, dynamic>?),
       id: json['id'] as int? ?? 0,
-      position: json['position'] as String? ?? '',
+      position: const PositionEntityConverter()
+          .fromJson(json['position'] as Map<String, dynamic>?),
       workExperience: json['work_experience'] as int? ?? 0,
       image: json['image'] as String? ?? '',
       rating: (json['rating'] as num?)?.toDouble() ?? 0,
       address: json['address'] as String? ?? '',
       phoneNumber: json['phone_number'] as String? ?? '',
-      specialization: json['specialization'] as String? ?? '',
+      specialization: const SpecializationConverter()
+          .fromJson(json['specialization'] as Map<String, dynamic>?),
       telegram: json['telegram'] as String? ?? '',
       instagram: json['instagram'] as String? ?? '',
       district: const DistrictEntityConverter()
@@ -44,14 +46,15 @@ Map<String, dynamic> _$CandidateSingleModelToJson(
       'id': instance.id,
       'full_name': instance.fullName,
       'image': instance.image,
-      'position': instance.position,
+      'position': const PositionEntityConverter().toJson(instance.position),
       'work_experience': instance.workExperience,
       'work': instance.work,
       'work_history': const WorkHistoryConverter().toJson(instance.workHistory),
       'region': const RegionEntityConverter().toJson(instance.region),
       'district': const DistrictEntityConverter().toJson(instance.district),
       'address': instance.address,
-      'specialization': instance.specialization,
+      'specialization':
+          const SpecializationConverter().toJson(instance.specialization),
       'phone_number': instance.phoneNumber,
       'email': instance.email,
       'rating': instance.rating,
@@ -67,7 +70,7 @@ Map<String, dynamic> _$CandidateSingleModelToJson(
 
 WorkHistoryModel _$WorkHistoryModelFromJson(Map<String, dynamic> json) =>
     WorkHistoryModel(
-      position: json['position'] as String? ?? '',
+      position: json['position'] as Map<String, dynamic>? ?? {},
       id: json['id'] as int? ?? 0,
       organization: const OrganizationEntityConverter()
           .fromJson(json['organization'] as Map<String, dynamic>?),
@@ -96,4 +99,16 @@ Map<String, dynamic> _$LicenseModelToJson(LicenseModel instance) =>
     <String, dynamic>{
       'url': instance.url,
       'size': instance.size,
+    };
+
+PositionModel _$PositionModelFromJson(Map<String, dynamic> json) =>
+    PositionModel(
+      title: json['title'] as String? ?? '',
+      id: json['id'] as int? ?? 0,
+    );
+
+Map<String, dynamic> _$PositionModelToJson(PositionModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
     };

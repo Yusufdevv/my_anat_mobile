@@ -17,7 +17,7 @@ class SearchEmpty extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .subtitle2!
-              .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
+              .copyWith(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.red),
         )
       ],
     );

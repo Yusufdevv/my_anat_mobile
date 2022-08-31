@@ -120,19 +120,6 @@ Map<String, dynamic> _$PhoneNumberModelToJson(PhoneNumberModel instance) =>
       'phone_number': instance.phoneNumber,
     };
 
-SpecializationModel _$SpecializationModelFromJson(Map<String, dynamic> json) =>
-    SpecializationModel(
-      id: json['id'] as int? ?? 0,
-      title: json['title'] as String? ?? '',
-    );
-
-Map<String, dynamic> _$SpecializationModelToJson(
-        SpecializationModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-    };
-
 TypesModel _$TypesModelFromJson(Map<String, dynamic> json) => TypesModel(
       title: json['title'] as String? ?? '',
       id: json['id'] as int? ?? 0,
