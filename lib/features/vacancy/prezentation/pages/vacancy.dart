@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
@@ -10,6 +11,7 @@ import 'package:anatomica/features/vacancy/domain/usecases/district.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/organization_vacancy.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/region.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/top_organization.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/vacancy_filter.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_option.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region_bloc.dart';
@@ -44,6 +46,8 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
   initState() {
     tabController = TabController(length: 2, vsync: this);
     vacancyBloc = VacancyBloc(
+      vacancyFilterUseCase:
+          VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       candidateListUseCase:
           CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
@@ -76,6 +80,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    print('token${StorageRepository.getString('token')}');
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: vacancyBloc),
@@ -121,6 +126,12 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                                 ...List.generate(
                                   state.categoryList.length,
                                   (index) => CategoryContainer(
+                                    onTap: () {
+                                      vacancyBloc.add(GetVacancyListEvent(
+                                          category: '${state.candidateList[index].id}'));
+                                      vacancyBloc.add(GetOrganizationVacancyEvent(
+                                          category: '${state.candidateList[index].id}'));
+                                    },
                                     title: state.categoryList[index].title,
                                   ),
                                 )
@@ -201,7 +212,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
               const SizedBox(height: 16),
               FilterContainer(
                 onTap: () {
-                  showFilterBottomSheet(context, regionBloc);
+                  showFilterBottomSheet(context, regionBloc, vacancyBloc);
                 },
               ),
               // const SizedBox(height: 20),

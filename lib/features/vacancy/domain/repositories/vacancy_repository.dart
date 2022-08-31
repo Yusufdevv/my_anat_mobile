@@ -12,7 +12,8 @@ import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
 
 abstract class VacancyRepository {
-  Future<Either<Failure, VacancyEntity>> getVacancies({String? next, int? organizationId});
+  Future<Either<Failure, VacancyEntity>> getVacancies(
+      {String? next, int? organizationId, String? search, String? category});
 
   Future<Either<Failure, TopOrganizationEntity>> getTopOrganization();
 
@@ -25,7 +26,8 @@ abstract class VacancyRepository {
   Future<Either<Failure, GenericPagination<VacancyListEntity>>> getRelationVacancyList(
       {required String slug});
 
-  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getCandidateList({String? next});
+  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getCandidateList(
+      {String? next, String? search});
 
   Future<Either<Failure, CandidateSingleEntity>> getCandidateSingle({required int id});
 
@@ -34,4 +36,6 @@ abstract class VacancyRepository {
   Future<Either<Failure, GenericPagination<DistrictEntity>>> getDistrictList({String? next});
 
   Future<Either<Failure, GenericPagination<CategoryListModel>>> getCategoryList({String? next});
+
+  Future<Either<Failure, List<VacancyOptionEntity>>> getVacancyFilter();
 }

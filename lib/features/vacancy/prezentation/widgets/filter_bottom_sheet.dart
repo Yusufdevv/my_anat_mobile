@@ -1,6 +1,7 @@
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region_bloc.dart';
+import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/experience_bottomsheet.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filter_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/region_bottom_sheet.dart';
@@ -9,8 +10,13 @@ import 'package:flutter/material.dart';
 
 class FilterBottomSheet extends StatelessWidget {
   final RegionBloc regionBloc;
+  final VacancyBloc vacancyBloc;
 
-  const FilterBottomSheet({required this.regionBloc, Key? key}) : super(key: key);
+  const FilterBottomSheet({
+    required this.vacancyBloc,
+    required this.regionBloc,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +28,14 @@ class FilterBottomSheet extends StatelessWidget {
         FilterItem(
             onTap: () {
               Navigator.of(context).pop();
-              showSalaryBottomSheet(context);
+              showSalaryBottomSheet(context,vacancyBloc);
             },
             title: 'Зарплата'),
         const SizedBox(height: 12),
         FilterItem(
             onTap: () {
               Navigator.of(context).pop();
-              showExperienceBottomSheet(context);
+              showExperienceBottomSheet(context,vacancyBloc);
             },
             title: 'Опыт работы'),
         const SizedBox(height: 12),
@@ -50,11 +56,11 @@ class FilterBottomSheet extends StatelessWidget {
   }
 }
 
-void showFilterBottomSheet(BuildContext context, RegionBloc regionBloc) {
+void showFilterBottomSheet(BuildContext context, RegionBloc regionBloc, VacancyBloc vacancyBloc) {
   showModalBottomSheet(
     context: context,
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
-    builder: (context) => FilterBottomSheet(regionBloc: regionBloc),
+    builder: (context) => FilterBottomSheet(regionBloc: regionBloc, vacancyBloc: vacancyBloc),
   );
 }

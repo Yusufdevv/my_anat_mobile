@@ -1,24 +1,23 @@
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 
 class SalaryBottomSheet extends StatefulWidget {
-  const SalaryBottomSheet({Key? key}) : super(key: key);
+  final VacancyBloc vacancyBloc;
+
+  const SalaryBottomSheet({required this.vacancyBloc, Key? key}) : super(key: key);
 
   @override
   State<SalaryBottomSheet> createState() => _SalaryBottomSheetState();
 }
 
 class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
-  final List<String> list = [
-    'Не имеет значение',
-    'До 3 000 000',
-    '3 000 000 - 6 500 000',
-    '6 500 000 - 9 900 000',
-    'Свыше 9 900 000',
-  ];
   final List<bool> checkList = [false, false, false, false, false];
   bool isChecked = false;
 
@@ -31,42 +30,56 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    return ScrolledBottomSheet(
-      title: 'Зарплата',
-      hasHeader: true,
-      children: [
-        const WDivider(),
-        const SizedBox(height: 16),
-        ...List.generate(
-          5,
-          (index) => CheckBoxTitle(
-            onTap: () {
-              print('tap');
-              selectSalary(index);
-            },
-            title: list[index],
-            isLast: index == 4 ? true : false,
-            isChecked: checkList[index],
-          ),
-        ),
-        WButton(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          text: 'Сохранить',
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        //    SizedBox(height: 4 + mediaQuery.padding.bottom)
-      ],
-    );
+    return BlocProvider.value(
+        value: widget.vacancyBloc,
+        child: ScrolledBottomSheet(
+            title: 'Зарплата',
+            hasHeader: true,
+            child: BlocBuilder<VacancyBloc, VacancyState>(
+              builder: (context, state) {
+                if (state.filterStatus.isPure) {
+                  context.read<VacancyBloc>().add(GetVacancyFilterEvent());
+                } else if (state.filterStatus.isSubmissionInProgress) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state.filterStatus.isSubmissionSuccess) {
+                  return Column(
+                    children: [
+                      const WDivider(),
+                      const SizedBox(height: 16),
+                      ...List.generate(
+                        state.vacancyFilterList[0].choices.length,
+                        (index) => CheckBoxTitle(
+                          onTap: () {
+                            selectSalary(index);
+                          },
+                          title: state.vacancyFilterList[0].choices[index].value,
+                          isLast: false,
+                          isChecked: checkList[index],
+                        ),
+                      ),
+                      WButton(
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        text: 'Сохранить',
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                } else if (state.filterStatus.isSubmissionFailure) {
+                  return const Center(child: Text('Fail'));
+                }
+                return const Center(child: CupertinoActivityIndicator());
+              },
+            )));
   }
 }
 
-void showSalaryBottomSheet(BuildContext context) {
+void showSalaryBottomSheet(BuildContext context, VacancyBloc vacancyBloc) {
   showModalBottomSheet(
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
     context: context,
-    builder: (context) => const SalaryBottomSheet(),
+    builder: (context) => SalaryBottomSheet(vacancyBloc: vacancyBloc),
   );
 }

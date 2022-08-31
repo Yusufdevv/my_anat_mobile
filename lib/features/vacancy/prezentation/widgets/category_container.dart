@@ -5,13 +5,19 @@ import 'package:flutter/material.dart';
 class CategoryContainer extends StatelessWidget {
   final String title;
   final EdgeInsets? margin;
+  final VoidCallback onTap;
 
-  const CategoryContainer({this.title = '', this.margin, Key? key}) : super(key: key);
+  const CategoryContainer({
+    required this.onTap,
+    this.title = '',
+    this.margin,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return WScaleAnimation(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         margin: margin ?? const EdgeInsets.only(right: 12, bottom: 20),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),

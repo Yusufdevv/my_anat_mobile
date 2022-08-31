@@ -118,7 +118,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                 Theme.of(context).textTheme.headline2!.copyWith(),
                                           ),
                                           const SizedBox(height: 4),
-                                          Text(state.candidate.position,
+                                          Text(state.candidate.position.title,
                                               style:
                                                   Theme.of(context).textTheme.headline2!.copyWith())
                                         ],
@@ -197,7 +197,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                     border: Border.all(color: primary),
                                                   ),
                                                   child: Text(
-                                                    state.candidate.position,
+                                                    state.candidate.position.title,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .headline3!

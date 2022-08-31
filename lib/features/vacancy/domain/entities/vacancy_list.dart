@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
@@ -207,29 +208,7 @@ class PhoneNumberEntity extends Equatable {
   List<Object?> get props => [phoneNumber];
 }
 
-class Specialization extends Equatable {
-  @JsonKey(name: 'id', defaultValue: 0)
-  final int id;
-  @JsonKey(name: 'title', defaultValue: '')
-  final String title;
 
-  const Specialization({required this.id, required this.title});
-
-  @override
-  List<Object?> get props => [id, title];
-}
-
-class SpecializationConverter
-    extends JsonConverter<Specialization, Map<String, dynamic>?> {
-  const SpecializationConverter();
-
-  @override
-  Specialization fromJson(Map<String, dynamic>? json) =>
-      SpecializationModel.fromJson(json ?? {});
-
-  @override
-  Map<String, dynamic> toJson(Specialization object) => {};
-}
 
 class TypesEntity extends Equatable {
   @JsonKey(name: 'id', defaultValue: 0)

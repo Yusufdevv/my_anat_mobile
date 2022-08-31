@@ -12,15 +12,17 @@ class OrganizationVacancyUseCase extends UseCase<VacancyEntity, OrganizationVaca
 
   @override
   Future<Either<Failure, VacancyEntity>> call(OrganizationVacancyParams params) async =>
-      await repository.getVacancies(next: params.next, organizationId: params.organizationId);
+      await repository.getVacancies(next: params.next, organizationId: params.organizationId,
+          category: params.category);
 }
 
 class OrganizationVacancyParams extends Equatable {
   final int organizationId;
   final String? next;
+  final String? category;
 
-  const OrganizationVacancyParams({required this.organizationId, this.next});
+  const OrganizationVacancyParams({this.category, required this.organizationId, this.next});
 
   @override
-  List<Object?> get props => [organizationId, next];
+  List<Object?> get props => [organizationId, next, category];
 }

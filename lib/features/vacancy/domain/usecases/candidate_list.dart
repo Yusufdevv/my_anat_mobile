@@ -15,14 +15,15 @@ class CandidateListUseCase
   @override
   Future<Either<Failure, GenericPagination<CandidateListEntity>>> call(
           CandidateListParams params) async =>
-      await repository.getCandidateList(next: params.next);
+      await repository.getCandidateList(next: params.next, search: params.search);
 }
 
 class CandidateListParams extends Equatable {
   final String? next;
+  final String? search;
 
-  const CandidateListParams({this.next});
+  const CandidateListParams({this.search, this.next});
 
   @override
-  List<Object?> get props => [next];
+  List<Object?> get props => [next, search];
 }

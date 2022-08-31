@@ -16,7 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
+  //await EasyLocalization.ensureInitialized();
   await setupLocator();
   runApp(const MyApp());
 }
