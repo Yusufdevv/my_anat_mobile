@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 class LogOutDialog extends StatelessWidget {
   final double? height;
   final String? title;
   final String? subTitle;
 
-  const LogOutDialog({this.title, this.subTitle, this.height, Key? key}) : super(key: key);
+  const LogOutDialog({this.title, this.subTitle, this.height, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +40,15 @@ class LogOutDialog extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pop();
                   },
-                  child: SvgPicture.asset(AppIcons.cancelX, color: manatee, height: 20, width: 20)),
+                  child: SvgPicture.asset(AppIcons.cancelX,
+                      color: manatee, height: 20, width: 20)),
             ],
           ),
           const SizedBox(height: 12),
           Text(
             subTitle ?? LocaleKeys.you_sure.tr(),
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+            style:
+                Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
           ),
           const SizedBox(height: 32),
           Row(
@@ -67,7 +71,9 @@ class LogOutDialog extends StatelessWidget {
                   text: LocaleKeys.yes.tr(),
                   height: 40,
                   onTap: () {
-                    Navigator.of(context).pop();
+                    // context
+                    //     .read<AuthenticationBloc>()
+                    //     .add(AuthenticationDeleteUser(onError: (e) {}));
                   },
                 ),
               ),
@@ -79,7 +85,8 @@ class LogOutDialog extends StatelessWidget {
   }
 }
 
-void showLogOutDialog(BuildContext context, {double? height, String? title, String? subTitle}) {
+void showLogOutDialog(BuildContext context,
+    {double? height, String? title, String? subTitle}) {
   showDialog(
     context: context,
     builder: (_) => AlertDialog(
