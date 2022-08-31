@@ -1,39 +1,50 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/get_comforts.dart';
+import 'package:anatomica/features/hospital_single/presentation/bloc/facilities/facilities_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/widgets/condition_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-class HospitalConditions extends StatelessWidget {
+
+class HospitalConditions extends StatefulWidget {
   const HospitalConditions({Key? key}) : super(key: key);
 
   @override
+  State<HospitalConditions> createState() => _HospitalConditionsState();
+}
+
+class _HospitalConditionsState extends State<HospitalConditions> {
+  late FacilitiesBloc facilitiesBloc;
+
+  @override
+  void initState() {
+    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase())
+      ..add(FacilitiesEvent.getFacilities());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16, mainAxisExtent: 102),
-      itemBuilder: (context, index) => Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.asset(
-              AppIcons.smile,
-            ),
-            const Spacer(),
-            Text(
-              LocaleKeys.polite.tr(),
-              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
-            )
-          ],
-        ),
+    return BlocProvider.value(
+      value: facilitiesBloc,
+      child: BlocBuilder<FacilitiesBloc, FacilitiesState>(
+        builder: (context, state) {
+          return GridView.builder(
+            padding: const EdgeInsets.all(16)
+                .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 16,
+                mainAxisExtent: 102),
+            itemBuilder: (context, index) =>ConditionItem(entity: state.comforts[index],),
+            itemCount: state.comforts.length,
+          );
+        },
       ),
-      itemCount: 20,
     );
   }
 }

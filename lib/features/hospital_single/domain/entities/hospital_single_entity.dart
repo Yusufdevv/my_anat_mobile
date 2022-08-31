@@ -3,19 +3,12 @@ import 'package:anatomica/features/common/models/logo.dart';
 
 class HospitalSingleEntity {
   final int id;
-
   final String slug;
-
   final String name;
-
   final AssetModel icon;
-
   final String address;
-
   final double rating;
-
   final String phone;
-
   final MapPosition location;
   final AssetModel bannerImage;
   final String description;
