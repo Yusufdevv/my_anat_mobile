@@ -14,13 +14,9 @@ class HospitalSingleEntity {
   final List<AssetModel> images;
   final String description;
   final String email;
-
   final String website;
-
   final String instagram;
-
   final String facebook;
-
   final String telegram;
 
   const HospitalSingleEntity(

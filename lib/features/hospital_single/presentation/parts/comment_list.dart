@@ -55,7 +55,7 @@ class _HospitalCommentListState extends State<HospitalCommentList> {
             builder: (context, state) {
               return Column(
                 children: List.generate(
-                    state.comments.length,
+                    state.comments.take(3).length,
                     (index) => CommentAboutHospital(
                           entity: state.comments[index],
                         )),
@@ -65,7 +65,7 @@ class _HospitalCommentListState extends State<HospitalCommentList> {
           WButton(
             onTap: widget.onTapAll,
             margin: const EdgeInsets.all(16)
-                .copyWith(bottom: MediaQuery.of(context).padding.bottom),
+                .copyWith(bottom: MediaQuery.of(context).padding.bottom+16),
             color: commentButton,
             text: LocaleKeys.all_reviews.tr(),
             textColor: textSecondary,

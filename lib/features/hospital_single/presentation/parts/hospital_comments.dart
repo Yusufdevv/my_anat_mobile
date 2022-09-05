@@ -11,7 +11,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HospitalComments extends StatelessWidget {
-  const HospitalComments({Key? key}) : super(key: key);
+  final double overallRating;
+
+  const HospitalComments({required this.overallRating, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class HospitalComments extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                '4,0',
+                overallRating.toString(),
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                       color: textSecondary,
                       fontSize: 40,
@@ -79,7 +82,9 @@ class HospitalComments extends StatelessWidget {
                     bottom: MediaQuery.of(context).padding.bottom + 16),
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 16),
-                itemBuilder: (context, index) =>  CommentItem(entity: state.comments[index],),
+                itemBuilder: (context, index) => CommentItem(
+                  entity: state.comments[index],
+                ),
                 itemCount: state.comments.length,
               );
             },

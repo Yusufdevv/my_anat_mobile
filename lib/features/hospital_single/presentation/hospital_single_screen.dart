@@ -239,15 +239,19 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                       BlocBuilder<HospitalSingleBloc,
                                           HospitalSingleState>(
                                         builder: (context, state) {
-                                          return state.hospital.images.length>1? Positioned(
-                                            left: 0,
-                                            right: 0,
-                                            bottom: 32,
-                                            child: ImageSliderIndicator(
-                                              itemCount: state.hospital.images.length,
-                                              currentIndex: currentImage,
-                                            ),
-                                          ):const SizedBox();
+                                          return state.hospital.images.length >
+                                                  1
+                                              ? Positioned(
+                                                  left: 0,
+                                                  right: 0,
+                                                  bottom: 32,
+                                                  child: ImageSliderIndicator(
+                                                    itemCount: state
+                                                        .hospital.images.length,
+                                                    currentIndex: currentImage,
+                                                  ),
+                                                )
+                                              : const SizedBox();
                                         },
                                       )
                                     ],
@@ -565,7 +569,10 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                 BlocProvider.value(
                     value: articlesBloc, child: const HospitalArticles()),
                 BlocProvider.value(
-                    value: commentsBloc, child: const HospitalComments()),
+                    value: commentsBloc,
+                    child: HospitalComments(
+                      overallRating: hospitalSingleBloc.state.hospital.rating,
+                    )),
                 BlocProvider.value(
                     value: vacanciesBloc, child: const HospitalVacancies()),
                 BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
