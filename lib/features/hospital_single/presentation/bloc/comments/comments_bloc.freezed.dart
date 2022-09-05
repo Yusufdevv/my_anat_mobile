@@ -16,19 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CommentsEvent {
+  int? get organizationId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getComments,
+    required TResult Function(int? organizationId) getComments,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getComments,
+    TResult Function(int? organizationId)? getComments,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getComments,
+    TResult Function(int? organizationId)? getComments,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +49,10 @@ mixin _$CommentsEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CommentsEventCopyWith<CommentsEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -55,6 +60,7 @@ abstract class $CommentsEventCopyWith<$Res> {
   factory $CommentsEventCopyWith(
           CommentsEvent value, $Res Function(CommentsEvent) then) =
       _$CommentsEventCopyWithImpl<$Res>;
+  $Res call({int? organizationId});
 }
 
 /// @nodoc
@@ -65,13 +71,28 @@ class _$CommentsEventCopyWithImpl<$Res>
   final CommentsEvent _value;
   // ignore: unused_field
   final $Res Function(CommentsEvent) _then;
+
+  @override
+  $Res call({
+    Object? organizationId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
 /// @nodoc
-abstract class _$$_GetCommentsCopyWith<$Res> {
+abstract class _$$_GetCommentsCopyWith<$Res>
+    implements $CommentsEventCopyWith<$Res> {
   factory _$$_GetCommentsCopyWith(
           _$_GetComments value, $Res Function(_$_GetComments) then) =
       __$$_GetCommentsCopyWithImpl<$Res>;
+  @override
+  $Res call({int? organizationId});
 }
 
 /// @nodoc
@@ -84,51 +105,75 @@ class __$$_GetCommentsCopyWithImpl<$Res>
 
   @override
   _$_GetComments get _value => super._value as _$_GetComments;
+
+  @override
+  $Res call({
+    Object? organizationId = freezed,
+  }) {
+    return _then(_$_GetComments(
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_GetComments implements _GetComments {
-  _$_GetComments();
+  _$_GetComments({this.organizationId});
+
+  @override
+  final int? organizationId;
 
   @override
   String toString() {
-    return 'CommentsEvent.getComments()';
+    return 'CommentsEvent.getComments(organizationId: $organizationId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_GetComments);
+        (other.runtimeType == runtimeType &&
+            other is _$_GetComments &&
+            const DeepCollectionEquality()
+                .equals(other.organizationId, organizationId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(organizationId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_GetCommentsCopyWith<_$_GetComments> get copyWith =>
+      __$$_GetCommentsCopyWithImpl<_$_GetComments>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getComments,
+    required TResult Function(int? organizationId) getComments,
   }) {
-    return getComments();
+    return getComments(organizationId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getComments,
+    TResult Function(int? organizationId)? getComments,
   }) {
-    return getComments?.call();
+    return getComments?.call(organizationId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getComments,
+    TResult Function(int? organizationId)? getComments,
     required TResult orElse(),
   }) {
     if (getComments != null) {
-      return getComments();
+      return getComments(organizationId);
     }
     return orElse();
   }
@@ -163,7 +208,14 @@ class _$_GetComments implements _GetComments {
 }
 
 abstract class _GetComments implements CommentsEvent {
-  factory _GetComments() = _$_GetComments;
+  factory _GetComments({final int? organizationId}) = _$_GetComments;
+
+  @override
+  int? get organizationId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_GetCommentsCopyWith<_$_GetComments> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

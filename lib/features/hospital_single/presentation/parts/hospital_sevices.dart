@@ -19,63 +19,59 @@ class HospitalServices extends StatefulWidget {
 
 class _HospitalServicesState extends State<HospitalServices> {
   late TextEditingController _textController;
-  late ServicesBloc servicesBloc;
+
   String searchValue = '';
 
   @override
   void initState() {
-    servicesBloc = ServicesBloc(GetServicesUseCase())
-      ..add(ServicesEvent.getComments());
+
     _textController = TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: servicesBloc,
-      child: ListView(
-        padding: const EdgeInsets.all(16)
-            .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-        children: [
-          SearchField(
-            controller: _textController,
-            onChanged: (value) {
-              setState(() {
-                searchValue = value;
-              });
-            },
-            fillColor: white,
+    return ListView(
+      padding: const EdgeInsets.all(16)
+          .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+      children: [
+        SearchField(
+          controller: _textController,
+          onChanged: (value) {
+            setState(() {
+              searchValue = value;
+            });
+          },
+          fillColor: white,
+        ),
+        const SizedBox(height: 16),
+        Container(
+          decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.circular(12),
           ),
-          const SizedBox(height: 16),
-          Container(
-            decoration: BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: BlocBuilder<ServicesBloc, ServicesState>(
-              builder: (context, state) {
-                return Column(
-                  children: List.generate(
-                    state.services.length,
-                    (index) => ServiceItem(
-                      isLast: index == state.services.length - 1,
-                      entity: state.services[index],
-                    ),
+          child: BlocBuilder<ServicesBloc, ServicesState>(
+            builder: (context, state) {
+              return Column(
+                children: List.generate(
+                  state.services.length,
+                  (index) => ServiceItem(
+                    isLast: index == state.services.length - 1,
+                    entity: state.services[index],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
-          const SizedBox(height: 16),
-          WButton(
-            onTap: () {},
-            color: commentButton,
-            text: LocaleKeys.download_more.tr(),
-            textColor: textSecondary,
-          )
-        ],
-      ),
+        ),
+        const SizedBox(height: 16),
+        WButton(
+          onTap: () {},
+          color: commentButton,
+          text: LocaleKeys.download_more.tr(),
+          textColor: textSecondary,
+        )
+      ],
     );
   }
 }

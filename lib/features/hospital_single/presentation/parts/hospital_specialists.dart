@@ -14,32 +14,28 @@ class HospitalSpecialists extends StatefulWidget {
 }
 
 class _HospitalSpecialistsState extends State<HospitalSpecialists> {
-  late HospitalSpecialistBloc hospitalSpecialistBloc;
+
 
   @override
   void initState() {
-    hospitalSpecialistBloc = HospitalSpecialistBloc(GetSpecialistsUseCase())
-      ..add(HospitalSpecialistEvent.getSpecialists());
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: hospitalSpecialistBloc,
-      child: BlocBuilder<HospitalSpecialistBloc, HospitalSpecialistState>(
-        builder: (context, state) {
-          return ListView.separated(
-            padding: const EdgeInsets.all(16)
-                .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-            itemBuilder: (context, index) => DoctorItem(
-              entity: state.specialists[index],
-            ),
-            separatorBuilder: (context, index) => const SizedBox(height: 12),
-            itemCount: state.specialists.length,
-          );
-        },
-      ),
+    return BlocBuilder<HospitalSpecialistBloc, HospitalSpecialistState>(
+      builder: (context, state) {
+        return ListView.separated(
+          padding: const EdgeInsets.all(16)
+              .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+          itemBuilder: (context, index) => DoctorItem(
+            entity: state.specialists[index],
+          ),
+          separatorBuilder: (context, index) => const SizedBox(height: 12),
+          itemCount: state.specialists.length,
+        );
+      },
     );
   }
 }

@@ -2,5 +2,5 @@ part of 'facilities_bloc.dart';
 
 @Freezed()
  class FacilitiesEvent with _$FacilitiesEvent  {
-   factory FacilitiesEvent.getFacilities()=_GetFacilities;
+   factory FacilitiesEvent.getFacilities({int? organizationId})=_GetFacilities;
  }

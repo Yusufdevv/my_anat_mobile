@@ -1,15 +1,19 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/hospital_single/data/models/comments.dart';
 import 'package:anatomica/features/map/presentation/widgets/delete_comment_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentItem extends StatelessWidget {
   final bool isMe;
+  final CommentModel entity ;
 
   const CommentItem({
+  required  this.entity,
     this.isMe = false,
     Key? key,
   }) : super(key: key);
@@ -30,7 +34,7 @@ class CommentItem extends StatelessWidget {
         ],
         border: Border.all(color: textFieldColor),
       ),
-      child: Column(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,7 +51,7 @@ class CommentItem extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.network(
-                          'https://picsum.photos/200',
+                          entity.userImage.middle,errorBuilder:(context,object,stack)=> const SizedBox(height: 40,width: 40,),
                           height: 40,
                           width: 40,
                           fit: BoxFit.cover,
@@ -60,7 +64,7 @@ class CommentItem extends StatelessWidget {
                       children: [
                         Text.rich(
                           TextSpan(
-                            text: 'Шохрух Бахтияров',
+                            text: entity.fullName,
                             children: [
                               if (isMe) ...{
                                 TextSpan(
@@ -81,7 +85,7 @@ class CommentItem extends StatelessWidget {
                             SvgPicture.asset(AppIcons.mapCalendar),
                             const SizedBox(width: 6),
                             Text(
-                              '21 Января, 2022',
+                              MyFunctions.safeDateFormat(entity.createdAt, 'dd MMMM yyyy'),
                               style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13),
                             ),
                           ],
@@ -115,12 +119,12 @@ class CommentItem extends StatelessWidget {
           Row(
             children: [
               Text(
-                '3.5',
+               entity.rating.toString(),
                 style: Theme.of(context).textTheme.headline3!.copyWith(color: primary),
               ),
               const SizedBox(width: 8),
-              const RatingStars(
-                rate: 4,
+               RatingStars(
+                rate: entity.rating,
                 inactiveStarColor: inactiveStar,
               ),
             ],
@@ -129,7 +133,7 @@ class CommentItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 20),
             child: Text(
-              'Врачей не хватает. Неврапотологу, кардиологу и эндокринологу не пробиться постоянная очередь. Кровь на гепатит В и С не берут отправляют в платные мед.центры. Постоянная толпа пациентов как не подхватить вирус.',
+              entity.comment,
               style: Theme.of(context).textTheme.bodyText1,
             ),
           )
