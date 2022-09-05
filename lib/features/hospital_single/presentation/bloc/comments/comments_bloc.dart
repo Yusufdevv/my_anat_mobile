@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anatomica/features/hospital_single/data/models/comments.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_comments.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
@@ -19,7 +20,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     on<_GetComments>((event, emit) async {
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress, ));
-      final result = await getComments('');
+      final result = await getComments(TypeParameter(id: event.organizationId??-1, next: ''));
       if (result.isRight) {
         emit(state.copyWith(
             status: FormzStatus.submissionSuccess, comments: result.right.results));
