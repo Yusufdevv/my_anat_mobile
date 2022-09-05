@@ -130,6 +130,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                         Row(
                           children: [
                             CategoryContainer(
+                              onTap: (){},
                                 title: state.vacancyListEntity.category.title,
                                 margin: const EdgeInsets.only(right: 12)),
                           ],

@@ -1,5 +1,6 @@
-import 'package:anatomica/features/auth/data/models/image_model.dart';
+import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
 import 'package:anatomica/features/vacancy/domain/entities/region.dart';
@@ -14,8 +15,8 @@ class CandidateSingleEntity extends Equatable {
   final String fullName;
   @JsonKey(defaultValue: '')
   final String image;
-  @JsonKey(defaultValue: '')
-  final String position;
+  @PositionEntityConverter()
+  final PositionEntity position;
   @JsonKey(defaultValue: 0)
   final int workExperience;
   @JsonKey(defaultValue: '')
@@ -28,8 +29,8 @@ class CandidateSingleEntity extends Equatable {
   final DistrictEntity district;
   @JsonKey(defaultValue: '')
   final String address;
-  @JsonKey(defaultValue: '')
-  final String specialization;
+  @SpecializationConverter()
+  final SpecializationEntity specialization;
   @JsonKey(defaultValue: '')
   final String phoneNumber;
   @JsonKey(defaultValue: '')
@@ -110,8 +111,8 @@ class WorkHistory extends Equatable {
   final int id;
   @OrganizationEntityConverter()
   final OrganizationEntity organization;
-  @JsonKey(defaultValue: '')
-  final String position;
+  @JsonKey(defaultValue: {})
+  final Map<String, dynamic> position;
   @JsonKey(defaultValue: '')
   final String startDate;
   @JsonKey(defaultValue: '')
@@ -139,13 +140,11 @@ class WorkHistory extends Equatable {
       ];
 }
 
-class WorkHistoryConverter
-    extends JsonConverter<WorkHistory, Map<String, dynamic>?> {
+class WorkHistoryConverter extends JsonConverter<WorkHistory, Map<String, dynamic>?> {
   const WorkHistoryConverter();
 
   @override
-  WorkHistory fromJson(Map<String, dynamic>? json) =>
-      WorkHistoryModel.fromJson(json ?? {});
+  WorkHistory fromJson(Map<String, dynamic>? json) => WorkHistoryModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(WorkHistory object) => {};
@@ -163,14 +162,33 @@ class LicenceEntity extends Equatable {
   List<Object?> get props => [url, size];
 }
 
-class LicenceEntityConverter
-    extends JsonConverter<LicenceEntity, Map<String, dynamic>?> {
+class LicenceEntityConverter extends JsonConverter<LicenceEntity, Map<String, dynamic>?> {
   const LicenceEntityConverter();
 
   @override
-  LicenceEntity fromJson(Map<String, dynamic>? json) =>
-      LicenseModel.fromJson(json ?? {});
+  LicenceEntity fromJson(Map<String, dynamic>? json) => LicenseModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(LicenceEntity object) => {};
+}
+
+class PositionEntity extends Equatable {
+  @JsonKey(name: 'id', defaultValue: 0)
+  final int id;
+  @JsonKey(name: 'title', defaultValue: '')
+  final String title;
+
+  const PositionEntity({required this.title, required this.id});
+
+  @override
+  List<Object?> get props => [title, id];
+}
+class PositionEntityConverter extends JsonConverter<PositionEntity, Map<String, dynamic>?> {
+  const PositionEntityConverter();
+
+  @override
+  PositionEntity fromJson(Map<String, dynamic>? json) => PositionModel.fromJson(json ?? {});
+
+  @override
+  Map<String, dynamic> toJson(PositionEntity object) => {};
 }

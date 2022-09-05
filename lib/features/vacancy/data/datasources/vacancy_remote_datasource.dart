@@ -13,6 +13,7 @@ import 'package:anatomica/features/vacancy/data/models/top_organization.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_option.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
 import 'package:dio/dio.dart';
 
 abstract class VacancyRemoteDataSource {
@@ -20,7 +21,8 @@ abstract class VacancyRemoteDataSource {
 
   VacancyRemoteDataSource({required this.paginationDatasource});
 
-  Future<VacancyModel> getVacancyList({String? next, int? organizationId});
+  Future<VacancyModel> getVacancyList(
+      {String? next, int? organizationId, String? search, String? category});
 
   Future<TopOrganizationModel> getTopOrganization();
 
@@ -32,7 +34,7 @@ abstract class VacancyRemoteDataSource {
 
   Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug});
 
-  Future<GenericPagination<CandidateListModel>> getCandidateList({String? next});
+  Future<GenericPagination<CandidateListModel>> getCandidateList({String? next, String? search});
 
   Future<CandidateSingleModel> getCandidateSingle({required int id});
 
@@ -41,6 +43,8 @@ abstract class VacancyRemoteDataSource {
   Future<GenericPagination<DistrictModel>> getDistrict({String? next});
 
   Future<GenericPagination<CategoryListModel>> getCategoryList({String? next});
+
+  Future<List<VacancyOptionEntity>> getVacancyFilter();
 }
 
 class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
@@ -49,12 +53,21 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   VacancyRemoteDataSourceImpl({required super.paginationDatasource});
 
   @override
-  Future<VacancyModel> getVacancyList({String? next, int? organizationId}) async {
+  Future<VacancyModel> getVacancyList(
+      {String? next, int? organizationId, String? search, String? category}) async {
     try {
       const url = '/vacancy/vacancy/list/';
       final Map<String, dynamic> query = {};
+      print('search:$search');
+      print('category$category');
+      if (category != null) {
+        query.putIfAbsent('category', () => category);
+      }
       if (organizationId != null) {
         query.putIfAbsent('organization', () => organizationId);
+      }
+      if (search != null) {
+        query.putIfAbsent('search', () => search);
       }
 
       final result = await paginationDatasource.fetchMore(
@@ -118,7 +131,11 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   @override
   Future<List<VacancyOptionModel>> getVacancyOption() async {
     final response = await dio.get('/vacancy/vacancy/list/');
-    response.requestOptions.data;
+    final result = response.requestOptions.data;
+    print('optinoiList');
+    print('result:$result');
+    print(response.statusCode);
+    print(response.requestOptions.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return (response.requestOptions.data as List)
           .map((e) => VacancyOptionModel.fromJson(e))
@@ -140,8 +157,14 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CandidateListModel>> getCandidateList({String? next}) async {
-    final response = await dio.get(next ?? '/doctor/');
+  Future<GenericPagination<CandidateListModel>> getCandidateList(
+      {String? next, String? search}) async {
+    final Map<String, dynamic> query = {};
+    print('search candidate:$search');
+    if (search != null) {
+      query.putIfAbsent('search', () => search);
+    }
+    final response = await dio.get(next ?? '/doctor/', queryParameters: query);
 
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
@@ -189,6 +212,16 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<List<VacancyOptionEntity>> getVacancyFilter() async {
+    final response = await dio.get('/vacancy/vacancy/filters/');
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return (response.data as List).map((e) => VacancyOptionModel.fromJson(e)).toList();
     }
     throw ServerException(
         statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');

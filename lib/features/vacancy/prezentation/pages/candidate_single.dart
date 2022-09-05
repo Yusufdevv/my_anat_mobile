@@ -23,6 +23,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 class SingleCandidateScreen extends StatefulWidget {
   final int id;
 
@@ -126,7 +127,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                 .copyWith(),
                                           ),
                                           const SizedBox(height: 4),
-                                          Text(state.candidate.position,
+                                          Text(state.candidate.position.title,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline2!
@@ -222,7 +223,8 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                         color: primary),
                                                   ),
                                                   child: Text(
-                                                    state.candidate.position,
+                                                    state.candidate.position
+                                                        .title,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .headline3!
