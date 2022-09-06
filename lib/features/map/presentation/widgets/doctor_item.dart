@@ -17,7 +17,7 @@ class DoctorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(behavior: HitTestBehavior.translucent,
       onTap: () {
         Navigator.of(context, rootNavigator: true).push(
           fade(
@@ -101,7 +101,7 @@ class DoctorItem extends StatelessWidget {
                     SvgPicture.asset(AppIcons.star),
                     const SizedBox(width: 4),
                     Text(
-                      '5.0',
+                      entity.rating.toString(),
                       style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
                     ),
                   ],

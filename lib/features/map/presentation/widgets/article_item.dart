@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_article_single.dart';
@@ -17,7 +18,7 @@ class HospitalArticleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(behavior: HitTestBehavior.translucent,
       onTap: () {
         Navigator.of(context).push(fade(page: const HospitalArticleSingle()));
       },
@@ -43,7 +44,7 @@ class HospitalArticleItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                'https://picsum.photos/200/300',
+                entity.image.middle,
                 height: 100,
                 width: 82,
                 fit: BoxFit.cover,
@@ -56,7 +57,7 @@ class HospitalArticleItem extends StatelessWidget {
                 children: [
                   const SizedBox(height: 8),
                   Text(
-                    LocaleKeys.all_natural.tr(),
+                    entity.title,
                     style: Theme.of(context).textTheme.headline1,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -69,7 +70,7 @@ class HospitalArticleItem extends StatelessWidget {
                       SvgPicture.asset(AppIcons.mapCalendar),
                       const SizedBox(width: 6),
                       Text(
-                        '21 Января, 2022',
+                        MyFunctions.safeDateFormat(entity.publishDate, 'dd MMMM yyyy'),
                         style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13),
                       ),
                     ],

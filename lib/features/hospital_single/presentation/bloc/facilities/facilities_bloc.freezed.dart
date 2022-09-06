@@ -16,19 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FacilitiesEvent {
+  int? get organizationId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getFacilities,
+    required TResult Function(int? organizationId) getFacilities,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getFacilities,
+    TResult Function(int? organizationId)? getFacilities,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getFacilities,
+    TResult Function(int? organizationId)? getFacilities,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +49,10 @@ mixin _$FacilitiesEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $FacilitiesEventCopyWith<FacilitiesEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -55,6 +60,7 @@ abstract class $FacilitiesEventCopyWith<$Res> {
   factory $FacilitiesEventCopyWith(
           FacilitiesEvent value, $Res Function(FacilitiesEvent) then) =
       _$FacilitiesEventCopyWithImpl<$Res>;
+  $Res call({int? organizationId});
 }
 
 /// @nodoc
@@ -65,13 +71,28 @@ class _$FacilitiesEventCopyWithImpl<$Res>
   final FacilitiesEvent _value;
   // ignore: unused_field
   final $Res Function(FacilitiesEvent) _then;
+
+  @override
+  $Res call({
+    Object? organizationId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
 /// @nodoc
-abstract class _$$_GetFacilitiesCopyWith<$Res> {
+abstract class _$$_GetFacilitiesCopyWith<$Res>
+    implements $FacilitiesEventCopyWith<$Res> {
   factory _$$_GetFacilitiesCopyWith(
           _$_GetFacilities value, $Res Function(_$_GetFacilities) then) =
       __$$_GetFacilitiesCopyWithImpl<$Res>;
+  @override
+  $Res call({int? organizationId});
 }
 
 /// @nodoc
@@ -84,51 +105,75 @@ class __$$_GetFacilitiesCopyWithImpl<$Res>
 
   @override
   _$_GetFacilities get _value => super._value as _$_GetFacilities;
+
+  @override
+  $Res call({
+    Object? organizationId = freezed,
+  }) {
+    return _then(_$_GetFacilities(
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_GetFacilities implements _GetFacilities {
-  _$_GetFacilities();
+  _$_GetFacilities({this.organizationId});
+
+  @override
+  final int? organizationId;
 
   @override
   String toString() {
-    return 'FacilitiesEvent.getFacilities()';
+    return 'FacilitiesEvent.getFacilities(organizationId: $organizationId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_GetFacilities);
+        (other.runtimeType == runtimeType &&
+            other is _$_GetFacilities &&
+            const DeepCollectionEquality()
+                .equals(other.organizationId, organizationId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(organizationId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_GetFacilitiesCopyWith<_$_GetFacilities> get copyWith =>
+      __$$_GetFacilitiesCopyWithImpl<_$_GetFacilities>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getFacilities,
+    required TResult Function(int? organizationId) getFacilities,
   }) {
-    return getFacilities();
+    return getFacilities(organizationId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getFacilities,
+    TResult Function(int? organizationId)? getFacilities,
   }) {
-    return getFacilities?.call();
+    return getFacilities?.call(organizationId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getFacilities,
+    TResult Function(int? organizationId)? getFacilities,
     required TResult orElse(),
   }) {
     if (getFacilities != null) {
-      return getFacilities();
+      return getFacilities(organizationId);
     }
     return orElse();
   }
@@ -163,7 +208,14 @@ class _$_GetFacilities implements _GetFacilities {
 }
 
 abstract class _GetFacilities implements FacilitiesEvent {
-  factory _GetFacilities() = _$_GetFacilities;
+  factory _GetFacilities({final int? organizationId}) = _$_GetFacilities;
+
+  @override
+  int? get organizationId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_GetFacilitiesCopyWith<_$_GetFacilities> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

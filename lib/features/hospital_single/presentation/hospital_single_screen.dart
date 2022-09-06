@@ -4,8 +4,20 @@ import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/get_comforts.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/get_comments.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/get_services.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_single_hospital.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/get_specialists.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/get_vacancies.dart';
+import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/bloc/facilities/facilities_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/bloc/h_articles/h_articles_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_single/hospital_single_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_specialist/hospital_specialist_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/bloc/services/services_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/bloc/vacancies/hospital_vacancies_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/comment_list.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_articles.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_comments.dart';
@@ -41,6 +53,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
   late HeaderManagerBloc _headerManagerBloc;
   late PageController _pageController;
   late HospitalSingleBloc hospitalSingleBloc;
+  late CommentsBloc commentsBloc;
+  late ServicesBloc servicesBloc;
+  late HospitalSpecialistBloc hospitalSpecialistBloc;
+  late FacilitiesBloc facilitiesBloc;
+  late HArticlesBloc articlesBloc;
+  late HospitalVacanciesBloc vacanciesBloc;
+
   int currentImage = 0;
   final tabs = [
     'О клинике',
@@ -62,7 +81,19 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
 
   @override
   void initState() {
+    vacanciesBloc = HospitalVacanciesBloc(GetHospitalVacancies())
+      ..add(HospitalVacanciesEvent.getVacancies());
+    articlesBloc = HArticlesBloc(GetHArticlesUseCase())
+      ..add(HArticlesEvent.getArticles());
+    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase())
+      ..add(FacilitiesEvent.getFacilities());
+    hospitalSpecialistBloc = HospitalSpecialistBloc(GetSpecialistsUseCase())
+      ..add(HospitalSpecialistEvent.getSpecialists());
+    servicesBloc = ServicesBloc(GetServicesUseCase())
+      ..add(ServicesEvent.getComments());
     super.initState();
+    commentsBloc = CommentsBloc(GetCommentsUseCase())
+      ..add(CommentsEvent.getComments());
     hospitalSingleBloc = HospitalSingleBloc(GetSingleHospitalUseCase())
       ..add(HospitalSingleEvent.getHospital(widget.slug));
     _tabController = TabController(length: 8, vsync: this);
@@ -124,48 +155,52 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                   child: Stack(
                                     children: [
                                       Positioned.fill(
-                                        child: PageView.builder(
-                                          itemBuilder: (context, index) =>
-                                              Stack(
-                                            children: [
-                                              Positioned.fill(
-                                                child: Image.asset(
-                                                  AppImages.hospitalImage,
-                                                  fit: BoxFit.cover,
-                                                  height: 277,
-                                                ),
-                                              ),
-                                              Positioned.fill(
-                                                  child: Container(
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
-                                                    colors: [
-                                                      textColor
-                                                          .withOpacity(0.48),
-                                                      textColor
-                                                          .withOpacity(0.24),
-                                                    ],
+                                        child: BlocBuilder<HospitalSingleBloc,
+                                            HospitalSingleState>(
+                                          builder: (context, state) {
+                                            return PageView.builder(
+                                              itemBuilder: (context, index) =>
+                                                  Stack(
+                                                children: [
+                                                  Positioned.fill(
+                                                    child: Image.network(
+                                                      state.hospital
+                                                          .images[index].middle,
+                                                      fit: BoxFit.cover,
+                                                      height: 277,
+                                                    ),
                                                   ),
-                                                ),
-                                              ))
-                                            ],
-                                          ),
-                                          itemCount: 10,
-                                          controller: _pageController,
-                                          onPageChanged: (index) {
-                                            setState(() {
-                                              currentImage = index;
-                                            });
+                                                  Positioned.fill(
+                                                      child: Container(
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter,
+                                                        colors: [
+                                                          textColor.withOpacity(
+                                                              0.48),
+                                                          textColor.withOpacity(
+                                                              0.24),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ))
+                                                ],
+                                              ),
+                                              itemCount:
+                                                  state.hospital.images.length,
+                                              controller: _pageController,
+                                              onPageChanged: (index) {
+                                                setState(() {
+                                                  currentImage = index;
+                                                });
+                                              },
+                                            );
                                           },
                                         ),
                                       ),
-                                      // Positioned.fill(
-                                      //   child: Container(
-                                      //
-                                      //   ),
-                                      // ),
                                       Padding(
                                         padding: EdgeInsets.only(
                                             top: MediaQuery.of(context)
@@ -204,15 +239,19 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                       BlocBuilder<HospitalSingleBloc,
                                           HospitalSingleState>(
                                         builder: (context, state) {
-                                          return Positioned(
-                                            left: 0,
-                                            right: 0,
-                                            bottom: 32,
-                                            child: ImageSliderIndicator(
-                                              itemCount: 10,
-                                              currentIndex: currentImage,
-                                            ),
-                                          );
+                                          return state.hospital.images.length >
+                                                  1
+                                              ? Positioned(
+                                                  left: 0,
+                                                  right: 0,
+                                                  bottom: 32,
+                                                  child: ImageSliderIndicator(
+                                                    itemCount: state
+                                                        .hospital.images.length,
+                                                    currentIndex: currentImage,
+                                                  ),
+                                                )
+                                              : const SizedBox();
                                         },
                                       )
                                     ],
@@ -506,18 +545,48 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
               children: [
                 BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
                   builder: (context, state) {
-                    return HospitalCommentList(
-                      description: state.hospital.description,
+                    return BlocProvider.value(
+                      value: commentsBloc,
+                      child: HospitalCommentList(
+                        description: state.hospital.description,
+                        onTapAll: () {
+                          _tabController.animateTo(
+                            5,
+                            duration: const Duration(milliseconds: 150),
+                          );
+                        },
+                      ),
                     );
                   },
                 ),
-                const HospitalServices(),
-                const HospitalSpecialists(),
-                const HospitalConditions(),
-                const HospitalArticles(),
-                const HospitalComments(),
-                const HospitalVacancies(),
-                const HospitalContacts(),
+                BlocProvider.value(
+                    value: servicesBloc, child: const HospitalServices()),
+                BlocProvider.value(
+                    value: hospitalSpecialistBloc,
+                    child: const HospitalSpecialists()),
+                BlocProvider.value(
+                    value: facilitiesBloc, child: const HospitalConditions()),
+                BlocProvider.value(
+                    value: articlesBloc, child: const HospitalArticles()),
+                BlocProvider.value(
+                    value: commentsBloc,
+                    child: HospitalComments(
+                      overallRating: hospitalSingleBloc.state.hospital.rating,
+                    )),
+                BlocProvider.value(
+                    value: vacanciesBloc, child: const HospitalVacancies()),
+                BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                  builder: (context, state) {
+                    return HospitalContacts(
+                      email: state.hospital.email,
+                      facebook: state.hospital.facebook,
+                      instagram: state.hospital.instagram,
+                      phone: state.hospital.phone,
+                      telegram: state.hospital.telegram,
+                      website: state.hospital.website,
+                    );
+                  },
+                ),
               ],
             ),
           ),

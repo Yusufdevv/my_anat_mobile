@@ -18,9 +18,9 @@ class GetHArticlesUseCase extends UseCase<GenericPagination<JournalArticleModel>
         url: '/article/',
         fromJson: JournalArticleModel.fromJson,
         next: param.next.isEmpty?null:param.next,
-    //   query: {
-    //       "organization":param.id
-    // },
+      query: param.id==-1?{}: {
+          "organization":param.id
+    },
     );
   }
 }

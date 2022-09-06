@@ -5,12 +5,40 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
+
 class HospitalSingleBottomSheet extends StatelessWidget {
-  const HospitalSingleBottomSheet({Key? key}) : super(key: key);
+  final String title;
+  final String slug;
+
+  final List<String> images;
+
+  final String address;
+
+  final String phone;
+
+  final Point location;
+
+  final double rating;
+  final bool isHospital;
+
+  const HospitalSingleBottomSheet(
+      {required this.title,
+      required this.address,
+      required this.images,
+      required this.slug,
+      required this.isHospital,
+      required this.rating,
+      required this.phone,
+      required this.location,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,33 +56,41 @@ class HospitalSingleBottomSheet extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: 140,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(AppImages.hospitalImage),
+              images.isEmpty
+                  ? const SizedBox()
+                  : SizedBox(
+                      height: 140,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(images[index]),
+                          ),
+                          itemCount: images.length,
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 8),
+                        ),
+                      ),
                     ),
-                    itemCount: 10,
-                    separatorBuilder: (context, index) => const SizedBox(width: 8),
-                  ),
-                ),
-              ),
               const SizedBox(height: 16),
               Padding(
-                padding: EdgeInsets.fromLTRB(8, 0, 8, MediaQuery.of(context).padding.bottom + 8),
+                padding: EdgeInsets.fromLTRB(
+                    8, 0, 8, MediaQuery.of(context).padding.bottom + 8),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '7-я Центральная Семейная поликлиника',
+                      title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(fontSize: 20),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -62,7 +98,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         SvgPicture.asset(AppIcons.location),
                         const SizedBox(width: 6),
                         Text(
-                          'г. Ташкент, улица Содика Азимова, 74',
+                          address,
                           style: Theme.of(context).textTheme.headline3,
                         ),
                       ],
@@ -73,7 +109,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         SvgPicture.asset(AppIcons.phone),
                         const SizedBox(width: 6),
                         Text(
-                          '+998 71 200-70-07',
+                          phone,
                           style: Theme.of(context).textTheme.headline3,
                         ),
                       ],
@@ -82,22 +118,26 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '4,0',
-                          style: Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
+                          rating.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(color: darkGreen),
                         ),
                         const SizedBox(width: 8),
                         ...List.generate(
-                          4,
+                          rating.toInt(),
                           (index) => Padding(
                             padding: const EdgeInsets.only(right: 4),
                             child: SvgPicture.asset(AppIcons.star),
                           ),
                         ),
                         ...List.generate(
-                          5 - 4,
+                          5 - rating.toInt(),
                           (index) => Padding(
                             padding: const EdgeInsets.only(right: 4),
-                            child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
+                            child: SvgPicture.asset(AppIcons.star,
+                                color: inactiveStar),
                           ),
                         ),
                       ],
@@ -108,11 +148,17 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         Expanded(
                           child: WButton(
                             onTap: () {
-                              // Navigator.of(context, rootNavigator: true).pushReplacement(
-                              //   fade(
-                              //     page: const HospitalSingleScreen(),
-                              //   ),
-                              // );
+                              if(isHospital){
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(
+                                  fade(
+                                    page: HospitalSingleScreen(slug: slug),
+                                  ),
+                                );
+                              }else {
+
+                              }
+
                             },
                             text: LocaleKeys.more.tr(),
                             textColor: white,
@@ -122,7 +168,13 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         WButton(
                           width: 40,
                           color: white,
-                          onTap: () {},
+                          onTap: () async {
+                            var uri = Uri.parse(
+                                'geo:${location.latitude},${location.longitude}');
+                            await canLaunchUrl(uri)
+                                ? await launchUrl(uri)
+                                : throw 'can not open this location';
+                          },
                           border: Border.all(color: primary),
                           padding: const EdgeInsets.all(8),
                           child: SvgPicture.asset(AppIcons.mapRoute),
@@ -131,7 +183,12 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         WButton(
                           width: 40,
                           color: white,
-                          onTap: () {},
+                          onTap: () async {
+                            var uri = Uri.parse('tel:${phone}');
+                            await canLaunchUrl(uri)
+                                ? await launchUrl(uri)
+                                : throw 'can not open phone';
+                          },
                           border: Border.all(color: primary),
                           padding: const EdgeInsets.all(8),
                           child: SvgPicture.asset(

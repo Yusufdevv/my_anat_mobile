@@ -31,10 +31,13 @@ class ContactsContainer extends StatelessWidget {
       child: Column(
         children: List.generate(
           contacts.length,
-          (index) => ContactItem(
-            icon: contacts[index].icon,
-            content: contacts[index].content,
-            isLast: index == contacts.length - 1,
+          (index) => GestureDetector(
+            onTap: contacts[index].onTap,
+            child: ContactItem(
+              icon: contacts[index].icon,
+              content: contacts[index].content,
+              isLast: index == contacts.length - 1,
+            ),
           ),
         ),
       ),
