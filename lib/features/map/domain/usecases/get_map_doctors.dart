@@ -9,8 +9,7 @@ class GetMapDoctorUseCase extends UseCase<List<MapDoctorModel>, String> {
   final GlobalRequestRepository repo = GlobalRequestRepository();
 
   @override
-  Future<Either<Failure, List<MapDoctorModel>>> call(search,
-      {MapParameter? param}) {
+  Future<Either<Failure, List<MapDoctorModel>>> call(search, {MapParameter? param}) {
     var query = <String, dynamic>{};
     if (search.isNotEmpty) {
       query.addAll({"search": "search"});
@@ -23,8 +22,6 @@ class GetMapDoctorUseCase extends UseCase<List<MapDoctorModel>, String> {
       });
     }
     return repo.getList<MapDoctorModel>(
-        endpoint: '/mobile/doctor/map/',
-        fromJson: MapDoctorModel.fromJson,
-        query: query);
+        endpoint: '/mobile/doctor/map/', fromJson: MapDoctorModel.fromJson, query: query);
   }
 }
