@@ -16,20 +16,23 @@ import 'package:anatomica/features/magazine/domain/usecases/search_journal_useca
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/all_articles.dart';
 import 'package:anatomica/features/magazine/presentation/pages/all_journals_screen.dart';
+import 'package:anatomica/features/magazine/presentation/pages/journal_article_single.dart';
 import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/article_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/magazine_appbar.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/magazine_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/magazine_small_item.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/purchase_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:formz/formz.dart';
 
 class MagazineScreen extends StatefulWidget {
@@ -81,10 +84,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                               children: [
                                 Text(
                                   LocaleKeys.issues.tr(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1!
-                                      .copyWith(fontSize: 24),
+                                  style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 24),
                                 ),
                                 const Spacer(),
                                 WScaleAnimation(
@@ -100,10 +100,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                                       children: [
                                         Text(
                                           LocaleKeys.all.tr(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline4!
-                                              .copyWith(fontSize: 15),
+                                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 15),
                                         ),
                                         SvgPicture.asset(AppIcons.arrowRight)
                                       ],
@@ -114,17 +111,13 @@ class _MagazineScreenState extends State<MagazineScreen> {
                             ),
                             MagazineItem(
                               onLeftButtonTap: () {
-                                Navigator.of(context, rootNavigator: true)
-                                    .push(fade(
-                                        page: OneTimePayment(
+                                Navigator.of(context, rootNavigator: true).push(fade(
+                                    page: OneTimePayment(
                                   price: state.journals.first.price,
                                   title: state.journals.first.redaction,
                                   imageUrl: state.journals.first.image.middle,
                                   isJournal: false,
-                                  isRegistered: context
-                                          .read<AuthenticationBloc>()
-                                          .state
-                                          .status ==
+                                  isRegistered: context.read<AuthenticationBloc>().state.status ==
                                       AuthenticationStatus.authenticated,
                                   subtitle: state.journals.first.redaction,
                                   id: state.journals.first.id,
@@ -140,11 +133,9 @@ class _MagazineScreenState extends State<MagazineScreen> {
                     ),
                   },
                   SliverPadding(
-                    padding:
-                        const EdgeInsets.only(bottom: 16, left: 16, right: 16),
+                    padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
                     sliver: SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16,
                         mainAxisSpacing: 20,
@@ -152,83 +143,61 @@ class _MagazineScreenState extends State<MagazineScreen> {
                       ),
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
+                          final journal = state.journals.skip(1).take(4).toList()[index];
                           return MagazineSmallItem(
-                            onButtonTap: () {
-                              Navigator.of(context, rootNavigator: true)
-                                  .push(fade(
-                                      page: OneTimePayment(
-                                price: state.journals
-                                    .skip(1)
-                                    .take(4)
-                                    .toList()[index]
-                                    .price,
-                                title: state.journals
-                                    .skip(1)
-                                    .take(4)
-                                    .toList()[index]
-                                    .name,
-                                imageUrl: state.journals
-                                    .skip(1)
-                                    .take(4)
-                                    .toList()[index]
-                                    .image
-                                    .middle,
-                                isJournal: false,
-                                isRegistered: context
-                                        .read<AuthenticationBloc>()
-                                        .state
-                                        .status ==
-                                    AuthenticationStatus.authenticated,
-                                subtitle: state.journals
-                                    .skip(1)
-                                    .take(4)
-                                    .toList()[index]
-                                    .redaction,
-                                id: state.journals
-                                    .skip(1)
-                                    .take(4)
-                                    .toList()[index]
-                                    .id,
-                              )));
-                            },
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                fade(
-                                  page: MagazineSingleItem(
-                                    bloc: context.read<JournalBloc>(),
-                                    journal: state.journals
-                                        .skip(1)
-                                        .take(4)
-                                        .toList()[index],
+                              if (journal.isBought) {
+                                Navigator.push(
+                                  context,
+                                  fade(
+                                    page: MagazineSingleItem(
+                                      bloc: context.read<JournalBloc>(),
+                                      journal: state.journals.skip(1).take(4).toList()[index],
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              } else {
+                                showModalBottomSheet(
+                                  context: context,
+                                  useRootNavigator: true,
+                                  backgroundColor: Colors.transparent,
+                                  isScrollControlled: true,
+                                  builder: (_) {
+                                    return PurchaseBottomSheet(
+                                        amount: journal.price,
+                                        onButtonTap: () {
+                                          Navigator.of(_).pop();
+                                          Navigator.of(context).push(fade(
+                                              page: OneTimePayment(
+                                                  price: journal.price,
+                                                  title: journal.name,
+                                                  imageUrl: journal.image.middle,
+                                                  isJournal: false,
+                                                  isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                                      AuthenticationStatus.authenticated,
+                                                  subtitle: journal.redaction,
+                                                  id: journal.id)));
+                                        });
+                                  },
+                                );
+                              }
                             },
                             margin: const EdgeInsets.only(top: 20),
-                            journalEntity:
-                                state.journals.skip(1).take(4).toList()[index],
+                            journalEntity: state.journals.skip(1).take(4).toList()[index],
                           );
                         },
                         childCount: state.journals.skip(1).take(4).length,
                       ),
                     ),
                   ),
-                  if (!context
-                      .watch<AuthenticationBloc>()
-                      .state
-                      .user
-                      .isSubscribed) ...{
+                  if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{
                     SliverToBoxAdapter(
                       child: Container(
                         decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(AppImages.magazineBack),
-                              fit: BoxFit.cover),
+                          image: DecorationImage(image: AssetImage(AppImages.magazineBack), fit: BoxFit.cover),
                         ),
                         child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 24),
+                          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                               border: Border.all(color: white1),
@@ -239,10 +208,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                             children: [
                               Text(
                                 LocaleKeys.active_follow.tr(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1!
-                                    .copyWith(fontSize: 20),
+                                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
                               ),
                               const SizedBox(height: 8),
                               Text(
@@ -250,9 +216,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
-                                    .copyWith(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400),
+                                    .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
                               ),
                               const SizedBox(height: 16),
                               Row(
@@ -260,17 +224,14 @@ class _MagazineScreenState extends State<MagazineScreen> {
                                   WButton(
                                     borderRadius: 6,
                                     height: 34,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12),
+                                    padding: const EdgeInsets.symmetric(horizontal: 12),
                                     onTap: () {},
                                     child: Text(
                                       LocaleKeys.more.tr(),
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline2!
-                                          .copyWith(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400),
+                                          .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
                                     ),
                                   ),
                                 ],
@@ -281,8 +242,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                       ),
                     ),
                   },
-                  if (state.journalArticleStatus ==
-                          PaginatorStatus.PAGINATOR_SUCCESS &&
+                  if (state.journalArticleStatus == PaginatorStatus.PAGINATOR_SUCCESS &&
                       state.journalArticles.isNotEmpty) ...[
                     SliverToBoxAdapter(
                       child: Padding(
@@ -294,10 +254,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                               padding: const EdgeInsets.only(left: 16),
                               child: Text(
                                 LocaleKeys.articles.tr(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1!
-                                    .copyWith(fontSize: 24),
+                                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 24),
                               ),
                             ),
                             const Spacer(),
@@ -307,16 +264,12 @@ class _MagazineScreenState extends State<MagazineScreen> {
                                 bloc: context.read<JournalBloc>(),
                               ))),
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 20, 16, 9),
+                                padding: const EdgeInsets.fromLTRB(16, 20, 16, 9),
                                 child: Row(
                                   children: [
                                     Text(
                                       LocaleKeys.all.tr(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4!
-                                          .copyWith(fontSize: 15),
+                                      style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 15),
                                     ),
                                     const SizedBox(width: 1),
                                     SvgPicture.asset(AppIcons.arrowRight)
@@ -335,23 +288,49 @@ class _MagazineScreenState extends State<MagazineScreen> {
                           child: Column(
                             children: [
                               WScaleAnimation(
-                                onTap: () {},
+                                onTap: () {
+                                  if (state.journalArticles.first.isBought) {
+                                    Navigator.of(context).push(fade(
+                                        page: JournalArticleSingle(
+                                            bloc: context.read<JournalBloc>(), slug: state.firstArticle.slug)));
+                                  } else {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      useRootNavigator: true,
+                                      backgroundColor: Colors.transparent,
+                                      isScrollControlled: true,
+                                      builder: (_) {
+                                        return PurchaseBottomSheet(
+                                            amount: state.firstArticle.price,
+                                            onButtonTap: () {
+                                              Navigator.of(_).pop();
+                                              Navigator.of(context).push(fade(
+                                                  page: OneTimePayment(
+                                                      price: state.firstArticle.price,
+                                                      title: state.firstArticle.title,
+                                                      imageUrl: state.firstArticle.image.middle,
+                                                      isJournal: false,
+                                                      isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                                          AuthenticationStatus.authenticated,
+                                                      subtitle: state.firstArticle.redaction,
+                                                      id: state.firstArticle.id)));
+                                            });
+                                      },
+                                    );
+                                  }
+                                },
                                 child: Column(
                                   children: [
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 12, bottom: 16),
+                                      margin: const EdgeInsets.only(top: 12, bottom: 16),
                                       height: 188,
                                       decoration: BoxDecoration(
-                                          border: Border.all(color: divider),
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
+                                          border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: CachedNetworkImage(
                                           width: double.infinity,
-                                          imageUrl:
-                                              state.firstArticle.image.middle,
+                                          imageUrl: state.firstArticle.image.middle,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -360,22 +339,28 @@ class _MagazineScreenState extends State<MagazineScreen> {
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         state.firstArticle.title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline1!
-                                            .copyWith(fontSize: 18),
+                                        style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
                                       ),
                                     ),
                                     const SizedBox(height: 4),
-                                    Text(
-                                      state.firstArticle.shortDescription,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline3!
-                                          .copyWith(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400),
-                                    ),
+                                    Html(
+                                      data: state.firstArticle.shortDescription,
+                                      style: {
+                                        'p': Style(
+                                          fontSize: const FontSize(13),
+                                          padding: EdgeInsets.zero,
+                                          margin: EdgeInsets.zero,
+                                          color: textSecondary,
+                                        )
+                                      },
+                                    )
+                                    // Text(
+                                    //   state.firstArticle.shortDescription,
+                                    //   style: Theme.of(context)
+                                    //       .textTheme
+                                    //       .headline3!
+                                    //       .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -396,16 +381,10 @@ class _MagazineScreenState extends State<MagazineScreen> {
                           (BuildContext context, int index) {
                             return ArticleItem(
                               margin: const EdgeInsets.only(bottom: 12),
-                              magazineItemEntity: state.journalArticles
-                                  .skip(1)
-                                  .take(4)
-                                  .toList()[index],
+                              magazineItemEntity: state.journalArticles.skip(1).take(4).toList()[index],
                             );
                           },
-                          childCount: state.journalArticles
-                              .skip(1)
-                              .take(4)
-                              .length, // 1000 list items
+                          childCount: state.journalArticles.skip(1).take(4).length, // 1000 list items
                         ),
                       ),
                     ),

@@ -10,6 +10,9 @@ class PhoneTextField extends StatelessWidget {
   final String hintText;
   final String title;
   final String errorText;
+  final String? prefixIcon;
+  final Color? prefixIconColor;
+  final ValueChanged<String>? onChanged;
 
   const PhoneTextField(
       {required this.controller,
@@ -17,6 +20,9 @@ class PhoneTextField extends StatelessWidget {
       this.title = '',
       this.hintText = '__ ___ __ __',
       this.errorText = '',
+      this.prefixIcon,
+      this.prefixIconColor,
+      this.onChanged,
       Key? key})
       : super(key: key);
 
@@ -53,6 +59,7 @@ class PhoneTextField extends StatelessWidget {
           height: 40,
           child: WMaskedTextField(
             controller: controller,
+            onChange: onChanged,
             keyboardType: TextInputType.number,
             style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
             decoration: InputDecoration(
@@ -78,9 +85,9 @@ class PhoneTextField extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 12, right: 8),
                     child: SvgPicture.asset(
-                      AppIcons.deviceMobile,
+                      prefixIcon ?? AppIcons.deviceMobile,
                       width: 20,
-                      color: textSecondary,
+                      color: prefixIconColor ?? textSecondary,
                     ),
                   ),
                   Padding(

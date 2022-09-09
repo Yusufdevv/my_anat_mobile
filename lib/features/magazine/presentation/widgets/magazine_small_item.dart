@@ -10,14 +10,8 @@ class MagazineSmallItem extends StatefulWidget {
   final JournalEntity journalEntity;
   final EdgeInsets margin;
   final VoidCallback onTap;
-  final VoidCallback onButtonTap;
 
-  const MagazineSmallItem(
-      {required this.journalEntity,
-      this.margin = EdgeInsets.zero,
-      required this.onTap,
-      required this.onButtonTap,
-      Key? key})
+  const MagazineSmallItem({required this.journalEntity, this.margin = EdgeInsets.zero, required this.onTap, Key? key})
       : super(key: key);
 
   @override
@@ -27,13 +21,13 @@ class MagazineSmallItem extends StatefulWidget {
 class _MagazineSmallItemState extends State<MagazineSmallItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: widget.margin,
-      child: Column(
-        children: [
-          WScaleAnimation(
-            onTap: widget.onTap,
-            child: Column(
+    return WScaleAnimation(
+      onTap: widget.onTap,
+      child: Container(
+        margin: widget.margin,
+        child: Column(
+          children: [
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
@@ -49,11 +43,13 @@ class _MagazineSmallItemState extends State<MagazineSmallItem> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(widget.journalEntity.redaction,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        )),
+                Text(
+                  widget.journalEntity.redaction,
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
@@ -65,16 +61,18 @@ class _MagazineSmallItemState extends State<MagazineSmallItem> {
                 ),
               ],
             ),
-          ),
-          WButton(
-            margin: const EdgeInsets.only(top: 12),
-            onTap: widget.onButtonTap,
-            child: Text(
-              MyFunctions.getFormatCostFromInt(widget.journalEntity.price),
-              style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+            WButton(
+              margin: const EdgeInsets.only(top: 12),
+              onTap: widget.onTap,
+              child: Text(
+                widget.journalEntity.isBought
+                    ? 'O\'qish'
+                    : MyFunctions.getFormatCostFromInt(widget.journalEntity.price),
+                style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

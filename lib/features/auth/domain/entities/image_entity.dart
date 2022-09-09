@@ -12,6 +12,12 @@ class ImageEntity extends Equatable {
   const ImageEntity({this.small = '', this.middle = '', this.origin = ''});
   @override
   List<Object?> get props => [origin, middle, small];
+  ImageEntity copyWith({
+    String? origin,
+    String? middle,
+    String? small,
+  }) =>
+      ImageEntity(middle: middle ?? this.middle, origin: origin ?? this.origin, small: small ?? this.small);
 }
 
 class ImageConverter implements JsonConverter<ImageEntity, Map<String, dynamic>?> {
