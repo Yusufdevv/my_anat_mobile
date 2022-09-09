@@ -13,16 +13,33 @@ class DistrictEntity extends Equatable {
   final String soato;
   @RegionEntityConverter()
   final RegionEntity region;
+  @JsonKey(name: 'is_check', defaultValue: false)
+  final bool isCheck;
 
   const DistrictEntity({
     required this.region,
     required this.soato,
     required this.title,
     required this.id,
+    required this.isCheck,
   });
 
+  DistrictEntity copyWith({
+    bool? isCheck,
+    RegionEntity? region,
+    String? title,
+    String? soato,
+  }) =>
+      DistrictEntity(
+        region: region ?? this.region,
+        soato: soato ?? this.soato,
+        title: title ?? this.title,
+        id: id,
+        isCheck: isCheck ?? this.isCheck,
+      );
+
   @override
-  List<Object?> get props => [id, title, soato, region];
+  List<Object?> get props => [id, title, soato, region, isCheck];
 }
 
 class DistrictEntityConverter extends JsonConverter<DistrictEntity, Map<String, dynamic>?> {

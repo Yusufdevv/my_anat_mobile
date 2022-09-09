@@ -9,6 +9,9 @@ class RegionState extends Equatable {
   final PaginatorStatus districtStatus;
   final bool fetchMoreDistrict;
   final String? nextDistrict;
+  final int? regionId;
+  final bool? isCheck;
+  final List<int> select;
 
   const RegionState({
     required this.districts,
@@ -19,6 +22,9 @@ class RegionState extends Equatable {
     required this.fetchMoreRegion,
     this.nextDistrict,
     this.nextRegion,
+    this.regionId,
+    this.isCheck,
+    required this.select,
   });
 
   RegionState copyWith({
@@ -30,6 +36,9 @@ class RegionState extends Equatable {
     PaginatorStatus? districtStatus,
     bool? fetchMoreDistrict,
     String? nextDistrict,
+    int? regionId,
+    bool? isCheck,
+    List<int>? select,
   }) =>
       RegionState(
         districts: districts ?? this.districts,
@@ -40,6 +49,9 @@ class RegionState extends Equatable {
         fetchMoreRegion: fetchMoreRegion ?? this.fetchMoreDistrict,
         nextDistrict: nextDistrict,
         nextRegion: nextRegion,
+        regionId: regionId ?? this.regionId,
+        isCheck: isCheck ?? this.isCheck,
+        select: select ?? this.select,
       );
 
   @override
@@ -51,6 +63,9 @@ class RegionState extends Equatable {
         nextDistrict,
         nextRegion,
         fetchMoreRegion,
-        fetchMoreDistrict
+        fetchMoreDistrict,
+        regionId,
+        isCheck,
+        select,
       ];
 }

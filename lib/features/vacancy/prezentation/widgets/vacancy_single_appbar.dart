@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -21,6 +22,8 @@ class VacancySingleAppBar extends StatelessWidget {
       backgroundColor: Colors.white,
       elevation: 0,
       foregroundColor: Colors.red,
+      systemOverlayStyle:
+      const SystemUiOverlayStyle(statusBarColor: primary),
       expandedHeight: 60,
       title: const SizedBox(),
       automaticallyImplyLeading: false,

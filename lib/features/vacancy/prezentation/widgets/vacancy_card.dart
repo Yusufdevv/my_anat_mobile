@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
@@ -7,17 +8,17 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_tex
 import 'package:flutter/material.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 class VacancyCard extends StatelessWidget {
   final VoidCallback onTap;
   final VacancyListEntity vacancyListEntity;
 
-  const VacancyCard(
-      {required this.onTap, required this.vacancyListEntity, Key? key})
+  const VacancyCard({required this.onTap, required this.vacancyListEntity, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         width: 223,
@@ -34,12 +35,13 @@ class VacancyCard extends StatelessWidget {
           children: [
             Text(
               vacancyListEntity.organization.speciazilation[0].title,
-              style:
-                  Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
+              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
             ),
             const SizedBox(height: 4),
             Text(
-                '${vacancyListEntity.salaryFrom} - ${vacancyListEntity.salaryTo} UZS',
+                '${MyFunctions.getPriceFormat2(vacancyListEntity.salaryFrom)} - '
+                '${MyFunctions.getPriceFormat2(vacancyListEntity.salaryTo)} '
+                'UZS',
                 style: Theme.of(context)
                     .textTheme
                     .headline4!
@@ -53,8 +55,7 @@ class VacancyCard extends StatelessWidget {
                     '${LocaleKeys.year.tr()}',
                 icon: AppIcons.briefCase),
             const SizedBox(height: 8),
-            VacancyItemTextWidget(
-                title: vacancyListEntity.address, icon: AppIcons.mapPin),
+            VacancyItemTextWidget(title: vacancyListEntity.address, icon: AppIcons.mapPin),
           ],
         ),
       ),

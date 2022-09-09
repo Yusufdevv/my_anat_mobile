@@ -32,9 +32,11 @@ class VacancySingleBloc extends Bloc<VacancySingleEvent, VacancySingleState> {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       final result = await vacancySingleUseCase.call(VacancySingleParams(slug: event.slug));
       if (result.isRight) {
+        print('right');
         emit(
             state.copyWith(status: FormzStatus.submissionSuccess, vacancyListEntity: result.right));
       } else {
+        print('left');
         emit(state.copyWith(status: FormzStatus.submissionFailure));
       }
     });
@@ -43,13 +45,15 @@ class VacancySingleBloc extends Bloc<VacancySingleEvent, VacancySingleState> {
     });
     on<GetRelatedVacancyList>((event, emit) async {
       final result = await relatedVacancyUseCase.call(RelatedVacancyListParams(slug: event.slug));
-      print('result:${result.right.results}');
+
       if (result.isRight) {
         emit(state.copyWith(
           paginatorStatus: PaginatorStatus.PAGINATOR_SUCCESS,
           totalPages: result.right.count,
           relatedVacancyList: result.right.results.cast<VacancyListEntity>(),
         ));
+      } else {
+        emit(state.copyWith(paginatorStatus: PaginatorStatus.PAGINATOR_ERROR));
       }
     });
   }

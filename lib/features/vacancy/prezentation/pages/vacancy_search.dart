@@ -178,6 +178,9 @@ class _VacancySearchScreenState extends State<VacancySearchScreen>
                       print(
                           'title: ${state.vacancyList[index].organization.title}');
                       return VacancyItem(
+                        onTapFavourite: (){
+
+                        },
                         vacancyEntity: state.vacancyList[index],
                         onTap: () {
                           Navigator.of(context).push(fade(

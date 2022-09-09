@@ -1,6 +1,7 @@
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
 import 'package:bloc/bloc.dart';
@@ -31,7 +32,8 @@ class VacancySearchBloc extends Bloc<VacancySearchEvent, VacancySearchState> {
           candidateList: [],
         )) {
     on<GetVacancySearchEvent>((event, emit) async {
-      final response = await vacancyListUseCase.call(VacancyListParams(search: event.search));
+      final response = await vacancyListUseCase
+          .call(VacancyListParams(vacancyParamsEntity: VacancyParamsEntity(search: event.search)));
       if (response.isRight) {
         final result = response.right;
         emit(state.copyWith(

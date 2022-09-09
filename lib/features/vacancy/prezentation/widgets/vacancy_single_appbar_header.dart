@@ -27,26 +27,30 @@ class VacancySingleAppBarHeader extends StatelessWidget {
               )),
           child: Row(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    vacancyEntity.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    vacancyEntity.organization.title,
-                    style: Theme.of(context).textTheme.headline2!.copyWith(
-                          fontWeight: FontWeight.w400,
-                        ),
-                  )
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      vacancyEntity.title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline2!
+                          .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      vacancyEntity.organization.title,
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                            fontWeight: FontWeight.w400,
+                          ),
+                    )
+                  ],
+                ),
               ),
-              const Spacer(),
+              const SizedBox(width: 16),
               Container(
                 height: 44,
                 width: 44,

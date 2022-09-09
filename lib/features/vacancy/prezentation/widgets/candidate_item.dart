@@ -8,6 +8,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_html/flutter_html.dart';
+
 class CandidateItem extends StatelessWidget {
   final VoidCallback onTap;
   final EdgeInsets? margin;
@@ -22,7 +24,7 @@ class CandidateItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: margin ?? const EdgeInsets.symmetric(horizontal: 16),
@@ -62,20 +64,15 @@ class CandidateItem extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       candidateListEntity.specialization.title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(fontSize: 14),
+                      style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                     ),
                     const Spacer(),
                     VacancyItemTextWidget(
-                        title:
-                            '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
+                        title: '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
                         icon: AppIcons.briefCase),
                     const SizedBox(height: 4),
                     VacancyItemTextWidget(
-                        title: candidateListEntity.address,
-                        icon: AppIcons.mapPin),
+                        title: candidateListEntity.address, icon: AppIcons.mapPin),
                   ],
                 ),
               ),

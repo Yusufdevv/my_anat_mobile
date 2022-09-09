@@ -1,3 +1,4 @@
+import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
 import 'package:anatomica/features/vacancy/domain/entities/region.dart';
@@ -22,6 +23,7 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
           regionStatus: PaginatorStatus.PAGINATOR_INITIAL,
           fetchMoreDistrict: false,
           fetchMoreRegion: false,
+          select: [],
         )) {
     on<GetRegionEvent>((event, emit) async {
       emit(state.copyWith(regionStatus: PaginatorStatus.PAGINATOR_LOADING));
@@ -39,19 +41,54 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
         emit(state.copyWith(regionStatus: PaginatorStatus.PAGINATOR_ERROR));
       }
     });
+    on<GetMoreRegion>((event, emit) async {
+      final response = await regionUseCase.call(const RegionParams());
+      if (response.isRight) {
+        final result = response.right;
+        emit(state.copyWith(
+          nextRegion: result.next,
+          regions: [...state.regions, ...result.results],
+          fetchMoreRegion: result.next != null,
+          regionStatus: PaginatorStatus.PAGINATOR_SUCCESS,
+        ));
+      } else {
+        emit(
+          state.copyWith(
+            regionStatus: PaginatorStatus.PAGINATOR_ERROR,
+          ),
+        );
+      }
+    });
     on<GetDistrictEvent>((event, emit) async {
       emit(state.copyWith(districtStatus: PaginatorStatus.PAGINATOR_SUCCESS));
-      final response = await districtUseCase.call(DistrictParams(next: state.nextDistrict));
+      final response =
+          await districtUseCase.call(DistrictParams(next: state.nextDistrict, id: event.id));
       if (response.isRight) {
         final result = response.right;
         print('result:$result');
+        emit(
+          state.copyWith(
+            fetchMoreRegion: result.next != null,
+            districtStatus: PaginatorStatus.PAGINATOR_SUCCESS,
+            nextDistrict: result.next,
+            districts: result.results,
+          ),
+        );
+      }
+    });
+    on<GetMoreDistrict>((event, emit) async {
+      final response = await districtUseCase.call(const DistrictParams());
+      if (response.isRight) {
+        final result = response.right;
         emit(state.copyWith(
-          fetchMoreRegion: result.next != null,
-          districtStatus: PaginatorStatus.PAGINATOR_SUCCESS,
+          fetchMoreDistrict: result.next != null,
           nextDistrict: result.next,
-          districts: result.results,
+          districts: [...state.districts, ...result.results],
         ));
       }
+    });
+    on<SelectDistrictEvent>((event, emit) {
+      emit(state.copyWith(select: event.select));
     });
   }
 }
