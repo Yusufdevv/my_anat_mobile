@@ -11,7 +11,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
               ?.map((e) => const OrganizationConverter()
                   .fromJson(e as Map<String, dynamic>?))
               .toList() ??
-          [],
+          const [],
       isSubscribed: json['is_subscribed'] as bool? ?? false,
       isOrganization: json['is_organization'] as bool? ?? false,
       isDoctor: json['is_doctor'] as bool? ?? false,

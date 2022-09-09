@@ -1,6 +1,6 @@
 import 'package:anatomica/features/magazine/presentation/pages/magazine_screen.dart';
 import 'package:anatomica/features/map/presentation/map_screen.dart';
-import 'package:anatomica/features/profile/prezentation/pages/profile.dart';
+import 'package:anatomica/features/profile/presentation/pages/profile.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -14,16 +14,14 @@ class TabNavigator extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final NavItemEnum tabItem;
 
-  const TabNavigator({required this.tabItem, required this.navigatorKey, Key? key})
-      : super(key: key);
+  const TabNavigator({required this.tabItem, required this.navigatorKey, Key? key}) : super(key: key);
 
   @override
   State<TabNavigator> createState() => _TabNavigatorState();
 }
 
 class _TabNavigatorState extends State<TabNavigator> with AutomaticKeepAliveClientMixin {
-  Map<String, WidgetBuilder> _routeBuilders(
-      {required BuildContext context, required RouteSettings routeSettings}) {
+  Map<String, WidgetBuilder> _routeBuilders({required BuildContext context, required RouteSettings routeSettings}) {
     switch (widget.tabItem) {
       case NavItemEnum.map:
         return {TabNavigatorRoutes.root: (context) => MapScreen()};
@@ -56,9 +54,8 @@ class _TabNavigatorState extends State<TabNavigator> with AutomaticKeepAliveClie
       onGenerateRoute: (routeSettings) {
         final routeBuilders = _routeBuilders(context: context, routeSettings: routeSettings);
         return CupertinoPageRoute(
-          builder: (context) => routeBuilders.containsKey(routeSettings.name)
-              ? routeBuilders[routeSettings.name]!(context)
-              : Container(),
+          builder: (context) =>
+              routeBuilders.containsKey(routeSettings.name) ? routeBuilders[routeSettings.name]!(context) : Container(),
         );
       },
     );
@@ -78,6 +75,4 @@ PageRouteBuilder fade({required Widget page, RouteSettings? settings}) => PageRo
           child: child,
         ),
     settings: settings,
-    pageBuilder:
-        (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) =>
-            page);
+    pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => page);

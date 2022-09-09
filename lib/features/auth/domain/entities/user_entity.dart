@@ -1,34 +1,23 @@
 import 'package:anatomica/features/auth/data/models/doctor_model.dart';
-import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/organization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/organization_entity.dart';
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 class UserEntity extends Equatable {
-  @JsonKey(defaultValue: 0)
   final int id;
-  @JsonKey(defaultValue: '')
   final String fullName;
-  @JsonKey(defaultValue: '')
   final String email;
-  @JsonKey(defaultValue: '')
   final String username;
   @ImageConverter()
   final ImageEntity img;
-  @JsonKey(defaultValue: '')
   final String phoneNumber;
-  @JsonKey(defaultValue: false)
   final bool isDoctor;
-  @JsonKey(defaultValue: false)
   final bool isOrganization;
-  @JsonKey(defaultValue: false)
   final bool isSubscribed;
   @DoctorConverter()
   final DoctorEntity doctor;
-  @JsonKey(defaultValue: [])
   @OrganizationConverter()
   final List<OrganizationEntity> organizations;
 
@@ -45,6 +34,32 @@ class UserEntity extends Equatable {
     this.organizations = const [],
     this.phoneNumber = '',
   });
+
+  UserEntity copyWith(
+          {int? id,
+          String? fullName,
+          String? email,
+          String? username,
+          ImageEntity? img,
+          String? phoneNumber,
+          bool? isDoctor,
+          bool? isOrganization,
+          bool? isSubscribed,
+          DoctorEntity? doctor,
+          List<OrganizationEntity>? organizations}) =>
+      UserEntity(
+        id: id ?? this.id,
+        doctor: doctor ?? this.doctor,
+        email: email ?? this.email,
+        fullName: fullName ?? this.fullName,
+        img: img ?? this.img,
+        isDoctor: isDoctor ?? this.isDoctor,
+        isOrganization: isOrganization ?? this.isOrganization,
+        isSubscribed: isSubscribed ?? this.isSubscribed,
+        organizations: organizations ?? this.organizations,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        username: username ?? this.username,
+      );
 
   @override
   List<Object?> get props => [

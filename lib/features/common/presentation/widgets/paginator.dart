@@ -8,6 +8,8 @@ class Paginator extends StatelessWidget {
   final bool hasMoreToFetch;
   final Widget errorWidget;
   final EdgeInsets? padding;
+  final bool isEmpty;
+  final Widget? emptyWidget;
   final Widget Function(BuildContext context, int index)? separatorBuilder;
   final Axis scrollDirection;
 
@@ -21,6 +23,8 @@ class Paginator extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.scrollDirection = Axis.vertical,
     this.separatorBuilder,
+    this.isEmpty = false,
+    this.emptyWidget,
     Key? key,
   }) : super(key: key);
 
@@ -31,25 +35,29 @@ class Paginator extends StatelessWidget {
     } else if (paginatorStatus == PaginatorStatus.PAGINATOR_ERROR) {
       return errorWidget;
     } else {
-      return ListView.separated(
-        scrollDirection: scrollDirection,
-        physics: const BouncingScrollPhysics(),
-        padding: padding,
-        itemBuilder: (context, index) {
-          if (index == itemCount) {
-            if (hasMoreToFetch) {
-              fetchMoreFunction();
-              return const Center(child: CupertinoActivityIndicator());
-            } else {
-              return const SizedBox();
+      if (isEmpty) {
+        return Center(child: emptyWidget);
+      } else {
+        return ListView.separated(
+          scrollDirection: scrollDirection,
+          physics: const BouncingScrollPhysics(),
+          padding: padding,
+          itemBuilder: (context, index) {
+            if (index == itemCount) {
+              if (hasMoreToFetch) {
+                fetchMoreFunction();
+                return const Center(child: CupertinoActivityIndicator());
+              } else {
+                return const SizedBox();
+              }
             }
-          }
-          return itemBuilder(context, index);
-        },
-        separatorBuilder: separatorBuilder ?? (context, index) => const SizedBox(),
-        itemCount: itemCount + 1,
-        shrinkWrap: true,
-      );
+            return itemBuilder(context, index);
+          },
+          separatorBuilder: separatorBuilder ?? (context, index) => const SizedBox(),
+          itemCount: itemCount + 1,
+          shrinkWrap: true,
+        );
+      }
     }
   }
 }

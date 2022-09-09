@@ -1,4 +1,3 @@
-import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/magazine/data/models/tag_model.dart';
 import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
@@ -22,6 +21,7 @@ class JournalModel extends JournalEntity {
     required super.name,
     required super.id,
     required super.redaction,
+    required super.isBought,
   });
 
   factory JournalModel.fromJson(Map<String, dynamic> json) => _$JournalModelFromJson(json);
