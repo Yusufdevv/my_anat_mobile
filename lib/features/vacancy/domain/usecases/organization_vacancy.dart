@@ -2,6 +2,7 @@ import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/domain/repositories/vacancy_repository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -12,17 +13,19 @@ class OrganizationVacancyUseCase extends UseCase<VacancyEntity, OrganizationVaca
 
   @override
   Future<Either<Failure, VacancyEntity>> call(OrganizationVacancyParams params) async =>
-      await repository.getVacancies(next: params.next, organizationId: params.organizationId,
-          category: params.category);
+      await repository.getVacancies(
+          next: params.next, vacancyParamsEntity: params.vacancyParamsEntity);
 }
 
 class OrganizationVacancyParams extends Equatable {
-  final int organizationId;
   final String? next;
-  final String? category;
+  final VacancyParamsEntity? vacancyParamsEntity;
 
-  const OrganizationVacancyParams({this.category, required this.organizationId, this.next});
+  const OrganizationVacancyParams({this.vacancyParamsEntity, this.next});
 
   @override
-  List<Object?> get props => [organizationId, next, category];
+  List<Object?> get props => [
+        vacancyParamsEntity,
+        next,
+      ];
 }

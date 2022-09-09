@@ -9,7 +9,7 @@ part of 'vacancy_list.dart';
 VacancyListModel _$VacancyListModelFromJson(Map<String, dynamic> json) =>
     VacancyListModel(
       workType: const WorkTypeConverter()
-          .fromJson(json['workType'] as Map<String, dynamic>?),
+          .fromJson(json['work_type'] as Map<String, dynamic>?),
       title: json['title'] as String? ?? '',
       category: const CategoryEntityConverter()
           .fromJson(json['category'] as Map<String, dynamic>?),
@@ -44,7 +44,7 @@ Map<String, dynamic> _$VacancyListModelToJson(VacancyListModel instance) =>
       'description': instance.description,
       'address': instance.address,
       'category': const CategoryEntityConverter().toJson(instance.category),
-      'workType': const WorkTypeConverter().toJson(instance.workType),
+      'work_type': const WorkTypeConverter().toJson(instance.workType),
       'employer_info': instance.employerInfo,
       'published_at': instance.publishedAt,
       'is_favorite': instance.isFavorite,

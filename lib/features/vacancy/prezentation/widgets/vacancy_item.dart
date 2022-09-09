@@ -1,24 +1,34 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 class VacancyItem extends StatelessWidget {
   final EdgeInsets? margin;
   final VoidCallback onTap;
   final VacancyListEntity vacancyEntity;
+  final VoidCallback onTapFavourite;
 
-  const VacancyItem({required this.vacancyEntity, this.margin, required this.onTap, Key? key})
-      : super(key: key);
+  const VacancyItem({
+    required this.vacancyEntity,
+    this.margin,
+    required this.onTap,
+    required this.onTapFavourite,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(behavior: HitTestBehavior.translucent,
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: onTap,
       child: Container(
         margin: margin ?? const EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -66,19 +76,20 @@ class VacancyItem extends StatelessWidget {
             VacancyItemTextWidget(title: vacancyEntity.address, icon: AppIcons.mapPin),
             const SizedBox(height: 4),
             VacancyItemTextWidget(
-                title: '${vacancyEntity.salaryFrom} - ${vacancyEntity.salaryTo}',
+                title:
+                    '${MyFunctions.getPriceFormat(vacancyEntity.salaryFrom)} - ${MyFunctions.getPriceFormat(vacancyEntity.salaryTo)}',
                 icon: AppIcons.cashBanknote),
             const SizedBox(height: 12),
             Row(
               children: [
                 Text(LocaleKeys.published.tr(), style: Theme.of(context).textTheme.subtitle2),
                 const SizedBox(width: 4),
-                Text(Jiffy(vacancyEntity.publishedAt).format('dd MMMM , yyyy'),
+                Text(MyFunctions.getPublishedDate(vacancyEntity.publishedAt),
                     style: Theme.of(context).textTheme.subtitle2),
                 const Spacer(),
                 FavouriteButton(
                   isFavourite: vacancyEntity.isFavorite,
-                  onTap: () {},
+                  onTap: onTapFavourite,
                 ),
               ],
             )

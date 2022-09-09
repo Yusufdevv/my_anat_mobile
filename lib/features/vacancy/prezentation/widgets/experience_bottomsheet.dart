@@ -38,45 +38,45 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
       child: ScrolledBottomSheet(
         title: LocaleKeys.experience.tr(),
         hasHeader: true,
-        isSubScreen: true,
-        child: BlocBuilder<VacancyBloc, VacancyState>(
-          builder: (context, state) {
-            if (state.filterStatus.isPure) {
-              context.read<VacancyBloc>().add(GetVacancyFilterEvent());
-            } else if (state.filterStatus.isSubmissionInProgress) {
-              return const Center(child: CupertinoActivityIndicator());
-            } else if (state.filterStatus.isSubmissionSuccess) {
-              return Column(
-                children: [
-                  const SizedBox(height: 16),
-                  ...List.generate(
-                    state.vacancyFilterList[1].choices.length,
-                    (index) => CheckBoxTitle(
-                      isChecked: checkList[index],
-                      onTap: () {
-                        isChecked(index);
-                      },
-                      title: state.vacancyFilterList[1].choices[index].value,
-                      isLast: index == 4 ? true : false,
-                    ),
-                  ),
-                  const Spacer(),
-                  WButton(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    text: LocaleKeys.save.tr(),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  SizedBox(height: 4 + mediaQuery.padding.bottom)
-                ],
-              );
-            } else if (state.filterStatus.isSubmissionFailure) {
-              return const Center(child: Text('Fail'));
-            }
-            return const Center(child: CupertinoActivityIndicator());
+        stackedWButton: WButton(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          text: LocaleKeys.save.tr(),
+          onTap: () {
+            Navigator.of(context).pop();
           },
         ),
+        children: [
+          BlocBuilder<VacancyBloc, VacancyState>(
+            builder: (context, state) {
+              if (state.filterStatus.isPure) {
+                context.read<VacancyBloc>().add(GetVacancyFilterEvent());
+              } else if (state.filterStatus.isSubmissionInProgress) {
+                return const Center(child: CupertinoActivityIndicator());
+              } else if (state.filterStatus.isSubmissionSuccess) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 16),
+                    ...List.generate(
+                      state.vacancyFilterList[1].choices.length,
+                      (index) => CheckBoxTitle(
+                        isChecked: checkList[index],
+                        onTap: () {
+                          isChecked(index);
+                        },
+                        title: state.vacancyFilterList[1].choices[index].value,
+                        isLast: index == 4 ? true : false,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                );
+              } else if (state.filterStatus.isSubmissionFailure) {
+                return const Center(child: Text('Fail'));
+              }
+              return const Center(child: CupertinoActivityIndicator());
+            },
+          ),
+        ],
       ),
     );
   }

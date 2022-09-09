@@ -1,6 +1,7 @@
 import 'package:anatomica/core/data/singletons/dio_settings.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
+import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_list.dart';
@@ -13,7 +14,11 @@ import 'package:anatomica/features/vacancy/data/models/top_organization.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_option.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_education.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_work.dart';
+import 'package:anatomica/features/vacancy/domain/entities/certificate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:dio/dio.dart';
 
 abstract class VacancyRemoteDataSource {
@@ -21,8 +26,7 @@ abstract class VacancyRemoteDataSource {
 
   VacancyRemoteDataSource({required this.paginationDatasource});
 
-  Future<VacancyModel> getVacancyList(
-      {String? next, int? organizationId, String? search, String? category});
+  Future<VacancyModel> getVacancyList({String? next, VacancyParamsEntity? vacancyParamsEntity});
 
   Future<TopOrganizationModel> getTopOrganization();
 
@@ -34,17 +38,28 @@ abstract class VacancyRemoteDataSource {
 
   Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug});
 
-  Future<GenericPagination<CandidateListModel>> getCandidateList({String? next, String? search});
+  Future<GenericPagination<CandidateListModel>> getCandidateList(
+      {String? next, String? search, String? categoryId});
 
   Future<CandidateSingleModel> getCandidateSingle({required int id});
 
   Future<GenericPagination<RegionModel>> getRegion({String? next});
 
-  Future<GenericPagination<DistrictModel>> getDistrict({String? next});
+  Future<GenericPagination<DistrictModel>> getDistrict({String? next, int? id});
 
   Future<GenericPagination<CategoryListModel>> getCategoryList({String? next});
 
   Future<List<VacancyOptionEntity>> getVacancyFilter();
+
+  Future<Either> addWishListVacancy({required int user, required int vacancy});
+
+  Future<Either> removeWishListVacancy({required int id});
+
+  Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation({required int id});
+
+  Future<GenericPagination<CertificateEntity>> getCandidateCertificate({required int id});
+
+  Future<GenericPagination<CandidateWorkEntity>> getCandidateWork({required int id});
 }
 
 class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
@@ -54,20 +69,28 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
 
   @override
   Future<VacancyModel> getVacancyList(
-      {String? next, int? organizationId, String? search, String? category}) async {
+      {String? next, VacancyParamsEntity? vacancyParamsEntity}) async {
     try {
       const url = '/vacancy/vacancy/list/';
       final Map<String, dynamic> query = {};
-      print('search:$search');
-      print('category$category');
-      if (category != null) {
-        query.putIfAbsent('category', () => category);
+      print('search:${vacancyParamsEntity?.search}');
+      print('category${vacancyParamsEntity?.category}');
+      print('salary:${vacancyParamsEntity?.salary}');
+      print('experience:${vacancyParamsEntity?.experience}');
+      if (vacancyParamsEntity?.category != null) {
+        query.putIfAbsent('category', () => vacancyParamsEntity?.category);
       }
-      if (organizationId != null) {
-        query.putIfAbsent('organization', () => organizationId);
+      if (vacancyParamsEntity?.organization != null) {
+        query.putIfAbsent('organization', () => vacancyParamsEntity?.organization);
       }
-      if (search != null) {
-        query.putIfAbsent('search', () => search);
+      if (vacancyParamsEntity?.search != null) {
+        query.putIfAbsent('search', () => vacancyParamsEntity?.search);
+      }
+      if (vacancyParamsEntity?.salary != null) {
+        query.putIfAbsent('salary', () => vacancyParamsEntity?.salary);
+      }
+      if (vacancyParamsEntity?.experience != null) {
+        query.putIfAbsent('experience', () => vacancyParamsEntity?.experience);
       }
 
       final result = await paginationDatasource.fetchMore(
@@ -148,6 +171,8 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   @override
   Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug}) async {
     final response = await dio.get('/vacancy/vacancy/$slug/related/');
+    print('/vacancy/vacancy/$slug/related/');
+    print(response.statusCode);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
@@ -157,12 +182,19 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CandidateListModel>> getCandidateList(
-      {String? next, String? search}) async {
+  Future<GenericPagination<CandidateListModel>> getCandidateList({
+    String? next,
+    String? search,
+    String? categoryId,
+  }) async {
     final Map<String, dynamic> query = {};
     print('search candidate:$search');
     if (search != null) {
       query.putIfAbsent('search', () => search);
+    }
+    print('candidate id:$categoryId');
+    if (categoryId != null) {
+      query.putIfAbsent('specialization', () => categoryId);
     }
     final response = await dio.get(next ?? '/doctor/', queryParameters: query);
 
@@ -185,8 +217,13 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<DistrictModel>> getDistrict({String? next}) async {
-    final response = await dio.get('/district/');
+  Future<GenericPagination<DistrictModel>> getDistrict({String? next, int? id}) async {
+    final Map<String, dynamic> query = {};
+    print('region id: $id');
+    if (id != null) {
+      query.putIfAbsent('region', () => id);
+    }
+    final response = await dio.get('/district/', queryParameters: query);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => DistrictModel.fromJson(p0 as Map<String, dynamic>));
@@ -225,5 +262,45 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     }
     throw ServerException(
         statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<Either> addWishListVacancy({required int user, required int vacancy}) async {
+    final response = await dio.post('/vacancy/vacancy/$vacancy/like',
+        data: {'user': user, 'vacancy': vacancy}, options: Options(headers: {}));
+    print(response.data);
+    print(response.statusCode);
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return Right('');
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<Either> removeWishListVacancy({required int id}) async {
+    final response =
+        await dio.delete('/vacancy/vacancy/$id/dislike', options: Options(headers: {}));
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return Right('');
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<GenericPagination<CertificateEntity>> getCandidateCertificate({required int id}) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation(
+      {required int id}) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<GenericPagination<CandidateWorkEntity>> getCandidateWork({required int id}) async {
+    throw UnimplementedError();
   }
 }

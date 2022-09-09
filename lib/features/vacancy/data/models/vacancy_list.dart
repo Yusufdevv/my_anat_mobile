@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'vacancy_list.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class VacancyListModel extends VacancyListEntity {
   const VacancyListModel({
     required super.workType,
@@ -73,7 +73,7 @@ class TypesModel extends TypesEntity {
   factory TypesModel.fromJson(Map<String, dynamic> json) => _$TypesModelFromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class WorkTypeModel extends WorkType {
   const WorkTypeModel({required super.label, required super.name});
 

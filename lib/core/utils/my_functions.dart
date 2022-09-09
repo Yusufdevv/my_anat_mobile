@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
 abstract class MyFunctions {
@@ -40,7 +41,8 @@ abstract class MyFunctions {
   static String getPublishedDate(String date) {
     if (Jiffy(date).isSame(DateTime.now(), Units.DAY)) {
       return 'Bugun, ${Jiffy(date).format('HH:mm')}';
-    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 || Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
+    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 ||
+        Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
       return 'Kecha, ${Jiffy(date).format('HH:mm')}';
     } else {
       return '${Jiffy(date).date} ${getMonth(Jiffy(date).month)}, ${Jiffy(date).year}';
@@ -90,6 +92,33 @@ abstract class MyFunctions {
         newCost.write(oldCost.toString()[i]);
       }
       return '$newCost UZS';
+    }
+  }
+
+  static String getPriceFormat(int price) {
+    if (price == 0) {
+      return '0';
+    } else {
+      final oldPrice = StringBuffer(price.toString());
+      final newPrice = StringBuffer();
+      for (var i = 0; i < oldPrice.length; i++) {
+        if ((oldPrice.length - i) % 3 == 0 && i != 0) newPrice.write('. ');
+        newPrice.write(oldPrice.toString()[i]);
+      }
+      return newPrice.toString();
+    }
+  }
+  static String getPriceFormat2(int price) {
+    if (price == 0) {
+      return '0';
+    } else {
+      final oldPrice = StringBuffer(price.toString());
+      final newPrice = StringBuffer();
+      for (var i = 0; i < oldPrice.length; i++) {
+        if ((oldPrice.length - i) % 3 == 0 && i != 0) newPrice.write(' ');
+        newPrice.write(oldPrice.toString()[i]);
+      }
+      return newPrice.toString();
     }
   }
 }

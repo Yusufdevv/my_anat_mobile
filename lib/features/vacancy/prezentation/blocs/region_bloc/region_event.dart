@@ -6,4 +6,18 @@ abstract class RegionEvent {
 
 class GetRegionEvent extends RegionEvent {}
 
-class GetDistrictEvent extends RegionEvent {}
+class GetMoreRegion extends RegionEvent {}
+
+class GetDistrictEvent extends RegionEvent {
+  final int? id;
+
+  GetDistrictEvent({this.id});
+}
+
+class GetMoreDistrict extends RegionEvent {}
+
+class SelectDistrictEvent extends RegionEvent {
+  final List<int> select;
+
+  SelectDistrictEvent({required this.select});
+}

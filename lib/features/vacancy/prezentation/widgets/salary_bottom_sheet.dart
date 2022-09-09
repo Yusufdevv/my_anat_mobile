@@ -1,6 +1,7 @@
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,8 +14,7 @@ import 'package:formz/formz.dart';
 class SalaryBottomSheet extends StatefulWidget {
   final VacancyBloc vacancyBloc;
 
-  const SalaryBottomSheet({required this.vacancyBloc, Key? key})
-      : super(key: key);
+  const SalaryBottomSheet({required this.vacancyBloc, Key? key}) : super(key: key);
 
   @override
   State<SalaryBottomSheet> createState() => _SalaryBottomSheetState();
@@ -34,48 +34,57 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return BlocProvider.value(
-        value: widget.vacancyBloc,
-        child: ScrolledBottomSheet(
-            title: LocaleKeys.salary.tr(),
-            hasHeader: true,
-            child: BlocBuilder<VacancyBloc, VacancyState>(
-              builder: (context, state) {
-                if (state.filterStatus.isPure) {
-                  context.read<VacancyBloc>().add(GetVacancyFilterEvent());
-                } else if (state.filterStatus.isSubmissionInProgress) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state.filterStatus.isSubmissionSuccess) {
-                  return Column(
-                    children: [
-                      const WDivider(),
-                      const SizedBox(height: 16),
-                      ...List.generate(
-                        state.vacancyFilterList[0].choices.length,
-                        (index) => CheckBoxTitle(
-                          onTap: () {
-                            selectSalary(index);
-                          },
-                          title:
-                              state.vacancyFilterList[0].choices[index].value,
-                          isLast: false,
-                          isChecked: checkList[index],
-                        ),
-                      ),
-                      WButton(
-                        margin: const EdgeInsets.symmetric(horizontal: 16),
-                        text: LocaleKeys.save.tr(),
+      value: widget.vacancyBloc,
+      child: ScrolledBottomSheet(
+        title: LocaleKeys.salary.tr(),
+        hasHeader: true,
+        stackedWButton: WButton(
+          margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+          text: LocaleKeys.save.tr(),
+          onTap: () async {
+            widget.vacancyBloc.add(SelectSalaryFilterEvent(
+                salaryKey: widget.vacancyBloc.state.vacancyFilterList[0].choices[0].key,
+                onSuccess: () {
+                  Navigator.of(context).pop();
+                }));
+          },
+        ),
+        escapeBottomNavbar: true,
+        children: [
+          BlocBuilder<VacancyBloc, VacancyState>(
+            builder: (context, state) {
+              if (state.filterStatus.isPure) {
+                context.read<VacancyBloc>().add(GetVacancyFilterEvent());
+              } else if (state.filterStatus.isSubmissionInProgress) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state.filterStatus.isSubmissionSuccess) {
+                return Column(
+                  children: [
+                    const WDivider(),
+                    const SizedBox(height: 16),
+                    ...List.generate(
+                      state.vacancyFilterList[0].choices.length,
+                      (index) => CheckBoxTitle(
                         onTap: () {
-                          Navigator.of(context).pop();
+                          selectSalary(index);
                         },
+                        title: state.vacancyFilterList[0].choices[index].value,
+                        isLast: false,
+                        isChecked: checkList[index],
                       ),
-                    ],
-                  );
-                } else if (state.filterStatus.isSubmissionFailure) {
-                  return const Center(child: Text('Fail'));
-                }
-                return const Center(child: CupertinoActivityIndicator());
-              },
-            )));
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                );
+              } else if (state.filterStatus.isSubmissionFailure) {
+                return const Center(child: Text('Fail'));
+              }
+              return const Center(child: CupertinoActivityIndicator());
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 

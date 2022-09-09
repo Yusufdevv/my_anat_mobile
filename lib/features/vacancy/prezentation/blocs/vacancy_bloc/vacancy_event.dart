@@ -4,15 +4,16 @@ part of 'vacancy_bloc.dart';
 abstract class VacancyEvent {}
 
 class GetVacancyListEvent extends VacancyEvent {
-  final String? category;
+  final VacancyParamsEntity? vacancyParamsEntity;
+  final Function? onSuccess;
 
-  GetVacancyListEvent({this.category});
+  GetVacancyListEvent({this.onSuccess, this.vacancyParamsEntity});
 }
 
 class GetMoreVacancyListEvent extends VacancyEvent {
-  final String? category;
+  final VacancyParamsEntity? vacancyParamsEntity;
 
-  GetMoreVacancyListEvent({this.category});
+  GetMoreVacancyListEvent({this.vacancyParamsEntity});
 }
 
 class GetTopOrganizationEvent extends VacancyEvent {}
@@ -27,10 +28,44 @@ class GetOrganizationVacancyEvent extends VacancyEvent {
 
 class GetMoreOrganizationVacancyEvent extends VacancyEvent {}
 
-class GetCandidateListEvent extends VacancyEvent {}
+class GetCandidateListEvent extends VacancyEvent {
+  final String? categoryId;
+
+  GetCandidateListEvent({this.categoryId});
+}
 
 class GetMoreCandidateList extends VacancyEvent {}
 
 class GetCategoryListEvent extends VacancyEvent {}
 
 class GetVacancyFilterEvent extends VacancyEvent {}
+
+class SelectSalaryFilterEvent extends VacancyEvent {
+  final String? salaryKey;
+  final Function onSuccess;
+
+  SelectSalaryFilterEvent({this.salaryKey, required this.onSuccess});
+}
+
+class SelectExperienceEvent extends VacancyEvent {
+  final String? experienceKey;
+  final Function onSuccess;
+
+  SelectExperienceEvent({required this.onSuccess, this.experienceKey});
+}
+
+class AddWishListVacancyEvent extends VacancyEvent {
+  final int user;
+  final int vacancy;
+  final Function(String text) onSuccess;
+  final Function onError;
+  final bool isFavourite;
+
+  AddWishListVacancyEvent({
+    required this.vacancy,
+    required this.user,
+    required this.onSuccess,
+    required this.onError,
+    required this.isFavourite,
+  });
+}
