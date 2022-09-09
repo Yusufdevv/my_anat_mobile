@@ -28,7 +28,8 @@ class JournalDatasourceImpl extends JournalDatasource {
   @override
   Future<GenericPagination<JournalModel>> getJournals({String? next}) async {
     try {
-      final response = await _dio.get(next ?? '/journal/');
+      final response = await _dio.get(next ?? '/journal/',
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => JournalModel.fromJson(p0 as Map<String, dynamic>? ?? {}));
@@ -47,7 +48,9 @@ class JournalDatasourceImpl extends JournalDatasource {
   @override
   Future<GenericPagination<JournalModel>> searchJournals({required String query, String? next}) async {
     try {
-      final response = await _dio.get(next ?? '/journal/', queryParameters: {'search': query});
+      final response = await _dio.get(next ?? '/journal/',
+          queryParameters: {'search': query},
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => JournalModel.fromJson(p0 as Map<String, dynamic>? ?? {}));
@@ -66,7 +69,9 @@ class JournalDatasourceImpl extends JournalDatasource {
   @override
   Future<GenericPagination<JournalArticleModel>> getJournalArticles({String? next}) async {
     try {
-      final response = await _dio.get(next ?? '/article/', queryParameters: {'ordering': '-publish_date'});
+      final response = await _dio.get(next ?? '/article/',
+          queryParameters: {'ordering': '-publish_date'},
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => JournalArticleModel.fromJson(p0 as Map<String, dynamic>? ?? {}));
@@ -105,7 +110,9 @@ class JournalDatasourceImpl extends JournalDatasource {
   @override
   Future<GenericPagination<JournalArticleModel>> getJournalSingleArticles({required int id, String? next}) async {
     try {
-      final response = await _dio.get(next ?? '/article/', queryParameters: {'journal': id});
+      final response = await _dio.get(next ?? '/article/',
+          queryParameters: {'journal': id},
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => JournalArticleModel.fromJson(p0 as Map<String, dynamic>? ?? {}));

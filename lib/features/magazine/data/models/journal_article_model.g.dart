@@ -23,6 +23,7 @@ JournalArticleModel _$JournalArticleModelFromJson(Map<String, dynamic> json) =>
               .fromJson(json['image'] as Map<String, dynamic>?),
       redaction: json['redaction'] as String? ?? '',
       id: json['id'] as int? ?? 0,
+      isBought: json['is_bought'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$JournalArticleModelToJson(
@@ -37,4 +38,5 @@ Map<String, dynamic> _$JournalArticleModelToJson(
       'is_premium': instance.isPremium,
       'redaction': instance.redaction,
       'view_count': instance.viewCount,
+      'is_bought': instance.isBought,
     };
