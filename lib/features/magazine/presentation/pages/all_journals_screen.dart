@@ -1,11 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
-import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
-import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/magazine_small_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
@@ -72,19 +69,6 @@ class AllJournalsScreen extends StatelessWidget {
                   return const SizedBox.shrink();
                 } else {
                   return MagazineSmallItem(
-                    onButtonTap: () {
-                      Navigator.of(context, rootNavigator: true).push(fade(
-                          page: OneTimePayment(
-                        price: state.journals[index].price,
-                        title: state.journals[index].name,
-                        imageUrl: state.journals[index].image.middle,
-                        isJournal: false,
-                        isRegistered:
-                            context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated,
-                        subtitle: state.journals[index].redaction,
-                        id: state.journals[index].id,
-                      )));
-                    },
                     onTap: () {
                       Navigator.push(
                         context,

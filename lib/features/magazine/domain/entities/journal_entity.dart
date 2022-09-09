@@ -1,4 +1,3 @@
-import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/magazine/data/models/tag_model.dart';
 import 'package:anatomica/features/magazine/domain/entities/tag_entity.dart';
@@ -19,6 +18,7 @@ class JournalEntity extends Equatable {
   final bool isPremium;
   final int price;
   final String publishDate;
+  final bool isBought;
   @TagConverter()
   final List<TagEntity> tags;
   const JournalEntity({
@@ -32,6 +32,7 @@ class JournalEntity extends Equatable {
     this.price = 0,
     this.category = const CategoryEntity(),
     this.isPremium = false,
+    this.isBought = false,
     this.publishDate = '',
     this.tags = const [],
   });
@@ -49,5 +50,6 @@ class JournalEntity extends Equatable {
         price,
         publishDate,
         tags,
+        isBought,
       ];
 }
