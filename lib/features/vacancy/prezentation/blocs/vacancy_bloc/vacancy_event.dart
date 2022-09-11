@@ -69,3 +69,8 @@ class AddWishListVacancyEvent extends VacancyEvent {
     required this.isFavourite,
   });
 }
+
+class LikeUnlikeVacancy extends VacancyEvent {
+  final VacancyListEntity vacancy;
+  LikeUnlikeVacancy({required this.vacancy});
+}

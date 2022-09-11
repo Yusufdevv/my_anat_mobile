@@ -1,5 +1,4 @@
-import 'package:anatomica/features/common/models/logo.dart';
-import 'package:anatomica/features/common/models/titler.dart';
+import 'package:anatomica/features/common/data/models/logo.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'map_hospital.g.dart';
@@ -33,7 +32,7 @@ class MapHospitalModel {
 
   MapHospitalModel(
       {required this.rating,
-        required this.distance,
+      required this.distance,
       required this.images,
       required this.longitude,
       required this.latitude,
@@ -41,9 +40,8 @@ class MapHospitalModel {
       required this.address,
       required this.title,
       required this.slug,
-
       required this.phoneNumber,
       required this.workFrom,
       required this.workTo});
-  factory MapHospitalModel.fromJson(Map<String,dynamic> json)=>_$MapHospitalModelFromJson(json);
+  factory MapHospitalModel.fromJson(Map<String, dynamic> json) => _$MapHospitalModelFromJson(json);
 }

@@ -2,6 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
+import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
@@ -9,13 +11,11 @@ import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
-import 'package:anatomica/features/vacancy/domain/usecases/add_wish_vacancy.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/category_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/district.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/organization_vacancy.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/region.dart';
-import 'package:anatomica/features/vacancy/domain/usecases/remove_wish_vacancy.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_filter.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
@@ -31,10 +31,10 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/filtr_container.
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_appbar.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_card_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_list.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VacancyScreen extends StatefulWidget {
   const VacancyScreen({Key? key}) : super(key: key);
@@ -54,22 +54,15 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
   initState() {
     tabController = TabController(length: 2, vsync: this);
     vacancyBloc = VacancyBloc(
-      removeWishListVacancyUseCase:
-          RemoveWishListVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      addWishListVacancyUseCase:
-          AddWishListVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyFilterUseCase:
-          VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyFilterUseCase: VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      candidateListUseCase:
-          CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyOptionUseCase:
-          VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      organizationVacancyUseCase:
-          OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      candidateListUseCase: CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyOptionUseCase: VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      organizationVacancyUseCase: OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      topOrganizationUseCase:
-          TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      topOrganizationUseCase: TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      likeUnlikeVacancyStreamUseCase:
+          LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
     );
     regionBloc = RegionBloc(
         districtUseCase: DistrictUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
@@ -142,12 +135,12 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                                     (index) => CategoryContainer(
                                       onTap: () {
                                         vacancyBloc.add(GetVacancyListEvent(
-                                            vacancyParamsEntity: VacancyParamsEntity(
-                                                category: '${state.candidateList[index].id}')));
-                                        vacancyBloc.add(GetOrganizationVacancyEvent(
-                                            category: '${state.candidateList[index].id}'));
-                                        vacancyBloc.add(GetCandidateListEvent(
-                                            categoryId: '${state.candidateList[index].id}'));
+                                            vacancyParamsEntity:
+                                                VacancyParamsEntity(category: '${state.candidateList[index].id}')));
+                                        vacancyBloc.add(
+                                            GetOrganizationVacancyEvent(category: '${state.candidateList[index].id}'));
+                                        vacancyBloc
+                                            .add(GetCandidateListEvent(categoryId: '${state.candidateList[index].id}'));
                                       },
                                       title: state.categoryList[index].title,
                                     ),

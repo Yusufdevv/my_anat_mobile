@@ -1,5 +1,5 @@
-import 'package:anatomica/features/common/entities/map_position.dart';
-import 'package:anatomica/features/common/models/logo.dart';
+import 'package:anatomica/features/common/data/models/logo.dart';
+import 'package:anatomica/features/common/domain/entities/map_position.dart';
 
 class HospitalSingleEntity {
   final int id;
@@ -22,7 +22,7 @@ class HospitalSingleEntity {
   const HospitalSingleEntity(
       {this.rating = 0,
       this.email = '',
-        this.images=const [],
+      this.images = const [],
       this.instagram = '',
       this.facebook = '',
       this.telegram = '',

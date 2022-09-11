@@ -1,7 +1,7 @@
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
-import 'package:anatomica/features/common/repository/global_requst_repository.dart';
+import 'package:anatomica/features/common/data/repository/global_requst_repository.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 
