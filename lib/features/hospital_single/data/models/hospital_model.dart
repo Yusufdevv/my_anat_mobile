@@ -1,5 +1,5 @@
-import 'package:anatomica/features/common/entities/map_position.dart';
-import 'package:anatomica/features/common/models/logo.dart';
+import 'package:anatomica/features/common/data/models/logo.dart';
+import 'package:anatomica/features/common/domain/entities/map_position.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_single_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -68,11 +68,9 @@ class HospitalModel extends HospitalSingleEntity {
             name: title,
             slug: slug,
             phone: phone,
-            location:
-                MapPosition(lat: latitude, long: longitude, zoomLevel: 15),
+            location: MapPosition(lat: latitude, long: longitude, zoomLevel: 15),
             description: description,
             icon: logo);
 
-  factory HospitalModel.fromJson(Map<String, dynamic> json) =>
-      _$HospitalModelFromJson(json);
+  factory HospitalModel.fromJson(Map<String, dynamic> json) => _$HospitalModelFromJson(json);
 }

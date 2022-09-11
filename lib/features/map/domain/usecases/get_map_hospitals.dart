@@ -1,8 +1,7 @@
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
-import 'package:anatomica/features/common/repository/global_requst_repository.dart';
-import 'package:anatomica/features/map/data/models/map_doctor.dart';
+import 'package:anatomica/features/common/data/repository/global_requst_repository.dart';
 import 'package:anatomica/features/map/data/models/map_hospital.dart';
 import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 
@@ -10,8 +9,7 @@ class GetMapHospitalUseCase extends UseCase<List<MapHospitalModel>, String> {
   final GlobalRequestRepository repo = GlobalRequestRepository();
 
   @override
-  Future<Either<Failure, List<MapHospitalModel>>> call(search,
-      {MapParameter? param}) {
+  Future<Either<Failure, List<MapHospitalModel>>> call(search, {MapParameter? param}) {
     var query = <String, dynamic>{};
     if (search.isNotEmpty) {
       query.addAll({"search": "search"});
@@ -24,8 +22,6 @@ class GetMapHospitalUseCase extends UseCase<List<MapHospitalModel>, String> {
       });
     }
     return repo.getList<MapHospitalModel>(
-        endpoint: '/mobile/organization/map/',
-        fromJson: MapHospitalModel.fromJson,
-        query: query);
+        endpoint: '/mobile/organization/map/', fromJson: MapHospitalModel.fromJson, query: query);
   }
 }

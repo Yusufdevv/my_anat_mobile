@@ -4,6 +4,8 @@ import 'package:anatomica/features/auth/data/datasources/authentication_data_sou
 import 'package:anatomica/features/auth/data/datasources/reset_password_datasource.dart';
 import 'package:anatomica/features/auth/data/repositories/authentication_repository_impl.dart';
 import 'package:anatomica/features/auth/data/repositories/reset_password_repository_impl.dart';
+import 'package:anatomica/features/common/data/datasources/like_unlike_datasource.dart';
+import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/magazine/data/datasources/journal_datasource.dart';
 import 'package:anatomica/features/magazine/data/datasources/payment_datasource.dart';
 import 'package:anatomica/features/magazine/data/repositories/journal_repository_impl.dart';
@@ -44,4 +46,7 @@ Future<void> setupLocator() async {
       paginationDatasource: serviceLocator<PaginationDatasource>()));
   serviceLocator
       .registerLazySingleton(() => ProfileRepositoryImpl(profileDatasource: serviceLocator<ProfileDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => LikeUnlikeDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator
+      .registerLazySingleton(() => LikeUnlikeRepositoryImpl(datasource: serviceLocator<LikeUnlikeDatasourceImpl>()));
 }

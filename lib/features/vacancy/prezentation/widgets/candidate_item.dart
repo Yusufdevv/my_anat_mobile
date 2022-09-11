@@ -1,14 +1,12 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button_candidate.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter/material.dart';
 
 class CandidateItem extends StatelessWidget {
   final VoidCallback onTap;
@@ -71,14 +69,13 @@ class CandidateItem extends StatelessWidget {
                         title: '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
                         icon: AppIcons.briefCase),
                     const SizedBox(height: 4),
-                    VacancyItemTextWidget(
-                        title: candidateListEntity.address, icon: AppIcons.mapPin),
+                    VacancyItemTextWidget(title: candidateListEntity.address, icon: AppIcons.mapPin),
                   ],
                 ),
               ),
             ),
             // const SizedBox(width: 10),
-            FavouriteButton(onTap: () {})
+            FavouriteButtonCandidate(onTap: () {})
           ],
         ),
       ),

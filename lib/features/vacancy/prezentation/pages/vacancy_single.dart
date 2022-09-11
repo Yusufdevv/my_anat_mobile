@@ -17,15 +17,14 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_single_a
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_single_appbar_header.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_single_textwidget.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-import 'package:jiffy/jiffy.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class VacancySingleScreen extends StatefulWidget {
   final String slug;
@@ -42,10 +41,8 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
   @override
   initState() {
     _vacancySingleBloc = VacancySingleBloc(
-        relatedVacancyUseCase:
-            RelatedVacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        vacancySingleUseCase:
-            VacancySingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        relatedVacancyUseCase: RelatedVacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        vacancySingleUseCase: VacancySingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
     _vacancySingleBloc.add(GetRelatedVacancyList(slug: widget.slug));
     super.initState();
   }
@@ -100,8 +97,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                 '${state.vacancyListEntity.experienceFrom} - ${state.vacancyListEntity.experienceTo} лет',
                             icon: AppIcons.briefCase),
                         const SizedBox(height: 10),
-                        VacancySingleTextWidget(
-                            title: state.vacancyListEntity.address, icon: AppIcons.mapPin),
+                        VacancySingleTextWidget(title: state.vacancyListEntity.address, icon: AppIcons.mapPin),
                         const SizedBox(height: 10),
                         VacancySingleTextWidget(
                             title:
@@ -185,8 +181,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               // const SizedBox(height: 12),
                               Text(
                                 '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt)}',
-                                style:
-                                    Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                                style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
                               ),
                               const SizedBox(height: 16),
                               WButton(
@@ -217,8 +212,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                         ),
                         const SizedBox(height: 20),
                         VacancyTitleText(
-                            title:
-                                '${state.relatedVacancyList.length} ${LocaleKeys.similar_vacancy.tr()}'),
+                            title: '${state.relatedVacancyList.length} ${LocaleKeys.similar_vacancy.tr()}'),
                         const SizedBox(height: 16),
                         Paginator(
                           padding: const EdgeInsets.only(top: 20),
@@ -226,13 +220,11 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                           errorWidget: const Text('Fail'),
                           itemBuilder: (context, index) {
                             return VacancyItem(
-                              onTapFavourite: (){},
                               margin: EdgeInsets.zero,
                               vacancyEntity: state.relatedVacancyList[index],
                               onTap: () {
-                                Navigator.of(context).push(fade(
-                                    page: VacancySingleScreen(
-                                        slug: state.relatedVacancyList[index].slug)));
+                                Navigator.of(context)
+                                    .push(fade(page: VacancySingleScreen(slug: state.relatedVacancyList[index].slug)));
                               },
                             );
                           },

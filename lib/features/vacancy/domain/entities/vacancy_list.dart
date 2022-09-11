@@ -1,5 +1,4 @@
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
-import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:equatable/equatable.dart';
@@ -79,6 +78,45 @@ class VacancyListEntity extends Equatable {
         obligations,
         publishedAt,
       ];
+
+  VacancyListEntity copyWith({
+    final int? id,
+    final String? title,
+    final String? slug,
+    final OrganizationEntity? organization,
+    final int? salaryFrom,
+    final int? salaryTo,
+    final int? experienceFrom,
+    final int? experienceTo,
+    final String? description,
+    final String? address,
+    final CategoryEntity? category,
+    final WorkType? workType,
+    final String? employerInfo,
+    final String? publishedAt,
+    final bool? isFavorite,
+    final List<dynamic>? requirements,
+    final List<dynamic>? obligations,
+  }) =>
+      VacancyListEntity(
+        id: id ?? this.id,
+        category: category ?? this.category,
+        address: address ?? this.address,
+        description: description ?? this.description,
+        employerInfo: employerInfo ?? this.employerInfo,
+        experienceFrom: experienceFrom ?? this.experienceFrom,
+        experienceTo: experienceTo ?? this.experienceTo,
+        isFavorite: isFavorite ?? this.isFavorite,
+        obligations: obligations ?? this.obligations,
+        organization: organization ?? this.organization,
+        publishedAt: publishedAt ?? this.publishedAt,
+        requirements: requirements ?? this.requirements,
+        salaryFrom: salaryFrom ?? this.salaryFrom,
+        salaryTo: salaryTo ?? this.salaryTo,
+        slug: slug ?? this.slug,
+        title: title ?? this.title,
+        workType: workType ?? this.workType,
+      );
 }
 
 class WorkType extends Equatable {
@@ -97,8 +135,7 @@ class WorkTypeConverter extends JsonConverter<WorkType, Map<String, dynamic>?> {
   const WorkTypeConverter();
 
   @override
-  WorkType fromJson(Map<String, dynamic>? json) =>
-      WorkTypeModel.fromJson(json ?? {});
+  WorkType fromJson(Map<String, dynamic>? json) => WorkTypeModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(WorkType object) => {};
@@ -116,13 +153,11 @@ class CategoryEntity extends Equatable {
   List<Object?> get props => [id, title];
 }
 
-class CategoryEntityConverter
-    extends JsonConverter<CategoryEntity, Map<String, dynamic>?> {
+class CategoryEntityConverter extends JsonConverter<CategoryEntity, Map<String, dynamic>?> {
   const CategoryEntityConverter();
 
   @override
-  CategoryEntity fromJson(Map<String, dynamic>? json) =>
-      CategoryModel.fromJson(json ?? {});
+  CategoryEntity fromJson(Map<String, dynamic>? json) => CategoryModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(CategoryEntity object) => {};
@@ -170,29 +205,15 @@ class OrganizationEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        title,
-        id,
-        phoneNumber,
-        phoneNumbers,
-        slug,
-        address,
-        images,
-        locationUrl,
-        rating,
-        speciazilation,
-        types,
-        logo
-      ];
+  List<Object?> get props =>
+      [title, id, phoneNumber, phoneNumbers, slug, address, images, locationUrl, rating, speciazilation, types, logo];
 }
 
-class OrganizationEntityConverter
-    extends JsonConverter<OrganizationEntity, Map<String, dynamic>?> {
+class OrganizationEntityConverter extends JsonConverter<OrganizationEntity, Map<String, dynamic>?> {
   const OrganizationEntityConverter();
 
   @override
-  OrganizationEntity fromJson(Map<String, dynamic>? json) =>
-      OrganizationModel.fromJson(json ?? {});
+  OrganizationEntity fromJson(Map<String, dynamic>? json) => OrganizationModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(OrganizationEntity object) => {};
@@ -207,8 +228,6 @@ class PhoneNumberEntity extends Equatable {
   @override
   List<Object?> get props => [phoneNumber];
 }
-
-
 
 class TypesEntity extends Equatable {
   @JsonKey(name: 'id', defaultValue: 0)

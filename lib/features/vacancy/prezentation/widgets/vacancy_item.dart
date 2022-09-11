@@ -2,26 +2,22 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button_vacancy.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 class VacancyItem extends StatelessWidget {
   final EdgeInsets? margin;
   final VoidCallback onTap;
   final VacancyListEntity vacancyEntity;
-  final VoidCallback onTapFavourite;
 
   const VacancyItem({
     required this.vacancyEntity,
     this.margin,
     required this.onTap,
-    required this.onTapFavourite,
     Key? key,
   }) : super(key: key);
 
@@ -70,8 +66,7 @@ class VacancyItem extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             VacancyItemTextWidget(
-                title: '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} лет',
-                icon: AppIcons.briefCase),
+                title: '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} лет', icon: AppIcons.briefCase),
             const SizedBox(height: 4),
             VacancyItemTextWidget(title: vacancyEntity.address, icon: AppIcons.mapPin),
             const SizedBox(height: 4),
@@ -87,10 +82,7 @@ class VacancyItem extends StatelessWidget {
                 Text(MyFunctions.getPublishedDate(vacancyEntity.publishedAt),
                     style: Theme.of(context).textTheme.subtitle2),
                 const Spacer(),
-                FavouriteButton(
-                  isFavourite: vacancyEntity.isFavorite,
-                  onTap: onTapFavourite,
-                ),
+                FavouriteButtonVacancy(vacancy: vacancyEntity),
               ],
             )
           ],
