@@ -9,6 +9,10 @@ class CandidateSingleState extends Equatable {
   final FormzStatus certificateStatus;
   final FormzStatus workStatus;
   final FormzStatus educationStatus;
+  final List<CandidateListEntity> candidateList;
+  final String? next;
+  final PaginatorStatus paginatorStatus;
+  final bool fetchMore;
 
   const CandidateSingleState({
     required this.status,
@@ -19,6 +23,10 @@ class CandidateSingleState extends Equatable {
     required this.certificateStatus,
     required this.educationStatus,
     required this.workStatus,
+    required this.paginatorStatus,
+    required this.candidateList,
+    this.next,
+    required this.fetchMore,
   });
 
   CandidateSingleState copyWith({
@@ -30,6 +38,10 @@ class CandidateSingleState extends Equatable {
     FormzStatus? certificateStatus,
     FormzStatus? workStatus,
     FormzStatus? educationStatus,
+    List<CandidateListEntity>? candidateList,
+    final String? next,
+    final PaginatorStatus? paginatorStatus,
+    final bool? fetchMore,
   }) =>
       CandidateSingleState(
         status: status ?? this.status,
@@ -40,6 +52,10 @@ class CandidateSingleState extends Equatable {
         certificateStatus: certificateStatus ?? this.certificateStatus,
         educationStatus: educationStatus ?? this.educationStatus,
         workStatus: workStatus ?? this.workStatus,
+        candidateList: candidateList ?? this.candidateList,
+        paginatorStatus: paginatorStatus ?? this.paginatorStatus,
+        next: next,
+        fetchMore: fetchMore ?? this.fetchMore,
       );
 
   @override
@@ -52,5 +68,9 @@ class CandidateSingleState extends Equatable {
         certificateStatus,
         workStatus,
         educationStatus,
+        candidateList,
+        paginatorStatus,
+        fetchMore,
+        next,
       ];
 }

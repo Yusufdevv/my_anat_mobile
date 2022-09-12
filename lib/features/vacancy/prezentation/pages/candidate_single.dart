@@ -11,12 +11,14 @@ import 'package:anatomica/features/vacancy/domain/usecases/candidate_certificate
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_education.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_work.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/related_candidate.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/candidate_single/candidate_single_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_contact_info.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/education_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/experience_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/experience_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/licence_item_list.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/related_candidate_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -62,6 +64,8 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
     _pageController = PageController();
     _scrollController.addListener(_scrollListener);
     _candidateSingleBloc = CandidateSingleBloc(
+        relatedCandidateListUseCase:
+            RelatedCandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
         candidateWorkUseCase:
             CandidateWorkUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
         candidateCertificateUseCase:
@@ -70,6 +74,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
             CandidateEducationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
         candidateSingleUseCase:
             CandidateSingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+    _candidateSingleBloc.add(GetRelatedCandidateListEvent(id: widget.id));
   }
 
   @override
@@ -155,7 +160,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                   alignment: Alignment.bottomCenter,
                                   children: [
                                     Positioned.fill(
-                                      bottom: 178,
+                                      bottom: 160,
                                       child: Stack(
                                         children: [
                                           Positioned.fill(
@@ -301,20 +306,20 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                       ),
                                                     ],
                                                   ),
-                                                  const SizedBox(height: 10),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(AppIcons.building),
-                                                      const SizedBox(width: 6),
-                                                      Text(
-                                                        'Doctor-D',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline3!
-                                                            .copyWith(color: textColor),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                  // const SizedBox(height: 10),
+                                                  // Row(
+                                                  //   children: [
+                                                  //     SvgPicture.asset(AppIcons.building),
+                                                  //     const SizedBox(width: 6),
+                                                  //     Text(
+                                                  //       'Doctor-D',
+                                                  //       style: Theme.of(context)
+                                                  //           .textTheme
+                                                  //           .headline3!
+                                                  //           .copyWith(color: textColor),
+                                                  //     ),
+                                                  //   ],
+                                                  // ),
                                                   const SizedBox(height: 16),
                                                   Row(
                                                     children: [
@@ -339,12 +344,8 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                     child: Row(
                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
-                                                        SvgPicture.asset(
-                                                          AppIcons.phone,
-                                                          height: 20,
-                                                          width: 20,
-                                                          color: white,
-                                                        ),
+                                                        SvgPicture.asset(AppIcons.phone,
+                                                            height: 20, width: 20, color: white),
                                                         const SizedBox(width: 8),
                                                         Text(
                                                           LocaleKeys.call.tr(),
@@ -441,6 +442,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                 .copyWith(fontSize: 18, fontWeight: FontWeight.w700),
                           ),
                         ),
+                        RelatedCandidateList(id: widget.id),
                         //  const CandidateItemList(),
                       ],
                     ),
@@ -450,7 +452,8 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                         const EducationItemList(),
                         const SizedBox(height: 24),
                         VacancyTitleText(title: LocaleKeys.candidates.tr(), fontSize: 18),
-                        // CandidateItemList(margin: EdgeInsets.zero),
+                        const SizedBox(height: 16),
+                        RelatedCandidateList(id: widget.id, margin: EdgeInsets.zero)
                       ],
                     ),
                     ListView(
@@ -459,7 +462,9 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                         const LicenceItemList(),
                         const SizedBox(height: 24),
                         VacancyTitleText(title: LocaleKeys.candidates.tr(), fontSize: 18),
-                        //   CandidateItemList(margin: EdgeInsets.zero),
+                        const SizedBox(height: 16),
+                        RelatedCandidateList(id: widget.id, margin: EdgeInsets.zero)
+
                       ],
                     ),
                     CandidateContactInfo(candidate: state.candidate),

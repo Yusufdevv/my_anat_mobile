@@ -27,3 +27,15 @@ class CandidateWorkEvent extends CandidateSingleEvent {
 
   CandidateWorkEvent({required this.id});
 }
+
+class GetRelatedCandidateListEvent extends CandidateSingleEvent {
+  final int id;
+
+  GetRelatedCandidateListEvent({required this.id});
+}
+
+class GetMoreRelatedCandidateListEvent extends CandidateSingleEvent {
+  final int id;
+
+  GetMoreRelatedCandidateListEvent({required this.id});
+}

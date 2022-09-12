@@ -54,13 +54,18 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
   initState() {
     tabController = TabController(length: 2, vsync: this);
     vacancyBloc = VacancyBloc(
-      vacancyFilterUseCase: VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyFilterUseCase:
+          VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      candidateListUseCase: CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyOptionUseCase: VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      organizationVacancyUseCase: OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      candidateListUseCase:
+          CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyOptionUseCase:
+          VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      organizationVacancyUseCase:
+          OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      topOrganizationUseCase: TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      topOrganizationUseCase:
+          TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       likeUnlikeVacancyStreamUseCase:
           LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
     );
@@ -121,9 +126,6 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                         ),
                         BlocBuilder<VacancyBloc, VacancyState>(
                           builder: (context, state) {
-                            // if(state.categoryStatus.isSubmissionInProgress){
-                            //   return Lis
-                            // }
                             return SingleChildScrollView(
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
@@ -135,12 +137,12 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                                     (index) => CategoryContainer(
                                       onTap: () {
                                         vacancyBloc.add(GetVacancyListEvent(
-                                            vacancyParamsEntity:
-                                                VacancyParamsEntity(category: '${state.candidateList[index].id}')));
-                                        vacancyBloc.add(
-                                            GetOrganizationVacancyEvent(category: '${state.candidateList[index].id}'));
-                                        vacancyBloc
-                                            .add(GetCandidateListEvent(categoryId: '${state.candidateList[index].id}'));
+                                            vacancyParamsEntity: VacancyParamsEntity(
+                                                category: '${state.candidateList[index].id}')));
+                                        vacancyBloc.add(GetOrganizationVacancyEvent(
+                                            category: '${state.candidateList[index].id}'));
+                                        vacancyBloc.add(GetCandidateListEvent(
+                                            categoryId: '${state.candidateList[index].id}'));
                                       },
                                       title: state.categoryList[index].title,
                                     ),
@@ -225,7 +227,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                     showFilterBottomSheet(context, regionBloc, vacancyBloc);
                   },
                 ),
-                // const SizedBox(height: 20),
+                 const SizedBox(height: 20),
                 hasFilter ? const FilterCardList() : const SizedBox(),
                 Expanded(
                   child: TabBarView(
@@ -234,9 +236,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                     children: [
                       VacancyItemList(
                         onSuccess: (text) {
-                          context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                message: text,
-                              ));
+                          context.read<ShowPopUpBloc>().add(ShowPopUp(message: text));
                         },
                       ),
                       const CandidateItemList(),

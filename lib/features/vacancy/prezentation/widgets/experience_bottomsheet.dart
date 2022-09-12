@@ -64,7 +64,7 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
                           isChecked(index);
                         },
                         title: state.vacancyFilterList[1].choices[index].value,
-                        isLast: index == 4 ? true : false,
+                        //isLast: index == 4 ? true : false,
                       ),
                     ),
                     const SizedBox(height: 20),

@@ -41,8 +41,10 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
   @override
   initState() {
     _vacancySingleBloc = VacancySingleBloc(
-        relatedVacancyUseCase: RelatedVacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        vacancySingleUseCase: VacancySingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        relatedVacancyUseCase:
+            RelatedVacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        vacancySingleUseCase:
+            VacancySingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
     _vacancySingleBloc.add(GetRelatedVacancyList(slug: widget.slug));
     super.initState();
   }
@@ -97,7 +99,8 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                 '${state.vacancyListEntity.experienceFrom} - ${state.vacancyListEntity.experienceTo} лет',
                             icon: AppIcons.briefCase),
                         const SizedBox(height: 10),
-                        VacancySingleTextWidget(title: state.vacancyListEntity.address, icon: AppIcons.mapPin),
+                        VacancySingleTextWidget(
+                            title: state.vacancyListEntity.address, icon: AppIcons.mapPin),
                         const SizedBox(height: 10),
                         VacancySingleTextWidget(
                             title:
@@ -125,16 +128,23 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                         //  const SizedBox(height: 16),
                         VacancyTitleText(title: LocaleKeys.category.tr()),
                         const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            CategoryContainer(
+                        SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(
+                              state.vacancyListEntity.organization.speciazilation.length,
+                              (index) => CategoryContainer(
+                                margin: const EdgeInsets.only(right: 12),
                                 onTap: () {},
-                                title: state.vacancyListEntity.category.title,
-                                margin: const EdgeInsets.only(right: 12)),
-                          ],
+                                title: state
+                                    .vacancyListEntity.organization.speciazilation[index].title,
+                              ),
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 16),
-                        VacancyTitleText(title: 'Тип занятности'),
+                        const VacancyTitleText(title: 'Тип занятности'),
                         const SizedBox(height: 8),
                         Text(
                           state.vacancyListEntity.workType.name,
@@ -145,13 +155,67 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                         ),
                         const SizedBox(height: 16),
                         VacancyTitleText(title: LocaleKeys.requirement.tr()),
-                        DotTextWidget(list: tList),
+                        ...List.generate(
+                          state.vacancyListEntity.requirements.length,
+                          (index) => RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                  child: Container(
+                                    width: 3,
+                                    height: 3,
+                                    margin: const EdgeInsets.only(right: 8),
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: black,
+                                    ),
+                                  ),
+                                  alignment: PlaceholderAlignment.middle,
+                                ),
+                                TextSpan(
+                                  text: state.vacancyListEntity.requirements[index].description,
+                                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 16),
                         VacancyTitleText(title: LocaleKeys.responsible.tr()),
-                        DotTextWidget(list: tList),
-                        const SizedBox(height: 16),
-                        VacancyTitleText(title: LocaleKeys.responsible.tr()),
-                        DotTextWidget(list: tList),
+                        ...List.generate(
+                          state.vacancyListEntity.obligations.length,
+                          (index) => RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                  child: Container(
+                                    width: 3,
+                                    height: 3,
+                                    margin: const EdgeInsets.only(right: 8),
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: black,
+                                    ),
+                                  ),
+                                  alignment: PlaceholderAlignment.middle,
+                                ),
+                                TextSpan(
+                                  text: state.vacancyListEntity.obligations[index].description,
+                                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // const SizedBox(height: 16),
+                        // VacancyTitleText(title: LocaleKeys.responsible.tr()),
+                        // DotTextWidget(list: tList),
                         const SizedBox(height: 16),
                         Container(
                           padding: const EdgeInsets.all(16),
@@ -181,7 +245,8 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               // const SizedBox(height: 12),
                               Text(
                                 '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt)}',
-                                style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                                style:
+                                    Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
                               ),
                               const SizedBox(height: 16),
                               WButton(
@@ -212,7 +277,8 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                         ),
                         const SizedBox(height: 20),
                         VacancyTitleText(
-                            title: '${state.relatedVacancyList.length} ${LocaleKeys.similar_vacancy.tr()}'),
+                            title:
+                                '${state.relatedVacancyList.length} ${LocaleKeys.similar_vacancy.tr()}'),
                         const SizedBox(height: 16),
                         Paginator(
                           padding: const EdgeInsets.only(top: 20),
@@ -223,8 +289,9 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               margin: EdgeInsets.zero,
                               vacancyEntity: state.relatedVacancyList[index],
                               onTap: () {
-                                Navigator.of(context)
-                                    .push(fade(page: VacancySingleScreen(slug: state.relatedVacancyList[index].slug)));
+                                Navigator.of(context).push(fade(
+                                    page: VacancySingleScreen(
+                                        slug: state.relatedVacancyList[index].slug)));
                               },
                             );
                           },

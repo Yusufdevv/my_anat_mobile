@@ -36,9 +36,9 @@ class VacancyListEntity extends Equatable {
   @JsonKey(name: 'is_favorite', defaultValue: false)
   final bool isFavorite;
   @JsonKey(name: 'requirements', defaultValue: [])
-  final List<dynamic> requirements;
+  final List<RequirementsModel> requirements;
   @JsonKey(name: 'obligations', defaultValue: [])
-  final List<dynamic> obligations;
+  final List<RequirementsModel> obligations;
 
   const VacancyListEntity({
     required this.workType,
@@ -95,8 +95,8 @@ class VacancyListEntity extends Equatable {
     final String? employerInfo,
     final String? publishedAt,
     final bool? isFavorite,
-    final List<dynamic>? requirements,
-    final List<dynamic>? obligations,
+    final List<RequirementsModel>? requirements,
+    final List<RequirementsModel>? obligations,
   }) =>
       VacancyListEntity(
         id: id ?? this.id,
@@ -205,8 +205,20 @@ class OrganizationEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [title, id, phoneNumber, phoneNumbers, slug, address, images, locationUrl, rating, speciazilation, types, logo];
+  List<Object?> get props => [
+        title,
+        id,
+        phoneNumber,
+        phoneNumbers,
+        slug,
+        address,
+        images,
+        locationUrl,
+        rating,
+        speciazilation,
+        types,
+        logo
+      ];
 }
 
 class OrganizationEntityConverter extends JsonConverter<OrganizationEntity, Map<String, dynamic>?> {
@@ -239,4 +251,19 @@ class TypesEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, title];
+}
+
+class RequirementsEntity extends Equatable {
+  @JsonKey(defaultValue: 0)
+  final int id;
+  @JsonKey(defaultValue: 'description')
+  final String description;
+
+  const RequirementsEntity({
+    required this.id,
+    required this.description,
+  });
+
+  @override
+  List<Object?> get props => [id, description];
 }

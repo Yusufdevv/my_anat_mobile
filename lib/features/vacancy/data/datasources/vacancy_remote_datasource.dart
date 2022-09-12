@@ -17,6 +17,7 @@ import 'package:anatomica/features/vacancy/data/models/top_organization.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_option.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_education.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_work.dart';
 import 'package:anatomica/features/vacancy/domain/entities/certificate.dart';
@@ -63,6 +64,8 @@ abstract class VacancyRemoteDataSource {
   Future<GenericPagination<CertificateEntity>> getCandidateCertificate({required int id});
 
   Future<GenericPagination<CandidateWorkEntity>> getCandidateWork({required int id});
+
+  Future<GenericPagination<CandidateListEntity>> getRelatedCandidateList({required int id});
 }
 
 class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
@@ -293,7 +296,9 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
 
   @override
   Future<GenericPagination<CertificateEntity>> getCandidateCertificate({required int id}) async {
-    final response = await dio.get('/doctor/1$id/certificates/', options: Options(headers: {}));
+    final response = await dio.get('/doctor/$id/certificates/', options: Options(headers: {}));
+    print(response.statusCode);
+    print(response.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => CertificateModel.fromJson(p0 as Map<String, dynamic>));
@@ -322,6 +327,17 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
+    }
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+  }
+
+  @override
+  Future<GenericPagination<CandidateListEntity>> getRelatedCandidateList({required int id}) async {
+    final response = await dio.get('/doctor/22/related/', options: Options(headers: {}));
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return GenericPagination.fromJson(
+          response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
     }
     throw ServerException(
         statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');

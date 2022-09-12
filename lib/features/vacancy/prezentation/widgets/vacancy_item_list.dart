@@ -17,7 +17,7 @@ class VacancyItemList extends StatelessWidget {
     return BlocBuilder<VacancyBloc, VacancyState>(
       builder: (context, state) {
         return Paginator(
-          padding: EdgeInsets.only(bottom: 50 + mediaQuery.padding.bottom, top: 20),
+          padding: EdgeInsets.only(bottom: 50 + mediaQuery.padding.bottom),
           paginatorStatus: state.paginatorStatus,
           errorWidget: const Text('Fail'),
           itemBuilder: (context, index) {

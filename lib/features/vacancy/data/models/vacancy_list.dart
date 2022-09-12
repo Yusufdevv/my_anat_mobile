@@ -55,7 +55,8 @@ class OrganizationModel extends OrganizationEntity {
     required super.logo,
   });
 
-  factory OrganizationModel.fromJson(Map<String, dynamic> json) => _$OrganizationModelFromJson(json);
+  factory OrganizationModel.fromJson(Map<String, dynamic> json) =>
+      _$OrganizationModelFromJson(json);
 }
 
 @JsonSerializable()
@@ -64,7 +65,6 @@ class PhoneNumberModel extends PhoneNumberEntity {
 
   factory PhoneNumberModel.fromJson(Map<String, dynamic> json) => _$PhoneNumberModelFromJson(json);
 }
-
 
 @JsonSerializable()
 class TypesModel extends TypesEntity {
@@ -85,4 +85,12 @@ class ImageModel extends ImageEntity {
   const ImageModel({required super.origin, required super.small, required super.middle});
 
   factory ImageModel.fromJson(Map<String, dynamic> json) => _$ImageModelFromJson(json);
+}
+
+@JsonSerializable()
+class RequirementsModel extends RequirementsEntity {
+  const RequirementsModel({required super.id, required super.description});
+
+  factory RequirementsModel.fromJson(Map<String, dynamic> json) =>
+      _$RequirementsModelFromJson(json);
 }
