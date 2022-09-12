@@ -1,10 +1,13 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_education.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
 import 'package:flutter/material.dart';
 
 class EducationItem extends StatelessWidget {
-  const EducationItem({Key? key}) : super(key: key);
+  final CandidateEducationEntity entity;
+
+  const EducationItem({required this.entity, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +31,16 @@ class EducationItem extends StatelessWidget {
         children: [
           Row(
             children: [
-              const ImageCard(imageUrl: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8bW9kZWxzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60', height: 58, width: 58),
+              ImageCard(imageUrl: entity.university.logo.middle, height: 58, width: 58),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const VacancyTitleText(title: 'РГМУ'),
+                    VacancyTitleText(title: entity.university.title),
                     const SizedBox(height: 4),
                     Text(
-                      'Медико-профилактическое дело ЕГЭ: русский, химия, биология ',
+                      entity.faculty.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
@@ -52,13 +55,13 @@ class EducationItem extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'Бакалавриат, медик',
+            entity.degree,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText1!.copyWith(color: darkGreen),
           ),
           const SizedBox(height: 8),
           Text(
-            'Бакалавриат, медик',
+            '${entity.startDate} ${entity.endDate}',
             style: Theme.of(context).textTheme.bodyText1!.copyWith(color: darkGreen),
           ),
         ],

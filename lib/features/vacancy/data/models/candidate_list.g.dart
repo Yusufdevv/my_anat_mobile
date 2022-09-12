@@ -18,6 +18,7 @@ CandidateListModel _$CandidateListModelFromJson(Map<String, dynamic> json) =>
       fullName: json['full_name'] as String? ?? '',
       position: json['position'] as String? ?? '',
       workExperience: json['work_experience'] as int? ?? 0,
+      isFavourite: json['is_favourite'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$CandidateListModelToJson(CandidateListModel instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$CandidateListModelToJson(CandidateListModel instance) =>
       'work_experience': instance.workExperience,
       'address': instance.address,
       'rating': instance.rating,
+      'is_favourite': instance.isFavourite,
     };

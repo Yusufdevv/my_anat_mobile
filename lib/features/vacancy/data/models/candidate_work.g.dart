@@ -37,18 +37,25 @@ CandidateOrganizationModel _$CandidateOrganizationModelFromJson(
           .fromJson(json['logo'] as Map<String, dynamic>?),
       slug: json['slug'] as String? ?? '',
       address: json['address'] as String? ?? '',
-      rating: json['rating'] as int? ?? 0,
-      specialization: const SpecializationConverter()
-          .fromJson(json['specialization'] as Map<String, dynamic>?),
-      phoneNumbers: (json['phone_numbers'] as List<dynamic>?)
-              ?.map((e) => e as String)
+      rating: (json['rating'] as num?)?.toDouble() ?? 0,
+      specialization: (json['specialization'] as List<dynamic>?)
+              ?.map((e) =>
+                  SpecializationModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      types: const TypeConverter()
-          .fromJson(json['types'] as Map<String, dynamic>?),
+      phoneNumbers: (json['phone_numbers'] as List<dynamic>?)
+              ?.map((e) => PhoneNumberModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      types: (json['types'] as List<dynamic>?)
+              ?.map((e) => TypeModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       locationUrl: json['location_url'] as String? ?? '',
-      images: const ImageConverter()
-          .fromJson(json['images'] as Map<String, dynamic>?),
+      images: (json['images'] as List<dynamic>?)
+              ?.map((e) => ImageModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       workAllDay: json['work_all_day'] as bool? ?? false,
     );
 
@@ -59,13 +66,12 @@ Map<String, dynamic> _$CandidateOrganizationModelToJson(
       'title': instance.title,
       'slug': instance.slug,
       'logo': const LogoEntityConverter().toJson(instance.logo),
-      'images': const ImageConverter().toJson(instance.images),
+      'images': instance.images,
       'address': instance.address,
       'phone_numbers': instance.phoneNumbers,
       'rating': instance.rating,
-      'specialization':
-          const SpecializationConverter().toJson(instance.specialization),
-      'types': const TypeConverter().toJson(instance.types),
+      'specialization': instance.specialization,
+      'types': instance.types,
       'location_url': instance.locationUrl,
       'work_all_day': instance.workAllDay,
     };

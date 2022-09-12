@@ -25,6 +25,8 @@ class CandidateListEntity extends Equatable {
   final String address;
   @JsonKey(defaultValue: 0)
   final double rating;
+  @JsonKey(defaultValue: false)
+  final bool isFavourite;
 
   const CandidateListEntity({
     required this.specialization,
@@ -36,6 +38,7 @@ class CandidateListEntity extends Equatable {
     required this.fullName,
     required this.position,
     required this.workExperience,
+    required this.isFavourite,
   });
 
   @override
@@ -49,5 +52,6 @@ class CandidateListEntity extends Equatable {
         fullName,
         position,
         workExperience,
+        isFavourite,
       ];
 }

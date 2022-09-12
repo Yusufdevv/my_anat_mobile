@@ -7,11 +7,15 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_certificate.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_education.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_single.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_work.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/candidate_single/candidate_single_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_contact_info.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/education_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/experience_item.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/experience_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/licence_item_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -58,6 +62,12 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
     _pageController = PageController();
     _scrollController.addListener(_scrollListener);
     _candidateSingleBloc = CandidateSingleBloc(
+        candidateWorkUseCase:
+            CandidateWorkUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateCertificateUseCase:
+            CandidateCertificateUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateEducationUseCase:
+            CandidateEducationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
         candidateSingleUseCase:
             CandidateSingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
   }
@@ -233,10 +243,8 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                                                   onTap: () {},
                                                   child: Padding(
                                                     padding: const EdgeInsets.all(16),
-                                                    child: SvgPicture.asset(
-                                                      AppIcons.share,
-                                                      color: white,
-                                                    ),
+                                                    child: SvgPicture.asset(AppIcons.share,
+                                                        color: white),
                                                   ),
                                                 ),
                                               ],
@@ -416,14 +424,13 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                             ],
                           ),
                         ),
-                          const SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Padding(
                           padding: const EdgeInsets.only(left: 16, bottom: 12),
                           child: VacancyTitleText(title: LocaleKeys.experience.tr(), fontSize: 18),
                         ),
-                        const ExperienceItem(),
-                        const SizedBox(height: 12),
-                        const ExperienceItem(),
+
+                        const Expanded(child: ExperienceItemList()),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(16, 24, 0, 16),
                           child: Text(
