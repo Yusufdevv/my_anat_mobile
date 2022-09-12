@@ -7,6 +7,8 @@ import 'package:anatomica/features/profile/data/datasources/profile_data_source.
 import 'package:anatomica/features/profile/domain/entities/faq_entity.dart';
 import 'package:anatomica/features/profile/domain/entities/uploaded_image_entity.dart';
 import 'package:anatomica/features/profile/domain/repositories/profile.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:dio/dio.dart';
 
 class ProfileRepositoryImpl extends ProfileRepository {
@@ -90,6 +92,34 @@ class ProfileRepositoryImpl extends ProfileRepository {
   Future<Either<Failure, GenericPagination<FaqEntity>>> getFaq({String? next}) async {
     try {
       final result = await profileDatasource.getFaq(next: next);
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getLikedCandidate({String? next}) async {
+    try {
+      final result = await profileDatasource.getLikedCandidateList(next: next);
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GenericPagination<VacancyListEntity>>> getLikedVacancy({String? next}) async {
+    try {
+      final result = await profileDatasource.getLikedVacancyList(next: next);
       return Right(result);
     } on DioException {
       return Left(DioFailure());

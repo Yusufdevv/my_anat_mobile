@@ -41,8 +41,7 @@ abstract class VacancyRemoteDataSource {
 
   Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug});
 
-  Future<GenericPagination<CandidateListModel>> getCandidateList(
-      {String? next, String? search, String? categoryId});
+  Future<GenericPagination<CandidateListModel>> getCandidateList({String? next, String? search, String? categoryId});
 
   Future<CandidateSingleModel> getCandidateSingle({required int id});
 
@@ -71,8 +70,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   VacancyRemoteDataSourceImpl({required super.paginationDatasource});
 
   @override
-  Future<VacancyModel> getVacancyList(
-      {String? next, VacancyParamsEntity? vacancyParamsEntity}) async {
+  Future<VacancyModel> getVacancyList({String? next, VacancyParamsEntity? vacancyParamsEntity}) async {
     try {
       const url = '/vacancy/vacancy/list/';
       final Map<String, dynamic> query = {};
@@ -130,8 +128,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return TopOrganizationModel.fromJson(response.data);
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -140,8 +137,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return VacancyListModel.fromJson(response.data);
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -150,8 +146,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(response.data, (p0) => SpecizationModel.fromJson);
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -163,12 +158,9 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     print(response.statusCode);
     print(response.requestOptions.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return (response.requestOptions.data as List)
-          .map((e) => VacancyOptionModel.fromJson(e))
-          .toList();
+      return (response.requestOptions.data as List).map((e) => VacancyOptionModel.fromJson(e)).toList();
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -177,11 +169,9 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     print('/vacancy/vacancy/$slug/related/');
     print(response.statusCode);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(
-          response.data, (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(response.data, (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -202,11 +192,9 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     final response = await dio.get(next ?? '/doctor/open-to-work/', queryParameters: query);
 
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(
-          response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -215,8 +203,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return CandidateSingleModel.fromJson(response.data);
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -228,33 +215,27 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     }
     final response = await dio.get('/district/', queryParameters: query);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(
-          response.data, (p0) => DistrictModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(response.data, (p0) => DistrictModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<RegionModel>> getRegion({String? next}) async {
     final response = await dio.get('/region/');
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(
-          response.data, (p0) => RegionModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(response.data, (p0) => RegionModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<CategoryListModel>> getCategoryList({String? next}) async {
     final response = await dio.get('/vacancy/vacancy/specization/list/');
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(
-          response.data, (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(response.data, (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -263,8 +244,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return (response.data as List).map((e) => VacancyOptionModel.fromJson(e)).toList();
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -276,42 +256,35 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return Right('');
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<Either> removeWishListVacancy({required int id}) async {
-    final response =
-        await dio.delete('/vacancy/vacancy/$id/dislike', options: Options(headers: {}));
+    final response = await dio.delete('/vacancy/vacancy/$id/dislike', options: Options(headers: {}));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return Right('');
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<CertificateEntity>> getCandidateCertificate({required int id}) async {
     final response = await dio.get('/doctor/1$id/certificates/', options: Options(headers: {}));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(
-          response.data, (p0) => CertificateModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(response.data, (p0) => CertificateModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
-  Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation(
-      {required int id}) async {
+  Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation({required int id}) async {
     final response = await dio.get('/doctor/$id/education/', options: Options(headers: {}));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => CandidateEducationModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -320,10 +293,8 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     print(response.statusCode);
     print(response.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(
-          response.data, (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(response.data, (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(
-        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 }
