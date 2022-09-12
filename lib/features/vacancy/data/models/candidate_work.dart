@@ -1,3 +1,5 @@
+import 'package:anatomica/features/auth/data/models/image_model.dart';
+import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/data/models/type_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';

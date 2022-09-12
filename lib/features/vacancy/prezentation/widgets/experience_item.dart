@@ -4,7 +4,16 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_te
 import 'package:flutter/material.dart';
 
 class ExperienceItem extends StatelessWidget {
-  const ExperienceItem({Key? key}) : super(key: key);
+  final String image;
+  final String title;
+  final String subTitle;
+
+  const ExperienceItem({
+    this.title = '',
+    this.image = '',
+    this.subTitle = '',
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +34,16 @@ class ExperienceItem extends StatelessWidget {
           ]),
       child: Row(
         children: [
-          const ImageCard(imageUrl: 'https://picsum.photos/536/354', height: 58, width: 58),
+          ImageCard(imageUrl: image, height: 58, width: 58),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const VacancyTitleText(title: 'EraMed clinic'),
+                VacancyTitleText(title: title),
                 const SizedBox(height: 4),
                 Text(
-                  'Врач «Скорой и неотложной медицинской помощи',
+                  subTitle,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style:

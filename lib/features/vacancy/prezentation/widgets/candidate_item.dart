@@ -60,11 +60,14 @@ class CandidateItem extends StatelessWidget {
                       candidateListEntity.fullName,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline1,
+                      maxLines: 1,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       candidateListEntity.specialization.title,
                       style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     const Spacer(),
                     VacancyItemTextWidget(

@@ -1,6 +1,9 @@
+import 'package:anatomica/features/auth/data/models/image_model.dart';
+import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/data/models/type_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/auth/domain/entities/phone_number_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/type_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_work.dart';
@@ -51,18 +54,18 @@ class CandidateOrganization extends Equatable {
   final String slug;
   @LogoEntityConverter()
   final LogoEntity logo;
-  @ImageConverter()
-  final ImageEntity images;
+  @JsonKey(defaultValue: [])
+  final List<ImageModel> images;
   @JsonKey(defaultValue: '')
   final String address;
   @JsonKey(defaultValue: [])
-  final List<String> phoneNumbers;
+  final List<PhoneNumberModel> phoneNumbers;
   @JsonKey(defaultValue: 0)
-  final int rating;
-  @SpecializationConverter()
-  final SpecializationEntity specialization;
-  @TypeConverter()
-  final TypeEntity types;
+  final double rating;
+  @JsonKey(defaultValue: [])
+  final List<SpecializationModel> specialization;
+  @JsonKey(defaultValue: [])
+  final List<TypeModel> types;
   @JsonKey(defaultValue: '')
   final String locationUrl;
   @JsonKey(defaultValue: false)

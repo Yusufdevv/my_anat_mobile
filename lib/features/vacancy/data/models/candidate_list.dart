@@ -18,6 +18,7 @@ class CandidateListModel extends CandidateListEntity {
     required super.fullName,
     required super.position,
     required super.workExperience,
+    required super.isFavourite,
   });
 
   factory CandidateListModel.fromJson(Map<String, dynamic> json) =>
