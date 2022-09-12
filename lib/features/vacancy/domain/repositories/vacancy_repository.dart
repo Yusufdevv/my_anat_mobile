@@ -3,7 +3,10 @@ import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/vacancy/data/models/category_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_education.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_work.dart';
+import 'package:anatomica/features/vacancy/domain/entities/certificate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
 import 'package:anatomica/features/vacancy/domain/entities/region.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
@@ -37,4 +40,17 @@ abstract class VacancyRepository {
   Future<Either<Failure, GenericPagination<CategoryListModel>>> getCategoryList({String? next});
 
   Future<Either<Failure, List<VacancyOptionEntity>>> getVacancyFilter();
+
+  Future<Either<Failure, Either>> addWishListVacancy({required int user, required int vacancy});
+
+  Future<Either<Failure, Either>> removeWishListVacancy({required int id});
+
+  Future<Either<Failure, GenericPagination<CertificateEntity>>> getCandidateCertificate(
+      {required int id});
+
+  Future<Either<Failure, GenericPagination<CandidateEducationEntity>>> getCandidateEducation(
+      {required int id});
+
+  Future<Either<Failure, GenericPagination<CandidateWorkEntity>>> getCandidateWork(
+      {required int id});
 }

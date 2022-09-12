@@ -26,6 +26,8 @@ class VacancyItemTextWidget extends StatelessWidget {
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
                     ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         )
       ],
