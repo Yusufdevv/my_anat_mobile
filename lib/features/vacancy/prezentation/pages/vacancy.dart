@@ -4,7 +4,6 @@ import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
-import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
@@ -87,10 +86,8 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
   Widget build(BuildContext context) {
     print('token:${StorageRepository.getString('token')}');
     print('user id:${context.read<AuthenticationBloc>().state.user.id}');
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: vacancyBloc),
-      ],
+    return BlocProvider.value(
+      value: vacancyBloc,
       child: CustomScreen(
         child: Scaffold(
           backgroundColor: white,
@@ -231,15 +228,9 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                   child: TabBarView(
                     physics: const BouncingScrollPhysics(),
                     controller: tabController,
-                    children: [
-                      VacancyItemList(
-                        onSuccess: (text) {
-                          context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                message: text,
-                              ));
-                        },
-                      ),
-                      const CandidateItemList(),
+                    children: const [
+                      VacancyItemList(),
+                      CandidateItemList(),
                     ],
                   ),
                 ),

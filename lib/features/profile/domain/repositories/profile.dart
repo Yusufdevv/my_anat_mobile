@@ -4,6 +4,8 @@ import 'package:anatomica/features/auth/domain/entities/user_entity.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/profile/domain/entities/faq_entity.dart';
 import 'package:anatomica/features/profile/domain/entities/uploaded_image_entity.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:dio/dio.dart';
 
 abstract class ProfileRepository {
@@ -19,4 +21,6 @@ abstract class ProfileRepository {
 
   Future<Either<Failure, UploadedImageEntity>> uploadImg(FormData formData);
   Future<Either<Failure, GenericPagination<FaqEntity>>> getFaq({String? next});
+  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getLikedCandidate({String? next});
+  Future<Either<Failure, GenericPagination<VacancyListEntity>>> getLikedVacancy({String? next});
 }

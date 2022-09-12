@@ -22,7 +22,14 @@ class SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
   });
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => false;
+  bool shouldRebuild(covariant SliverTabBarDelegate oldDelegate) =>
+      child != oldDelegate.child ||
+      color != oldDelegate.color ||
+      backgroundColor != oldDelegate.backgroundColor ||
+      tabBarMargin != oldDelegate.tabBarMargin ||
+      hasRadius != oldDelegate.hasRadius ||
+      hasShadow != oldDelegate.hasShadow ||
+      height != oldDelegate.height;
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) => Container(

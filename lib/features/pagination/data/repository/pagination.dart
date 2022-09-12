@@ -13,7 +13,7 @@ class PaginationRepository {
   /// Give empty String for "next" if you don't have next link
   Future<Either<Failure, GenericPagination<T>>> fetchMore<T>(
       {required String url,
-       String? next,
+      String? next,
       required T Function(Map<String, dynamic>) fromJson,
       Map<String, dynamic>? query}) async {
     try {
@@ -23,9 +23,8 @@ class PaginationRepository {
       }
 
       final result = await dio.get(
-       next?? url,options: Options(headers: {
-         "Authorization":"Token ${StorageRepository.getString('token',defValue: '')}"
-      }),
+        next ?? url,
+        options: Options(headers: {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"}),
         queryParameters: queryParams,
       );
       print(queryParams);
@@ -33,13 +32,11 @@ class PaginationRepository {
       print(result.data);
       print(result.statusCode);
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
-        final data = GenericPagination<T>.fromJson(
-            (result.data!), (data) => fromJson((data as Map<String, dynamic>)));
+        final data = GenericPagination<T>.fromJson((result.data!), (data) => fromJson((data as Map<String, dynamic>)));
 
         return Right(data);
       } else {
-        return Left(ServerFailure(statusCode: result.statusCode ??0, errorMessage: result
-            .statusMessage??''));
+        return Left(ServerFailure(statusCode: result.statusCode ?? 0, errorMessage: result.statusMessage ?? ''));
       }
     } catch (e) {
       print(e.toString() + 'error read here ');
@@ -54,7 +51,7 @@ class PaginationDatasource {
   /// Give empty String for "next" if you don't have next link
   Future<GenericPagination<T>> fetchMore<T>({
     required String url,
-     String? next,
+    String? next,
     required T Function(Map<String, dynamic>) fromJson,
     Map<String, dynamic>? query,
     int size = 15,
@@ -65,23 +62,20 @@ class PaginationDatasource {
         queryParams = query;
       }
 
-      final result = await dio.get(next??url,
+      final result = await dio.get(next ?? url,
           queryParameters: queryParams,
-          options: Options(
-              headers: {'Authorization': 'Bearer ${StorageRepository.getString('token',defValue: '')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token', defValue: '')}'}));
 
       // print(queryParams);
       // print(result.realUri);
       // print(result.data);
       // print(result.statusCode);
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
-        final data = GenericPagination<T>.fromJson(
-            (result.data!), (data) => fromJson((data as Map<String, dynamic>)));
+        final data = GenericPagination<T>.fromJson((result.data!), (data) => fromJson((data as Map<String, dynamic>)));
 
         return data;
       } else {
-        throw ServerException(
-            errorMessage: 'GenericPagination2 Failure!', statusCode: result.statusCode!);
+        throw ServerException(errorMessage: 'GenericPagination2 Failure!', statusCode: result.statusCode!);
       }
     } catch (_) {
       rethrow;

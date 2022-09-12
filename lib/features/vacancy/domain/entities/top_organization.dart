@@ -14,13 +14,8 @@ class TopOrganizationEntity extends Equatable {
   @JsonKey(name: 'vacancy_count', defaultValue: 0)
   final int vacancyCount;
 
-  const TopOrganizationEntity({
-    required this.title,
-    required this.vacancyCount,
-    required this.logo,
-    required this.slug,
-    required this.id
-  });
+  const TopOrganizationEntity(
+      {required this.title, required this.vacancyCount, required this.logo, required this.slug, required this.id});
 
   @override
   List<Object?> get props => [id, logo, vacancyCount, title, slug];
@@ -34,7 +29,11 @@ class LogoEntity extends Equatable {
   @JsonKey(name: 'small', defaultValue: '')
   final String small;
 
-  const LogoEntity({required this.middle, required this.origin, required this.small});
+  const LogoEntity({
+    this.middle = '',
+    this.origin = '',
+    this.small = '',
+  });
 
   @override
   List<Object?> get props => [origin, middle, small];

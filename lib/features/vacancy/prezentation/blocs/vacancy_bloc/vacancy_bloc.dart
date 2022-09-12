@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
@@ -17,8 +19,8 @@ import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_option.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
-import 'package:meta/meta.dart';
 
 part 'vacancy_event.dart';
 part 'vacancy_state.dart';
@@ -32,6 +34,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
   final CategoryListUseCase categoryListUseCase;
   final VacancyFilterUseCase vacancyFilterUseCase;
   final LikeUnlikeVacancyStreamUseCase _likeUnlikeVacancyStreamUseCase;
+  late StreamSubscription<VacancyListEntity> vacancySubscription;
   VacancyBloc({
     required this.vacancyListUseCase,
     required this.topOrganizationUseCase,
@@ -66,6 +69,9 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
           filterStatus: FormzStatus.pure,
           vacancyFilterList: const [],
         )) {
+    vacancySubscription = _likeUnlikeVacancyStreamUseCase.call(NoParams()).listen((event) {
+      add(LikeUnlikeVacancy(vacancy: event));
+    });
     on<GetVacancyListEvent>((event, emit) async {
       final result = await vacancyListUseCase.call(VacancyListParams(vacancyParamsEntity: event.vacancyParamsEntity));
       if (result.isRight) {
@@ -226,6 +232,16 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       emit(state.copyWith(experienceKey: event.experienceKey));
       event.onSuccess();
     });
-    on<LikeUnlikeVacancy>((event, emit) {});
+    on<LikeUnlikeVacancy>((event, emit) {
+      final newList = [...state.vacancyList];
+      final currentVacancy =
+          newList.firstWhere((element) => element.id == event.vacancy.id, orElse: () => const VacancyListEntity());
+
+      if (currentVacancy.id != 0) {
+        newList.insert(newList.indexOf(currentVacancy), event.vacancy);
+        newList.remove(currentVacancy);
+        emit(state.copyWith(vacancyList: newList));
+      }
+    });
   }
 }
