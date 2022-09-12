@@ -58,7 +58,7 @@ class GlobalRequestRepository {
       }
 
       return Right(list);
-    } catch (e) {
+    } catch (e) {print(e.toString());
       return Left(ServerFailure(statusCode: 141, errorMessage: ''));
     }
   }

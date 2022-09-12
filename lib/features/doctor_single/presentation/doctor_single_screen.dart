@@ -5,12 +5,12 @@ import 'package:anatomica/features/common/presentation/widgets/rating_container.
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/doctor_single/presentation/parts/about_doctor.dart';
+import 'package:anatomica/features/doctor_single/presentation/parts/doctor_articles.dart';
+import 'package:anatomica/features/doctor_single/presentation/parts/doctor_comments.dart';
+import 'package:anatomica/features/doctor_single/presentation/parts/doctor_contacts.dart';
+import 'package:anatomica/features/doctor_single/presentation/parts/doctor_interviews.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/about_doctor.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/doctor_articles.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/doctor_comments.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/doctor_contacts.dart';
-import 'package:anatomica/features/map/presentation/single_tabs/doctor_single/doctor_interviews.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
 import 'package:flutter/material.dart';
@@ -217,7 +217,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                                                 Text(
                                                   'г. Ташкент, улица Содика Азимова, 74',
                                                   style:
-                                                      Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                                  Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                                 ),
                                               ],
                                             ),
@@ -229,7 +229,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                                                 Text(
                                                   '+998 71 200-70-07',
                                                   style:
-                                                      Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                                  Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                                 ),
                                               ],
                                             ),
@@ -241,7 +241,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                                                 Text(
                                                   'Doctor-D',
                                                   style:
-                                                      Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                                  Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                                 ),
                                               ],
                                             ),
@@ -251,7 +251,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                                                 Text(
                                                   '4,0',
                                                   style:
-                                                      Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
+                                                  Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
                                                 ),
                                                 const SizedBox(width: 8),
                                                 const RatingStars(

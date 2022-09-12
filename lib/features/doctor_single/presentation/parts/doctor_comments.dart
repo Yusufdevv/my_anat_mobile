@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/features/hospital_single/data/models/comments.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_empty.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_item.dart';
@@ -83,7 +84,7 @@ class DoctorComments extends StatelessWidget {
               padding: const EdgeInsets.all(16)
                   .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
               separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemBuilder: (context, index) => const CommentItem(),
+              itemBuilder: (context, index) =>  CommentItem(entity: CommentModel.fromJson({}),),
               itemCount: 10,
             ),
           )

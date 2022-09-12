@@ -17,34 +17,30 @@ class HospitalConditions extends StatefulWidget {
 }
 
 class _HospitalConditionsState extends State<HospitalConditions> {
-  late FacilitiesBloc facilitiesBloc;
+
 
   @override
   void initState() {
-    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase())
-      ..add(FacilitiesEvent.getFacilities());
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: facilitiesBloc,
-      child: BlocBuilder<FacilitiesBloc, FacilitiesState>(
-        builder: (context, state) {
-          return GridView.builder(
-            padding: const EdgeInsets.all(16)
-                .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                mainAxisExtent: 102),
-            itemBuilder: (context, index) =>ConditionItem(entity: state.comforts[index],),
-            itemCount: state.comforts.length,
-          );
-        },
-      ),
+    return BlocBuilder<FacilitiesBloc, FacilitiesState>(
+      builder: (context, state) {
+        return GridView.builder(
+          padding: const EdgeInsets.all(16)
+              .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              mainAxisExtent: 102),
+          itemBuilder: (context, index) =>ConditionItem(entity: state.comforts[index],),
+          itemCount: state.comforts.length,
+        );
+      },
     );
   }
 }

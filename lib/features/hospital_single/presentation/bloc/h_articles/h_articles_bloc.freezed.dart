@@ -16,19 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HArticlesEvent {
+  int? get organizationId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getArticles,
+    required TResult Function(int? organizationId) getArticles,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getArticles,
+    TResult Function(int? organizationId)? getArticles,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getArticles,
+    TResult Function(int? organizationId)? getArticles,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +49,10 @@ mixin _$HArticlesEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $HArticlesEventCopyWith<HArticlesEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -55,6 +60,7 @@ abstract class $HArticlesEventCopyWith<$Res> {
   factory $HArticlesEventCopyWith(
           HArticlesEvent value, $Res Function(HArticlesEvent) then) =
       _$HArticlesEventCopyWithImpl<$Res>;
+  $Res call({int? organizationId});
 }
 
 /// @nodoc
@@ -65,13 +71,28 @@ class _$HArticlesEventCopyWithImpl<$Res>
   final HArticlesEvent _value;
   // ignore: unused_field
   final $Res Function(HArticlesEvent) _then;
+
+  @override
+  $Res call({
+    Object? organizationId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
 /// @nodoc
-abstract class _$$_GetArticlesCopyWith<$Res> {
+abstract class _$$_GetArticlesCopyWith<$Res>
+    implements $HArticlesEventCopyWith<$Res> {
   factory _$$_GetArticlesCopyWith(
           _$_GetArticles value, $Res Function(_$_GetArticles) then) =
       __$$_GetArticlesCopyWithImpl<$Res>;
+  @override
+  $Res call({int? organizationId});
 }
 
 /// @nodoc
@@ -84,51 +105,75 @@ class __$$_GetArticlesCopyWithImpl<$Res>
 
   @override
   _$_GetArticles get _value => super._value as _$_GetArticles;
+
+  @override
+  $Res call({
+    Object? organizationId = freezed,
+  }) {
+    return _then(_$_GetArticles(
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_GetArticles implements _GetArticles {
-  _$_GetArticles();
+  _$_GetArticles({this.organizationId});
+
+  @override
+  final int? organizationId;
 
   @override
   String toString() {
-    return 'HArticlesEvent.getArticles()';
+    return 'HArticlesEvent.getArticles(organizationId: $organizationId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_GetArticles);
+        (other.runtimeType == runtimeType &&
+            other is _$_GetArticles &&
+            const DeepCollectionEquality()
+                .equals(other.organizationId, organizationId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(organizationId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_GetArticlesCopyWith<_$_GetArticles> get copyWith =>
+      __$$_GetArticlesCopyWithImpl<_$_GetArticles>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getArticles,
+    required TResult Function(int? organizationId) getArticles,
   }) {
-    return getArticles();
+    return getArticles(organizationId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getArticles,
+    TResult Function(int? organizationId)? getArticles,
   }) {
-    return getArticles?.call();
+    return getArticles?.call(organizationId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getArticles,
+    TResult Function(int? organizationId)? getArticles,
     required TResult orElse(),
   }) {
     if (getArticles != null) {
-      return getArticles();
+      return getArticles(organizationId);
     }
     return orElse();
   }
@@ -163,7 +208,14 @@ class _$_GetArticles implements _GetArticles {
 }
 
 abstract class _GetArticles implements HArticlesEvent {
-  factory _GetArticles() = _$_GetArticles;
+  factory _GetArticles({final int? organizationId}) = _$_GetArticles;
+
+  @override
+  int? get organizationId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_GetArticlesCopyWith<_$_GetArticles> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

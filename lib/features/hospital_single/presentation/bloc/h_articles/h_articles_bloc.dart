@@ -16,7 +16,7 @@ class HArticlesBloc extends Bloc<HArticlesEvent, HArticlesState> {
   HArticlesBloc(this.getArticles) : super(HArticlesState()) {
     on<HArticlesEvent>((event, emit) async{
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result =await getArticles(TypeParameter(id: 0, next: ''));
+      final result =await getArticles(TypeParameter(id: event.organizationId??-1, next: ''));
       if(result.isRight){
         emit(state.copyWith(status: FormzStatus.submissionSuccess,articles: result.right.results));
       }else {

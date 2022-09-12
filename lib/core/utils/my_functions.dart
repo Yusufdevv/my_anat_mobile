@@ -1,6 +1,16 @@
 import 'package:jiffy/jiffy.dart';
 
 abstract class MyFunctions {
+  static String safeDateFormat(String date, String pattern){
+    try{
+      return Jiffy(date).format(pattern);
+    }catch(e){
+      print('$e date parse error');
+      return date;
+    }
+  }
+
+
   static String getFormattedTimerTime(int ticks) {
     final buffer = StringBuffer();
     final minutes = (ticks / 60).floor();

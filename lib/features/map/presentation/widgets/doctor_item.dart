@@ -2,8 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/doctor_single/presentation/doctor_single_screen.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
-import 'package:anatomica/features/map/presentation/screens/doctor_single.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,7 +17,7 @@ class DoctorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(behavior: HitTestBehavior.translucent,
       onTap: () {
         Navigator.of(context, rootNavigator: true).push(
           fade(
@@ -101,7 +101,7 @@ class DoctorItem extends StatelessWidget {
                     SvgPicture.asset(AppIcons.star),
                     const SizedBox(width: 4),
                     Text(
-                      '5.0',
+                      entity.rating.toString(),
                       style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
                     ),
                   ],

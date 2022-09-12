@@ -1,3 +1,5 @@
+import 'package:anatomica/features/map/data/models/map_doctor.dart';
+import 'package:anatomica/features/map/data/models/map_hospital.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';

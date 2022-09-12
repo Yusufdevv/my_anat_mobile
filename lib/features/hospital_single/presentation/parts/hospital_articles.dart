@@ -12,30 +12,26 @@ class HospitalArticles extends StatefulWidget {
 }
 
 class _HospitalArticlesState extends State<HospitalArticles> {
-  late HArticlesBloc articlesBloc;
+
 
   @override
   void initState() {
-    articlesBloc = HArticlesBloc(GetHArticlesUseCase())
-      ..add(HArticlesEvent.getArticles());
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: articlesBloc,
-      child: BlocBuilder<HArticlesBloc, HArticlesState>(
-        builder: (context, state) {
-          return ListView.separated(
-            itemCount: state.articles.length,
-            padding: const EdgeInsets.all(16)
-                .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-            itemBuilder: (context, index) =>  HospitalArticleItem(entity: state.articles[index],),
-            separatorBuilder: (context, index) => const SizedBox(height: 16),
-          );
-        },
-      ),
+    return BlocBuilder<HArticlesBloc, HArticlesState>(
+      builder: (context, state) {
+        return ListView.separated(
+          itemCount: state.articles.length,
+          padding: const EdgeInsets.all(16)
+              .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+          itemBuilder: (context, index) =>  HospitalArticleItem(entity: state.articles[index],),
+          separatorBuilder: (context, index) => const SizedBox(height: 16),
+        );
+      },
     );
   }
 }
