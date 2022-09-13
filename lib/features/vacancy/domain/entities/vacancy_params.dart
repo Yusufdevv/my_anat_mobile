@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 
 class VacancyParamsEntity extends Equatable {
   final String? search;
-  final String? salary;
-  final String? experience;
+  final List<String>? salary;
+  final List<String>? experience;
   final String? category;
   final String? workType;
   final String? region;

@@ -47,14 +47,12 @@ class FilterBottomSheet extends StatelessWidget {
         const SizedBox(height: 16),
         FilterItem(
             onTap: () {
-              // Navigator.of(context).pop();
               showSalaryBottomSheet(context, vacancyBloc);
             },
             title: LocaleKeys.salary.tr()),
         const SizedBox(height: 12),
         FilterItem(
           onTap: () {
-            //  Navigator.of(context).pop();
             showExperienceBottomSheet(context, vacancyBloc);
           },
           title: LocaleKeys.experience.tr(),
@@ -62,7 +60,6 @@ class FilterBottomSheet extends StatelessWidget {
         const SizedBox(height: 12),
         FilterItem(
           onTap: () {
-            // Navigator.of(context).pop();
             showRegionBottomSheet(context, regionBloc);
           },
           title: LocaleKeys.city_district.tr(),

@@ -58,11 +58,13 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                 duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
           }
         },
-        stackedWButton: currentPage == 1
+        stackedWButton: currentPage == 1 || isCheck
             ? WButton(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 text: 'Выбрать',
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
               )
             : null,
         child: PageView(

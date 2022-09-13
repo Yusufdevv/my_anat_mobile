@@ -41,14 +41,14 @@ class GetCategoryListEvent extends VacancyEvent {}
 class GetVacancyFilterEvent extends VacancyEvent {}
 
 class SelectSalaryFilterEvent extends VacancyEvent {
-  final String? salaryKey;
+  final List<String>? salaryKey;
   final Function onSuccess;
 
   SelectSalaryFilterEvent({this.salaryKey, required this.onSuccess});
 }
 
 class SelectExperienceEvent extends VacancyEvent {
-  final String? experienceKey;
+  final List<String>? experienceKey;
   final Function onSuccess;
 
   SelectExperienceEvent({required this.onSuccess, this.experienceKey});

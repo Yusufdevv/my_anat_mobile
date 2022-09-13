@@ -226,6 +226,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       }
     });
     on<SelectSalaryFilterEvent>((event, emit) {
+
       emit(state.copyWith(salaryKey: event.salaryKey));
       event.onSuccess();
     });

@@ -22,13 +22,7 @@ class ExperienceBottomSheet extends StatefulWidget {
 }
 
 class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
-  final List<bool> checkList = [false, false, false, false];
-
-  void isChecked(int index) {
-    setState(() {
-      checkList[index] = !checkList[index];
-    });
-  }
+  List<String> list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +36,12 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
           margin: const EdgeInsets.symmetric(horizontal: 16),
           text: LocaleKeys.save.tr(),
           onTap: () {
-            Navigator.of(context).pop();
+            widget.vacancyBloc.add(SelectExperienceEvent(
+              onSuccess: () {
+                Navigator.of(context).pop();
+              },
+              experienceKey: list,
+            ));
           },
         ),
         children: [
@@ -59,12 +58,17 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
                     ...List.generate(
                       state.vacancyFilterList[1].choices.length,
                       (index) => CheckBoxTitle(
-                        isChecked: checkList[index],
+                        isChecked: list.contains(state.vacancyFilterList[1].choices[index].key),
                         onTap: () {
-                          isChecked(index);
+                          setState(() {
+                            if (list.contains(state.vacancyFilterList[1].choices[index].key)) {
+                              list.remove(state.vacancyFilterList[1].choices[index].key);
+                            } else {
+                              list.add(state.vacancyFilterList[1].choices[index].key);
+                            }
+                          });
                         },
                         title: state.vacancyFilterList[1].choices[index].value,
-                        //isLast: index == 4 ? true : false,
                       ),
                     ),
                     const SizedBox(height: 20),

@@ -1,7 +1,6 @@
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
-import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,14 +20,12 @@ class SalaryBottomSheet extends StatefulWidget {
 }
 
 class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
-  final List<bool> checkList = [false, false, false, false, false];
-  bool isChecked = false;
-
-  selectSalary(int index) {
-    setState(() {
-      checkList[index] = !checkList[index];
-    });
+  @override
+  initState() {
+    super.initState();
   }
+
+  List<String> list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +40,7 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
           text: LocaleKeys.save.tr(),
           onTap: () async {
             widget.vacancyBloc.add(SelectSalaryFilterEvent(
-                salaryKey: widget.vacancyBloc.state.vacancyFilterList[0].choices[0].key,
+                salaryKey: list,
                 onSuccess: () {
                   Navigator.of(context).pop();
                 }));
@@ -66,11 +63,17 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
                       state.vacancyFilterList[0].choices.length,
                       (index) => CheckBoxTitle(
                         onTap: () {
-                          selectSalary(index);
+                            setState(() {
+                              if (list.contains(state.vacancyFilterList[0].choices[index].key)) {
+                                list.remove(state.vacancyFilterList[0].choices[index].key);
+                              } else {
+                                list.add(state.vacancyFilterList[0].choices[index].key);
+                              }
+                            });
                         },
                         title: state.vacancyFilterList[0].choices[index].value,
                         isLast: false,
-                        isChecked: checkList[index],
+                        isChecked: list.contains(state.vacancyFilterList[0].choices[index].key),
                       ),
                     ),
                     const SizedBox(height: 20),

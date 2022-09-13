@@ -16,9 +16,9 @@ class VacancySingleAppBarHeader extends StatelessWidget {
       pinned: true,
       delegate: SliverTabBarDelegate(
         hasRadius: true,
-        height: 80 + mediaQuery.padding.top,
+        height: 89,
         child: Container(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
           decoration: const BoxDecoration(
               color: primary,
               borderRadius: BorderRadius.only(
@@ -26,6 +26,7 @@ class VacancySingleAppBarHeader extends StatelessWidget {
                 bottomRight: Radius.circular(16),
               )),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
