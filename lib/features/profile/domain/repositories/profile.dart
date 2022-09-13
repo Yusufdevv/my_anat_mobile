@@ -1,14 +1,22 @@
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/auth/domain/entities/user_entity.dart';
+import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
+import 'package:anatomica/features/profile/domain/entities/faq_entity.dart';
+import 'package:anatomica/features/profile/domain/entities/uploaded_image_entity.dart';
 import 'package:dio/dio.dart';
 
 abstract class ProfileRepository {
   const ProfileRepository();
 
-  Future<Either<ServerFailure, UserEntity>> getProfile();
+  Future<Either<Failure, UserEntity>> getProfile();
 
-  Future<Either<Failure, UserEntity>> editProfile(Map<String, dynamic> data);
+  Future<Either<Failure, void>> deleteAccount();
 
-  Future<Either<Failure, UserEntity>> uploadImg(FormData formData);
+  Future<Either<Failure, void>> editProfile(Map<String, dynamic> data);
+
+  Future<Either<Failure, void>> changePassword({required String currentPassword, required String newPassword});
+
+  Future<Either<Failure, UploadedImageEntity>> uploadImg(FormData formData);
+  Future<Either<Failure, GenericPagination<FaqEntity>>> getFaq({String? next});
 }

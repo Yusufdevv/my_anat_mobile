@@ -25,6 +25,8 @@ class VacancyState extends Equatable {
   final FormzStatus categoryStatus;
   final List<VacancyOptionEntity> vacancyFilterList;
   final FormzStatus filterStatus;
+  final List<String>? salaryKey;
+  final List<String>? experienceKey;
 
   const VacancyState({
     required this.organizationNext,
@@ -51,6 +53,8 @@ class VacancyState extends Equatable {
     required this.categoryStatus,
     required this.filterStatus,
     required this.vacancyFilterList,
+    this.salaryKey,
+    this.experienceKey,
   });
 
   VacancyState copyWith({
@@ -78,6 +82,8 @@ class VacancyState extends Equatable {
     FormzStatus? categoryStatus,
     List<VacancyOptionEntity>? vacancyFilterList,
     FormzStatus? filterStatus,
+    List<String>? salaryKey,
+    List<String>? experienceKey,
   }) =>
       VacancyState(
         paginatorStatus: paginatorStatus ?? this.paginatorStatus,
@@ -105,6 +111,8 @@ class VacancyState extends Equatable {
         categoryStatus: categoryStatus ?? this.categoryStatus,
         filterStatus: filterStatus ?? this.filterStatus,
         vacancyFilterList: vacancyFilterList ?? this.vacancyFilterList,
+        salaryKey: salaryKey ?? this.salaryKey,
+        experienceKey: experienceKey ?? this.experienceKey,
       );
 
   @override
@@ -131,6 +139,8 @@ class VacancyState extends Equatable {
         categoryList,
         categoryStatus,
         filterStatus,
-        vacancyFilterList
+        vacancyFilterList,
+        salaryKey,
+        experienceKey,
       ];
 }

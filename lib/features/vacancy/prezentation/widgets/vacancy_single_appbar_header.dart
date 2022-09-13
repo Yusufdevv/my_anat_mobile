@@ -16,9 +16,9 @@ class VacancySingleAppBarHeader extends StatelessWidget {
       pinned: true,
       delegate: SliverTabBarDelegate(
         hasRadius: true,
-        height: 80 + mediaQuery.padding.top,
+        height: 89,
         child: Container(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
           decoration: const BoxDecoration(
               color: primary,
               borderRadius: BorderRadius.only(
@@ -26,27 +26,32 @@ class VacancySingleAppBarHeader extends StatelessWidget {
                 bottomRight: Radius.circular(16),
               )),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    vacancyEntity.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    vacancyEntity.organization.title,
-                    style: Theme.of(context).textTheme.headline2!.copyWith(
-                          fontWeight: FontWeight.w400,
-                        ),
-                  )
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      vacancyEntity.title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline2!
+                          .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      vacancyEntity.organization.title,
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
+                            fontWeight: FontWeight.w400,
+                          ),
+                    )
+                  ],
+                ),
               ),
-              const Spacer(),
+              const SizedBox(width: 16),
               Container(
                 height: 44,
                 width: 44,

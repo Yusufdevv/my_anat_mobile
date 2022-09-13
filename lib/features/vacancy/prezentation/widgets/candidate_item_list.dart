@@ -18,7 +18,7 @@ class CandidateItemList extends StatelessWidget {
     return BlocBuilder<VacancyBloc, VacancyState>(
       builder: (context, state) {
         return Paginator(
-          padding: EdgeInsets.only(top: 20, bottom: 16 + mediaQuery.padding.bottom),
+          padding: EdgeInsets.only(bottom: 16 + mediaQuery.padding.bottom),
           paginatorStatus: state.candidatePaginatorStatus,
           itemBuilder: (context, index) => CandidateItem(
             candidateListEntity: state.candidateList[index],

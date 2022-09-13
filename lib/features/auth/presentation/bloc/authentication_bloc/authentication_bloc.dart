@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/domain/entities/user_entity.dart';
@@ -30,6 +31,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
           if (userData.isRight) {
             emit(AuthenticationState.authenticated(userData.right));
           } else {
+            await StorageRepository.deleteString('token');
             emit(const AuthenticationState.unauthenticated());
           }
           break;

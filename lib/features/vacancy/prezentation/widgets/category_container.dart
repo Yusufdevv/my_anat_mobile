@@ -20,7 +20,7 @@ class CategoryContainer extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: margin ?? const EdgeInsets.only(right: 12, bottom: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
         height: 37,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),

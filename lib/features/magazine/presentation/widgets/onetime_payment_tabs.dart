@@ -1,23 +1,19 @@
 import 'package:anatomica/features/common/presentation/widgets/phone_text_field.dart';
-import 'package:anatomica/features/magazine/domain/entity/magazine_item_entity.dart';
-import 'package:flutter/material.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 class OneTimePaymentTabs extends StatefulWidget {
-  final MagazineItemEntity magazineItemEntity;
+  // final MagazineItemEntity magazineItemEntity;
   final VoidCallback onTap;
 
-  const OneTimePaymentTabs(
-      {required this.magazineItemEntity, required this.onTap, Key? key})
-      : super(key: key);
+  const OneTimePaymentTabs({/*required this.magazineItemEntity, */ required this.onTap, Key? key}) : super(key: key);
 
   @override
   State<OneTimePaymentTabs> createState() => _OneTimePaymentTabsState();
 }
 
-class _OneTimePaymentTabsState extends State<OneTimePaymentTabs>
-    with TickerProviderStateMixin {
+class _OneTimePaymentTabsState extends State<OneTimePaymentTabs> with TickerProviderStateMixin {
   late TabController tabController;
 
   @override

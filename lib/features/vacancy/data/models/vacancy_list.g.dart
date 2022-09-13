@@ -9,7 +9,7 @@ part of 'vacancy_list.dart';
 VacancyListModel _$VacancyListModelFromJson(Map<String, dynamic> json) =>
     VacancyListModel(
       workType: const WorkTypeConverter()
-          .fromJson(json['workType'] as Map<String, dynamic>?),
+          .fromJson(json['work_type'] as Map<String, dynamic>?),
       title: json['title'] as String? ?? '',
       category: const CategoryEntityConverter()
           .fromJson(json['category'] as Map<String, dynamic>?),
@@ -21,11 +21,19 @@ VacancyListModel _$VacancyListModelFromJson(Map<String, dynamic> json) =>
       salaryFrom: json['salary_from'] as int? ?? 0,
       description: json['description'] as String? ?? '',
       salaryTo: json['salary_to'] as int? ?? 0,
-      requirements: json['requirements'] as List<dynamic>? ?? [],
+      requirements: (json['requirements'] as List<dynamic>?)
+              ?.map(
+                  (e) => RequirementsModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       employerInfo: json['employer_info'] as String? ?? '',
       experienceFrom: json['experience_from'] as int? ?? 0,
       isFavorite: json['is_favorite'] as bool? ?? false,
-      obligations: json['obligations'] as List<dynamic>? ?? [],
+      obligations: (json['obligations'] as List<dynamic>?)
+              ?.map(
+                  (e) => RequirementsModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       publishedAt: json['published_at'] as String? ?? '',
       experienceTo: json['experience_to'] as int? ?? 0,
     );
@@ -44,7 +52,7 @@ Map<String, dynamic> _$VacancyListModelToJson(VacancyListModel instance) =>
       'description': instance.description,
       'address': instance.address,
       'category': const CategoryEntityConverter().toJson(instance.category),
-      'workType': const WorkTypeConverter().toJson(instance.workType),
+      'work_type': const WorkTypeConverter().toJson(instance.workType),
       'employer_info': instance.employerInfo,
       'published_at': instance.publishedAt,
       'is_favorite': instance.isFavorite,
@@ -154,4 +162,16 @@ Map<String, dynamic> _$ImageModelToJson(ImageModel instance) =>
       'origin': instance.origin,
       'middle': instance.middle,
       'small': instance.small,
+    };
+
+RequirementsModel _$RequirementsModelFromJson(Map<String, dynamic> json) =>
+    RequirementsModel(
+      id: json['id'] as int? ?? 0,
+      description: json['description'] as String? ?? 'description',
+    );
+
+Map<String, dynamic> _$RequirementsModelToJson(RequirementsModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'description': instance.description,
     };

@@ -1,13 +1,13 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button_candidate.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+
 class CandidateItem extends StatelessWidget {
   final VoidCallback onTap;
   final EdgeInsets? margin;
@@ -22,7 +22,7 @@ class CandidateItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: margin ?? const EdgeInsets.symmetric(horizontal: 16),
@@ -58,30 +58,27 @@ class CandidateItem extends StatelessWidget {
                       candidateListEntity.fullName,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline1,
+                      maxLines: 1,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       candidateListEntity.specialization.title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(fontSize: 14),
+                      style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     const Spacer(),
                     VacancyItemTextWidget(
-                        title:
-                            '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
+                        title: '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
                         icon: AppIcons.briefCase),
                     const SizedBox(height: 4),
-                    VacancyItemTextWidget(
-                        title: candidateListEntity.address,
-                        icon: AppIcons.mapPin),
+                    VacancyItemTextWidget(title: candidateListEntity.address, icon: AppIcons.mapPin),
                   ],
                 ),
               ),
             ),
             // const SizedBox(width: 10),
-            FavouriteButton(onTap: () {})
+            FavouriteButtonCandidate(onTap: () {})
           ],
         ),
       ),

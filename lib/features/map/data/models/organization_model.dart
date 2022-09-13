@@ -1,8 +1,7 @@
-import 'package:anatomica/features/common/models/logo.dart';
-import 'package:anatomica/features/common/models/phone_number.dart';
-import 'package:anatomica/features/common/models/titler.dart';
+import 'package:anatomica/features/common/data/models/logo.dart';
+import 'package:anatomica/features/common/data/models/phone_number.dart';
+import 'package:anatomica/features/common/data/models/titler.dart';
 import 'package:anatomica/features/map/domain/entities/hospital_entity.dart';
-import 'package:anatomica/features/vacancy/data/models/top_organization.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'organization_model.g.dart';
@@ -38,7 +37,7 @@ class HospitalModel extends HospitalEntity {
 
   HospitalModel(
       {required this.id,
-        required this.imagesList,
+      required this.imagesList,
       required this.title,
       required this.logo,
       required this.types,
@@ -48,8 +47,8 @@ class HospitalModel extends HospitalEntity {
       required this.locationUrl,
       required this.phoneNumbers,
       required this.rating,
-      required this.specialization}):super(title: title,addres: address,images: imagesList,rating: rating,slug: slug);
+      required this.specialization})
+      : super(title: title, addres: address, images: imagesList, rating: rating, slug: slug);
 
-  factory HospitalModel.fromJson(Map<String, dynamic> json) =>
-      _$HospitalModelFromJson(json);
+  factory HospitalModel.fromJson(Map<String, dynamic> json) => _$HospitalModelFromJson(json);
 }

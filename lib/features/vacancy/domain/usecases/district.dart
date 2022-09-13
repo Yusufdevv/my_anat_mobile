@@ -13,13 +13,14 @@ class DistrictUseCase extends UseCase<GenericPagination<DistrictEntity>, Distric
 
   @override
   Future<Either<Failure, GenericPagination<DistrictEntity>>> call(DistrictParams params) async =>
-      await repository.getDistrictList();
+      await repository.getDistrictList(id: params.id, next: params.next);
 }
 
 class DistrictParams extends Equatable {
   final String? next;
+  final int? id;
 
-  const DistrictParams({this.next});
+  const DistrictParams({this.next, this.id});
 
   @override
   List<Object?> get props => [next];

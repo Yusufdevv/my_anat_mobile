@@ -17,6 +17,7 @@ class ScrolledBottomSheet extends StatelessWidget {
   final WButton? stackedWButton;
   final bool hasCancelButton;
   final bool hasDivider;
+  final VoidCallback? onTapCancel;
 
   const ScrolledBottomSheet(
       {required this.title,
@@ -29,6 +30,7 @@ class ScrolledBottomSheet extends StatelessWidget {
       this.children,
       this.pinnedChild,
       this.stackedWButton,
+        this.onTapCancel,
       Key? key})
       : assert(child == null || children == null),
         super(key: key);
@@ -60,9 +62,7 @@ class ScrolledBottomSheet extends StatelessWidget {
                           if (isSubScreen)
                             WScaleAnimation(
                               child: SvgPicture.asset(AppIcons.leftArrow),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
+                              onTap:onTapCancel??(){},
                             ),
                           if (isSubScreen) const SizedBox(width: 4),
                           Text(
@@ -106,6 +106,7 @@ class ScrolledBottomSheet extends StatelessWidget {
                     child: Container(
                       color: white,
                       child: ListView(
+                        physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         children: [
                           ...children!,

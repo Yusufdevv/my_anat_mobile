@@ -13,6 +13,7 @@ DistrictModel _$DistrictModelFromJson(Map<String, dynamic> json) =>
       soato: json['soato'] as String? ?? '',
       title: json['title'] as String? ?? '',
       id: json['id'] as int? ?? 0,
+      isCheck: json['is_check'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$DistrictModelToJson(DistrictModel instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$DistrictModelToJson(DistrictModel instance) =>
       'title': instance.title,
       'soato': instance.soato,
       'region': const RegionEntityConverter().toJson(instance.region),
+      'is_check': instance.isCheck,
     };

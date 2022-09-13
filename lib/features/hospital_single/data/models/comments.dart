@@ -1,5 +1,4 @@
-import 'package:anatomica/features/common/models/logo.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:anatomica/features/common/data/models/logo.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'comments.g.dart';
@@ -38,6 +37,4 @@ class CommentModel {
     }
     return _$CommentModelFromJson(json);
   }
-
-
 }

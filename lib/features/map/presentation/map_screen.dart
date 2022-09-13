@@ -19,13 +19,13 @@ import 'package:anatomica/features/map/presentation/widgets/hospital_single_bott
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_controller_buttons.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -34,8 +34,7 @@ class MapScreen extends StatefulWidget {
   State<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen>
-    with TickerProviderStateMixin, WidgetsBindingObserver {
+class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, WidgetsBindingObserver {
   late YandexMapController _mapController;
   late TabController _controller;
   late TextEditingController _searchFieldController;
@@ -46,25 +45,18 @@ class _MapScreenState extends State<MapScreen>
   double longitude = 0;
   final clusterId = const MapObjectId('big_cluster_id');
 
-  Future<Uint8List> getBytesFromCanvas(
-      {required int width,
-      required int height,
-      required int placeCount}) async {
+  Future<Uint8List> getBytesFromCanvas({required int width, required int height, required int placeCount}) async {
     final pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
     final Paint paint = Paint()..color = Colors.red;
-    canvas.drawImage(await getImageInfo(context).then((value) => value.image),
-        const Offset(0, 3), paint);
+    canvas.drawImage(await getImageInfo(context).then((value) => value.image), const Offset(0, 3), paint);
     TextPainter painter = TextPainter(textDirection: ui.TextDirection.ltr);
     painter.text = TextSpan(
       text: placeCount.toString(),
       style: const TextStyle(fontSize: 25.0, color: Colors.white),
     );
     painter.layout();
-    painter.paint(
-        canvas,
-        Offset((width * 0.5) - painter.width * 0.5,
-            (height * 0.5) - painter.height * 0.5));
+    painter.paint(canvas, Offset((width * 0.5) - painter.width * 0.5, (height * 0.5) - painter.height * 0.5));
     final img = await pictureRecorder.endRecording().toImage(width, height);
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
     return data?.buffer.asUint8List() ?? Uint8List(0);
@@ -72,8 +64,7 @@ class _MapScreenState extends State<MapScreen>
 
   Future<ImageInfo> getImageInfo(BuildContext context) async {
     AssetImage assetImage = const AssetImage(AppImages.placeMarkCluster);
-    ImageStream stream =
-        assetImage.resolve(createLocalImageConfiguration(context));
+    ImageStream stream = assetImage.resolve(createLocalImageConfiguration(context));
     Completer<ImageInfo> completer = Completer();
     stream.addListener(ImageStreamListener((ImageInfo imageInfo, _) {
       return completer.complete(imageInfo);
@@ -83,8 +74,7 @@ class _MapScreenState extends State<MapScreen>
 
   @override
   void initState() {
-    mapOrganizationBloc =
-        MapOrganizationBloc(GetMapHospitalUseCase(), GetMapDoctorUseCase());
+    mapOrganizationBloc = MapOrganizationBloc(GetMapHospitalUseCase(), GetMapDoctorUseCase());
     _controller = TabController(length: 2, vsync: this);
     _searchFieldController = TextEditingController();
     WidgetsBinding.instance.addObserver(this);
@@ -111,16 +101,13 @@ class _MapScreenState extends State<MapScreen>
                     phone: e.phoneNumber,
                     address: e.address,
                     images: e.images.map((e) => e.middle).toList(),
-                    location:
-                        Point(latitude: e.latitude, longitude: e.longitude),
+                    location: Point(latitude: e.latitude, longitude: e.longitude),
                     rating: e.rating,
                   ),
                 );
               },
-              icon: PlacemarkIcon.single(PlacemarkIconStyle(
-                  image:
-                      BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon),
-                  scale: 3))),
+              icon: PlacemarkIcon.single(
+                  PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon), scale: 3))),
         )
         .toList();
     final clusterItem = ClusterizedPlacemarkCollection(
@@ -134,10 +121,7 @@ class _MapScreenState extends State<MapScreen>
           icon: PlacemarkIcon.single(
             PlacemarkIconStyle(
               image: BitmapDescriptor.fromBytes(
-                await getBytesFromCanvas(
-                    width: 48,
-                    height: 50,
-                    placeCount: cluster.placemarks.length),
+                await getBytesFromCanvas(width: 48, height: 50, placeCount: cluster.placemarks.length),
               ),
               scale: 3,
             ),
@@ -156,9 +140,7 @@ class _MapScreenState extends State<MapScreen>
           (e) => PlacemarkMapObject(
               opacity: 1,
               mapId: MapObjectId(e.hospital.longitude.toString()),
-              point: Point(
-                  latitude: e.hospital.latitude,
-                  longitude: e.hospital.longitude),
+              point: Point(latitude: e.hospital.latitude, longitude: e.hospital.longitude),
               onTap: (object, point) {
                 showModalBottomSheet(
                   context: context,
@@ -172,17 +154,13 @@ class _MapScreenState extends State<MapScreen>
                     phone: e.hospital.phoneNumber,
                     address: e.hospital.address,
                     images: e.hospital.images.map((e) => e.middle).toList(),
-                    location: Point(
-                        latitude: e.hospital.latitude,
-                        longitude: e.hospital.longitude),
+                    location: Point(latitude: e.hospital.latitude, longitude: e.hospital.longitude),
                     rating: e.hospital.rating,
                   ),
                 );
               },
-              icon: PlacemarkIcon.single(PlacemarkIconStyle(
-                  image:
-                      BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon),
-                  scale: 3))),
+              icon: PlacemarkIcon.single(
+                  PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon), scale: 3))),
         )
         .toList();
     final clusterItem = ClusterizedPlacemarkCollection(
@@ -196,10 +174,7 @@ class _MapScreenState extends State<MapScreen>
           icon: PlacemarkIcon.single(
             PlacemarkIconStyle(
               image: BitmapDescriptor.fromBytes(
-                await getBytesFromCanvas(
-                    width: 48,
-                    height: 50,
-                    placeCount: cluster.placemarks.length),
+                await getBytesFromCanvas(width: 48, height: 50, placeCount: cluster.placemarks.length),
               ),
               scale: 3,
             ),
@@ -241,9 +216,8 @@ class _MapScreenState extends State<MapScreen>
           ),
           body: BlocListener<MapOrganizationBloc, MapOrganizationState>(
             listenWhen: (state1, state2) {
-              bool isBuild =
-                  (state1.hospitals.length != state2.hospitals.length) ||
-                      (state1.doctors.length != state2.doctors.length);
+              bool isBuild = (state1.hospitals.length != state2.hospitals.length) ||
+                  (state1.doctors.length != state2.doctors.length);
               print(isBuild.toString() + 'is141');
               return isBuild;
             },
@@ -262,31 +236,23 @@ class _MapScreenState extends State<MapScreen>
                   bottom: 60,
                   child: YandexMap(
                     rotateGesturesEnabled: false,
-                    onCameraPositionChanged:
-                        (cameraPosition, updateReason, _) {},
+                    onCameraPositionChanged: (cameraPosition, updateReason, _) {},
                     onMapTap: (point) {
-                      WidgetsBinding.instance.focusManager.primaryFocus
-                          ?.unfocus();
+                      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                     },
                     mapObjects: _mapObjects,
                     onMapCreated: (controller) async {
                       _mapController = controller;
                       final position = await _determinePosition();
                       mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
-                          param: MapParameter(
-                              lat: position.latitude,
-                              long: position.longitude,
-                              radius: 1000000)));
+                          param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
                       _mapController.moveCamera(
                         CameraUpdate.newCameraPosition(
                           CameraPosition(
-                            target: Point(
-                                latitude: position.latitude,
-                                longitude: position.longitude),
+                            target: Point(latitude: position.latitude, longitude: position.longitude),
                           ),
                         ),
-                        animation: const MapAnimation(
-                            duration: 0.15, type: MapAnimationType.smooth),
+                        animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                       );
                     },
                   ),
@@ -362,30 +328,22 @@ class _MapScreenState extends State<MapScreen>
                                 _mapController.moveCamera(
                                   CameraUpdate.newCameraPosition(
                                     CameraPosition(
-                                      target: Point(
-                                          latitude: position.latitude,
-                                          longitude: position.longitude),
+                                      target: Point(latitude: position.latitude, longitude: position.longitude),
                                     ),
                                   ),
-                                  animation: const MapAnimation(
-                                      duration: 0.15,
-                                      type: MapAnimationType.smooth),
+                                  animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                                 );
                               },
                               onMinusTap: () {
                                 _mapController.moveCamera(
                                   CameraUpdate.zoomOut(),
-                                  animation: const MapAnimation(
-                                      duration: 0.15,
-                                      type: MapAnimationType.smooth),
+                                  animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                                 );
                               },
                               onPlusTap: () {
                                 _mapController.moveCamera(
                                   CameraUpdate.zoomIn(),
-                                  animation: const MapAnimation(
-                                      duration: 0.15,
-                                      type: MapAnimationType.smooth),
+                                  animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                                 );
                               },
                             ),
@@ -396,8 +354,7 @@ class _MapScreenState extends State<MapScreen>
                         height: 36,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 12),
+                          separatorBuilder: (context, index) => const SizedBox(width: 12),
                           physics: const BouncingScrollPhysics(),
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           itemBuilder: (context, index) => MapButton.chip(
@@ -416,8 +373,7 @@ class _MapScreenState extends State<MapScreen>
                       ),
                       const SizedBox(height: 16),
                       Container(
-                        padding: EdgeInsets.fromLTRB(16, 16, 16,
-                            MediaQuery.of(context).viewInsets.bottom + 43),
+                        padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).viewInsets.bottom + 43),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: textFieldColor),
@@ -454,8 +410,7 @@ class _MapScreenState extends State<MapScreen>
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
     return await Geolocator.getCurrentPosition();
   }

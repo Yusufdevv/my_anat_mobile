@@ -8,15 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VacancyItemList extends StatelessWidget {
   final EdgeInsets? margin;
+  final Function(String text) onSuccess;
 
-  const VacancyItemList({this.margin, Key? key}) : super(key: key);
+  const VacancyItemList({this.margin, required this.onSuccess, Key? key}) : super(key: key);
 
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return BlocBuilder<VacancyBloc, VacancyState>(
       builder: (context, state) {
         return Paginator(
-          padding: EdgeInsets.only(bottom: 50 + mediaQuery.padding.bottom, top: 20),
+          padding: EdgeInsets.only(bottom: 50 + mediaQuery.padding.bottom),
           paginatorStatus: state.paginatorStatus,
           errorWidget: const Text('Fail'),
           itemBuilder: (context, index) {
@@ -24,8 +25,7 @@ class VacancyItemList extends StatelessWidget {
             return VacancyItem(
               vacancyEntity: state.vacancyList[index],
               onTap: () {
-                Navigator.of(context)
-                    .push(fade(page: VacancySingleScreen(slug: state.vacancyList[index].slug)));
+                Navigator.of(context).push(fade(page: VacancySingleScreen(slug: state.vacancyList[index].slug)));
               },
             );
           },

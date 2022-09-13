@@ -1,5 +1,6 @@
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/experience_bottomsheet.dart';
@@ -25,46 +26,55 @@ class FilterBottomSheet extends StatelessWidget {
     return ScrolledBottomSheet(
       title: LocaleKeys.filter.tr(),
       hasHeader: true,
+      stackedWButton: WButton(
+        padding: EdgeInsets.zero,
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        text: LocaleKeys.save.tr(),
+        onTap: () async {
+          vacancyBloc.add(
+            GetVacancyListEvent(
+                vacancyParamsEntity: VacancyParamsEntity(
+                  salary: vacancyBloc.state.salaryKey,
+                  experience: vacancyBloc.state.experienceKey,
+                ),
+                onSuccess: () {
+                  Navigator.of(context).pop();
+                }),
+          );
+        },
+      ),
       children: [
         const SizedBox(height: 16),
         FilterItem(
             onTap: () {
-              Navigator.of(context).pop();
               showSalaryBottomSheet(context, vacancyBloc);
             },
             title: LocaleKeys.salary.tr()),
         const SizedBox(height: 12),
         FilterItem(
-            onTap: () {
-              Navigator.of(context).pop();
-              showExperienceBottomSheet(context, vacancyBloc);
-            },
-            title: LocaleKeys.experience.tr()),
+          onTap: () {
+            showExperienceBottomSheet(context, vacancyBloc);
+          },
+          title: LocaleKeys.experience.tr(),
+        ),
         const SizedBox(height: 12),
         FilterItem(
-            onTap: () {
-              Navigator.of(context).pop();
-              showRegionBottomSheet(context, regionBloc);
-            },
-            title: LocaleKeys.city_district.tr()),
-        const SizedBox(height: 20),
-        WButton(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          text: LocaleKeys.save.tr(),
-          onTap: () {},
-        )
+          onTap: () {
+            showRegionBottomSheet(context, regionBloc);
+          },
+          title: LocaleKeys.city_district.tr(),
+        ),
+        const SizedBox(height: 60),
       ],
     );
   }
 }
 
-void showFilterBottomSheet(
-    BuildContext context, RegionBloc regionBloc, VacancyBloc vacancyBloc) {
+void showFilterBottomSheet(BuildContext context, RegionBloc regionBloc, VacancyBloc vacancyBloc) {
   showModalBottomSheet(
     context: context,
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
-    builder: (context) =>
-        FilterBottomSheet(regionBloc: regionBloc, vacancyBloc: vacancyBloc),
+    builder: (context) => FilterBottomSheet(regionBloc: regionBloc, vacancyBloc: vacancyBloc),
   );
 }

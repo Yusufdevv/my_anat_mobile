@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'vacancy_list.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class VacancyListModel extends VacancyListEntity {
   const VacancyListModel({
     required super.workType,
@@ -55,7 +55,8 @@ class OrganizationModel extends OrganizationEntity {
     required super.logo,
   });
 
-  factory OrganizationModel.fromJson(Map<String, dynamic> json) => _$OrganizationModelFromJson(json);
+  factory OrganizationModel.fromJson(Map<String, dynamic> json) =>
+      _$OrganizationModelFromJson(json);
 }
 
 @JsonSerializable()
@@ -65,7 +66,6 @@ class PhoneNumberModel extends PhoneNumberEntity {
   factory PhoneNumberModel.fromJson(Map<String, dynamic> json) => _$PhoneNumberModelFromJson(json);
 }
 
-
 @JsonSerializable()
 class TypesModel extends TypesEntity {
   const TypesModel({required super.title, required super.id});
@@ -73,7 +73,7 @@ class TypesModel extends TypesEntity {
   factory TypesModel.fromJson(Map<String, dynamic> json) => _$TypesModelFromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class WorkTypeModel extends WorkType {
   const WorkTypeModel({required super.label, required super.name});
 
@@ -85,4 +85,12 @@ class ImageModel extends ImageEntity {
   const ImageModel({required super.origin, required super.small, required super.middle});
 
   factory ImageModel.fromJson(Map<String, dynamic> json) => _$ImageModelFromJson(json);
+}
+
+@JsonSerializable()
+class RequirementsModel extends RequirementsEntity {
+  const RequirementsModel({required super.id, required super.description});
+
+  factory RequirementsModel.fromJson(Map<String, dynamic> json) =>
+      _$RequirementsModelFromJson(json);
 }

@@ -1,12 +1,16 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/vacancy/domain/entities/certificate.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LicenceItem extends StatelessWidget {
-  const LicenceItem({Key? key}) : super(key: key);
+  final CertificateEntity entity;
+
+  const LicenceItem({required this.entity, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +46,10 @@ class LicenceItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const VacancyTitleText(title: 'РГМУ'),
+                    VacancyTitleText(title: entity.title),
                     const SizedBox(height: 4),
                     Text(
-                      'Медико-профилактическое дело ЕГЭ: русский, химия, биология ',
+                      entity.specialization.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
@@ -64,7 +68,7 @@ class LicenceItem extends StatelessWidget {
               SvgPicture.asset(AppIcons.calendar),
               const SizedBox(width: 8),
               Text(
-                'Бакалавриат, медик',
+                MyFunctions.getPublishedDate(entity.date),
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(color: montana),
               ),
@@ -76,7 +80,7 @@ class LicenceItem extends StatelessWidget {
               SvgPicture.asset(AppIcons.numberList),
               const SizedBox(width: 8),
               Text(
-                'Бакалавриат, медик',
+                entity.certificateNumber,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(color: montana),
               ),
             ],

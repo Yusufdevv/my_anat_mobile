@@ -22,13 +22,7 @@ class ExperienceBottomSheet extends StatefulWidget {
 }
 
 class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
-  final List<bool> checkList = [false, false, false, false];
-
-  void isChecked(int index) {
-    setState(() {
-      checkList[index] = !checkList[index];
-    });
-  }
+  List<String> list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -38,45 +32,55 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
       child: ScrolledBottomSheet(
         title: LocaleKeys.experience.tr(),
         hasHeader: true,
-        isSubScreen: true,
-        child: BlocBuilder<VacancyBloc, VacancyState>(
-          builder: (context, state) {
-            if (state.filterStatus.isPure) {
-              context.read<VacancyBloc>().add(GetVacancyFilterEvent());
-            } else if (state.filterStatus.isSubmissionInProgress) {
-              return const Center(child: CupertinoActivityIndicator());
-            } else if (state.filterStatus.isSubmissionSuccess) {
-              return Column(
-                children: [
-                  const SizedBox(height: 16),
-                  ...List.generate(
-                    state.vacancyFilterList[1].choices.length,
-                    (index) => CheckBoxTitle(
-                      isChecked: checkList[index],
-                      onTap: () {
-                        isChecked(index);
-                      },
-                      title: state.vacancyFilterList[1].choices[index].value,
-                      isLast: index == 4 ? true : false,
-                    ),
-                  ),
-                  const Spacer(),
-                  WButton(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    text: LocaleKeys.save.tr(),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  SizedBox(height: 4 + mediaQuery.padding.bottom)
-                ],
-              );
-            } else if (state.filterStatus.isSubmissionFailure) {
-              return const Center(child: Text('Fail'));
-            }
-            return const Center(child: CupertinoActivityIndicator());
+        stackedWButton: WButton(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          text: LocaleKeys.save.tr(),
+          onTap: () {
+            widget.vacancyBloc.add(SelectExperienceEvent(
+              onSuccess: () {
+                Navigator.of(context).pop();
+              },
+              experienceKey: list,
+            ));
           },
         ),
+        children: [
+          BlocBuilder<VacancyBloc, VacancyState>(
+            builder: (context, state) {
+              if (state.filterStatus.isPure) {
+                context.read<VacancyBloc>().add(GetVacancyFilterEvent());
+              } else if (state.filterStatus.isSubmissionInProgress) {
+                return const Center(child: CupertinoActivityIndicator());
+              } else if (state.filterStatus.isSubmissionSuccess) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 16),
+                    ...List.generate(
+                      state.vacancyFilterList[1].choices.length,
+                      (index) => CheckBoxTitle(
+                        isChecked: list.contains(state.vacancyFilterList[1].choices[index].key),
+                        onTap: () {
+                          setState(() {
+                            if (list.contains(state.vacancyFilterList[1].choices[index].key)) {
+                              list.remove(state.vacancyFilterList[1].choices[index].key);
+                            } else {
+                              list.add(state.vacancyFilterList[1].choices[index].key);
+                            }
+                          });
+                        },
+                        title: state.vacancyFilterList[1].choices[index].value,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                );
+              } else if (state.filterStatus.isSubmissionFailure) {
+                return const Center(child: Text('Fail'));
+              }
+              return const Center(child: CupertinoActivityIndicator());
+            },
+          ),
+        ],
       ),
     );
   }
