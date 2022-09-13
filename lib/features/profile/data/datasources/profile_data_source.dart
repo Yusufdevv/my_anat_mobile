@@ -181,7 +181,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
   @override
   Future<GenericPagination<CandidateListModel>> getLikedCandidateList({String? next}) async {
     try {
-      final response = await _dio.get(next ?? '/doctor/liked/');
+      final response = await _dio.get(next ?? '/doctor/liked/',
+          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'})));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => CandidateListModel.fromJson((p0 as Map<String, dynamic>? ?? {})['doctor']));

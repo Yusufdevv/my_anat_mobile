@@ -78,7 +78,9 @@ class CandidateItem extends StatelessWidget {
               ),
             ),
             // const SizedBox(width: 10),
-            FavouriteButtonCandidate(onTap: () {})
+            FavouriteButtonCandidate(
+              candidate: candidateListEntity,
+            )
           ],
         ),
       ),

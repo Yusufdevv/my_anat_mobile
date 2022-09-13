@@ -10,14 +10,17 @@ import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 
 class LikeUnlikeRepositoryImpl extends LikeUnlikeRepository {
   final LikeUnlikeDatasource datasource;
+
   LikeUnlikeRepositoryImpl({required this.datasource});
+
   final StreamController<VacancyListEntity> _vacancyController = StreamController.broadcast(sync: true);
   final StreamController<CandidateListEntity> _doctorController = StreamController.broadcast(sync: true);
+
   @override
   Future<Either<Failure, void>> likeDoctor(CandidateListEntity doctor) async {
     try {
       await datasource.likeDoctor(doctor.id);
-      _doctorController.add(doctor);
+      _doctorController.add(doctor.copyWith(isFavorite: true));
       return Right('');
     } on DioException {
       return Left(DioFailure());
@@ -57,7 +60,7 @@ class LikeUnlikeRepositoryImpl extends LikeUnlikeRepository {
   Future<Either<Failure, void>> unlikeDoctor(CandidateListEntity doctor) async {
     try {
       await datasource.unlikeDoctor(doctor.id);
-      _doctorController.add(doctor);
+      _doctorController.add(doctor.copyWith(isFavorite: false));
       return Right('');
     } on DioException {
       return Left(DioFailure());

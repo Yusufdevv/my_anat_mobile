@@ -9,6 +9,7 @@ class ProfileFavouriteState extends Equatable {
   final bool candidateFetchMore;
   final String? vacancyNext;
   final String? candidateNext;
+
   const ProfileFavouriteState({
     this.candidateFetchMore = false,
     this.candidateNext,

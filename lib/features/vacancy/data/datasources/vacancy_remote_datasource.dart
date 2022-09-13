@@ -1,12 +1,16 @@
 import 'package:anatomica/core/data/singletons/dio_settings.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
+import 'package:anatomica/features/vacancy/data/models/candidate_education.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_list.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_single.dart';
+import 'package:anatomica/features/vacancy/data/models/candidate_work.dart';
 import 'package:anatomica/features/vacancy/data/models/category_list.dart';
+import 'package:anatomica/features/vacancy/data/models/certificate.dart';
 import 'package:anatomica/features/vacancy/data/models/district.dart';
 import 'package:anatomica/features/vacancy/data/models/region.dart';
 import 'package:anatomica/features/vacancy/data/models/specization.dart';
@@ -186,7 +190,9 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (categoryId != null) {
       query.putIfAbsent('specialization', () => categoryId);
     }
-    final response = await dio.get(next ?? '/doctor/', queryParameters: query);
+    final response = await dio.get(next ?? '/doctor/open-to-work/',
+        queryParameters: query,
+        options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
 
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
@@ -267,16 +273,31 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
 
   @override
   Future<GenericPagination<CertificateEntity>> getCandidateCertificate({required int id}) async {
-    throw UnimplementedError();
+    final response = await dio.get('/doctor/1$id/certificates/', options: Options(headers: {}));
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return GenericPagination.fromJson(response.data, (p0) => CertificateModel.fromJson(p0 as Map<String, dynamic>));
+    }
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation({required int id}) async {
-    throw UnimplementedError();
+    final response = await dio.get('/doctor/$id/education/', options: Options(headers: {}));
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return GenericPagination.fromJson(
+          response.data, (p0) => CandidateEducationModel.fromJson(p0 as Map<String, dynamic>));
+    }
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<CandidateWorkEntity>> getCandidateWork({required int id}) async {
-    throw UnimplementedError();
+    final response = await dio.get('/doctor/$id/work/', options: Options(headers: {}));
+    print(response.statusCode);
+    print(response.data);
+    if (response.statusCode! >= 200 && response.statusCode! < 300) {
+      return GenericPagination.fromJson(response.data, (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
+    }
+    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 }

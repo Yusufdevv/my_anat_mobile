@@ -10,7 +10,9 @@ import 'package:anatomica/features/profile/data/repositories/profile_impl.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_liked_candidates_usecase.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_liked_vacancies_usecase.dart';
 import 'package:anatomica/features/profile/presentation/blocs/profile_favourite_bloc/profile_favourite_bloc.dart';
+import 'package:anatomica/features/vacancy/prezentation/pages/candidate_single.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_single.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -92,18 +94,23 @@ class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderSt
                   hasMoreToFetch: state.vacancyFetchMore,
                   errorWidget: const Text('error'),
                 ),
-                ListView.separated(
+                Paginator(
                   padding: const EdgeInsets.only(top: 0),
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) => SizedBox(),
-                  //     CandidateItem(
-                  //   onTap: () {
-                  //     Navigator.of(context).push(fade(page: const CandidateSingleScreen()));
-                  //   },
-                  // ),
+                  itemBuilder: (context, index) => CandidateItem(
+                    candidateListEntity: state.likedCandidates[index],
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(fade(page: SingleCandidateScreen(id: state.likedCandidates[index].id)));
+                    },
+                  ),
                   separatorBuilder: (context, index) => const SizedBox(height: 12),
-                  itemCount: 10,
+                  itemCount: state.likedCandidates.length,
+                  paginatorStatus: state.candidateStatus,
+                  fetchMoreFunction: () {
+                    context.read<ProfileFavouriteBloc>().add(GetMoreLikedCandidates());
+                  },
+                  hasMoreToFetch: state.candidateFetchMore,
+                  errorWidget: const Text('error'),
                 )
               ],
             );

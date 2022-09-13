@@ -3,6 +3,7 @@ import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
+import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
@@ -62,6 +63,8 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
       topOrganizationUseCase: TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       likeUnlikeVacancyStreamUseCase:
           LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+      likeUnlikeDoctorStreamUseCase:
+          LikeUnlikeDoctorStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
     );
     regionBloc = RegionBloc(
         districtUseCase: DistrictUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),

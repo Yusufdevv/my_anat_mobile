@@ -1,7 +1,7 @@
-import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
+import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
-import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'candidate_list.g.dart';
@@ -18,9 +18,8 @@ class CandidateListModel extends CandidateListEntity {
     required super.fullName,
     required super.position,
     required super.workExperience,
-    required super.isFavourite,
+    required super.isFavorite,
   });
 
-  factory CandidateListModel.fromJson(Map<String, dynamic> json) =>
-      _$CandidateListModelFromJson(json);
+  factory CandidateListModel.fromJson(Map<String, dynamic> json) => _$CandidateListModelFromJson(json);
 }

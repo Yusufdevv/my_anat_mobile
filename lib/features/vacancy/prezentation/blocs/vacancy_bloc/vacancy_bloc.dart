@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anatomica/core/usecases/usecase.dart';
+import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/vacancy/data/models/top_organization.dart';
@@ -34,7 +35,9 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
   final CategoryListUseCase categoryListUseCase;
   final VacancyFilterUseCase vacancyFilterUseCase;
   final LikeUnlikeVacancyStreamUseCase _likeUnlikeVacancyStreamUseCase;
+  final LikeUnlikeDoctorStreamUseCase _likeUnlikeDoctorStreamUseCase;
   late StreamSubscription<VacancyListEntity> vacancySubscription;
+  late StreamSubscription<CandidateListEntity> doctorSubscription;
   VacancyBloc({
     required this.vacancyListUseCase,
     required this.topOrganizationUseCase,
@@ -44,7 +47,9 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     required this.categoryListUseCase,
     required this.vacancyFilterUseCase,
     required LikeUnlikeVacancyStreamUseCase likeUnlikeVacancyStreamUseCase,
+    required LikeUnlikeDoctorStreamUseCase likeUnlikeDoctorStreamUseCase,
   })  : _likeUnlikeVacancyStreamUseCase = likeUnlikeVacancyStreamUseCase,
+        _likeUnlikeDoctorStreamUseCase = likeUnlikeDoctorStreamUseCase,
         super(VacancyState(
           paginatorStatus: PaginatorStatus.PAGINATOR_LOADING,
           count: 0,
@@ -71,6 +76,9 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         )) {
     vacancySubscription = _likeUnlikeVacancyStreamUseCase.call(NoParams()).listen((event) {
       add(LikeUnlikeVacancy(vacancy: event));
+    });
+    doctorSubscription = _likeUnlikeDoctorStreamUseCase.call(NoParams()).listen((event) {
+      add(LikeUnlikeCandidate(candidate: event));
     });
     on<GetVacancyListEvent>((event, emit) async {
       final result = await vacancyListUseCase.call(VacancyListParams(vacancyParamsEntity: event.vacancyParamsEntity));
@@ -241,6 +249,17 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         newList.insert(newList.indexOf(currentVacancy), event.vacancy);
         newList.remove(currentVacancy);
         emit(state.copyWith(vacancyList: newList));
+      }
+    });
+    on<LikeUnlikeCandidate>((event, emit) {
+      final newList = [...state.candidateList];
+      final currentCandidate =
+          newList.firstWhere((element) => element.id == event.candidate.id, orElse: () => const CandidateListEntity());
+
+      if (currentCandidate.id != 0) {
+        newList.insert(newList.indexOf(currentCandidate), event.candidate);
+        newList.remove(currentCandidate);
+        emit(state.copyWith(candidateList: newList));
       }
     });
   }

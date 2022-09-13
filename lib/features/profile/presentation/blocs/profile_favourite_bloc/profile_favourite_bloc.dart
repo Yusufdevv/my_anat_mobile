@@ -38,7 +38,17 @@ class ProfileFavouriteBloc extends Bloc<ProfileFavouriteEvent, ProfileFavouriteS
     candidateLikeSubscription = _likeUnlikeDoctorStreamUseCase.call(NoParams()).listen((event) {
       add(AddRemoveLikedCandidates(candidate: event));
     });
-    on<AddRemoveLikedCandidates>((event, emit) {});
+    on<AddRemoveLikedCandidates>((event, emit) {
+      if (event.candidate.isFavorite) {
+        final newList = [...state.likedCandidates];
+        newList.add(event.candidate);
+        emit(state.copyWith(likedCandidates: newList));
+      } else {
+        final newList = [...state.likedCandidates];
+        newList.removeWhere((vacancy) => vacancy.id == event.candidate.id);
+        emit(state.copyWith(likedCandidates: newList));
+      }
+    });
     on<AddRemoveLikedVacancies>((event, emit) {
       if (event.vacancy.isFavorite) {
         final newList = [...state.likedVacancies];

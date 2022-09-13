@@ -14,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class FavouriteButtonVacancy extends StatelessWidget {
   final VacancyListEntity vacancy;
+
   const FavouriteButtonVacancy({required this.vacancy, Key? key}) : super(key: key);
 
   @override

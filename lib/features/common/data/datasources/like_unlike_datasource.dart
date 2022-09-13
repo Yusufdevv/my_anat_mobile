@@ -51,8 +51,9 @@ class LikeUnlikeDatasourceImpl extends LikeUnlikeDatasource {
   @override
   Future<void> likeDoctor(int id) async {
     try {
-      final response = await _dio.delete('/doctor/$id/like/',
+      final response = await _dio.post('/doctor/$id/like/',
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      print('like data ${response.data}');
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
