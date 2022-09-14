@@ -7,7 +7,7 @@ class VacancyParamsEntity extends Equatable {
   final String? category;
   final String? workType;
   final String? region;
-  final List<String>? district;
+  final List<int>? district;
   final String? organization;
   final String? ordering;
   final int? limit;

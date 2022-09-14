@@ -44,10 +44,6 @@ abstract class VacancyRepository {
 
   Future<Either<Failure, List<VacancyOptionEntity>>> getVacancyFilter();
 
-  Future<Either<Failure, Either>> addWishListVacancy({required int user, required int vacancy});
-
-  Future<Either<Failure, Either>> removeWishListVacancy({required int id});
-
   Future<Either<Failure, GenericPagination<CertificateEntity>>> getCandidateCertificate(
       {required int id});
 

@@ -135,42 +135,15 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
           body: TabBarView(
             controller: tabController,
             children: [
-              // BlocBuilder<VacancySearchBloc, VacancySearchState>(
-              //   builder: (context, state) {
-              //     return Padding(
-              //       padding: const EdgeInsets.fromLTRB(16, 29, 0, 16),
-              //       child: Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           const VacancyTitleText(title: 'Популярные запросы'),
-              //           const WDivider(margin: EdgeInsets.symmetric(vertical: 13)),
-              //           Container(
-              //             color: white,
-              //             child: Column(
-              //               crossAxisAlignment: CrossAxisAlignment.start,
-              //               children: [
-              //                 ...List.generate(
-              //                     3, (index) => SearchItem(isLast: index == 2 ? true : false)),
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     );
-              //   },
-              // ),
               BlocBuilder<VacancySearchBloc, VacancySearchState>(
                 builder: (context, state) {
-                  print('state:${state.vacancyPaginatorStatus}');
                   return Paginator(
                     padding: EdgeInsets.only(bottom: 50 + mediaQuery.padding.bottom, top: 20),
                     paginatorStatus: state.vacancyPaginatorStatus,
                     errorWidget: const Text('Fail'),
+                    isEmpty: state.vacancyList.isEmpty,
+                    emptyWidget: const SearchEmpty(),
                     itemBuilder: (context, index) {
-                      if (state.vacancyList.isEmpty) {
-                        return const Center(child: SearchEmpty());
-                      }
-                      print('title: ${state.vacancyList[index].organization.title}');
                       return VacancyItem(
                         searchText: controller.text,
                         vacancyEntity: state.vacancyList[index],
@@ -189,15 +162,13 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
               ),
               BlocBuilder<VacancySearchBloc, VacancySearchState>(
                 builder: (context, state) {
-                  print('state:${state.candidatePaginatorStatus}');
                   return Paginator(
                     padding: EdgeInsets.only(bottom: 50 + mediaQuery.padding.bottom, top: 20),
                     paginatorStatus: state.candidatePaginatorStatus,
                     errorWidget: const Text('Fail'),
+                    isEmpty: state.candidateList.isEmpty,
+                    emptyWidget: const SearchEmpty(),
                     itemBuilder: (context, index) {
-                      if (state.candidateList.isEmpty) {
-                        return const Center(child: SearchEmpty());
-                      }
                       return CandidateItem(
                         searchText: controller.text,
                         candidateListEntity: state.candidateList[index],

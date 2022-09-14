@@ -12,6 +12,7 @@ class Paginator extends StatelessWidget {
   final Widget? emptyWidget;
   final Widget Function(BuildContext context, int index)? separatorBuilder;
   final Axis scrollDirection;
+  final Widget? loadingWidget;
 
   const Paginator({
     required this.paginatorStatus,
@@ -25,13 +26,14 @@ class Paginator extends StatelessWidget {
     this.separatorBuilder,
     this.isEmpty = false,
     this.emptyWidget,
+    this.loadingWidget,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (paginatorStatus == PaginatorStatus.PAGINATOR_LOADING) {
-      return const Center(child: CupertinoActivityIndicator());
+      return loadingWidget ?? const Center(child: CupertinoActivityIndicator());
     } else if (paginatorStatus == PaginatorStatus.PAGINATOR_ERROR) {
       return errorWidget;
     } else if (paginatorStatus == PaginatorStatus.PAGINATOR_SUCCESS) {

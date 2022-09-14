@@ -28,7 +28,7 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
   late PageController pageController;
   int currentPage = 0;
   bool isCheck = false;
-  List<String> list = [];
+  List<int> list = [];
   bool isAllDistrict = false;
 
   @override
@@ -133,15 +133,17 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return CheckBoxTitle(
-                        isChecked: list.contains(widget.regionBloc.state.districts[index+1].title),
+                        isChecked: list.length == widget.regionBloc.state.districts.length,
                         onTap: () {
                           setState(() {
-                            for (var element in widget.regionBloc.state.districts) {
-                              if (list.contains(element.title)) {
-                                list.remove(element.title);
-                              } else {
-                                list.add(element.title);
-                              }
+                            var items = widget.regionBloc.state.districts.map((e) => e.id).toList();
+                            if (list.length == items.length) {
+                              list.clear();
+                            } else if (list.isNotEmpty) {
+                              list.clear();
+                              list.addAll(items);
+                            } else {
+                              list.addAll(items);
                             }
                           });
                         },
@@ -149,18 +151,17 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                         padding: EdgeInsets.zero,
                       );
                     }
-                    print(widget.vacancyBloc.state.districtList);
 
                     return CheckBoxTitle(
                       padding: EdgeInsets.zero,
-                      isChecked: list.contains(widget.regionBloc.state.districts[index - 1].title),
+                      isChecked: list.contains(widget.regionBloc.state.districts[index - 1].id),
                       title: state.districts[index - 1].title,
                       onTap: () {
                         setState(() {
-                          if (list.contains(widget.regionBloc.state.districts[index - 1].title)) {
-                            list.remove(widget.regionBloc.state.districts[index - 1].title);
+                          if (list.contains(widget.regionBloc.state.districts[index - 1].id)) {
+                            list.remove(widget.regionBloc.state.districts[index - 1].id);
                           } else {
-                            list.add(widget.regionBloc.state.districts[index - 1].title);
+                            list.add(widget.regionBloc.state.districts[index - 1].id);
                           }
                         });
                       },

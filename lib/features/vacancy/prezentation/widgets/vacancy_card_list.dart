@@ -3,6 +3,7 @@ import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_single.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_card.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_card_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,6 +38,7 @@ class VacancyCardList extends StatelessWidget {
             },
             paginatorStatus: state.paginatorStatusOrganization,
             hasMoreToFetch: state.fetchMoreOrganization,
+            loadingWidget: const VacancyCardShimmer(),
           ),
         );
       },

@@ -11,7 +11,6 @@ import 'package:anatomica/features/vacancy/domain/usecases/related_vacancy.dart'
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_single.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_single/vacancy_single_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/category_container.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/dot_text_widget.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_single_appbar.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_single_appbar_header.dart';
@@ -65,7 +64,6 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
       child: Scaffold(
         body: BlocBuilder<VacancySingleBloc, VacancySingleState>(
           builder: (context, state) {
-            print('status:${state.status}');
             if (state.status.isPure) {
               context.read<VacancySingleBloc>().add(GetSingleVacancyEvent(slug: widget.slug));
             } else if (state.status.isSubmissionInProgress) {
@@ -109,23 +107,24 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                           style: const {},
                         ),
                         VacancyTitleText(title: LocaleKeys.category.tr()),
-                        const SizedBox(height: 8),
-                        SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: List.generate(
-                              state.vacancyListEntity.organization.speciazilation.length,
-                              (index) => CategoryContainer(
-                                margin: const EdgeInsets.only(right: 12),
-                                onTap: () {},
-                                title: state
-                                    .vacancyListEntity.organization.speciazilation[index].title,
+                        SizedBox(
+                          child: SingleChildScrollView(
+                            padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: List.generate(
+                                state.vacancyListEntity.organization.speciazilation.length,
+                                (index) => CategoryContainer(
+                                  margin: const EdgeInsets.only(right: 12),
+                                  onTap: () {},
+                                  title: state
+                                      .vacancyListEntity.organization.speciazilation[index].title,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
                         const VacancyTitleText(title: 'Тип занятности'),
                         const SizedBox(height: 8),
                         Text(
@@ -213,7 +212,6 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               VacancyTitleText(title: LocaleKeys.information_work.tr()),
-                              // const SizedBox(height: 8),
                               Html(data: state.vacancyListEntity.description),
                               Text(
                                 '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt)}',

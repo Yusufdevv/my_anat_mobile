@@ -55,7 +55,7 @@ class SelectExperienceEvent extends VacancyEvent {
 }
 
 class SelectDistrictEvent extends VacancyEvent {
-  final List<String>? districtList;
+  final List<int>? districtList;
   final Function onSuccess;
 
   SelectDistrictEvent({required this.onSuccess, this.districtList});

@@ -42,16 +42,10 @@ class VacancyScreen extends StatefulWidget {
   State<VacancyScreen> createState() => _VacancyScreenState();
 }
 
-class _VacancyScreenState extends State<VacancyScreen>
-    with TickerProviderStateMixin {
+class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateMixin {
   late TabController tabController;
   bool hasFilter = false;
-  List<String> categoryList = [
-    'Стоматолог',
-    'Кардиолог',
-    'Терапевт',
-    'Пулмонолг'
-  ];
+  List<String> categoryList = ['Стоматолог', 'Кардиолог', 'Терапевт', 'Пулмонолг'];
   late VacancyBloc vacancyBloc;
   late RegionBloc regionBloc;
 
@@ -62,30 +56,26 @@ class _VacancyScreenState extends State<VacancyScreen>
         setState(() {});
       });
     vacancyBloc = VacancyBloc(
-      vacancyFilterUseCase: VacancyFilterUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      categoryListUseCase: CategoryListUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      candidateListUseCase: CandidateListUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyOptionUseCase: VacancyOptionUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      organizationVacancyUseCase: OrganizationVacancyUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyListUseCase: VacancyListUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      topOrganizationUseCase: TopOrganizationUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
-          repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
-      likeUnlikeDoctorStreamUseCase: LikeUnlikeDoctorStreamUseCase(
-          repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+      vacancyFilterUseCase:
+          VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      candidateListUseCase:
+          CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyOptionUseCase:
+          VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      organizationVacancyUseCase:
+          OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      topOrganizationUseCase:
+          TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      likeUnlikeVacancyStreamUseCase:
+          LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+      likeUnlikeDoctorStreamUseCase:
+          LikeUnlikeDoctorStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
     );
     regionBloc = RegionBloc(
-        districtUseCase: DistrictUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        regionUseCase:
-            RegionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        districtUseCase: DistrictUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        regionUseCase: RegionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
     vacancyBloc.add(GetVacancyListEvent(onSuccess: () {}));
     vacancyBloc.add(GetTopOrganizationEvent());
     vacancyBloc.add(GetCandidateListEvent());
@@ -128,14 +118,12 @@ class _VacancyScreenState extends State<VacancyScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, bottom: 12, top: 16),
+                          padding: const EdgeInsets.only(left: 16, bottom: 12, top: 16),
                           child: Text(
                             LocaleKeys.categories.tr(),
-                            style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                            style: Theme.of(context).textTheme.headline1!.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                         ),
                         BlocBuilder<VacancyBloc, VacancyState>(
@@ -143,31 +131,24 @@ class _VacancyScreenState extends State<VacancyScreen>
                             return SingleChildScrollView(
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: Row(
-                                children: [
-                                  ...List.generate(
-                                    state.categoryList.length,
-                                    (index) => CategoryContainer(
-                                      onTap: () {
-                                        vacancyBloc.add(GetVacancyListEvent(
-                                            onSuccess: () {},
-                                            vacancyParamsEntity:
-                                                VacancyParamsEntity(
-                                                    category:
-                                                        '${state.categoryList[index].id}')));
-                                        vacancyBloc.add(GetOrganizationVacancyEvent(
-                                            category:
-                                                '${state.categoryList[index].id}'));
-                                        vacancyBloc.add(GetCandidateListEvent(
-                                            categoryId:
-                                                '${state.categoryList[index].id}'));
-                                      },
-                                      title: state.categoryList[index].title,
-                                    ),
-                                  )
-                                ],
+                                children: List.generate(
+                                  state.categoryList.length,
+                                  (index) => CategoryContainer(
+                                    onTap: () {
+                                      vacancyBloc.add(GetVacancyListEvent(
+                                          onSuccess: () {},
+                                          vacancyParamsEntity: VacancyParamsEntity(
+                                              category: '${state.categoryList[index].id}')));
+                                      vacancyBloc.add(GetOrganizationVacancyEvent(
+                                          category: '${state.categoryList[index].id}'));
+                                      vacancyBloc.add(GetCandidateListEvent(
+                                          categoryId: '${state.categoryList[index].id}'));
+                                    },
+                                    title: state.categoryList[index].title,
+                                  ),
+                                ),
                               ),
                             );
                           },
@@ -177,10 +158,9 @@ class _VacancyScreenState extends State<VacancyScreen>
                           padding: const EdgeInsets.only(left: 16, bottom: 12),
                           child: Text(
                             LocaleKeys.vacancy_company.tr(),
-                            style:
-                                Theme.of(context).textTheme.headline1!.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                            style: Theme.of(context).textTheme.headline1!.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                         ),
                         Container(
@@ -203,22 +183,24 @@ class _VacancyScreenState extends State<VacancyScreen>
                               Stack(
                                 children: [
                                   const VacancyCardList(),
-                                  Positioned(
-                                    right: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      height: 145,
-                                      width: 20,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            white.withOpacity(0),
-                                            white,
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                  vacancyBloc.state.organizationVacancyList.length == 1
+                                      ? const SizedBox()
+                                      : Positioned(
+                                          right: 0,
+                                          bottom: 0,
+                                          child: Container(
+                                            height: 145,
+                                            width: 20,
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  white.withOpacity(0),
+                                                  white,
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
                                 ],
                               ),
                             ],
@@ -243,8 +225,7 @@ class _VacancyScreenState extends State<VacancyScreen>
                 tabController.index != 1
                     ? FilterContainer(
                         onTap: () {
-                          showFilterBottomSheet(
-                              context, regionBloc, vacancyBloc);
+                          showFilterBottomSheet(context, regionBloc, vacancyBloc);
                         },
                       )
                     : const SizedBox(),
@@ -257,9 +238,7 @@ class _VacancyScreenState extends State<VacancyScreen>
                     children: [
                       VacancyItemList(
                         onSuccess: (text) {
-                          context
-                              .read<ShowPopUpBloc>()
-                              .add(ShowPopUp(message: text));
+                          context.read<ShowPopUpBloc>().add(ShowPopUp(message: text));
                         },
                       ),
                       const CandidateItemList(),

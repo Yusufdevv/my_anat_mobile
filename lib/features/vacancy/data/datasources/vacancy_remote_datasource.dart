@@ -43,7 +43,8 @@ abstract class VacancyRemoteDataSource {
 
   Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug});
 
-  Future<GenericPagination<CandidateListModel>> getCandidateList({String? next, String? search, String? categoryId});
+  Future<GenericPagination<CandidateListModel>> getCandidateList(
+      {String? next, String? search, String? categoryId});
 
   Future<CandidateSingleModel> getCandidateSingle({required int id});
 
@@ -54,10 +55,6 @@ abstract class VacancyRemoteDataSource {
   Future<GenericPagination<CategoryListModel>> getCategoryList({String? next});
 
   Future<List<VacancyOptionEntity>> getVacancyFilter();
-
-  Future<Either> addWishListVacancy({required int user, required int vacancy});
-
-  Future<Either> removeWishListVacancy({required int id});
 
   Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation({required int id});
 
@@ -74,7 +71,8 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   VacancyRemoteDataSourceImpl({required super.paginationDatasource});
 
   @override
-  Future<VacancyModel> getVacancyList({String? next, VacancyParamsEntity? vacancyParamsEntity}) async {
+  Future<VacancyModel> getVacancyList(
+      {String? next, VacancyParamsEntity? vacancyParamsEntity}) async {
     try {
       const url = '/vacancy/vacancy/list/';
       final Map<String, dynamic> query = {};
@@ -101,7 +99,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       if (vacancyParamsEntity?.district != null) {
         query.putIfAbsent('district', () => vacancyParamsEntity?.district);
       }
-
 
       final result = await paginationDatasource.fetchMore(
         url: url,
@@ -133,54 +130,85 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
 
   @override
   Future<TopOrganizationModel> getTopOrganization() async {
-    final response = await dio.get('/vacancy/vacancy/top-organization/');
+    final response = await dio.get('/vacancy/vacancy/top-organization/',
+        options: Options(
+          headers: StorageRepository.getString('token').isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              : {},
+        ));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return TopOrganizationModel.fromJson(response.data);
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<VacancyListModel> getSingleVacancy({required String slug}) async {
-    final response = await dio.get('/vacancy/vacancy/$slug/detail/');
+    final response = await dio.get('/vacancy/vacancy/$slug/detail/',
+        options: Options(
+          headers: StorageRepository.getString('token').isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              : {},
+        ));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return VacancyListModel.fromJson(response.data);
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination> getSpecizationList() async {
-    final response = await dio.get('/vacancy/vacancy/specization/list/');
+    final response = await dio.get('/vacancy/vacancy/specization/list/',
+        options: Options(
+          headers: StorageRepository.getString('token').isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              : {},
+        ));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(response.data, (p0) => SpecizationModel.fromJson);
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<List<VacancyOptionModel>> getVacancyOption() async {
-    final response = await dio.get('/vacancy/vacancy/list/');
+    final response = await dio.get('/vacancy/vacancy/list/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}));
     final result = response.requestOptions.data;
     print('optinoiList');
     print('result:$result');
     print(response.statusCode);
     print(response.requestOptions.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return (response.requestOptions.data as List).map((e) => VacancyOptionModel.fromJson(e)).toList();
+      return (response.requestOptions.data as List)
+          .map((e) => VacancyOptionModel.fromJson(e))
+          .toList();
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug}) async {
-    final response = await dio.get('/vacancy/vacancy/$slug/related/');
+    final response = await dio.get('/vacancy/vacancy/$slug/related/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}));
     print('/vacancy/vacancy/$slug/related/');
     print(response.statusCode);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(response.data, (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(
+          response.data, (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -200,24 +228,35 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     }
     final response = await dio.get(next ?? '/doctor/open-to-work/',
         queryParameters: query,
-        options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
-
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}));
+    print(response.data);
+    print(response.statusCode);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(
+          response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<CandidateSingleModel> getCandidateSingle({required int id}) async {
-    final response = await dio.get('/doctor/$id/detail/');
+    final response = await dio.get('/doctor/$id/detail/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}));
 
     print(response.realUri);
     print(response.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return CandidateSingleModel.fromJson(response.data);
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
@@ -227,100 +266,126 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (id != null) {
       query.putIfAbsent('region', () => id);
     }
-    final response = await dio.get(next ?? '/district/', queryParameters: query);
+    final response = await dio.get(next ?? '/district/',
+        queryParameters: query,
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(response.data, (p0) => DistrictModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(
+          response.data, (p0) => DistrictModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<RegionModel>> getRegion({String? next}) async {
-    final response = await dio.get(next ?? '/region/', queryParameters: {
-      'limit':6
-    });
+    final response = await dio.get(next ?? '/region/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}),
+        queryParameters: {'limit': 6});
     print('/region');
     print(next);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(response.data, (p0) => RegionModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(
+          response.data, (p0) => RegionModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<CategoryListModel>> getCategoryList({String? next}) async {
-    final response = await dio.get('/vacancy/vacancy/specization/list/');
+    final response = await dio.get('/vacancy/vacancy/specization/list/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(response.data, (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(
+          response.data, (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<List<VacancyOptionEntity>> getVacancyFilter() async {
-    final response = await dio.get('/vacancy/vacancy/filters/');
+    final response = await dio.get('/vacancy/vacancy/filters/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return (response.data as List).map((e) => VacancyOptionModel.fromJson(e)).toList();
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
-  }
-
-  @override
-  Future<Either> addWishListVacancy({required int user, required int vacancy}) async {
-    final response = await dio.post('/vacancy/vacancy/$vacancy/like',
-        data: {'user': user, 'vacancy': vacancy}, options: Options(headers: {}));
-    print(response.data);
-    print(response.statusCode);
-    if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return Right('');
-    }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
-  }
-
-  @override
-  Future<Either> removeWishListVacancy({required int id}) async {
-    final response = await dio.delete('/vacancy/vacancy/$id/dislike', options: Options(headers: {}));
-    if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return Right('');
-    }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<CertificateEntity>> getCandidateCertificate({required int id}) async {
-    final response = await dio.get('/doctor/$id/certificates/', options: Options(headers: {}));
+    final response = await dio.get('/doctor/$id/certificates/',
+        options: Options(
+          headers: StorageRepository.getString('token').isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              : {},
+        ));
     print(response.statusCode);
     print(response.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(response.data, (p0) => CertificateModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(
+          response.data, (p0) => CertificateModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
-  Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation({required int id}) async {
-    final response = await dio.get('/doctor/$id/education/', options: Options(headers: {}));
+  Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation(
+      {required int id}) async {
+    final response = await dio.get('/doctor/$id/education/',
+        options: Options(
+          headers: StorageRepository.getString('token').isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              : {},
+        ));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => CandidateEducationModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<CandidateWorkEntity>> getCandidateWork({required int id}) async {
-    final response = await dio.get('/doctor/$id/work/', options: Options(headers: {}));
+    final response = await dio.get('/doctor/$id/work/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}));
     print(response.statusCode);
     print(response.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
-      return GenericPagination.fromJson(response.data, (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
+      return GenericPagination.fromJson(
+          response.data, (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
     }
-    throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
+    throw ServerException(
+        statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
   }
 
   @override
   Future<GenericPagination<CandidateListEntity>> getRelatedCandidateList({required int id}) async {
-    final response = await dio.get('/doctor/22/related/', options: Options(headers: {}));
+    final response = await dio.get('/doctor/22/related/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}));
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));

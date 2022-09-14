@@ -63,16 +63,16 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
                       state.vacancyFilterList[0].choices.length,
                       (index) => CheckBoxTitle(
                         onTap: () {
-                            setState(() {
-                              if (list.contains(state.vacancyFilterList[0].choices[index].key)) {
-                                list.remove(state.vacancyFilterList[0].choices[index].key);
-                              } else {
-                                list.add(state.vacancyFilterList[0].choices[index].key);
-                              }
-                            });
+                          setState(() {
+                            if (list.contains(state.vacancyFilterList[0].choices[index].key)) {
+                              list.remove(state.vacancyFilterList[0].choices[index].key);
+                            } else {
+                              list.add(state.vacancyFilterList[0].choices[index].key);
+                            }
+                          });
                         },
                         title: state.vacancyFilterList[0].choices[index].value,
-                        isLast: false,
+                        isLast: index + 1 == state.vacancyFilterList[0].choices.length,
                         isChecked: list.contains(state.vacancyFilterList[0].choices[index].key),
                       ),
                     ),
@@ -95,6 +95,7 @@ void showSalaryBottomSheet(BuildContext context, VacancyBloc vacancyBloc) {
   showModalBottomSheet(
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
+    isScrollControlled: true,
     context: context,
     builder: (context) => SalaryBottomSheet(vacancyBloc: vacancyBloc),
   );
