@@ -8,10 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VacancyItemList extends StatelessWidget {
   final EdgeInsets? margin;
-  final Function(String text) onSuccess;
 
-  const VacancyItemList({this.margin, required this.onSuccess, Key? key}) : super(key: key);
+  const VacancyItemList({this.margin, Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return BlocBuilder<VacancyBloc, VacancyState>(

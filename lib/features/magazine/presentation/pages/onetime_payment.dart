@@ -10,21 +10,20 @@ import 'package:anatomica/features/common/presentation/widgets/phone_text_field.
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/data/repositories/payment_repository_impl.dart';
+import 'package:anatomica/features/magazine/domain/usecases/check_payment_status_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/order_create_article_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/order_create_journal_usecase.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_expect.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class OneTimePayment extends StatefulWidget {
   final String imageUrl;
@@ -49,8 +48,7 @@ class OneTimePayment extends StatefulWidget {
   State<OneTimePayment> createState() => _OneTimePaymentState();
 }
 
-class _OneTimePaymentState extends State<OneTimePayment>
-    with TickerProviderStateMixin {
+class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStateMixin {
   late TabController controller;
   late TextEditingController phoneController;
   late TextEditingController emailController;
@@ -76,10 +74,9 @@ class _OneTimePaymentState extends State<OneTimePayment>
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PaymentBloc(
-        orderCreateArticleUseCase: OrderCreateArticleUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-        orderCreateJournalUseCase: OrderCreateJournalUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
+        orderCreateArticleUseCase: OrderCreateArticleUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
+        orderCreateJournalUseCase: OrderCreateJournalUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
+        checkPaymentStatusUseCase: CheckPaymentStatusUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
       ),
       child: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {
@@ -96,16 +93,13 @@ class _OneTimePaymentState extends State<OneTimePayment>
                 title: Column(
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 13, right: 16, left: 16),
+                      padding: const EdgeInsets.only(top: 13, right: 16, left: 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Spacer(),
                           Text(
-                            widget.isRegistered
-                                ? 'Покупка журнала'
-                                : LocaleKeys.only_pay.tr(),
+                            widget.isRegistered ? 'Покупка журнала' : LocaleKeys.only_pay.tr(),
                             style: Theme.of(context).textTheme.headline1,
                           ),
                           const Spacer(),
@@ -166,46 +160,38 @@ class _OneTimePaymentState extends State<OneTimePayment>
                   if (!widget.isRegistered) ...{
                     SizedBox(
                       height: 105,
-                      child: TabBarView(
-                          controller: controller,
-                          physics: const BouncingScrollPhysics(),
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                              child: PhoneTextField(
-                                controller: phoneController,
-                                title: 'Номер телефона',
-                              ),
+                      child: TabBarView(controller: controller, physics: const BouncingScrollPhysics(), children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+                          child: PhoneTextField(
+                            controller: phoneController,
+                            title: 'Номер телефона',
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+                          child: DefaultTextField(
+                            title: 'Электронная почта',
+                            controller: emailController,
+                            onChanged: (value) {},
+                            prefix: Padding(
+                              padding: const EdgeInsets.only(left: 12, right: 8),
+                              child: SvgPicture.asset(AppIcons.mail),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                              child: DefaultTextField(
-                                title: 'Электронная почта',
-                                controller: emailController,
-                                onChanged: (value) {},
-                                prefix: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 12, right: 8),
-                                  child: SvgPicture.asset(AppIcons.mail),
-                                ),
-                                hintText: 'example@anatomica.uz',
-                              ),
-                            ),
-                          ]),
+                            hintText: 'example@anatomica.uz',
+                          ),
+                        ),
+                      ]),
                     ),
                   },
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16)
-                        .copyWith(top: widget.isRegistered ? 16 : 0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: widget.isRegistered ? 16 : 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: divider),
-                              borderRadius: BorderRadius.circular(8)),
+                          decoration:
+                              BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: CachedNetworkImage(
@@ -218,35 +204,35 @@ class _OneTimePaymentState extends State<OneTimePayment>
                           ),
                         ),
                         const SizedBox(width: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(widget.title,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.title,
+                                style: Theme.of(context).textTheme.headline1!.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                widget.subtitle,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline1!
-                                    .copyWith(
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                            const SizedBox(height: 4),
-                            Text(
-                              widget.subtitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3!
-                                  .copyWith(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400),
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              MyFunctions.getFormatCostFromInt(widget.price),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(fontSize: 20),
-                            ),
-                          ],
+                                    .headline3!
+                                    .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                MyFunctions.getFormatCostFromInt(widget.price),
+                                style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -262,12 +248,8 @@ class _OneTimePaymentState extends State<OneTimePayment>
                     child: GridView(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 15,
-                              mainAxisSpacing: 16,
-                              mainAxisExtent: 54),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 16, mainAxisExtent: 54),
                       children: [
                         PaymentMethod(
                           onTap: (value) {
@@ -303,15 +285,10 @@ class _OneTimePaymentState extends State<OneTimePayment>
                     ),
                   ),
                   WButton(
-                    margin: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).padding.bottom + 16,
-                        left: 16,
-                        right: 16),
+                    margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
                     onTap: () {
                       if (currentPaymentMethod.isEmpty) {
-                        context
-                            .read<ShowPopUpBloc>()
-                            .add(ShowPopUp(message: 'To\'lov turini tanlang'));
+                        context.read<ShowPopUpBloc>().add(ShowPopUp(message: 'To\'lov turini tanlang'));
                       } else {
                         if (widget.isJournal) {
                           context.read<PaymentBloc>().add(
@@ -319,19 +296,14 @@ class _OneTimePaymentState extends State<OneTimePayment>
                                   journalId: widget.id,
                                   price: widget.price,
                                   isRegistered: widget.isRegistered,
-                                  phone: isPhone
-                                      ? "+998${phoneController.text.replaceAll(' ', '')}"
-                                      : '',
+                                  phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
                                   email: !isPhone ? emailController.text : '',
                                   paymentProvider: currentPaymentMethod,
                                   onSuccess: (value) {
-                                    launchUrlString(value,
-                                        mode: LaunchMode.externalApplication);
+                                    launchUrlString(value, mode: LaunchMode.externalApplication);
                                   },
                                   onError: (message) {
-                                    context
-                                        .read<ShowPopUpBloc>()
-                                        .add(ShowPopUp(message: message));
+                                    context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
                                   },
                                 ),
                               );
@@ -341,23 +313,22 @@ class _OneTimePaymentState extends State<OneTimePayment>
                                   isRegistered: widget.isRegistered,
                                   articleId: widget.id,
                                   price: widget.price,
-                                  phone: isPhone
-                                      ? "+998${phoneController.text.replaceAll(' ', '')}"
-                                      : '',
+                                  phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
                                   email: !isPhone ? emailController.text : '',
                                   paymentProvider: currentPaymentMethod,
                                   onSuccess: (value) {
-                                    launchUrlString(value,
-                                        mode: LaunchMode.externalApplication);
-                                    Navigator.of(context).push(fade(
+                                    launchUrlString(value, mode: LaunchMode.externalApplication);
+                                    Navigator.of(context).push(
+                                      fade(
                                         page: OneTimeExpect(
-                                      isRegistered: widget.isRegistered,
-                                    )));
+                                          isRegistered: widget.isRegistered,
+                                          bloc: context.read<PaymentBloc>(),
+                                        ),
+                                      ),
+                                    );
                                   },
                                   onError: (message) {
-                                    context
-                                        .read<ShowPopUpBloc>()
-                                        .add(ShowPopUp(message: message));
+                                    context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
                                   },
                                 ),
                               );

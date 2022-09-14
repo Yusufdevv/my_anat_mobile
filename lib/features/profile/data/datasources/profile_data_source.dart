@@ -5,7 +5,7 @@ import 'package:anatomica/features/pagination/data/models/generic_pagination.dar
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 import 'package:anatomica/features/profile/data/models/faq_model.dart';
 import 'package:anatomica/features/profile/data/models/uploaded_image_model.dart';
-import 'package:anatomica/features/vacancy/data/models/vacancy.dart';
+import 'package:anatomica/features/vacancy/data/models/candidate_list.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:dio/dio.dart';
 
@@ -17,7 +17,8 @@ abstract class ProfileDatasource {
 
   ProfileDatasource({required this.paginationDatasource});
 
-  Future<VacancyModel> getLikedVacancyList({String? next, int? organizationId});
+  Future<GenericPagination<VacancyListModel>> getLikedVacancyList({String? next});
+  Future<GenericPagination<CandidateListModel>> getLikedCandidateList({String? next});
 
   Future<UserModel> getProfile();
   Future<void> deleteAccount();
@@ -36,27 +37,13 @@ class ProfileDatasourceImpl extends ProfileDatasource {
   ProfileDatasourceImpl(this._dio, {required super.paginationDatasource});
 
   @override
-  Future<VacancyModel> getLikedVacancyList({String? next, int? organizationId}) async {
+  Future<GenericPagination<VacancyListModel>> getLikedVacancyList({String? next}) async {
     try {
-      const url = '/vacancy/vacancy/liked/';
-      final Map<String, dynamic> query = {};
-      if (organizationId != null) {
-        query.putIfAbsent('organization', () => organizationId);
-      }
+      final results = await _dio.get(next ?? '/vacancy/vacancy/liked',
+          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'})));
 
-      final result = await paginationDatasource.fetchMore(
-        url: url,
-        next: next,
-        fromJson: VacancyListModel.fromJson,
-        query: query,
-      );
-
-      final vacancies = VacancyModel(
-        next: result.next,
-        results: result.results,
-        count: result.count,
-      );
-      return vacancies;
+      return GenericPagination.fromJson(
+          results.data, (p0) => VacancyListModel.fromJson((p0 as Map<String, dynamic>)['vacancy']));
     } on ServerException {
       rethrow;
     } on DioError catch (error) {
@@ -179,6 +166,26 @@ class ProfileDatasourceImpl extends ProfileDatasource {
       final response = await _dio.get(next ?? '/faq/');
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) => FaqModel.fromJson(p0 as Map<String, dynamic>? ?? {}));
+      } else {
+        throw ServerException(errorMessage: response.data.toString(), statusCode: response.statusCode ?? 0);
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<GenericPagination<CandidateListModel>> getLikedCandidateList({String? next}) async {
+    try {
+      final response = await _dio.get(next ?? '/doctor/liked/',
+          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'})));
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(
+            response.data, (p0) => CandidateListModel.fromJson((p0 as Map<String, dynamic>? ?? {})['doctor']));
       } else {
         throw ServerException(errorMessage: response.data.toString(), statusCode: response.statusCode ?? 0);
       }

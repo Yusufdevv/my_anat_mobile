@@ -1,4 +1,5 @@
 import 'package:anatomica/core/exceptions/failures.dart';
+import 'package:anatomica/features/magazine/domain/usecases/check_payment_status_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/order_create_article_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/order_create_journal_usecase.dart';
 import 'package:bloc/bloc.dart';
@@ -12,14 +13,17 @@ part 'payment_state.dart';
 class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   final OrderCreateArticleUseCase _orderCreateArticleUseCase;
   final OrderCreateJournalUseCase _orderCreateJournalUseCase;
+  final CheckPaymentStatusUseCase _checkPaymentStatusUseCase;
   PaymentBloc({
     required OrderCreateJournalUseCase orderCreateJournalUseCase,
     required OrderCreateArticleUseCase orderCreateArticleUseCase,
+    required CheckPaymentStatusUseCase checkPaymentStatusUseCase,
   })  : _orderCreateJournalUseCase = orderCreateJournalUseCase,
         _orderCreateArticleUseCase = orderCreateArticleUseCase,
+        _checkPaymentStatusUseCase = checkPaymentStatusUseCase,
         super(const PaymentState()) {
     on<OrderCreateArticle>((event, emit) async {
-      emit(const PaymentState(orderCreateStatus: FormzStatus.submissionInProgress));
+      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateArticleUseCase.call(OrderCreateParams(
         id: event.articleId,
         price: event.price,
@@ -29,10 +33,10 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         paymentProvider: event.paymentProvider,
       ));
       if (result.isRight) {
-        emit(const PaymentState(orderCreateStatus: FormzStatus.submissionSuccess));
-        event.onSuccess(result.right);
+        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
+        event.onSuccess(result.right.transactionCheckoutUrl);
       } else {
-        emit(const PaymentState(orderCreateStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
           event.onError('Tarmoqqa ulanishda muammo');
         } else if (result.left is ParsingFailure) {
@@ -44,8 +48,17 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         }
       }
     });
+    on<CheckPaymentStatus>((event, emit) async {
+      emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionInProgress));
+      final result = await _checkPaymentStatusUseCase.call(state.paymentId);
+      if (result.isRight) {
+        emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionSuccess, status: result.right));
+      } else {
+        emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionFailure));
+      }
+    });
     on<OrderCreateJournal>((event, emit) async {
-      emit(const PaymentState(orderCreateStatus: FormzStatus.submissionInProgress));
+      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateJournalUseCase.call(OrderCreateParams(
         id: event.journalId,
         price: event.price,
@@ -55,10 +68,10 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         paymentProvider: event.paymentProvider,
       ));
       if (result.isRight) {
-        emit(const PaymentState(orderCreateStatus: FormzStatus.submissionSuccess));
-        event.onSuccess(result.right);
+        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
+        event.onSuccess(result.right.transactionCheckoutUrl);
       } else {
-        emit(const PaymentState(orderCreateStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
           event.onError('Tarmoqqa ulanishda muammo');
         } else if (result.left is ParsingFailure) {

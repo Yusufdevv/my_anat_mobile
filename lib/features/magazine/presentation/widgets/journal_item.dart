@@ -6,10 +6,10 @@ import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart'
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MagazineItem extends StatelessWidget {
@@ -57,9 +57,8 @@ class MagazineItem extends StatelessWidget {
                   children: [
                     Container(
                       height: 492,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: divider),
-                          borderRadius: BorderRadius.circular(8)),
+                      decoration:
+                          BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: CachedNetworkImage(
@@ -79,13 +78,11 @@ class MagazineItem extends StatelessWidget {
                           color: black.withOpacity(0.4),
                         ),
                         child: Text(
-                          MyFunctions.getPublishedDate(
-                              journalEntity.publishDate),
+                          MyFunctions.getPublishedDate(journalEntity.publishDate),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
-                              .copyWith(
-                                  fontSize: 12, fontWeight: FontWeight.w400),
+                              .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ),
@@ -100,10 +97,7 @@ class MagazineItem extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   journalEntity.name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                  style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -119,10 +113,7 @@ class MagazineItem extends StatelessWidget {
                         onTap: onLeftButtonTap,
                         child: Text(
                           LocaleKeys.preview.tr(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(fontSize: 14),
+                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ),
                     ),
@@ -136,8 +127,7 @@ class MagazineItem extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
-                              .copyWith(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
+                              .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -155,8 +145,7 @@ class MagazineItem extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
-                              .copyWith(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
+                              .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -170,10 +159,7 @@ class MagazineItem extends StatelessWidget {
                         onTap: onRightButtonTap,
                         child: Text(
                           LocaleKeys.subscribe.tr(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(fontSize: 14),
+                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ),
                     ),

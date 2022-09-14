@@ -1,9 +1,10 @@
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
+import 'package:anatomica/features/magazine/data/models/payment_response_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class PaymentDatasource {
-  Future<String> orderCreateArticle({
+  Future<PaymentResponseModel> orderCreateArticle({
     required int articleId,
     required int price,
     required String phoneNumber,
@@ -11,7 +12,7 @@ abstract class PaymentDatasource {
     required String paymentProvider,
     required bool isRegistered,
   });
-  Future<String> orderCreateJournal({
+  Future<PaymentResponseModel> orderCreateJournal({
     required int journalId,
     required int price,
     required String phoneNumber,
@@ -19,13 +20,14 @@ abstract class PaymentDatasource {
     required String paymentProvider,
     required bool isRegistered,
   });
+  Future<String> checkPaymentStatus({required int id});
 }
 
 class PaymentDatasourceImpl extends PaymentDatasource {
   final Dio _dio;
   PaymentDatasourceImpl(this._dio);
   @override
-  Future<String> orderCreateArticle({
+  Future<PaymentResponseModel> orderCreateArticle({
     required int articleId,
     required int price,
     required String phoneNumber,
@@ -57,7 +59,8 @@ class PaymentDatasourceImpl extends PaymentDatasource {
           options:
               Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString('token')}'} : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data['transaction_checkout_url'] as String;
+        print(response.data);
+        return PaymentResponseModel.fromJson(response.data);
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
@@ -71,7 +74,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
   }
 
   @override
-  Future<String> orderCreateJournal({
+  Future<PaymentResponseModel> orderCreateJournal({
     required int journalId,
     required int price,
     required String phoneNumber,
@@ -103,7 +106,26 @@ class PaymentDatasourceImpl extends PaymentDatasource {
           options:
               Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString('token')}'} : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data['transaction_checkout_url'] as String;
+        return PaymentResponseModel.fromJson(response.data);
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<String> checkPaymentStatus({required int id}) async {
+    try {
+      final response = await _dio.get('/payments/$id/detail/',
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return response.data['status'] as String;
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }

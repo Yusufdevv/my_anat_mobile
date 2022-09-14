@@ -3,8 +3,8 @@ import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
+import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
-import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
@@ -43,10 +43,16 @@ class VacancyScreen extends StatefulWidget {
   State<VacancyScreen> createState() => _VacancyScreenState();
 }
 
-class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateMixin {
+class _VacancyScreenState extends State<VacancyScreen>
+    with TickerProviderStateMixin {
   late TabController tabController;
   bool hasFilter = false;
-  List<String> categoryList = ['Стоматолог', 'Кардиолог', 'Терапевт', 'Пулмонолг'];
+  List<String> categoryList = [
+    'Стоматолог',
+    'Кардиолог',
+    'Терапевт',
+    'Пулмонолг'
+  ];
   late VacancyBloc vacancyBloc;
   late RegionBloc regionBloc;
 
@@ -54,24 +60,30 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
   initState() {
     tabController = TabController(length: 2, vsync: this);
     vacancyBloc = VacancyBloc(
-      vacancyFilterUseCase:
-          VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      candidateListUseCase:
-          CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyOptionUseCase:
-          VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      organizationVacancyUseCase:
-          OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      topOrganizationUseCase:
-          TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      likeUnlikeVacancyStreamUseCase:
-          LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+      vacancyFilterUseCase: VacancyFilterUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      categoryListUseCase: CategoryListUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      candidateListUseCase: CandidateListUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyOptionUseCase: VacancyOptionUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      organizationVacancyUseCase: OrganizationVacancyUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyListUseCase: VacancyListUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      topOrganizationUseCase: TopOrganizationUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
+          repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+      likeUnlikeDoctorStreamUseCase: LikeUnlikeDoctorStreamUseCase(
+          repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
     );
     regionBloc = RegionBloc(
-        districtUseCase: DistrictUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        regionUseCase: RegionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        districtUseCase: DistrictUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        regionUseCase:
+            RegionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
     vacancyBloc.add(GetVacancyListEvent());
     vacancyBloc.add(GetTopOrganizationEvent());
     vacancyBloc.add(GetCandidateListEvent());
@@ -116,12 +128,14 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 16, bottom: 12, top: 16),
+                          padding: const EdgeInsets.only(
+                              left: 16, bottom: 12, top: 16),
                           child: Text(
                             LocaleKeys.categories.tr(),
-                            style: Theme.of(context).textTheme.headline1!.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.headline1!.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                           ),
                         ),
                         BlocBuilder<VacancyBloc, VacancyState>(
@@ -129,7 +143,8 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                             return SingleChildScrollView(
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: Row(
                                 children: [
                                   ...List.generate(
@@ -137,12 +152,16 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                                     (index) => CategoryContainer(
                                       onTap: () {
                                         vacancyBloc.add(GetVacancyListEvent(
-                                            vacancyParamsEntity: VacancyParamsEntity(
-                                                category: '${state.candidateList[index].id}')));
+                                            vacancyParamsEntity:
+                                                VacancyParamsEntity(
+                                                    category:
+                                                        '${state.candidateList[index].id}')));
                                         vacancyBloc.add(GetOrganizationVacancyEvent(
-                                            category: '${state.candidateList[index].id}'));
+                                            category:
+                                                '${state.candidateList[index].id}'));
                                         vacancyBloc.add(GetCandidateListEvent(
-                                            categoryId: '${state.candidateList[index].id}'));
+                                            categoryId:
+                                                '${state.candidateList[index].id}'));
                                       },
                                       title: state.categoryList[index].title,
                                     ),
@@ -157,9 +176,10 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                           padding: const EdgeInsets.only(left: 16, bottom: 12),
                           child: Text(
                             LocaleKeys.vacancy_company.tr(),
-                            style: Theme.of(context).textTheme.headline1!.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.headline1!.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                           ),
                         ),
                         Container(
@@ -227,7 +247,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                     showFilterBottomSheet(context, regionBloc, vacancyBloc);
                   },
                 ),
-                 const SizedBox(height: 20),
+                const SizedBox(height: 20),
                 hasFilter ? const FilterCardList() : const SizedBox(),
                 Expanded(
                   child: TabBarView(
@@ -236,7 +256,9 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                     children: [
                       VacancyItemList(
                         onSuccess: (text) {
-                          context.read<ShowPopUpBloc>().add(ShowPopUp(message: text));
+                          context
+                              .read<ShowPopUpBloc>()
+                              .add(ShowPopUp(message: text));
                         },
                       ),
                       const CandidateItemList(),

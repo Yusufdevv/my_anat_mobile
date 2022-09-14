@@ -8,14 +8,20 @@ part of 'vacancy_list.dart';
 
 VacancyListModel _$VacancyListModelFromJson(Map<String, dynamic> json) =>
     VacancyListModel(
-      workType: const WorkTypeConverter()
-          .fromJson(json['work_type'] as Map<String, dynamic>?),
+      workType: json['work_type'] == null
+          ? const WorkType()
+          : const WorkTypeConverter()
+              .fromJson(json['work_type'] as Map<String, dynamic>?),
       title: json['title'] as String? ?? '',
-      category: const CategoryEntityConverter()
-          .fromJson(json['category'] as Map<String, dynamic>?),
+      category: json['category'] == null
+          ? const CategoryEntity()
+          : const CategoryEntityConverter()
+              .fromJson(json['category'] as Map<String, dynamic>?),
       id: json['id'] as int? ?? 0,
-      organization: const OrganizationEntityConverter()
-          .fromJson(json['organization'] as Map<String, dynamic>?),
+      organization: json['organization'] == null
+          ? const OrganizationEntity()
+          : const OrganizationEntityConverter()
+              .fromJson(json['organization'] as Map<String, dynamic>?),
       address: json['address'] as String? ?? '',
       slug: json['slug'] as String? ?? '',
       salaryFrom: json['salary_from'] as int? ?? 0,
@@ -98,8 +104,10 @@ OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => TypesModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      logo: const LogoEntityConverter()
-          .fromJson(json['logo'] as Map<String, dynamic>?),
+      logo: json['logo'] == null
+          ? const LogoEntity()
+          : const LogoEntityConverter()
+              .fromJson(json['logo'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>

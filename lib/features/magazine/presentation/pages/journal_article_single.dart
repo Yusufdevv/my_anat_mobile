@@ -35,7 +35,7 @@ class JournalArticleSingle extends StatelessWidget {
               );
             } else if (state.articleSingleStatus.isSubmissionSuccess) {
               return ListView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom),
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),

@@ -41,25 +41,25 @@ class VacancyListEntity extends Equatable {
   final List<RequirementsModel> obligations;
 
   const VacancyListEntity({
-    required this.workType,
-    required this.title,
-    required this.category,
-    required this.id,
-    required this.organization,
-    required this.address,
-    required this.slug,
-    required this.salaryFrom,
-    required this.description,
-    required this.salaryTo,
-    required this.requirements,
-    required this.employerInfo,
-    required this.experienceFrom,
-    required this.isFavorite,
-    required this.obligations,
-    required this.publishedAt,
-    required this.experienceTo,
+    this.workType = const WorkType(),
+    this.title = '',
+    this.category = const CategoryEntity(),
+    this.id = 0,
+    this.organization = const OrganizationEntity(),
+    this.address = '',
+    this.slug = '',
+    this.salaryFrom = 0,
+    this.description = '',
+    this.salaryTo = 0,
+    this.requirements = const [],
+    this.employerInfo = '',
+    this.experienceFrom = 0,
+    this.isFavorite = false,
+    this.obligations = const [],
+    this.publishedAt = '',
+    this.experienceTo = 0,
   });
-
+  @override
   List<Object?> get props => [
         workType,
         title,
@@ -125,7 +125,10 @@ class WorkType extends Equatable {
   @JsonKey(name: 'label', defaultValue: '')
   final String label;
 
-  const WorkType({required this.label, required this.name});
+  const WorkType({
+    this.label = '',
+    this.name = '',
+  });
 
   @override
   List<Object?> get props => [name, label];
@@ -190,18 +193,18 @@ class OrganizationEntity extends Equatable {
   final String locationUrl;
 
   const OrganizationEntity({
-    required this.title,
-    required this.id,
-    required this.phoneNumber,
-    required this.phoneNumbers,
-    required this.slug,
-    required this.address,
-    required this.images,
-    required this.locationUrl,
-    required this.rating,
-    required this.speciazilation,
-    required this.types,
-    required this.logo,
+    this.title = '',
+    this.id = 0,
+    this.phoneNumber = '',
+    this.phoneNumbers = const [],
+    this.slug = '',
+    this.address = '',
+    this.images = const [],
+    this.locationUrl = '',
+    this.rating = 0,
+    this.speciazilation = const [],
+    this.types = const [],
+    this.logo = const LogoEntity(),
   });
 
   @override

@@ -1,14 +1,15 @@
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
+import 'package:anatomica/features/magazine/domain/entities/payment_response_entity.dart';
 import 'package:anatomica/features/magazine/domain/repositories/payment_repository.dart';
 import 'package:equatable/equatable.dart';
 
-class OrderCreateArticleUseCase implements UseCase<String, OrderCreateParams> {
+class OrderCreateArticleUseCase implements UseCase<PaymentResponseEntity, OrderCreateParams> {
   final PaymentRepository repository;
   OrderCreateArticleUseCase({required this.repository});
   @override
-  Future<Either<Failure, String>> call(OrderCreateParams params) async => repository.orderCreateArticle(
+  Future<Either<Failure, PaymentResponseEntity>> call(OrderCreateParams params) async => repository.orderCreateArticle(
         articleId: params.id,
         price: params.price,
         phoneNumber: params.phoneNumber,

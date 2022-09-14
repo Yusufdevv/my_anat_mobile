@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:anatomica/core/usecases/usecase.dart';
+import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/vacancy/data/models/top_organization.dart';
@@ -17,8 +20,8 @@ import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_option.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
-import 'package:meta/meta.dart';
 
 part 'vacancy_event.dart';
 
@@ -33,7 +36,9 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
   final CategoryListUseCase categoryListUseCase;
   final VacancyFilterUseCase vacancyFilterUseCase;
   final LikeUnlikeVacancyStreamUseCase _likeUnlikeVacancyStreamUseCase;
-
+  final LikeUnlikeDoctorStreamUseCase _likeUnlikeDoctorStreamUseCase;
+  late StreamSubscription<VacancyListEntity> vacancySubscription;
+  late StreamSubscription<CandidateListEntity> doctorSubscription;
   VacancyBloc({
     required this.vacancyListUseCase,
     required this.topOrganizationUseCase,
@@ -43,7 +48,9 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     required this.categoryListUseCase,
     required this.vacancyFilterUseCase,
     required LikeUnlikeVacancyStreamUseCase likeUnlikeVacancyStreamUseCase,
+    required LikeUnlikeDoctorStreamUseCase likeUnlikeDoctorStreamUseCase,
   })  : _likeUnlikeVacancyStreamUseCase = likeUnlikeVacancyStreamUseCase,
+        _likeUnlikeDoctorStreamUseCase = likeUnlikeDoctorStreamUseCase,
         super(VacancyState(
           paginatorStatus: PaginatorStatus.PAGINATOR_LOADING,
           count: 0,
@@ -68,9 +75,17 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
           filterStatus: FormzStatus.pure,
           vacancyFilterList: const [],
         )) {
+    vacancySubscription =
+        _likeUnlikeVacancyStreamUseCase.call(NoParams()).listen((event) {
+      add(LikeUnlikeVacancy(vacancy: event));
+    });
+    doctorSubscription =
+        _likeUnlikeDoctorStreamUseCase.call(NoParams()).listen((event) {
+      add(LikeUnlikeCandidate(candidate: event));
+    });
     on<GetVacancyListEvent>((event, emit) async {
-      final result = await vacancyListUseCase
-          .call(VacancyListParams(vacancyParamsEntity: event.vacancyParamsEntity));
+      final result = await vacancyListUseCase.call(
+          VacancyListParams(vacancyParamsEntity: event.vacancyParamsEntity));
       if (result.isRight) {
         emit(
           state.copyWith(
@@ -86,8 +101,8 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       }
     });
     on<GetMoreVacancyListEvent>((event, emit) async {
-      final response = await vacancyListUseCase.call(
-          VacancyListParams(next: state.next, vacancyParamsEntity: event.vacancyParamsEntity));
+      final response = await vacancyListUseCase.call(VacancyListParams(
+          next: state.next, vacancyParamsEntity: event.vacancyParamsEntity));
       if (response.isRight) {
         final result = response.right;
         emit(
@@ -103,25 +118,31 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       }
     });
     on<GetTopOrganizationEvent>((event, emit) async {
-      emit(state.copyWith(topOrganizationStatus: FormzStatus.submissionInProgress));
-      final result = await topOrganizationUseCase.call(const TopOrganizationParams());
+      emit(state.copyWith(
+          topOrganizationStatus: FormzStatus.submissionInProgress));
+      final result =
+          await topOrganizationUseCase.call(const TopOrganizationParams());
       if (result.isRight) {
         emit(state.copyWith(
             topOrganizationEntity: result.right,
             topOrganizationStatus: FormzStatus.submissionSuccess));
         add(GetOrganizationVacancyEvent());
       } else {
-        emit(state.copyWith(topOrganizationStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(
+            topOrganizationStatus: FormzStatus.submissionFailure));
       }
     });
     on<GetVacancyOptionEvent>((event, emit) async {
-      emit(state.copyWith(vacancyOptionStatus: FormzStatus.submissionInProgress));
+      emit(state.copyWith(
+          vacancyOptionStatus: FormzStatus.submissionInProgress));
       final result = await vacancyOptionUseCase.call(NoParams());
       if (result.isRight) {
         emit(state.copyWith(
-            vacancyOptionStatus: FormzStatus.submissionSuccess, vacancyOptionList: result.right));
+            vacancyOptionStatus: FormzStatus.submissionSuccess,
+            vacancyOptionList: result.right));
       } else {
-        emit(state.copyWith(vacancyOptionStatus: FormzStatus.submissionFailure));
+        emit(
+            state.copyWith(vacancyOptionStatus: FormzStatus.submissionFailure));
       }
     });
     on<GetOrganizationVacancyEvent>(
@@ -144,12 +165,14 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
             organizationVacancyList: result.results,
           ));
         } else {
-          state.copyWith(paginatorStatusOrganization: PaginatorStatus.PAGINATOR_ERROR);
+          state.copyWith(
+              paginatorStatusOrganization: PaginatorStatus.PAGINATOR_ERROR);
         }
       },
     );
     on<GetMoreOrganizationVacancyEvent>((event, emit) async {
-      final response = await organizationVacancyUseCase.call(OrganizationVacancyParams(
+      final response =
+          await organizationVacancyUseCase.call(OrganizationVacancyParams(
         vacancyParamsEntity: VacancyParamsEntity(
           organization: state.topOrganizationEntity.id.toString(),
         ),
@@ -161,18 +184,24 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
           organizationNext: result.next,
           paginatorStatusOrganization: PaginatorStatus.PAGINATOR_SUCCESS,
           organizationCount: result.count,
-          fetchMoreOrganization: [...state.organizationVacancyList, ...result.results].length >
-                  state.organizationVacancyList.length
-              ? true
-              : false,
-          organizationVacancyList: [...state.organizationVacancyList, ...result.results],
+          fetchMoreOrganization:
+              [...state.organizationVacancyList, ...result.results].length >
+                      state.organizationVacancyList.length
+                  ? true
+                  : false,
+          organizationVacancyList: [
+            ...state.organizationVacancyList,
+            ...result.results
+          ],
         ));
       } else {
-        state.copyWith(paginatorStatusOrganization: PaginatorStatus.PAGINATOR_ERROR);
+        state.copyWith(
+            paginatorStatusOrganization: PaginatorStatus.PAGINATOR_ERROR);
       }
     });
     on<GetCandidateListEvent>((event, emit) async {
-      final response = await candidateListUseCase.call(const CandidateListParams());
+      final response =
+          await candidateListUseCase.call(const CandidateListParams());
 
       if (response.isRight) {
         emit(state.copyWith(
@@ -182,12 +211,13 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
           candidateNext: response.right.next,
         ));
       } else {
-        emit(state.copyWith(candidatePaginatorStatus: PaginatorStatus.PAGINATOR_ERROR));
+        emit(state.copyWith(
+            candidatePaginatorStatus: PaginatorStatus.PAGINATOR_ERROR));
       }
     });
     on<GetMoreCandidateList>((event, emit) async {
-      final response =
-          await candidateListUseCase.call(CandidateListParams(next: state.candidateNext));
+      final response = await candidateListUseCase
+          .call(CandidateListParams(next: state.candidateNext));
       if (response.isRight) {
         emit(state.copyWith(
           candidatePaginatorStatus: PaginatorStatus.PAGINATOR_SUCCESS,
@@ -226,7 +256,6 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       }
     });
     on<SelectSalaryFilterEvent>((event, emit) {
-
       emit(state.copyWith(salaryKey: event.salaryKey));
       event.onSuccess();
     });
@@ -234,6 +263,29 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       emit(state.copyWith(experienceKey: event.experienceKey));
       event.onSuccess();
     });
-    //  on<LikeUnlikeVacancy>((event, emit) {});
+    on<LikeUnlikeVacancy>((event, emit) {
+      final newList = [...state.vacancyList];
+      final currentVacancy = newList.firstWhere(
+          (element) => element.id == event.vacancy.id,
+          orElse: () => const VacancyListEntity());
+
+      if (currentVacancy.id != 0) {
+        newList.insert(newList.indexOf(currentVacancy), event.vacancy);
+        newList.remove(currentVacancy);
+        emit(state.copyWith(vacancyList: newList));
+      }
+    });
+    on<LikeUnlikeCandidate>((event, emit) {
+      final newList = [...state.candidateList];
+      final currentCandidate = newList.firstWhere(
+          (element) => element.id == event.candidate.id,
+          orElse: () => const CandidateListEntity());
+
+      if (currentCandidate.id != 0) {
+        newList.insert(newList.indexOf(currentCandidate), event.candidate);
+        newList.remove(currentCandidate);
+        emit(state.copyWith(candidateList: newList));
+      }
+    });
   }
 }

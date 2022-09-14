@@ -29,9 +29,22 @@ class FavouriteBloc extends Bloc<FavouriteEvent, FavouriteState> {
       if (event.vacancy.isFavorite) {
         emit(const FavouriteState(isFavourite: false));
         await _unlikeVacancyUseCase.call(event.vacancy);
+        emit(const FavouriteState(isFavourite: null));
       } else {
         emit(const FavouriteState(isFavourite: true));
         await _likeVacancyUseCase.call(event.vacancy);
+        emit(const FavouriteState(isFavourite: null));
+      }
+    });
+    on<LikeUnlikeCandidate>((event, emit) async {
+      if (event.candidate.isFavorite) {
+        emit(const FavouriteState(isFavourite: false));
+        await _unlikeDoctorUseCase.call(event.candidate);
+        emit(const FavouriteState(isFavourite: null));
+      } else {
+        emit(const FavouriteState(isFavourite: true));
+        await _likeDoctorUseCase.call(event.candidate);
+        emit(const FavouriteState(isFavourite: null));
       }
     });
   }
