@@ -10,6 +10,8 @@ import 'package:anatomica/features/common/presentation/widgets/custom_screen.dar
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
+import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
@@ -59,7 +61,10 @@ class _VacancyScreenState extends State<VacancyScreen>
 
   @override
   initState() {
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 2, vsync: this)
+      ..addListener(() {
+        setState(() {});
+      });
     vacancyBloc = VacancyBloc(
       vacancyFilterUseCase: VacancyFilterUseCase(
           repository: serviceLocator<VacancyRepositoryImpl>()),
@@ -85,7 +90,7 @@ class _VacancyScreenState extends State<VacancyScreen>
             repository: serviceLocator<VacancyRepositoryImpl>()),
         regionUseCase:
             RegionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
-    vacancyBloc.add(GetVacancyListEvent());
+    vacancyBloc.add(GetVacancyListEvent(onSuccess: () {}));
     vacancyBloc.add(GetTopOrganizationEvent());
     vacancyBloc.add(GetCandidateListEvent());
     vacancyBloc.add(GetCategoryListEvent());
@@ -103,8 +108,6 @@ class _VacancyScreenState extends State<VacancyScreen>
 
   @override
   Widget build(BuildContext context) {
-    print('token:${StorageRepository.getString('token')}');
-    print('user id:${context.read<AuthenticationBloc>().state.user.id}');
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: vacancyBloc),
@@ -153,16 +156,17 @@ class _VacancyScreenState extends State<VacancyScreen>
                                     (index) => CategoryContainer(
                                       onTap: () {
                                         vacancyBloc.add(GetVacancyListEvent(
+                                            onSuccess: () {},
                                             vacancyParamsEntity:
                                                 VacancyParamsEntity(
                                                     category:
-                                                        '${state.candidateList[index].id}')));
+                                                        '${state.categoryList[index].id}')));
                                         vacancyBloc.add(GetOrganizationVacancyEvent(
                                             category:
-                                                '${state.candidateList[index].id}'));
+                                                '${state.categoryList[index].id}'));
                                         vacancyBloc.add(GetCandidateListEvent(
                                             categoryId:
-                                                '${state.candidateList[index].id}'));
+                                                '${state.categoryList[index].id}'));
                                       },
                                       title: state.categoryList[index].title,
                                     ),
@@ -202,10 +206,7 @@ class _VacancyScreenState extends State<VacancyScreen>
                               const SizedBox(height: 10),
                               Stack(
                                 children: [
-                                  VacancyCardList(onTap: () {
-                                    // Navigator.of(context)
-                                    //     .push(fade(page: const VacancySingleScreen()));
-                                  }),
+                                  const VacancyCardList(),
                                   Positioned(
                                     right: 0,
                                     bottom: 0,
@@ -242,12 +243,15 @@ class _VacancyScreenState extends State<VacancyScreen>
                     Text(LocaleKeys.candidate.tr()),
                   ],
                 ),
-                const SizedBox(height: 16),
-                FilterContainer(
-                  onTap: () {
-                    showFilterBottomSheet(context, regionBloc, vacancyBloc);
-                  },
-                ),
+                SizedBox(height: tabController.index != 1 ? 16 : 0),
+                tabController.index != 1
+                    ? FilterContainer(
+                        onTap: () {
+                          showFilterBottomSheet(
+                              context, regionBloc, vacancyBloc);
+                        },
+                      )
+                    : const SizedBox(),
                 const SizedBox(height: 20),
                 hasFilter ? const FilterCardList() : const SizedBox(),
                 Expanded(

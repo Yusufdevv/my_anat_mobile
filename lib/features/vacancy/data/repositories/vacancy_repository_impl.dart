@@ -126,7 +126,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   @override
   Future<Either<Failure, GenericPagination<RegionEntity>>> getRegion({String? next}) async {
     try {
-      final result = await dataSource.getRegion();
+      final result = await dataSource.getRegion(next: next);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));

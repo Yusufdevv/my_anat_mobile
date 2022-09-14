@@ -5,9 +5,9 @@ abstract class VacancyEvent {}
 
 class GetVacancyListEvent extends VacancyEvent {
   final VacancyParamsEntity? vacancyParamsEntity;
-  final Function? onSuccess;
+  final Function onSuccess;
 
-  GetVacancyListEvent({this.onSuccess, this.vacancyParamsEntity});
+  GetVacancyListEvent({required this.onSuccess, this.vacancyParamsEntity});
 }
 
 class GetMoreVacancyListEvent extends VacancyEvent {
@@ -54,6 +54,13 @@ class SelectExperienceEvent extends VacancyEvent {
   SelectExperienceEvent({required this.onSuccess, this.experienceKey});
 }
 
+class SelectDistrictEvent extends VacancyEvent {
+  final List<String>? districtList;
+  final Function onSuccess;
+
+  SelectDistrictEvent({required this.onSuccess, this.districtList});
+}
+
 class AddWishListVacancyEvent extends VacancyEvent {
   final int user;
   final int vacancy;
@@ -72,6 +79,7 @@ class AddWishListVacancyEvent extends VacancyEvent {
 
 class LikeUnlikeVacancy extends VacancyEvent {
   final VacancyListEntity vacancy;
+
   LikeUnlikeVacancy({required this.vacancy});
 }
 

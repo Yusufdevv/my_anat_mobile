@@ -1,5 +1,7 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/company_shimmer_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 class CompanyCard extends StatelessWidget {
   final VacancyBloc vacancyBloc;
 
@@ -20,10 +23,12 @@ class CompanyCard extends StatelessWidget {
       value: vacancyBloc,
       child: BlocBuilder<VacancyBloc, VacancyState>(
         builder: (context, state) {
-          print('image_url:${state.topOrganizationEntity.logo.origin}');
           if (state.topOrganizationStatus.isSubmissionSuccess) {
             return WScaleAnimation(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .push(fade(page: HospitalSingleScreen(slug: state.topOrganizationEntity.slug)));
+              },
               child: Row(
                 children: [
                   ImageCard(imageUrl: state.topOrganizationEntity.logo.middle),
@@ -40,7 +45,7 @@ class CompanyCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '${state.topOrganizationEntity.vacancyCount} ${LocaleKeys.vacancies.tr()}',
+                        '${state.organizationVacancyList.length} ${LocaleKeys.vacancies.tr()}',
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 13),
                       ),
                     ],

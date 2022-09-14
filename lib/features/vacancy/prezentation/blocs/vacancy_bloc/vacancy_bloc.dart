@@ -95,7 +95,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
             vacancyList: result.right.results,
           ),
         );
-        event.onSuccess!();
+        event.onSuccess();
       } else {
         emit(state.copyWith(paginatorStatus: PaginatorStatus.PAGINATOR_ERROR));
       }
@@ -275,17 +275,9 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         emit(state.copyWith(vacancyList: newList));
       }
     });
-    on<LikeUnlikeCandidate>((event, emit) {
-      final newList = [...state.candidateList];
-      final currentCandidate = newList.firstWhere(
-          (element) => element.id == event.candidate.id,
-          orElse: () => const CandidateListEntity());
-
-      if (currentCandidate.id != 0) {
-        newList.insert(newList.indexOf(currentCandidate), event.candidate);
-        newList.remove(currentCandidate);
-        emit(state.copyWith(candidateList: newList));
-      }
+    on<SelectDistrictEvent>((event, emit) async {
+      emit(state.copyWith(districtList: event.districtList));
+      event.onSuccess();
     });
   }
 }

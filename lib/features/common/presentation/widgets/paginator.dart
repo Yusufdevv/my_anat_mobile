@@ -34,7 +34,7 @@ class Paginator extends StatelessWidget {
       return const Center(child: CupertinoActivityIndicator());
     } else if (paginatorStatus == PaginatorStatus.PAGINATOR_ERROR) {
       return errorWidget;
-    } else {
+    } else if (paginatorStatus == PaginatorStatus.PAGINATOR_SUCCESS) {
       if (isEmpty) {
         return Center(child: emptyWidget);
       } else {
@@ -58,6 +58,8 @@ class Paginator extends StatelessWidget {
           shrinkWrap: true,
         );
       }
+    } else {
+      return const SizedBox();
     }
   }
 }

@@ -12,7 +12,7 @@ class FilterContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),

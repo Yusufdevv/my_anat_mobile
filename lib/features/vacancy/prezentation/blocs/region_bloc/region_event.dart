@@ -15,9 +15,3 @@ class GetDistrictEvent extends RegionEvent {
 }
 
 class GetMoreDistrict extends RegionEvent {}
-
-class SelectDistrictEvent extends RegionEvent {
-  final List<int> select;
-
-  SelectDistrictEvent({required this.select});
-}

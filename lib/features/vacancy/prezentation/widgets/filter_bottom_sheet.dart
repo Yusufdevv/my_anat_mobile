@@ -36,8 +36,11 @@ class FilterBottomSheet extends StatelessWidget {
                 vacancyParamsEntity: VacancyParamsEntity(
                   salary: vacancyBloc.state.salaryKey,
                   experience: vacancyBloc.state.experienceKey,
+                  district: vacancyBloc.state.districtList,
                 ),
                 onSuccess: () {
+                  print('success');
+                  print(vacancyBloc.state.districtList);
                   Navigator.of(context).pop();
                 }),
           );
@@ -60,7 +63,7 @@ class FilterBottomSheet extends StatelessWidget {
         const SizedBox(height: 12),
         FilterItem(
           onTap: () {
-            showRegionBottomSheet(context, regionBloc);
+            showRegionBottomSheet(context, regionBloc, vacancyBloc);
           },
           title: LocaleKeys.city_district.tr(),
         ),
