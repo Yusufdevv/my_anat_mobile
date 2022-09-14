@@ -83,6 +83,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       print('category${vacancyParamsEntity?.category}');
       print('salary:${vacancyParamsEntity?.salary}');
       print('experience:${vacancyParamsEntity?.experience}');
+      print('district:${vacancyParamsEntity?.district}');
       if (vacancyParamsEntity?.category != null) {
         query.putIfAbsent('category', () => vacancyParamsEntity?.category);
       }
@@ -98,6 +99,10 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       if (vacancyParamsEntity?.experience != null) {
         query.putIfAbsent('experience', () => vacancyParamsEntity?.experience);
       }
+      if (vacancyParamsEntity?.district != null) {
+        query.putIfAbsent('district', () => vacancyParamsEntity?.district);
+      }
+
 
       final result = await paginationDatasource.fetchMore(
         url: url,
@@ -215,6 +220,9 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   @override
   Future<CandidateSingleModel> getCandidateSingle({required int id}) async {
     final response = await dio.get('/doctor/$id/detail/');
+
+    print(response.realUri);
+    print(response.data);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return CandidateSingleModel.fromJson(response.data);
     }
@@ -229,7 +237,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     if (id != null) {
       query.putIfAbsent('region', () => id);
     }
-    final response = await dio.get('/district/', queryParameters: query);
+    final response = await dio.get(next ?? '/district/', queryParameters: query);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => DistrictModel.fromJson(p0 as Map<String, dynamic>));
@@ -240,7 +248,11 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
 
   @override
   Future<GenericPagination<RegionModel>> getRegion({String? next}) async {
-    final response = await dio.get('/region/');
+    final response = await dio.get(next ?? '/region/', queryParameters: {
+      'limit':6
+    });
+    print('/region');
+    print(next);
     if (response.statusCode! >= 200 && response.statusCode! < 300) {
       return GenericPagination.fromJson(
           response.data, (p0) => RegionModel.fromJson(p0 as Map<String, dynamic>));

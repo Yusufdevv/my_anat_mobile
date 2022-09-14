@@ -80,12 +80,13 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
             vacancyList: result.right.results,
           ),
         );
-        event.onSuccess!();
+        event.onSuccess();
       } else {
         emit(state.copyWith(paginatorStatus: PaginatorStatus.PAGINATOR_ERROR));
       }
     });
     on<GetMoreVacancyListEvent>((event, emit) async {
+      print('come to more vacancies list ');
       final response = await vacancyListUseCase.call(
           VacancyListParams(next: state.next, vacancyParamsEntity: event.vacancyParamsEntity));
       if (response.isRight) {
@@ -134,6 +135,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
             ),
           ),
         );
+        print('iddd${state.topOrganizationEntity.id}');
 
         if (response.isRight) {
           final result = response.right;
@@ -226,7 +228,6 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       }
     });
     on<SelectSalaryFilterEvent>((event, emit) {
-
       emit(state.copyWith(salaryKey: event.salaryKey));
       event.onSuccess();
     });
@@ -234,6 +235,9 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       emit(state.copyWith(experienceKey: event.experienceKey));
       event.onSuccess();
     });
-    //  on<LikeUnlikeVacancy>((event, emit) {});
+    on<SelectDistrictEvent>((event, emit) async {
+      emit(state.copyWith(districtList: event.districtList));
+      event.onSuccess();
+    });
   }
 }

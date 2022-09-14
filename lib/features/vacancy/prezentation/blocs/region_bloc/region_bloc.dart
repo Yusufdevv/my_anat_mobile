@@ -27,23 +27,23 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
         )) {
     on<GetRegionEvent>((event, emit) async {
       emit(state.copyWith(regionStatus: PaginatorStatus.PAGINATOR_LOADING));
-      final response = await regionUseCase.call(RegionParams(next: state.nextRegion));
+      final response = await regionUseCase.call(const RegionParams());
       if (response.isRight) {
         final result = response.right;
         emit(state.copyWith(
           regions: result.results,
           regionStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-          fetchMoreRegion: state.nextRegion != null,
+          fetchMoreRegion: result.next != null,
           nextRegion: result.next,
         ));
       } else {
-        print('left');
         emit(state.copyWith(regionStatus: PaginatorStatus.PAGINATOR_ERROR));
       }
     });
     on<GetMoreRegion>((event, emit) async {
-      final response = await regionUseCase.call(const RegionParams());
+      final response = await regionUseCase.call(RegionParams(next: state.nextRegion));
       if (response.isRight) {
+        print('get more region list');
         final result = response.right;
         emit(state.copyWith(
           nextRegion: result.next,
@@ -61,11 +61,9 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
     });
     on<GetDistrictEvent>((event, emit) async {
       emit(state.copyWith(districtStatus: PaginatorStatus.PAGINATOR_SUCCESS));
-      final response =
-          await districtUseCase.call(DistrictParams(next: state.nextDistrict, id: event.id));
+      final response = await districtUseCase.call(DistrictParams(id: event.id));
       if (response.isRight) {
         final result = response.right;
-        print('result:$result');
         emit(
           state.copyWith(
             fetchMoreRegion: result.next != null,
@@ -77,7 +75,8 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
       }
     });
     on<GetMoreDistrict>((event, emit) async {
-      final response = await districtUseCase.call(const DistrictParams());
+      print('get more district');
+      final response = await districtUseCase.call(DistrictParams(next: state.nextDistrict));
       if (response.isRight) {
         final result = response.right;
         emit(state.copyWith(
@@ -86,9 +85,6 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
           districts: [...state.districts, ...result.results],
         ));
       }
-    });
-    on<SelectDistrictEvent>((event, emit) {
-      emit(state.copyWith(select: event.select));
     });
   }
 }

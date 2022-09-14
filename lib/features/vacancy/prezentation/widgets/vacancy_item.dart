@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/common/presentation/widgets/highlighted_text.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button_vacancy.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
@@ -13,11 +14,13 @@ class VacancyItem extends StatelessWidget {
   final EdgeInsets? margin;
   final VoidCallback onTap;
   final VacancyListEntity vacancyEntity;
+  final String searchText;
 
   const VacancyItem({
     required this.vacancyEntity,
     this.margin,
     required this.onTap,
+    this.searchText = '',
     Key? key,
   }) : super(key: key);
 
@@ -42,11 +45,16 @@ class VacancyItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        vacancyEntity.title,
-                        style: Theme.of(context).textTheme.headline1!.copyWith(),
+                      HighlightedText(
+                        allText: vacancyEntity.title,
+                        textStyle: Theme.of(context).textTheme.headline1!.copyWith(),
+                        highlightedText: searchText,
                         overflow: TextOverflow.ellipsis,
+                        textStyleHighlight: Theme.of(context).textTheme.headline1!.copyWith(
+                              color: white,
+                            ),
                         maxLines: 2,
+                        highlightColor: tongerineYellow,
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -66,7 +74,8 @@ class VacancyItem extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             VacancyItemTextWidget(
-                title: '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} лет', icon: AppIcons.briefCase),
+                title: '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} лет',
+                icon: AppIcons.briefCase),
             const SizedBox(height: 4),
             VacancyItemTextWidget(title: vacancyEntity.address, icon: AppIcons.mapPin),
             const SizedBox(height: 4),

@@ -55,18 +55,9 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
     super.dispose();
   }
 
-  final List<String> tList = [
-    'высшее медицинское образование',
-    'наличие медкнижки и действующего '
-        'сертификата',
-    'знание компьютера',
-    'опыт работы по специальности'
-  ];
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    print('slug:${widget.slug}');
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: _vacancySingleBloc),
@@ -113,19 +104,10 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                         ),
-                        // const SizedBox(height: 8),
                         Html(
                           data: state.vacancyListEntity.description,
                           style: const {},
                         ),
-                        // Text(
-                        //   state.vacancyListEntity.description,
-                        //   style: Theme.of(context)
-                        //       .textTheme
-                        //       .bodyText2!
-                        //       .copyWith(color: montana, fontSize: 13),
-                        // ),
-                        //  const SizedBox(height: 16),
                         VacancyTitleText(title: LocaleKeys.category.tr()),
                         const SizedBox(height: 8),
                         SingleChildScrollView(
@@ -175,7 +157,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                 TextSpan(
                                   text: state.vacancyListEntity.requirements[index].description,
                                   style: Theme.of(context).textTheme.headline1!.copyWith(
-                                        fontSize: 18,
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w400,
                                       ),
                                 ),
@@ -205,7 +187,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                 TextSpan(
                                   text: state.vacancyListEntity.obligations[index].description,
                                   style: Theme.of(context).textTheme.headline1!.copyWith(
-                                        fontSize: 18,
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w400,
                                       ),
                                 ),
@@ -213,9 +195,6 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                             ),
                           ),
                         ),
-                        // const SizedBox(height: 16),
-                        // VacancyTitleText(title: LocaleKeys.responsible.tr()),
-                        // DotTextWidget(list: tList),
                         const SizedBox(height: 16),
                         Container(
                           padding: const EdgeInsets.all(16),
@@ -236,13 +215,6 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               VacancyTitleText(title: LocaleKeys.information_work.tr()),
                               // const SizedBox(height: 8),
                               Html(data: state.vacancyListEntity.description),
-                              // Text(
-                              //   state.vacancyListEntity.description,
-                              //   style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                              //         color: montana,
-                              //       ),
-                              // ),
-                              // const SizedBox(height: 12),
                               Text(
                                 '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt)}',
                                 style:

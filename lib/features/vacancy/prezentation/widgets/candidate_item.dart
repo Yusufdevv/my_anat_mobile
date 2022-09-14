@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/common/presentation/widgets/highlighted_text.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button_candidate.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
@@ -12,11 +13,13 @@ class CandidateItem extends StatelessWidget {
   final VoidCallback onTap;
   final EdgeInsets? margin;
   final CandidateListEntity candidateListEntity;
+  final String searchText;
 
   const CandidateItem({
     required this.candidateListEntity,
     this.margin,
     required this.onTap,
+    this.searchText = '',
     Key? key,
   }) : super(key: key);
 
@@ -61,10 +64,16 @@ class CandidateItem extends StatelessWidget {
                       maxLines: 1,
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      candidateListEntity.specialization.title,
-                      style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                    HighlightedText(
+                      allText: candidateListEntity.specialization.title,
+                      textStyle: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                       overflow: TextOverflow.ellipsis,
+                      highlightedText: searchText,
+                      textStyleHighlight: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .copyWith(fontSize: 14, color: white),
+                      highlightColor: tongerineYellow,
                       maxLines: 1,
                     ),
                     const Spacer(),
@@ -72,7 +81,8 @@ class CandidateItem extends StatelessWidget {
                         title: '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
                         icon: AppIcons.briefCase),
                     const SizedBox(height: 4),
-                    VacancyItemTextWidget(title: candidateListEntity.address, icon: AppIcons.mapPin),
+                    VacancyItemTextWidget(
+                        title: candidateListEntity.address, icon: AppIcons.mapPin),
                   ],
                 ),
               ),

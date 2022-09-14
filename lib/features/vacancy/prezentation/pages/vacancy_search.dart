@@ -38,8 +38,10 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
     tabController = TabController(length: 2, vsync: this);
     controller = TextEditingController();
     vacancySearchBloc = VacancySearchBloc(
-        candidateListUseCase: CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        candidateListUseCase:
+            CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        vacancyListUseCase:
+            VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
     vacancySearchBloc.add(GetVacancySearchEvent(search: ''));
     vacancySearchBloc.add(GetCandidateSearchEvent(search: ''));
     super.initState();
@@ -84,7 +86,10 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                         },
                         child: Text(
                           LocaleKeys.cancel.tr(),
-                          style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(fontWeight: FontWeight.w400),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -104,6 +109,8 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                               setState(() {
                                 controller.clear();
                               });
+                              vacancySearchBloc.add(GetVacancySearchEvent(search: ''));
+                              vacancySearchBloc.add(GetCandidateSearchEvent(search: ''));
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(right: 10),
@@ -165,10 +172,11 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                       }
                       print('title: ${state.vacancyList[index].organization.title}');
                       return VacancyItem(
+                        searchText: controller.text,
                         vacancyEntity: state.vacancyList[index],
                         onTap: () {
-                          Navigator.of(context)
-                              .push(fade(page: VacancySingleScreen(slug: state.vacancyList[index].slug)));
+                          Navigator.of(context).push(
+                              fade(page: VacancySingleScreen(slug: state.vacancyList[index].slug)));
                         },
                       );
                     },
@@ -190,12 +198,12 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                       if (state.candidateList.isEmpty) {
                         return const Center(child: SearchEmpty());
                       }
-
                       return CandidateItem(
+                        searchText: controller.text,
                         candidateListEntity: state.candidateList[index],
                         onTap: () {
-                          Navigator.of(context)
-                              .push(fade(page: VacancySingleScreen(slug: state.vacancyList[index].slug)));
+                          Navigator.of(context).push(
+                              fade(page: VacancySingleScreen(slug: state.vacancyList[index].slug)));
                         },
                       );
                     },

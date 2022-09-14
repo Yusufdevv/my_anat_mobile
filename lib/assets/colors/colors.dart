@@ -43,6 +43,7 @@ const steelBlue = _steelBlue;
 const deleteButton = _sunsetOrange2;
 const appBarDivider = _whiteSmoke3;
 const gold = _goldenTainoi;
+const tongerineYellow=_tongerineYellow;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -87,3 +88,4 @@ const _steelBlue = Color(0xff437FB7);
 const _sunsetOrange2 = Color(0xffFF4C4C);
 const _whiteSmoke3 = Color(0xffF4F4F4);
 const _goldenTainoi = Color(0xffFFC15D);
+const _tongerineYellow = Color(0xffF8B76B);

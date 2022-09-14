@@ -2,6 +2,7 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region_bloc.dart';
+import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/region_item.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegionBottomSheet extends StatefulWidget {
   final RegionBloc regionBloc;
+  final VacancyBloc vacancyBloc;
 
-  const RegionBottomSheet({required this.regionBloc, Key? key}) : super(key: key);
+  const RegionBottomSheet({
+    required this.regionBloc,
+    required this.vacancyBloc,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<RegionBottomSheet> createState() => _RegionBottomSheetState();
@@ -22,18 +28,12 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
   late PageController pageController;
   int currentPage = 0;
   bool isCheck = false;
-  List<int> isCheckList = [];
-
-  void selectAll() {
-    setState(() {
-      isCheck = !isCheck;
-    });
-  }
+  List<String> list = [];
+  bool isAllDistrict = false;
 
   @override
   initState() {
     pageController = PageController();
-    // isCheckList=widget.regionBloc.state.
     super.initState();
   }
 
@@ -46,8 +46,11 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    return BlocProvider.value(
-      value: widget.regionBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: widget.regionBloc),
+        BlocProvider.value(value: widget.vacancyBloc),
+      ],
       child: ScrolledBottomSheet(
         isSubScreen: currentPage == 1 ? true : false,
         title: currentPage == 0 ? LocaleKeys.region.tr() : 'г.Ташкент',
@@ -63,7 +66,12 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 text: 'Выбрать',
                 onTap: () {
-                  Navigator.of(context).pop();
+                  widget.vacancyBloc.add(SelectDistrictEvent(
+                    onSuccess: () {
+                      Navigator.of(context).pop();
+                    },
+                    districtList: list,
+                  ));
                 },
               )
             : null,
@@ -84,31 +92,37 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                 return Paginator(
                   hasMoreToFetch: state.fetchMoreRegion,
                   paginatorStatus: state.regionStatus,
-                  fetchMoreFunction: () {},
+                  fetchMoreFunction: () {
+                    context.read<RegionBloc>().add(GetMoreRegion());
+                  },
                   errorWidget: const Text('Fail'),
                   padding: EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return CheckBoxTitle(
-                        onTap: selectAll,
+                        onTap: () {
+                          setState(() {
+                            isCheck = !isCheck;
+                          });
+                        },
                         isChecked: isCheck,
                         title: LocaleKeys.all_uzb.tr(),
                         padding: EdgeInsets.zero,
                       );
                     }
                     return RegionItem(
-                      title: state.regions[index].title,
+                      title: state.regions[index - 1].title,
                       onTap: () {
                         context
                             .read<RegionBloc>()
-                            .add(GetDistrictEvent(id: state.regions[index].id));
+                            .add(GetDistrictEvent(id: state.regions[index - 1].id));
                         pageController.nextPage(
                             duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
                       },
                     );
                   },
                   separatorBuilder: (context, index) => const SizedBox(height: 16),
-                  itemCount: state.regions.length,
+                  itemCount: state.regions.length + 1,
                 );
               },
             ),
@@ -119,24 +133,42 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return CheckBoxTitle(
-                        onTap: selectAll,
-                        isChecked: isCheckList.length == state.districts.length,
+                        isChecked: list.contains(widget.regionBloc.state.districts[index+1].title),
+                        onTap: () {
+                          setState(() {
+                            for (var element in widget.regionBloc.state.districts) {
+                              if (list.contains(element.title)) {
+                                list.remove(element.title);
+                              } else {
+                                list.add(element.title);
+                              }
+                            }
+                          });
+                        },
                         title: LocaleKeys.all.tr(),
                         padding: EdgeInsets.zero,
                       );
                     }
+                    print(widget.vacancyBloc.state.districtList);
+
                     return CheckBoxTitle(
                       padding: EdgeInsets.zero,
+                      isChecked: list.contains(widget.regionBloc.state.districts[index - 1].title),
                       title: state.districts[index - 1].title,
                       onTap: () {
                         setState(() {
-                          isCheckList.add(state.districts[index - 1].id);
+                          if (list.contains(widget.regionBloc.state.districts[index - 1].title)) {
+                            list.remove(widget.regionBloc.state.districts[index - 1].title);
+                          } else {
+                            list.add(widget.regionBloc.state.districts[index - 1].title);
+                          }
                         });
-                        context.read<RegionBloc>().add(SelectDistrictEvent(select: isCheckList));
                       },
                     );
                   },
-                  fetchMoreFunction: () {},
+                  fetchMoreFunction: () {
+                    context.read<RegionBloc>().add(GetMoreDistrict());
+                  },
                   paginatorStatus: state.districtStatus,
                   hasMoreToFetch: state.fetchMoreDistrict,
                   errorWidget: const Center(child: Text('Fail')),
@@ -152,11 +184,11 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
   }
 }
 
-void showRegionBottomSheet(BuildContext context, RegionBloc regionBloc) {
+void showRegionBottomSheet(BuildContext context, RegionBloc regionBloc, VacancyBloc vacancyBloc) {
   showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
     useRootNavigator: true,
-    builder: (context) => RegionBottomSheet(regionBloc: regionBloc),
+    builder: (context) => RegionBottomSheet(vacancyBloc: vacancyBloc, regionBloc: regionBloc),
   );
 }
