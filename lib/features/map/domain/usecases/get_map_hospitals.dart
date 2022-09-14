@@ -1,3 +1,4 @@
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
@@ -22,6 +23,9 @@ class GetMapHospitalUseCase extends UseCase<List<MapHospitalModel>, String> {
       });
     }
     return repo.getList<MapHospitalModel>(
-        endpoint: '/mobile/organization/map/', fromJson: MapHospitalModel.fromJson, query: query);
+        endpoint: '/mobile/organization/map/',
+        fromJson: MapHospitalModel.fromJson,
+        query: query,
+        sendToken: StorageRepository.getString('token').isNotEmpty);
   }
 }

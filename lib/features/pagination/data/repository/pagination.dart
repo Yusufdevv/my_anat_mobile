@@ -24,7 +24,10 @@ class PaginationRepository {
 
       final result = await dio.get(
         next ?? url,
-        options: Options(headers: {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"}),
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"}
+                : {}),
         queryParameters: queryParams,
       );
       print(queryParams);
@@ -64,7 +67,10 @@ class PaginationDatasource {
 
       final result = await dio.get(next ?? url,
           queryParameters: queryParams,
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token', defValue: '')}'}));
+          options: Options(
+              headers: StorageRepository.getString('token').isNotEmpty
+                  ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"}
+                  : {}));
 
       // print(queryParams);
       // print(result.realUri);

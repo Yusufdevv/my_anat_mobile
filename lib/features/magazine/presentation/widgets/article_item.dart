@@ -23,12 +23,15 @@ class ArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return WScaleAnimation(
       onTap: () {
-        if (magazineItemEntity.isBought) {
-          Navigator.of(context, rootNavigator: true).push(fade(
+        if (magazineItemEntity.isBought || !magazineItemEntity.isPremium) {
+          Navigator.of(context, rootNavigator: true).push(
+            fade(
               page: JournalArticleSingle(
-            bloc: context.read<JournalBloc>(),
-            slug: magazineItemEntity.slug,
-          )));
+                bloc: context.read<JournalBloc>(),
+                slug: magazineItemEntity.slug,
+              ),
+            ),
+          );
         } else {
           showModalBottomSheet(
             context: context,

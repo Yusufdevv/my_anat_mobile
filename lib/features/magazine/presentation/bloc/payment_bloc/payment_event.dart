@@ -44,3 +44,5 @@ class OrderCreateJournal extends PaymentEvent {
     required this.isRegistered,
   });
 }
+
+class CheckPaymentStatus extends PaymentEvent {}
