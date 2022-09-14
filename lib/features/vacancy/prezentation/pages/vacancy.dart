@@ -1,7 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/core/data/singletons/storage.dart';
-import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
@@ -10,8 +8,6 @@ import 'package:anatomica/features/common/presentation/widgets/custom_screen.dar
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
-import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
