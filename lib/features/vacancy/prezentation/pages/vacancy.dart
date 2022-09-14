@@ -5,6 +5,7 @@ import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/au
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
+import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';

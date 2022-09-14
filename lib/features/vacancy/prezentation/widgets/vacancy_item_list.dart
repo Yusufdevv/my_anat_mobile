@@ -9,7 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class VacancyItemList extends StatelessWidget {
   final EdgeInsets? margin;
 
-  const VacancyItemList({this.margin, Key? key}) : super(key: key);
+  final Function(String text) onSuccess;
+
+  const VacancyItemList({this.margin, Key? key, required this.onSuccess})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,9 @@ class VacancyItemList extends StatelessWidget {
             return VacancyItem(
               vacancyEntity: state.vacancyList[index],
               onTap: () {
-                Navigator.of(context).push(fade(page: VacancySingleScreen(slug: state.vacancyList[index].slug)));
+                Navigator.of(context).push(fade(
+                    page: VacancySingleScreen(
+                        slug: state.vacancyList[index].slug)));
               },
             );
           },
