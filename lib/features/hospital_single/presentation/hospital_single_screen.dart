@@ -30,6 +30,7 @@ import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_
 import 'package:anatomica/features/map/presentation/widgets/image_slider_indicator.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -141,6 +142,10 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                           floating: true,
                           automaticallyImplyLeading: false,
                           backgroundColor: white,
+                          systemOverlayStyle: const SystemUiOverlayStyle(
+                            statusBarColor: primary,
+                            statusBarIconBrightness: Brightness.light,
+                          ),
                           collapsedHeight: 56,
                           flexibleSpace: FlexibleSpaceBar(
                             stretchModes: const [

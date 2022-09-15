@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 class PhonesBottomSheet extends StatelessWidget {
   final List<String>? phones;
 
@@ -56,7 +58,11 @@ class PhonesBottomSheet extends StatelessWidget {
           ListView.separated(
             padding: const EdgeInsets.fromLTRB(0, 16, 16, 0),
             shrinkWrap: true,
-            itemBuilder: (context, index) => PhoneBottomSheetItem(phone: phones![index]),
+            itemBuilder: (context, index) => PhoneBottomSheetItem(
+                onTap: () {
+                  launchUrl(Uri.parse('tel://${phones![index]}'));
+                },
+                phone: phones![index]),
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemCount: phones!.length,
           )

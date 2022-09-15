@@ -152,8 +152,10 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                               floating: true,
                               automaticallyImplyLeading: false,
                               backgroundColor: white,
-                              systemOverlayStyle:
-                                  const SystemUiOverlayStyle(statusBarColor: darkGreen),
+                              systemOverlayStyle: const SystemUiOverlayStyle(
+                                statusBarColor: darkGreen,
+                                statusBarIconBrightness: Brightness.light,
+                              ),
                               collapsedHeight: 56,
                               flexibleSpace: FlexibleSpaceBar(
                                 stretchModes: const [StretchMode.blurBackground],

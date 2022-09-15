@@ -23,6 +23,7 @@ class FilterBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return ScrolledBottomSheet(
       title: LocaleKeys.filter.tr(),
       hasHeader: true,
@@ -39,8 +40,6 @@ class FilterBottomSheet extends StatelessWidget {
                   district: vacancyBloc.state.districtList,
                 ),
                 onSuccess: () {
-                  print('success');
-                  print(vacancyBloc.state.districtList);
                   Navigator.of(context).pop();
                 }),
           );
@@ -67,7 +66,7 @@ class FilterBottomSheet extends StatelessWidget {
           },
           title: LocaleKeys.city_district.tr(),
         ),
-        const SizedBox(height: 60),
+        const SizedBox(height: 20),
       ],
     );
   }

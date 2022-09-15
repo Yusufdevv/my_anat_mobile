@@ -27,7 +27,7 @@ class VacancyState extends Equatable {
   final FormzStatus filterStatus;
   final List<String>? salaryKey;
   final List<String>? experienceKey;
-  final List<String> districtList;
+  final List<int> districtList;
 
   const VacancyState({
     required this.organizationNext,
@@ -86,7 +86,7 @@ class VacancyState extends Equatable {
     FormzStatus? filterStatus,
     List<String>? salaryKey,
     List<String>? experienceKey,
-    List<String>? districtList,
+    List<int>? districtList,
   }) =>
       VacancyState(
         paginatorStatus: paginatorStatus ?? this.paginatorStatus,

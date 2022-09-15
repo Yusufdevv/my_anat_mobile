@@ -155,27 +155,6 @@ class VacancyRepositoryImpl extends VacancyRepository {
   }
 
   @override
-  Future<Either<Failure, Either>> addWishListVacancy(
-      {required int user, required int vacancy}) async {
-    try {
-      final result = await dataSource.addWishListVacancy(user: user, vacancy: vacancy);
-      return Right(result);
-    } on ServerException catch (error) {
-      return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Either>> removeWishListVacancy({required int id}) async {
-    try {
-      final result = await dataSource.removeWishListVacancy(id: id);
-      return Right(result);
-    } on ServerException catch (error) {
-      return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));
-    }
-  }
-
-  @override
   Future<Either<Failure, GenericPagination<CertificateEntity>>> getCandidateCertificate(
       {required int id}) async {
     try {

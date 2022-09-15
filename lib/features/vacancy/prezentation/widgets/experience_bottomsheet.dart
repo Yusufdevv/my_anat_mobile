@@ -68,6 +68,7 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
                             }
                           });
                         },
+                        isLast: index + 1 == state.vacancyFilterList[1].choices.length,
                         title: state.vacancyFilterList[1].choices[index].value,
                       ),
                     ),
@@ -89,6 +90,7 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
 void showExperienceBottomSheet(BuildContext context, VacancyBloc vacancyBloc) {
   showModalBottomSheet(
     context: context,
+    isScrollControlled: true,
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
     builder: (context) => ExperienceBottomSheet(vacancyBloc: vacancyBloc),
