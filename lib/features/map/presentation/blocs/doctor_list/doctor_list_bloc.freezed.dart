@@ -314,7 +314,7 @@ abstract class _GetMoreDoctors implements DoctorListEvent {
 
 /// @nodoc
 mixin _$DoctorListState {
-  List<DoctorsEntity> get doctors => throw _privateConstructorUsedError;
+  List<HospitalDoctorsEntity> get doctors => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
   String get next => throw _privateConstructorUsedError;
   int get count => throw _privateConstructorUsedError;
@@ -330,7 +330,7 @@ abstract class $DoctorListStateCopyWith<$Res> {
           DoctorListState value, $Res Function(DoctorListState) then) =
       _$DoctorListStateCopyWithImpl<$Res>;
   $Res call(
-      {List<DoctorsEntity> doctors,
+      {List<HospitalDoctorsEntity> doctors,
       FormzStatus status,
       String next,
       int count});
@@ -356,7 +356,7 @@ class _$DoctorListStateCopyWithImpl<$Res>
       doctors: doctors == freezed
           ? _value.doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<DoctorsEntity>,
+              as List<HospitalDoctorsEntity>,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -381,7 +381,7 @@ abstract class _$$_DoctorListStateCopyWith<$Res>
       __$$_DoctorListStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<DoctorsEntity> doctors,
+      {List<HospitalDoctorsEntity> doctors,
       FormzStatus status,
       String next,
       int count});
@@ -409,7 +409,7 @@ class __$$_DoctorListStateCopyWithImpl<$Res>
       doctors: doctors == freezed
           ? _value._doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<DoctorsEntity>,
+              as List<HospitalDoctorsEntity>,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -430,16 +430,16 @@ class __$$_DoctorListStateCopyWithImpl<$Res>
 
 class _$_DoctorListState implements _DoctorListState {
   _$_DoctorListState(
-      {final List<DoctorsEntity> doctors = const [],
+      {final List<HospitalDoctorsEntity> doctors = const [],
       this.status = FormzStatus.pure,
       this.next = '',
       this.count = 0})
       : _doctors = doctors;
 
-  final List<DoctorsEntity> _doctors;
+  final List<HospitalDoctorsEntity> _doctors;
   @override
   @JsonKey()
-  List<DoctorsEntity> get doctors {
+  List<HospitalDoctorsEntity> get doctors {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_doctors);
   }
@@ -486,13 +486,13 @@ class _$_DoctorListState implements _DoctorListState {
 
 abstract class _DoctorListState implements DoctorListState {
   factory _DoctorListState(
-      {final List<DoctorsEntity> doctors,
+      {final List<HospitalDoctorsEntity> doctors,
       final FormzStatus status,
       final String next,
       final int count}) = _$_DoctorListState;
 
   @override
-  List<DoctorsEntity> get doctors;
+  List<HospitalDoctorsEntity> get doctors;
   @override
   FormzStatus get status;
   @override

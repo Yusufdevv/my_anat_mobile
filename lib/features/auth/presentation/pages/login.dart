@@ -92,8 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         child: AnnotatedRegion(
-          value: const SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.light),
+          value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
           child: WKeyboardDismisser(
             child: BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
               builder: (context, state) {
@@ -106,12 +105,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       AuthHeader(
                         title: LocaleKeys.enter.tr(),
                         subTitle: LocaleKeys.has_account.tr(),
+                        showBackButton: true,
                       ),
                       Expanded(
                         child: Container(
                           width: double.infinity,
-                          padding: EdgeInsets.fromLTRB(
-                              16, 16, 16, 16 + mediaQuery.padding.bottom),
+                          padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
@@ -121,8 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               )
                             ],
                             color: white,
-                            borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(16)),
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,8 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 hasError: state.loginStatus.isSubmissionFailure,
                                 hintText: LocaleKeys.write_login.tr(),
                                 prefix: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 12, right: 8),
+                                  padding: const EdgeInsets.only(left: 12, right: 8),
                                   child: SvgPicture.asset(AppIcons.user),
                                 ),
                               ),
@@ -150,43 +147,33 @@ class _LoginScreenState extends State<LoginScreen> {
                               WScaleAnimation(
                                 onTap: () {
                                   // context.read<ShowPopUpBloc>().add(ShowPopUp(message: 'Error'));
-                                  Navigator.of(context).push(
-                                      fade(page: const ResetPasswordScreen()));
+                                  Navigator.of(context).push(fade(page: const ResetPasswordScreen()));
                                 },
                                 scaleValue: 0.98,
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 16, 16, 16),
+                                  padding: const EdgeInsets.fromLTRB(0, 16, 16, 16),
                                   child: Text(
                                     LocaleKeys.forgot_password.tr(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .copyWith(fontSize: 14, color: primary),
+                                    style:
+                                        Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14, color: primary),
                                   ),
                                 ),
                               ),
                               const Spacer(),
                               WButton(
                                 text: LocaleKeys.enter.tr(),
-                                isLoading:
-                                    state.loginStatus.isSubmissionInProgress,
-                                onTap: () =>
-                                    context.read<LoginSignUpBloc>().add(
-                                          Login(
-                                            username: loginController.text,
-                                            password: passwordController.text,
-                                            onError: (message) {
-                                              context.read<ShowPopUpBloc>().add(
-                                                    ShowPopUp(
-                                                        message: message.replaceAll(
-                                                            RegExp(
-                                                                r'\{?\[?\]?\.?}?'),
-                                                            '')),
-                                                  );
-                                            },
-                                          ),
-                                        ),
+                                isLoading: state.loginStatus.isSubmissionInProgress,
+                                onTap: () => context.read<LoginSignUpBloc>().add(
+                                      Login(
+                                        username: loginController.text,
+                                        password: passwordController.text,
+                                        onError: (message) {
+                                          context.read<ShowPopUpBloc>().add(
+                                                ShowPopUp(message: message.replaceAll(RegExp(r'\{?\[?\]?\.?}?'), '')),
+                                              );
+                                        },
+                                      ),
+                                    ),
                               ),
                               const SizedBox(height: 16),
                               Row(
@@ -195,10 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   Text(
                                     LocaleKeys.no_account.tr(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2!
-                                        .copyWith(),
+                                    style: Theme.of(context).textTheme.subtitle2!.copyWith(),
                                   ),
                                   const SizedBox(width: 4),
                                   WScaleAnimation(
@@ -206,18 +190,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Navigator.of(context).push(
                                         fade(
                                           page: RegisterScreen(
-                                            bloc:
-                                                context.read<LoginSignUpBloc>(),
+                                            bloc: context.read<LoginSignUpBloc>(),
                                           ),
                                         ),
                                       );
                                     },
                                     child: Text(
                                       LocaleKeys.za_register.tr(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4!
-                                          .copyWith(
+                                      style: Theme.of(context).textTheme.headline4!.copyWith(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700,
                                           ),

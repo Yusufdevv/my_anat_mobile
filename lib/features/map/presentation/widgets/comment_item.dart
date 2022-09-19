@@ -3,17 +3,17 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:anatomica/features/hospital_single/data/models/comments.dart';
+import 'package:anatomica/features/hospital_single/domain/entities/comment_entity.dart';
 import 'package:anatomica/features/map/presentation/widgets/delete_comment_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentItem extends StatelessWidget {
   final bool isMe;
-  final CommentModel entity ;
+  final CommentEntity entity;
 
   const CommentItem({
-  required  this.entity,
+    required this.entity,
     this.isMe = false,
     Key? key,
   }) : super(key: key);
@@ -34,7 +34,8 @@ class CommentItem extends StatelessWidget {
         ],
         border: Border.all(color: textFieldColor),
       ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +52,11 @@ class CommentItem extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.network(
-                          entity.userImage.middle,errorBuilder:(context,object,stack)=> const SizedBox(height: 40,width: 40,),
+                          entity.userImage.middle,
+                          errorBuilder: (context, object, stack) => const SizedBox(
+                            height: 40,
+                            width: 40,
+                          ),
                           height: 40,
                           width: 40,
                           fit: BoxFit.cover,
@@ -64,7 +69,7 @@ class CommentItem extends StatelessWidget {
                       children: [
                         Text.rich(
                           TextSpan(
-                            text: entity.fullName,
+                            text: entity.userFullName,
                             children: [
                               if (isMe) ...{
                                 TextSpan(
@@ -119,11 +124,11 @@ class CommentItem extends StatelessWidget {
           Row(
             children: [
               Text(
-               entity.rating.toString(),
+                entity.rating.toString(),
                 style: Theme.of(context).textTheme.headline3!.copyWith(color: primary),
               ),
               const SizedBox(width: 8),
-               RatingStars(
+              RatingStars(
                 rate: entity.rating,
                 inactiveStarColor: inactiveStar,
               ),

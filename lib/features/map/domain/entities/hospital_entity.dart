@@ -6,6 +6,13 @@ class HospitalEntity {
   final String addres;
   final List<AssetModel> images;
   final double rating;
-  HospitalEntity(
-      {required this.rating, required this.title, required this.images, required this.addres, required this.slug});
+  final int id;
+  HospitalEntity({
+    required this.rating,
+    required this.title,
+    required this.images,
+    required this.addres,
+    required this.slug,
+    required this.id,
+  });
 }

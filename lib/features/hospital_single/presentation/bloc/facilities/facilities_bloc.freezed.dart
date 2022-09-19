@@ -16,42 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FacilitiesEvent {
-  int? get organizationId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int? organizationId) getFacilities,
+    required TResult Function(int organizationId) getFacilities,
+    required TResult Function() getMoreFacilities,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int? organizationId)? getFacilities,
+    TResult Function(int organizationId)? getFacilities,
+    TResult Function()? getMoreFacilities,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int? organizationId)? getFacilities,
+    TResult Function(int organizationId)? getFacilities,
+    TResult Function()? getMoreFacilities,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetFacilities value) getFacilities,
+    required TResult Function(_GetMoreFacilities value) getMoreFacilities,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetFacilities value)? getFacilities,
+    TResult Function(_GetMoreFacilities value)? getMoreFacilities,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetFacilities value)? getFacilities,
+    TResult Function(_GetMoreFacilities value)? getMoreFacilities,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $FacilitiesEventCopyWith<FacilitiesEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,7 +61,6 @@ abstract class $FacilitiesEventCopyWith<$Res> {
   factory $FacilitiesEventCopyWith(
           FacilitiesEvent value, $Res Function(FacilitiesEvent) then) =
       _$FacilitiesEventCopyWithImpl<$Res>;
-  $Res call({int? organizationId});
 }
 
 /// @nodoc
@@ -71,28 +71,14 @@ class _$FacilitiesEventCopyWithImpl<$Res>
   final FacilitiesEvent _value;
   // ignore: unused_field
   final $Res Function(FacilitiesEvent) _then;
-
-  @override
-  $Res call({
-    Object? organizationId = freezed,
-  }) {
-    return _then(_value.copyWith(
-      organizationId: organizationId == freezed
-          ? _value.organizationId
-          : organizationId // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$$_GetFacilitiesCopyWith<$Res>
-    implements $FacilitiesEventCopyWith<$Res> {
+abstract class _$$_GetFacilitiesCopyWith<$Res> {
   factory _$$_GetFacilitiesCopyWith(
           _$_GetFacilities value, $Res Function(_$_GetFacilities) then) =
       __$$_GetFacilitiesCopyWithImpl<$Res>;
-  @override
-  $Res call({int? organizationId});
+  $Res call({int organizationId});
 }
 
 /// @nodoc
@@ -114,7 +100,7 @@ class __$$_GetFacilitiesCopyWithImpl<$Res>
       organizationId: organizationId == freezed
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -122,10 +108,10 @@ class __$$_GetFacilitiesCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GetFacilities implements _GetFacilities {
-  _$_GetFacilities({this.organizationId});
+  _$_GetFacilities({required this.organizationId});
 
   @override
-  final int? organizationId;
+  final int organizationId;
 
   @override
   String toString() {
@@ -153,7 +139,8 @@ class _$_GetFacilities implements _GetFacilities {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int? organizationId) getFacilities,
+    required TResult Function(int organizationId) getFacilities,
+    required TResult Function() getMoreFacilities,
   }) {
     return getFacilities(organizationId);
   }
@@ -161,7 +148,8 @@ class _$_GetFacilities implements _GetFacilities {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int? organizationId)? getFacilities,
+    TResult Function(int organizationId)? getFacilities,
+    TResult Function()? getMoreFacilities,
   }) {
     return getFacilities?.call(organizationId);
   }
@@ -169,7 +157,8 @@ class _$_GetFacilities implements _GetFacilities {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int? organizationId)? getFacilities,
+    TResult Function(int organizationId)? getFacilities,
+    TResult Function()? getMoreFacilities,
     required TResult orElse(),
   }) {
     if (getFacilities != null) {
@@ -182,6 +171,7 @@ class _$_GetFacilities implements _GetFacilities {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetFacilities value) getFacilities,
+    required TResult Function(_GetMoreFacilities value) getMoreFacilities,
   }) {
     return getFacilities(this);
   }
@@ -190,6 +180,7 @@ class _$_GetFacilities implements _GetFacilities {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetFacilities value)? getFacilities,
+    TResult Function(_GetMoreFacilities value)? getMoreFacilities,
   }) {
     return getFacilities?.call(this);
   }
@@ -198,6 +189,7 @@ class _$_GetFacilities implements _GetFacilities {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetFacilities value)? getFacilities,
+    TResult Function(_GetMoreFacilities value)? getMoreFacilities,
     required TResult orElse(),
   }) {
     if (getFacilities != null) {
@@ -208,22 +200,127 @@ class _$_GetFacilities implements _GetFacilities {
 }
 
 abstract class _GetFacilities implements FacilitiesEvent {
-  factory _GetFacilities({final int? organizationId}) = _$_GetFacilities;
+  factory _GetFacilities({required final int organizationId}) =
+      _$_GetFacilities;
 
-  @override
-  int? get organizationId;
-  @override
+  int get organizationId;
   @JsonKey(ignore: true)
   _$$_GetFacilitiesCopyWith<_$_GetFacilities> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$_GetMoreFacilitiesCopyWith<$Res> {
+  factory _$$_GetMoreFacilitiesCopyWith(_$_GetMoreFacilities value,
+          $Res Function(_$_GetMoreFacilities) then) =
+      __$$_GetMoreFacilitiesCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetMoreFacilitiesCopyWithImpl<$Res>
+    extends _$FacilitiesEventCopyWithImpl<$Res>
+    implements _$$_GetMoreFacilitiesCopyWith<$Res> {
+  __$$_GetMoreFacilitiesCopyWithImpl(
+      _$_GetMoreFacilities _value, $Res Function(_$_GetMoreFacilities) _then)
+      : super(_value, (v) => _then(v as _$_GetMoreFacilities));
+
+  @override
+  _$_GetMoreFacilities get _value => super._value as _$_GetMoreFacilities;
+}
+
+/// @nodoc
+
+class _$_GetMoreFacilities implements _GetMoreFacilities {
+  _$_GetMoreFacilities();
+
+  @override
+  String toString() {
+    return 'FacilitiesEvent.getMoreFacilities()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetMoreFacilities);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int organizationId) getFacilities,
+    required TResult Function() getMoreFacilities,
+  }) {
+    return getMoreFacilities();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(int organizationId)? getFacilities,
+    TResult Function()? getMoreFacilities,
+  }) {
+    return getMoreFacilities?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int organizationId)? getFacilities,
+    TResult Function()? getMoreFacilities,
+    required TResult orElse(),
+  }) {
+    if (getMoreFacilities != null) {
+      return getMoreFacilities();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetFacilities value) getFacilities,
+    required TResult Function(_GetMoreFacilities value) getMoreFacilities,
+  }) {
+    return getMoreFacilities(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetFacilities value)? getFacilities,
+    TResult Function(_GetMoreFacilities value)? getMoreFacilities,
+  }) {
+    return getMoreFacilities?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetFacilities value)? getFacilities,
+    TResult Function(_GetMoreFacilities value)? getMoreFacilities,
+    required TResult orElse(),
+  }) {
+    if (getMoreFacilities != null) {
+      return getMoreFacilities(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetMoreFacilities implements FacilitiesEvent {
+  factory _GetMoreFacilities() = _$_GetMoreFacilities;
+}
+
+/// @nodoc
 mixin _$FacilitiesState {
   List<ComfortEntity> get comforts => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
-  String get next => throw _privateConstructorUsedError;
+  bool get fetchMore => throw _privateConstructorUsedError;
+  String? get next => throw _privateConstructorUsedError;
+  int get organizationId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FacilitiesStateCopyWith<FacilitiesState> get copyWith =>
@@ -238,8 +335,9 @@ abstract class $FacilitiesStateCopyWith<$Res> {
   $Res call(
       {List<ComfortEntity> comforts,
       FormzStatus status,
-      int count,
-      String next});
+      bool fetchMore,
+      String? next,
+      int organizationId});
 }
 
 /// @nodoc
@@ -255,8 +353,9 @@ class _$FacilitiesStateCopyWithImpl<$Res>
   $Res call({
     Object? comforts = freezed,
     Object? status = freezed,
-    Object? count = freezed,
+    Object? fetchMore = freezed,
     Object? next = freezed,
+    Object? organizationId = freezed,
   }) {
     return _then(_value.copyWith(
       comforts: comforts == freezed
@@ -267,14 +366,18 @@ class _$FacilitiesStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -289,8 +392,9 @@ abstract class _$$_FacilitiesStateCopyWith<$Res>
   $Res call(
       {List<ComfortEntity> comforts,
       FormzStatus status,
-      int count,
-      String next});
+      bool fetchMore,
+      String? next,
+      int organizationId});
 }
 
 /// @nodoc
@@ -308,8 +412,9 @@ class __$$_FacilitiesStateCopyWithImpl<$Res>
   $Res call({
     Object? comforts = freezed,
     Object? status = freezed,
-    Object? count = freezed,
+    Object? fetchMore = freezed,
     Object? next = freezed,
+    Object? organizationId = freezed,
   }) {
     return _then(_$_FacilitiesState(
       comforts: comforts == freezed
@@ -320,14 +425,18 @@ class __$$_FacilitiesStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -338,8 +447,9 @@ class _$_FacilitiesState implements _FacilitiesState {
   _$_FacilitiesState(
       {final List<ComfortEntity> comforts = const [],
       this.status = FormzStatus.pure,
-      this.count = 0,
-      this.next = ''})
+      this.fetchMore = false,
+      this.next,
+      this.organizationId = 0})
       : _comforts = comforts;
 
   final List<ComfortEntity> _comforts;
@@ -355,14 +465,16 @@ class _$_FacilitiesState implements _FacilitiesState {
   final FormzStatus status;
   @override
   @JsonKey()
-  final int count;
+  final bool fetchMore;
+  @override
+  final String? next;
   @override
   @JsonKey()
-  final String next;
+  final int organizationId;
 
   @override
   String toString() {
-    return 'FacilitiesState(comforts: $comforts, status: $status, count: $count, next: $next)';
+    return 'FacilitiesState(comforts: $comforts, status: $status, fetchMore: $fetchMore, next: $next, organizationId: $organizationId)';
   }
 
   @override
@@ -372,8 +484,10 @@ class _$_FacilitiesState implements _FacilitiesState {
             other is _$_FacilitiesState &&
             const DeepCollectionEquality().equals(other._comforts, _comforts) &&
             const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.count, count) &&
-            const DeepCollectionEquality().equals(other.next, next));
+            const DeepCollectionEquality().equals(other.fetchMore, fetchMore) &&
+            const DeepCollectionEquality().equals(other.next, next) &&
+            const DeepCollectionEquality()
+                .equals(other.organizationId, organizationId));
   }
 
   @override
@@ -381,8 +495,9 @@ class _$_FacilitiesState implements _FacilitiesState {
       runtimeType,
       const DeepCollectionEquality().hash(_comforts),
       const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(count),
-      const DeepCollectionEquality().hash(next));
+      const DeepCollectionEquality().hash(fetchMore),
+      const DeepCollectionEquality().hash(next),
+      const DeepCollectionEquality().hash(organizationId));
 
   @JsonKey(ignore: true)
   @override
@@ -394,17 +509,20 @@ abstract class _FacilitiesState implements FacilitiesState {
   factory _FacilitiesState(
       {final List<ComfortEntity> comforts,
       final FormzStatus status,
-      final int count,
-      final String next}) = _$_FacilitiesState;
+      final bool fetchMore,
+      final String? next,
+      final int organizationId}) = _$_FacilitiesState;
 
   @override
   List<ComfortEntity> get comforts;
   @override
   FormzStatus get status;
   @override
-  int get count;
+  bool get fetchMore;
   @override
-  String get next;
+  String? get next;
+  @override
+  int get organizationId;
   @override
   @JsonKey(ignore: true)
   _$$_FacilitiesStateCopyWith<_$_FacilitiesState> get copyWith =>

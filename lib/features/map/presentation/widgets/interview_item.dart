@@ -1,11 +1,15 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/doctor_single/domain/entities/doctor_interview_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
+
 class InterviewItem extends StatelessWidget {
+  final DoctorInterviewEntity interview;
+
   const InterviewItem({
+    required this.interview,
     Key? key,
   }) : super(key: key);
 
@@ -30,7 +34,7 @@ class InterviewItem extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.network(
-              'https://picsum.photos/300/200',
+              interview.image.middle,
               height: 184,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -42,7 +46,7 @@ class InterviewItem extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  LocaleKeys.all_natural.tr(),
+                  interview.title,
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 const SizedBox(height: 10),
@@ -51,7 +55,7 @@ class InterviewItem extends StatelessWidget {
                     SvgPicture.asset(AppIcons.interviewTime),
                     const SizedBox(width: 4),
                     Text(
-                      '1:18:30',
+                      MyFunctions.getFormattedDuration(interview.videoDuration),
                       style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13),
                     ),
                   ],

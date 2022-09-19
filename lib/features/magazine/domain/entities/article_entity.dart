@@ -15,29 +15,35 @@ class JournalArticleEntity extends Equatable {
   final String redaction;
   final int viewCount;
   final bool isBought;
+  final bool isPaidForPublish;
+  final String moderationStatus;
   const JournalArticleEntity({
     this.redaction = '',
     this.image = const ImageEntity(),
     this.publishDate = '',
     this.id = 0,
     this.slug = '',
+    this.moderationStatus = '',
     this.category = const CategoryEntity(),
     this.isPremium = false,
     this.isBought = false,
+    this.isPaidForPublish = false,
     this.title = '',
     this.viewCount = 0,
   });
   @override
   List<Object?> get props => [
-        id,
-        title,
-        slug,
+        redaction,
         image,
         publishDate,
+        id,
+        slug,
+        moderationStatus,
         category,
         isPremium,
-        redaction,
-        viewCount,
         isBought,
+        isPaidForPublish,
+        title,
+        viewCount,
       ];
 }

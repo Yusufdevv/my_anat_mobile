@@ -16,42 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HospitalSpecialistEvent {
-  int? get organizationId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int? organizationId) getSpecialists,
+    required TResult Function(int organizationId) getSpecialists,
+    required TResult Function() getMoreSpecialists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int? organizationId)? getSpecialists,
+    TResult Function(int organizationId)? getSpecialists,
+    TResult Function()? getMoreSpecialists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int? organizationId)? getSpecialists,
+    TResult Function(int organizationId)? getSpecialists,
+    TResult Function()? getMoreSpecialists,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetSpecialists value) getSpecialists,
+    required TResult Function(_GetMoreSpecialists value) getMoreSpecialists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetSpecialists value)? getSpecialists,
+    TResult Function(_GetMoreSpecialists value)? getMoreSpecialists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetSpecialists value)? getSpecialists,
+    TResult Function(_GetMoreSpecialists value)? getMoreSpecialists,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $HospitalSpecialistEventCopyWith<HospitalSpecialistEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,7 +61,6 @@ abstract class $HospitalSpecialistEventCopyWith<$Res> {
   factory $HospitalSpecialistEventCopyWith(HospitalSpecialistEvent value,
           $Res Function(HospitalSpecialistEvent) then) =
       _$HospitalSpecialistEventCopyWithImpl<$Res>;
-  $Res call({int? organizationId});
 }
 
 /// @nodoc
@@ -71,28 +71,14 @@ class _$HospitalSpecialistEventCopyWithImpl<$Res>
   final HospitalSpecialistEvent _value;
   // ignore: unused_field
   final $Res Function(HospitalSpecialistEvent) _then;
-
-  @override
-  $Res call({
-    Object? organizationId = freezed,
-  }) {
-    return _then(_value.copyWith(
-      organizationId: organizationId == freezed
-          ? _value.organizationId
-          : organizationId // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$$_GetSpecialistsCopyWith<$Res>
-    implements $HospitalSpecialistEventCopyWith<$Res> {
+abstract class _$$_GetSpecialistsCopyWith<$Res> {
   factory _$$_GetSpecialistsCopyWith(
           _$_GetSpecialists value, $Res Function(_$_GetSpecialists) then) =
       __$$_GetSpecialistsCopyWithImpl<$Res>;
-  @override
-  $Res call({int? organizationId});
+  $Res call({int organizationId});
 }
 
 /// @nodoc
@@ -114,7 +100,7 @@ class __$$_GetSpecialistsCopyWithImpl<$Res>
       organizationId: organizationId == freezed
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -122,10 +108,10 @@ class __$$_GetSpecialistsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GetSpecialists implements _GetSpecialists {
-  _$_GetSpecialists({this.organizationId});
+  _$_GetSpecialists({required this.organizationId});
 
   @override
-  final int? organizationId;
+  final int organizationId;
 
   @override
   String toString() {
@@ -153,7 +139,8 @@ class _$_GetSpecialists implements _GetSpecialists {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int? organizationId) getSpecialists,
+    required TResult Function(int organizationId) getSpecialists,
+    required TResult Function() getMoreSpecialists,
   }) {
     return getSpecialists(organizationId);
   }
@@ -161,7 +148,8 @@ class _$_GetSpecialists implements _GetSpecialists {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int? organizationId)? getSpecialists,
+    TResult Function(int organizationId)? getSpecialists,
+    TResult Function()? getMoreSpecialists,
   }) {
     return getSpecialists?.call(organizationId);
   }
@@ -169,7 +157,8 @@ class _$_GetSpecialists implements _GetSpecialists {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int? organizationId)? getSpecialists,
+    TResult Function(int organizationId)? getSpecialists,
+    TResult Function()? getMoreSpecialists,
     required TResult orElse(),
   }) {
     if (getSpecialists != null) {
@@ -182,6 +171,7 @@ class _$_GetSpecialists implements _GetSpecialists {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetSpecialists value) getSpecialists,
+    required TResult Function(_GetMoreSpecialists value) getMoreSpecialists,
   }) {
     return getSpecialists(this);
   }
@@ -190,6 +180,7 @@ class _$_GetSpecialists implements _GetSpecialists {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetSpecialists value)? getSpecialists,
+    TResult Function(_GetMoreSpecialists value)? getMoreSpecialists,
   }) {
     return getSpecialists?.call(this);
   }
@@ -198,6 +189,7 @@ class _$_GetSpecialists implements _GetSpecialists {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetSpecialists value)? getSpecialists,
+    TResult Function(_GetMoreSpecialists value)? getMoreSpecialists,
     required TResult orElse(),
   }) {
     if (getSpecialists != null) {
@@ -208,22 +200,129 @@ class _$_GetSpecialists implements _GetSpecialists {
 }
 
 abstract class _GetSpecialists implements HospitalSpecialistEvent {
-  factory _GetSpecialists({final int? organizationId}) = _$_GetSpecialists;
+  factory _GetSpecialists({required final int organizationId}) =
+      _$_GetSpecialists;
 
-  @override
-  int? get organizationId;
-  @override
+  int get organizationId;
   @JsonKey(ignore: true)
   _$$_GetSpecialistsCopyWith<_$_GetSpecialists> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$_GetMoreSpecialistsCopyWith<$Res> {
+  factory _$$_GetMoreSpecialistsCopyWith(_$_GetMoreSpecialists value,
+          $Res Function(_$_GetMoreSpecialists) then) =
+      __$$_GetMoreSpecialistsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetMoreSpecialistsCopyWithImpl<$Res>
+    extends _$HospitalSpecialistEventCopyWithImpl<$Res>
+    implements _$$_GetMoreSpecialistsCopyWith<$Res> {
+  __$$_GetMoreSpecialistsCopyWithImpl(
+      _$_GetMoreSpecialists _value, $Res Function(_$_GetMoreSpecialists) _then)
+      : super(_value, (v) => _then(v as _$_GetMoreSpecialists));
+
+  @override
+  _$_GetMoreSpecialists get _value => super._value as _$_GetMoreSpecialists;
+}
+
+/// @nodoc
+
+class _$_GetMoreSpecialists implements _GetMoreSpecialists {
+  _$_GetMoreSpecialists();
+
+  @override
+  String toString() {
+    return 'HospitalSpecialistEvent.getMoreSpecialists()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetMoreSpecialists);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int organizationId) getSpecialists,
+    required TResult Function() getMoreSpecialists,
+  }) {
+    return getMoreSpecialists();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(int organizationId)? getSpecialists,
+    TResult Function()? getMoreSpecialists,
+  }) {
+    return getMoreSpecialists?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int organizationId)? getSpecialists,
+    TResult Function()? getMoreSpecialists,
+    required TResult orElse(),
+  }) {
+    if (getMoreSpecialists != null) {
+      return getMoreSpecialists();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetSpecialists value) getSpecialists,
+    required TResult Function(_GetMoreSpecialists value) getMoreSpecialists,
+  }) {
+    return getMoreSpecialists(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetSpecialists value)? getSpecialists,
+    TResult Function(_GetMoreSpecialists value)? getMoreSpecialists,
+  }) {
+    return getMoreSpecialists?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetSpecialists value)? getSpecialists,
+    TResult Function(_GetMoreSpecialists value)? getMoreSpecialists,
+    required TResult orElse(),
+  }) {
+    if (getMoreSpecialists != null) {
+      return getMoreSpecialists(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetMoreSpecialists implements HospitalSpecialistEvent {
+  factory _GetMoreSpecialists() = _$_GetMoreSpecialists;
+}
+
+/// @nodoc
 mixin _$HospitalSpecialistState {
-  List<DoctorsModel> get specialists => throw _privateConstructorUsedError;
+  List<HospitalDoctorsEntity> get specialists =>
+      throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
-  String get next => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
+  FormzStatus get paginationStatus => throw _privateConstructorUsedError;
+  String? get next => throw _privateConstructorUsedError;
+  bool get fetchMore => throw _privateConstructorUsedError;
+  int get organizationId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HospitalSpecialistStateCopyWith<HospitalSpecialistState> get copyWith =>
@@ -236,10 +335,12 @@ abstract class $HospitalSpecialistStateCopyWith<$Res> {
           $Res Function(HospitalSpecialistState) then) =
       _$HospitalSpecialistStateCopyWithImpl<$Res>;
   $Res call(
-      {List<DoctorsModel> specialists,
+      {List<HospitalDoctorsEntity> specialists,
       FormzStatus status,
-      String next,
-      int count});
+      FormzStatus paginationStatus,
+      String? next,
+      bool fetchMore,
+      int organizationId});
 }
 
 /// @nodoc
@@ -255,25 +356,35 @@ class _$HospitalSpecialistStateCopyWithImpl<$Res>
   $Res call({
     Object? specialists = freezed,
     Object? status = freezed,
+    Object? paginationStatus = freezed,
     Object? next = freezed,
-    Object? count = freezed,
+    Object? fetchMore = freezed,
+    Object? organizationId = freezed,
   }) {
     return _then(_value.copyWith(
       specialists: specialists == freezed
           ? _value.specialists
           : specialists // ignore: cast_nullable_to_non_nullable
-              as List<DoctorsModel>,
+              as List<HospitalDoctorsEntity>,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
+      paginationStatus: paginationStatus == freezed
+          ? _value.paginationStatus
+          : paginationStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -287,10 +398,12 @@ abstract class _$$_HospitalSpecialistStateCopyWith<$Res>
       __$$_HospitalSpecialistStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<DoctorsModel> specialists,
+      {List<HospitalDoctorsEntity> specialists,
       FormzStatus status,
-      String next,
-      int count});
+      FormzStatus paginationStatus,
+      String? next,
+      bool fetchMore,
+      int organizationId});
 }
 
 /// @nodoc
@@ -309,25 +422,35 @@ class __$$_HospitalSpecialistStateCopyWithImpl<$Res>
   $Res call({
     Object? specialists = freezed,
     Object? status = freezed,
+    Object? paginationStatus = freezed,
     Object? next = freezed,
-    Object? count = freezed,
+    Object? fetchMore = freezed,
+    Object? organizationId = freezed,
   }) {
     return _then(_$_HospitalSpecialistState(
       specialists: specialists == freezed
           ? _value._specialists
           : specialists // ignore: cast_nullable_to_non_nullable
-              as List<DoctorsModel>,
+              as List<HospitalDoctorsEntity>,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
+      paginationStatus: paginationStatus == freezed
+          ? _value.paginationStatus
+          : paginationStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -337,16 +460,18 @@ class __$$_HospitalSpecialistStateCopyWithImpl<$Res>
 
 class _$_HospitalSpecialistState implements _HospitalSpecialistState {
   _$_HospitalSpecialistState(
-      {final List<DoctorsModel> specialists = const [],
+      {final List<HospitalDoctorsEntity> specialists = const [],
       this.status = FormzStatus.pure,
-      this.next = '',
-      this.count = 0})
+      this.paginationStatus = FormzStatus.pure,
+      this.next,
+      this.fetchMore = false,
+      this.organizationId = 0})
       : _specialists = specialists;
 
-  final List<DoctorsModel> _specialists;
+  final List<HospitalDoctorsEntity> _specialists;
   @override
   @JsonKey()
-  List<DoctorsModel> get specialists {
+  List<HospitalDoctorsEntity> get specialists {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_specialists);
   }
@@ -356,14 +481,19 @@ class _$_HospitalSpecialistState implements _HospitalSpecialistState {
   final FormzStatus status;
   @override
   @JsonKey()
-  final String next;
+  final FormzStatus paginationStatus;
+  @override
+  final String? next;
   @override
   @JsonKey()
-  final int count;
+  final bool fetchMore;
+  @override
+  @JsonKey()
+  final int organizationId;
 
   @override
   String toString() {
-    return 'HospitalSpecialistState(specialists: $specialists, status: $status, next: $next, count: $count)';
+    return 'HospitalSpecialistState(specialists: $specialists, status: $status, paginationStatus: $paginationStatus, next: $next, fetchMore: $fetchMore, organizationId: $organizationId)';
   }
 
   @override
@@ -374,8 +504,12 @@ class _$_HospitalSpecialistState implements _HospitalSpecialistState {
             const DeepCollectionEquality()
                 .equals(other._specialists, _specialists) &&
             const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality()
+                .equals(other.paginationStatus, paginationStatus) &&
             const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality().equals(other.count, count));
+            const DeepCollectionEquality().equals(other.fetchMore, fetchMore) &&
+            const DeepCollectionEquality()
+                .equals(other.organizationId, organizationId));
   }
 
   @override
@@ -383,8 +517,10 @@ class _$_HospitalSpecialistState implements _HospitalSpecialistState {
       runtimeType,
       const DeepCollectionEquality().hash(_specialists),
       const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(paginationStatus),
       const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(count));
+      const DeepCollectionEquality().hash(fetchMore),
+      const DeepCollectionEquality().hash(organizationId));
 
   @JsonKey(ignore: true)
   @override
@@ -396,19 +532,25 @@ class _$_HospitalSpecialistState implements _HospitalSpecialistState {
 
 abstract class _HospitalSpecialistState implements HospitalSpecialistState {
   factory _HospitalSpecialistState(
-      {final List<DoctorsModel> specialists,
+      {final List<HospitalDoctorsEntity> specialists,
       final FormzStatus status,
-      final String next,
-      final int count}) = _$_HospitalSpecialistState;
+      final FormzStatus paginationStatus,
+      final String? next,
+      final bool fetchMore,
+      final int organizationId}) = _$_HospitalSpecialistState;
 
   @override
-  List<DoctorsModel> get specialists;
+  List<HospitalDoctorsEntity> get specialists;
   @override
   FormzStatus get status;
   @override
-  String get next;
+  FormzStatus get paginationStatus;
   @override
-  int get count;
+  String? get next;
+  @override
+  bool get fetchMore;
+  @override
+  int get organizationId;
   @override
   @JsonKey(ignore: true)
   _$$_HospitalSpecialistStateCopyWith<_$_HospitalSpecialistState>

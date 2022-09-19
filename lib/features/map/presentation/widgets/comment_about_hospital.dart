@@ -1,11 +1,11 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/hospital_single/data/models/comments.dart';
+import 'package:anatomica/features/hospital_single/domain/entities/comment_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentAboutHospital extends StatelessWidget {
-  final CommentModel entity;
+  final CommentEntity entity;
   const CommentAboutHospital({
     required this.entity,
     Key? key,
@@ -28,14 +28,15 @@ class CommentAboutHospital extends StatelessWidget {
         ],
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(18),
                 child: Image.network(
-                 entity.userImage.middle,
+                  entity.userImage.middle,
                   height: 36,
                   width: 36,
                   errorBuilder: (_, __, ___) => Container(
@@ -55,7 +56,7 @@ class CommentAboutHospital extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    entity.fullName,
+                    entity.userFullName,
                     style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 15),
                   ),
                   const SizedBox(height: 2),

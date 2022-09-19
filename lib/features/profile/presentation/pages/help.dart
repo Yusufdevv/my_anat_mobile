@@ -40,7 +40,6 @@ class _HelpScreenState extends State<HelpScreen> {
         body: BlocBuilder<FaqBloc, FaqState>(
           builder: (context, state) {
             return Paginator(
-              isEmpty: state.faqs.isEmpty,
               paginatorStatus: state.status,
               itemBuilder: (context, index) => HelpItem(
                 title: state.faqs[index].title,

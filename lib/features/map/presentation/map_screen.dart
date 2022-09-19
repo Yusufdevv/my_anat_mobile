@@ -1,21 +1,17 @@
-import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/assets/constants/app_images.dart';
+import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
-import 'package:anatomica/features/map/data/models/map_doctor.dart';
-import 'package:anatomica/features/map/data/models/map_hospital.dart';
+import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals.dart';
+import 'package:anatomica/features/map/domain/usecases/get_types_usecase.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_controller_bloc/map_controller_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
-import 'package:anatomica/features/map/presentation/widgets/hospital_single_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_controller_buttons.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -24,7 +20,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class MapScreen extends StatefulWidget {
@@ -43,147 +38,15 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
 
   double latitude = 0;
   double longitude = 0;
-  final clusterId = const MapObjectId('big_cluster_id');
-
-  Future<Uint8List> getBytesFromCanvas({required int width, required int height, required int placeCount}) async {
-    final pictureRecorder = ui.PictureRecorder();
-    final Canvas canvas = Canvas(pictureRecorder);
-    final Paint paint = Paint()..color = Colors.red;
-    canvas.drawImage(await getImageInfo(context).then((value) => value.image), const Offset(0, 3), paint);
-    TextPainter painter = TextPainter(textDirection: ui.TextDirection.ltr);
-    painter.text = TextSpan(
-      text: placeCount.toString(),
-      style: const TextStyle(fontSize: 25.0, color: Colors.white),
-    );
-    painter.layout();
-    painter.paint(canvas, Offset((width * 0.5) - painter.width * 0.5, (height * 0.5) - painter.height * 0.5));
-    final img = await pictureRecorder.endRecording().toImage(width, height);
-    final data = await img.toByteData(format: ui.ImageByteFormat.png);
-    return data?.buffer.asUint8List() ?? Uint8List(0);
-  }
-
-  Future<ImageInfo> getImageInfo(BuildContext context) async {
-    AssetImage assetImage = const AssetImage(AppImages.placeMarkCluster);
-    ImageStream stream = assetImage.resolve(createLocalImageConfiguration(context));
-    Completer<ImageInfo> completer = Completer();
-    stream.addListener(ImageStreamListener((ImageInfo imageInfo, _) {
-      return completer.complete(imageInfo);
-    }));
-    return completer.future;
-  }
 
   @override
   void initState() {
-    mapOrganizationBloc = MapOrganizationBloc(GetMapHospitalUseCase(), GetMapDoctorUseCase());
+    mapOrganizationBloc = MapOrganizationBloc(GetMapHospitalUseCase(), GetMapDoctorUseCase(),
+        getTypesUseCase: GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()));
     _controller = TabController(length: 2, vsync: this);
     _searchFieldController = TextEditingController();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
-  }
-
-  void addHospitals(List<MapHospitalModel> points) {
-    final placeMarks = points
-        .map(
-          (e) => PlacemarkMapObject(
-              opacity: 1,
-              mapId: MapObjectId(e.latitude.toString()),
-              point: Point(latitude: e.latitude, longitude: e.longitude),
-              onTap: (object, point) {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  useRootNavigator: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => HospitalSingleBottomSheet(
-                    isHospital: true,
-                    slug: e.slug,
-                    title: e.title,
-                    phone: e.phoneNumber,
-                    address: e.address,
-                    images: e.images.map((e) => e.middle).toList(),
-                    location: Point(latitude: e.latitude, longitude: e.longitude),
-                    rating: e.rating,
-                  ),
-                );
-              },
-              icon: PlacemarkIcon.single(
-                  PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon), scale: 3))),
-        )
-        .toList();
-    final clusterItem = ClusterizedPlacemarkCollection(
-      mapId: clusterId,
-      placemarks: placeMarks,
-      radius: 25,
-      minZoom: 30,
-      onClusterAdded: (collection, cluster) async => cluster.copyWith(
-        appearance: cluster.appearance.copyWith(
-          opacity: 1,
-          icon: PlacemarkIcon.single(
-            PlacemarkIconStyle(
-              image: BitmapDescriptor.fromBytes(
-                await getBytesFromCanvas(width: 48, height: 50, placeCount: cluster.placemarks.length),
-              ),
-              scale: 3,
-            ),
-          ),
-        ),
-      ),
-    );
-
-    _mapObjects.clear();
-    _mapObjects.add(clusterItem);
-  }
-
-  void addDoctors(List<MapDoctorModel> points) {
-    final placeMarks = points
-        .map(
-          (e) => PlacemarkMapObject(
-              opacity: 1,
-              mapId: MapObjectId(e.hospital.longitude.toString()),
-              point: Point(latitude: e.hospital.latitude, longitude: e.hospital.longitude),
-              onTap: (object, point) {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  useRootNavigator: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => HospitalSingleBottomSheet(
-                    isHospital: false,
-                    slug: '',
-                    title: e.hospital.title,
-                    phone: e.hospital.phoneNumber,
-                    address: e.hospital.address,
-                    images: e.hospital.images.map((e) => e.middle).toList(),
-                    location: Point(latitude: e.hospital.latitude, longitude: e.hospital.longitude),
-                    rating: e.hospital.rating,
-                  ),
-                );
-              },
-              icon: PlacemarkIcon.single(
-                  PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon), scale: 3))),
-        )
-        .toList();
-    final clusterItem = ClusterizedPlacemarkCollection(
-      mapId: clusterId,
-      placemarks: placeMarks,
-      radius: 25,
-      minZoom: 30,
-      onClusterAdded: (collection, cluster) async => cluster.copyWith(
-        appearance: cluster.appearance.copyWith(
-          opacity: 1,
-          icon: PlacemarkIcon.single(
-            PlacemarkIconStyle(
-              image: BitmapDescriptor.fromBytes(
-                await getBytesFromCanvas(width: 48, height: 50, placeCount: cluster.placemarks.length),
-              ),
-              scale: 3,
-            ),
-          ),
-        ),
-      ),
-    );
-    _mapObjects.clear();
-    _mapObjects.add(clusterItem);
   }
 
   @override
@@ -214,23 +77,22 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
               height: 20,
             ),
           ),
-          body: BlocListener<MapOrganizationBloc, MapOrganizationState>(
+          body: BlocConsumer<MapOrganizationBloc, MapOrganizationState>(
             listenWhen: (state1, state2) {
               bool isBuild = (state1.hospitals.length != state2.hospitals.length) ||
                   (state1.doctors.length != state2.doctors.length);
-              print(isBuild.toString() + 'is141');
               return isBuild;
             },
             listener: (context, state) {
               setState(() {
                 if (_controller.index == 0) {
-                  addHospitals(state.hospitals);
+                  MyFunctions.addHospitals(state.hospitals, context, _mapObjects);
                 } else {
-                  addDoctors(state.doctors);
+                  MyFunctions.addDoctors(state.doctors, context, _mapObjects);
                 }
               });
             },
-            child: Stack(
+            builder: (context, mapOrganizationState) => Stack(
               children: [
                 Positioned.fill(
                   bottom: 60,
@@ -243,7 +105,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                     mapObjects: _mapObjects,
                     onMapCreated: (controller) async {
                       _mapController = controller;
-                      final position = await _determinePosition();
+                      final position = await MyFunctions.determinePosition();
                       mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
                           param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
                       _mapController.moveCamera(
@@ -284,9 +146,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           onTap: (index) {
                             setState(() {
                               if (index == 1) {
-                                addDoctors(state.doctors);
+                                MyFunctions.addHospitals(state.hospitals, context, _mapObjects);
                               } else {
-                                addHospitals(state.hospitals);
+                                MyFunctions.addDoctors(state.doctors, context, _mapObjects);
                               }
                             });
                           },
@@ -324,7 +186,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                             ),
                             MapControllerButtons(
                               onCurrentLocationTap: () async {
-                                final position = await _determinePosition();
+                                final position = await MyFunctions.determinePosition();
                                 _mapController.moveCamera(
                                   CameraUpdate.newCameraPosition(
                                     CameraPosition(
@@ -393,25 +255,5 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
         ),
       ),
     );
-  }
-
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
-    }
-    return await Geolocator.getCurrentPosition();
   }
 }

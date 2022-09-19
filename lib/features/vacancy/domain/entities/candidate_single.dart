@@ -156,7 +156,7 @@ class LicenceEntity extends Equatable {
   @JsonKey(defaultValue: 0)
   final int size;
 
-  const LicenceEntity({required this.size, required this.url});
+  const LicenceEntity({this.size = 0, this.url = ''});
 
   @override
   List<Object?> get props => [url, size];
@@ -178,11 +178,12 @@ class PositionEntity extends Equatable {
   @JsonKey(name: 'title', defaultValue: '')
   final String title;
 
-  const PositionEntity({required this.title, required this.id});
+  const PositionEntity({this.title = '', this.id = 0});
 
   @override
   List<Object?> get props => [title, id];
 }
+
 class PositionEntityConverter extends JsonConverter<PositionEntity, Map<String, dynamic>?> {
   const PositionEntityConverter();
 
