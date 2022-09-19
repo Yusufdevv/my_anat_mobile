@@ -1,19 +1,30 @@
-import 'package:anatomica/features/common/data/models/logo.dart';
+import 'package:anatomica/features/auth/data/models/specialization_model.dart';
+import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 
-class DoctorsEntity {
-  final String name;
+class HospitalDoctorsEntity {
+  final String fullName;
   final int id;
-  final String specialization;
+  @SpecializationConverter()
+  final SpecializationEntity specialization;
   final double rating;
-  final AssetModel image;
-  final double lat;
-  final double long;
-  DoctorsEntity(
-      {required this.rating,
-      required this.specialization,
-      required this.id,
-      required this.name,
-      required this.image,
-      required this.lat,
-      required this.long});
+  @ImageConverter()
+  final ImageEntity image;
+  final String position;
+  final String phoneNumber;
+  final int workExperience;
+  final String address;
+  final bool isFavourite;
+  const HospitalDoctorsEntity({
+    this.isFavourite = false,
+    this.rating = 0,
+    this.specialization = const SpecializationEntity(),
+    this.id = 0,
+    this.fullName = '',
+    this.image = const ImageEntity(),
+    this.position = '',
+    this.phoneNumber = '',
+    this.workExperience = 0,
+    this.address = '',
+  });
 }

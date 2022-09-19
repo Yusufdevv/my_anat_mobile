@@ -1,74 +1,135 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/core/data/singletons/storage.dart';
+import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/get_comments.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_about_hospital.dart';
+import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet.dart';
+import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class HospitalCommentList extends StatefulWidget {
+class HospitalCommentList extends StatelessWidget {
   final VoidCallback onTapAll;
   final String description;
 
-  const HospitalCommentList({required this.onTapAll,
-    Key? key, required this.description})
-      : super(key: key);
-
-  @override
-  State<HospitalCommentList> createState() => _HospitalCommentListState();
-}
-
-class _HospitalCommentListState extends State<HospitalCommentList> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  const HospitalCommentList({required this.onTapAll, Key? key, required this.description}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(StorageRepository.getString('token'));
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            color: white,
-            child: Html(data: widget.description),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 32, 0, 12),
-            child: Text(
-              LocaleKeys.reviews.tr(),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline1!
-                  .copyWith(fontSize: 20),
-            ),
-          ),
-          BlocBuilder<CommentsBloc, CommentsState>(
-            builder: (context, state) {
-              return Column(
-                children: List.generate(
+      child: BlocBuilder<CommentsBloc, CommentsState>(
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                color: white,
+                child: Html(data: description),
+              ),
+              if (state.comments.isNotEmpty) ...[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 32, 0, 12),
+                  child: Text(
+                    LocaleKeys.reviews.tr(),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                  ),
+                ),
+                Column(
+                  children: List.generate(
                     state.comments.take(3).length,
                     (index) => CommentAboutHospital(
-                          entity: state.comments[index],
-                        )),
-              );
-            },
+                      entity: state.comments[index],
+                    ),
+                  ),
+                ),
+                WButton(
+                  onTap: onTapAll,
+                  margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                  color: commentButton,
+                  text: LocaleKeys.all_reviews.tr(),
+                  textColor: textSecondary,
+                )
+              ] else ...{
+                BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) {
+                    return EmptyWidget(
+                      onButtonTap: () {
+                        if (state.status == AuthenticationStatus.authenticated) {
+                          showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (_) => CommentBottomSheet(
+                              parentContext: context,
+                              commentsBloc: context.read<CommentsBloc>(),
+                            ),
+                          );
+                        } else {
+                          showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            isScrollControlled: true,
+                            builder: (_) => RegisterBottomSheet(parentContext: context),
+                          );
+                        }
+                      },
+                    );
+                  },
+                )
+              },
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class RegisterBottomSheet extends StatelessWidget {
+  final BuildContext parentContext;
+  const RegisterBottomSheet({
+    required this.parentContext,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16)
+          .copyWith(bottom: MediaQuery.of(context).padding.bottom + 20, top: 0),
+      decoration: const BoxDecoration(
+        color: white,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(16),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(
+            AppIcons.registerUserIcon,
           ),
+          Text(
+            'Пожалуйста, зарегистрируйтесь,\nчтобы использовать эту функцию',
+            style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 32),
           WButton(
-            onTap: widget.onTapAll,
-            margin: const EdgeInsets.all(16)
-                .copyWith(bottom: MediaQuery.of(context).padding.bottom+16),
-            color: commentButton,
-            text: LocaleKeys.all_reviews.tr(),
-            textColor: textSecondary,
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(parentContext).push(fade(page: const LoginScreen()));
+            },
+            borderRadius: 8,
+            text: 'Зарегистрироваться',
           )
         ],
       ),

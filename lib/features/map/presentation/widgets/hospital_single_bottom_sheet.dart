@@ -1,21 +1,20 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class HospitalSingleBottomSheet extends StatelessWidget {
   final String title;
   final String slug;
+  final int id;
 
   final List<String> images;
 
@@ -37,6 +36,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
       required this.rating,
       required this.phone,
       required this.location,
+      required this.id,
       Key? key})
       : super(key: key);
 
@@ -70,15 +70,13 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                             child: Image.network(images[index]),
                           ),
                           itemCount: images.length,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 8),
+                          separatorBuilder: (context, index) => const SizedBox(width: 8),
                         ),
                       ),
                     ),
               const SizedBox(height: 16),
               Padding(
-                padding: EdgeInsets.fromLTRB(
-                    8, 0, 8, MediaQuery.of(context).padding.bottom + 8),
+                padding: EdgeInsets.fromLTRB(8, 0, 8, MediaQuery.of(context).padding.bottom + 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -87,10 +85,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                       title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline1!
-                          .copyWith(fontSize: 20),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -119,10 +114,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                       children: [
                         Text(
                           rating.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3!
-                              .copyWith(color: darkGreen),
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
                         ),
                         const SizedBox(width: 8),
                         ...List.generate(
@@ -136,8 +128,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           5 - rating.toInt(),
                           (index) => Padding(
                             padding: const EdgeInsets.only(right: 4),
-                            child: SvgPicture.asset(AppIcons.star,
-                                color: inactiveStar),
+                            child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
                           ),
                         ),
                       ],
@@ -148,17 +139,16 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         Expanded(
                           child: WButton(
                             onTap: () {
-                              if(isHospital){
-                                Navigator.of(context, rootNavigator: true)
-                                    .pushReplacement(
+                              if (isHospital) {
+                                Navigator.of(context, rootNavigator: true).pushReplacement(
                                   fade(
-                                    page: HospitalSingleScreen(slug: slug),
+                                    page: HospitalSingleScreen(
+                                      slug: slug,
+                                      id: id,
+                                    ),
                                   ),
                                 );
-                              }else {
-
-                              }
-
+                              } else {}
                             },
                             text: LocaleKeys.more.tr(),
                             textColor: white,
@@ -169,11 +159,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           width: 40,
                           color: white,
                           onTap: () async {
-                            var uri = Uri.parse(
-                                'geo:${location.latitude},${location.longitude}');
-                            await canLaunchUrl(uri)
-                                ? await launchUrl(uri)
-                                : throw 'can not open this location';
+                            var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
+                            await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
                           },
                           border: Border.all(color: primary),
                           padding: const EdgeInsets.all(8),
@@ -185,9 +172,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           color: white,
                           onTap: () async {
                             var uri = Uri.parse('tel:${phone}');
-                            await canLaunchUrl(uri)
-                                ? await launchUrl(uri)
-                                : throw 'can not open phone';
+                            await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open phone';
                           },
                           border: Border.all(color: primary),
                           padding: const EdgeInsets.all(8),

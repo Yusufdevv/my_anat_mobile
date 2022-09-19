@@ -1,13 +1,17 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AuthHeader extends StatelessWidget {
   final String title;
   final String subTitle;
+  final bool showBackButton;
+
   const AuthHeader({
     this.title = '',
     this.subTitle = '',
+    this.showBackButton = false,
     Key? key,
   }) : super(key: key);
 
@@ -18,6 +22,15 @@ class AuthHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (showBackButton) ...{
+            WScaleAnimation(
+              onTap: () => Navigator.of(context).pop(),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16, bottom: 16),
+                child: SvgPicture.asset(AppIcons.chevronLeft),
+              ),
+            )
+          },
           SvgPicture.asset(AppIcons.logo),
           const SizedBox(height: 36),
           Text(title,

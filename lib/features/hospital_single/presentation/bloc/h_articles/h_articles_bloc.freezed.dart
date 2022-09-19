@@ -16,42 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HArticlesEvent {
-  int? get organizationId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int? organizationId) getArticles,
+    required TResult Function(int organizationId) getArticles,
+    required TResult Function() getMoreArticles,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int? organizationId)? getArticles,
+    TResult Function(int organizationId)? getArticles,
+    TResult Function()? getMoreArticles,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int? organizationId)? getArticles,
+    TResult Function(int organizationId)? getArticles,
+    TResult Function()? getMoreArticles,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetArticles value) getArticles,
+    required TResult Function(_GetMoreArticles value) getMoreArticles,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetArticles value)? getArticles,
+    TResult Function(_GetMoreArticles value)? getMoreArticles,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetArticles value)? getArticles,
+    TResult Function(_GetMoreArticles value)? getMoreArticles,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $HArticlesEventCopyWith<HArticlesEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,7 +61,6 @@ abstract class $HArticlesEventCopyWith<$Res> {
   factory $HArticlesEventCopyWith(
           HArticlesEvent value, $Res Function(HArticlesEvent) then) =
       _$HArticlesEventCopyWithImpl<$Res>;
-  $Res call({int? organizationId});
 }
 
 /// @nodoc
@@ -71,28 +71,14 @@ class _$HArticlesEventCopyWithImpl<$Res>
   final HArticlesEvent _value;
   // ignore: unused_field
   final $Res Function(HArticlesEvent) _then;
-
-  @override
-  $Res call({
-    Object? organizationId = freezed,
-  }) {
-    return _then(_value.copyWith(
-      organizationId: organizationId == freezed
-          ? _value.organizationId
-          : organizationId // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$$_GetArticlesCopyWith<$Res>
-    implements $HArticlesEventCopyWith<$Res> {
+abstract class _$$_GetArticlesCopyWith<$Res> {
   factory _$$_GetArticlesCopyWith(
           _$_GetArticles value, $Res Function(_$_GetArticles) then) =
       __$$_GetArticlesCopyWithImpl<$Res>;
-  @override
-  $Res call({int? organizationId});
+  $Res call({int organizationId});
 }
 
 /// @nodoc
@@ -114,7 +100,7 @@ class __$$_GetArticlesCopyWithImpl<$Res>
       organizationId: organizationId == freezed
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -122,10 +108,10 @@ class __$$_GetArticlesCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GetArticles implements _GetArticles {
-  _$_GetArticles({this.organizationId});
+  _$_GetArticles({required this.organizationId});
 
   @override
-  final int? organizationId;
+  final int organizationId;
 
   @override
   String toString() {
@@ -153,7 +139,8 @@ class _$_GetArticles implements _GetArticles {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int? organizationId) getArticles,
+    required TResult Function(int organizationId) getArticles,
+    required TResult Function() getMoreArticles,
   }) {
     return getArticles(organizationId);
   }
@@ -161,7 +148,8 @@ class _$_GetArticles implements _GetArticles {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int? organizationId)? getArticles,
+    TResult Function(int organizationId)? getArticles,
+    TResult Function()? getMoreArticles,
   }) {
     return getArticles?.call(organizationId);
   }
@@ -169,7 +157,8 @@ class _$_GetArticles implements _GetArticles {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int? organizationId)? getArticles,
+    TResult Function(int organizationId)? getArticles,
+    TResult Function()? getMoreArticles,
     required TResult orElse(),
   }) {
     if (getArticles != null) {
@@ -182,6 +171,7 @@ class _$_GetArticles implements _GetArticles {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetArticles value) getArticles,
+    required TResult Function(_GetMoreArticles value) getMoreArticles,
   }) {
     return getArticles(this);
   }
@@ -190,6 +180,7 @@ class _$_GetArticles implements _GetArticles {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetArticles value)? getArticles,
+    TResult Function(_GetMoreArticles value)? getMoreArticles,
   }) {
     return getArticles?.call(this);
   }
@@ -198,6 +189,7 @@ class _$_GetArticles implements _GetArticles {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetArticles value)? getArticles,
+    TResult Function(_GetMoreArticles value)? getMoreArticles,
     required TResult orElse(),
   }) {
     if (getArticles != null) {
@@ -208,22 +200,126 @@ class _$_GetArticles implements _GetArticles {
 }
 
 abstract class _GetArticles implements HArticlesEvent {
-  factory _GetArticles({final int? organizationId}) = _$_GetArticles;
+  factory _GetArticles({required final int organizationId}) = _$_GetArticles;
 
-  @override
-  int? get organizationId;
-  @override
+  int get organizationId;
   @JsonKey(ignore: true)
   _$$_GetArticlesCopyWith<_$_GetArticles> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$_GetMoreArticlesCopyWith<$Res> {
+  factory _$$_GetMoreArticlesCopyWith(
+          _$_GetMoreArticles value, $Res Function(_$_GetMoreArticles) then) =
+      __$$_GetMoreArticlesCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetMoreArticlesCopyWithImpl<$Res>
+    extends _$HArticlesEventCopyWithImpl<$Res>
+    implements _$$_GetMoreArticlesCopyWith<$Res> {
+  __$$_GetMoreArticlesCopyWithImpl(
+      _$_GetMoreArticles _value, $Res Function(_$_GetMoreArticles) _then)
+      : super(_value, (v) => _then(v as _$_GetMoreArticles));
+
+  @override
+  _$_GetMoreArticles get _value => super._value as _$_GetMoreArticles;
+}
+
+/// @nodoc
+
+class _$_GetMoreArticles implements _GetMoreArticles {
+  _$_GetMoreArticles();
+
+  @override
+  String toString() {
+    return 'HArticlesEvent.getMoreArticles()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetMoreArticles);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int organizationId) getArticles,
+    required TResult Function() getMoreArticles,
+  }) {
+    return getMoreArticles();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(int organizationId)? getArticles,
+    TResult Function()? getMoreArticles,
+  }) {
+    return getMoreArticles?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int organizationId)? getArticles,
+    TResult Function()? getMoreArticles,
+    required TResult orElse(),
+  }) {
+    if (getMoreArticles != null) {
+      return getMoreArticles();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetArticles value) getArticles,
+    required TResult Function(_GetMoreArticles value) getMoreArticles,
+  }) {
+    return getMoreArticles(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetArticles value)? getArticles,
+    TResult Function(_GetMoreArticles value)? getMoreArticles,
+  }) {
+    return getMoreArticles?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetArticles value)? getArticles,
+    TResult Function(_GetMoreArticles value)? getMoreArticles,
+    required TResult orElse(),
+  }) {
+    if (getMoreArticles != null) {
+      return getMoreArticles(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetMoreArticles implements HArticlesEvent {
+  factory _GetMoreArticles() = _$_GetMoreArticles;
+}
+
+/// @nodoc
 mixin _$HArticlesState {
   List<JournalArticleEntity> get articles => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
-  String get next => throw _privateConstructorUsedError;
+  bool get fetchMore => throw _privateConstructorUsedError;
+  String? get next => throw _privateConstructorUsedError;
+  int get organizationId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HArticlesStateCopyWith<HArticlesState> get copyWith =>
@@ -238,8 +334,9 @@ abstract class $HArticlesStateCopyWith<$Res> {
   $Res call(
       {List<JournalArticleEntity> articles,
       FormzStatus status,
-      int count,
-      String next});
+      bool fetchMore,
+      String? next,
+      int organizationId});
 }
 
 /// @nodoc
@@ -255,8 +352,9 @@ class _$HArticlesStateCopyWithImpl<$Res>
   $Res call({
     Object? articles = freezed,
     Object? status = freezed,
-    Object? count = freezed,
+    Object? fetchMore = freezed,
     Object? next = freezed,
+    Object? organizationId = freezed,
   }) {
     return _then(_value.copyWith(
       articles: articles == freezed
@@ -267,14 +365,18 @@ class _$HArticlesStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -289,8 +391,9 @@ abstract class _$$_HArticlesStateCopyWith<$Res>
   $Res call(
       {List<JournalArticleEntity> articles,
       FormzStatus status,
-      int count,
-      String next});
+      bool fetchMore,
+      String? next,
+      int organizationId});
 }
 
 /// @nodoc
@@ -308,8 +411,9 @@ class __$$_HArticlesStateCopyWithImpl<$Res>
   $Res call({
     Object? articles = freezed,
     Object? status = freezed,
-    Object? count = freezed,
+    Object? fetchMore = freezed,
     Object? next = freezed,
+    Object? organizationId = freezed,
   }) {
     return _then(_$_HArticlesState(
       articles: articles == freezed
@@ -320,14 +424,18 @@ class __$$_HArticlesStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      organizationId: organizationId == freezed
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -338,8 +446,9 @@ class _$_HArticlesState implements _HArticlesState {
   _$_HArticlesState(
       {final List<JournalArticleEntity> articles = const [],
       this.status = FormzStatus.pure,
-      this.count = 0,
-      this.next = ''})
+      this.fetchMore = false,
+      this.next,
+      this.organizationId = 0})
       : _articles = articles;
 
   final List<JournalArticleEntity> _articles;
@@ -355,14 +464,16 @@ class _$_HArticlesState implements _HArticlesState {
   final FormzStatus status;
   @override
   @JsonKey()
-  final int count;
+  final bool fetchMore;
+  @override
+  final String? next;
   @override
   @JsonKey()
-  final String next;
+  final int organizationId;
 
   @override
   String toString() {
-    return 'HArticlesState(articles: $articles, status: $status, count: $count, next: $next)';
+    return 'HArticlesState(articles: $articles, status: $status, fetchMore: $fetchMore, next: $next, organizationId: $organizationId)';
   }
 
   @override
@@ -372,8 +483,10 @@ class _$_HArticlesState implements _HArticlesState {
             other is _$_HArticlesState &&
             const DeepCollectionEquality().equals(other._articles, _articles) &&
             const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.count, count) &&
-            const DeepCollectionEquality().equals(other.next, next));
+            const DeepCollectionEquality().equals(other.fetchMore, fetchMore) &&
+            const DeepCollectionEquality().equals(other.next, next) &&
+            const DeepCollectionEquality()
+                .equals(other.organizationId, organizationId));
   }
 
   @override
@@ -381,8 +494,9 @@ class _$_HArticlesState implements _HArticlesState {
       runtimeType,
       const DeepCollectionEquality().hash(_articles),
       const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(count),
-      const DeepCollectionEquality().hash(next));
+      const DeepCollectionEquality().hash(fetchMore),
+      const DeepCollectionEquality().hash(next),
+      const DeepCollectionEquality().hash(organizationId));
 
   @JsonKey(ignore: true)
   @override
@@ -394,17 +508,20 @@ abstract class _HArticlesState implements HArticlesState {
   factory _HArticlesState(
       {final List<JournalArticleEntity> articles,
       final FormzStatus status,
-      final int count,
-      final String next}) = _$_HArticlesState;
+      final bool fetchMore,
+      final String? next,
+      final int organizationId}) = _$_HArticlesState;
 
   @override
   List<JournalArticleEntity> get articles;
   @override
   FormzStatus get status;
   @override
-  int get count;
+  bool get fetchMore;
   @override
-  String get next;
+  String? get next;
+  @override
+  int get organizationId;
   @override
   @JsonKey(ignore: true)
   _$$_HArticlesStateCopyWith<_$_HArticlesState> get copyWith =>

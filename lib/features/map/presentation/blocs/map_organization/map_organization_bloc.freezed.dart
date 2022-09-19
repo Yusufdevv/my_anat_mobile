@@ -16,23 +16,28 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MapOrganizationEvent {
-  MapParameter get param => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(MapParameter param) getHospitals,
     required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getTypes,
+    required TResult Function() getMoreTypes,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(MapParameter param)? getHospitals,
     TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(MapParameter param)? getHospitals,
     TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -40,24 +45,26 @@ mixin _$MapOrganizationEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetHospitals value) getHospitals,
     required TResult Function(_GetDoctors value) getDoctors,
+    required TResult Function(_GetTypes value) getTypes,
+    required TResult Function(_GetMoreTypes value) getMoreTypes,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetHospitals value)? getHospitals,
     TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetHospitals value)? getHospitals,
     TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $MapOrganizationEventCopyWith<MapOrganizationEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -66,7 +73,6 @@ abstract class $MapOrganizationEventCopyWith<$Res> {
   factory $MapOrganizationEventCopyWith(MapOrganizationEvent value,
           $Res Function(MapOrganizationEvent) then) =
       _$MapOrganizationEventCopyWithImpl<$Res>;
-  $Res call({MapParameter param});
 }
 
 /// @nodoc
@@ -77,27 +83,13 @@ class _$MapOrganizationEventCopyWithImpl<$Res>
   final MapOrganizationEvent _value;
   // ignore: unused_field
   final $Res Function(MapOrganizationEvent) _then;
-
-  @override
-  $Res call({
-    Object? param = freezed,
-  }) {
-    return _then(_value.copyWith(
-      param: param == freezed
-          ? _value.param
-          : param // ignore: cast_nullable_to_non_nullable
-              as MapParameter,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$$_GetHospitalsCopyWith<$Res>
-    implements $MapOrganizationEventCopyWith<$Res> {
+abstract class _$$_GetHospitalsCopyWith<$Res> {
   factory _$$_GetHospitalsCopyWith(
           _$_GetHospitals value, $Res Function(_$_GetHospitals) then) =
       __$$_GetHospitalsCopyWithImpl<$Res>;
-  @override
   $Res call({MapParameter param});
 }
 
@@ -160,6 +152,8 @@ class _$_GetHospitals implements _GetHospitals {
   TResult when<TResult extends Object?>({
     required TResult Function(MapParameter param) getHospitals,
     required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getTypes,
+    required TResult Function() getMoreTypes,
   }) {
     return getHospitals(param);
   }
@@ -169,6 +163,8 @@ class _$_GetHospitals implements _GetHospitals {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(MapParameter param)? getHospitals,
     TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
   }) {
     return getHospitals?.call(param);
   }
@@ -178,6 +174,8 @@ class _$_GetHospitals implements _GetHospitals {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(MapParameter param)? getHospitals,
     TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
     required TResult orElse(),
   }) {
     if (getHospitals != null) {
@@ -191,6 +189,8 @@ class _$_GetHospitals implements _GetHospitals {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetHospitals value) getHospitals,
     required TResult Function(_GetDoctors value) getDoctors,
+    required TResult Function(_GetTypes value) getTypes,
+    required TResult Function(_GetMoreTypes value) getMoreTypes,
   }) {
     return getHospitals(this);
   }
@@ -200,6 +200,8 @@ class _$_GetHospitals implements _GetHospitals {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetHospitals value)? getHospitals,
     TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
   }) {
     return getHospitals?.call(this);
   }
@@ -209,6 +211,8 @@ class _$_GetHospitals implements _GetHospitals {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetHospitals value)? getHospitals,
     TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
     required TResult orElse(),
   }) {
     if (getHospitals != null) {
@@ -221,21 +225,17 @@ class _$_GetHospitals implements _GetHospitals {
 abstract class _GetHospitals implements MapOrganizationEvent {
   factory _GetHospitals({required final MapParameter param}) = _$_GetHospitals;
 
-  @override
   MapParameter get param;
-  @override
   @JsonKey(ignore: true)
   _$$_GetHospitalsCopyWith<_$_GetHospitals> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_GetDoctorsCopyWith<$Res>
-    implements $MapOrganizationEventCopyWith<$Res> {
+abstract class _$$_GetDoctorsCopyWith<$Res> {
   factory _$$_GetDoctorsCopyWith(
           _$_GetDoctors value, $Res Function(_$_GetDoctors) then) =
       __$$_GetDoctorsCopyWithImpl<$Res>;
-  @override
   $Res call({MapParameter param});
 }
 
@@ -298,6 +298,8 @@ class _$_GetDoctors implements _GetDoctors {
   TResult when<TResult extends Object?>({
     required TResult Function(MapParameter param) getHospitals,
     required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getTypes,
+    required TResult Function() getMoreTypes,
   }) {
     return getDoctors(param);
   }
@@ -307,6 +309,8 @@ class _$_GetDoctors implements _GetDoctors {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(MapParameter param)? getHospitals,
     TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
   }) {
     return getDoctors?.call(param);
   }
@@ -316,6 +320,8 @@ class _$_GetDoctors implements _GetDoctors {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(MapParameter param)? getHospitals,
     TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
     required TResult orElse(),
   }) {
     if (getDoctors != null) {
@@ -329,6 +335,8 @@ class _$_GetDoctors implements _GetDoctors {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetHospitals value) getHospitals,
     required TResult Function(_GetDoctors value) getDoctors,
+    required TResult Function(_GetTypes value) getTypes,
+    required TResult Function(_GetMoreTypes value) getMoreTypes,
   }) {
     return getDoctors(this);
   }
@@ -338,6 +346,8 @@ class _$_GetDoctors implements _GetDoctors {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetHospitals value)? getHospitals,
     TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
   }) {
     return getDoctors?.call(this);
   }
@@ -347,6 +357,8 @@ class _$_GetDoctors implements _GetDoctors {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetHospitals value)? getHospitals,
     TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
     required TResult orElse(),
   }) {
     if (getDoctors != null) {
@@ -359,19 +371,255 @@ class _$_GetDoctors implements _GetDoctors {
 abstract class _GetDoctors implements MapOrganizationEvent {
   factory _GetDoctors({required final MapParameter param}) = _$_GetDoctors;
 
-  @override
   MapParameter get param;
-  @override
   @JsonKey(ignore: true)
   _$$_GetDoctorsCopyWith<_$_GetDoctors> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$_GetTypesCopyWith<$Res> {
+  factory _$$_GetTypesCopyWith(
+          _$_GetTypes value, $Res Function(_$_GetTypes) then) =
+      __$$_GetTypesCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetTypesCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res>
+    implements _$$_GetTypesCopyWith<$Res> {
+  __$$_GetTypesCopyWithImpl(
+      _$_GetTypes _value, $Res Function(_$_GetTypes) _then)
+      : super(_value, (v) => _then(v as _$_GetTypes));
+
+  @override
+  _$_GetTypes get _value => super._value as _$_GetTypes;
+}
+
+/// @nodoc
+
+class _$_GetTypes implements _GetTypes {
+  _$_GetTypes();
+
+  @override
+  String toString() {
+    return 'MapOrganizationEvent.getTypes()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetTypes);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(MapParameter param) getHospitals,
+    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getTypes,
+    required TResult Function() getMoreTypes,
+  }) {
+    return getTypes();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(MapParameter param)? getHospitals,
+    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
+  }) {
+    return getTypes?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MapParameter param)? getHospitals,
+    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
+    required TResult orElse(),
+  }) {
+    if (getTypes != null) {
+      return getTypes();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetHospitals value) getHospitals,
+    required TResult Function(_GetDoctors value) getDoctors,
+    required TResult Function(_GetTypes value) getTypes,
+    required TResult Function(_GetMoreTypes value) getMoreTypes,
+  }) {
+    return getTypes(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetHospitals value)? getHospitals,
+    TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
+  }) {
+    return getTypes?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetHospitals value)? getHospitals,
+    TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
+    required TResult orElse(),
+  }) {
+    if (getTypes != null) {
+      return getTypes(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetTypes implements MapOrganizationEvent {
+  factory _GetTypes() = _$_GetTypes;
+}
+
+/// @nodoc
+abstract class _$$_GetMoreTypesCopyWith<$Res> {
+  factory _$$_GetMoreTypesCopyWith(
+          _$_GetMoreTypes value, $Res Function(_$_GetMoreTypes) then) =
+      __$$_GetMoreTypesCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetMoreTypesCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res>
+    implements _$$_GetMoreTypesCopyWith<$Res> {
+  __$$_GetMoreTypesCopyWithImpl(
+      _$_GetMoreTypes _value, $Res Function(_$_GetMoreTypes) _then)
+      : super(_value, (v) => _then(v as _$_GetMoreTypes));
+
+  @override
+  _$_GetMoreTypes get _value => super._value as _$_GetMoreTypes;
+}
+
+/// @nodoc
+
+class _$_GetMoreTypes implements _GetMoreTypes {
+  _$_GetMoreTypes();
+
+  @override
+  String toString() {
+    return 'MapOrganizationEvent.getMoreTypes()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetMoreTypes);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(MapParameter param) getHospitals,
+    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getTypes,
+    required TResult Function() getMoreTypes,
+  }) {
+    return getMoreTypes();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(MapParameter param)? getHospitals,
+    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
+  }) {
+    return getMoreTypes?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(MapParameter param)? getHospitals,
+    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getTypes,
+    TResult Function()? getMoreTypes,
+    required TResult orElse(),
+  }) {
+    if (getMoreTypes != null) {
+      return getMoreTypes();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetHospitals value) getHospitals,
+    required TResult Function(_GetDoctors value) getDoctors,
+    required TResult Function(_GetTypes value) getTypes,
+    required TResult Function(_GetMoreTypes value) getMoreTypes,
+  }) {
+    return getMoreTypes(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetHospitals value)? getHospitals,
+    TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
+  }) {
+    return getMoreTypes?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetHospitals value)? getHospitals,
+    TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
+    required TResult orElse(),
+  }) {
+    if (getMoreTypes != null) {
+      return getMoreTypes(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetMoreTypes implements MapOrganizationEvent {
+  factory _GetMoreTypes() = _$_GetMoreTypes;
+}
+
+/// @nodoc
 mixin _$MapOrganizationState {
   List<MapHospitalModel> get hospitals => throw _privateConstructorUsedError;
   List<MapDoctorModel> get doctors => throw _privateConstructorUsedError;
+  List<TypeEntity> get types => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
+  FormzStatus get getTypesStatus => throw _privateConstructorUsedError;
+  String? get next => throw _privateConstructorUsedError;
+  bool get fetchMore => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MapOrganizationStateCopyWith<MapOrganizationState> get copyWith =>
@@ -386,7 +634,11 @@ abstract class $MapOrganizationStateCopyWith<$Res> {
   $Res call(
       {List<MapHospitalModel> hospitals,
       List<MapDoctorModel> doctors,
-      FormzStatus status});
+      List<TypeEntity> types,
+      FormzStatus status,
+      FormzStatus getTypesStatus,
+      String? next,
+      bool fetchMore});
 }
 
 /// @nodoc
@@ -402,7 +654,11 @@ class _$MapOrganizationStateCopyWithImpl<$Res>
   $Res call({
     Object? hospitals = freezed,
     Object? doctors = freezed,
+    Object? types = freezed,
     Object? status = freezed,
+    Object? getTypesStatus = freezed,
+    Object? next = freezed,
+    Object? fetchMore = freezed,
   }) {
     return _then(_value.copyWith(
       hospitals: hospitals == freezed
@@ -413,10 +669,26 @@ class _$MapOrganizationStateCopyWithImpl<$Res>
           ? _value.doctors
           : doctors // ignore: cast_nullable_to_non_nullable
               as List<MapDoctorModel>,
+      types: types == freezed
+          ? _value.types
+          : types // ignore: cast_nullable_to_non_nullable
+              as List<TypeEntity>,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
+      getTypesStatus: getTypesStatus == freezed
+          ? _value.getTypesStatus
+          : getTypesStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      next: next == freezed
+          ? _value.next
+          : next // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -431,7 +703,11 @@ abstract class _$$_MapOrganizationStateCopyWith<$Res>
   $Res call(
       {List<MapHospitalModel> hospitals,
       List<MapDoctorModel> doctors,
-      FormzStatus status});
+      List<TypeEntity> types,
+      FormzStatus status,
+      FormzStatus getTypesStatus,
+      String? next,
+      bool fetchMore});
 }
 
 /// @nodoc
@@ -449,7 +725,11 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
   $Res call({
     Object? hospitals = freezed,
     Object? doctors = freezed,
+    Object? types = freezed,
     Object? status = freezed,
+    Object? getTypesStatus = freezed,
+    Object? next = freezed,
+    Object? fetchMore = freezed,
   }) {
     return _then(_$_MapOrganizationState(
       hospitals: hospitals == freezed
@@ -460,10 +740,26 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
           ? _value._doctors
           : doctors // ignore: cast_nullable_to_non_nullable
               as List<MapDoctorModel>,
+      types: types == freezed
+          ? _value._types
+          : types // ignore: cast_nullable_to_non_nullable
+              as List<TypeEntity>,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
+      getTypesStatus: getTypesStatus == freezed
+          ? _value.getTypesStatus
+          : getTypesStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      next: next == freezed
+          ? _value.next
+          : next // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -474,9 +770,14 @@ class _$_MapOrganizationState implements _MapOrganizationState {
   _$_MapOrganizationState(
       {final List<MapHospitalModel> hospitals = const [],
       final List<MapDoctorModel> doctors = const [],
-      this.status = FormzStatus.pure})
+      final List<TypeEntity> types = const [],
+      this.status = FormzStatus.pure,
+      this.getTypesStatus = FormzStatus.pure,
+      this.next,
+      this.fetchMore = false})
       : _hospitals = hospitals,
-        _doctors = doctors;
+        _doctors = doctors,
+        _types = types;
 
   final List<MapHospitalModel> _hospitals;
   @override
@@ -494,13 +795,29 @@ class _$_MapOrganizationState implements _MapOrganizationState {
     return EqualUnmodifiableListView(_doctors);
   }
 
+  final List<TypeEntity> _types;
+  @override
+  @JsonKey()
+  List<TypeEntity> get types {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_types);
+  }
+
   @override
   @JsonKey()
   final FormzStatus status;
+  @override
+  @JsonKey()
+  final FormzStatus getTypesStatus;
+  @override
+  final String? next;
+  @override
+  @JsonKey()
+  final bool fetchMore;
 
   @override
   String toString() {
-    return 'MapOrganizationState(hospitals: $hospitals, doctors: $doctors, status: $status)';
+    return 'MapOrganizationState(hospitals: $hospitals, doctors: $doctors, types: $types, status: $status, getTypesStatus: $getTypesStatus, next: $next, fetchMore: $fetchMore)';
   }
 
   @override
@@ -511,7 +828,12 @@ class _$_MapOrganizationState implements _MapOrganizationState {
             const DeepCollectionEquality()
                 .equals(other._hospitals, _hospitals) &&
             const DeepCollectionEquality().equals(other._doctors, _doctors) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            const DeepCollectionEquality().equals(other._types, _types) &&
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality()
+                .equals(other.getTypesStatus, getTypesStatus) &&
+            const DeepCollectionEquality().equals(other.next, next) &&
+            const DeepCollectionEquality().equals(other.fetchMore, fetchMore));
   }
 
   @override
@@ -519,7 +841,11 @@ class _$_MapOrganizationState implements _MapOrganizationState {
       runtimeType,
       const DeepCollectionEquality().hash(_hospitals),
       const DeepCollectionEquality().hash(_doctors),
-      const DeepCollectionEquality().hash(status));
+      const DeepCollectionEquality().hash(_types),
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(getTypesStatus),
+      const DeepCollectionEquality().hash(next),
+      const DeepCollectionEquality().hash(fetchMore));
 
   @JsonKey(ignore: true)
   @override
@@ -532,14 +858,26 @@ abstract class _MapOrganizationState implements MapOrganizationState {
   factory _MapOrganizationState(
       {final List<MapHospitalModel> hospitals,
       final List<MapDoctorModel> doctors,
-      final FormzStatus status}) = _$_MapOrganizationState;
+      final List<TypeEntity> types,
+      final FormzStatus status,
+      final FormzStatus getTypesStatus,
+      final String? next,
+      final bool fetchMore}) = _$_MapOrganizationState;
 
   @override
   List<MapHospitalModel> get hospitals;
   @override
   List<MapDoctorModel> get doctors;
   @override
+  List<TypeEntity> get types;
+  @override
   FormzStatus get status;
+  @override
+  FormzStatus get getTypesStatus;
+  @override
+  String? get next;
+  @override
+  bool get fetchMore;
   @override
   @JsonKey(ignore: true)
   _$$_MapOrganizationStateCopyWith<_$_MapOrganizationState> get copyWith =>

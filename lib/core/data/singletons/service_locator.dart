@@ -6,10 +6,16 @@ import 'package:anatomica/features/auth/data/repositories/authentication_reposit
 import 'package:anatomica/features/auth/data/repositories/reset_password_repository_impl.dart';
 import 'package:anatomica/features/common/data/datasources/like_unlike_datasource.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
+import 'package:anatomica/features/doctor_single/data/datasources/doctor_single_datasource.dart';
+import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
+import 'package:anatomica/features/hospital_single/data/datasources/hospital_single_datasource.dart';
+import 'package:anatomica/features/hospital_single/data/repository/hospital_repository.dart';
 import 'package:anatomica/features/magazine/data/datasources/journal_datasource.dart';
 import 'package:anatomica/features/magazine/data/datasources/payment_datasource.dart';
 import 'package:anatomica/features/magazine/data/repositories/journal_repository_impl.dart';
 import 'package:anatomica/features/magazine/data/repositories/payment_repository_impl.dart';
+import 'package:anatomica/features/map/data/datasources/map_datasource.dart';
+import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 import 'package:anatomica/features/profile/data/datasources/profile_data_source.dart';
 import 'package:anatomica/features/profile/data/repositories/profile_impl.dart';
@@ -49,4 +55,12 @@ Future<void> setupLocator() async {
   serviceLocator.registerLazySingleton(() => LikeUnlikeDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator
       .registerLazySingleton(() => LikeUnlikeRepositoryImpl(datasource: serviceLocator<LikeUnlikeDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => HospitalSingleDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(
+      () => HospitalSingleRepositoryImpl(datasource: serviceLocator<HospitalSingleDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => DoctorSingleDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(
+      () => DoctorSingleRepositoryImpl(datasource: serviceLocator<DoctorSingleDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => MapDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(() => MapRepositoryImpl(datasource: serviceLocator<MapDatasourceImpl>()));
 }

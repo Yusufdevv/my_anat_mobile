@@ -13,8 +13,10 @@ class CandidateContactInfo extends StatelessWidget {
   const CandidateContactInfo({required this.candidate, Key? key}) : super(key: key);
 
   Future<void> _launchUrl(String uri) async {
-    if (!await launchUrl(Uri.parse(uri))) {
+    if (!await canLaunchUrl(Uri.parse(uri))) {
       throw 'Could not launch $uri';
+    } else {
+      await launchUrl(Uri.parse(uri), mode: LaunchMode.externalApplication);
     }
   }
 
@@ -68,8 +70,7 @@ class CandidateContactItem extends StatelessWidget {
   final bool isLast;
   final VoidCallback onTap;
 
-  const CandidateContactItem(
-      {required this.onTap, this.isLast = false, this.title = '', this.icon = '', Key? key})
+  const CandidateContactItem({required this.onTap, this.isLast = false, this.title = '', this.icon = '', Key? key})
       : super(key: key);
 
   @override

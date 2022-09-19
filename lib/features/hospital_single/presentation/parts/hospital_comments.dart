@@ -1,19 +1,24 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
+import 'package:anatomica/features/hospital_single/domain/entities/post_comment_entity.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_item.dart';
-import 'package:flutter/material.dart';
+import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HospitalComments extends StatelessWidget {
   final double overallRating;
-
-  const HospitalComments({required this.overallRating, Key? key})
+  final CommentsBloc commentsBloc;
+  final ValueChanged<PostCommentEntity> onSubmitComment;
+  const HospitalComments(
+      {required this.overallRating, required this.onSubmitComment, required this.commentsBloc, Key? key})
       : super(key: key);
 
   @override
@@ -49,10 +54,7 @@ class HospitalComments extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       '7 ${LocaleKeys.review.tr()}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(color: textColor, fontSize: 13),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
                     ),
                   ],
                 ),
@@ -64,8 +66,10 @@ class HospitalComments extends StatelessWidget {
                       context: context,
                       backgroundColor: Colors.transparent,
                       isScrollControlled: true,
-                      builder: (_) =>
-                          CommentBottomSheet(parentContext: context),
+                      builder: (_) => CommentBottomSheet(
+                        parentContext: context,
+                        commentsBloc: commentsBloc,
+                      ),
                     );
                   },
                   text: LocaleKeys.add_reviews.tr(),
@@ -77,15 +81,32 @@ class HospitalComments extends StatelessWidget {
         Expanded(
           child: BlocBuilder<CommentsBloc, CommentsState>(
             builder: (context, state) {
-              return ListView.separated(
-                padding: const EdgeInsets.all(16).copyWith(
-                    bottom: MediaQuery.of(context).padding.bottom + 16),
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 16),
+              return Paginator(
+                paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
+                errorWidget: const Text('error'),
+                padding: state.comments.isEmpty
+                    ? EdgeInsets.zero
+                    : const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                separatorBuilder: (context, index) => const SizedBox(height: 16),
                 itemBuilder: (context, index) => CommentItem(
                   entity: state.comments[index],
                 ),
                 itemCount: state.comments.length,
+                emptyWidget: EmptyWidget(onButtonTap: () {
+                  showModalBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    builder: (_) => CommentBottomSheet(
+                      parentContext: context,
+                      onSubmit: onSubmitComment,
+                      commentsBloc: context.read<CommentsBloc>(),
+                    ),
+                  );
+                }),
+                fetchMoreFunction: () {
+                  context.read<CommentsBloc>().add(CommentsEvent.getMoreComments());
+                },
+                hasMoreToFetch: state.fetchMore,
               );
             },
           ),

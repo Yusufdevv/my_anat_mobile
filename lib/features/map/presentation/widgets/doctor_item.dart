@@ -1,7 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/auth/domain/entities/doctor_entity.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/doctor_single/presentation/doctor_single_screen.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -9,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DoctorItem extends StatelessWidget {
-  final DoctorsEntity entity;
+  final HospitalDoctorsEntity entity;
   const DoctorItem({
     required this.entity,
     Key? key,
@@ -17,11 +15,12 @@ class DoctorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(behavior: HitTestBehavior.translucent,
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         Navigator.of(context, rootNavigator: true).push(
           fade(
-            page: const DoctorSingleScreen(),
+            page: DoctorSingleScreen(id: entity.id),
           ),
         );
       },
@@ -52,7 +51,11 @@ class DoctorItem extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
-                      entity.image.middle,errorBuilder: (context,reason,good)=>Container(height: 100,width: 82,),
+                      entity.image.middle,
+                      errorBuilder: (context, reason, good) => const SizedBox(
+                        height: 100,
+                        width: 82,
+                      ),
                       height: 100,
                       width: 82,
                       fit: BoxFit.cover,
@@ -65,12 +68,12 @@ class DoctorItem extends StatelessWidget {
                       children: [
                         const SizedBox(height: 8),
                         Text(
-                          entity.name,
+                          entity.fullName,
                           style: Theme.of(context).textTheme.headline1,
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          entity.specialization,
+                          entity.position,
                           style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ],

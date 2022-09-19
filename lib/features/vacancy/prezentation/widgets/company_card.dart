@@ -5,12 +5,12 @@ import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/company_shimmer_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class CompanyCard extends StatelessWidget {
   final VacancyBloc vacancyBloc;
@@ -26,8 +26,9 @@ class CompanyCard extends StatelessWidget {
           if (state.topOrganizationStatus.isSubmissionSuccess) {
             return WScaleAnimation(
               onTap: () {
-                Navigator.of(context)
-                    .push(fade(page: HospitalSingleScreen(slug: state.topOrganizationEntity.slug)));
+                Navigator.of(context).push(fade(
+                    page: HospitalSingleScreen(
+                        slug: state.topOrganizationEntity.slug, id: state.topOrganizationEntity.id)));
               },
               child: Row(
                 children: [

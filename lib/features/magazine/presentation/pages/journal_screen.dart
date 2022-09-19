@@ -19,6 +19,7 @@ import 'package:anatomica/features/magazine/presentation/pages/journal_article_s
 import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/article_item.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/buy_dialog.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_small_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/magazine_appbar.dart';
@@ -274,20 +275,31 @@ class _MagazineScreenState extends State<MagazineScreen> {
                                             amount: state.firstArticle.price,
                                             onButtonTap: () {
                                               Navigator.of(_).pop();
-                                              Navigator.of(context).push(
-                                                fade(
-                                                  page: OneTimePayment(
-                                                    price: state.firstArticle.price,
-                                                    title: state.firstArticle.title,
-                                                    imageUrl: state.firstArticle.image.middle,
-                                                    isJournal: false,
-                                                    isRegistered: context.read<AuthenticationBloc>().state.status ==
-                                                        AuthenticationStatus.authenticated,
-                                                    subtitle: state.firstArticle.redaction,
-                                                    id: state.firstArticle.id,
+                                              if (context.read<AuthenticationBloc>().state.status ==
+                                                  AuthenticationStatus.authenticated) {
+                                                Navigator.of(context).push(
+                                                  fade(
+                                                    page: OneTimePayment(
+                                                      price: state.firstArticle.price,
+                                                      title: state.firstArticle.title,
+                                                      imageUrl: state.firstArticle.image.middle,
+                                                      isJournal: false,
+                                                      isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                                          AuthenticationStatus.authenticated,
+                                                      subtitle: state.firstArticle.redaction,
+                                                      id: state.firstArticle.id,
+                                                    ),
                                                   ),
-                                                ),
-                                              );
+                                                );
+                                              } else {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (_) => BuyDialog(
+                                                    onPaymentTap: () {},
+                                                    onRegistrationTap: () {},
+                                                  ),
+                                                );
+                                              }
                                             },
                                           );
                                         },

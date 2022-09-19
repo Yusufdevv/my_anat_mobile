@@ -208,20 +208,8 @@ class OrganizationEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        title,
-        id,
-        phoneNumber,
-        phoneNumbers,
-        slug,
-        address,
-        images,
-        locationUrl,
-        rating,
-        speciazilation,
-        types,
-        logo
-      ];
+  List<Object?> get props =>
+      [title, id, phoneNumber, phoneNumbers, slug, address, images, locationUrl, rating, speciazilation, types, logo];
 }
 
 class OrganizationEntityConverter extends JsonConverter<OrganizationEntity, Map<String, dynamic>?> {

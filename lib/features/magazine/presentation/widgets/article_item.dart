@@ -2,11 +2,13 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/journal_article_single.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/buy_dialog.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/purchase_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -43,8 +45,10 @@ class ArticleItem extends StatelessWidget {
                 amount: 0,
                 onButtonTap: () {
                   Navigator.of(_).pop();
-                  Navigator.of(context).push(fade(
-                      page: OneTimePayment(
+                  if (context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated) {
+                    Navigator.of(context).push(
+                      fade(
+                        page: OneTimePayment(
                           price: 0,
                           title: magazineItemEntity.title,
                           imageUrl: magazineItemEntity.image.middle,
@@ -52,7 +56,36 @@ class ArticleItem extends StatelessWidget {
                           isRegistered:
                               context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated,
                           subtitle: magazineItemEntity.redaction,
-                          id: magazineItemEntity.id)));
+                          id: magazineItemEntity.id,
+                        ),
+                      ),
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (_) => BuyDialog(
+                        onPaymentTap: () {
+                          Navigator.of(context).push(
+                            fade(
+                              page: OneTimePayment(
+                                price: 0,
+                                title: magazineItemEntity.title,
+                                imageUrl: magazineItemEntity.image.middle,
+                                isJournal: false,
+                                isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                    AuthenticationStatus.authenticated,
+                                subtitle: magazineItemEntity.redaction,
+                                id: magazineItemEntity.id,
+                              ),
+                            ),
+                          );
+                        },
+                        onRegistrationTap: () {
+                          Navigator.of(context).push(fade(page: const LoginScreen()));
+                        },
+                      ),
+                    );
+                  }
                 },
               );
             },
