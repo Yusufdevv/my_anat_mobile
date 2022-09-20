@@ -137,53 +137,57 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                 ),
               )
             ],
-            body: TabBarView(
-              controller: _tabController,
-              children: [
-                BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-                  builder: (context, state) {
-                    return BlocProvider.value(
+            body: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+              builder: (context, state) {
+                return TabBarView(
+                  controller: _tabController,
+                  children: [
+                    BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                      builder: (context, state) {
+                        return BlocProvider.value(
+                          value: commentsBloc,
+                          child: HospitalCommentList(
+                            description: state.hospital.description,
+                            onTapAll: () {
+                              _tabController.animateTo(
+                                5,
+                                duration: const Duration(milliseconds: 150),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    BlocProvider.value(value: servicesBloc, child: const HospitalServices()),
+                    BlocProvider.value(value: hospitalSpecialistBloc, child: const HospitalSpecialists()),
+                    BlocProvider.value(value: facilitiesBloc, child: const HospitalConditions()),
+                    BlocProvider.value(value: articlesBloc, child: const HospitalArticles()),
+                    BlocProvider.value(
                       value: commentsBloc,
-                      child: HospitalCommentList(
-                        description: state.hospital.description,
-                        onTapAll: () {
-                          _tabController.animateTo(
-                            5,
-                            duration: const Duration(milliseconds: 150),
-                          );
-                        },
+                      child: HospitalComments(
+                        commentCount: state.hospital.commentCount,
+                        commentsBloc: commentsBloc,
+                        overallRating: state.hospital.rating,
+                        onSubmitComment: (comment) {},
                       ),
-                    );
-                  },
-                ),
-                BlocProvider.value(value: servicesBloc, child: const HospitalServices()),
-                BlocProvider.value(value: hospitalSpecialistBloc, child: const HospitalSpecialists()),
-                BlocProvider.value(value: facilitiesBloc, child: const HospitalConditions()),
-                BlocProvider.value(value: articlesBloc, child: const HospitalArticles()),
-                BlocProvider.value(
-                  value: commentsBloc,
-                  child: HospitalComments(
-                    commentCount: state.hospital.commentCount,
-                    commentsBloc: commentsBloc,
-                    overallRating: hospitalSingleBloc.state.hospital.rating,
-                    onSubmitComment: (comment) {},
-                  ),
-                ),
-                BlocProvider.value(value: vacanciesBloc, child: const HospitalVacancies()),
-                BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-                  builder: (context, state) {
-                    return HospitalContacts(
-                      email: state.hospital.email,
-                      facebook: state.hospital.facebook,
-                      instagram: state.hospital.instagram,
-                      phone: state.hospital.phoneNumber,
-                      telegram: state.hospital.telegram,
-                      website: state.hospital.website,
-                      phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
-                    );
-                  },
-                ),
-              ],
+                    ),
+                    BlocProvider.value(value: vacanciesBloc, child: const HospitalVacancies()),
+                    BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                      builder: (context, state) {
+                        return HospitalContacts(
+                          email: state.hospital.email,
+                          facebook: state.hospital.facebook,
+                          instagram: state.hospital.instagram,
+                          phone: state.hospital.phoneNumber,
+                          telegram: state.hospital.telegram,
+                          website: state.hospital.website,
+                          phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),
