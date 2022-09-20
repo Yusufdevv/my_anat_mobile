@@ -92,13 +92,10 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
       ..add(ServicesEvent.getServices(organizationId: widget.id));
     super.initState();
     commentsBloc = CommentsBloc(
-        doctorCommentUseCase: DoctorCommentUseCase(repository:serviceLocator<DoctorSingleRepositoryImpl>() ),
-        GetCommentsUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        postCommentUseCase: PostCommentUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(
-            repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+        doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+        GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
       ..add(CommentsEvent.getComments(organizationId: widget.id));
     hospitalSingleBloc =
         HospitalSingleBloc(GetSingleHospitalUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
