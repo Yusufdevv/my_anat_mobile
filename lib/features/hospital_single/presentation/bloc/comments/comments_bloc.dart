@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/comment_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/post_comment_entity.dart';
@@ -11,17 +12,24 @@ import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'comments_bloc.freezed.dart';
+
 part 'comments_event.dart';
+
 part 'comments_state.dart';
 
 class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
   final GetCommentsUseCase getComments;
   final PostCommentUseCase _postCommentUseCase;
   final GetDoctorCommentsUseCase _getDoctorCommentsUseCase;
+  final DoctorCommentUseCase _doctorCommentUseCase;
 
-  CommentsBloc(this.getComments,
-      {required PostCommentUseCase postCommentUseCase, required GetDoctorCommentsUseCase getDoctorCommentsUseCase})
-      : _postCommentUseCase = postCommentUseCase,
+  CommentsBloc(
+    this.getComments, {
+    required PostCommentUseCase postCommentUseCase,
+    required GetDoctorCommentsUseCase getDoctorCommentsUseCase,
+    required DoctorCommentUseCase doctorCommentUseCase,
+  })  : _postCommentUseCase = postCommentUseCase,
+        _doctorCommentUseCase = doctorCommentUseCase,
         _getDoctorCommentsUseCase = getDoctorCommentsUseCase,
         super(CommentsState()) {
     on<_GetComments>((event, emit) async {
@@ -93,6 +101,20 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         event.onSuccess();
       } else {
         emit(state.copyWith(postCommentStatus: FormzStatus.submissionFailure));
+      }
+    });
+    on<_SendDoctorComment>((event, emit) async {
+      emit(state.copyWith(sendDoctorCommentStatus: FormzStatus.submissionInProgress));
+      final result = await _doctorCommentUseCase.call(DoctorCommentParams(
+        comment: event.comment,
+        doctor: event.doctor,
+        rating: event.rating,
+      ));
+      if (result.isRight) {
+        emit(state.copyWith(doctorCommentStatus: FormzStatus.submissionSuccess));
+        event.onSuccess();
+      } else {
+        emit(state.copyWith(doctorCommentStatus: FormzStatus.submissionFailure));
       }
     });
   }

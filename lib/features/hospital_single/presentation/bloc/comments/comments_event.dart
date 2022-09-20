@@ -10,6 +10,13 @@ class CommentsEvent with _$CommentsEvent {
 
   factory CommentsEvent.getMoreDoctorComments() = _GetMoreDoctorComments;
 
-  factory CommentsEvent.postComment({required PostCommentEntity comment, required VoidCallback onSuccess}) =
-      _PostComment;
+  factory CommentsEvent.postComment(
+      {required PostCommentEntity comment, required VoidCallback onSuccess}) = _PostComment;
+
+  factory CommentsEvent.sendDoctorComment({
+    required int doctor,
+    required double rating,
+    required String comment,
+    required Function onSuccess,
+  }) = _SendDoctorComment;
 }

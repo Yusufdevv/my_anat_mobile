@@ -2,6 +2,7 @@ import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/doctor_single/data/datasources/doctor_single_datasource.dart';
+import 'package:anatomica/features/doctor_single/domain/entities/doctor_comment.dart';
 import 'package:anatomica/features/doctor_single/domain/entities/doctor_interview_entity.dart';
 import 'package:anatomica/features/doctor_single/domain/entities/doctor_sinlge_entity.dart';
 import 'package:anatomica/features/doctor_single/domain/repositories/doctor_single_repository.dart';
@@ -59,9 +60,29 @@ class DoctorSingleRepositoryImpl extends DoctorSingleRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CommentEntity>>> getDoctorComments({required int id, String? next}) async {
+  Future<Either<Failure, GenericPagination<CommentEntity>>> getDoctorComments(
+      {required int id, String? next}) async {
     try {
       final result = await datasource.getDoctorComments(id: id, next: next);
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, DoctorCommentEntity>> sendDoctorComment(
+      {required int doctor, required double rating, required String comment}) async {
+    try {
+      final result = await datasource.sendDoctorComment(
+        comment: comment,
+        doctor: doctor,
+        rating: rating,
+      );
       return Right(result);
     } on DioException {
       return Left(DioFailure());

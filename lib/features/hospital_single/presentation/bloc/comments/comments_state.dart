@@ -16,5 +16,6 @@ class CommentsState with _$CommentsState {
     @Default(0) int doctorCommentCount,
     @Default(0) int hospitalCommentCount,
     @Default(FormzStatus.pure) postCommentStatus,
+    @Default(FormzStatus.pure) sendDoctorCommentStatus,
   }) = _CommentsState;
 }

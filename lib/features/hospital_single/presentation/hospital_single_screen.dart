@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
+import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
 import 'package:anatomica/features/hospital_single/data/repository/hospital_repository.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
@@ -97,6 +98,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
       ..add(ServicesEvent.getServices(organizationId: widget.id));
     super.initState();
     commentsBloc = CommentsBloc(
+      doctorCommentUseCase: DoctorCommentUseCase(repository:serviceLocator<DoctorSingleRepositoryImpl>() ),
         GetCommentsUseCase(
             repository: serviceLocator<HospitalSingleRepositoryImpl>()),
         postCommentUseCase: PostCommentUseCase(
