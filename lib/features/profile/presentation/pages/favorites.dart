@@ -19,102 +19,84 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FavoritesScreen extends StatefulWidget {
+class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
 
   @override
-  State<FavoritesScreen> createState() => _FavoritesScreenState();
-}
-
-class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderStateMixin {
-  late TabController tabController;
-
-  @override
-  initState() {
-    tabController = TabController(length: 2, vsync: this);
-    super.initState();
-  }
-
-  @override
-  dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileFavouriteBloc(
-        getLikedCandidatesUseCase: GetLikedCandidatesUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
-        getLikedVacanciesUseCase: GetLikedVacanciesUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
-        likeUnlikeDoctorStreamUseCase:
-            LikeUnlikeDoctorStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
-        likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
-          repository: serviceLocator<LikeUnlikeRepositoryImpl>(),
-        ),
-      )
-        ..add(GetLikedCandidates())
-        ..add(GetLikedVacancies()),
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(117),
-          child: Column(
-            children: [
-              WAppBar(title: LocaleKeys.favorite.tr(), hasUnderline: true),
-              WTabBar(
-                tabController: tabController,
-                tabs: [
-                  Tab(text: LocaleKeys.vacancy.tr()),
-                  Tab(text: LocaleKeys.candidate.tr()),
-                ],
-              )
-            ],
+    return DefaultTabController(
+      length: 2,
+      child: BlocProvider(
+        create: (context) => ProfileFavouriteBloc(
+          getLikedCandidatesUseCase: GetLikedCandidatesUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
+          getLikedVacanciesUseCase: GetLikedVacanciesUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
+          likeUnlikeDoctorStreamUseCase:
+              LikeUnlikeDoctorStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+          likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
+            repository: serviceLocator<LikeUnlikeRepositoryImpl>(),
           ),
-        ),
-        body: BlocBuilder<ProfileFavouriteBloc, ProfileFavouriteState>(
-          builder: (context, state) {
-            return TabBarView(
-              controller: tabController,
+        )
+          ..add(GetLikedCandidates())
+          ..add(GetLikedVacancies()),
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(117),
+            child: Column(
               children: [
-                Paginator(
-                  padding: EdgeInsets.only(top: 16, bottom: MediaQuery.of(context).padding.bottom),
-                  itemBuilder: (context, index) => VacancyItem(
-                    vacancyEntity: state.likedVacancies[index],
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(fade(page: VacancySingleScreen(slug: state.likedVacancies[index].slug)));
-                    },
-                  ),
-                  separatorBuilder: (context, index) => const SizedBox(height: 12),
-                  itemCount: state.likedVacancies.length,
-                  paginatorStatus: state.vacancyStatus,
-                  fetchMoreFunction: () {
-                    context.read<ProfileFavouriteBloc>().add(GetMoreLikedVacancies());
-                  },
-                  hasMoreToFetch: state.vacancyFetchMore,
-                  errorWidget: const Text('error'),
-                ),
-                Paginator(
-                  padding: const EdgeInsets.only(top: 0),
-                  itemBuilder: (context, index) => CandidateItem(
-                    candidateListEntity: state.likedCandidates[index],
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(fade(page: SingleCandidateScreen(id: state.likedCandidates[index].id)));
-                    },
-                  ),
-                  separatorBuilder: (context, index) => const SizedBox(height: 12),
-                  itemCount: state.likedCandidates.length,
-                  paginatorStatus: state.candidateStatus,
-                  fetchMoreFunction: () {
-                    context.read<ProfileFavouriteBloc>().add(GetMoreLikedCandidates());
-                  },
-                  hasMoreToFetch: state.candidateFetchMore,
-                  errorWidget: const Text('error'),
+                WAppBar(title: LocaleKeys.favorite.tr(), hasUnderline: true),
+                WTabBar(
+                  tabs: [
+                    Tab(text: LocaleKeys.vacancy.tr()),
+                    Tab(text: LocaleKeys.candidate.tr()),
+                  ],
                 )
               ],
-            );
-          },
+            ),
+          ),
+          body: BlocBuilder<ProfileFavouriteBloc, ProfileFavouriteState>(
+            builder: (context, state) {
+              return TabBarView(
+                children: [
+                  Paginator(
+                    padding: EdgeInsets.only(top: 16, bottom: MediaQuery.of(context).padding.bottom),
+                    itemBuilder: (context, index) => VacancyItem(
+                      vacancyEntity: state.likedVacancies[index],
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(fade(page: VacancySingleScreen(slug: state.likedVacancies[index].slug)));
+                      },
+                    ),
+                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    itemCount: state.likedVacancies.length,
+                    paginatorStatus: state.vacancyStatus,
+                    fetchMoreFunction: () {
+                      context.read<ProfileFavouriteBloc>().add(GetMoreLikedVacancies());
+                    },
+                    hasMoreToFetch: state.vacancyFetchMore,
+                    errorWidget: const Text('error'),
+                  ),
+                  Paginator(
+                    padding: const EdgeInsets.only(top: 0),
+                    itemBuilder: (context, index) => CandidateItem(
+                      candidateListEntity: state.likedCandidates[index],
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(fade(page: SingleCandidateScreen(id: state.likedCandidates[index].id)));
+                      },
+                    ),
+                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    itemCount: state.likedCandidates.length,
+                    paginatorStatus: state.candidateStatus,
+                    fetchMoreFunction: () {
+                      context.read<ProfileFavouriteBloc>().add(GetMoreLikedCandidates());
+                    },
+                    hasMoreToFetch: state.candidateFetchMore,
+                    errorWidget: const Text('error'),
+                  )
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

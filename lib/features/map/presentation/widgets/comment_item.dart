@@ -9,12 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentItem extends StatelessWidget {
-  final bool isMe;
   final CommentEntity entity;
 
   const CommentItem({
     required this.entity,
-    this.isMe = false,
     Key? key,
   }) : super(key: key);
 
@@ -47,7 +45,7 @@ class CommentItem extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        border: isMe ? Border.all(color: primary) : null,
+                        border: entity.isOwn ? Border.all(color: primary) : null,
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
@@ -71,7 +69,7 @@ class CommentItem extends StatelessWidget {
                           TextSpan(
                             text: entity.userFullName,
                             children: [
-                              if (isMe) ...{
+                              if (entity.isOwn) ...{
                                 TextSpan(
                                   text: ' (я)',
                                   style: Theme.of(context)
@@ -100,7 +98,7 @@ class CommentItem extends StatelessWidget {
                   ],
                 ),
               ),
-              if (isMe) ...{
+              if (entity.isOwn) ...{
                 WScaleAnimation(
                   onTap: () {
                     showDialog(

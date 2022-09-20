@@ -29,6 +29,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(state.copyWith(profileEntity: event.profileEntity));
     });
     on<DeleteAccount>((event, emit) async {
+      print('call delete profile event');
       final result = await _deleteAccountUseCase.call(NoParams());
       if (result.isRight) {
         event.onSuccess();

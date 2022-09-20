@@ -25,34 +25,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:image_picker/image_picker.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateMixin {
-  late ImagePicker imagePicker;
-  late ProfileBloc _profileBloc;
-
-  @override
-  void initState() {
-    imagePicker = ImagePicker();
-    _profileBloc = ProfileBloc(
-        getProfileUseCase: GetProfileUseCase(profileRepository: serviceLocator<ProfileRepositoryImpl>()),
-        deleteAccountUsecase: DeleteAccountUseCase(repository: serviceLocator<ProfileRepositoryImpl>()))
-      ..add(GetProfileEvent());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    return BlocProvider.value(
-        value: _profileBloc,
+    return BlocProvider(
+        create: (context) => ProfileBloc(
+            getProfileUseCase: GetProfileUseCase(profileRepository: serviceLocator<ProfileRepositoryImpl>()),
+            deleteAccountUsecase: DeleteAccountUseCase(repository: serviceLocator<ProfileRepositoryImpl>()))
+          ..add(GetProfileEvent()),
         child: Scaffold(
           appBar: const PreferredSize(
             preferredSize: Size.fromHeight(64),
