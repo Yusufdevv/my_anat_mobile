@@ -2,10 +2,10 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class WTabBar extends StatelessWidget {
-  final TabController tabController;
+  final TabController? tabController;
   final List<Widget> tabs;
 
-  const WTabBar({required this.tabController, required this.tabs, Key? key}) : super(key: key);
+  const WTabBar({this.tabController, required this.tabs, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +20,8 @@ class WTabBar extends StatelessWidget {
         padding: const EdgeInsets.all(6),
         indicator: ShapeDecoration(
           shadows: [
-            BoxShadow(
-                blurRadius: 1,
-                offset: const Offset(0, 3),
-                color: const Color(0xff000000).withOpacity(0.04)),
-            BoxShadow(
-                blurRadius: 8,
-                offset: const Offset(0, 3),
-                color: const Color(0xff000000).withOpacity(0.12)),
+            BoxShadow(blurRadius: 1, offset: const Offset(0, 3), color: const Color(0xff000000).withOpacity(0.04)),
+            BoxShadow(blurRadius: 8, offset: const Offset(0, 3), color: const Color(0xff000000).withOpacity(0.12)),
           ],
           shape: RoundedRectangleBorder(
               side: BorderSide(color: const Color(0xff000000).withOpacity(0.04)),
@@ -37,10 +31,8 @@ class WTabBar extends StatelessWidget {
         controller: tabController,
         indicatorSize: TabBarIndicatorSize.tab,
         onTap: (s) {},
-        unselectedLabelStyle: Theme.of(context)
-            .textTheme
-            .headline1!
-            .copyWith(fontSize: 13, fontWeight: FontWeight.w500),
+        unselectedLabelStyle:
+            Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w500),
         labelStyle: Theme.of(context).textTheme.headline1!.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w600,

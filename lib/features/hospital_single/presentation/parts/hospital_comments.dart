@@ -1,7 +1,10 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
+import 'package:anatomica/features/common/presentation/widgets/register_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/post_comment_entity.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
@@ -16,72 +19,86 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HospitalComments extends StatelessWidget {
   final double overallRating;
   final CommentsBloc commentsBloc;
+  final int commentCount;
   final ValueChanged<PostCommentEntity> onSubmitComment;
   const HospitalComments(
-      {required this.overallRating, required this.onSubmitComment, required this.commentsBloc, Key? key})
+      {required this.overallRating,
+      required this.onSubmitComment,
+      required this.commentsBloc,
+      required this.commentCount,
+      Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-            color: white,
-            border: Border(
-              bottom: BorderSide(color: textFieldColor),
-            ),
-          ),
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Text(
-                overallRating.toString(),
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: textSecondary,
-                      fontSize: 40,
-                    ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RatingStars(
-                      rate: 4,
-                      inactiveStarColor: primary.withOpacity(0.5),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      '7 ${LocaleKeys.review.tr()}',
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
-                    ),
-                  ],
+    return BlocBuilder<CommentsBloc, CommentsState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: white,
+                border: Border(
+                  bottom: BorderSide(color: textFieldColor),
                 ),
               ),
-              Expanded(
-                child: WButton(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      isScrollControlled: true,
-                      builder: (_) => CommentBottomSheet(
-                        parentContext: context,
-                        commentsBloc: commentsBloc,
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Text(
+                    overallRating.toString(),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          color: textSecondary,
+                          fontSize: 40,
+                        ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RatingStars(
+                          rate: 4,
+                          inactiveStarColor: primary.withOpacity(0.5),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          '$commentCount ${LocaleKeys.review.tr()}',
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (state.comments.where((element) => element.isOwn).isEmpty) ...{
+                    Expanded(
+                      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                        builder: (context, state) {
+                          return WButton(
+                            onTap: () {
+                              if (state.status == AuthenticationStatus.authenticated) {
+                                showModalBottomSheet(
+                                  backgroundColor: Colors.transparent,
+                                  context: context,
+                                  builder: (_) => CommentBottomSheet(
+                                    parentContext: context,
+                                    commentsBloc: context.read<CommentsBloc>(),
+                                  ),
+                                );
+                              } else {
+                                showRegisterBottomSheet(context);
+                              }
+                            },
+                            text: LocaleKeys.add_reviews.tr(),
+                          );
+                        },
                       ),
-                    );
-                  },
-                  text: LocaleKeys.add_reviews.tr(),
-                ),
-              )
-            ],
-          ),
-        ),
-        Expanded(
-          child: BlocBuilder<CommentsBloc, CommentsState>(
-            builder: (context, state) {
-              return Paginator(
+                    )
+                  }
+                ],
+              ),
+            ),
+            Expanded(
+              child: Paginator(
                 paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
                 errorWidget: const Text('error'),
                 padding: state.comments.isEmpty
@@ -92,26 +109,33 @@ class HospitalComments extends StatelessWidget {
                   entity: state.comments[index],
                 ),
                 itemCount: state.comments.length,
-                emptyWidget: EmptyWidget(onButtonTap: () {
-                  showModalBottomSheet(
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (_) => CommentBottomSheet(
-                      parentContext: context,
-                      onSubmit: onSubmitComment,
-                      commentsBloc: context.read<CommentsBloc>(),
-                    ),
-                  );
-                }),
+                emptyWidget: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) {
+                    return EmptyWidget(onButtonTap: () {
+                      if (state.status == AuthenticationStatus.authenticated) {
+                        showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (_) => CommentBottomSheet(
+                            parentContext: context,
+                            commentsBloc: context.read<CommentsBloc>(),
+                          ),
+                        );
+                      } else {
+                        showRegisterBottomSheet(context);
+                      }
+                    });
+                  },
+                ),
                 fetchMoreFunction: () {
                   context.read<CommentsBloc>().add(CommentsEvent.getMoreComments());
                 },
                 hasMoreToFetch: state.fetchMore,
-              );
-            },
-          ),
-        )
-      ],
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }
