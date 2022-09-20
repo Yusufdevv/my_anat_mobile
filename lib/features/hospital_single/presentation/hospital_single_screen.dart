@@ -38,13 +38,15 @@ class HospitalSingleScreen extends StatefulWidget {
   final String slug;
   final int id;
 
-  const HospitalSingleScreen({required this.id, required this.slug, Key? key}) : super(key: key);
+  const HospitalSingleScreen({required this.id, required this.slug, Key? key})
+      : super(key: key);
 
   @override
   State<HospitalSingleScreen> createState() => _HospitalSingleScreenState();
 }
 
-class _HospitalSingleScreenState extends State<HospitalSingleScreen> with TickerProviderStateMixin {
+class _HospitalSingleScreenState extends State<HospitalSingleScreen>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
@@ -78,17 +80,21 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
 
   @override
   void initState() {
-    vacanciesBloc =
-        HospitalVacanciesBloc(GetHospitalVacancies(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-          ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
-    articlesBloc = HArticlesBloc(GetHArticlesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    vacanciesBloc = HospitalVacanciesBloc(GetHospitalVacancies(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+      ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
+    articlesBloc = HArticlesBloc(GetHArticlesUseCase(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HArticlesEvent.getArticles(organizationId: widget.id));
-    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(FacilitiesEvent.getFacilities(organizationId: widget.id));
     hospitalSpecialistBloc = HospitalSpecialistBloc(
-        GetHospitalSpecialistsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+        GetHospitalSpecialistsUseCase(
+            repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HospitalSpecialistEvent.getSpecialists(organizationId: widget.id));
-    servicesBloc = ServicesBloc(GetServicesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    servicesBloc = ServicesBloc(GetServicesUseCase(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(ServicesEvent.getServices(organizationId: widget.id));
     super.initState();
     commentsBloc = CommentsBloc(
@@ -97,9 +103,9 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
         postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
         getDoctorCommentsUseCase: GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
       ..add(CommentsEvent.getComments(organizationId: widget.id));
-    hospitalSingleBloc =
-        HospitalSingleBloc(GetSingleHospitalUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-          ..add(HospitalSingleEvent.getHospital(widget.slug));
+    hospitalSingleBloc = HospitalSingleBloc(GetSingleHospitalUseCase(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+      ..add(HospitalSingleEvent.getHospital(widget.slug));
     _tabController = TabController(length: 8, vsync: this);
     _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
@@ -108,7 +114,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
+    _headerManagerBloc.add(
+        ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
   }
 
   @override
@@ -121,7 +128,9 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
             floatHeaderSlivers: false,
             controller: _scrollController,
             headerSliverBuilder: (context, isHeaderScrolled) => [
-              HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
+              HospitalSingleAppBar(
+                  headerManagerBloc: _headerManagerBloc,
+                  pageController: _pageController),
               SliverOverlapAbsorber(
                 handle: SliverOverlapAbsorberHandle(),
                 sliver: SliverSafeArea(
