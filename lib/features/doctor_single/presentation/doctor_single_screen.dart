@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
+import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_articles_usecase.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_interviews_usecase.dart';
@@ -30,6 +31,7 @@ import 'package:formz/formz.dart';
 
 class DoctorSingleScreen extends StatefulWidget {
   final int id;
+
   const DoctorSingleScreen({required this.id, Key? key}) : super(key: key);
 
   @override
@@ -89,15 +91,18 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
         ),
         BlocProvider(
             create: (context) => DoctorInterviewsBloc(
-                getDoctorInterviewsUseCase:
-                    GetDoctorInterviewsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+                getDoctorInterviewsUseCase: GetDoctorInterviewsUseCase(
+                    repository: serviceLocator<DoctorSingleRepositoryImpl>()))
               ..add(GetDoctorInterviews(doctorId: widget.id))),
         BlocProvider(
             create: (context) => CommentsBloc(
+                doctorCommentUseCase:
+                    DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
                 GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                getDoctorCommentsUseCase:
-                    GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+                postCommentUseCase:
+                    PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+                getDoctorCommentsUseCase: GetDoctorCommentsUseCase(
+                    repository: serviceLocator<DoctorSingleRepositoryImpl>()))
               ..add(CommentsEvent.getDoctorComments(doctorId: widget.id))),
       ],
       child: WKeyboardDismisser(
@@ -113,7 +118,8 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                   floatHeaderSlivers: false,
                   controller: _scrollController,
                   headerSliverBuilder: (context, isHeaderScrolled) => [
-                    DoctorSingleAppBar(headerManagerBloc: _headerManagerBloc, doctor: state.doctorSingle),
+                    DoctorSingleAppBar(
+                        headerManagerBloc: _headerManagerBloc, doctor: state.doctorSingle),
                     SliverOverlapAbsorber(
                       handle: SliverOverlapAbsorberHandle(),
                       sliver: SliverSafeArea(
