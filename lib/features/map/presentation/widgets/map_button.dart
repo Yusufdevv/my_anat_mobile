@@ -6,25 +6,28 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class MapButton extends StatelessWidget {
   final String title;
+  final int id ;
   final Widget _leading;
   final EdgeInsets _padding;
-  final VoidCallback onTap;
-  MapButton.chip({
+  final Function(int) onTap;
+  final bool? selected ;
+  MapButton.chip({required this.id,
     required this.title,
     required this.onTap,
+     this.selected,
     Key? key,
   })  : _leading = Container(
           width: 12,
           height: 28,
           decoration: BoxDecoration(
-            color: primary,
+            color:selected!=null&&selected? primary:Colors.grey[300],
             borderRadius: BorderRadius.circular(6),
           ),
         ),
         _padding = const EdgeInsets.fromLTRB(4, 4, 12, 4),
         super(key: key);
 
-  MapButton.defaultButton({required this.title, required this.onTap, String icon = AppIcons.listIcon, Key? key})
+  MapButton.defaultButton({required this.title, required this.onTap, String icon = AppIcons.listIcon, Key? key, this.selected, required this.id})
       : _leading = SvgPicture.asset(icon),
         _padding = const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         super(key: key);
@@ -32,7 +35,9 @@ class MapButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WScaleAnimation(
-      onTap: onTap,
+      onTap: (){
+        onTap(id);
+      },
       child: Container(
         padding: _padding,
         decoration: BoxDecoration(

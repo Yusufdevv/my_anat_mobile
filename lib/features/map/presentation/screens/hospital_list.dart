@@ -151,8 +151,8 @@ class _HospitalListState extends State<HospitalList>
                               padding: const EdgeInsets.all(16),
                               child: MapButton.defaultButton(
                                 title: LocaleKeys.on_map.tr(),
-                                onTap: () {},
-                                icon: AppIcons.mapIcon,
+                                onTap: (id) {},
+                                icon: AppIcons.mapIcon, id: 0,
                               ),
                             ),
                           ],

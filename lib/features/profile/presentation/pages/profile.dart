@@ -106,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                         title: LocaleKeys.favorite.tr(),
                         icon: AppIcons.profileStar,
                         onTap: () {
-                          Navigator.of(context).push(fade(page: const FavoritesScreen()));
+                          Navigator.of(context,rootNavigator: true).push(fade(page: const FavoritesScreen()));
                         }),
                     const SizedBox(height: 12),
                     ProfileItem(

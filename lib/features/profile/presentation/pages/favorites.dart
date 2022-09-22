@@ -1,7 +1,9 @@
+import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
+import 'package:anatomica/features/common/presentation/widgets/empty_page.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
@@ -76,7 +78,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderSt
             return TabBarView(
               controller: tabController,
               children: [
-                Paginator(
+                Paginator(emptyWidget: const EmptyPage(iconPath: AppIcons.emptyA,title: 'Ничего не найдено',desc: 'Вы ещё не добавили вакансии',),
                   padding: EdgeInsets.only(top: 16, bottom: MediaQuery.of(context).padding.bottom),
                   itemBuilder: (context, index) => VacancyItem(
                     vacancyEntity: state.likedVacancies[index],
@@ -94,7 +96,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderSt
                   hasMoreToFetch: state.vacancyFetchMore,
                   errorWidget: const Text('error'),
                 ),
-                Paginator(
+                Paginator(emptyWidget: const EmptyPage(iconPath: AppIcons.emptyA,title: 'Ничего не найдено',desc: 'Вы ещё не добавили кандидаты',),
                   padding: const EdgeInsets.only(top: 0),
                   itemBuilder: (context, index) => CandidateItem(
                     candidateListEntity: state.likedCandidates[index],
