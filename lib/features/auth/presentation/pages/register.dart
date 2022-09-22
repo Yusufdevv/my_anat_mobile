@@ -21,8 +21,7 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen>
-    with TickerProviderStateMixin {
+class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStateMixin {
   late PageController pageController;
   late TabController tabController;
   int currentPage = 0;
@@ -94,8 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                         subTitle: _getSubtitle(currentPage),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16)
-                            .copyWith(bottom: 42),
+                        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 42),
                         child: RegistrationProgress(
                           currentPosition: currentPage,
                         ),

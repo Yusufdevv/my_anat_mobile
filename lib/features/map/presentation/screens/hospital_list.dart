@@ -10,11 +10,12 @@ import 'package:anatomica/features/map/presentation/screens/result_list.dart';
 import 'package:anatomica/features/map/presentation/screens/suggestion_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctors_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
+
 class HospitalList extends StatefulWidget {
   final TabController controller;
 
@@ -24,8 +25,7 @@ class HospitalList extends StatefulWidget {
   State<HospitalList> createState() => _HospitalListState();
 }
 
-class _HospitalListState extends State<HospitalList>
-    with TickerProviderStateMixin {
+class _HospitalListState extends State<HospitalList> with TickerProviderStateMixin {
   late TabController _controller;
   late TextEditingController controller;
   late HospitalListBloc bloc;
@@ -33,10 +33,8 @@ class _HospitalListState extends State<HospitalList>
 
   @override
   void initState() {
-    doctorListBloc = DoctorListBloc(GetDoctorsUseCase())
-      ..add(DoctorListEvent.getDoctors(search: ''));
-    bloc = HospitalListBloc(GetHospitalsUseCase())
-      ..add(HospitalListEvent.getHospitals(search: ''));
+    doctorListBloc = DoctorListBloc(GetDoctorsUseCase())..add(DoctorListEvent.getDoctors(search: ''));
+    bloc = HospitalListBloc(GetHospitalsUseCase())..add(HospitalListEvent.getHospitals(search: ''));
     controller = TextEditingController()
       ..addListener(() {
         if (controller.text.isNotEmpty) {
@@ -81,8 +79,7 @@ class _HospitalListState extends State<HospitalList>
               Container(
                 height: 36,
                 padding: const EdgeInsets.all(2),
-                margin: const EdgeInsets.symmetric(horizontal: 16)
-                    .copyWith(bottom: 16),
+                margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
                 decoration: BoxDecoration(
                   color: textFieldColor,
                   borderRadius: BorderRadius.circular(8),
@@ -100,7 +97,7 @@ class _HospitalListState extends State<HospitalList>
                   labelColor: textColor,
                   onTap: (index) {},
                   unselectedLabelColor: textSecondary,
-                  tabs:   [
+                  tabs: [
                     Tab(text: LocaleKeys.organization.tr()),
                     Tab(text: LocaleKeys.doctor.tr()),
                   ],
@@ -169,11 +166,9 @@ class _HospitalListState extends State<HospitalList>
                           controller: TextEditingController(),
                           onChanged: (value) {
                             if (_controller.index == 0) {
-                              bloc.add(HospitalListEvent.getHospitals(
-                                  search: value));
+                              bloc.add(HospitalListEvent.getHospitals(search: value));
                             } else {
-                              doctorListBloc.add(
-                                  DoctorListEvent.getDoctors(search: value));
+                              doctorListBloc.add(DoctorListEvent.getDoctors(search: value));
                             }
                           },
                         ),

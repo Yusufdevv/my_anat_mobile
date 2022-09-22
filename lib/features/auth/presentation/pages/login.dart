@@ -92,7 +92,13 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         child: AnnotatedRegion(
-          value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+          value: const SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.light,
+            statusBarColor: Colors.transparent,
+            systemNavigationBarIconBrightness: Brightness.dark,
+            systemNavigationBarColor: Colors.transparent,
+            systemNavigationBarContrastEnforced: false,
+          ),
           child: WKeyboardDismisser(
             child: BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
               builder: (context, state) {

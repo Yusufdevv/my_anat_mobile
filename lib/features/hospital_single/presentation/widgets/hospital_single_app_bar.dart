@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_single/hospital_single_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
@@ -75,9 +76,10 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                     itemBuilder: (context, index) => Stack(
                                       children: [
                                         Positioned.fill(
-                                          child: Image.network(
-                                            state.hospital.images[index].middle,
+                                          child: WImage(
+                                            imageUrl: state.hospital.images[index].middle,
                                             fit: BoxFit.cover,
+                                            onErrorWidget: SvgPicture.asset(AppIcons.bigImageError),
                                           ),
                                         ),
                                         Positioned.fill(
@@ -172,15 +174,18 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                       children: [
                                         Row(
                                           children: [
-                                            Container(
-                                              height: 40,
-                                              width: 40,
+                                            DecoratedBox(
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(6),
                                                 border: Border.all(color: divider),
-                                                image: DecorationImage(
-                                                  image: NetworkImage(state.hospital.logo.middle),
-                                                ),
+                                                borderRadius: BorderRadius.circular(6),
+                                              ),
+                                              child: WImage(
+                                                height: 40,
+                                                width: 40,
+                                                imageUrl: state.hospital.logo.middle,
+                                                borderRadius: BorderRadius.circular(6),
+                                                onErrorWidget:
+                                                    SvgPicture.asset(AppIcons.smallImageError, fit: BoxFit.cover),
                                               ),
                                             ),
                                             const SizedBox(width: 12),

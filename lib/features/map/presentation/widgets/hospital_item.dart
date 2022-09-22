@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
 import 'package:anatomica/features/map/domain/entities/hospital_entity.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -51,11 +52,13 @@ class HospitalItem extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: entity.images.length,
                         separatorBuilder: (context, index) => const SizedBox(width: 8),
-                        itemBuilder: (context, index) => Container(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              entity.images[index].small,
+                        itemBuilder: (context, index) => ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: WImage(
+                            imageUrl: entity.images[index].middle,
+                            fit: BoxFit.cover,
+                            onErrorWidget: SvgPicture.asset(
+                              AppIcons.bigImageError,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -87,35 +90,37 @@ class HospitalItem extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              top: 16,
-              right: -13,
-              child: Container(
-                height: 30,
-                padding: const EdgeInsets.fromLTRB(8, 0, 12, 0),
-                decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.circular(13),
-                  border: Border.all(color: textFieldColor),
+            if (entity.rating != 0) ...{
+              Positioned(
+                top: 16,
+                right: -13,
+                child: Container(
+                  height: 30,
+                  padding: const EdgeInsets.fromLTRB(8, 0, 12, 0),
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(13),
+                    border: Border.all(color: textFieldColor),
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(AppIcons.star),
+                      const SizedBox(width: 4),
+                      Text(
+                        entity.rating.toString(),
+                        style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        width: 1,
+                        height: 30,
+                        color: textFieldColor,
+                      )
+                    ],
+                  ),
                 ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(AppIcons.star),
-                    const SizedBox(width: 4),
-                    Text(
-                      entity.rating.toString(),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      width: 1,
-                      height: 30,
-                      color: textFieldColor,
-                    )
-                  ],
-                ),
-              ),
-            )
+              )
+            }
           ],
         ),
       ),

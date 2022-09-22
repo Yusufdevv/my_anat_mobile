@@ -29,8 +29,13 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         "password": password,
       });
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-
         await StorageRepository.putString('token', response.data['token']);
+      } else if (response.statusCode != null && response.statusCode! >= 400 && response.statusCode! < 500) {
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage:
+                ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Login parol xato')
+                    .toString());
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
@@ -51,7 +56,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       print(response.data);
       print(response.realUri);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-
         return UserModel.fromJson(response.data);
       } else {
         await StorageRepository.deleteString('token');
@@ -72,6 +76,12 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       final response = await _dio.get('/auth/check/username/$username');
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return true;
+      } else if (response.statusCode != null && response.statusCode! >= 400 && response.statusCode! < 500) {
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage:
+                ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Login band')
+                    .toString());
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
