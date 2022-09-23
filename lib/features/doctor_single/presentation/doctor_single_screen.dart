@@ -138,10 +138,10 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                   body: TabBarView(
                     controller: _tabController,
                     children: [
-                      AboutDoctor(),
+                      const AboutDoctor(),
                       DoctorArticles(doctorId: widget.id),
                       DoctorInterviews(doctorId: widget.id),
-                      DoctorComments(rating: state.doctorSingle.rating),
+                      DoctorComments(rating: state.doctorSingle.rating, doctor: widget.id),
                       DoctorContacts(
                         doctorSingle: state.doctorSingle,
                       ),

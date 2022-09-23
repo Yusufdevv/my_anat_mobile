@@ -15,8 +15,7 @@ import 'package:formz/formz.dart';
 class RegisterFeed extends StatefulWidget {
   final PageController pageController;
 
-  const RegisterFeed({required this.pageController, Key? key})
-      : super(key: key);
+  const RegisterFeed({required this.pageController, Key? key}) : super(key: key);
 
   @override
   State<RegisterFeed> createState() => _RegisterFeedState();
@@ -38,8 +37,7 @@ class _RegisterFeedState extends State<RegisterFeed> {
     return BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.fromLTRB(
-              16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
           child: Column(
             children: [
               Expanded(
@@ -49,10 +47,10 @@ class _RegisterFeedState extends State<RegisterFeed> {
                   children: [
                     DefaultTextField(
                       title: LocaleKeys.name.tr(),
+                      maxLines: 1,
                       controller: nameController,
                       onChanged: (value) {},
-                      hasError: nameController.text.isEmpty &&
-                          state.checkUsernameStatus.isSubmissionFailure,
+                      hasError: nameController.text.isEmpty && state.checkUsernameStatus.isSubmissionFailure,
                       prefix: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 8),
                         child: SvgPicture.asset(AppIcons.user),
@@ -64,6 +62,7 @@ class _RegisterFeedState extends State<RegisterFeed> {
                       title: LocaleKeys.login.tr(),
                       controller: loginController,
                       onChanged: (value) {},
+                      maxLines: 1,
                       hasError: state.checkUsernameStatus.isSubmissionFailure,
                       prefix: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 8),
@@ -71,6 +70,9 @@ class _RegisterFeedState extends State<RegisterFeed> {
                       ),
                       hintText: LocaleKeys.create_login.tr(),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).viewInsets.bottom,
+                    )
                   ],
                 ),
               ),
@@ -84,14 +86,13 @@ class _RegisterFeedState extends State<RegisterFeed> {
                           username: loginController.text,
                           fullName: nameController.text,
                           onError: (message) {
-                            context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                message:
-                                    message.replaceAll(RegExp(r'{?}?'), '')));
+                            context
+                                .read<ShowPopUpBloc>()
+                                .add(ShowPopUp(message: message.replaceAll(RegExp(r'{?}?'), '')));
                           },
                           onSuccess: () {
-                            widget.pageController.animateToPage(1,
-                                duration: const Duration(milliseconds: 150),
-                                curve: Curves.linear);
+                            widget.pageController
+                                .animateToPage(1, duration: const Duration(milliseconds: 150), curve: Curves.linear);
                           },
                         ),
                       );

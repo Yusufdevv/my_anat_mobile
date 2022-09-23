@@ -1,11 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/data/repositories/journal_repository_impl.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_article_single_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_articles_usecase.dart';
@@ -15,11 +12,11 @@ import 'package:anatomica/features/magazine/domain/usecases/search_journal_useca
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/all_articles.dart';
 import 'package:anatomica/features/magazine/presentation/pages/all_journals_screen.dart';
-import 'package:anatomica/features/magazine/presentation/pages/journal_article_single.dart';
 import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/activate_premium.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/article_item.dart';
-import 'package:anatomica/features/magazine/presentation/widgets/buy_dialog.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/first_article.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_small_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/magazine_appbar.dart';
@@ -27,23 +24,16 @@ import 'package:anatomica/features/magazine/presentation/widgets/purchase_bottom
 import 'package:anatomica/features/magazine/presentation/widgets/title_with_suffix_action.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:formz/formz.dart';
 
-class MagazineScreen extends StatefulWidget {
+class MagazineScreen extends StatelessWidget {
   const MagazineScreen({Key? key}) : super(key: key);
 
-  @override
-  State<MagazineScreen> createState() => _MagazineScreenState();
-}
-
-class _MagazineScreenState extends State<MagazineScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -176,56 +166,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                       ),
                     ),
                     if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{
-                      SliverToBoxAdapter(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(image: AssetImage(AppImages.magazineBack), fit: BoxFit.cover),
-                          ),
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: white1),
-                                borderRadius: BorderRadius.circular(16),
-                                color: white.withOpacity(0.6)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  LocaleKeys.active_follow.tr(),
-                                  style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  LocaleKeys.get_access.tr(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1!
-                                      .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
-                                ),
-                                const SizedBox(height: 16),
-                                Row(
-                                  children: [
-                                    WButton(
-                                      borderRadius: 6,
-                                      height: 34,
-                                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                                      onTap: () {},
-                                      child: Text(
-                                        LocaleKeys.more.tr(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2!
-                                            .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      const ActivatePremium(),
                     },
                     if (state.journalArticleStatus == PaginatorStatus.PAGINATOR_SUCCESS &&
                         state.journalArticles.isNotEmpty) ...[
@@ -247,107 +188,7 @@ class _MagazineScreenState extends State<MagazineScreen> {
                         ),
                       ),
                       if (state.getFirstArticleStatus.isSubmissionSuccess) ...{
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16).copyWith(top: 0),
-                            child: Column(
-                              children: [
-                                WScaleAnimation(
-                                  onTap: () {
-                                    if (state.journalArticles.first.isBought ||
-                                        !state.journalArticles.first.isPremium) {
-                                      Navigator.of(context).push(
-                                        fade(
-                                          page: JournalArticleSingle(
-                                            bloc: context.read<JournalBloc>(),
-                                            slug: state.firstArticle.slug,
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        useRootNavigator: true,
-                                        backgroundColor: Colors.transparent,
-                                        isScrollControlled: true,
-                                        builder: (_) {
-                                          return PurchaseBottomSheet(
-                                            amount: state.firstArticle.price,
-                                            onButtonTap: () {
-                                              Navigator.of(_).pop();
-                                              if (context.read<AuthenticationBloc>().state.status ==
-                                                  AuthenticationStatus.authenticated) {
-                                                Navigator.of(context).push(
-                                                  fade(
-                                                    page: OneTimePayment(
-                                                      price: state.firstArticle.price,
-                                                      title: state.firstArticle.title,
-                                                      imageUrl: state.firstArticle.image.middle,
-                                                      isJournal: false,
-                                                      isRegistered: context.read<AuthenticationBloc>().state.status ==
-                                                          AuthenticationStatus.authenticated,
-                                                      subtitle: state.firstArticle.redaction,
-                                                      id: state.firstArticle.id,
-                                                    ),
-                                                  ),
-                                                );
-                                              } else {
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (_) => BuyDialog(
-                                                    onPaymentTap: () {},
-                                                    onRegistrationTap: () {},
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                          );
-                                        },
-                                      );
-                                    }
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.only(top: 0, bottom: 16),
-                                        height: 188,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
-                                          child: CachedNetworkImage(
-                                            width: double.infinity,
-                                            imageUrl: state.firstArticle.image.middle,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          state.firstArticle.title,
-                                          style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Html(
-                                        data: state.firstArticle.shortDescription,
-                                        style: {
-                                          'p': Style(
-                                            fontSize: const FontSize(13),
-                                            padding: EdgeInsets.zero,
-                                            margin: EdgeInsets.zero,
-                                            color: textSecondary,
-                                          )
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        FirstArticle(state: state),
                       },
                       SliverPadding(
                         padding: EdgeInsets.only(

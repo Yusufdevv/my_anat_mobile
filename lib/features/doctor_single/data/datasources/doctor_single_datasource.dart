@@ -20,6 +20,8 @@ abstract class DoctorSingleDatasource {
 
   Future<DoctorCommentModel> sendDoctorComment(
       {required int doctor, required double rating, required String comment});
+
+  Future<String> deleteDoctorComment({required int id});
 }
 
 class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
@@ -155,10 +157,41 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
+      print('/doctor/comment/create/');
+      print(response.statusCode);
+      print(response.data);
+
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
         return DoctorCommentModel.fromJson(response.data);
+      } else {
+        throw ServerException(
+            statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<String> deleteDoctorComment({required int id}) async {
+    try {
+      final response = await _dio.delete(
+        '/doctor/comment/21/delete/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}),
+      );
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return '';
       } else {
         throw ServerException(
             statusCode: response.statusCode!, errorMessage: response.data.toString());

@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/doctor_single/presentation/doctor_single_screen.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -50,12 +51,9 @@ class DoctorItem extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      entity.image.middle,
-                      errorBuilder: (context, reason, good) => const SizedBox(
-                        height: 100,
-                        width: 82,
-                      ),
+                    child: WImage(
+                      imageUrl: entity.image.middle,
+                      onErrorWidget: SvgPicture.asset(AppIcons.smallImageError),
                       height: 100,
                       width: 82,
                       fit: BoxFit.cover,
@@ -82,35 +80,37 @@ class DoctorItem extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              left: -9,
-              bottom: 18,
-              child: Container(
-                height: 24,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.circular(13),
-                  border: Border.all(color: textFieldColor),
+            if (entity.rating != 0) ...{
+              Positioned(
+                left: -9,
+                bottom: 18,
+                child: Container(
+                  height: 24,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(13),
+                    border: Border.all(color: textFieldColor),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 1,
+                        height: 30,
+                        color: textFieldColor,
+                      ),
+                      const SizedBox(width: 8),
+                      SvgPicture.asset(AppIcons.star),
+                      const SizedBox(width: 4),
+                      Text(
+                        entity.rating.toString(),
+                        style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 1,
-                      height: 30,
-                      color: textFieldColor,
-                    ),
-                    const SizedBox(width: 8),
-                    SvgPicture.asset(AppIcons.star),
-                    const SizedBox(width: 4),
-                    Text(
-                      entity.rating.toString(),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
-                    ),
-                  ],
-                ),
-              ),
-            )
+              )
+            }
           ],
         ),
       ),

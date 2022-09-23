@@ -7,6 +7,8 @@ class AppIcons {
   static const profile = 'assets/icons/global/profile.svg';
   static const emptyA = 'assets/icons/global/empty_a.svg';
   static const registerUserIcon = 'assets/icons/global/register_user_icon.svg';
+  static const bigImageError = 'assets/icons/global/big_image_error.svg';
+  static const smallImageError = 'assets/icons/global/small_image_error.svg';
 
   // MapScreen
   static const listIcon = 'assets/icons/map_screen/list_icon.svg';
@@ -56,7 +58,7 @@ class AppIcons {
   //vacancy
   static const arrowRight = 'assets/icons/vacancy/arror_right.svg';
   static const filter = 'assets/icons/vacancy/filter.svg';
-  static const searchEmpty='assets/icons/vacancy/search_empty.svg';
+  static const searchEmpty = 'assets/icons/vacancy/search_empty.svg';
 
 //  static const star = 'assets/icons/vacancy/star.svg';
   static const mapPin = 'assets/icons/vacancy/map_pin.svg';

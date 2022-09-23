@@ -16,7 +16,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return AnnotatedRegion(
-      value: SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarContrastEnforced: false,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
       child: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

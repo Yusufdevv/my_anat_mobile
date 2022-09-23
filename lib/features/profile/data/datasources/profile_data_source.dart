@@ -10,23 +10,14 @@ import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:dio/dio.dart';
 
 abstract class ProfileDatasource {
-  /// Calls the https://anatomika.xn--h28h.uz/... endpoint.
-  ///
-  /// Throws a [ServerException] for all error codes.
   final PaginationDatasource paginationDatasource;
-
   ProfileDatasource({required this.paginationDatasource});
-
   Future<GenericPagination<VacancyListModel>> getLikedVacancyList({String? next});
   Future<GenericPagination<CandidateListModel>> getLikedCandidateList({String? next});
-
   Future<UserModel> getProfile();
   Future<void> deleteAccount();
-
   Future<void> editProfile(Map<String, dynamic> data);
-
   Future<UploadedImageModel> uploadImg(FormData formData);
-
   Future<void> changePassword({required String currentPassword, required String newPassword});
   Future<GenericPagination<FaqModel>> getFaq({String? next});
 }
@@ -64,7 +55,6 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.get('/user/profile/',
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
-      print(response.data);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return UserModel.fromJson(response.data);
       } else {
@@ -75,7 +65,6 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -105,8 +94,6 @@ class ProfileDatasourceImpl extends ProfileDatasource {
       final response = await _dio.post('/image/create/',
           data: formData,
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
-      print(response.realUri);
-      print(response.data);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return UploadedImageModel.fromJson(response.data);
       } else {
@@ -183,6 +170,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.get(next ?? '/doctor/liked/',
           options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'})));
+      print(response.data);
+      print(response.realUri);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => CandidateListModel.fromJson((p0 as Map<String, dynamic>? ?? {})['doctor']));

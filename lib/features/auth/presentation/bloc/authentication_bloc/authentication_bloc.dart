@@ -36,6 +36,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
           }
           break;
         case AuthenticationStatus.unauthenticated:
+          await StorageRepository.deleteString('token');
           emit(const AuthenticationState.unauthenticated());
           break;
       }

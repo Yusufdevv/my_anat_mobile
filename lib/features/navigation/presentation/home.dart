@@ -1,5 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/common/presentation/widgets/register_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/domain/entity/nav_bar.dart';
 import 'package:anatomica/features/navigation/presentation/widgets/nav_bar_item.dart';
 import 'package:anatomica/features/navigation/presentation/widgets/tab_indicator.dart';
@@ -7,6 +10,7 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'navigator.dart';
 
@@ -122,21 +126,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                   ],
                 ),
-                child: TabBar(
-                  enableFeedback: true,
-                  onTap: (index) {},
-                  controller: _controller,
-                  indicatorPadding: EdgeInsets.zero,
-                  padding: EdgeInsets.zero,
-                  indicator: const CustomTabIndicator(radius: 3, color: primary),
-                  labelPadding: EdgeInsets.zero,
-                  tabs: List.generate(
-                    lables.length,
-                    (index) => NavItemWidget(
-                      navBar: lables[index],
-                      currentIndex: _currentIndex,
-                    ),
-                  ),
+                child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, state) {
+                    return TabBar(
+                      enableFeedback: true,
+                      onTap: (index) {
+                        if (index == 3 && state.status == AuthenticationStatus.unauthenticated) {
+                          showRegisterBottomSheet(context);
+                          _controller.animateTo(_controller.previousIndex);
+                        }
+                      },
+                      controller: _controller,
+                      indicatorPadding: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
+                      indicator: const CustomTabIndicator(radius: 3, color: primary),
+                      labelPadding: EdgeInsets.zero,
+                      tabs: List.generate(
+                        lables.length,
+                        (index) => NavItemWidget(
+                          navBar: lables[index],
+                          currentIndex: _currentIndex,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),

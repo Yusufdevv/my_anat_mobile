@@ -7,7 +7,7 @@ class DoctorCommentEntity extends Equatable {
   @JsonKey(defaultValue: 0)
   final int doctor;
   @JsonKey(defaultValue: 0)
-  final int rating;
+  final double rating;
   @JsonKey(defaultValue: '')
   final String comment;
 

@@ -9,8 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CandidateItemList extends StatelessWidget {
   final EdgeInsets? margin;
 
-  const CandidateItemList({this.margin = const EdgeInsets.symmetric(horizontal: 16), Key? key})
-      : super(key: key);
+  const CandidateItemList({this.margin = const EdgeInsets.symmetric(horizontal: 16), Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +22,7 @@ class CandidateItemList extends StatelessWidget {
           itemBuilder: (context, index) => CandidateItem(
             candidateListEntity: state.candidateList[index],
             onTap: () {
-              Navigator.of(context)
-                  .push(fade(page: SingleCandidateScreen(id: state.candidateList[index].id)));
+              Navigator.of(context).push(fade(page: SingleCandidateScreen(id: state.candidateList[index].id)));
             },
           ),
           fetchMoreFunction: () {

@@ -9,7 +9,7 @@ part of 'doctor_comment.dart';
 DoctorCommentModel _$DoctorCommentModelFromJson(Map<String, dynamic> json) =>
     DoctorCommentModel(
       comment: json['comment'] as String? ?? '',
-      rating: json['rating'] as int? ?? 0,
+      rating: (json['rating'] as num?)?.toDouble() ?? 0,
       id: json['id'] as int? ?? 0,
       doctor: json['doctor'] as int? ?? 0,
     );

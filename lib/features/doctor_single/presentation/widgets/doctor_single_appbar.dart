@@ -3,6 +3,7 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/doctor_single/domain/entities/doctor_sinlge_entity.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
@@ -33,9 +34,8 @@ class DoctorSingleAppBar extends StatelessWidget {
               bottom: false,
               sliver: SliverAppBar(
                 title: state.isHeaderScrolled ? const HospitalSingleAppBarBody() : Container(),
-                systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarColor: Colors.transparent,
-                    statusBarIconBrightness: state.isHeaderScrolled ? Brightness.dark : Brightness.light),
+                systemOverlayStyle: const SystemUiOverlayStyle(
+                    statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark),
                 shadowColor: textFieldColor,
                 stretch: true,
                 expandedHeight: 496,
@@ -62,10 +62,11 @@ class DoctorSingleAppBar extends StatelessWidget {
                               child: Stack(
                                 children: [
                                   Positioned.fill(
-                                    child: Image.network(
-                                      doctor.img.middle,
+                                    child: WImage(
+                                      imageUrl: doctor.img.middle,
                                       fit: BoxFit.cover,
                                       height: 277,
+                                      onErrorWidget: SvgPicture.asset(AppIcons.bigImageError),
                                     ),
                                   ),
                                   Positioned.fill(

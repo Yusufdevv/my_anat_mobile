@@ -1,7 +1,10 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
+import 'package:anatomica/features/common/presentation/widgets/register_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet.dart';
@@ -13,7 +16,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DoctorComments extends StatelessWidget {
   final double rating;
-  const DoctorComments({required this.rating, Key? key}) : super(key: key);
+  final int? doctor;
+
+  const DoctorComments({this.doctor, required this.rating, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,23 +55,37 @@ class DoctorComments extends StatelessWidget {
                         const SizedBox(height: 6),
                         Text(
                           '7 ${LocaleKeys.review.tr()}',
-                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(color: textColor, fontSize: 13),
                         ),
                       ],
                     ),
                   ),
                   Expanded(
-                    child: WButton(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          backgroundColor: Colors.transparent,
-                          isScrollControlled: true,
-                          builder: (_) =>
-                              CommentBottomSheet(parentContext: context, commentsBloc: context.read<CommentsBloc>()),
+                    child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                      builder: (context, authState) {
+                        return WButton(
+                          onTap: () {
+                            if (authState.status == AuthenticationStatus.authenticated) {
+                              showModalBottomSheet(
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (_) => CommentBottomSheet(
+                                  parentContext: context,
+                                  isDoctor: true,
+                                  commentsBloc: context.read<CommentsBloc>(),
+                                  doctor: doctor,
+                                ),
+                              );
+                            } else {
+                              showRegisterBottomSheet(context);
+                            }
+                          },
+                          text: LocaleKeys.add_reviews.tr(),
                         );
                       },
-                      text: LocaleKeys.add_reviews.tr(),
                     ),
                   )
                 ],
@@ -74,13 +93,15 @@ class DoctorComments extends StatelessWidget {
             ),
             Expanded(
               child: Paginator(
-                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                padding: const EdgeInsets.all(16)
+                    .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
                 separatorBuilder: (context, index) => const SizedBox(height: 16),
                 itemBuilder: (context, index) => CommentItem(
                   entity: state.doctorComments[index],
                 ),
                 itemCount: state.doctorComments.length,
-                paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.doctorCommentStatus),
+                paginatorStatus:
+                    MyFunctions.formzStatusToPaginatorStatus(state.doctorCommentStatus),
                 fetchMoreFunction: () {
                   context.read<CommentsBloc>().add(CommentsEvent.getMoreDoctorComments());
                 },
