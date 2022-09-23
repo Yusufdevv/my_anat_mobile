@@ -85,5 +85,12 @@ class LikeUnlikeVacancy extends VacancyEvent {
 
 class LikeUnlikeCandidate extends VacancyEvent {
   final CandidateListEntity candidate;
+
   LikeUnlikeCandidate({required this.candidate});
+}
+
+class SelectCategoryEvent extends VacancyEvent {
+  final int id;
+
+  SelectCategoryEvent({required this.id});
 }
