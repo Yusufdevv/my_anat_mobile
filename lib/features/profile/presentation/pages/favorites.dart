@@ -28,8 +28,7 @@ class FavoritesScreen extends StatefulWidget {
   State<FavoritesScreen> createState() => _FavoritesScreenState();
 }
 
-class _FavoritesScreenState extends State<FavoritesScreen>
-    with TickerProviderStateMixin {
+class _FavoritesScreenState extends State<FavoritesScreen> with TickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -48,12 +47,10 @@ class _FavoritesScreenState extends State<FavoritesScreen>
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProfileFavouriteBloc(
-        getLikedCandidatesUseCase: GetLikedCandidatesUseCase(
-            repository: serviceLocator<ProfileRepositoryImpl>()),
-        getLikedVacanciesUseCase: GetLikedVacanciesUseCase(
-            repository: serviceLocator<ProfileRepositoryImpl>()),
-        likeUnlikeDoctorStreamUseCase: LikeUnlikeDoctorStreamUseCase(
-            repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+        getLikedCandidatesUseCase: GetLikedCandidatesUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
+        getLikedVacanciesUseCase: GetLikedVacanciesUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
+        likeUnlikeDoctorStreamUseCase:
+            LikeUnlikeDoctorStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
         likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
           repository: serviceLocator<LikeUnlikeRepositoryImpl>(),
         ),
@@ -87,24 +84,19 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                     title: 'Ничего не найдено',
                     desc: 'Вы ещё не добавили вакансии',
                   ),
-                  padding: EdgeInsets.only(
-                      top: 16, bottom: MediaQuery.of(context).padding.bottom),
+                  padding: EdgeInsets.only(top: 16, bottom: MediaQuery.of(context).padding.bottom),
                   itemBuilder: (context, index) => VacancyItem(
                     vacancyEntity: state.likedVacancies[index],
                     onTap: () {
-                      Navigator.of(context).push(fade(
-                          page: VacancySingleScreen(
-                              slug: state.likedVacancies[index].slug)));
+                      Navigator.of(context)
+                          .push(fade(page: VacancySingleScreen(slug: state.likedVacancies[index].slug)));
                     },
                   ),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 12),
+                  separatorBuilder: (context, index) => const SizedBox(height: 12),
                   itemCount: state.likedVacancies.length,
                   paginatorStatus: state.vacancyStatus,
                   fetchMoreFunction: () {
-                    context
-                        .read<ProfileFavouriteBloc>()
-                        .add(GetMoreLikedVacancies());
+                    context.read<ProfileFavouriteBloc>().add(GetMoreLikedVacancies());
                   },
                   hasMoreToFetch: state.vacancyFetchMore,
                   errorWidget: const Text('error'),
@@ -119,19 +111,15 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                   itemBuilder: (context, index) => CandidateItem(
                     candidateListEntity: state.likedCandidates[index],
                     onTap: () {
-                      Navigator.of(context).push(fade(
-                          page: SingleCandidateScreen(
-                              id: state.likedCandidates[index].id)));
+                      Navigator.of(context)
+                          .push(fade(page: SingleCandidateScreen(id: state.likedCandidates[index].id)));
                     },
                   ),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 12),
+                  separatorBuilder: (context, index) => const SizedBox(height: 12),
                   itemCount: state.likedCandidates.length,
                   paginatorStatus: state.candidateStatus,
                   fetchMoreFunction: () {
-                    context
-                        .read<ProfileFavouriteBloc>()
-                        .add(GetMoreLikedCandidates());
+                    context.read<ProfileFavouriteBloc>().add(GetMoreLikedCandidates());
                   },
                   hasMoreToFetch: state.candidateFetchMore,
                   errorWidget: const Text('error'),
