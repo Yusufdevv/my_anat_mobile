@@ -17,9 +17,14 @@ class CommentBottomSheet extends StatefulWidget {
   final BuildContext parentContext;
   final ValueChanged<PostCommentEntity>? onSubmit;
   final CommentsBloc? commentsBloc;
+  final bool isDoctor;
+  final int? doctor;
+
   const CommentBottomSheet({
     required this.parentContext,
     this.commentsBloc,
+    this.isDoctor = false,
+    this.doctor,
     this.onSubmit,
     Key? key,
   }) : super(key: key);
@@ -57,7 +62,11 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               children: [
                 Text(
                   LocaleKeys.add_reviews.tr(),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(fontSize: 20),
                 ),
                 WScaleAnimation(
                   onTap: () => Navigator.of(context).pop(),
@@ -99,7 +108,11 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                   ),
                   Text(
                     rating.toDouble().toString(),
-                    style: Theme.of(context).textTheme.headline1!.copyWith(color: primary, fontSize: 32),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(color: primary, fontSize: 32),
                   )
                 ],
               ),
@@ -118,25 +131,50 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
             ),
             WButton(
               onTap: () {
-                if (widget.commentsBloc != null) {
-                  widget.commentsBloc!.add(CommentsEvent.postComment(
-                      comment: PostCommentEntity(comment: _controller.text, rating: rating.toInt()),
-                      onSuccess: () {
-                        Navigator.of(context).pop();
-                        showModalBottomSheet(
-                          context: widget.parentContext,
-                          backgroundColor: Colors.transparent,
-                          isScrollControlled: true,
-                          builder: (_) => const CommentSuccessBottomSheet(),
-                        );
-                      }));
+                if (!widget.isDoctor) {
+                  if (widget.commentsBloc != null) {
+                    widget.commentsBloc!.add(CommentsEvent.postComment(
+                        comment: PostCommentEntity(
+                            comment: _controller.text, rating: rating.toInt()),
+                        onSuccess: () {
+                          Navigator.of(context).pop();
+                          showModalBottomSheet(
+                            context: widget.parentContext,
+                            backgroundColor: Colors.transparent,
+                            isScrollControlled: true,
+                            builder: (_) => const CommentSuccessBottomSheet(),
+                          );
+                        }));
+                  }
+                } else {
+                  widget.commentsBloc!.add(CommentsEvent.sendDoctorComment(
+                      doctor:widget.doctor!,
+                      rating: rating,
+                      comment: _controller.text, onSuccess: () {
+                    Navigator.of(context).pop();
+                    showModalBottomSheet(
+                      context: widget.parentContext,
+                      backgroundColor: Colors.transparent,
+                      isScrollControlled: true,
+                      builder: (_) => const CommentSuccessBottomSheet(),
+                    );
+                  }
+                  ));
                 }
               },
               margin: const EdgeInsets.only(right: 16),
               text: LocaleKeys.feedback.tr(),
             ),
             SizedBox(
-              height: 16 + MediaQuery.of(context).padding.bottom + MediaQuery.of(context).viewInsets.bottom,
+              height: 16 +
+                  MediaQuery
+                      .of(context)
+                      .padding
+                      .bottom +
+                  MediaQuery
+                      .of(context)
+                      .viewInsets
+                      .bottom,
             )
           ],
         ),
@@ -153,7 +191,10 @@ class CommentSuccessBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+      padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery
+          .of(context)
+          .padding
+          .bottom),
       decoration: const BoxDecoration(
         color: white,
         borderRadius: BorderRadius.vertical(
@@ -168,12 +209,20 @@ class CommentSuccessBottomSheet extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             LocaleKeys.successfully_sent.tr(),
-            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+            style: Theme
+                .of(context)
+                .textTheme
+                .headline1!
+                .copyWith(fontSize: 20),
           ),
           const SizedBox(height: 8),
           Text(
             LocaleKeys.your_review_successfully.tr(),
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+            style: Theme
+                .of(context)
+                .textTheme
+                .subtitle2!
+                .copyWith(fontSize: 14),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),

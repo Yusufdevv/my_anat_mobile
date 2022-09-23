@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
@@ -94,6 +95,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    print(StorageRepository.getString('token'));
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: vacancyBloc),
