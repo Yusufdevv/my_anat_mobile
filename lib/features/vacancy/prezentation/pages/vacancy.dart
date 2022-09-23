@@ -142,8 +142,18 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                                       isSelect:
                                           state.categoryList[index].id == state.selectCategoryId,
                                       onTap: () {
-                                        vacancyBloc.add(
-                                            SelectCategoryEvent(id: state.categoryList[index].id));
+                                        if (state.categoryList[index].id ==
+                                            state.selectCategoryId) {
+                                          vacancyBloc.add(GetVacancyListEvent(onSuccess: () {}));
+                                          vacancyBloc.add(GetTopOrganizationEvent());
+                                          vacancyBloc.add(GetCandidateListEvent());
+                                          vacancyBloc.add(GetCategoryListEvent());
+                                          vacancyBloc.add(SelectCategoryEvent(id: -1));
+                                        } else {
+                                          vacancyBloc.add(SelectCategoryEvent(
+                                              id: state.categoryList[index].id));
+                                        }
+
                                         vacancyBloc.add(GetVacancyListEvent(
                                             onSuccess: () {},
                                             vacancyParamsEntity: VacancyParamsEntity(
