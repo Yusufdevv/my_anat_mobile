@@ -6,10 +6,12 @@ class CategoryContainer extends StatelessWidget {
   final String title;
   final EdgeInsets? margin;
   final VoidCallback onTap;
+  final bool isSelect;
 
   const CategoryContainer({
     required this.onTap,
     this.title = '',
+    this.isSelect = false,
     this.margin,
     Key? key,
   }) : super(key: key);
@@ -25,6 +27,7 @@ class CategoryContainer extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(width: 1, color: pattensBlue),
+          color: isSelect ? primary : Colors.transparent,
           boxShadow: [
             BoxShadow(
               blurRadius: 10,
@@ -39,7 +42,7 @@ class CategoryContainer extends StatelessWidget {
             style: Theme.of(context).textTheme.headline5!.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
-                  color: darkGreen,
+                  color: isSelect ? white : darkGreen,
                 ),
           ),
         ),

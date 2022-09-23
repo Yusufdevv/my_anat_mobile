@@ -137,19 +137,25 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                               child: Row(
                                 children: List.generate(
                                   state.categoryList.length,
-                                  (index) => CategoryContainer(
-                                    onTap: () {
-                                      vacancyBloc.add(GetVacancyListEvent(
-                                          onSuccess: () {},
-                                          vacancyParamsEntity: VacancyParamsEntity(
-                                              category: '${state.categoryList[index].id}')));
-                                      vacancyBloc.add(GetOrganizationVacancyEvent(
-                                          category: '${state.categoryList[index].id}'));
-                                      vacancyBloc.add(GetCandidateListEvent(
-                                          categoryId: '${state.categoryList[index].id}'));
-                                    },
-                                    title: state.categoryList[index].title,
-                                  ),
+                                  (index) {
+                                    return CategoryContainer(
+                                      isSelect:
+                                          state.categoryList[index].id == state.selectCategoryId,
+                                      onTap: () {
+                                        vacancyBloc.add(
+                                            SelectCategoryEvent(id: state.categoryList[index].id));
+                                        vacancyBloc.add(GetVacancyListEvent(
+                                            onSuccess: () {},
+                                            vacancyParamsEntity: VacancyParamsEntity(
+                                                category: '${state.categoryList[index].id}')));
+                                        vacancyBloc.add(GetOrganizationVacancyEvent(
+                                            category: '${state.categoryList[index].id}'));
+                                        vacancyBloc.add(GetCandidateListEvent(
+                                            categoryId: '${state.categoryList[index].id}'));
+                                      },
+                                      title: state.categoryList[index].title,
+                                    );
+                                  },
                                 ),
                               ),
                             );
