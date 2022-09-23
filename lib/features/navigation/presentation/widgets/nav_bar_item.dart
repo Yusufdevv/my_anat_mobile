@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/navigation/domain/entity/nav_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -38,7 +39,7 @@ class NavItemWidget extends StatelessWidget {
           Container(
             alignment: Alignment.bottomCenter,
             child: Text(
-              navBar.title,
+              navBar.title.tr(),
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               maxLines: 1,

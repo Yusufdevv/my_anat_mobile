@@ -49,20 +49,29 @@ class FilterBottomSheet extends StatelessWidget {
         const SizedBox(height: 16),
         FilterItem(
             onTap: () {
-              showSalaryBottomSheet(context, vacancyBloc);
+              showSalaryBottomSheet(
+                context: context,
+                vacancyBloc: vacancyBloc,
+                list: vacancyBloc.state.salaryKey ?? [],
+              );
             },
             title: LocaleKeys.salary.tr()),
         const SizedBox(height: 12),
         FilterItem(
           onTap: () {
-            showExperienceBottomSheet(context, vacancyBloc);
+            showExperienceBottomSheet(context, vacancyBloc, vacancyBloc.state.experienceKey ?? []);
           },
           title: LocaleKeys.experience.tr(),
         ),
         const SizedBox(height: 12),
         FilterItem(
           onTap: () {
-            showRegionBottomSheet(context, regionBloc, vacancyBloc);
+            showRegionBottomSheet(
+              context,
+              regionBloc,
+              vacancyBloc,
+              vacancyBloc.state.districtList,
+            );
           },
           title: LocaleKeys.city_district.tr(),
         ),

@@ -12,8 +12,10 @@ import 'package:formz/formz.dart';
 
 class SalaryBottomSheet extends StatefulWidget {
   final VacancyBloc vacancyBloc;
+  final List<String> list;
 
-  const SalaryBottomSheet({required this.vacancyBloc, Key? key}) : super(key: key);
+  const SalaryBottomSheet({required this.vacancyBloc, required this.list, Key? key})
+      : super(key: key);
 
   @override
   State<SalaryBottomSheet> createState() => _SalaryBottomSheetState();
@@ -22,6 +24,7 @@ class SalaryBottomSheet extends StatefulWidget {
 class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
   @override
   initState() {
+    list.addAll(widget.list);
     super.initState();
   }
 
@@ -91,12 +94,13 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
   }
 }
 
-void showSalaryBottomSheet(BuildContext context, VacancyBloc vacancyBloc) {
+void showSalaryBottomSheet(
+    {required BuildContext context, required VacancyBloc vacancyBloc, required List<String> list}) {
   showModalBottomSheet(
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
     isScrollControlled: true,
     context: context,
-    builder: (context) => SalaryBottomSheet(vacancyBloc: vacancyBloc),
+    builder: (context) => SalaryBottomSheet(list: list, vacancyBloc: vacancyBloc),
   );
 }

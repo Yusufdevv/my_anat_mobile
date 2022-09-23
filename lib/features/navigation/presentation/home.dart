@@ -37,22 +37,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   final List<NavBar> lables = [
     NavBar(
-      title: LocaleKeys.map.tr(),
+      title: LocaleKeys.map,
       id: 0,
       icon: AppIcons.map,
     ),
     NavBar(
-      title: LocaleKeys.magazine.tr(),
+      title: LocaleKeys.magazine,
       id: 1,
       icon: AppIcons.magazine,
     ),
     NavBar(
-      title: LocaleKeys.vacancy.tr(),
+      title: LocaleKeys.vacancy,
       id: 2,
       icon: AppIcons.vacancies,
     ),
     NavBar(
-      title: LocaleKeys.account.tr(),
+      title: LocaleKeys.account,
       id: 3,
       icon: AppIcons.profile,
     ),
