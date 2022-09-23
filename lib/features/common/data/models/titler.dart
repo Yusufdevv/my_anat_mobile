@@ -8,6 +8,6 @@ class TitlerModel {
   final int id ;
   @JsonKey(name: 'title',defaultValue: '')
   final String title;
-  TitlerModel({required this.title,required this.id});
+  const TitlerModel({required this.title,required this.id});
   factory TitlerModel.fromJson(Map<String,dynamic> json)=>_$TitlerModelFromJson(json);
 }
