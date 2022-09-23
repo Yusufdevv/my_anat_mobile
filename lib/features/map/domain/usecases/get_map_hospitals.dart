@@ -21,6 +21,11 @@ class GetMapHospitalUseCase extends UseCase<List<MapHospitalModel>, String> {
         "lon": param.long,
         "rad": param.radius,
       });
+      if(param.spec!=-1){
+        query.addAll({
+          'specialization':param.spec
+        });
+      }
     }
     return repo.getList<MapHospitalModel>(
         endpoint: '/mobile/organization/map/',

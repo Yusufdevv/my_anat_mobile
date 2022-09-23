@@ -8,8 +8,8 @@ part of 'map_doctor.dart';
 
 MapDoctorModel _$MapDoctorModelFromJson(Map<String, dynamic> json) =>
     MapDoctorModel(
-      hospital:
-          MapHospitalModel.fromJson(json['hospital'] as Map<String, dynamic>),
+      hospital: MapHospitalModel.fromJson(
+          json['organization'] as Map<String, dynamic>),
       doctor: const HospitalDoctorsConverter()
           .fromJson(json['doctor'] as Map<String, dynamic>?),
     );
@@ -17,5 +17,5 @@ MapDoctorModel _$MapDoctorModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MapDoctorModelToJson(MapDoctorModel instance) =>
     <String, dynamic>{
       'doctor': const HospitalDoctorsConverter().toJson(instance.doctor),
-      'hospital': instance.hospital,
+      'organization': instance.hospital,
     };

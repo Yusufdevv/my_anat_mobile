@@ -5,8 +5,7 @@ import 'package:anatomica/features/auth/domain/entities/specialization_entity.da
 class HospitalDoctorsEntity {
   final String fullName;
   final int id;
-  @SpecializationConverter()
-  final SpecializationEntity specialization;
+  final String specialization;
   final double rating;
   @ImageConverter()
   final ImageEntity image;
@@ -18,7 +17,7 @@ class HospitalDoctorsEntity {
   const HospitalDoctorsEntity({
     this.isFavourite = false,
     this.rating = 0,
-    this.specialization = const SpecializationEntity(),
+    this.specialization = '',
     this.id = 0,
     this.fullName = '',
     this.image = const ImageEntity(),

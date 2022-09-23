@@ -23,7 +23,7 @@ class PaginationRepository {
       }
 
       final result = await dio.get(
-        next ?? url,
+        next!=null&&next.isNotEmpty?next: url,
         options: Options(
             headers: StorageRepository.getString('token').isNotEmpty
                 ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"}

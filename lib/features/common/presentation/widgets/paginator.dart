@@ -35,7 +35,7 @@ class Paginator extends StatelessWidget {
     } else if (paginatorStatus == PaginatorStatus.PAGINATOR_ERROR) {
       return errorWidget;
     } else if (paginatorStatus == PaginatorStatus.PAGINATOR_SUCCESS) {
-      return ListView.separated(
+      return itemCount==0?emptyWidget??SizedBox(): ListView.separated(
         scrollDirection: scrollDirection,
         physics: const BouncingScrollPhysics(),
         padding: padding,

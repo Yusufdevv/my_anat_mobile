@@ -5,6 +5,7 @@ class AppIcons {
   static const magazine = 'assets/icons/global/magazine.svg';
   static const vacancies = 'assets/icons/global/vacancies.svg';
   static const profile = 'assets/icons/global/profile.svg';
+  static const emptyA = 'assets/icons/global/empty_a.svg';
   static const registerUserIcon = 'assets/icons/global/register_user_icon.svg';
 
   // MapScreen

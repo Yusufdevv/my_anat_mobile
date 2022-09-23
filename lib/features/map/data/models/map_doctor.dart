@@ -9,6 +9,7 @@ part 'map_doctor.g.dart';
 class MapDoctorModel {
   @HospitalDoctorsConverter()
   final HospitalDoctorsEntity doctor;
+  @JsonKey(name: 'organization')
   final MapHospitalModel hospital;
   MapDoctorModel({required this.hospital, required this.doctor});
 

@@ -20,8 +20,14 @@ class GetMapDoctorUseCase extends UseCase<List<MapDoctorModel>, String> {
         "lon": param.long,
         "rad": param.radius,
       });
+      if(param.spec!=-1){
+        query.addAll({
+          'specialization':param.spec
+        });
+      }
     }
+
     return repo.getList<MapDoctorModel>(
-        endpoint: '/mobile/doctor/map/', fromJson: MapDoctorModel.fromJson, query: query);
+        endpoint: '/mobile/doctor/map', fromJson: MapDoctorModel.fromJson, query: query);
   }
 }
