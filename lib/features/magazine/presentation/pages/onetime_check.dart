@@ -26,7 +26,7 @@ class OneTimeCheck extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Text(
           LocaleKeys.only_pay.tr(),
-          style: Theme.of(context).textTheme.headline1,
+          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
         ),
         actions: [
           Padding(

@@ -7,11 +7,13 @@ class PaymentMethod extends StatelessWidget {
   final String paymentMethod;
   final String currentPaymentMethod;
   final String icon;
+  final double iconHeight;
   const PaymentMethod({
     required this.onTap,
     required this.currentPaymentMethod,
     required this.paymentMethod,
     required this.icon,
+    required this.iconHeight,
     Key? key,
   }) : super(key: key);
 
@@ -26,7 +28,7 @@ class PaymentMethod extends StatelessWidget {
           border: Border.all(color: paymentMethod == currentPaymentMethod ? primary : lilyWhite),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Image.asset(icon),
+        child: Image.asset(icon, height: iconHeight),
       ),
     );
   }

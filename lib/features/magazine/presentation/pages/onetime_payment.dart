@@ -93,30 +93,32 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                 title: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 13, right: 16, left: 16),
+                      padding: const EdgeInsets.only(left: 16),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Spacer(),
+                          const SizedBox(width: 56),
                           Text(
                             widget.isRegistered ? 'Покупка журнала' : LocaleKeys.only_pay.tr(),
-                            style: Theme.of(context).textTheme.headline1,
+                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
                           ),
-                          const Spacer(),
                           WScaleAnimation(
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: SvgPicture.asset(
-                              AppIcons.close,
-                              color: black,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16),
+                              child: SvgPicture.asset(
+                                AppIcons.close,
+                                color: black,
+                              ),
                             ),
                           )
                         ],
                       ),
                     ),
-                    const SizedBox(height: 12),
                     if (!widget.isRegistered) ...[
+                      const SizedBox(height: 12),
                       const Divider(
                         color: appBarDivider,
                         height: 0,
@@ -260,6 +262,7 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                           icon: AppImages.payMe,
                           currentPaymentMethod: currentPaymentMethod,
                           paymentMethod: 'payme',
+                          iconHeight: 24,
                         ),
                         PaymentMethod(
                           onTap: (value) {
@@ -267,6 +270,7 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                               currentPaymentMethod = value;
                             });
                           },
+                          iconHeight: 26,
                           icon: AppImages.click,
                           currentPaymentMethod: currentPaymentMethod,
                           paymentMethod: 'click',
@@ -277,6 +281,7 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                               currentPaymentMethod = value;
                             });
                           },
+                          iconHeight: 22,
                           icon: AppImages.apelsin,
                           currentPaymentMethod: currentPaymentMethod,
                           paymentMethod: 'apelsin',

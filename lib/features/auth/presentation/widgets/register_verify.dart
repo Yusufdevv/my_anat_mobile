@@ -83,6 +83,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                 onTimeChanged: (seconds) {
                   secondsLeft = seconds;
                 },
+                hasError: state.submitCodeStatus.isSubmissionFailure,
                 pinCodeController: pinCodeController,
                 secondsLeft: state.secondsLeft,
                 onRefresh: () {

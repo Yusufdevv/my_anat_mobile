@@ -9,6 +9,7 @@ import 'package:anatomica/features/magazine/domain/usecases/get_journal_articles
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journale_single_articles_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/search_journal_usecase.dart';
+import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/all_articles.dart';
 import 'package:anatomica/features/magazine/presentation/pages/all_journals_screen.dart';
@@ -16,6 +17,7 @@ import 'package:anatomica/features/magazine/presentation/pages/magazine_single_i
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/activate_premium.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/article_item.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/downloading_dialog.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/first_article.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_small_item.dart';
@@ -56,7 +58,7 @@ class MagazineScreen extends StatelessWidget {
         ..add(GetJournals())
         ..add(GetJournalArticles()),
       child: AnnotatedRegion(
-        value: const SystemUiOverlayStyle(statusBarColor: white),
+        value: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
         child: Scaffold(
           appBar: const PreferredSize(
             preferredSize: Size.fromHeight(64),
@@ -83,18 +85,36 @@ class MagazineScreen extends StatelessWidget {
                                 },
                               ),
                               MagazineItem(
-                                onLeftButtonTap: () {
-                                  Navigator.of(context, rootNavigator: true).push(fade(
-                                      page: OneTimePayment(
-                                    price: state.journals.first.price,
-                                    title: state.journals.first.redaction,
-                                    imageUrl: state.journals.first.image.middle,
-                                    isJournal: false,
-                                    isRegistered: context.read<AuthenticationBloc>().state.status ==
-                                        AuthenticationStatus.authenticated,
-                                    subtitle: state.journals.first.redaction,
-                                    id: state.journals.first.id,
-                                  )));
+                                onLeftButtonTap: () async {
+                                  if (state.journals.first.isBought) {
+                                    SystemChrome.setSystemUIOverlayStyle(
+                                        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+                                    await showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      barrierColor: primary.withOpacity(0.84),
+                                      builder: (_) => BlocProvider(
+                                        create: (context) => DownloadBloc(),
+                                        child:
+                                            DownloadingDialog(bookTitle: 'widget.book.title', parentContext: context),
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.of(context, rootNavigator: true).push(
+                                      fade(
+                                        page: OneTimePayment(
+                                          price: state.journals.first.price,
+                                          title: state.journals.first.redaction,
+                                          imageUrl: state.journals.first.image.middle,
+                                          isJournal: false,
+                                          isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                              AuthenticationStatus.authenticated,
+                                          subtitle: state.journals.first.redaction,
+                                          id: state.journals.first.id,
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 },
                                 onRightButtonTap: () {},
                                 margin: const EdgeInsets.only(right: 16, top: 4),
@@ -166,7 +186,7 @@ class MagazineScreen extends StatelessWidget {
                       ),
                     ),
                     if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{
-                      const ActivatePremium(),
+                      ActivatePremium(images: state.journals.map((e) => e.image).toList()),
                     },
                     if (state.journalArticleStatus == PaginatorStatus.PAGINATOR_SUCCESS &&
                         state.journalArticles.isNotEmpty) ...[
