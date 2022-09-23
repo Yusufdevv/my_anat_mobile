@@ -183,5 +183,6 @@ abstract class  LocaleKeys {
   static const region = 'region';
   static const all_uzb = 'all_uzb';
   static const return_results = 'return_results';
+  static const purchased = 'purchased';
 
 }

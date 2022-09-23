@@ -12,6 +12,7 @@ import 'package:anatomica/features/profile/domain/usecases/get_profile.dart';
 import 'package:anatomica/features/profile/presentation/blocs/profile_bloc/profile_bloc.dart';
 import 'package:anatomica/features/profile/presentation/pages/favorites.dart';
 import 'package:anatomica/features/profile/presentation/pages/help.dart';
+import 'package:anatomica/features/profile/presentation/pages/purchased_screen.dart';
 import 'package:anatomica/features/profile/presentation/pages/safety.dart';
 import 'package:anatomica/features/profile/presentation/pages/setting.dart';
 import 'package:anatomica/features/profile/presentation/widgets/logout_dialog.dart';
@@ -34,8 +35,10 @@ class ProfileScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     return BlocProvider(
         create: (context) => ProfileBloc(
-            getProfileUseCase: GetProfileUseCase(profileRepository: serviceLocator<ProfileRepositoryImpl>()),
-            deleteAccountUsecase: DeleteAccountUseCase(repository: serviceLocator<ProfileRepositoryImpl>()))
+            getProfileUseCase: GetProfileUseCase(
+                profileRepository: serviceLocator<ProfileRepositoryImpl>()),
+            deleteAccountUsecase: DeleteAccountUseCase(
+                repository: serviceLocator<ProfileRepositoryImpl>()))
           ..add(GetProfileEvent()),
         child: Scaffold(
           appBar: const PreferredSize(
@@ -50,7 +53,8 @@ class ProfileScreen extends StatelessWidget {
                 );
               } else if (state.getProfileStatus.isSubmissionSuccess) {
                 return ListView(
-                  padding: EdgeInsets.fromLTRB(16, 16, 16, 20 + mediaQuery.padding.bottom),
+                  padding: EdgeInsets.fromLTRB(
+                      16, 16, 16, 20 + mediaQuery.padding.bottom),
                   physics: const BouncingScrollPhysics(),
                   children: [
                     ProfileCard(
@@ -58,11 +62,16 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     if (state.profileEntity.isDoctor) ...{
-                      ProfileItem(title: LocaleKeys.doctor_office.tr(), icon: AppIcons.scope, onTap: () {}),
+                      ProfileItem(
+                          title: LocaleKeys.doctor_office.tr(),
+                          icon: AppIcons.scope,
+                          onTap: () {}),
                     },
                     if (state.profileEntity.isOrganization) ...{
                       ProfileItem(
-                          title: LocaleKeys.organization_office.tr(), image: AppImages.organization, onTap: () {}),
+                          title: LocaleKeys.organization_office.tr(),
+                          image: AppImages.organization,
+                          onTap: () {}),
                     },
                     const SizedBox(height: 12),
                     ProfileItem(
@@ -90,14 +99,24 @@ class ProfileScreen extends StatelessWidget {
                         title: LocaleKeys.favorite.tr(),
                         icon: AppIcons.profileStar,
                         onTap: () {
-                          Navigator.of(context,rootNavigator: true).push(fade(page: const FavoritesScreen()));
+                          Navigator.of(context, rootNavigator: true)
+                              .push(fade(page: const FavoritesScreen()));
                         }),
                     const SizedBox(height: 12),
                     ProfileItem(
                         title: LocaleKeys.help.tr(),
                         icon: AppIcons.help,
                         onTap: () {
-                          Navigator.of(context, rootNavigator: true).push(fade(page: const HelpScreen()));
+                          Navigator.of(context, rootNavigator: true)
+                              .push(fade(page: const HelpScreen()));
+                        }),
+                    const SizedBox(height: 12),
+                    ProfileItem(
+                        title: LocaleKeys.purchased.tr(),
+                        icon: AppIcons.purchased,
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .push(fade(page: const PurchasedScreen()));
                         }),
                     const SizedBox(height: 12),
                     const WDivider(),
@@ -109,11 +128,14 @@ class ProfileScreen extends StatelessWidget {
                           showLogOutDialog(context,
                               onConfirmTap: () => context
                                   .read<AuthenticationBloc>()
-                                  .add(AuthenticationStatusChanged(status: AuthenticationStatus.unauthenticated)));
+                                  .add(AuthenticationStatusChanged(
+                                      status: AuthenticationStatus
+                                          .unauthenticated)));
                         },
                         color: snow),
                     const SizedBox(height: 24),
-                    if (state.profileEntity.isDoctor || state.profileEntity.isOrganization) ...{
+                    if (state.profileEntity.isDoctor ||
+                        state.profileEntity.isOrganization) ...{
                       const SizedBox()
                     } else ...{
                       Column(

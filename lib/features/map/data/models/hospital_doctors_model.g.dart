@@ -12,7 +12,10 @@ HospitalDoctorsModel _$HospitalDoctorsModelFromJson(
       fullName: json['full_name'] as String? ?? '',
       id: json['id'] as int? ?? 0,
       phoneNumber: json['phone_number'] as String? ?? '',
-      specialization: json['specialization'] as String? ?? '',
+      specialization: json['specialization'] == null
+          ? const TitlerModel(id: 0, title: '')
+          : TitlerModel.fromJson(
+              json['specialization'] as Map<String, dynamic>),
       isFavourite: json['is_favourite'] as bool? ?? false,
       image: json['image'] == null
           ? const ImageEntity()
