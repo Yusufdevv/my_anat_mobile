@@ -24,9 +24,13 @@ mixin _$CommentsEvent {
     required TResult Function() getMoreDoctorComments,
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
-    required TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)
+    required TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)
         sendDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteHospitalComment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,9 +41,13 @@ mixin _$CommentsEvent {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,9 +58,13 @@ mixin _$CommentsEvent {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -65,6 +77,9 @@ mixin _$CommentsEvent {
         getMoreDoctorComments,
     required TResult Function(_PostComment value) postComment,
     required TResult Function(_SendDoctorComment value) sendDoctorComment,
+    required TResult Function(_DeleteDoctorComment value) deleteDoctorComment,
+    required TResult Function(_DeleteHospitalComment value)
+        deleteHospitalComment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +90,8 @@ mixin _$CommentsEvent {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,6 +102,8 @@ mixin _$CommentsEvent {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -179,9 +198,13 @@ class _$_GetComments implements _GetComments {
     required TResult Function() getMoreDoctorComments,
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
-    required TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)
+    required TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)
         sendDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteHospitalComment,
   }) {
     return getComments(organizationId);
   }
@@ -195,9 +218,13 @@ class _$_GetComments implements _GetComments {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
   }) {
     return getComments?.call(organizationId);
   }
@@ -211,9 +238,13 @@ class _$_GetComments implements _GetComments {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (getComments != null) {
@@ -232,6 +263,9 @@ class _$_GetComments implements _GetComments {
         getMoreDoctorComments,
     required TResult Function(_PostComment value) postComment,
     required TResult Function(_SendDoctorComment value) sendDoctorComment,
+    required TResult Function(_DeleteDoctorComment value) deleteDoctorComment,
+    required TResult Function(_DeleteHospitalComment value)
+        deleteHospitalComment,
   }) {
     return getComments(this);
   }
@@ -245,6 +279,8 @@ class _$_GetComments implements _GetComments {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return getComments?.call(this);
   }
@@ -258,6 +294,8 @@ class _$_GetComments implements _GetComments {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (getComments != null) {
@@ -323,9 +361,13 @@ class _$_GetMoreComments implements _GetMoreComments {
     required TResult Function() getMoreDoctorComments,
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
-    required TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)
+    required TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)
         sendDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteHospitalComment,
   }) {
     return getMoreComments();
   }
@@ -339,9 +381,13 @@ class _$_GetMoreComments implements _GetMoreComments {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
   }) {
     return getMoreComments?.call();
   }
@@ -355,9 +401,13 @@ class _$_GetMoreComments implements _GetMoreComments {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (getMoreComments != null) {
@@ -376,6 +426,9 @@ class _$_GetMoreComments implements _GetMoreComments {
         getMoreDoctorComments,
     required TResult Function(_PostComment value) postComment,
     required TResult Function(_SendDoctorComment value) sendDoctorComment,
+    required TResult Function(_DeleteDoctorComment value) deleteDoctorComment,
+    required TResult Function(_DeleteHospitalComment value)
+        deleteHospitalComment,
   }) {
     return getMoreComments(this);
   }
@@ -389,6 +442,8 @@ class _$_GetMoreComments implements _GetMoreComments {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return getMoreComments?.call(this);
   }
@@ -402,6 +457,8 @@ class _$_GetMoreComments implements _GetMoreComments {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (getMoreComments != null) {
@@ -487,9 +544,13 @@ class _$_GetDoctorComments implements _GetDoctorComments {
     required TResult Function() getMoreDoctorComments,
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
-    required TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)
+    required TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)
         sendDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteHospitalComment,
   }) {
     return getDoctorComments(doctorId);
   }
@@ -503,9 +564,13 @@ class _$_GetDoctorComments implements _GetDoctorComments {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
   }) {
     return getDoctorComments?.call(doctorId);
   }
@@ -519,9 +584,13 @@ class _$_GetDoctorComments implements _GetDoctorComments {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (getDoctorComments != null) {
@@ -540,6 +609,9 @@ class _$_GetDoctorComments implements _GetDoctorComments {
         getMoreDoctorComments,
     required TResult Function(_PostComment value) postComment,
     required TResult Function(_SendDoctorComment value) sendDoctorComment,
+    required TResult Function(_DeleteDoctorComment value) deleteDoctorComment,
+    required TResult Function(_DeleteHospitalComment value)
+        deleteHospitalComment,
   }) {
     return getDoctorComments(this);
   }
@@ -553,6 +625,8 @@ class _$_GetDoctorComments implements _GetDoctorComments {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return getDoctorComments?.call(this);
   }
@@ -566,6 +640,8 @@ class _$_GetDoctorComments implements _GetDoctorComments {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (getDoctorComments != null) {
@@ -633,9 +709,13 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
     required TResult Function() getMoreDoctorComments,
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
-    required TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)
+    required TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)
         sendDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteHospitalComment,
   }) {
     return getMoreDoctorComments();
   }
@@ -649,9 +729,13 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
   }) {
     return getMoreDoctorComments?.call();
   }
@@ -665,9 +749,13 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (getMoreDoctorComments != null) {
@@ -686,6 +774,9 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
         getMoreDoctorComments,
     required TResult Function(_PostComment value) postComment,
     required TResult Function(_SendDoctorComment value) sendDoctorComment,
+    required TResult Function(_DeleteDoctorComment value) deleteDoctorComment,
+    required TResult Function(_DeleteHospitalComment value)
+        deleteHospitalComment,
   }) {
     return getMoreDoctorComments(this);
   }
@@ -699,6 +790,8 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return getMoreDoctorComments?.call(this);
   }
@@ -712,6 +805,8 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (getMoreDoctorComments != null) {
@@ -805,9 +900,13 @@ class _$_PostComment implements _PostComment {
     required TResult Function() getMoreDoctorComments,
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
-    required TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)
+    required TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)
         sendDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteHospitalComment,
   }) {
     return postComment(comment, onSuccess);
   }
@@ -821,9 +920,13 @@ class _$_PostComment implements _PostComment {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
   }) {
     return postComment?.call(comment, onSuccess);
   }
@@ -837,9 +940,13 @@ class _$_PostComment implements _PostComment {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (postComment != null) {
@@ -858,6 +965,9 @@ class _$_PostComment implements _PostComment {
         getMoreDoctorComments,
     required TResult Function(_PostComment value) postComment,
     required TResult Function(_SendDoctorComment value) sendDoctorComment,
+    required TResult Function(_DeleteDoctorComment value) deleteDoctorComment,
+    required TResult Function(_DeleteHospitalComment value)
+        deleteHospitalComment,
   }) {
     return postComment(this);
   }
@@ -871,6 +981,8 @@ class _$_PostComment implements _PostComment {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return postComment?.call(this);
   }
@@ -884,6 +996,8 @@ class _$_PostComment implements _PostComment {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (postComment != null) {
@@ -910,7 +1024,12 @@ abstract class _$$_SendDoctorCommentCopyWith<$Res> {
   factory _$$_SendDoctorCommentCopyWith(_$_SendDoctorComment value,
           $Res Function(_$_SendDoctorComment) then) =
       __$$_SendDoctorCommentCopyWithImpl<$Res>;
-  $Res call({int doctor, double rating, String comment, Function onSuccess});
+  $Res call(
+      {int doctor,
+      double rating,
+      String comment,
+      Function onSuccess,
+      Function onError});
 }
 
 /// @nodoc
@@ -930,6 +1049,7 @@ class __$$_SendDoctorCommentCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? comment = freezed,
     Object? onSuccess = freezed,
+    Object? onError = freezed,
   }) {
     return _then(_$_SendDoctorComment(
       doctor: doctor == freezed
@@ -948,6 +1068,10 @@ class __$$_SendDoctorCommentCopyWithImpl<$Res>
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as Function,
+      onError: onError == freezed
+          ? _value.onError
+          : onError // ignore: cast_nullable_to_non_nullable
+              as Function,
     ));
   }
 }
@@ -959,7 +1083,8 @@ class _$_SendDoctorComment implements _SendDoctorComment {
       {required this.doctor,
       required this.rating,
       required this.comment,
-      required this.onSuccess});
+      required this.onSuccess,
+      required this.onError});
 
   @override
   final int doctor;
@@ -969,10 +1094,12 @@ class _$_SendDoctorComment implements _SendDoctorComment {
   final String comment;
   @override
   final Function onSuccess;
+  @override
+  final Function onError;
 
   @override
   String toString() {
-    return 'CommentsEvent.sendDoctorComment(doctor: $doctor, rating: $rating, comment: $comment, onSuccess: $onSuccess)';
+    return 'CommentsEvent.sendDoctorComment(doctor: $doctor, rating: $rating, comment: $comment, onSuccess: $onSuccess, onError: $onError)';
   }
 
   @override
@@ -983,7 +1110,8 @@ class _$_SendDoctorComment implements _SendDoctorComment {
             const DeepCollectionEquality().equals(other.doctor, doctor) &&
             const DeepCollectionEquality().equals(other.rating, rating) &&
             const DeepCollectionEquality().equals(other.comment, comment) &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess));
+            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
+            const DeepCollectionEquality().equals(other.onError, onError));
   }
 
   @override
@@ -992,7 +1120,8 @@ class _$_SendDoctorComment implements _SendDoctorComment {
       const DeepCollectionEquality().hash(doctor),
       const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(comment),
-      const DeepCollectionEquality().hash(onSuccess));
+      const DeepCollectionEquality().hash(onSuccess),
+      const DeepCollectionEquality().hash(onError));
 
   @JsonKey(ignore: true)
   @override
@@ -1009,11 +1138,15 @@ class _$_SendDoctorComment implements _SendDoctorComment {
     required TResult Function() getMoreDoctorComments,
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
-    required TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)
+    required TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)
         sendDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteHospitalComment,
   }) {
-    return sendDoctorComment(doctor, rating, comment, onSuccess);
+    return sendDoctorComment(doctor, rating, comment, onSuccess, onError);
   }
 
   @override
@@ -1025,11 +1158,15 @@ class _$_SendDoctorComment implements _SendDoctorComment {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
   }) {
-    return sendDoctorComment?.call(doctor, rating, comment, onSuccess);
+    return sendDoctorComment?.call(doctor, rating, comment, onSuccess, onError);
   }
 
   @override
@@ -1041,13 +1178,17 @@ class _$_SendDoctorComment implements _SendDoctorComment {
     TResult Function()? getMoreDoctorComments,
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(
-            int doctor, double rating, String comment, Function onSuccess)?
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
         sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (sendDoctorComment != null) {
-      return sendDoctorComment(doctor, rating, comment, onSuccess);
+      return sendDoctorComment(doctor, rating, comment, onSuccess, onError);
     }
     return orElse();
   }
@@ -1062,6 +1203,9 @@ class _$_SendDoctorComment implements _SendDoctorComment {
         getMoreDoctorComments,
     required TResult Function(_PostComment value) postComment,
     required TResult Function(_SendDoctorComment value) sendDoctorComment,
+    required TResult Function(_DeleteDoctorComment value) deleteDoctorComment,
+    required TResult Function(_DeleteHospitalComment value)
+        deleteHospitalComment,
   }) {
     return sendDoctorComment(this);
   }
@@ -1075,6 +1219,8 @@ class _$_SendDoctorComment implements _SendDoctorComment {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return sendDoctorComment?.call(this);
   }
@@ -1088,6 +1234,8 @@ class _$_SendDoctorComment implements _SendDoctorComment {
     TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
     TResult Function(_PostComment value)? postComment,
     TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
     required TResult orElse(),
   }) {
     if (sendDoctorComment != null) {
@@ -1102,14 +1250,443 @@ abstract class _SendDoctorComment implements CommentsEvent {
       {required final int doctor,
       required final double rating,
       required final String comment,
-      required final Function onSuccess}) = _$_SendDoctorComment;
+      required final Function onSuccess,
+      required final Function onError}) = _$_SendDoctorComment;
 
   int get doctor;
   double get rating;
   String get comment;
   Function get onSuccess;
+  Function get onError;
   @JsonKey(ignore: true)
   _$$_SendDoctorCommentCopyWith<_$_SendDoctorComment> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_DeleteDoctorCommentCopyWith<$Res> {
+  factory _$$_DeleteDoctorCommentCopyWith(_$_DeleteDoctorComment value,
+          $Res Function(_$_DeleteDoctorComment) then) =
+      __$$_DeleteDoctorCommentCopyWithImpl<$Res>;
+  $Res call({int id, Function onSuccess, Function onError});
+}
+
+/// @nodoc
+class __$$_DeleteDoctorCommentCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res>
+    implements _$$_DeleteDoctorCommentCopyWith<$Res> {
+  __$$_DeleteDoctorCommentCopyWithImpl(_$_DeleteDoctorComment _value,
+      $Res Function(_$_DeleteDoctorComment) _then)
+      : super(_value, (v) => _then(v as _$_DeleteDoctorComment));
+
+  @override
+  _$_DeleteDoctorComment get _value => super._value as _$_DeleteDoctorComment;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? onSuccess = freezed,
+    Object? onError = freezed,
+  }) {
+    return _then(_$_DeleteDoctorComment(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      onSuccess: onSuccess == freezed
+          ? _value.onSuccess
+          : onSuccess // ignore: cast_nullable_to_non_nullable
+              as Function,
+      onError: onError == freezed
+          ? _value.onError
+          : onError // ignore: cast_nullable_to_non_nullable
+              as Function,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_DeleteDoctorComment implements _DeleteDoctorComment {
+  _$_DeleteDoctorComment(
+      {required this.id, required this.onSuccess, required this.onError});
+
+  @override
+  final int id;
+  @override
+  final Function onSuccess;
+  @override
+  final Function onError;
+
+  @override
+  String toString() {
+    return 'CommentsEvent.deleteDoctorComment(id: $id, onSuccess: $onSuccess, onError: $onError)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DeleteDoctorComment &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
+            const DeepCollectionEquality().equals(other.onError, onError));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(onSuccess),
+      const DeepCollectionEquality().hash(onError));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_DeleteDoctorCommentCopyWith<_$_DeleteDoctorComment> get copyWith =>
+      __$$_DeleteDoctorCommentCopyWithImpl<_$_DeleteDoctorComment>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int organizationId) getComments,
+    required TResult Function() getMoreComments,
+    required TResult Function(int doctorId) getDoctorComments,
+    required TResult Function() getMoreDoctorComments,
+    required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
+        postComment,
+    required TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)
+        sendDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteHospitalComment,
+  }) {
+    return deleteDoctorComment(id, onSuccess, onError);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(int organizationId)? getComments,
+    TResult Function()? getMoreComments,
+    TResult Function(int doctorId)? getDoctorComments,
+    TResult Function()? getMoreDoctorComments,
+    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+        postComment,
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
+        sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
+  }) {
+    return deleteDoctorComment?.call(id, onSuccess, onError);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int organizationId)? getComments,
+    TResult Function()? getMoreComments,
+    TResult Function(int doctorId)? getDoctorComments,
+    TResult Function()? getMoreDoctorComments,
+    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+        postComment,
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
+        sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
+    required TResult orElse(),
+  }) {
+    if (deleteDoctorComment != null) {
+      return deleteDoctorComment(id, onSuccess, onError);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetComments value) getComments,
+    required TResult Function(_GetMoreComments value) getMoreComments,
+    required TResult Function(_GetDoctorComments value) getDoctorComments,
+    required TResult Function(_GetMoreDoctorComments value)
+        getMoreDoctorComments,
+    required TResult Function(_PostComment value) postComment,
+    required TResult Function(_SendDoctorComment value) sendDoctorComment,
+    required TResult Function(_DeleteDoctorComment value) deleteDoctorComment,
+    required TResult Function(_DeleteHospitalComment value)
+        deleteHospitalComment,
+  }) {
+    return deleteDoctorComment(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetComments value)? getComments,
+    TResult Function(_GetMoreComments value)? getMoreComments,
+    TResult Function(_GetDoctorComments value)? getDoctorComments,
+    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult Function(_PostComment value)? postComment,
+    TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+  }) {
+    return deleteDoctorComment?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetComments value)? getComments,
+    TResult Function(_GetMoreComments value)? getMoreComments,
+    TResult Function(_GetDoctorComments value)? getDoctorComments,
+    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult Function(_PostComment value)? postComment,
+    TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    required TResult orElse(),
+  }) {
+    if (deleteDoctorComment != null) {
+      return deleteDoctorComment(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _DeleteDoctorComment implements CommentsEvent {
+  factory _DeleteDoctorComment(
+      {required final int id,
+      required final Function onSuccess,
+      required final Function onError}) = _$_DeleteDoctorComment;
+
+  int get id;
+  Function get onSuccess;
+  Function get onError;
+  @JsonKey(ignore: true)
+  _$$_DeleteDoctorCommentCopyWith<_$_DeleteDoctorComment> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_DeleteHospitalCommentCopyWith<$Res> {
+  factory _$$_DeleteHospitalCommentCopyWith(_$_DeleteHospitalComment value,
+          $Res Function(_$_DeleteHospitalComment) then) =
+      __$$_DeleteHospitalCommentCopyWithImpl<$Res>;
+  $Res call({int id, Function onSuccess, Function onError});
+}
+
+/// @nodoc
+class __$$_DeleteHospitalCommentCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res>
+    implements _$$_DeleteHospitalCommentCopyWith<$Res> {
+  __$$_DeleteHospitalCommentCopyWithImpl(_$_DeleteHospitalComment _value,
+      $Res Function(_$_DeleteHospitalComment) _then)
+      : super(_value, (v) => _then(v as _$_DeleteHospitalComment));
+
+  @override
+  _$_DeleteHospitalComment get _value =>
+      super._value as _$_DeleteHospitalComment;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? onSuccess = freezed,
+    Object? onError = freezed,
+  }) {
+    return _then(_$_DeleteHospitalComment(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      onSuccess: onSuccess == freezed
+          ? _value.onSuccess
+          : onSuccess // ignore: cast_nullable_to_non_nullable
+              as Function,
+      onError: onError == freezed
+          ? _value.onError
+          : onError // ignore: cast_nullable_to_non_nullable
+              as Function,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_DeleteHospitalComment implements _DeleteHospitalComment {
+  _$_DeleteHospitalComment(
+      {required this.id, required this.onSuccess, required this.onError});
+
+  @override
+  final int id;
+  @override
+  final Function onSuccess;
+  @override
+  final Function onError;
+
+  @override
+  String toString() {
+    return 'CommentsEvent.deleteHospitalComment(id: $id, onSuccess: $onSuccess, onError: $onError)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DeleteHospitalComment &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
+            const DeepCollectionEquality().equals(other.onError, onError));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(onSuccess),
+      const DeepCollectionEquality().hash(onError));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_DeleteHospitalCommentCopyWith<_$_DeleteHospitalComment> get copyWith =>
+      __$$_DeleteHospitalCommentCopyWithImpl<_$_DeleteHospitalComment>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int organizationId) getComments,
+    required TResult Function() getMoreComments,
+    required TResult Function(int doctorId) getDoctorComments,
+    required TResult Function() getMoreDoctorComments,
+    required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
+        postComment,
+    required TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)
+        sendDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteDoctorComment,
+    required TResult Function(int id, Function onSuccess, Function onError)
+        deleteHospitalComment,
+  }) {
+    return deleteHospitalComment(id, onSuccess, onError);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(int organizationId)? getComments,
+    TResult Function()? getMoreComments,
+    TResult Function(int doctorId)? getDoctorComments,
+    TResult Function()? getMoreDoctorComments,
+    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+        postComment,
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
+        sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
+  }) {
+    return deleteHospitalComment?.call(id, onSuccess, onError);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int organizationId)? getComments,
+    TResult Function()? getMoreComments,
+    TResult Function(int doctorId)? getDoctorComments,
+    TResult Function()? getMoreDoctorComments,
+    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+        postComment,
+    TResult Function(int doctor, double rating, String comment,
+            Function onSuccess, Function onError)?
+        sendDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteDoctorComment,
+    TResult Function(int id, Function onSuccess, Function onError)?
+        deleteHospitalComment,
+    required TResult orElse(),
+  }) {
+    if (deleteHospitalComment != null) {
+      return deleteHospitalComment(id, onSuccess, onError);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetComments value) getComments,
+    required TResult Function(_GetMoreComments value) getMoreComments,
+    required TResult Function(_GetDoctorComments value) getDoctorComments,
+    required TResult Function(_GetMoreDoctorComments value)
+        getMoreDoctorComments,
+    required TResult Function(_PostComment value) postComment,
+    required TResult Function(_SendDoctorComment value) sendDoctorComment,
+    required TResult Function(_DeleteDoctorComment value) deleteDoctorComment,
+    required TResult Function(_DeleteHospitalComment value)
+        deleteHospitalComment,
+  }) {
+    return deleteHospitalComment(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetComments value)? getComments,
+    TResult Function(_GetMoreComments value)? getMoreComments,
+    TResult Function(_GetDoctorComments value)? getDoctorComments,
+    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult Function(_PostComment value)? postComment,
+    TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+  }) {
+    return deleteHospitalComment?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetComments value)? getComments,
+    TResult Function(_GetMoreComments value)? getMoreComments,
+    TResult Function(_GetDoctorComments value)? getDoctorComments,
+    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult Function(_PostComment value)? postComment,
+    TResult Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    required TResult orElse(),
+  }) {
+    if (deleteHospitalComment != null) {
+      return deleteHospitalComment(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _DeleteHospitalComment implements CommentsEvent {
+  factory _DeleteHospitalComment(
+      {required final int id,
+      required final Function onSuccess,
+      required final Function onError}) = _$_DeleteHospitalComment;
+
+  int get id;
+  Function get onSuccess;
+  Function get onError;
+  @JsonKey(ignore: true)
+  _$$_DeleteHospitalCommentCopyWith<_$_DeleteHospitalComment> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

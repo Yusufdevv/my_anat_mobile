@@ -15,6 +15,7 @@ import 'package:anatomica/features/map/presentation/blocs/map_controller_bloc/ma
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/specialization/specialization_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
+import 'package:anatomica/features/map/presentation/screens/suggestion/suggestion_page.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_controller_buttons.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -44,15 +45,19 @@ class _MapScreenState extends State<MapScreen>
 
   double latitude = 0;
   double longitude = 0;
+  double zoomLevel = 15;
+  int currentRadius = 10000;
 
   @override
   void initState() {
     specBloc = SpecializationBloc(GetSpecializationUseCase())
       ..add(SpecializationEvent.getSpecs());
     mapOrganizationBloc = MapOrganizationBloc(
-        GetMapHospitalUseCase(), GetMapDoctorUseCase(),
-        getTypesUseCase:
-            GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()));
+      GetMapHospitalUseCase(),
+      GetMapDoctorUseCase(),
+      getTypesUseCase:
+          GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
+    );
     _controller = TabController(length: 2, vsync: this);
     _searchFieldController = TextEditingController();
     WidgetsBinding.instance.addObserver(this);
@@ -116,12 +121,14 @@ class _MapScreenState extends State<MapScreen>
                   },
                   listener: (context, state) {
                     mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(
-                        param: MapParameter(spec: state.selectedId,
+                        param: MapParameter(
+                            spec: state.selectedId,
                             lat: currentLocation.latitude,
                             long: currentLocation.longitude,
                             radius: 1000000)));
                     mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
-                        param: MapParameter(spec: state.selectedId,
+                        param: MapParameter(
+                            spec: state.selectedId,
                             lat: currentLocation.latitude,
                             long: currentLocation.longitude,
                             radius: 1000000)));
@@ -131,9 +138,7 @@ class _MapScreenState extends State<MapScreen>
                     child: YandexMap(
                       rotateGesturesEnabled: false,
                       onCameraPositionChanged:
-                          (cameraPosition, updateReason, _) {
-
-                          },
+                          (cameraPosition, updateReason, _) {},
                       onMapTap: (point) {
                         WidgetsBinding.instance.focusManager.primaryFocus
                             ?.unfocus();
@@ -159,6 +164,7 @@ class _MapScreenState extends State<MapScreen>
                         _mapController.moveCamera(
                           CameraUpdate.newCameraPosition(
                             CameraPosition(
+                              zoom: zoomLevel,
                               target: Point(
                                   latitude: position.latitude,
                                   longitude: position.longitude),
@@ -239,75 +245,104 @@ class _MapScreenState extends State<MapScreen>
                               ),
                               id: 0,
                             ),
-                            MapControllerButtons(
-                              onCurrentLocationTap: () async {
-                                final position =
-                                    await MyFunctions.determinePosition();
-                                _mapController.moveCamera(
-                                  CameraUpdate.newCameraPosition(
-                                    CameraPosition(
-                                      target: Point(
-                                          latitude: position.latitude,
-                                          longitude: position.longitude),
-                                    ),
-                                  ),
-                                  animation: const MapAnimation(
-                                      duration: 0.15,
-                                      type: MapAnimationType.smooth),
-                                );
-                              },
-                              onMinusTap: () {
-                                _mapController.moveCamera(
-                                  CameraUpdate.zoomOut(),
-                                  animation: const MapAnimation(
-                                      duration: 0.15,
-                                      type: MapAnimationType.smooth),
-                                );
-                              },
-                              onPlusTap: () {
-                                _mapController.moveCamera(
-                                  CameraUpdate.zoomIn(),
-                                  animation: const MapAnimation(
-                                      duration: 0.15,
-                                      type: MapAnimationType.smooth),
+                            BlocBuilder<SpecializationBloc,
+                                SpecializationState>(
+                              builder: (context, state) {
+                                return MapControllerButtons(
+                                  onCurrentLocationTap: () async {
+                                    final position =
+                                        await MyFunctions.determinePosition();
+                                    _mapController.moveCamera(
+                                      CameraUpdate.newCameraPosition(
+                                        CameraPosition(
+                                          target: Point(
+                                              latitude: position.latitude,
+                                              longitude: position.longitude),
+                                        ),
+                                      ),
+                                      animation: const MapAnimation(
+                                          duration: 0.15,
+                                          type: MapAnimationType.smooth),
+                                    );
+                                  },
+                                  onMinusTap: () {
+                                    _mapController.moveCamera(
+                                      CameraUpdate.zoomTo(zoomLevel - 1),
+                                      animation: const MapAnimation(
+                                          duration: 0.2,
+                                          type: MapAnimationType.smooth),
+                                    );
+                                    zoomLevel--;
+                                    if (zoomLevel <= 11) {
+                                      mapOrganizationBloc.add(
+                                          MapOrganizationEvent.getDoctors(
+                                              param: MapParameter(
+                                                  spec: state.selectedId,
+                                                  lat: currentLocation.latitude,
+                                                  long:
+                                                      currentLocation.longitude,
+                                                  radius: currentRadius)));
+                                      mapOrganizationBloc.add(
+                                          MapOrganizationEvent.getHospitals(
+                                              param: MapParameter(
+                                                  spec: state.selectedId,
+                                                  lat: currentLocation.latitude,
+                                                  long:
+                                                      currentLocation.longitude,
+                                                  radius: currentRadius)));
+                                    }
+                                  },
+                                  onPlusTap: () {
+                                    _mapController.moveCamera(
+                                      CameraUpdate.zoomTo(zoomLevel + 1),
+                                      animation: const MapAnimation(
+                                          duration: 0.2,
+                                          type: MapAnimationType.smooth),
+                                    );
+                                    zoomLevel++;
+                                    print(zoomLevel);
+                                  },
                                 );
                               },
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 36,
-                        child: BlocBuilder<SpecializationBloc,
-                            SpecializationState>(
-                          builder: (context, state) {
-                            return ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(width: 12),
-                              physics: const BouncingScrollPhysics(),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              itemBuilder: (context, index) => MapButton.chip(
-                                selected: state.selectedId ==
-                                    state.specializations[index].id,
-                                title: state.specializations[index].title,
-                                onTap: (id) {
-                                  if (state.selectedId ==
-                                      state.specializations[index].id) {
-                                    specBloc.add(
-                                        SpecializationEvent.selectSpec(-1));
-                                  } else {
-                                    specBloc.add(
-                                        SpecializationEvent.selectSpec(id));
-                                  }
-                                },
-                                id: state.specializations[index].id,
-                              ),
-                              itemCount: state.specializations.length,
-                            );
-                          },
-                        ),
+                      BlocBuilder<SpecializationBloc, SpecializationState>(
+                        builder: (context, state) {
+                          return state.specializations.isEmpty
+                              ? const SizedBox()
+                              : SizedBox(height: 36,
+                                child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(width: 12),
+                                    physics: const BouncingScrollPhysics(),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    itemBuilder: (context, index) =>
+                                        MapButton.chip(
+                                      selected: state.selectedId ==
+                                          state.specializations[index].id,
+                                      title: state.specializations[index].title,
+                                      onTap: (id) {
+                                        if (state.selectedId ==
+                                            state.specializations[index].id) {
+                                          specBloc.add(
+                                              SpecializationEvent.selectSpec(
+                                                  -1));
+                                        } else {
+                                          specBloc.add(
+                                              SpecializationEvent.selectSpec(
+                                                  id));
+                                        }
+                                      },
+                                      id: state.specializations[index].id,
+                                    ),
+                                    itemCount: state.specializations.length,
+                                  ),
+                              );
+                        },
                       ),
                       const SizedBox(height: 16),
                       Container(
@@ -318,9 +353,18 @@ class _MapScreenState extends State<MapScreen>
                           border: Border.all(color: textFieldColor),
                           color: white,
                         ),
-                        child: SearchField(
-                          controller: _searchFieldController,
-                          onChanged: (value) {},
+                        child: GestureDetector(onTap: (){
+                          showModalBottomSheet(isScrollControlled: true,useRootNavigator: true,
+                              context: context, builder:(c){
+                            return  SuggestionPage(statusBarHeight: MediaQuery.of(context).padding.top,);
+                          });
+                        },
+                          child: AbsorbPointer(absorbing: true,
+                            child: SearchField(
+                              controller: _searchFieldController,
+                              onChanged: (value) {},
+                            ),
+                          ),
                         ),
                       )
                     ],

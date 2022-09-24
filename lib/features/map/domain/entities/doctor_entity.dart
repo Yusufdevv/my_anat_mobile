@@ -1,12 +1,11 @@
-import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
-import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
+import 'package:anatomica/features/common/data/models/titler.dart';
 
 class HospitalDoctorsEntity {
   final String fullName;
   final int id;
-  @SpecializationConverter()
-  final SpecializationEntity specialization;
+
+  final TitlerModel specialization;
   final double rating;
   @ImageConverter()
   final ImageEntity image;
@@ -18,7 +17,7 @@ class HospitalDoctorsEntity {
   const HospitalDoctorsEntity({
     this.isFavourite = false,
     this.rating = 0,
-    this.specialization = const SpecializationEntity(),
+    this.specialization = const TitlerModel(id: 0,title: ''),
     this.id = 0,
     this.fullName = '',
     this.image = const ImageEntity(),

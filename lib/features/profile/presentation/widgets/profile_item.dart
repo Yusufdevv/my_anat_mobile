@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -44,7 +45,7 @@ class ProfileItem extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Text(
-              title,
+              title.tr(),
               style: Theme.of(context).textTheme.headline1!.copyWith(),
             ),
             const Spacer(),

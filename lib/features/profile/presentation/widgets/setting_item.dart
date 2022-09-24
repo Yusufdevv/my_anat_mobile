@@ -29,7 +29,7 @@ class SettingItem extends StatelessWidget {
                   ),
             ),
             const Spacer(),
-            SvgPicture.asset(icon),
+            SizedBox(height: 36, width: 36, child: SvgPicture.asset(icon)),
             const SizedBox(width: 4),
             SvgPicture.asset(AppIcons.arrowRight, color: textSecondary),
           ],

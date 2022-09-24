@@ -13,10 +13,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RegionBottomSheet extends StatefulWidget {
   final RegionBloc regionBloc;
   final VacancyBloc vacancyBloc;
+  final List<int> list;
 
   const RegionBottomSheet({
     required this.regionBloc,
     required this.vacancyBloc,
+    required this.list,
     Key? key,
   }) : super(key: key);
 
@@ -33,6 +35,7 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
 
   @override
   initState() {
+    list.addAll(widget.list);
     pageController = PageController();
     super.initState();
   }
@@ -185,11 +188,20 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
   }
 }
 
-void showRegionBottomSheet(BuildContext context, RegionBloc regionBloc, VacancyBloc vacancyBloc) {
+void showRegionBottomSheet(
+  BuildContext context,
+  RegionBloc regionBloc,
+  VacancyBloc vacancyBloc,
+  List<int> list,
+) {
   showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
     useRootNavigator: true,
-    builder: (context) => RegionBottomSheet(vacancyBloc: vacancyBloc, regionBloc: regionBloc),
+    builder: (context) => RegionBottomSheet(
+      vacancyBloc: vacancyBloc,
+      regionBloc: regionBloc,
+      list: list,
+    ),
   );
 }

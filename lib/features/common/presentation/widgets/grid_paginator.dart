@@ -1,0 +1,70 @@
+import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
+import 'package:flutter/cupertino.dart';
+
+class GridPaginator extends StatelessWidget {
+  final PaginatorStatus paginatorStatus;
+  final Widget Function(BuildContext context, int index) itemBuilder;
+  final int itemCount;
+  final VoidCallback fetchMoreFunction;
+  final bool hasMoreToFetch;
+  final Widget errorWidget;
+  final EdgeInsets? padding;
+  final Widget? emptyWidget;
+  final Widget Function(BuildContext context, int index)? separatorBuilder;
+  final Axis scrollDirection;
+  final Widget? loadingWidget;
+  final SliverGridDelegate gridDelegate;
+
+  const GridPaginator({
+    required this.paginatorStatus,
+    required this.itemBuilder,
+    required this.itemCount,
+    required this.fetchMoreFunction,
+    required this.hasMoreToFetch,
+    required this.errorWidget,
+    required this.gridDelegate,
+    this.padding = EdgeInsets.zero,
+    this.scrollDirection = Axis.vertical,
+    this.separatorBuilder,
+    this.emptyWidget,
+    this.loadingWidget,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (paginatorStatus == PaginatorStatus.PAGINATOR_LOADING) {
+      return loadingWidget ?? const Center(child: CupertinoActivityIndicator());
+    } else if (paginatorStatus == PaginatorStatus.PAGINATOR_ERROR) {
+      return errorWidget;
+    } else if (paginatorStatus == PaginatorStatus.PAGINATOR_SUCCESS) {
+      return itemCount == 0
+          ? emptyWidget ?? SizedBox()
+          : GridView.builder(
+              gridDelegate: gridDelegate,
+              scrollDirection: scrollDirection,
+              physics: const BouncingScrollPhysics(),
+              padding: padding,
+              itemBuilder: (context, index) {
+                if (itemCount == 0) {
+                  return emptyWidget ?? const SizedBox.shrink();
+                }
+                if (index == itemCount) {
+                  if (hasMoreToFetch) {
+                    fetchMoreFunction();
+                    return const Center(child: CupertinoActivityIndicator());
+                  } else {
+                    return const SizedBox();
+                  }
+                }
+                return itemBuilder(context, index);
+              },
+              itemCount: itemCount + 1,
+              shrinkWrap: true,
+            );
+    } else {
+      return const SizedBox();
+    }
+  }
+}
+

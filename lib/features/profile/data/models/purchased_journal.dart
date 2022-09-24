@@ -5,10 +5,10 @@ part 'purchased_journal.g.dart';
 
 
 @JsonSerializable()
-class PurchasedJournal {
+class PurchasedJournalModel {
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'name')
+  @JsonKey(name: 'name',defaultValue: '')
   final String name;
   @JsonKey(name: 'slug')
   final String slug;
@@ -25,7 +25,7 @@ class PurchasedJournal {
   @JsonKey(name: 'is_premium')
   final bool isPremium;
   @JsonKey(name: 'price')
-  final String price;
+  final double price;
   @JsonKey(name: 'publish_date')
   final String publishDate;
   @JsonKey(name: 'tags')
@@ -33,14 +33,14 @@ class PurchasedJournal {
   @JsonKey(name: 'is_bought')
   final bool isBought;
 
-  PurchasedJournal(
+  PurchasedJournalModel(
       { this.redaction='',
        this.isPremium=false,
        this.category=const TitlerModel(title: '',id: 0),
        this.publishDate='',
        this.id=0,
-       this.name='',
-       this.price='',
+    required   this.name,
+       this.price=0,
        this.image=const ImageModel(origin: '', small: '', middle: '', id: 0),
        this.description='',
        this.slug='',
@@ -48,6 +48,6 @@ class PurchasedJournal {
        this.organization=0,
        this.tags=const []});
 
-  factory PurchasedJournal.fromJson(Map<String,dynamic> json)=>_$PurchasedJournalFromJson(json);
+  factory PurchasedJournalModel.fromJson(Map<String,dynamic> json)=>_$PurchasedJournalModelFromJson(json);
 }
 

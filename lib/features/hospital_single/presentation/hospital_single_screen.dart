@@ -3,8 +3,10 @@ import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
+import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment_delete.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
 import 'package:anatomica/features/hospital_single/data/repository/hospital_repository.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/delete_comment.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_comforts.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_comments.dart';
@@ -78,28 +80,38 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
 
   @override
   void initState() {
-    vacanciesBloc =
-        HospitalVacanciesBloc(GetHospitalVacancies(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-          ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
-    articlesBloc = HArticlesBloc(GetHArticlesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    vacanciesBloc = HospitalVacanciesBloc(
+        GetHospitalVacancies(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+      ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
+    articlesBloc = HArticlesBloc(
+        GetHArticlesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HArticlesEvent.getArticles(organizationId: widget.id));
-    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    facilitiesBloc = FacilitiesBloc(
+        GetComfortsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(FacilitiesEvent.getFacilities(organizationId: widget.id));
     hospitalSpecialistBloc = HospitalSpecialistBloc(
         GetHospitalSpecialistsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HospitalSpecialistEvent.getSpecialists(organizationId: widget.id));
-    servicesBloc = ServicesBloc(GetServicesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-      ..add(ServicesEvent.getServices(organizationId: widget.id));
+    servicesBloc =
+        ServicesBloc(GetServicesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+          ..add(ServicesEvent.getServices(organizationId: widget.id));
     super.initState();
     commentsBloc = CommentsBloc(
-        doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+        deletePostCommentUseCase:
+            DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        doctorCommentDeleteUseCase:
+            DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+        doctorCommentUseCase:
+            DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
         GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+        postCommentUseCase:
+            PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        getDoctorCommentsUseCase:
+            GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
       ..add(CommentsEvent.getComments(organizationId: widget.id));
-    hospitalSingleBloc =
-        HospitalSingleBloc(GetSingleHospitalUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-          ..add(HospitalSingleEvent.getHospital(widget.slug));
+    hospitalSingleBloc = HospitalSingleBloc(
+        GetSingleHospitalUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+      ..add(HospitalSingleEvent.getHospital(widget.slug));
     _tabController = TabController(length: 8, vsync: this);
     _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
@@ -121,7 +133,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
             floatHeaderSlivers: false,
             controller: _scrollController,
             headerSliverBuilder: (context, isHeaderScrolled) => [
-              HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
+              HospitalSingleAppBar(
+                  headerManagerBloc: _headerManagerBloc, pageController: _pageController),
               SliverOverlapAbsorber(
                 handle: SliverOverlapAbsorberHandle(),
                 sliver: SliverSafeArea(
@@ -159,7 +172,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                       },
                     ),
                     BlocProvider.value(value: servicesBloc, child: const HospitalServices()),
-                    BlocProvider.value(value: hospitalSpecialistBloc, child: const HospitalSpecialists()),
+                    BlocProvider.value(
+                        value: hospitalSpecialistBloc, child: const HospitalSpecialists()),
                     BlocProvider.value(value: facilitiesBloc, child: const HospitalConditions()),
                     BlocProvider.value(value: articlesBloc, child: const HospitalArticles()),
                     BlocProvider.value(
@@ -168,7 +182,9 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                         commentCount: state.hospital.commentCount,
                         commentsBloc: commentsBloc,
                         overallRating: state.hospital.rating,
-                        onSubmitComment: (comment) {},
+                        onSubmitComment: (comment) {
+                          print('submit');
+                        },
                       ),
                     ),
                     BlocProvider.value(value: vacanciesBloc, child: const HospitalVacancies()),
@@ -181,7 +197,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                           phone: state.hospital.phoneNumber,
                           telegram: state.hospital.telegram,
                           website: state.hospital.website,
-                          phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
+                          phoneNumbers:
+                              state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
                         );
                       },
                     ),

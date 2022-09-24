@@ -11,9 +11,11 @@ import 'package:formz/formz.dart';
 
 class ExperienceBottomSheet extends StatefulWidget {
   final VacancyBloc vacancyBloc;
+  final List<String> list;
 
   const ExperienceBottomSheet({
     required this.vacancyBloc,
+    required this.list,
     Key? key,
   }) : super(key: key);
 
@@ -22,6 +24,12 @@ class ExperienceBottomSheet extends StatefulWidget {
 }
 
 class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
+  @override
+  initState() {
+    list.addAll(widget.list);
+    super.initState();
+  }
+
   List<String> list = [];
 
   @override
@@ -87,12 +95,12 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
   }
 }
 
-void showExperienceBottomSheet(BuildContext context, VacancyBloc vacancyBloc) {
+void showExperienceBottomSheet(BuildContext context, VacancyBloc vacancyBloc, List<String> list) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
-    builder: (context) => ExperienceBottomSheet(vacancyBloc: vacancyBloc),
+    builder: (context) => ExperienceBottomSheet(vacancyBloc: vacancyBloc, list: list),
   );
 }

@@ -16,7 +16,9 @@ import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 
 class HospitalSingleRepositoryImpl extends HospitalSingleRepository {
   final HospitalSingleDatasource datasource;
+
   HospitalSingleRepositoryImpl({required this.datasource});
+
   @override
   Future<Either<Failure, HospitalSingleEntity>> getHospitalSingle({required String slug}) async {
     try {
@@ -92,7 +94,8 @@ class HospitalSingleRepositoryImpl extends HospitalSingleRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CommentEntity>>> getHospitalComments({required int id, String? next}) async {
+  Future<Either<Failure, GenericPagination<CommentEntity>>> getHospitalComments(
+      {required int id, String? next}) async {
     try {
       final result = await datasource.getHospitalComments(id: id, next: next);
       return Right(result);
@@ -121,11 +124,27 @@ class HospitalSingleRepositoryImpl extends HospitalSingleRepository {
   }
 
   @override
-  Future<Either<Failure, void>> postComment({required int organizationId, required PostCommentEntity comment}) async {
+  Future<Either<Failure, void>> postComment(
+      {required int organizationId, required PostCommentEntity comment}) async {
     try {
       await datasource.postComment(
-          organizationId: organizationId, comment: PostCommentModel(rating: comment.rating, comment: comment.comment));
+          organizationId: organizationId,
+          comment: PostCommentModel(rating: comment.rating, comment: comment.comment));
       return Right('');
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Either>> deleteComment({required int id}) async {
+    try {
+      await datasource.deleteComment(id: id);
+      return Right(Right(''));
     } on DioException {
       return Left(DioFailure());
     } on ParsingException catch (e) {

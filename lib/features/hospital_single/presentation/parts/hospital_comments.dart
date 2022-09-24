@@ -21,11 +21,14 @@ class HospitalComments extends StatelessWidget {
   final CommentsBloc commentsBloc;
   final int commentCount;
   final ValueChanged<PostCommentEntity> onSubmitComment;
+  final VoidCallback? onTapDelete;
+
   const HospitalComments(
       {required this.overallRating,
       required this.onSubmitComment,
       required this.commentsBloc,
       required this.commentCount,
+      this.onTapDelete,
       Key? key})
       : super(key: key);
 
@@ -64,7 +67,10 @@ class HospitalComments extends StatelessWidget {
                         const SizedBox(height: 6),
                         Text(
                           '$commentCount ${LocaleKeys.review.tr()}',
-                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(color: textColor, fontSize: 13),
                         ),
                       ],
                     ),
@@ -103,9 +109,21 @@ class HospitalComments extends StatelessWidget {
                 errorWidget: const Text('error'),
                 padding: state.comments.isEmpty
                     ? EdgeInsets.zero
-                    : const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                    : const EdgeInsets.all(16)
+                        .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
                 separatorBuilder: (context, index) => const SizedBox(height: 16),
                 itemBuilder: (context, index) => CommentItem(
+                  onTapDelete: () {
+                    print('del');
+                    commentsBloc.add(CommentsEvent.deleteHospitalComment(
+                        id: state.comments[index].id,
+                        onSuccess: () {
+                          print('success deleted');
+                        },
+                        onError: () {
+                          print('error');
+                        }));
+                  },
                   entity: state.comments[index],
                 ),
                 itemCount: state.comments.length,

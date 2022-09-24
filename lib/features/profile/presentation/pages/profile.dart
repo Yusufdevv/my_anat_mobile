@@ -34,8 +34,10 @@ class ProfileScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     return BlocProvider(
         create: (context) => ProfileBloc(
-            getProfileUseCase: GetProfileUseCase(profileRepository: serviceLocator<ProfileRepositoryImpl>()),
-            deleteAccountUsecase: DeleteAccountUseCase(repository: serviceLocator<ProfileRepositoryImpl>()))
+            getProfileUseCase:
+                GetProfileUseCase(profileRepository: serviceLocator<ProfileRepositoryImpl>()),
+            deleteAccountUsecase:
+                DeleteAccountUseCase(repository: serviceLocator<ProfileRepositoryImpl>()))
           ..add(GetProfileEvent()),
         child: Scaffold(
           appBar: const PreferredSize(
@@ -58,15 +60,18 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     if (state.profileEntity.isDoctor) ...{
-                      ProfileItem(title: LocaleKeys.doctor_office.tr(), icon: AppIcons.scope, onTap: () {}),
+                      ProfileItem(
+                          title: LocaleKeys.doctor_office, icon: AppIcons.scope, onTap: () {}),
                     },
                     if (state.profileEntity.isOrganization) ...{
                       ProfileItem(
-                          title: LocaleKeys.organization_office.tr(), image: AppImages.organization, onTap: () {}),
+                          title: LocaleKeys.organization_office,
+                          image: AppImages.organization,
+                          onTap: () {}),
                     },
                     const SizedBox(height: 12),
                     ProfileItem(
-                        title: LocaleKeys.setting.tr(),
+                        title: LocaleKeys.setting,
                         icon: AppIcons.setting,
                         onTap: () {
                           Navigator.of(context).push(
@@ -77,7 +82,7 @@ class ProfileScreen extends StatelessWidget {
                         }),
                     const SizedBox(height: 12),
                     ProfileItem(
-                        title: LocaleKeys.safety.tr(),
+                        title: LocaleKeys.safety,
                         icon: AppIcons.lock,
                         onTap: () {
                           Navigator.of(context).push(fade(
@@ -87,29 +92,31 @@ class ProfileScreen extends StatelessWidget {
                         }),
                     const SizedBox(height: 12),
                     ProfileItem(
-                        title: LocaleKeys.favorite.tr(),
+                        title: LocaleKeys.favorite,
                         icon: AppIcons.profileStar,
                         onTap: () {
-                          Navigator.of(context,rootNavigator: true).push(fade(page: const FavoritesScreen()));
+                          Navigator.of(context, rootNavigator: true)
+                              .push(fade(page: const FavoritesScreen()));
                         }),
                     const SizedBox(height: 12),
                     ProfileItem(
-                        title: LocaleKeys.help.tr(),
+                        title: LocaleKeys.help,
                         icon: AppIcons.help,
                         onTap: () {
-                          Navigator.of(context, rootNavigator: true).push(fade(page: const HelpScreen()));
+                          Navigator.of(context, rootNavigator: true)
+                              .push(fade(page: const HelpScreen()));
                         }),
                     const SizedBox(height: 12),
                     const WDivider(),
                     const SizedBox(height: 12),
                     ProfileItem(
-                        title: LocaleKeys.sing_out.tr(),
+                        title: LocaleKeys.sing_out,
                         icon: AppIcons.logout,
                         onTap: () {
                           showLogOutDialog(context,
-                              onConfirmTap: () => context
-                                  .read<AuthenticationBloc>()
-                                  .add(AuthenticationStatusChanged(status: AuthenticationStatus.unauthenticated)));
+                              onConfirmTap: () => context.read<AuthenticationBloc>().add(
+                                  AuthenticationStatusChanged(
+                                      status: AuthenticationStatus.unauthenticated)));
                         },
                         color: snow),
                     const SizedBox(height: 24),

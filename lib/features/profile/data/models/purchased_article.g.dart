@@ -6,8 +6,9 @@ part of 'purchased_article.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PurchasedArticle _$PurchasedArticleFromJson(Map<String, dynamic> json) =>
-    PurchasedArticle(
+PurchasedArticleModel _$PurchasedArticleModelFromJson(
+        Map<String, dynamic> json) =>
+    PurchasedArticleModel(
       id: json['id'] as int? ?? 0,
       title: json['title'] as String? ?? '',
       images: (json['images'] as List<dynamic>?)
@@ -20,18 +21,19 @@ PurchasedArticle _$PurchasedArticleFromJson(Map<String, dynamic> json) =>
           ? const TitlerModel(title: '', id: -1)
           : TitlerModel.fromJson(json['category'] as Map<String, dynamic>),
       isPremium: json['is_premium'] as bool? ?? false,
-      moderizationStatus: json['moderation_status'] as String? ?? '',
+      moderationStatus: json['moderation_status'] as String? ?? '',
       paidForPublish: json['is_paid_for_publish'] as bool? ?? false,
       redaction: json['redaction'] as String? ?? '',
       viewCount: json['view_count'] as int? ?? 0,
     );
 
-Map<String, dynamic> _$PurchasedArticleToJson(PurchasedArticle instance) =>
+Map<String, dynamic> _$PurchasedArticleModelToJson(
+        PurchasedArticleModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'is_paid_for_publish': instance.paidForPublish,
-      'moderation_status': instance.moderizationStatus,
+      'moderation_status': instance.moderationStatus,
       'slug': instance.slug,
       'images': instance.images,
       'publish_date': instance.publishDate,
