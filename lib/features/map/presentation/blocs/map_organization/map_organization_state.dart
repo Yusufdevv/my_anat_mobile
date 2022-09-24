@@ -8,6 +8,7 @@ class MapOrganizationState with _$MapOrganizationState {
     @Default([]) List<TypeEntity> types,
     @Default(FormzStatus.pure) FormzStatus status,
     @Default(FormzStatus.pure) FormzStatus getTypesStatus,
+    @Default('') String searchText,
     String? next,
     @Default(false) bool fetchMore,
   }) = _MapOrganizationState;

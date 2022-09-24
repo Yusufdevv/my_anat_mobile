@@ -118,13 +118,13 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                         duration: const Duration(milliseconds: 150),
                         child: state.crossFadeState == CrossFadeState.showFirst
                             ? const ResultList()
-                            : const SuggestionListScreen(),
+                            :  SuggestionListScreen(onTapItem: (String ) {  }, ),
                       ),
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 150),
                         child: state.crossFadeState == CrossFadeState.showFirst
                             ? const DoctorsList()
-                            : const SuggestionListScreen(),
+                            :  SuggestionListScreen(onTapItem: (String ) {  },),
                       ),
                     ],
                   ),

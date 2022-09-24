@@ -4,8 +4,11 @@ import 'package:anatomica/features/common/presentation/widgets/search_field.dart
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_hospitals.dart';
+import 'package:anatomica/features/map/domain/usecases/get_suggestions.dart';
 import 'package:anatomica/features/map/presentation/blocs/doctor_list/doctor_list_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
+import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
+import 'package:anatomica/features/map/presentation/blocs/suggestion/suggestion_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/result_list.dart';
 import 'package:anatomica/features/map/presentation/screens/suggestion_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctors_list.dart';
@@ -18,8 +21,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SuggestionPage extends StatefulWidget {
   final double statusBarHeight;
+  final String? text;
 
-  const SuggestionPage({required this.statusBarHeight, Key? key})
+  const SuggestionPage({required this.statusBarHeight, this.text, Key? key})
       : super(key: key);
 
   @override
@@ -30,10 +34,19 @@ class _SuggestionPageState extends State<SuggestionPage>
     with TickerProviderStateMixin {
   late TabController _controller;
   late TextEditingController controller;
+  late SuggestionBloc doctorSuggestion;
+  late SuggestionBloc hospitalSuggestion;
+  late FocusNode focusNode;
 
   @override
   void initState() {
-    controller = TextEditingController();
+    focusNode = FocusNode()..requestFocus();
+    var useCase = GetSuggestionsUseCase();
+    doctorSuggestion = SuggestionBloc(useCase, true)
+      ..add(SuggestionEvent.getSuggestions(widget.text ?? ''));
+    hospitalSuggestion = SuggestionBloc(useCase, false)
+      ..add(SuggestionEvent.getSuggestions(widget.text ?? ''));
+    controller = TextEditingController(text: widget.text ?? '');
     _controller = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -43,56 +56,55 @@ class _SuggestionPageState extends State<SuggestionPage>
     return SizedBox(
       child: Column(
         children: [
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: widget.statusBarHeight + 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).pop(),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
-                          child: SvgPicture.asset(AppIcons.close),
-                        ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: widget.statusBarHeight + 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                        child: SvgPicture.asset(AppIcons.close),
                       ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 36,
-                  padding: const EdgeInsets.all(2),
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: textFieldColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TabBar(
-                    controller: _controller,
-                    padding: EdgeInsets.zero,
-                    indicatorPadding: EdgeInsets.zero,
-                    indicator: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(6),
                     ),
-                    labelPadding: EdgeInsets.zero,
-                    labelStyle: Theme.of(context).textTheme.headline3,
-                    labelColor: textColor,
-                    onTap: (index) {},
-                    unselectedLabelColor: textSecondary,
-                    tabs: [
-                      Tab(text: LocaleKeys.organization.tr()),
-                      Tab(text: LocaleKeys.doctor.tr()),
-                    ],
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Container(
+                height: 36,
+                padding: const EdgeInsets.all(2),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: textFieldColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: TabBar(
+                  controller: _controller,
+                  padding: EdgeInsets.zero,
+                  indicatorPadding: EdgeInsets.zero,
+                  indicator: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  labelPadding: EdgeInsets.zero,
+                  labelStyle: Theme.of(context).textTheme.headline3,
+                  labelColor: textColor,
+                  onTap: (index) {},
+                  unselectedLabelColor: textSecondary,
+                  tabs: [
+                    Tab(text: LocaleKeys.organization.tr()),
+                    Tab(text: LocaleKeys.doctor.tr()),
+                  ],
+                ),
+              ),
+            ],
           ),
           const Divider(
+            thickness: 1,
             color: Color(0xF0F5F3),
           ),
           Expanded(
@@ -101,9 +113,27 @@ class _SuggestionPageState extends State<SuggestionPage>
                 Positioned.fill(
                   child: TabBarView(
                     controller: _controller,
-                    children: const [
-                      SuggestionListScreen(),
-                      SuggestionListScreen(),
+                    children: [
+                      BlocProvider.value(
+                        value: hospitalSuggestion,
+                        child: SuggestionListScreen(
+                          onTapItem: (text) {
+                            context.read<MapOrganizationBloc>().add(
+                                MapOrganizationEvent.changeSearchText(text));
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      BlocProvider.value(
+                        value: doctorSuggestion,
+                        child: SuggestionListScreen(
+                          onTapItem: (text) {
+                            context.read<MapOrganizationBloc>().add(
+                                MapOrganizationEvent.changeSearchText(text));
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -128,10 +158,16 @@ class _SuggestionPageState extends State<SuggestionPage>
                           color: white,
                         ),
                         child: SearchField(
-                          controller: TextEditingController(),
+                          focusNode: focusNode,
+                          controller: controller,
                           onChanged: (value) {
                             if (_controller.index == 0) {
-                            } else {}
+                              hospitalSuggestion
+                                  .add(SuggestionEvent.getSuggestions(value));
+                            } else {
+                              doctorSuggestion
+                                  .add(SuggestionEvent.getSuggestions(value));
+                            }
                           },
                         ),
                       ),
