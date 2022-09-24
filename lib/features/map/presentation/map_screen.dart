@@ -15,6 +15,7 @@ import 'package:anatomica/features/map/presentation/blocs/map_controller_bloc/ma
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/specialization/specialization_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
+import 'package:anatomica/features/map/presentation/screens/suggestion/suggestion_page.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_controller_buttons.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -352,9 +353,18 @@ class _MapScreenState extends State<MapScreen>
                           border: Border.all(color: textFieldColor),
                           color: white,
                         ),
-                        child: SearchField(
-                          controller: _searchFieldController,
-                          onChanged: (value) {},
+                        child: GestureDetector(onTap: (){
+                          showModalBottomSheet(isScrollControlled: true,useRootNavigator: true,
+                              context: context, builder:(c){
+                            return  SuggestionPage(statusBarHeight: MediaQuery.of(context).padding.top,);
+                          });
+                        },
+                          child: AbsorbPointer(absorbing: true,
+                            child: SearchField(
+                              controller: _searchFieldController,
+                              onChanged: (value) {},
+                            ),
+                          ),
                         ),
                       )
                     ],
