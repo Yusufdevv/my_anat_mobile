@@ -18,6 +18,7 @@ class JournalEntity extends Equatable {
   final bool isPremium;
   final int price;
   final String publishDate;
+  final String fileExtension;
   final bool isBought;
   @TagConverter()
   final List<TagEntity> tags;
@@ -34,6 +35,7 @@ class JournalEntity extends Equatable {
     this.isPremium = false,
     this.isBought = false,
     this.publishDate = '',
+    this.fileExtension = '',
     this.tags = const [],
   });
   @override
@@ -51,5 +53,6 @@ class JournalEntity extends Equatable {
         publishDate,
         tags,
         isBought,
+        fileExtension,
       ];
 }

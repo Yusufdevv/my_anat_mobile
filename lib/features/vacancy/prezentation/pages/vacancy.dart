@@ -1,6 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
@@ -57,18 +56,13 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
         setState(() {});
       });
     vacancyBloc = VacancyBloc(
-      vacancyFilterUseCase:
-          VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyFilterUseCase: VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      candidateListUseCase:
-          CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyOptionUseCase:
-          VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      organizationVacancyUseCase:
-          OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      candidateListUseCase: CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyOptionUseCase: VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      organizationVacancyUseCase: OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      topOrganizationUseCase:
-          TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      topOrganizationUseCase: TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       likeUnlikeVacancyStreamUseCase:
           LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
       likeUnlikeDoctorStreamUseCase:
@@ -95,7 +89,6 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    print(StorageRepository.getString('token'));
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: vacancyBloc),
@@ -141,12 +134,12 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                                     onTap: () {
                                       vacancyBloc.add(GetVacancyListEvent(
                                           onSuccess: () {},
-                                          vacancyParamsEntity: VacancyParamsEntity(
-                                              category: '${state.categoryList[index].id}')));
-                                      vacancyBloc.add(GetOrganizationVacancyEvent(
-                                          category: '${state.categoryList[index].id}'));
-                                      vacancyBloc.add(GetCandidateListEvent(
-                                          categoryId: '${state.categoryList[index].id}'));
+                                          vacancyParamsEntity:
+                                              VacancyParamsEntity(category: '${state.categoryList[index].id}')));
+                                      vacancyBloc.add(
+                                          GetOrganizationVacancyEvent(category: '${state.categoryList[index].id}'));
+                                      vacancyBloc
+                                          .add(GetCandidateListEvent(categoryId: '${state.categoryList[index].id}'));
                                     },
                                     title: state.categoryList[index].title,
                                   ),
