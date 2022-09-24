@@ -16,9 +16,10 @@ class SuggestionListScreen extends StatelessWidget {
           color: textFieldColor,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(4, (index) => SuggestionItem(title: 'Suggestion $index')),
+        child: ListView.builder(shrinkWrap: true,
+          itemBuilder: (context, index) =>
+              SuggestionItem(title: 'Suggestion $index'),
+          itemCount: 5,
         ),
       ),
     );

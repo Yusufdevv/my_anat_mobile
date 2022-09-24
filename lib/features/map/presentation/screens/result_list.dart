@@ -1,3 +1,6 @@
+import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/common/presentation/widgets/empty_page.dart';
+import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,19 +15,26 @@ class ResultList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HospitalListBloc, HospitalListState>(
       builder: (context, state) {
-        if(state.status==FormzStatus.submissionInProgress){
-          return const Center(child: CupertinoActivityIndicator(),);
-        }else if(state.status==FormzStatus.submissionSuccess){
-          return ListView.separated(
+     return   Paginator(
+            emptyWidget: const EmptyPage(
+              title: 'Ничего не найдено',
+              desc: 'Результаты не найдены по вашему запросу',
+              iconPath: AppIcons.emptyA,
+            ),
+            paginatorStatus: PaginatorStatus.PAGINATOR_SUCCESS,
+            itemBuilder: (c, index) {
+              return HospitalItem(
+                entity: state.hospitals[index],
+              );
+            },
             itemCount: state.hospitals.length,
-            itemBuilder: (context, index) =>  HospitalItem(entity: state.hospitals[index],),
-            padding: const EdgeInsets.all(16).copyWith(bottom: 266),
-            separatorBuilder: (context, index) => const SizedBox(height: 12),
-          );
-        }else {
-          return const SizedBox();
-        }
-
+            fetchMoreFunction: () {
+              context
+                  .read<HospitalListBloc>()
+                  .add(HospitalListEvent.getMoreHospitals());
+            },
+            hasMoreToFetch: state.totalCount > state.hospitals.length,
+            errorWidget: const SizedBox());
       },
     );
   }
