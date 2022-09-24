@@ -167,7 +167,8 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
         return DoctorCommentModel.fromJson(response.data);
       } else {
         throw ServerException(
-            statusCode: response.statusCode!, errorMessage: response.data.toString());
+            statusCode: response.statusCode!, errorMessage: (response.data['doctor'] as
+        List<dynamic>).first);
       }
     } on ServerException {
       rethrow;
@@ -182,12 +183,14 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
   Future<String> deleteDoctorComment({required int id}) async {
     try {
       final response = await _dio.delete(
-        '/doctor/comment/21/delete/',
+        '/doctor/comment/$id/delete/',
         options: Options(
             headers: StorageRepository.getString('token').isNotEmpty
                 ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                 : {}),
       );
+      print(response.statusCode);
+      print(response.data);
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {

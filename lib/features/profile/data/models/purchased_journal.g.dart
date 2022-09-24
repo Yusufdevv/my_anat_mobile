@@ -6,8 +6,9 @@ part of 'purchased_journal.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PurchasedJournal _$PurchasedJournalFromJson(Map<String, dynamic> json) =>
-    PurchasedJournal(
+PurchasedJournalModel _$PurchasedJournalModelFromJson(
+        Map<String, dynamic> json) =>
+    PurchasedJournalModel(
       redaction: json['redaction'] as String? ?? '',
       isPremium: json['is_premium'] as bool? ?? false,
       category: json['category'] == null
@@ -16,7 +17,7 @@ PurchasedJournal _$PurchasedJournalFromJson(Map<String, dynamic> json) =>
       publishDate: json['publish_date'] as String? ?? '',
       id: json['id'] as int? ?? 0,
       name: json['name'] as String? ?? '',
-      price: json['price'] as String? ?? '',
+      price: (json['price'] as num?)?.toDouble() ?? 0,
       image: json['image'] == null
           ? const ImageModel(origin: '', small: '', middle: '', id: 0)
           : ImageModel.fromJson(json['image'] as Map<String, dynamic>),
@@ -30,7 +31,8 @@ PurchasedJournal _$PurchasedJournalFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$PurchasedJournalToJson(PurchasedJournal instance) =>
+Map<String, dynamic> _$PurchasedJournalModelToJson(
+        PurchasedJournalModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

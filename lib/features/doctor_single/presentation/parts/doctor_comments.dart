@@ -97,6 +97,17 @@ class DoctorComments extends StatelessWidget {
                     .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
                 separatorBuilder: (context, index) => const SizedBox(height: 16),
                 itemBuilder: (context, index) => CommentItem(
+                  onTapDelete: () {
+                    print('del');
+                    context.read<CommentsBloc>().add(CommentsEvent.deleteDoctorComment(
+                        id: state.doctorComments[index].id,
+                        onError: () {
+                          print('ui error');
+                        },
+                        onSuccess: () {
+                          print('success deleted');
+                        }));
+                  },
                   entity: state.doctorComments[index],
                 ),
                 itemCount: state.doctorComments.length,

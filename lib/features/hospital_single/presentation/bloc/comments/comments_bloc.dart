@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment_delete.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
@@ -122,13 +123,20 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(state.copyWith(doctorCommentStatus: FormzStatus.submissionSuccess));
         event.onSuccess();
       } else {
+        event.onError((result.left as ServerFailure).errorMessage);
         emit(state.copyWith(doctorCommentStatus: FormzStatus.submissionFailure));
       }
     });
     on<_DeleteDoctorComment>((event, emit) async {
+      final List<CommentEntity> comment = [...state.doctorComments];
       final result = await _doctorCommentDeleteUseCase.call(event.id);
       if (result.isRight) {
         event.onSuccess();
+        comment.removeWhere((element) => element.id == event.id);
+        emit(state.copyWith(doctorComments: comment));
+      } else {
+        event.onError();
+        print('error');
       }
     });
     on<_DeleteHospitalComment>((event, emit) async {

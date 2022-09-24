@@ -18,12 +18,16 @@ class CommentsEvent with _$CommentsEvent {
     required double rating,
     required String comment,
     required Function onSuccess,
+    required Function(String message) onError,
   }) = _SendDoctorComment;
 
-  factory CommentsEvent.deleteDoctorComment({required int id, required Function onSuccess}) =
-      _DeleteDoctorComment;
+  factory CommentsEvent.deleteDoctorComment(
+      {required int id,
+      required Function onSuccess,
+      required Function onError}) = _DeleteDoctorComment;
 
-  factory CommentsEvent.deleteHospitalComment({required int id, required Function onSuccess,
-  required Function onError}) =
-      _DeleteHospitalComment;
+  factory CommentsEvent.deleteHospitalComment(
+      {required int id,
+      required Function onSuccess,
+      required Function onError}) = _DeleteHospitalComment;
 }
