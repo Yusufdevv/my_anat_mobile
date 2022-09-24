@@ -115,6 +115,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         emit(state.copyWith(submitCodeStatus: FormzStatus.submissionSuccess, stateId: result.right));
         event.onSuccess();
       } else {
+        emit(state.copyWith(submitCodeStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
           event.onError('Tarmoqqa ulanishda muammo');
         } else if (result.left is ParsingFailure) {
@@ -122,13 +123,14 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
         }
-        emit(state.copyWith(submitCodeStatus: FormzStatus.submissionFailure));
       }
     });
     on<SubmitPassword>((event, emit) async {
+      emit(state.copyWith(submitPasswordStatus: FormzStatus.submissionInProgress));
       final result = await _submitResetPasswordUseCase.call(
           PasswordParams(stateId: state.stateId, password: event.password, confirmPassword: event.confirmPassword));
       if (result.isRight) {
+        emit(state.copyWith(submitPasswordStatus: FormzStatus.submissionSuccess));
       } else {
         if (result.left is DioFailure) {
           event.onError('Tarmoqqa ulanishda muammo');
@@ -137,6 +139,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
         }
+        emit(state.copyWith(submitPasswordStatus: FormzStatus.submissionFailure));
       }
     });
     on<SubmitChangedPhone>((event, emit) async {

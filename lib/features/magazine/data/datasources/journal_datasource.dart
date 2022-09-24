@@ -18,6 +18,7 @@ abstract class JournalDatasource {
   Future<GenericPagination<JournalArticleModel>> getJournalSingleArticles({required int id, String? next});
 
   Future<JournalArticleSingleModel> getJournalArticleSingle({required String slug});
+  Future<String> getJournalFile({required String slug});
 }
 
 class JournalDatasourceImpl extends JournalDatasource {
@@ -146,6 +147,32 @@ class JournalDatasourceImpl extends JournalDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => JournalArticleModel.fromJson(p0 as Map<String, dynamic>? ?? {}));
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<String> getJournalFile({required String slug}) async {
+    try {
+      final response = await _dio.get(
+        '/journal/$slug/file/',
+        options: Options(
+          headers: StorageRepository.getString('token').isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              : {},
+        ),
+      );
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        print(response.data);
+        return '';
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }

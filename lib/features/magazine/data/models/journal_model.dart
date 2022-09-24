@@ -22,6 +22,7 @@ class JournalModel extends JournalEntity {
     required super.id,
     required super.redaction,
     required super.isBought,
+    required super.fileExtension,
   });
 
   factory JournalModel.fromJson(Map<String, dynamic> json) => _$JournalModelFromJson(json);

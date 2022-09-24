@@ -34,6 +34,7 @@ class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
   Widget build(BuildContext context) {
     return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       builder: (context, state) {
+        print(state.submitCodeStatus);
         return Padding(
           padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
           child: Column(
@@ -81,8 +82,10 @@ class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
                 onTimeChanged: (seconds) {
                   secondsLeft = seconds;
                 },
+                hasError: state.submitCodeStatus.isSubmissionFailure,
                 secondsLeft: state.secondsLeft,
                 pinCodeController: pinCodeController,
+                errorText: 'Kod xato',
                 onRefresh: () {
                   context.read<ResetPasswordBloc>().add(ResendCode());
                 },

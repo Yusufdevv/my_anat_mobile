@@ -11,18 +11,20 @@ class ChangeProgress extends DownloadEvent {
 }
 
 class CheckWetherFileExists extends DownloadEvent {
-  final String fileUrl;
+  final String slug;
   final String filename;
   final int id;
   final VoidCallback onNotDownloaded;
+  final ValueChanged<String> onDownloaded;
   final String fileType;
 
   const CheckWetherFileExists({
-    required this.fileUrl,
+    required this.slug,
     required this.filename,
     required this.id,
     required this.onNotDownloaded,
     required this.fileType,
+    required this.onDownloaded,
   });
 }
 

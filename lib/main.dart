@@ -1,6 +1,5 @@
 import 'package:anatomica/assets/themes/theme.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/data/repositories/authentication_repository_impl.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/domain/usecases/get_authentication_status_usecase.dart';
@@ -47,7 +46,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    print(StorageRepository.getString('token'));
     return MultiBlocProvider(
       providers: [
         BlocProvider(

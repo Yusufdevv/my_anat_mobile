@@ -31,11 +31,15 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         await StorageRepository.putString('token', response.data['token']);
       } else if (response.statusCode != null && response.statusCode! >= 400 && response.statusCode! < 500) {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage:
-                ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Login parol xato')
-                    .toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage:
+                  ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Login parol xato')
+                      .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
@@ -59,7 +63,16 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         return UserModel.fromJson(response.data);
       } else {
         await StorageRepository.deleteString('token');
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first
+                      : 'Foydalanuvchi ma`lumotlarini olishda xato')
+                  .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       }
     } on ServerException {
       rethrow;
@@ -72,25 +85,33 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
 
   @override
   Future<bool> checkUserName({required String username}) async {
-    try {
-      final response = await _dio.get('/auth/check/username/$username');
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return true;
-      } else if (response.statusCode != null && response.statusCode! >= 400 && response.statusCode! < 500) {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage:
-                ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Login band')
-                    .toString());
-      } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+    if (username.isNotEmpty) {
+      try {
+        final response = await _dio.get('/auth/check/username/$username');
+        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+          return true;
+        } else if (response.statusCode != null && response.statusCode! >= 400 && response.statusCode! < 500) {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage:
+                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Login band')
+                        .toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
+      } on ServerException {
+        rethrow;
+      } on DioError {
+        throw DioException();
+      } on Exception catch (e) {
+        throw ParsingException(errorMessage: e.toString());
       }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
+    } else {
+      throw const ParsingException(errorMessage: "Login bo'sh bo'lishi mumkin emas");
     }
   }
 
@@ -115,63 +136,101 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   @override
   Future<String> submitNameUsername(
       {required String username, required String fullName, required String stateId}) async {
-    try {
-      final response = await _dio.post('/auth/registration/', data: {
-        "state_id": stateId,
-        "full_name": fullName,
-        "login": username,
-      });
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data['state_id'] as String;
-      } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+    if (fullName.isNotEmpty) {
+      try {
+        final response = await _dio.post('/auth/registration/', data: {
+          "state_id": stateId,
+          "full_name": fullName,
+          "login": username,
+        });
+        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+          return response.data['state_id'] as String;
+        } else {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first
+                        : 'Ism yoki login xato')
+                    .toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
+        }
+      } on ServerException {
+        rethrow;
+      } on DioError {
+        throw DioException();
+      } on Exception catch (e) {
+        throw ParsingException(errorMessage: e.toString());
       }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
+    } else {
+      throw const ParsingException(errorMessage: "To'liq ism bo'sh bo'lishi mumkin emas");
     }
   }
 
   @override
   Future<String> confirmCode({required String code, required String stateId}) async {
-    try {
-      final response = await _dio.post('/auth/registration/', data: {"state_id": stateId, "code": code});
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data['state_id'] as String;
-      } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+    if (code.length >= 6) {
+      try {
+        final response = await _dio.post('/auth/registration/', data: {"state_id": stateId, "code": code});
+        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+          return response.data['state_id'] as String;
+        } else {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first
+                        : 'Tasdiqlash kodi xato')
+                    .toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
+        }
+      } on ServerException {
+        rethrow;
+      } on DioError {
+        throw DioException();
+      } on Exception catch (e) {
+        throw ParsingException(errorMessage: e.toString());
       }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
+    } else {
+      throw const ParsingException(errorMessage: "Iltimos, hamma bo'sh joylarni to'ldiring");
     }
   }
 
   @override
   Future<String> submitEmail({required String email, required String stateId}) async {
-    try {
-      final response = await _dio.post('/auth/registration/', data: {
-        "state_id": stateId,
-        "confirmation_type": 'email',
-        "email": email,
-      });
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data['state_id'] as String;
-      } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+    if (email.isNotEmpty) {
+      try {
+        final response = await _dio.post('/auth/registration/', data: {
+          "state_id": stateId,
+          "confirmation_type": 'email',
+          "email": email,
+        });
+        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+          return response.data['state_id'] as String;
+        } else {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage:
+                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Email xato')
+                        .toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
+        }
+      } on ServerException {
+        rethrow;
+      } on DioError {
+        throw DioException();
+      } on Exception catch (e) {
+        throw ParsingException(errorMessage: e.toString());
       }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
+    } else {
+      throw const ParsingException(errorMessage: "Email bo'sh bo'lishi mumkin emas");
     }
   }
 
@@ -195,7 +254,14 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           await StorageRepository.putString('token', response.data['token']);
           return '';
         } else {
-          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage:
+                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : '').toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
         }
       } on ServerException {
         rethrow;
@@ -209,23 +275,44 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
 
   @override
   Future<String> submitPhone({required String phone, required String stateId}) async {
-    try {
-      final response = await _dio.post('/auth/registration/', data: {
-        "state_id": stateId,
-        "confirmation_type": 'phone',
-        "phone": phone,
-      });
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data['state_id'] as String;
-      } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+    if (phone.isNotEmpty) {
+      try {
+        final response = await _dio.post('/auth/registration/', data: {
+          "state_id": stateId,
+          "confirmation_type": 'phone',
+          "phone": phone,
+        });
+        print(response.data);
+        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+          return response.data['state_id'] as String;
+        } else {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first
+                        : 'Telefon raqam xato')
+                    .toString());
+          } else {
+            if (response.data is Map) {
+              throw ServerException(
+                  statusCode: response.statusCode!,
+                  errorMessage:
+                      ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : '').toString());
+            } else {
+              throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+            }
+          }
+        }
+      } on ServerException {
+        rethrow;
+      } on DioError {
+        throw DioException();
+      } on Exception catch (e) {
+        throw ParsingException(errorMessage: e.toString());
       }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
+    } else {
+      throw const ParsingException(errorMessage: "Telefon raqam bo'sh bo'lishi mumkin emas");
     }
   }
 
@@ -237,7 +324,16 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       });
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first
+                      : 'Smsni qayta jo\'natishda xato')
+                  .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       }
     } on ServerException {
       rethrow;
@@ -250,45 +346,69 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
 
   @override
   Future<String> submitChangedEmail({required String email, required String stateId}) async {
-    try {
-      final response = await _dio.post('/auth/registration/back/', data: {
-        "state_id": stateId,
-        "confirmation_type": 'email',
-        "email": email,
-      });
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data['state_id'] as String;
-      } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+    if (email.isNotEmpty) {
+      try {
+        final response = await _dio.post('/auth/registration/back/', data: {
+          "state_id": stateId,
+          "confirmation_type": 'email',
+          "email": email,
+        });
+        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+          return response.data['state_id'] as String;
+        } else {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage:
+                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Email xato')
+                        .toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
+        }
+      } on ServerException {
+        rethrow;
+      } on DioError {
+        throw DioException();
+      } on Exception catch (e) {
+        throw ParsingException(errorMessage: e.toString());
       }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
+    } else {
+      throw const ParsingException(errorMessage: "Email bo'sh bo'lishi mumkin emas");
     }
   }
 
   @override
   Future<String> submitChangedPhone({required String phone, required String stateId}) async {
-    try {
-      final response = await _dio.post('/auth/registration/back/', data: {
-        "state_id": stateId,
-        "confirmation_type": 'phone',
-        "phone": phone,
-      });
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data['state_id'] as String;
-      } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+    if (phone.isNotEmpty) {
+      try {
+        final response = await _dio.post('/auth/registration/back/', data: {
+          "state_id": stateId,
+          "confirmation_type": 'phone',
+          "phone": phone,
+        });
+        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+          return response.data['state_id'] as String;
+        } else {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage:
+                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Email xato')
+                        .toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
+        }
+      } on ServerException {
+        rethrow;
+      } on DioError {
+        throw DioException();
+      } on Exception catch (e) {
+        throw ParsingException(errorMessage: e.toString());
       }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
+    } else {
+      throw const ParsingException(errorMessage: "Telefon raqam bo'sh bo'lishi mumkin emas");
     }
   }
 }

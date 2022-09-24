@@ -117,7 +117,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
         }
-        emit(state.copyWith(loginStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(checkUsernameStatus: FormzStatus.submissionFailure));
       }
     });
     on<ChangeConfirmationType>((event, emit) {

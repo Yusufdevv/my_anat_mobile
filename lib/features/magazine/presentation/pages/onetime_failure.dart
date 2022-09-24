@@ -2,10 +2,11 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 class OneTimeFailure extends StatelessWidget {
   const OneTimeFailure({Key? key}) : super(key: key);
 
@@ -21,7 +22,7 @@ class OneTimeFailure extends StatelessWidget {
           automaticallyImplyLeading: false,
           title: Text(
             LocaleKeys.only_pay.tr(),
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
           ),
           actions: [
             Padding(
@@ -46,28 +47,19 @@ class OneTimeFailure extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 LocaleKeys.error.tr(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
               Text(
                 LocaleKeys.realisation_error.tr(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(fontWeight: FontWeight.w400),
+                style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
                 textAlign: TextAlign.center,
               ),
             ],
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).padding.bottom,
-              left: 16,
-              right: 16),
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom, left: 16, right: 16),
           child: Row(
             children: [
               Expanded(
@@ -79,10 +71,7 @@ class OneTimeFailure extends StatelessWidget {
                   onTap: () {},
                   child: Text(
                     LocaleKeys.to_main.tr(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline4!
-                        .copyWith(fontSize: 14),
+                    style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                   ),
                 ),
               ),
@@ -94,10 +83,7 @@ class OneTimeFailure extends StatelessWidget {
                   onTap: () {},
                   child: Text(
                     LocaleKeys.to_retry.tr(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
