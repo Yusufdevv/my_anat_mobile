@@ -1,7 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
@@ -63,7 +62,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
 
   @override
   Widget build(BuildContext context) {
-    print(StorageRepository.getString('token'));
     return MultiBlocProvider(
       providers: [
         BlocProvider(
