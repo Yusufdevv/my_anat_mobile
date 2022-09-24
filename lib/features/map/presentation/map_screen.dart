@@ -307,38 +307,41 @@ class _MapScreenState extends State<MapScreen>
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 36,
-                        child: BlocBuilder<SpecializationBloc,
-                            SpecializationState>(
-                          builder: (context, state) {
-                            return ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(width: 12),
-                              physics: const BouncingScrollPhysics(),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              itemBuilder: (context, index) => MapButton.chip(
-                                selected: state.selectedId ==
-                                    state.specializations[index].id,
-                                title: state.specializations[index].title,
-                                onTap: (id) {
-                                  if (state.selectedId ==
-                                      state.specializations[index].id) {
-                                    specBloc.add(
-                                        SpecializationEvent.selectSpec(-1));
-                                  } else {
-                                    specBloc.add(
-                                        SpecializationEvent.selectSpec(id));
-                                  }
-                                },
-                                id: state.specializations[index].id,
-                              ),
-                              itemCount: state.specializations.length,
-                            );
-                          },
-                        ),
+                      BlocBuilder<SpecializationBloc, SpecializationState>(
+                        builder: (context, state) {
+                          return state.specializations.isEmpty
+                              ? const SizedBox()
+                              : SizedBox(height: 36,
+                                child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(width: 12),
+                                    physics: const BouncingScrollPhysics(),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    itemBuilder: (context, index) =>
+                                        MapButton.chip(
+                                      selected: state.selectedId ==
+                                          state.specializations[index].id,
+                                      title: state.specializations[index].title,
+                                      onTap: (id) {
+                                        if (state.selectedId ==
+                                            state.specializations[index].id) {
+                                          specBloc.add(
+                                              SpecializationEvent.selectSpec(
+                                                  -1));
+                                        } else {
+                                          specBloc.add(
+                                              SpecializationEvent.selectSpec(
+                                                  id));
+                                        }
+                                      },
+                                      id: state.specializations[index].id,
+                                    ),
+                                    itemCount: state.specializations.length,
+                                  ),
+                              );
+                        },
                       ),
                       const SizedBox(height: 16),
                       Container(
