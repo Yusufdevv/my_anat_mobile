@@ -13,7 +13,7 @@ class GetMapHospitalUseCase extends UseCase<List<MapHospitalModel>, String> {
   Future<Either<Failure, List<MapHospitalModel>>> call(search, {MapParameter? param}) {
     var query = <String, dynamic>{};
     if (search.isNotEmpty) {
-      query.addAll({"search": "search"});
+      query.addAll({"search": search});
     }
     if (param != null) {
       query.addAll({

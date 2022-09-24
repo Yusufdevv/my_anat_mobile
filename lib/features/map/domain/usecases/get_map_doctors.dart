@@ -12,7 +12,7 @@ class GetMapDoctorUseCase extends UseCase<List<MapDoctorModel>, String> {
   Future<Either<Failure, List<MapDoctorModel>>> call(search, {MapParameter? param}) {
     var query = <String, dynamic>{};
     if (search.isNotEmpty) {
-      query.addAll({"search": "search"});
+      query.addAll({"search": search});
     }
     if (param != null) {
       query.addAll({

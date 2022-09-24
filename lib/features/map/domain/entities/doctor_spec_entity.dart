@@ -5,7 +5,6 @@ import 'package:json_annotation/json_annotation.dart';
 class DoctorSpecEntity {
   final String fullName;
   final int id;
-
   final String specialization;
   final double rating;
   @ImageConverter()

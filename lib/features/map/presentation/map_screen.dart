@@ -46,7 +46,7 @@ class _MapScreenState extends State<MapScreen>
   double latitude = 0;
   double longitude = 0;
   double zoomLevel = 15;
-  int currentRadius = 10000;
+  int currentRadius = 100000;
 
   @override
   void initState() {
@@ -177,7 +177,23 @@ class _MapScreenState extends State<MapScreen>
                     ),
                   ),
                 ),
-                BlocBuilder<MapOrganizationBloc, MapOrganizationState>(
+                BlocConsumer<MapOrganizationBloc, MapOrganizationState>(
+                  listener: (context, state) {
+                    _searchFieldController.text = state.searchText;
+                    mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(
+                        param: MapParameter(
+                            lat: currentLocation.latitude,
+                            long: currentLocation.longitude,
+                            radius: currentRadius)));
+                    mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
+                        param: MapParameter(
+                            lat: currentLocation.latitude,
+                            long: currentLocation.longitude,
+                            radius: currentRadius)));
+                  },
+                  listenWhen: (state1, state2) {
+                    return state1.searchText != state2.searchText;
+                  },
                   builder: (context, state) {
                     return Positioned(
                       left: 16,
@@ -312,8 +328,9 @@ class _MapScreenState extends State<MapScreen>
                         builder: (context, state) {
                           return state.specializations.isEmpty
                               ? const SizedBox()
-                              : SizedBox(height: 36,
-                                child: ListView.separated(
+                              : SizedBox(
+                                  height: 36,
+                                  child: ListView.separated(
                                     scrollDirection: Axis.horizontal,
                                     separatorBuilder: (context, index) =>
                                         const SizedBox(width: 12),
@@ -341,7 +358,7 @@ class _MapScreenState extends State<MapScreen>
                                     ),
                                     itemCount: state.specializations.length,
                                   ),
-                              );
+                                );
                         },
                       ),
                       const SizedBox(height: 16),
@@ -353,17 +370,75 @@ class _MapScreenState extends State<MapScreen>
                           border: Border.all(color: textFieldColor),
                           color: white,
                         ),
-                        child: GestureDetector(onTap: (){
-                          showModalBottomSheet(isScrollControlled: true,useRootNavigator: true,
-                              context: context, builder:(c){
-                            return  SuggestionPage(statusBarHeight: MediaQuery.of(context).padding.top,);
-                          });
-                        },
-                          child: AbsorbPointer(absorbing: true,
-                            child: SearchField(
-                              controller: _searchFieldController,
-                              onChanged: (value) {},
-                            ),
+                        child: GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                useRootNavigator: true,
+                                context: context,
+                                builder: (c) {
+                                  return BlocProvider.value(
+                                    value: mapOrganizationBloc,
+                                    child: SuggestionPage(
+                                      statusBarHeight:
+                                          MediaQuery.of(context).padding.top,
+                                    ),
+                                  );
+                                });
+                          },
+                          child: BlocBuilder<MapOrganizationBloc,
+                              MapOrganizationState>(
+                            builder: (context, state) {
+                              return Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: lilyWhite),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      AppIcons.search,
+                                      width: 24,
+                                      height: 24,
+                                    ),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        state.searchText.isNotEmpty
+                                            ? state.searchText
+                                            : LocaleKeys.search.tr(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline1!
+                                            .copyWith(
+                                                color:
+                                                    state.searchText.isNotEmpty
+                                                        ? textColor
+                                                        : textSecondary,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14),
+                                      ),
+                                    ),
+                                    if (state.searchText.isNotEmpty) ...{
+                                      GestureDetector(
+                                        onTap: () {
+                                          mapOrganizationBloc.add(
+                                              MapOrganizationEvent
+                                                  .changeSearchText(''));
+                                        },
+                                        child: SvgPicture.asset(
+                                          AppIcons.close,
+                                          width: 24,
+                                          height: 24,
+                                        ),
+                                      )
+                                    }
+                                  ],
+                                ),
+                              );
+                            },
                           ),
                         ),
                       )

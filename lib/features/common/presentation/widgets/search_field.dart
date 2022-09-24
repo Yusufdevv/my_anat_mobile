@@ -11,7 +11,9 @@ class SearchField extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final VoidCallback? onClear;
   final Color fillColor;
+  final FocusNode? focusNode;
   const SearchField({
+     this.focusNode,
     required this.controller,
     required this.onChanged,
     this.onClear,
@@ -47,7 +49,7 @@ class _SearchFieldState extends State<SearchField> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,
-      child: TextField(
+      child: TextField(focusNode: widget.focusNode,
         controller: _controller,
         onChanged: widget.onChanged,
         style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
