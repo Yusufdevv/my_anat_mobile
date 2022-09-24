@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
+import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment_delete.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/comment_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/post_comment_entity.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/delete_comment.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_comments.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/post_comment_usecase.dart';
@@ -22,14 +24,20 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
   final PostCommentUseCase _postCommentUseCase;
   final GetDoctorCommentsUseCase _getDoctorCommentsUseCase;
   final DoctorCommentUseCase _doctorCommentUseCase;
+  final DoctorCommentDeleteUseCase _doctorCommentDeleteUseCase;
+  final DeletePostCommentUseCase _deletePostCommentUseCase;
 
   CommentsBloc(
     this.getComments, {
     required PostCommentUseCase postCommentUseCase,
     required GetDoctorCommentsUseCase getDoctorCommentsUseCase,
     required DoctorCommentUseCase doctorCommentUseCase,
+    required DoctorCommentDeleteUseCase doctorCommentDeleteUseCase,
+    required DeletePostCommentUseCase deletePostCommentUseCase,
   })  : _postCommentUseCase = postCommentUseCase,
+        _doctorCommentDeleteUseCase = doctorCommentDeleteUseCase,
         _doctorCommentUseCase = doctorCommentUseCase,
+        _deletePostCommentUseCase = deletePostCommentUseCase,
         _getDoctorCommentsUseCase = getDoctorCommentsUseCase,
         super(CommentsState()) {
     on<_GetComments>((event, emit) async {
@@ -115,6 +123,25 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         event.onSuccess();
       } else {
         emit(state.copyWith(doctorCommentStatus: FormzStatus.submissionFailure));
+      }
+    });
+    on<_DeleteDoctorComment>((event, emit) async {
+      final result = await _doctorCommentDeleteUseCase.call(event.id);
+      if (result.isRight) {
+        event.onSuccess();
+      }
+    });
+    on<_DeleteHospitalComment>((event, emit) async {
+      print('event');
+      final List<CommentEntity> comment = [...state.comments];
+      final result = await _deletePostCommentUseCase.call(event.id);
+      if (result.isRight) {
+        event.onSuccess();
+        comment.removeWhere((element) => element.id == event.id);
+        emit(state.copyWith(comments: comment));
+      } else {
+        event.onError();
+        print('event fail');
       }
     });
   }

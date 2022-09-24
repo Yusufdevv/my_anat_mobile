@@ -12,13 +12,27 @@ import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 
 abstract class HospitalSingleRepository {
   Future<Either<Failure, HospitalSingleEntity>> getHospitalSingle({required String slug});
+
   Future<Either<Failure, GenericPagination<HospitalServiceEntity>>> getHospitalServices(
       {required int id, String? next, String search = ''});
+
   Future<Either<Failure, GenericPagination<HospitalDoctorsEntity>>> getHospitalSpecialists(
       {required int id, String? next});
-  Future<Either<Failure, GenericPagination<ComfortEntity>>> getHospitalConditions({required int id, String? next});
-  Future<Either<Failure, GenericPagination<JournalArticleEntity>>> getHospitalArticles({required int id, String? next});
-  Future<Either<Failure, GenericPagination<CommentEntity>>> getHospitalComments({required int id, String? next});
-  Future<Either<Failure, GenericPagination<VacancyListEntity>>> getHospitalVacancies({required int id, String? next});
-  Future<Either<Failure, void>> postComment({required int organizationId, required PostCommentEntity comment});
+
+  Future<Either<Failure, GenericPagination<ComfortEntity>>> getHospitalConditions(
+      {required int id, String? next});
+
+  Future<Either<Failure, GenericPagination<JournalArticleEntity>>> getHospitalArticles(
+      {required int id, String? next});
+
+  Future<Either<Failure, GenericPagination<CommentEntity>>> getHospitalComments(
+      {required int id, String? next});
+
+  Future<Either<Failure, GenericPagination<VacancyListEntity>>> getHospitalVacancies(
+      {required int id, String? next});
+
+  Future<Either<Failure, void>> postComment(
+      {required int organizationId, required PostCommentEntity comment});
+
+  Future<Either<Failure, Either>> deleteComment({required int id});
 }

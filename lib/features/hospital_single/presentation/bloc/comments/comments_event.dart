@@ -19,4 +19,11 @@ class CommentsEvent with _$CommentsEvent {
     required String comment,
     required Function onSuccess,
   }) = _SendDoctorComment;
+
+  factory CommentsEvent.deleteDoctorComment({required int id, required Function onSuccess}) =
+      _DeleteDoctorComment;
+
+  factory CommentsEvent.deleteHospitalComment({required int id, required Function onSuccess,
+  required Function onError}) =
+      _DeleteHospitalComment;
 }

@@ -10,9 +10,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentItem extends StatelessWidget {
   final CommentEntity entity;
+  final VoidCallback? onTapDelete;
 
   const CommentItem({
     required this.entity,
+    this.onTapDelete,
     Key? key,
   }) : super(key: key);
 
@@ -103,7 +105,7 @@ class CommentItem extends StatelessWidget {
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (_) => const DeleteCommentDialog(),
+                      builder: (_) => DeleteCommentDialog(onTapDelete: onTapDelete),
                     );
                   },
                   child: Padding(

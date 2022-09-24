@@ -24,4 +24,6 @@ abstract class DoctorSingleRepository {
     required double rating,
     required String comment,
   });
+
+  Future<Either<Failure, String>> deleteDoctorComment({required int id});
 }

@@ -3,6 +3,7 @@ import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
+import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment_delete.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_articles_usecase.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_interviews_usecase.dart';
@@ -17,6 +18,7 @@ import 'package:anatomica/features/doctor_single/presentation/parts/doctor_conta
 import 'package:anatomica/features/doctor_single/presentation/parts/doctor_interviews.dart';
 import 'package:anatomica/features/doctor_single/presentation/widgets/doctor_single_appbar.dart';
 import 'package:anatomica/features/hospital_single/data/repository/hospital_repository.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/delete_comment.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_comments.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/post_comment_usecase.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
@@ -96,6 +98,10 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
               ..add(GetDoctorInterviews(doctorId: widget.id))),
         BlocProvider(
             create: (context) => CommentsBloc(
+                deletePostCommentUseCase: DeletePostCommentUseCase(
+                    repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+                doctorCommentDeleteUseCase: DoctorCommentDeleteUseCase(
+                    repository: serviceLocator<DoctorSingleRepositoryImpl>()),
                 doctorCommentUseCase:
                     DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
                 GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
