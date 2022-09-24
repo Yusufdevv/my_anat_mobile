@@ -30,6 +30,7 @@ JournalModel _$JournalModelFromJson(Map<String, dynamic> json) => JournalModel(
       id: json['id'] as int? ?? 0,
       redaction: json['redaction'] as String? ?? '',
       isBought: json['is_bought'] as bool? ?? false,
+      fileExtension: json['file_extension'] as String? ?? '',
     );
 
 Map<String, dynamic> _$JournalModelToJson(JournalModel instance) =>
@@ -45,6 +46,7 @@ Map<String, dynamic> _$JournalModelToJson(JournalModel instance) =>
       'is_premium': instance.isPremium,
       'price': instance.price,
       'publish_date': instance.publishDate,
+      'file_extension': instance.fileExtension,
       'is_bought': instance.isBought,
       'tags': instance.tags.map(const TagConverter().toJson).toList(),
     };

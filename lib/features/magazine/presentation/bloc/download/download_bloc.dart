@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:anatomica/core/data/singletons/dio_settings.dart';
+import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/db_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -43,7 +46,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
 
     final appDocDir = Platform.isAndroid ? await getTemporaryDirectory() : await getTemporaryDirectory();
 
-    final path = '${appDocDir.path}/${event.id}.epub';
+    final path = '${appDocDir.path}/${event.id}.${event.fileType}.aes';
     final file = File(path);
     final rawBooks = await DbHelper.instance.query('downloaded_journals', 'id', event.id);
     emit(state.copyWith(epubOpeningStatus: FormzStatus.submissionInProgress));
@@ -51,7 +54,10 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       event.onNotDownloaded();
       await file.create();
-      await dio.download(event.fileUrl, path, deleteOnError: true, onReceiveProgress: (receivedBytes, totalBytes) {
+      final token = StorageRepository.getString('token');
+      await dio.download('/journal/${event.slug}/file/', path,
+          options: Options(headers: token.isNotEmpty ? {'Authorization': "Token $token"} : {}),
+          deleteOnError: true, onReceiveProgress: (receivedBytes, totalBytes) {
         streamController.add(receivedBytes / totalBytes);
         if (receivedBytes == totalBytes) {
           add(
@@ -64,6 +70,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
         }
       });
     } else {
+      event.onDownloaded(path);
       emit(state.copyWith(
         fileAlreadyDownloaded: true,
         progress: 100,
@@ -75,7 +82,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
 
   Future<void> _onDownloadFinished(DownloadFinished event, Emitter<DownloadState> emit) async {
     try {
-      await DbHelper.instance.insert('downloaded_ebooks', {
+      await DbHelper.instance.insert('downloaded_journals', {
         'id': event.id,
         'title': event.filename,
         'path': event.path,
@@ -87,7 +94,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     }
   }
 
-  Dio dio = Dio();
+  Dio dio = serviceLocator<DioSettings>().dio;
   final StreamController<double> streamController = StreamController();
   late StreamSubscription<double> progressSubscription;
 

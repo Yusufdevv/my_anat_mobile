@@ -57,18 +57,13 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
         setState(() {});
       });
     vacancyBloc = VacancyBloc(
-      vacancyFilterUseCase:
-          VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyFilterUseCase: VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      candidateListUseCase:
-          CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyOptionUseCase:
-          VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      organizationVacancyUseCase:
-          OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      candidateListUseCase: CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyOptionUseCase: VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      organizationVacancyUseCase: OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      topOrganizationUseCase:
-          TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      topOrganizationUseCase: TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
       likeUnlikeVacancyStreamUseCase:
           LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
       likeUnlikeDoctorStreamUseCase:
@@ -137,35 +132,19 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                               child: Row(
                                 children: List.generate(
                                   state.categoryList.length,
-                                  (index) {
-                                    return CategoryContainer(
-                                      isSelect:
-                                          state.categoryList[index].id == state.selectCategoryId,
-                                      onTap: () {
-                                        if (state.categoryList[index].id ==
-                                            state.selectCategoryId) {
-                                          vacancyBloc.add(GetVacancyListEvent(onSuccess: () {}));
-                                          vacancyBloc.add(GetTopOrganizationEvent());
-                                          vacancyBloc.add(GetCandidateListEvent());
-                                          vacancyBloc.add(GetCategoryListEvent());
-                                          vacancyBloc.add(SelectCategoryEvent(id: -1));
-                                        } else {
-                                          vacancyBloc.add(SelectCategoryEvent(
-                                              id: state.categoryList[index].id));
-                                        }
-
-                                        vacancyBloc.add(GetVacancyListEvent(
-                                            onSuccess: () {},
-                                            vacancyParamsEntity: VacancyParamsEntity(
-                                                category: '${state.categoryList[index].id}')));
-                                        vacancyBloc.add(GetOrganizationVacancyEvent(
-                                            category: '${state.categoryList[index].id}'));
-                                        vacancyBloc.add(GetCandidateListEvent(
-                                            categoryId: '${state.categoryList[index].id}'));
-                                      },
-                                      title: state.categoryList[index].title,
-                                    );
-                                  },
+                                  (index) => CategoryContainer(
+                                    onTap: () {
+                                      vacancyBloc.add(GetVacancyListEvent(
+                                          onSuccess: () {},
+                                          vacancyParamsEntity:
+                                              VacancyParamsEntity(category: '${state.categoryList[index].id}')));
+                                      vacancyBloc.add(
+                                          GetOrganizationVacancyEvent(category: '${state.categoryList[index].id}'));
+                                      vacancyBloc
+                                          .add(GetCandidateListEvent(categoryId: '${state.categoryList[index].id}'));
+                                    },
+                                    title: state.categoryList[index].title,
+                                  ),
                                 ),
                               ),
                             );
