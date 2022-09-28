@@ -11,8 +11,10 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/data/repositories/payment_repository_impl.dart';
 import 'package:anatomica/features/magazine/domain/usecases/check_payment_status_usecase.dart';
+import 'package:anatomica/features/magazine/domain/usecases/get_prices_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/order_create_article_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/order_create_journal_usecase.dart';
+import 'package:anatomica/features/magazine/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_expect.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/payment_method.dart';
@@ -77,6 +79,9 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
         orderCreateArticleUseCase: OrderCreateArticleUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
         orderCreateJournalUseCase: OrderCreateJournalUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
         checkPaymentStatusUseCase: CheckPaymentStatusUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
+        getPricesUseCase: GetPricesUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
+        payForMonthlySubscriptionUseCase:
+            PayForMonthlySubscriptionUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
       ),
       child: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {

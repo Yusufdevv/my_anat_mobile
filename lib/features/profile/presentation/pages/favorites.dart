@@ -1,3 +1,5 @@
+import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
@@ -18,6 +20,7 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
@@ -72,6 +75,19 @@ class FavoritesScreen extends StatelessWidget {
                     fetchMoreFunction: () {
                       context.read<ProfileFavouriteBloc>().add(GetMoreLikedVacancies());
                     },
+                    emptyWidget: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      SvgPicture.asset(AppIcons.emptyA),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Ничего не найдено',
+                        style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Вы ещё не добавили вакансии',
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textSecondary),
+                      )
+                    ]),
                     hasMoreToFetch: state.vacancyFetchMore,
                     errorWidget: const Text('error'),
                   ),
@@ -87,6 +103,19 @@ class FavoritesScreen extends StatelessWidget {
                     separatorBuilder: (context, index) => const SizedBox(height: 12),
                     itemCount: state.likedCandidates.length,
                     paginatorStatus: state.candidateStatus,
+                    emptyWidget: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      SvgPicture.asset(AppIcons.emptyA),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Ничего не найдено',
+                        style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Вы ещё не добавили вакансии',
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textSecondary),
+                      )
+                    ]),
                     fetchMoreFunction: () {
                       context.read<ProfileFavouriteBloc>().add(GetMoreLikedCandidates());
                     },

@@ -45,8 +45,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     }
 
     final appDocDir = Platform.isAndroid ? await getTemporaryDirectory() : await getTemporaryDirectory();
-
-    final path = '${appDocDir.path}/${event.id}.${event.fileType}.aes';
+    final path = '${appDocDir.path}/${event.id}.${event.fileType}';
     final file = File(path);
     final rawBooks = await DbHelper.instance.query('downloaded_journals', 'id', event.id);
     emit(state.copyWith(epubOpeningStatus: FormzStatus.submissionInProgress));
@@ -55,7 +54,8 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       event.onNotDownloaded();
       await file.create();
       final token = StorageRepository.getString('token');
-      await dio.download('/journal/${event.slug}/file/', path,
+      final fileUrl = await dio.get('/journal/${event.slug}/file/');
+      await dio.download(fileUrl.data['file'], path,
           options: Options(headers: token.isNotEmpty ? {'Authorization': "Token $token"} : {}),
           deleteOnError: true, onReceiveProgress: (receivedBytes, totalBytes) {
         streamController.add(receivedBytes / totalBytes);
@@ -70,7 +70,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
         }
       });
     } else {
-      event.onDownloaded(path);
+      event.onDownloaded(file);
       emit(state.copyWith(
         fileAlreadyDownloaded: true,
         progress: 100,

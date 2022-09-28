@@ -25,6 +25,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -34,10 +35,8 @@ class ProfileScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     return BlocProvider(
         create: (context) => ProfileBloc(
-            getProfileUseCase:
-                GetProfileUseCase(profileRepository: serviceLocator<ProfileRepositoryImpl>()),
-            deleteAccountUsecase:
-                DeleteAccountUseCase(repository: serviceLocator<ProfileRepositoryImpl>()))
+            getProfileUseCase: GetProfileUseCase(profileRepository: serviceLocator<ProfileRepositoryImpl>()),
+            deleteAccountUsecase: DeleteAccountUseCase(repository: serviceLocator<ProfileRepositoryImpl>()))
           ..add(GetProfileEvent()),
         child: Scaffold(
           appBar: const PreferredSize(
@@ -60,14 +59,10 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     if (state.profileEntity.isDoctor) ...{
-                      ProfileItem(
-                          title: LocaleKeys.doctor_office, icon: AppIcons.scope, onTap: () {}),
+                      ProfileItem(title: LocaleKeys.doctor_office, icon: AppIcons.scope, onTap: () {}),
                     },
                     if (state.profileEntity.isOrganization) ...{
-                      ProfileItem(
-                          title: LocaleKeys.organization_office,
-                          image: AppImages.organization,
-                          onTap: () {}),
+                      ProfileItem(title: LocaleKeys.organization_office, image: AppImages.organization, onTap: () {}),
                     },
                     const SizedBox(height: 12),
                     ProfileItem(
@@ -95,16 +90,14 @@ class ProfileScreen extends StatelessWidget {
                         title: LocaleKeys.favorite,
                         icon: AppIcons.profileStar,
                         onTap: () {
-                          Navigator.of(context, rootNavigator: true)
-                              .push(fade(page: const FavoritesScreen()));
+                          Navigator.of(context, rootNavigator: true).push(fade(page: const FavoritesScreen()));
                         }),
                     const SizedBox(height: 12),
                     ProfileItem(
                         title: LocaleKeys.help,
                         icon: AppIcons.help,
                         onTap: () {
-                          Navigator.of(context, rootNavigator: true)
-                              .push(fade(page: const HelpScreen()));
+                          Navigator.of(context, rootNavigator: true).push(fade(page: const HelpScreen()));
                         }),
                     const SizedBox(height: 12),
                     const WDivider(),
@@ -114,9 +107,9 @@ class ProfileScreen extends StatelessWidget {
                         icon: AppIcons.logout,
                         onTap: () {
                           showLogOutDialog(context,
-                              onConfirmTap: () => context.read<AuthenticationBloc>().add(
-                                  AuthenticationStatusChanged(
-                                      status: AuthenticationStatus.unauthenticated)));
+                              onConfirmTap: () => context
+                                  .read<AuthenticationBloc>()
+                                  .add(AuthenticationStatusChanged(status: AuthenticationStatus.unauthenticated)));
                         },
                         color: snow),
                     const SizedBox(height: 24),
@@ -125,9 +118,22 @@ class ProfileScreen extends StatelessWidget {
                     } else ...{
                       Column(
                         children: [
-                          const OtherProfileItem(),
+                          OtherProfileItem(
+                            onTap: () async {
+                              if (await canLaunchUrlString('https://anatomica.uicgroup.tech/create-doctor')) {
+                                await launchUrlString('https://anatomica.uicgroup.tech/create-doctor',
+                                    mode: LaunchMode.externalApplication);
+                              }
+                            },
+                          ),
                           const SizedBox(height: 12),
                           OtherProfileItem(
+                            onTap: () async {
+                              if (await canLaunchUrlString('https://anatomica.uicgroup.tech/create-organization')) {
+                                await launchUrlString('https://anatomica.uicgroup.tech/create-organization',
+                                    mode: LaunchMode.externalApplication);
+                              }
+                            },
                             iconBackgroundColor: steelBlue,
                             icon: AppIcons.icHospital,
                             backgroundColor: pattensBlue,

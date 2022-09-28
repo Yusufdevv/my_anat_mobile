@@ -57,8 +57,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     try {
       final response = await _dio.get('/user/profile/',
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
-      print(response.data);
-      print(response.realUri);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return UserModel.fromJson(response.data);
       } else {
@@ -282,7 +280,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           "confirmation_type": 'phone',
           "phone": phone,
         });
-        print(response.data);
         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
           return response.data['state_id'] as String;
         } else {

@@ -1,6 +1,7 @@
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/magazine/data/models/payment_response_model.dart';
+import 'package:anatomica/features/magazine/data/models/prices_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class PaymentDatasource {
@@ -21,6 +22,8 @@ abstract class PaymentDatasource {
     required bool isRegistered,
   });
   Future<String> checkPaymentStatus({required int id});
+  Future<PricesModel> getPrices();
+  Future<PaymentResponseModel> payForMonthlySubscription({required int numOfMoths, required String paymentProvider});
 }
 
 class PaymentDatasourceImpl extends PaymentDatasource {
@@ -127,7 +130,21 @@ class PaymentDatasourceImpl extends PaymentDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return response.data['status'] as String;
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage:
+                  ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'xato').toString());
+        } else {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage:
+                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : '').toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
+        }
       }
     } on ServerException {
       rethrow;
@@ -135,6 +152,82 @@ class PaymentDatasourceImpl extends PaymentDatasource {
       throw DioException();
     } on Exception catch (e) {
       throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<PricesModel> getPrices() async {
+    try {
+      final response = await _dio.get('/payments/prices/',
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return PricesModel.fromJson(response.data);
+      } else {
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage:
+                  ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'xato').toString());
+        } else {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage:
+                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : '').toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
+        }
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<PaymentResponseModel> payForMonthlySubscription(
+      {required int numOfMoths, required String paymentProvider}) async {
+    if (paymentProvider.isNotEmpty) {
+      try {
+        final response = await _dio.post('/payments/subscribe/',
+            data: {'month_count': numOfMoths, 'payment_provider': paymentProvider},
+            options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+          return PaymentResponseModel.fromJson(response.data);
+        } else {
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first
+                        : 'Telefon raqam xato')
+                    .toString());
+          } else {
+            if (response.data is Map) {
+              throw ServerException(
+                  statusCode: response.statusCode!,
+                  errorMessage:
+                      ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : '').toString());
+            } else {
+              throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+            }
+          }
+        }
+      } on ServerException {
+        rethrow;
+      } on DioError {
+        throw DioException();
+      } on Exception catch (e) {
+        throw ParsingException(
+          errorMessage: e.toString(),
+        );
+      }
+    } else {
+      throw const ParsingException(errorMessage: "To'lov provayderi tanlanmagan");
     }
   }
 }

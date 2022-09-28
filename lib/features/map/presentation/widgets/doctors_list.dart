@@ -19,6 +19,8 @@ class _DoctorsListState extends State<DoctorsList> {
     return BlocBuilder<DoctorListBloc, DoctorListState>(
       builder: (context, state) {
         return Paginator(
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
+            padding: const EdgeInsets.all(16).copyWith(bottom: 266),
             emptyWidget: const EmptyPage(
               title: 'Ничего не найдено',
               desc: 'Результаты не найдены по вашему запросу',
@@ -32,13 +34,10 @@ class _DoctorsListState extends State<DoctorsList> {
             },
             itemCount: state.doctors.length,
             fetchMoreFunction: () {
-              context
-                  .read<DoctorListBloc>()
-                  .add(DoctorListEvent.getMoreDoctors());
+              context.read<DoctorListBloc>().add(DoctorListEvent.getMoreDoctors());
             },
             hasMoreToFetch: state.count > state.doctors.length,
             errorWidget: const SizedBox());
-
       },
     );
   }

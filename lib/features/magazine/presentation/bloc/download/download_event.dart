@@ -15,7 +15,7 @@ class CheckWetherFileExists extends DownloadEvent {
   final String filename;
   final int id;
   final VoidCallback onNotDownloaded;
-  final ValueChanged<String> onDownloaded;
+  final ValueChanged<File> onDownloaded;
   final String fileType;
 
   const CheckWetherFileExists({

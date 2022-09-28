@@ -1,7 +1,12 @@
 import 'package:anatomica/core/exceptions/failures.dart';
+import 'package:anatomica/core/usecases/usecase.dart';
+import 'package:anatomica/features/magazine/domain/entities/payment_response_entity.dart';
+import 'package:anatomica/features/magazine/domain/entities/prices_entity.dart';
 import 'package:anatomica/features/magazine/domain/usecases/check_payment_status_usecase.dart';
+import 'package:anatomica/features/magazine/domain/usecases/get_prices_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/order_create_article_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/order_create_journal_usecase.dart';
+import 'package:anatomica/features/magazine/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +19,19 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   final OrderCreateArticleUseCase _orderCreateArticleUseCase;
   final OrderCreateJournalUseCase _orderCreateJournalUseCase;
   final CheckPaymentStatusUseCase _checkPaymentStatusUseCase;
-  PaymentBloc({
-    required OrderCreateJournalUseCase orderCreateJournalUseCase,
-    required OrderCreateArticleUseCase orderCreateArticleUseCase,
-    required CheckPaymentStatusUseCase checkPaymentStatusUseCase,
-  })  : _orderCreateJournalUseCase = orderCreateJournalUseCase,
+  final GetPricesUseCase _getPricesUseCase;
+  final PayForMonthlySubscriptionUseCase _payForMonthlySubscriptionUseCase;
+  PaymentBloc(
+      {required OrderCreateJournalUseCase orderCreateJournalUseCase,
+      required OrderCreateArticleUseCase orderCreateArticleUseCase,
+      required CheckPaymentStatusUseCase checkPaymentStatusUseCase,
+      required GetPricesUseCase getPricesUseCase,
+      required PayForMonthlySubscriptionUseCase payForMonthlySubscriptionUseCase})
+      : _orderCreateJournalUseCase = orderCreateJournalUseCase,
         _orderCreateArticleUseCase = orderCreateArticleUseCase,
         _checkPaymentStatusUseCase = checkPaymentStatusUseCase,
+        _getPricesUseCase = getPricesUseCase,
+        _payForMonthlySubscriptionUseCase = payForMonthlySubscriptionUseCase,
         super(const PaymentState()) {
     on<OrderCreateArticle>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
@@ -70,6 +81,35 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       if (result.isRight) {
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
         event.onSuccess(result.right.transactionCheckoutUrl);
+      } else {
+        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
+        if (result.left is DioFailure) {
+          event.onError('Tarmoqqa ulanishda muammo');
+        } else if (result.left is ParsingFailure) {
+          event.onError((result.left as ParsingFailure).errorMessage);
+        } else if (result.left is ServerFailure) {
+          event.onError((result.left as ServerFailure).errorMessage);
+        } else {
+          event.onError(result.left.toString());
+        }
+      }
+    });
+    on<GetPrices>((event, emit) async {
+      emit(state.copyWith(getPricesStatus: FormzStatus.submissionInProgress));
+      final result = await _getPricesUseCase.call(NoParams());
+      if (result.isRight) {
+        emit(state.copyWith(getPricesStatus: FormzStatus.submissionSuccess, prices: result.right));
+      } else {
+        emit(state.copyWith(getPricesStatus: FormzStatus.submissionFailure));
+      }
+    });
+    on<PayForMonthlySubscription>((event, emit) async {
+      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
+      final result = await _payForMonthlySubscriptionUseCase
+          .call(SubscriptionParams(paymentProvider: event.paymentProvider, period: event.period));
+      if (result.isRight) {
+        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
+        event.onSuccess(result.right);
       } else {
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {

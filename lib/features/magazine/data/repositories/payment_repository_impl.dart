@@ -3,6 +3,7 @@ import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/magazine/data/datasources/payment_datasource.dart';
 import 'package:anatomica/features/magazine/domain/entities/payment_response_entity.dart';
+import 'package:anatomica/features/magazine/domain/entities/prices_entity.dart';
 import 'package:anatomica/features/magazine/domain/repositories/payment_repository.dart';
 
 class PaymentRepositoryImpl extends PaymentRepository {
@@ -69,6 +70,36 @@ class PaymentRepositoryImpl extends PaymentRepository {
   Future<Either<Failure, String>> checkPaymentStatus({required int id}) async {
     try {
       final result = await datasource.checkPaymentStatus(id: id);
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PricesEntity>> getPrices() async {
+    try {
+      final result = await datasource.getPrices();
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PaymentResponseEntity>> payForMonthlySubscription(
+      {required int numOfMoths, required String paymentProvider}) async {
+    try {
+      final result =
+          await datasource.payForMonthlySubscription(numOfMoths: numOfMoths, paymentProvider: paymentProvider);
       return Right(result);
     } on DioException {
       return Left(DioFailure());

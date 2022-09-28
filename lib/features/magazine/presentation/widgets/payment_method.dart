@@ -21,10 +21,11 @@ class PaymentMethod extends StatelessWidget {
   Widget build(BuildContext context) {
     return WScaleAnimation(
       onTap: () => onTap(paymentMethod),
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: lilyWhite,
+          color: paymentMethod == currentPaymentMethod ? white : lilyWhite,
           border: Border.all(color: paymentMethod == currentPaymentMethod ? primary : lilyWhite),
           borderRadius: BorderRadius.circular(10),
         ),

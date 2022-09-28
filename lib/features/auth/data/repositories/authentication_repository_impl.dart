@@ -18,8 +18,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     required this.resetPasswordDatasource,
   });
 
-  final StreamController<AuthenticationStatus> _statusController =
-      StreamController.broadcast(sync: true);
+  final StreamController<AuthenticationStatus> _statusController = StreamController.broadcast(sync: true);
 
   @override
   Stream<AuthenticationStatus> statusStream() async* {
@@ -34,11 +33,9 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, void>> login(
-      {required String username, required String password}) async {
+  Future<Either<Failure, void>> login({required String username, required String password}) async {
     try {
-      final result =
-          await dataSource.login(username: username, password: password);
+      final result = await dataSource.login(username: username, password: password);
       _statusController.add(AuthenticationStatus.authenticated);
       return Right(result);
     } on DioException {
@@ -46,8 +43,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
@@ -61,14 +57,12 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, bool>> checkUsername(
-      {required String username}) async {
+  Future<Either<Failure, bool>> checkUsername({required String username}) async {
     try {
       final result = await dataSource.checkUserName(username: username);
       return Right(result);
@@ -77,8 +71,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
@@ -92,14 +85,12 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, String>> submitCode(
-      {required String stateId, required String code}) async {
+  Future<Either<Failure, String>> submitCode({required String stateId, required String code}) async {
     try {
       final result = await dataSource.confirmCode(stateId: stateId, code: code);
       return Right(result);
@@ -108,57 +99,45 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, String>> submitEmail(
-      {required String stateId, required String email}) async {
+  Future<Either<Failure, String>> submitEmail({required String stateId, required String email}) async {
     try {
-      final result =
-          await dataSource.submitEmail(stateId: stateId, email: email);
+      final result = await dataSource.submitEmail(stateId: stateId, email: email);
       return Right(result);
     } on DioException {
       return Left(DioFailure());
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
   Future<Either<Failure, String>> submitNameUsername(
-      {required String username,
-      required String fullName,
-      required String stateId}) async {
+      {required String username, required String fullName, required String stateId}) async {
     try {
-      final result = await dataSource.submitNameUsername(
-          username: username, fullName: fullName, stateId: stateId);
+      final result = await dataSource.submitNameUsername(username: username, fullName: fullName, stateId: stateId);
       return Right(result);
     } on DioException {
       return Left(DioFailure());
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
   Future<Either<Failure, String>> submitPassword(
-      {required String stateId,
-      required String password,
-      required String confirmPassword}) async {
+      {required String stateId, required String password, required String confirmPassword}) async {
     try {
-      final result = await dataSource.submitPassword(
-          password: password,
-          confirmPassword: confirmPassword,
-          stateId: stateId);
+      final result =
+          await dataSource.submitPassword(password: password, confirmPassword: confirmPassword, stateId: stateId);
       _statusController.add(AuthenticationStatus.authenticated);
       return Right(result);
     } on DioException {
@@ -166,25 +145,21 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, String>> submitPhone(
-      {required String stateId, required String phone}) async {
+  Future<Either<Failure, String>> submitPhone({required String stateId, required String phone}) async {
     try {
-      final result =
-          await dataSource.submitPhone(phone: phone, stateId: stateId);
+      final result = await dataSource.submitPhone(phone: phone, stateId: stateId);
       return Right(result);
     } on DioException {
       return Left(DioFailure());
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
@@ -198,55 +173,44 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, String>> submitChangedEmail(
-      {required String stateId, required String email}) async {
+  Future<Either<Failure, String>> submitChangedEmail({required String stateId, required String email}) async {
     try {
-      final result =
-          await dataSource.submitChangedEmail(stateId: stateId, email: email);
+      final result = await dataSource.submitChangedEmail(stateId: stateId, email: email);
       return Right(result);
     } on DioException {
       return Left(DioFailure());
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, String>> submitChangedPhone(
-      {required String stateId, required String phone}) async {
+  Future<Either<Failure, String>> submitChangedPhone({required String stateId, required String phone}) async {
     try {
-      final result =
-          await dataSource.submitChangedPhone(stateId: stateId, phone: phone);
+      final result = await dataSource.submitChangedPhone(stateId: stateId, phone: phone);
       return Right(result);
     } on DioException {
       return Left(DioFailure());
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
   Future<Either<Failure, void>> submitResetPassword(
-      {required String stateId,
-      required String password,
-      required String confirmPassword}) async {
+      {required String stateId, required String password, required String confirmPassword}) async {
     try {
       final result = await resetPasswordDatasource.submitPassword(
-          password: password,
-          confirmPassword: confirmPassword,
-          stateId: stateId);
+          password: password, confirmPassword: confirmPassword, stateId: stateId);
       _statusController.add(AuthenticationStatus.authenticated);
       return Right(result);
     } on DioException {
@@ -254,8 +218,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 

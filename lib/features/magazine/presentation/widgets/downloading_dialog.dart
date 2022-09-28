@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/reader/presentation/reader_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
+import 'package:munir_epub_reader/epub_viewer.dart';
 
 class DownloadingDialog extends StatelessWidget {
   final BuildContext parentContext;
@@ -63,20 +68,20 @@ class DownloadingDialog extends StatelessWidget {
                         listener: (context, state) {
                           if (state.status.isSubmissionSuccess) {
                             Navigator.of(context).pop();
-                            // if (Platform.isAndroid) {
-                            //   EpubViewer.setConfig(
-                            //     themeColor: Theme.of(context).primaryColor,
-                            //     identifier: 'iosBook',
-                            //     scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-                            //     allowSharing: true,
-                            //     enableTts: true,
-                            //     nightMode: true,
-                            //   );
-                            //   EpubViewer.open(state.fileUrl);
-                            // } else {
-                            //   Navigator.of(context, rootNavigator: true)
-                            //       .push(fade(page: ReaderScreen(filePath: state.fileUrl, bookTitle: bookTitle)));
-                            // }
+                            if (Platform.isAndroid) {
+                              EpubViewer.setConfig(
+                                themeColor: Theme.of(context).primaryColor,
+                                identifier: 'iosBook',
+                                scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
+                                allowSharing: true,
+                                enableTts: true,
+                                nightMode: true,
+                              );
+                              EpubViewer.open(state.fileUrl);
+                            } else {
+                              Navigator.of(context, rootNavigator: true)
+                                  .push(fade(page: ReaderScreen(filePath: state.fileUrl, bookTitle: bookTitle)));
+                            }
                           }
                         },
                         builder: (context, state) => AnimatedContainer(

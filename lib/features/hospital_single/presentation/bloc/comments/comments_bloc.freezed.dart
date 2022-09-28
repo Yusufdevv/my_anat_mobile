@@ -25,7 +25,7 @@ mixin _$CommentsEvent {
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
     required TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)
+            Function onSuccess, dynamic Function(String) onError)
         sendDoctorComment,
     required TResult Function(int id, Function onSuccess, Function onError)
         deleteDoctorComment,
@@ -42,7 +42,7 @@ mixin _$CommentsEvent {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -59,7 +59,7 @@ mixin _$CommentsEvent {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -199,7 +199,7 @@ class _$_GetComments implements _GetComments {
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
     required TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)
+            Function onSuccess, dynamic Function(String) onError)
         sendDoctorComment,
     required TResult Function(int id, Function onSuccess, Function onError)
         deleteDoctorComment,
@@ -219,7 +219,7 @@ class _$_GetComments implements _GetComments {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -239,7 +239,7 @@ class _$_GetComments implements _GetComments {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -362,7 +362,7 @@ class _$_GetMoreComments implements _GetMoreComments {
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
     required TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)
+            Function onSuccess, dynamic Function(String) onError)
         sendDoctorComment,
     required TResult Function(int id, Function onSuccess, Function onError)
         deleteDoctorComment,
@@ -382,7 +382,7 @@ class _$_GetMoreComments implements _GetMoreComments {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -402,7 +402,7 @@ class _$_GetMoreComments implements _GetMoreComments {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -545,7 +545,7 @@ class _$_GetDoctorComments implements _GetDoctorComments {
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
     required TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)
+            Function onSuccess, dynamic Function(String) onError)
         sendDoctorComment,
     required TResult Function(int id, Function onSuccess, Function onError)
         deleteDoctorComment,
@@ -565,7 +565,7 @@ class _$_GetDoctorComments implements _GetDoctorComments {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -585,7 +585,7 @@ class _$_GetDoctorComments implements _GetDoctorComments {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -710,7 +710,7 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
     required TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)
+            Function onSuccess, dynamic Function(String) onError)
         sendDoctorComment,
     required TResult Function(int id, Function onSuccess, Function onError)
         deleteDoctorComment,
@@ -730,7 +730,7 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -750,7 +750,7 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -901,7 +901,7 @@ class _$_PostComment implements _PostComment {
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
     required TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)
+            Function onSuccess, dynamic Function(String) onError)
         sendDoctorComment,
     required TResult Function(int id, Function onSuccess, Function onError)
         deleteDoctorComment,
@@ -921,7 +921,7 @@ class _$_PostComment implements _PostComment {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -941,7 +941,7 @@ class _$_PostComment implements _PostComment {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -1029,7 +1029,7 @@ abstract class _$$_SendDoctorCommentCopyWith<$Res> {
       double rating,
       String comment,
       Function onSuccess,
-      Function onError});
+      dynamic Function(String) onError});
 }
 
 /// @nodoc
@@ -1071,7 +1071,7 @@ class __$$_SendDoctorCommentCopyWithImpl<$Res>
       onError: onError == freezed
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
-              as Function,
+              as dynamic Function(String),
     ));
   }
 }
@@ -1095,7 +1095,7 @@ class _$_SendDoctorComment implements _SendDoctorComment {
   @override
   final Function onSuccess;
   @override
-  final Function onError;
+  final dynamic Function(String) onError;
 
   @override
   String toString() {
@@ -1111,7 +1111,7 @@ class _$_SendDoctorComment implements _SendDoctorComment {
             const DeepCollectionEquality().equals(other.rating, rating) &&
             const DeepCollectionEquality().equals(other.comment, comment) &&
             const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
-            const DeepCollectionEquality().equals(other.onError, onError));
+            (identical(other.onError, onError) || other.onError == onError));
   }
 
   @override
@@ -1121,7 +1121,7 @@ class _$_SendDoctorComment implements _SendDoctorComment {
       const DeepCollectionEquality().hash(rating),
       const DeepCollectionEquality().hash(comment),
       const DeepCollectionEquality().hash(onSuccess),
-      const DeepCollectionEquality().hash(onError));
+      onError);
 
   @JsonKey(ignore: true)
   @override
@@ -1139,7 +1139,7 @@ class _$_SendDoctorComment implements _SendDoctorComment {
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
     required TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)
+            Function onSuccess, dynamic Function(String) onError)
         sendDoctorComment,
     required TResult Function(int id, Function onSuccess, Function onError)
         deleteDoctorComment,
@@ -1159,7 +1159,7 @@ class _$_SendDoctorComment implements _SendDoctorComment {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -1179,7 +1179,7 @@ class _$_SendDoctorComment implements _SendDoctorComment {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -1251,13 +1251,13 @@ abstract class _SendDoctorComment implements CommentsEvent {
       required final double rating,
       required final String comment,
       required final Function onSuccess,
-      required final Function onError}) = _$_SendDoctorComment;
+      required final dynamic Function(String) onError}) = _$_SendDoctorComment;
 
   int get doctor;
   double get rating;
   String get comment;
   Function get onSuccess;
-  Function get onError;
+  dynamic Function(String) get onError;
   @JsonKey(ignore: true)
   _$$_SendDoctorCommentCopyWith<_$_SendDoctorComment> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1356,7 +1356,7 @@ class _$_DeleteDoctorComment implements _DeleteDoctorComment {
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
     required TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)
+            Function onSuccess, dynamic Function(String) onError)
         sendDoctorComment,
     required TResult Function(int id, Function onSuccess, Function onError)
         deleteDoctorComment,
@@ -1376,7 +1376,7 @@ class _$_DeleteDoctorComment implements _DeleteDoctorComment {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -1396,7 +1396,7 @@ class _$_DeleteDoctorComment implements _DeleteDoctorComment {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -1570,7 +1570,7 @@ class _$_DeleteHospitalComment implements _DeleteHospitalComment {
     required TResult Function(PostCommentEntity comment, VoidCallback onSuccess)
         postComment,
     required TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)
+            Function onSuccess, dynamic Function(String) onError)
         sendDoctorComment,
     required TResult Function(int id, Function onSuccess, Function onError)
         deleteDoctorComment,
@@ -1590,7 +1590,7 @@ class _$_DeleteHospitalComment implements _DeleteHospitalComment {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
@@ -1610,7 +1610,7 @@ class _$_DeleteHospitalComment implements _DeleteHospitalComment {
     TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
     TResult Function(int doctor, double rating, String comment,
-            Function onSuccess, Function onError)?
+            Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
     TResult Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,

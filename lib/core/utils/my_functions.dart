@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -320,5 +321,9 @@ abstract class MyFunctions {
     final secondsInString =
         '${(durationInSeconds % 60) < 10 ? '0${(durationInSeconds % 60)}' : (durationInSeconds % 60)}';
     return '$hoursInString:$minutesInString:$secondsInString';
+  }
+
+  static double getRadiusFromZoom(double zoom) {
+    return 40000 / pow(2, zoom);
   }
 }

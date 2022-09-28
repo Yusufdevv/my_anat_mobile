@@ -6,7 +6,6 @@ import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 
 class ResultList extends StatelessWidget {
   const ResultList({Key? key}) : super(key: key);
@@ -15,7 +14,9 @@ class ResultList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HospitalListBloc, HospitalListState>(
       builder: (context, state) {
-     return   Paginator(
+        return Paginator(
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
+            padding: const EdgeInsets.all(16).copyWith(bottom: 266),
             emptyWidget: const EmptyPage(
               title: 'Ничего не найдено',
               desc: 'Результаты не найдены по вашему запросу',
@@ -29,9 +30,7 @@ class ResultList extends StatelessWidget {
             },
             itemCount: state.hospitals.length,
             fetchMoreFunction: () {
-              context
-                  .read<HospitalListBloc>()
-                  .add(HospitalListEvent.getMoreHospitals());
+              context.read<HospitalListBloc>().add(HospitalListEvent.getMoreHospitals());
             },
             hasMoreToFetch: state.totalCount > state.hospitals.length,
             errorWidget: const SizedBox());

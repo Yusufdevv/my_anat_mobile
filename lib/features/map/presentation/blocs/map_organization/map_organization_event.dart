@@ -7,4 +7,6 @@ class MapOrganizationEvent with _$MapOrganizationEvent {
   factory MapOrganizationEvent.getTypes() = _GetTypes;
   factory MapOrganizationEvent.getMoreTypes() = _GetMoreTypes;
   factory MapOrganizationEvent.changeSearchText(String text) = _ChangeSearchText;
+  factory MapOrganizationEvent.changeRadius({required int radius}) = _ChangeRadius;
+  factory MapOrganizationEvent.changeLatLong({required double lat, required double long}) = _ChangeLatLong;
 }
