@@ -1,6 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +13,11 @@ class ScrolledBottomSheet extends StatelessWidget {
   final bool hasHeader;
   final bool escapeBottomNavbar;
   final bool isSubScreen;
-  final WButton? stackedWButton;
+  final Widget? stackedWButton;
   final bool hasCancelButton;
   final bool hasDivider;
   final VoidCallback? onTapCancel;
+  final bool applyBottomPadding;
 
   const ScrolledBottomSheet(
       {required this.title,
@@ -25,12 +25,13 @@ class ScrolledBottomSheet extends StatelessWidget {
       this.escapeBottomNavbar = true,
       this.isSubScreen = false,
       this.hasCancelButton = true,
-        this.hasDivider=true,
+      this.hasDivider = true,
       this.child,
       this.children,
       this.pinnedChild,
       this.stackedWButton,
-        this.onTapCancel,
+      this.applyBottomPadding = true,
+      this.onTapCancel,
       Key? key})
       : assert(child == null || children == null),
         super(key: key);
@@ -62,7 +63,7 @@ class ScrolledBottomSheet extends StatelessWidget {
                           if (isSubScreen)
                             WScaleAnimation(
                               child: SvgPicture.asset(AppIcons.leftArrow),
-                              onTap:onTapCancel??(){},
+                              onTap: onTapCancel ?? () {},
                             ),
                           if (isSubScreen) const SizedBox(width: 4),
                           Text(
@@ -85,7 +86,7 @@ class ScrolledBottomSheet extends StatelessWidget {
                     ),
                   )
                 : const SliverToBoxAdapter(child: SizedBox()),
-             SliverToBoxAdapter( child: hasDivider? WDivider():SizedBox()),
+            SliverToBoxAdapter(child: hasDivider ? WDivider() : SizedBox()),
             pinnedChild != null
                 ? SliverToBoxAdapter(
                     child: Container(
@@ -123,7 +124,7 @@ class ScrolledBottomSheet extends StatelessWidget {
         ),
         stackedWButton != null
             ? Positioned(
-                bottom: MediaQuery.of(context).padding.bottom + 8,
+                bottom: applyBottomPadding ? MediaQuery.of(context).padding.bottom + 8 : 0,
                 left: 0,
                 right: 0,
                 child: stackedWButton!,

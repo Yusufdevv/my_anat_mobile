@@ -1,3 +1,4 @@
+import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
@@ -5,9 +6,9 @@ import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/region_item.dart';
-import 'package:flutter/material.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegionBottomSheet extends StatefulWidget {
@@ -60,22 +61,25 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
         hasHeader: true,
         onTapCancel: () {
           if (currentPage == 1) {
-            pageController.previousPage(
-                duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+            pageController.previousPage(duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
           }
         },
+        applyBottomPadding: !(currentPage == 1 || isCheck),
         stackedWButton: currentPage == 1 || isCheck
-            ? WButton(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                text: 'Выбрать',
-                onTap: () {
-                  widget.vacancyBloc.add(SelectDistrictEvent(
-                    onSuccess: () {
-                      Navigator.of(context).pop();
-                    },
-                    districtList: list,
-                  ));
-                },
+            ? Container(
+                color: white,
+                child: WButton(
+                  margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 8),
+                  text: 'Выбрать',
+                  onTap: () {
+                    widget.vacancyBloc.add(SelectDistrictEvent(
+                      onSuccess: () {
+                        Navigator.of(context).pop();
+                      },
+                      districtList: list,
+                    ));
+                  },
+                ),
               )
             : null,
         child: PageView(
@@ -116,11 +120,8 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                     return RegionItem(
                       title: state.regions[index - 1].title,
                       onTap: () {
-                        context
-                            .read<RegionBloc>()
-                            .add(GetDistrictEvent(id: state.regions[index - 1].id));
-                        pageController.nextPage(
-                            duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+                        context.read<RegionBloc>().add(GetDistrictEvent(id: state.regions[index - 1].id));
+                        pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
                       },
                     );
                   },
@@ -132,7 +133,7 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
             BlocBuilder<RegionBloc, RegionState>(
               builder: (context, state) {
                 return Paginator(
-                  padding: EdgeInsets.fromLTRB(16, 20, 16, 24 + mediaQuery.padding.bottom),
+                  padding: EdgeInsets.fromLTRB(16, 20, 16, 40 + mediaQuery.padding.bottom),
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return CheckBoxTitle(
@@ -198,6 +199,8 @@ void showRegionBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
     useRootNavigator: true,
+    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height - 150),
+    isScrollControlled: true,
     builder: (context) => RegionBottomSheet(
       vacancyBloc: vacancyBloc,
       regionBloc: regionBloc,
