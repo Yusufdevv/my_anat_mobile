@@ -1,9 +1,11 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/common/presentation/widgets/register_bottom_sheet.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/all_journals_screen.dart';
+import 'package:anatomica/features/magazine/presentation/pages/buy_subscription.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/downloading_dialog.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_item.dart';
@@ -17,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FirstJournal extends StatelessWidget {
   final JournalState state;
+
   const FirstJournal({
     required this.state,
     Key? key,
@@ -82,7 +85,15 @@ class FirstJournal extends StatelessWidget {
                   );
                 }
               },
-              onRightButtonTap: () {},
+              onRightButtonTap: () {
+                if (context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated){
+                  Navigator.of(context, rootNavigator: true)
+                      .push(fade(page: BuySubscription(images: state.journals.map((e) => e.image).toList())));
+                } else {
+                  showRegisterBottomSheet(context);
+                }
+
+              },
               margin: const EdgeInsets.only(right: 16, top: 4),
               journalEntity: state.journals.first,
             ),

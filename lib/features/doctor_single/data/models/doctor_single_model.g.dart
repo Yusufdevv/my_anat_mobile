@@ -46,6 +46,7 @@ DoctorSingleModel _$DoctorSingleModelFromJson(Map<String, dynamic> json) =>
           ? const LicenceEntity()
           : const LicenceEntityConverter()
               .fromJson(json['licence'] as Map<String, dynamic>?),
+      commentCount: json['comment_count'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$DoctorSingleModelToJson(DoctorSingleModel instance) =>
@@ -71,4 +72,5 @@ Map<String, dynamic> _$DoctorSingleModelToJson(DoctorSingleModel instance) =>
       'telegram': instance.telegram,
       'moderation_status': instance.moderationStatus,
       'img': const ImageConverter().toJson(instance.img),
+      'comment_count': instance.commentCount,
     };

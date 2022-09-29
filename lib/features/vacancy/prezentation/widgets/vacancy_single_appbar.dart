@@ -1,15 +1,16 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class VacancySingleAppBar extends StatelessWidget {
-  const VacancySingleAppBar({Key? key}) : super(key: key);
+  final String shareValue;
+  const VacancySingleAppBar({required this.shareValue, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +38,7 @@ class VacancySingleAppBar extends StatelessWidget {
           height: 60,
           decoration: BoxDecoration(
             color: primary,
-            boxShadow: [
-              BoxShadow(
-                  color: woodSmoke.withOpacity(0.12), offset: const Offset(0, 8), blurRadius: 24)
-            ],
+            boxShadow: [BoxShadow(color: woodSmoke.withOpacity(0.12), offset: const Offset(0, 8), blurRadius: 24)],
           ),
           child: Column(
             children: [
@@ -58,7 +56,7 @@ class VacancySingleAppBar extends StatelessWidget {
                   const SizedBox(width: 20),
                   WScaleAnimation(
                     onTap: () {
-                      Share.share('something');
+                      Share.share(shareValue);
                     },
                     child: SvgPicture.asset(AppIcons.share),
                   ),

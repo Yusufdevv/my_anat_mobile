@@ -22,9 +22,11 @@ class DoctorArticles extends StatelessWidget {
           },
           paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.getArticleStatus),
           errorWidget: const Text('error'),
-          emptyWidget: const EmptyWidget(
-            content: 'Shifokor maqola yozmagan',
-            title: 'Shifokor maqola yozmagan',
+          emptyWidget: const SingleChildScrollView(
+            child: EmptyWidget(
+              content: 'Shifokor maqola yozmagan',
+              title: 'Shifokor maqola yozmagan',
+            ),
           ),
           itemCount: state.articles.length,
           padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),

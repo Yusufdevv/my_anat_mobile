@@ -45,7 +45,7 @@ class CommentAboutHospital extends StatelessWidget {
                     width: 36,
                     alignment: Alignment.center,
                     child: Text(
-                      'Ш',
+                      entity.userFullName.isNotEmpty ? entity.userFullName[0] : '',
                       style: Theme.of(context).textTheme.headline1!.copyWith(color: textSecondary, fontSize: 15),
                     ),
                   ),

@@ -94,22 +94,20 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
         ),
         BlocProvider(
             create: (context) => DoctorInterviewsBloc(
-                getDoctorInterviewsUseCase: GetDoctorInterviewsUseCase(
-                    repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+                getDoctorInterviewsUseCase:
+                    GetDoctorInterviewsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
               ..add(GetDoctorInterviews(doctorId: widget.id))),
         BlocProvider(
             create: (context) => CommentsBloc(
-                deletePostCommentUseCase: DeletePostCommentUseCase(
-                    repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                doctorCommentDeleteUseCase: DoctorCommentDeleteUseCase(
-                    repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-                doctorCommentUseCase:
-                    DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+                deletePostCommentUseCase:
+                    DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+                doctorCommentDeleteUseCase:
+                    DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+                doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
                 GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                postCommentUseCase:
-                    PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                getDoctorCommentsUseCase: GetDoctorCommentsUseCase(
-                    repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+                postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+                getDoctorCommentsUseCase:
+                    GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
               ..add(CommentsEvent.getDoctorComments(doctorId: widget.id))),
       ],
       child: WKeyboardDismisser(
@@ -126,8 +124,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                     floatHeaderSlivers: false,
                     controller: _scrollController,
                     headerSliverBuilder: (context, isHeaderScrolled) => [
-                      DoctorSingleAppBar(
-                          headerManagerBloc: _headerManagerBloc, doctor: state.doctorSingle),
+                      DoctorSingleAppBar(headerManagerBloc: _headerManagerBloc, doctor: state.doctorSingle),
                       SliverOverlapAbsorber(
                         handle: SliverOverlapAbsorberHandle(),
                         sliver: SliverSafeArea(
@@ -146,10 +143,17 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                     body: TabBarView(
                       controller: _tabController,
                       children: [
-                        const AboutDoctor(),
+                        AboutDoctor(
+                          controller: _tabController,
+                          showBio: state.doctorSingle.showInProfileBio,
+                          description: state.doctorSingle.bio,
+                        ),
                         DoctorArticles(doctorId: widget.id),
                         DoctorInterviews(doctorId: widget.id),
-                        DoctorComments(rating: state.doctorSingle.rating, doctor: widget.id),
+                        DoctorComments(
+                          rating: state.doctorSingle.rating,
+                          doctor: widget.id,
+                        ),
                         DoctorContacts(
                           doctorSingle: state.doctorSingle,
                         ),

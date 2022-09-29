@@ -24,9 +24,11 @@ class HospitalArticles extends StatelessWidget {
           padding: state.articles.isEmpty
               ? EdgeInsets.zero
               : const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-          emptyWidget: const EmptyWidget(
-            title: 'Maqolalar mavjud emas!',
-            content: 'Maqolalar mavjud emas!',
+          emptyWidget: const SingleChildScrollView(
+            child: EmptyWidget(
+              title: 'Maqolalar mavjud emas!',
+              content: 'Maqolalar mavjud emas!',
+            ),
           ),
           itemBuilder: (context, index) => HospitalArticleItem(
             entity: state.articles[index],

@@ -60,6 +60,7 @@ class AppIcons {
   static const arrowRight = 'assets/icons/vacancy/arror_right.svg';
   static const filter = 'assets/icons/vacancy/filter.svg';
   static const searchEmpty = 'assets/icons/vacancy/search_empty.svg';
+  static const certificate = 'assets/icons/vacancy/certificate.svg';
 
 //  static const star = 'assets/icons/vacancy/star.svg';
   static const mapPin = 'assets/icons/vacancy/map_pin.svg';

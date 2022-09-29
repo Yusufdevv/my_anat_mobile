@@ -25,7 +25,7 @@ class RatingStars extends StatelessWidget {
     return Row(
       children: [
         ...List.generate(
-          rate.toInt() ,
+          rate.toInt() <= 5 ? rate.toInt() : 5,
           (index) => Row(
             children: [
               GestureDetector(
@@ -45,7 +45,7 @@ class RatingStars extends StatelessWidget {
           ),
         ),
         ...List.generate(
-          5 - rate.toInt(),
+          (5 - rate.toInt()) > 0 ? (5 - rate.toInt()) : 0,
           (index) => Row(
             children: [
               GestureDetector(

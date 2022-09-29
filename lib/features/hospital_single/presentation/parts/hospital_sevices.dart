@@ -36,17 +36,19 @@ class _HospitalServicesState extends State<HospitalServices> {
               ? const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16)
               : EdgeInsets.zero,
           children: [
-            Padding(
-              padding: state.services.isNotEmpty ? EdgeInsets.zero : const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: SearchField(
-                controller: _textController,
-                onChanged: (value) {
-                  context.read<ServicesBloc>().add(ServicesEvent.searchServices(query: value));
-                },
-                fillColor: white,
+            if (state.serviceCount > 20) ...[
+              Padding(
+                padding: state.services.isNotEmpty ? EdgeInsets.zero : const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: SearchField(
+                  controller: _textController,
+                  onChanged: (value) {
+                    context.read<ServicesBloc>().add(ServicesEvent.searchServices(query: value));
+                  },
+                  fillColor: white,
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
+            ],
             if (state.status.isSubmissionInProgress) ...{
               const Center(
                 child: CupertinoActivityIndicator(),

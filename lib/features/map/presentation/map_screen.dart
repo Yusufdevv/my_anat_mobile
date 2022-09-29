@@ -366,7 +366,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                           mapOrganizationBloc.add(MapOrganizationEvent.changeSearchText(''));
                                         },
                                         child: SvgPicture.asset(
-                                          AppIcons.close,
+                                          AppIcons.clearRounded,
                                           width: 24,
                                           height: 24,
                                         ),

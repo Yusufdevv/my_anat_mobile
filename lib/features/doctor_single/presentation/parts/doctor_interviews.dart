@@ -16,9 +16,11 @@ class DoctorInterviews extends StatelessWidget {
       builder: (context, state) {
         return Paginator(
           errorWidget: const Text('error'),
-          emptyWidget: const EmptyWidget(
-            title: 'Interviyular yo\'q',
-            content: 'Bu mutaxasis interviyu bermagan',
+          emptyWidget: const SingleChildScrollView(
+            child: EmptyWidget(
+              title: 'Interviyular yo\'q',
+              content: 'Bu mutaxasis interviyu bermagan',
+            ),
           ),
           itemCount: state.interviews.length,
           padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),

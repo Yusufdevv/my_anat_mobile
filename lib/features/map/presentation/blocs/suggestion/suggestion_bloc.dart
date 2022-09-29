@@ -5,31 +5,37 @@ import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 
-part 'suggestion_event.dart';
-
-part 'suggestion_state.dart';
-
 part 'suggestion_bloc.freezed.dart';
+part 'suggestion_event.dart';
+part 'suggestion_state.dart';
 
 class SuggestionBloc extends Bloc<SuggestionEvent, SuggestionState> {
   final GetSuggestionsUseCase getSuggestions;
-  final bool isDoctor;
 
-  SuggestionBloc(this.getSuggestions, this.isDoctor)
-      : super(SuggestionState()) {
-    on<SuggestionEvent>((event, emit) async {
-      emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await getSuggestions(
-          SuggestionParam(isDoctor: isDoctor, search: event.text));
+  SuggestionBloc(this.getSuggestions) : super(SuggestionState()) {
+    on<_GetSuggestions>((event, emit) async {
+      emit(state.copyWith(status: FormzStatus.submissionInProgress, searchText: event.text));
+      final result = await getSuggestions(SuggestionParam(isDoctor: state.currentPage == 1, search: event.text));
       if (result.isRight) {
-        emit(state.copyWith(
-            status: FormzStatus.submissionInProgress, list: result.right));
+        emit(state.copyWith(status: FormzStatus.submissionInProgress, list: result.right));
       } else {
         emit(state.copyWith(
           status: FormzStatus.submissionFailure,
         ));
       }
     }, transformer: debounce(const Duration(milliseconds: 200)));
+    on<_ChangePage>((event, emit) async {
+      emit(state.copyWith(status: FormzStatus.submissionInProgress));
+      final result = await getSuggestions(SuggestionParam(isDoctor: state.currentPage == 1, search: state.searchText));
+      if (result.isRight) {
+        emit(state.copyWith(status: FormzStatus.submissionInProgress, list: result.right));
+      } else {
+        emit(state.copyWith(
+          status: FormzStatus.submissionFailure,
+        ));
+      }
+      emit(state.copyWith(currentPage: event.page));
+    });
   }
 
   EventTransformer<MyEvent> debounce<MyEvent>(Duration duration) =>

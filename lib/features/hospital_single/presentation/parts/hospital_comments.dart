@@ -6,7 +6,6 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/register_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/hospital_single/domain/entities/post_comment_entity.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_item.dart';
@@ -20,16 +19,10 @@ class HospitalComments extends StatelessWidget {
   final double overallRating;
   final CommentsBloc commentsBloc;
   final int commentCount;
-  final ValueChanged<PostCommentEntity> onSubmitComment;
   final VoidCallback? onTapDelete;
 
   const HospitalComments(
-      {required this.overallRating,
-      required this.onSubmitComment,
-      required this.commentsBloc,
-      required this.commentCount,
-      this.onTapDelete,
-      Key? key})
+      {required this.overallRating, required this.commentsBloc, required this.commentCount, this.onTapDelete, Key? key})
       : super(key: key);
 
   @override
@@ -61,16 +54,13 @@ class HospitalComments extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RatingStars(
-                          rate: 4,
+                          rate: overallRating,
                           inactiveStarColor: primary.withOpacity(0.5),
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          '$commentCount ${LocaleKeys.review.tr()}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3!
-                              .copyWith(color: textColor, fontSize: 13),
+                          '${state.hospitalCommentCount} ${LocaleKeys.review.tr()}',
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
                         ),
                       ],
                     ),
@@ -85,6 +75,7 @@ class HospitalComments extends StatelessWidget {
                                 showModalBottomSheet(
                                   backgroundColor: Colors.transparent,
                                   context: context,
+                                  isScrollControlled: true,
                                   builder: (_) => CommentBottomSheet(
                                     parentContext: context,
                                     commentsBloc: context.read<CommentsBloc>(),
@@ -109,40 +100,45 @@ class HospitalComments extends StatelessWidget {
                 errorWidget: const Text('error'),
                 padding: state.comments.isEmpty
                     ? EdgeInsets.zero
-                    : const EdgeInsets.all(16)
-                        .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                    : const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
                 separatorBuilder: (context, index) => const SizedBox(height: 16),
                 itemBuilder: (context, index) => CommentItem(
                   onTapDelete: () {
                     print('del');
-                    commentsBloc.add(CommentsEvent.deleteHospitalComment(
+                    commentsBloc.add(
+                      CommentsEvent.deleteHospitalComment(
                         id: state.comments[index].id,
                         onSuccess: () {
                           print('success deleted');
                         },
                         onError: () {
                           print('error');
-                        }));
+                        },
+                      ),
+                    );
                   },
                   entity: state.comments[index],
                 ),
                 itemCount: state.comments.length,
                 emptyWidget: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                   builder: (context, state) {
-                    return EmptyWidget(onButtonTap: () {
-                      if (state.status == AuthenticationStatus.authenticated) {
-                        showModalBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (_) => CommentBottomSheet(
-                            parentContext: context,
-                            commentsBloc: context.read<CommentsBloc>(),
-                          ),
-                        );
-                      } else {
-                        showRegisterBottomSheet(context);
-                      }
-                    });
+                    return SingleChildScrollView(
+                      child: EmptyWidget(onButtonTap: () {
+                        if (state.status == AuthenticationStatus.authenticated) {
+                          showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (_) => CommentBottomSheet(
+                              parentContext: context,
+                              commentsBloc: context.read<CommentsBloc>(),
+                            ),
+                          );
+                        } else {
+                          showRegisterBottomSheet(context);
+                        }
+                      }),
+                    );
                   },
                 ),
                 fetchMoreFunction: () {

@@ -8,5 +8,6 @@ class FacilitiesState with _$FacilitiesState {
     @Default(false) bool fetchMore,
     String? next,
     @Default(0) int organizationId,
+    @Default(0) int facilityCount,
   }) = _FacilitiesState;
 }

@@ -8,6 +8,7 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CandidateItem extends StatelessWidget {
   final VoidCallback onTap;
@@ -47,6 +48,7 @@ class CandidateItem extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: candidateListEntity.image.middle,
                   fit: BoxFit.cover,
+                  errorWidget: (_, __, ___) => SvgPicture.asset(AppIcons.smallImageError),
                 ),
               ),
             ),
@@ -69,10 +71,7 @@ class CandidateItem extends StatelessWidget {
                       textStyle: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                       overflow: TextOverflow.ellipsis,
                       highlightedText: searchText,
-                      textStyleHighlight: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(fontSize: 14, color: white),
+                      textStyleHighlight: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14, color: white),
                       highlightColor: tongerineYellow,
                       maxLines: 1,
                     ),
@@ -81,8 +80,7 @@ class CandidateItem extends StatelessWidget {
                         title: '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
                         icon: AppIcons.briefCase),
                     const SizedBox(height: 4),
-                    VacancyItemTextWidget(
-                        title: candidateListEntity.address, icon: AppIcons.mapPin),
+                    VacancyItemTextWidget(title: candidateListEntity.address, icon: AppIcons.mapPin),
                   ],
                 ),
               ),

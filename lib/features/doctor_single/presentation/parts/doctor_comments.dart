@@ -49,16 +49,13 @@ class DoctorComments extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RatingStars(
-                          rate: rating,
+                          rate: rating.round().toDouble(),
                           inactiveStarColor: primary.withOpacity(0.5),
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          '7 ${LocaleKeys.review.tr()}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3!
-                              .copyWith(color: textColor, fontSize: 13),
+                          '${state.doctorComments.length} ${LocaleKeys.review.tr()}',
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
                         ),
                       ],
                     ),
@@ -72,6 +69,7 @@ class DoctorComments extends StatelessWidget {
                               showModalBottomSheet(
                                 backgroundColor: Colors.transparent,
                                 context: context,
+                                isScrollControlled: true,
                                 builder: (_) => CommentBottomSheet(
                                   parentContext: context,
                                   isDoctor: true,
@@ -93,8 +91,7 @@ class DoctorComments extends StatelessWidget {
             ),
             Expanded(
               child: Paginator(
-                padding: const EdgeInsets.all(16)
-                    .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
                 separatorBuilder: (context, index) => const SizedBox(height: 16),
                 itemBuilder: (context, index) => CommentItem(
                   onTapDelete: () {
@@ -111,8 +108,7 @@ class DoctorComments extends StatelessWidget {
                   entity: state.doctorComments[index],
                 ),
                 itemCount: state.doctorComments.length,
-                paginatorStatus:
-                    MyFunctions.formzStatusToPaginatorStatus(state.doctorCommentStatus),
+                paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.doctorCommentStatus),
                 fetchMoreFunction: () {
                   context.read<CommentsBloc>().add(CommentsEvent.getMoreDoctorComments());
                 },

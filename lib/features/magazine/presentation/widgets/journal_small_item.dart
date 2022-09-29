@@ -45,6 +45,7 @@ class _MagazineSmallItemState extends State<MagazineSmallItem> {
                 const SizedBox(height: 12),
                 Text(
                   widget.journalEntity.redaction,
+                  maxLines: 1,
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,

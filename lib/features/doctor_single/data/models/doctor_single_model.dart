@@ -34,6 +34,7 @@ class DoctorSingleModel extends DoctorSingleEntity {
     required super.showInProfileBio,
     required super.work,
     required super.licence,
+    required super.commentCount,
   });
   factory DoctorSingleModel.fromJson(Map<String, dynamic> json) => _$DoctorSingleModelFromJson(json);
 }

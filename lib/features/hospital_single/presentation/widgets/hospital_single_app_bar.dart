@@ -79,7 +79,11 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                           child: WImage(
                                             imageUrl: state.hospital.images[index].middle,
                                             fit: BoxFit.cover,
-                                            onErrorWidget: SvgPicture.asset(AppIcons.bigImageError),
+                                            onErrorColor: Colors.red,
+                                            onErrorWidget: SvgPicture.asset(
+                                              AppIcons.bigImageError,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                         Positioned.fill(

@@ -481,6 +481,7 @@ mixin _$ServicesState {
   bool get fetchMore => throw _privateConstructorUsedError;
   int get hospitalId => throw _privateConstructorUsedError;
   String get searchQuery => throw _privateConstructorUsedError;
+  int get serviceCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ServicesStateCopyWith<ServicesState> get copyWith =>
@@ -499,7 +500,8 @@ abstract class $ServicesStateCopyWith<$Res> {
       String? next,
       bool fetchMore,
       int hospitalId,
-      String searchQuery});
+      String searchQuery,
+      int serviceCount});
 }
 
 /// @nodoc
@@ -520,6 +522,7 @@ class _$ServicesStateCopyWithImpl<$Res>
     Object? fetchMore = freezed,
     Object? hospitalId = freezed,
     Object? searchQuery = freezed,
+    Object? serviceCount = freezed,
   }) {
     return _then(_value.copyWith(
       status: status == freezed
@@ -550,6 +553,10 @@ class _$ServicesStateCopyWithImpl<$Res>
           ? _value.searchQuery
           : searchQuery // ignore: cast_nullable_to_non_nullable
               as String,
+      serviceCount: serviceCount == freezed
+          ? _value.serviceCount
+          : serviceCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -568,7 +575,8 @@ abstract class _$$_ServicesStateCopyWith<$Res>
       String? next,
       bool fetchMore,
       int hospitalId,
-      String searchQuery});
+      String searchQuery,
+      int serviceCount});
 }
 
 /// @nodoc
@@ -591,6 +599,7 @@ class __$$_ServicesStateCopyWithImpl<$Res>
     Object? fetchMore = freezed,
     Object? hospitalId = freezed,
     Object? searchQuery = freezed,
+    Object? serviceCount = freezed,
   }) {
     return _then(_$_ServicesState(
       status: status == freezed
@@ -621,6 +630,10 @@ class __$$_ServicesStateCopyWithImpl<$Res>
           ? _value.searchQuery
           : searchQuery // ignore: cast_nullable_to_non_nullable
               as String,
+      serviceCount: serviceCount == freezed
+          ? _value.serviceCount
+          : serviceCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -635,7 +648,8 @@ class _$_ServicesState implements _ServicesState {
       this.next,
       this.fetchMore = false,
       this.hospitalId = 0,
-      this.searchQuery = ''})
+      this.searchQuery = '',
+      this.serviceCount = 0})
       : _services = services;
 
   @override
@@ -663,10 +677,13 @@ class _$_ServicesState implements _ServicesState {
   @override
   @JsonKey()
   final String searchQuery;
+  @override
+  @JsonKey()
+  final int serviceCount;
 
   @override
   String toString() {
-    return 'ServicesState(status: $status, paginationStatus: $paginationStatus, services: $services, next: $next, fetchMore: $fetchMore, hospitalId: $hospitalId, searchQuery: $searchQuery)';
+    return 'ServicesState(status: $status, paginationStatus: $paginationStatus, services: $services, next: $next, fetchMore: $fetchMore, hospitalId: $hospitalId, searchQuery: $searchQuery, serviceCount: $serviceCount)';
   }
 
   @override
@@ -683,7 +700,9 @@ class _$_ServicesState implements _ServicesState {
             const DeepCollectionEquality()
                 .equals(other.hospitalId, hospitalId) &&
             const DeepCollectionEquality()
-                .equals(other.searchQuery, searchQuery));
+                .equals(other.searchQuery, searchQuery) &&
+            const DeepCollectionEquality()
+                .equals(other.serviceCount, serviceCount));
   }
 
   @override
@@ -695,7 +714,8 @@ class _$_ServicesState implements _ServicesState {
       const DeepCollectionEquality().hash(next),
       const DeepCollectionEquality().hash(fetchMore),
       const DeepCollectionEquality().hash(hospitalId),
-      const DeepCollectionEquality().hash(searchQuery));
+      const DeepCollectionEquality().hash(searchQuery),
+      const DeepCollectionEquality().hash(serviceCount));
 
   @JsonKey(ignore: true)
   @override
@@ -711,7 +731,8 @@ abstract class _ServicesState implements ServicesState {
       final String? next,
       final bool fetchMore,
       final int hospitalId,
-      final String searchQuery}) = _$_ServicesState;
+      final String searchQuery,
+      final int serviceCount}) = _$_ServicesState;
 
   @override
   FormzStatus get status;
@@ -727,6 +748,8 @@ abstract class _ServicesState implements ServicesState {
   int get hospitalId;
   @override
   String get searchQuery;
+  @override
+  int get serviceCount;
   @override
   @JsonKey(ignore: true)
   _$$_ServicesStateCopyWith<_$_ServicesState> get copyWith =>

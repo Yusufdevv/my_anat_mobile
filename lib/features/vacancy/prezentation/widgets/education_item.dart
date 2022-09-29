@@ -13,7 +13,6 @@ class EducationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 20, 14),
-      height: 142,
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(12),
@@ -43,10 +42,7 @@ class EducationItem extends StatelessWidget {
                       entity.faculty.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(fontWeight: FontWeight.w400),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
                     )
                   ],
                 ),

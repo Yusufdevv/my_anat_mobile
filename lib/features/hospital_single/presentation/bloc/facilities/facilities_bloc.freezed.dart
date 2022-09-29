@@ -321,6 +321,7 @@ mixin _$FacilitiesState {
   bool get fetchMore => throw _privateConstructorUsedError;
   String? get next => throw _privateConstructorUsedError;
   int get organizationId => throw _privateConstructorUsedError;
+  int get facilityCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FacilitiesStateCopyWith<FacilitiesState> get copyWith =>
@@ -337,7 +338,8 @@ abstract class $FacilitiesStateCopyWith<$Res> {
       FormzStatus status,
       bool fetchMore,
       String? next,
-      int organizationId});
+      int organizationId,
+      int facilityCount});
 }
 
 /// @nodoc
@@ -356,6 +358,7 @@ class _$FacilitiesStateCopyWithImpl<$Res>
     Object? fetchMore = freezed,
     Object? next = freezed,
     Object? organizationId = freezed,
+    Object? facilityCount = freezed,
   }) {
     return _then(_value.copyWith(
       comforts: comforts == freezed
@@ -378,6 +381,10 @@ class _$FacilitiesStateCopyWithImpl<$Res>
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
+      facilityCount: facilityCount == freezed
+          ? _value.facilityCount
+          : facilityCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -394,7 +401,8 @@ abstract class _$$_FacilitiesStateCopyWith<$Res>
       FormzStatus status,
       bool fetchMore,
       String? next,
-      int organizationId});
+      int organizationId,
+      int facilityCount});
 }
 
 /// @nodoc
@@ -415,6 +423,7 @@ class __$$_FacilitiesStateCopyWithImpl<$Res>
     Object? fetchMore = freezed,
     Object? next = freezed,
     Object? organizationId = freezed,
+    Object? facilityCount = freezed,
   }) {
     return _then(_$_FacilitiesState(
       comforts: comforts == freezed
@@ -437,6 +446,10 @@ class __$$_FacilitiesStateCopyWithImpl<$Res>
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
+      facilityCount: facilityCount == freezed
+          ? _value.facilityCount
+          : facilityCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -449,7 +462,8 @@ class _$_FacilitiesState implements _FacilitiesState {
       this.status = FormzStatus.pure,
       this.fetchMore = false,
       this.next,
-      this.organizationId = 0})
+      this.organizationId = 0,
+      this.facilityCount = 0})
       : _comforts = comforts;
 
   final List<ComfortEntity> _comforts;
@@ -471,10 +485,13 @@ class _$_FacilitiesState implements _FacilitiesState {
   @override
   @JsonKey()
   final int organizationId;
+  @override
+  @JsonKey()
+  final int facilityCount;
 
   @override
   String toString() {
-    return 'FacilitiesState(comforts: $comforts, status: $status, fetchMore: $fetchMore, next: $next, organizationId: $organizationId)';
+    return 'FacilitiesState(comforts: $comforts, status: $status, fetchMore: $fetchMore, next: $next, organizationId: $organizationId, facilityCount: $facilityCount)';
   }
 
   @override
@@ -487,7 +504,9 @@ class _$_FacilitiesState implements _FacilitiesState {
             const DeepCollectionEquality().equals(other.fetchMore, fetchMore) &&
             const DeepCollectionEquality().equals(other.next, next) &&
             const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId));
+                .equals(other.organizationId, organizationId) &&
+            const DeepCollectionEquality()
+                .equals(other.facilityCount, facilityCount));
   }
 
   @override
@@ -497,7 +516,8 @@ class _$_FacilitiesState implements _FacilitiesState {
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(fetchMore),
       const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(organizationId));
+      const DeepCollectionEquality().hash(organizationId),
+      const DeepCollectionEquality().hash(facilityCount));
 
   @JsonKey(ignore: true)
   @override
@@ -511,7 +531,8 @@ abstract class _FacilitiesState implements FacilitiesState {
       final FormzStatus status,
       final bool fetchMore,
       final String? next,
-      final int organizationId}) = _$_FacilitiesState;
+      final int organizationId,
+      final int facilityCount}) = _$_FacilitiesState;
 
   @override
   List<ComfortEntity> get comforts;
@@ -523,6 +544,8 @@ abstract class _FacilitiesState implements FacilitiesState {
   String? get next;
   @override
   int get organizationId;
+  @override
+  int get facilityCount;
   @override
   @JsonKey(ignore: true)
   _$$_FacilitiesStateCopyWith<_$_FacilitiesState> get copyWith =>

@@ -7,18 +7,20 @@ class ExperienceItem extends StatelessWidget {
   final String image;
   final String title;
   final String subTitle;
+  final bool isLast;
 
   const ExperienceItem({
     this.title = '',
     this.image = '',
     this.subTitle = '',
+    this.isLast = false,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: isLast ? 0 : 12),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       height: 82,
       decoration: BoxDecoration(
@@ -46,8 +48,7 @@ class ExperienceItem extends StatelessWidget {
                   subTitle,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style:
-                      Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                  style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
                 )
               ],
             ),

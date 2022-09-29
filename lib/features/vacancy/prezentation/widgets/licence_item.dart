@@ -2,15 +2,15 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/vacancy/domain/entities/certificate.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LicenceItem extends StatelessWidget {
   final CertificateEntity entity;
+  final bool isLast;
 
-  const LicenceItem({required this.entity, Key? key}) : super(key: key);
+  const LicenceItem({required this.entity, this.isLast = false, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +34,9 @@ class LicenceItem extends StatelessWidget {
         children: [
           Row(
             children: [
-              const ImageCard(
-                imageUrl:
-                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8bW9kZWxzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+              Container(
                 height: 58,
                 width: 58,
-                hasShadow: true,
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -52,10 +49,7 @@ class LicenceItem extends StatelessWidget {
                       entity.specialization.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(fontWeight: FontWeight.w400),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
                     )
                   ],
                 ),

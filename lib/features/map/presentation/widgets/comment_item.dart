@@ -53,9 +53,16 @@ class CommentItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         child: Image.network(
                           entity.userImage.middle,
-                          errorBuilder: (context, object, stack) => const SizedBox(
+                          errorBuilder: (context, object, stack) => Container(
                             height: 40,
                             width: 40,
+                            color: textFieldColor,
+                            alignment: Alignment.center,
+                            child: Text(
+                              entity.userFullName.isNotEmpty ? entity.userFullName[0] : '',
+                              style:
+                                  Theme.of(context).textTheme.headline1!.copyWith(color: textSecondary, fontSize: 15),
+                            ),
                           ),
                           height: 40,
                           width: 40,

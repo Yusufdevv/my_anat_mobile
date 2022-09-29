@@ -1,4 +1,5 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/empty_page.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/map/presentation/blocs/doctor_list/doctor_list_bloc.dart';
@@ -20,13 +21,17 @@ class _DoctorsListState extends State<DoctorsList> {
       builder: (context, state) {
         return Paginator(
             separatorBuilder: (context, index) => const SizedBox(height: 12),
-            padding: const EdgeInsets.all(16).copyWith(bottom: 266),
-            emptyWidget: const EmptyPage(
-              title: 'Ничего не найдено',
-              desc: 'Результаты не найдены по вашему запросу',
-              iconPath: AppIcons.emptyA,
+            padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 136),
+            emptyWidget: const Center(
+              child: SingleChildScrollView(
+                child: EmptyPage(
+                  title: 'Ничего не найдено',
+                  desc: 'Результаты не найдены по вашему запросу',
+                  iconPath: AppIcons.emptyA,
+                ),
+              ),
             ),
-            paginatorStatus: PaginatorStatus.PAGINATOR_SUCCESS,
+            paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
             itemBuilder: (c, index) {
               return DoctorItem(
                 entity: state.doctors[index],

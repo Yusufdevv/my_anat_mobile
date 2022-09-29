@@ -10,5 +10,6 @@ class ServicesState with _$ServicesState {
     @Default(false) bool fetchMore,
     @Default(0) int hospitalId,
     @Default('') String searchQuery,
+    @Default(0) int serviceCount,
   }) = _ServicesState;
 }

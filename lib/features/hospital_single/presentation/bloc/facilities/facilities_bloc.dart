@@ -24,6 +24,7 @@ class FacilitiesBloc extends Bloc<FacilitiesEvent, FacilitiesState> {
             comforts: result.right.results,
             next: result.right.next,
             organizationId: event.organizationId,
+            facilityCount: result.right.count,
             fetchMore: result.right.next != null,
           ),
         );

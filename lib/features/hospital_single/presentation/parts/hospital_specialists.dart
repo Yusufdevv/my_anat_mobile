@@ -26,9 +26,11 @@ class HospitalSpecialists extends StatelessWidget {
           itemBuilder: (context, index) => DoctorItem(
             entity: state.specialists[index],
           ),
-          emptyWidget: const EmptyWidget(
-            title: 'Mutaxasislar mavjud emas!',
-            content: 'Bu klinikada mutaxasislar mavjud emas!',
+          emptyWidget: const SingleChildScrollView(
+            child: EmptyWidget(
+              title: 'Mutaxasislar mavjud emas!',
+              content: 'Bu klinikada mutaxasislar mavjud emas!',
+            ),
           ),
           separatorBuilder: (context, index) => const SizedBox(height: 12),
           itemCount: state.specialists.length,

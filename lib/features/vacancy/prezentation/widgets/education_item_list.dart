@@ -5,14 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 class EducationItemList extends StatelessWidget {
-  const EducationItemList({Key? key}) : super(key: key);
+  final int candidateId;
+  const EducationItemList({required this.candidateId, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CandidateSingleBloc, CandidateSingleState>(
       builder: (context, state) {
         if (state.educationStatus.isPure) {
-          context.read<CandidateSingleBloc>().add(CandidateEducationEvent(id: 22));
+          context.read<CandidateSingleBloc>().add(CandidateEducationEvent(id: candidateId));
         } else if (state.educationStatus.isSubmissionInProgress) {
           return const Center(child: CupertinoActivityIndicator());
         } else if (state.educationStatus.isSubmissionSuccess) {

@@ -1,6 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ImageCard extends StatelessWidget {
   final String imageUrl;
@@ -40,7 +42,14 @@ class ImageCard extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover),
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          fit: BoxFit.cover,
+          errorWidget: (_, __, ___) => SvgPicture.asset(
+            AppIcons.smallImageError,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }

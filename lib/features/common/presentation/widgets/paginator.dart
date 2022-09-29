@@ -35,28 +35,30 @@ class Paginator extends StatelessWidget {
     } else if (paginatorStatus == PaginatorStatus.PAGINATOR_ERROR) {
       return errorWidget;
     } else if (paginatorStatus == PaginatorStatus.PAGINATOR_SUCCESS) {
-      return itemCount==0?emptyWidget??SizedBox(): ListView.separated(
-        scrollDirection: scrollDirection,
-        physics: const BouncingScrollPhysics(),
-        padding: padding,
-        itemBuilder: (context, index) {
-          if (itemCount == 0) {
-            return emptyWidget ?? const SizedBox.shrink();
-          }
-          if (index == itemCount) {
-            if (hasMoreToFetch) {
-              fetchMoreFunction();
-              return const Center(child: CupertinoActivityIndicator());
-            } else {
-              return const SizedBox();
-            }
-          }
-          return itemBuilder(context, index);
-        },
-        separatorBuilder: separatorBuilder ?? (context, index) => const SizedBox(),
-        itemCount: itemCount + 1,
-        shrinkWrap: true,
-      );
+      return itemCount == 0
+          ? emptyWidget ?? const SizedBox()
+          : ListView.separated(
+              scrollDirection: scrollDirection,
+              physics: const BouncingScrollPhysics(),
+              padding: padding,
+              itemBuilder: (context, index) {
+                if (itemCount == 0) {
+                  return emptyWidget ?? const SizedBox.shrink();
+                }
+                if (index == itemCount) {
+                  if (hasMoreToFetch) {
+                    fetchMoreFunction();
+                    return const Center(child: CupertinoActivityIndicator());
+                  } else {
+                    return const SizedBox();
+                  }
+                }
+                return itemBuilder(context, index);
+              },
+              separatorBuilder: separatorBuilder ?? (context, index) => const SizedBox(),
+              itemCount: itemCount + 1,
+              shrinkWrap: true,
+            );
     } else {
       return const SizedBox();
     }

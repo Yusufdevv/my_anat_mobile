@@ -213,7 +213,11 @@ abstract class MyFunctions {
   }
 
   static String formatPhoneForInput(String phone) {
-    return '${phone.substring(4, 6)} ${phone.substring(6, 9)} ${phone.substring(9, 11)} ${phone.substring(11, 13)}';
+    if (phone.length >= 13) {
+      return '${phone.substring(4, 6)} ${phone.substring(6, 9)} ${phone.substring(9, 11)} ${phone.substring(11, 13)}';
+    } else {
+      return phone;
+    }
   }
 
   static String getPublishedDate(String date) {

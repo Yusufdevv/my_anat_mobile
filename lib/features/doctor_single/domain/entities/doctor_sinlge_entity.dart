@@ -35,6 +35,7 @@ class DoctorSingleEntity extends Equatable {
   final String moderationStatus;
   @ImageConverter()
   final ImageEntity img;
+  final int commentCount;
   const DoctorSingleEntity({
     this.id = 0,
     this.fullName = '',
@@ -56,6 +57,7 @@ class DoctorSingleEntity extends Equatable {
     this.telegram = '',
     this.moderationStatus = '',
     this.img = const ImageEntity(),
+    this.commentCount = 0,
   });
 
   @override

@@ -11,7 +11,6 @@ part 'services_state.dart';
 
 class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
   final GetServicesUseCase getServices;
-
   ServicesBloc(this.getServices) : super(ServicesState()) {
     on<_GetServices>((event, emit) async {
       emit(state.copyWith(
@@ -21,6 +20,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       if (result.isRight) {
         emit(
           state.copyWith(
+            serviceCount: result.right.count,
             status: FormzStatus.submissionSuccess,
             services: result.right.results,
             hospitalId: event.organizationId,

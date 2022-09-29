@@ -20,9 +20,11 @@ class HospitalVacancies extends StatelessWidget {
             context.read<HospitalVacanciesBloc>().add(HospitalVacanciesEvent.getMoreVacancies());
           },
           hasMoreToFetch: state.fetchMore,
-          emptyWidget: const EmptyWidget(
-            title: 'Vakansiyalar mavjud emas!',
-            content: 'Bu klinikada bo\'sh ish o\'rinlari mavjud emas!',
+          emptyWidget: const SingleChildScrollView(
+            child: EmptyWidget(
+              title: 'Vakansiyalar mavjud emas!',
+              content: 'Bu klinikada bo\'sh ish o\'rinlari mavjud emas!',
+            ),
           ),
           padding: state.vacancies.isEmpty
               ? EdgeInsets.zero

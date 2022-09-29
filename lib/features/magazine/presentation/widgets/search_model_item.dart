@@ -32,13 +32,13 @@ class SearchedModelsItem extends StatelessWidget {
             textStyleHighlight:
                 Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
             textStyle: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
-            allText: magazineItemEntity.name,
+            allText: magazineItemEntity.redaction,
             highlightedText: controller.text,
             highlightColor: yellowHighlightedText,
           ),
           const SizedBox(height: 4),
           Text(
-            magazineItemEntity.redaction,
+            magazineItemEntity.name,
             style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
           ),
           WButton(

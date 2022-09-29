@@ -179,6 +179,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     ),
                     const SizedBox(height: 28),
                     DefaultTextField(
+                      maxLines: 1,
                       controller: nameController,
                       onChanged: (v) {
                         context.read<EditProfileBloc>().add(EditProfileEvent.changeName(v));
