@@ -16,6 +16,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:munir_epub_reader/epub_viewer.dart';
 
 class FirstJournal extends StatelessWidget {
   final JournalState state;
@@ -35,10 +36,13 @@ class FirstJournal extends StatelessWidget {
             TitleWithSuffixAction(
               title: LocaleKeys.issues.tr(),
               onTap: () {
-                Navigator.of(context).push(fade(
+                Navigator.of(context).push(
+                  fade(
                     page: AllJournalsScreen(
-                  bloc: context.read<JournalBloc>(),
-                )));
+                      bloc: context.read<JournalBloc>(),
+                    ),
+                  ),
+                );
               },
             ),
             MagazineItem(
@@ -63,8 +67,8 @@ class FirstJournal extends StatelessWidget {
                             );
                           },
                           fileType: state.journals.first.fileExtension,
-                          onDownloaded: (path) {
-                            print(path);
+                          onDownloaded: (file) {
+                            EpubViewer.open(file.path);
                           },
                         ),
                       );
@@ -86,13 +90,12 @@ class FirstJournal extends StatelessWidget {
                 }
               },
               onRightButtonTap: () {
-                if (context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated){
+                if (context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated) {
                   Navigator.of(context, rootNavigator: true)
                       .push(fade(page: BuySubscription(images: state.journals.map((e) => e.image).toList())));
                 } else {
                   showRegisterBottomSheet(context);
                 }
-
               },
               margin: const EdgeInsets.only(right: 16, top: 4),
               journalEntity: state.journals.first,

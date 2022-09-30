@@ -29,9 +29,13 @@ class ContactItem extends StatelessWidget {
                 color: primary,
               ),
               const SizedBox(width: 8),
-              Text(
-                content,
-                style: Theme.of(context).textTheme.headline1,
+              Expanded(
+                child: Text(
+                  content,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
               )
             ],
           ),

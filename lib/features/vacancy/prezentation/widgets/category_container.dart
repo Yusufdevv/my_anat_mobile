@@ -7,12 +7,14 @@ class CategoryContainer extends StatelessWidget {
   final EdgeInsets? margin;
   final VoidCallback onTap;
   final bool isSelect;
+  final bool isDisabled;
 
   const CategoryContainer({
     required this.onTap,
     this.title = '',
     this.isSelect = false,
     this.margin,
+    this.isDisabled = false,
     Key? key,
   }) : super(key: key);
 
@@ -20,6 +22,7 @@ class CategoryContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return WScaleAnimation(
       onTap: onTap,
+      isDisabled: isDisabled,
       child: Container(
         margin: margin ?? const EdgeInsets.only(right: 12, bottom: 20),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),

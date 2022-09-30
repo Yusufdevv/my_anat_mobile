@@ -129,7 +129,8 @@ class _HospitalContactsState extends State<HospitalContacts> {
           if (widget.phoneNumbers.isNotEmpty || widget.phone.isNotEmpty) ...{
             WButton(
               onTap: () async {
-                if (widget.phoneNumbers.isNotEmpty && !widget.phoneNumbers.toList().contains(widget.phone)) {
+                print(widget.phoneNumbers.length);
+                if (widget.phoneNumbers.length > 1) {
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,

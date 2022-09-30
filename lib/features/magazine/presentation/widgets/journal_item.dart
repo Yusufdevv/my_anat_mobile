@@ -3,6 +3,7 @@ import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
+import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -46,6 +47,7 @@ class MagazineItem extends StatelessWidget {
                   page: MagazineSingleItem(
                     journal: journalEntity,
                     bloc: context.read<JournalBloc>(),
+                    downloadBloc: context.read<DownloadBloc>(),
                   ),
                 ),
               );
@@ -123,7 +125,7 @@ class MagazineItem extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 12),
                         onTap: onRightButtonTap,
                         child: Text(
-                          LocaleKeys.buy.tr(),
+                          journalEntity.isBought || !journalEntity.isPremium ? 'Читать' : LocaleKeys.buy.tr(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -141,7 +143,9 @@ class MagazineItem extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 12),
                         onTap: onLeftButtonTap,
                         child: Text(
-                          journalEntity.isBought ? 'Читать' : MyFunctions.getFormatCostFromInt(journalEntity.price),
+                          journalEntity.isBought || !journalEntity.isPremium
+                              ? 'Читать'
+                              : MyFunctions.getFormatCostFromInt(journalEntity.price),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!

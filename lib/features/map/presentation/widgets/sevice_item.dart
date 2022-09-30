@@ -25,8 +25,8 @@ class ServiceItem extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               fade(
-                page: const ServiceSingleScreen(
-                  url: 'https://www.youtube.com/',
+                page: ServiceSingleScreen(
+                  url: entity.url,
                 ),
               ),
             );

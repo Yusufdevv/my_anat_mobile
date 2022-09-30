@@ -135,6 +135,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.delete('/user/profile/delete/',
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      print(response.data);
       if (!(response.statusCode! >= 200 && response.statusCode! < 300)) {
         throw ServerException(errorMessage: response.data.toString(), statusCode: response.statusCode ?? 0);
       }

@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class CandidateSingleHeader extends StatelessWidget {
   const CandidateSingleHeader({Key? key, required HeaderManagerBloc headerManagerBloc, required this.candidate})
@@ -34,9 +35,9 @@ class CandidateSingleHeader extends StatelessWidget {
               top: false,
               bottom: false,
               sliver: SliverAppBar(
-                title: headerManageState.isHeaderScrolled
+                title: headerManageState.isScrolled
                     ? Container(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                        padding: EdgeInsets.fromLTRB(16, MediaQuery.of(context).padding.top + 16, 16, 30),
                         width: double.infinity,
                         color: darkGreen,
                         child: Column(
@@ -44,10 +45,17 @@ class CandidateSingleHeader extends StatelessWidget {
                           children: [
                             Text(
                               candidate.fullName,
-                              style: Theme.of(context).textTheme.headline2!.copyWith(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(fontWeight: FontWeight.w600, fontSize: 20),
                             ),
                             const SizedBox(height: 4),
-                            Text(candidate.position.title, style: Theme.of(context).textTheme.headline2!.copyWith())
+                            Text(candidate.position.title,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(fontWeight: FontWeight.w400, fontSize: 16))
                           ],
                         ),
                       )
@@ -60,13 +68,14 @@ class CandidateSingleHeader extends StatelessWidget {
                 elevation: 1,
                 pinned: true,
                 floating: true,
+                toolbarHeight: 60 + MediaQuery.of(context).padding.top,
                 automaticallyImplyLeading: false,
                 backgroundColor: white,
                 systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: headerManageState.isHeaderScrolled ? darkGreen : Colors.transparent,
-                  statusBarIconBrightness: headerManageState.isHeaderScrolled ? Brightness.light : Brightness.dark,
+                  statusBarColor: headerManageState.isScrolled ? darkGreen : Colors.transparent,
+                  statusBarIconBrightness: headerManageState.isScrolled ? Brightness.light : Brightness.dark,
                 ),
-                collapsedHeight: 56,
+                collapsedHeight: 60 + MediaQuery.of(context).padding.top,
                 flexibleSpace: FlexibleSpaceBar(
                   stretchModes: const [StretchMode.blurBackground],
                   background: Stack(
@@ -218,7 +227,11 @@ class CandidateSingleHeader extends StatelessWidget {
                                     const SizedBox(height: 16),
                                     WButton(
                                       color: primary,
-                                      onTap: () {},
+                                      onTap: () async {
+                                        if (await canLaunchUrlString('tel:${candidate.phoneNumber}')) {
+                                          await launchUrlString('tel:${candidate.phoneNumber}');
+                                        }
+                                      },
                                       padding: EdgeInsets.zero,
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.center,

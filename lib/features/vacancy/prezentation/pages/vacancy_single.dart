@@ -116,6 +116,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               children: List.generate(
                                 state.vacancyListEntity.organization.speciazilation.length,
                                 (index) => CategoryContainer(
+                                  isDisabled: true,
                                   margin: const EdgeInsets.only(right: 12),
                                   onTap: () {},
                                   title: state.vacancyListEntity.organization.speciazilation[index].title,

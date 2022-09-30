@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/map/presentation/widgets/contact_item.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +20,11 @@ class PhoneBottomSheetItem extends StatelessWidget {
       throw 'Could not launch $uri';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return WScaleAnimation(
-      onTap:onTap?? (){},
+      onTap: onTap ?? () {},
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -36,9 +38,9 @@ class PhoneBottomSheetItem extends StatelessWidget {
             )
           ],
         ),
-        child:  ContactItem(
+        child: ContactItem(
           icon: AppIcons.boldPhone,
-          content: phone,
+          content: MyFunctions.formatPhone(phone, false),
           isLast: true,
         ),
       ),

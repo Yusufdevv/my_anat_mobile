@@ -12,6 +12,7 @@ class AboutCandidate extends StatelessWidget {
   final int candidateId;
   final String bio;
   final bool showBio;
+  final bool isRelatedEmpty;
 
   const AboutCandidate({
     Key? key,
@@ -19,6 +20,7 @@ class AboutCandidate extends StatelessWidget {
     required this.candidateId,
     required this.bio,
     required this.showBio,
+    required this.isRelatedEmpty,
   }) : super(key: key);
 
   @override
@@ -51,17 +53,17 @@ class AboutCandidate extends StatelessWidget {
           ),
           const SizedBox(height: 16),
         ],
-        ExperienceItemList(
-          candidateId: candidateId,
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 24, 0, 16),
-          child: Text(
-            LocaleKeys.candidates.tr(),
-            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
+        ExperienceItemList(candidateId: candidateId),
+        if (!isRelatedEmpty) ...[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 24, 0, 16),
+            child: Text(
+              LocaleKeys.candidates.tr(),
+              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
+            ),
           ),
-        ),
-        RelatedCandidateList(id: candidateId),
+          RelatedCandidateList(id: candidateId),
+        ]
       ],
     );
   }

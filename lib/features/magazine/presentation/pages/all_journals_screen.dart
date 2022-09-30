@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_small_item.dart';
@@ -69,11 +70,12 @@ class AllJournalsScreen extends StatelessWidget {
                   return const SizedBox.shrink();
                 } else {
                   return MagazineSmallItem(
-                    onTap: () {
+                    onButtonTap: () {
                       Navigator.push(
                         context,
                         fade(
                           page: MagazineSingleItem(
+                            downloadBloc: context.read<DownloadBloc>(),
                             bloc: bloc,
                             journal: state.journals[index],
                           ),

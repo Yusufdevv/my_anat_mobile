@@ -17,7 +17,7 @@ class HeaderManagerBloc extends Bloc<HeaderManagerEvent, HeaderManagerState> {
       },
     );
     on<ChangeVacancyScrollPosition>((event, emit) {
-      if (event.headerPosition > 450 - kToolbarHeight) {
+      if (event.headerPosition > 496 - kToolbarHeight) {
         emit(state.copyWith(isScrolled: true));
       } else {
         emit(state.copyWith(isScrolled: false));

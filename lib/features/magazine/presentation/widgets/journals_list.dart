@@ -34,8 +34,7 @@ class JournalsList extends StatelessWidget {
           (context, index) {
             final journal = state.journals.skip(1).take(4).toList()[index];
             return MagazineSmallItem(
-              onTap: () {
-                print(journal.isBought);
+              onButtonTap: () {
                 if (journal.isBought) {
                   context.read<DownloadBloc>().add(
                         CheckWetherFileExists(

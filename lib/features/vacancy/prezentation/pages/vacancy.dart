@@ -131,7 +131,9 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                                 children: List.generate(
                                   state.categoryList.length,
                                   (index) => CategoryContainer(
+                                    isSelect: state.selectCategoryId == state.categoryList[index].id,
                                     onTap: () {
+                                      vacancyBloc.add(SelectCategoryEvent(id: state.categoryList[index].id));
                                       vacancyBloc.add(GetVacancyListEvent(
                                           onSuccess: () {},
                                           vacancyParamsEntity:

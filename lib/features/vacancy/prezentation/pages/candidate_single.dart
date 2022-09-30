@@ -68,7 +68,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen> with Tick
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
+    _headerManagerBloc.add(ChangeVacancyScrollPosition(headerPosition: _scrollController.offset));
   }
 
   @override
@@ -119,6 +119,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen> with Tick
                       candidateId: widget.id,
                       bio: state.candidate.bio,
                       showBio: state.candidate.showInProfileBio,
+                      isRelatedEmpty: state.candidateList.isEmpty,
                     ),
                     ListView(
                       padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
@@ -135,7 +136,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen> with Tick
                     ListView(
                       padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
                       children: [
-                        const LicenceItemList(),
+                        LicenceItemList(candidateId: state.candidate.id),
                         if (state.candidateList.isNotEmpty) ...[
                           const SizedBox(height: 24),
                           VacancyTitleText(title: LocaleKeys.candidates.tr(), fontSize: 18),

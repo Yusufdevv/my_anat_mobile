@@ -1,16 +1,15 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_article_single.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
 class HospitalArticleItem extends StatelessWidget {
-  final JournalArticleEntity entity ;
+  final JournalArticleEntity entity;
   const HospitalArticleItem({
     required this.entity,
     Key? key,
@@ -18,9 +17,16 @@ class HospitalArticleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(behavior: HitTestBehavior.translucent,
-      onTap: () {
-        Navigator.of(context).push(fade(page: const HospitalArticleSingle()));
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () async {
+        if (entity.isBought || !entity.isPremium) {
+          Navigator.of(context).push(fade(page: HospitalArticleSingle(slug: entity.slug)));
+        } else {
+          if (await canLaunchUrlString('https://anatomica.uicgroup.tech/premium-article/${entity.slug}')) {
+            await launchUrlString('https://anatomica.uicgroup.tech/premium-article/${entity.slug}');
+          }
+        }
       },
       child: Container(
         padding: const EdgeInsets.all(8),

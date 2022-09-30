@@ -226,15 +226,22 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () {
-                        showCupertinoDatePicker(context, (date) {
-                          setState(() {
-                            this.date = date;
-                          });
-
-                          context
-                              .read<EditProfileBloc>()
-                              .add(EditProfileEvent.changeDate(Jiffy(date).format('dd.MM.yyyy')));
-                        });
+                        showCupertinoDatePicker(
+                          context,
+                          (date) {
+                            setState(() {
+                              this.date = date;
+                            });
+                            context
+                                .read<EditProfileBloc>()
+                                .add(EditProfileEvent.changeDate(Jiffy(date).format('dd.MM.yyyy')));
+                          },
+                          DateTime(
+                            Jiffy(date).year,
+                            Jiffy(date).month,
+                            Jiffy(date).date,
+                          ),
+                        );
                       },
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(16, 8, 12, 8),

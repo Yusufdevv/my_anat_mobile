@@ -7,7 +7,6 @@ import 'package:anatomica/features/navigation/domain/entity/nav_bar.dart';
 import 'package:anatomica/features/navigation/presentation/widgets/nav_bar_item.dart';
 import 'package:anatomica/features/navigation/presentation/widgets/tab_indicator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     NavItemEnum.account: GlobalKey<NavigatorState>(),
   };
 
-  final List<NavBar> lables = [
+  final List<NavBar> lables = const [
     NavBar(
       title: LocaleKeys.map,
       id: 0,
@@ -65,15 +64,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _controller = TabController(length: 4, vsync: this);
     _controller.addListener(onTabChange);
 
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-          systemNavigationBarColor: Colors.transparent,
-          systemNavigationBarContrastEnforced: false,
-          systemNavigationBarIconBrightness: Brightness.dark,
-          systemStatusBarContrastEnforced: false,
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.dark),
-    );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: SystemUiOverlay.values);
     super.initState();
   }
@@ -103,63 +93,72 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             }
             return isFirstRouteInCurrentTab;
           },
-          child: Scaffold(
-            extendBody: true,
-            resizeToAvoidBottomInset: true,
-            bottomNavigationBar: Container(
-              color: Colors.transparent,
-              child: Container(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-                height: 72 + MediaQuery.of(context).padding.bottom,
-                decoration: BoxDecoration(
-                  color: white,
-                  border: Border.all(color: textFieldColor),
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(16),
-                    topLeft: Radius.circular(16),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xff8898AA).withOpacity(0.08),
-                      blurRadius: 30,
-                      offset: const Offset(0, -4),
+          child: AnnotatedRegion(
+            value: const SystemUiOverlayStyle(
+                systemNavigationBarColor: Colors.transparent,
+                systemNavigationBarContrastEnforced: false,
+                systemNavigationBarIconBrightness: Brightness.dark,
+                systemStatusBarContrastEnforced: false,
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: Brightness.dark),
+            child: Scaffold(
+              extendBody: true,
+              resizeToAvoidBottomInset: true,
+              bottomNavigationBar: Container(
+                color: Colors.transparent,
+                child: Container(
+                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+                  height: 72 + MediaQuery.of(context).padding.bottom,
+                  decoration: BoxDecoration(
+                    color: white,
+                    border: Border.all(color: textFieldColor),
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(16),
+                      topLeft: Radius.circular(16),
                     ),
-                  ],
-                ),
-                child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                  builder: (context, state) {
-                    return TabBar(
-                      enableFeedback: true,
-                      onTap: (index) {
-                        if (index == 3 && state.status == AuthenticationStatus.unauthenticated) {
-                          showRegisterBottomSheet(context);
-                          _controller.animateTo(_controller.previousIndex);
-                        }
-                      },
-                      controller: _controller,
-                      indicatorPadding: EdgeInsets.zero,
-                      padding: EdgeInsets.zero,
-                      indicator: const CustomTabIndicator(radius: 3, color: primary),
-                      labelPadding: EdgeInsets.zero,
-                      tabs: List.generate(
-                        lables.length,
-                        (index) => NavItemWidget(
-                          navBar: lables[index],
-                          currentIndex: _currentIndex,
-                        ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xff8898AA).withOpacity(0.08),
+                        blurRadius: 30,
+                        offset: const Offset(0, -4),
                       ),
-                    );
-                  },
+                    ],
+                  ),
+                  child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                    builder: (context, state) {
+                      return TabBar(
+                        enableFeedback: true,
+                        onTap: (index) {
+                          if (index == 3 && state.status == AuthenticationStatus.unauthenticated) {
+                            showRegisterBottomSheet(context);
+                            _controller.animateTo(_controller.previousIndex);
+                          }
+                        },
+                        controller: _controller,
+                        indicatorPadding: EdgeInsets.zero,
+                        padding: EdgeInsets.zero,
+                        indicator: const CustomTabIndicator(radius: 3, color: primary),
+                        labelPadding: EdgeInsets.zero,
+                        tabs: List.generate(
+                          lables.length,
+                          (index) => NavItemWidget(
+                            navBar: lables[index],
+                            currentIndex: _currentIndex,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            body: TabBarView(
-              controller: _controller,
-              physics: const NeverScrollableScrollPhysics(),
-              children: List.generate(
-                NavItemEnum.values.length,
-                (index) => _buildPageNavigator(
-                  NavItemEnum.values[index],
+              body: TabBarView(
+                controller: _controller,
+                physics: const NeverScrollableScrollPhysics(),
+                children: List.generate(
+                  NavItemEnum.values.length,
+                  (index) => _buildPageNavigator(
+                    NavItemEnum.values[index],
+                  ),
                 ),
               ),
             ),

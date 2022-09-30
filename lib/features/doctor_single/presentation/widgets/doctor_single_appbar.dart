@@ -252,7 +252,12 @@ class DoctorSingleAppBar extends StatelessWidget {
                                         Expanded(
                                           child: WButton(
                                             color: white,
-                                            onTap: () {},
+                                            onTap: () async {
+                                              if (await canLaunchUrlString(doctor.organization.locationUrl)) {
+                                                await launchUrlString(doctor.organization.locationUrl,
+                                                    mode: LaunchMode.externalApplication);
+                                              }
+                                            },
                                             padding: EdgeInsets.zero,
                                             border: Border.all(color: primary),
                                             child: Row(

@@ -6,11 +6,12 @@ import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismis
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/search_model_item.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
+
 class MagazineSearchScreen extends StatefulWidget {
   final JournalBloc bloc;
   const MagazineSearchScreen({required this.bloc, Key? key}) : super(key: key);
@@ -81,6 +82,7 @@ class _MagazineSearchScreenState extends State<MagazineSearchScreen> {
                   const SizedBox(width: 8),
                   WScaleAnimation(
                     onTap: () {
+                      widget.bloc.add(SearchJournals(query: ''));
                       Navigator.pop(context);
                     },
                     child: Text(

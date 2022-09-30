@@ -54,7 +54,8 @@ class MagazineScreen extends StatelessWidget {
           ..add(GetJournals())
           ..add(GetJournalArticles()),
         child: AnnotatedRegion(
-          value: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+          value:
+              const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark),
           child: Scaffold(
             appBar: const PreferredSize(
               preferredSize: Size.fromHeight(64),

@@ -34,28 +34,34 @@ class CandidateContactInfo extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
           child: Column(
             children: [
-              CandidateContactItem(
-                onTap: () {
-                  _launchUrl(candidate.email);
-                },
-                icon: AppIcons.vacancyMail,
-                title: candidate.email,
-              ),
-              CandidateContactItem(
-                onTap: () {
-                  _launchUrl('https://www.instagram.com/${candidate.instagram}');
-                },
-                icon: AppIcons.instagram,
-                title: candidate.instagram,
-              ),
-              CandidateContactItem(
-                onTap: () {
-                  _launchUrl('https://telegram.me');
-                },
-                icon: AppIcons.telegram,
-                title: candidate.telegram,
-                isLast: true,
-              ),
+              if (candidate.email.isNotEmpty) ...{
+                CandidateContactItem(
+                  onTap: () {
+                    _launchUrl('mailto:${candidate.email}');
+                  },
+                  icon: AppIcons.vacancyMail,
+                  title: candidate.email,
+                ),
+              },
+              if (candidate.instagram.isNotEmpty) ...{
+                CandidateContactItem(
+                  onTap: () {
+                    _launchUrl('https://www.instagram.com/${candidate.instagram}');
+                  },
+                  icon: AppIcons.instagram,
+                  title: candidate.instagram,
+                ),
+              },
+              if (candidate.telegram.isNotEmpty) ...{
+                CandidateContactItem(
+                  onTap: () {
+                    _launchUrl('https://t.me/${candidate.telegram}');
+                  },
+                  icon: AppIcons.telegram,
+                  title: candidate.telegram,
+                  isLast: true,
+                ),
+              }
             ],
           ),
         ),
