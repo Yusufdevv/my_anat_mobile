@@ -85,7 +85,7 @@ class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
                 hasError: state.submitCodeStatus.isSubmissionFailure,
                 secondsLeft: state.secondsLeft,
                 pinCodeController: pinCodeController,
-                errorText: 'Kod xato',
+                errorText: LocaleKeys.code_error.tr(),
                 onRefresh: () {
                   context.read<ResetPasswordBloc>().add(ResendCode());
                 },

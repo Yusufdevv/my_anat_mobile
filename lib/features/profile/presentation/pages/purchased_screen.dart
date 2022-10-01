@@ -1,13 +1,13 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
-import 'package:anatomica/features/profile/data/models/purchased_article.dart';
-import 'package:anatomica/features/profile/data/models/purchased_journal.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_purchased_article.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_purchased_journal.dart';
 import 'package:anatomica/features/profile/presentation/blocs/purchased_article/purchased_article_bloc.dart';
 import 'package:anatomica/features/profile/presentation/blocs/purchased_journal/purchased_journal_bloc.dart';
 import 'package:anatomica/features/profile/presentation/parts/purchased_article_list.dart';
 import 'package:anatomica/features/profile/presentation/parts/purchased_journal_list.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,8 +19,7 @@ class PurchasedScreen extends StatefulWidget {
   State<PurchasedScreen> createState() => _PurchasedScreenState();
 }
 
-class _PurchasedScreenState extends State<PurchasedScreen>
-    with TickerProviderStateMixin {
+class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   late PurchasedJournalBloc purchasedJournalBloc;
   late PurchasedArticleBloc purchasedArticleBloc;
@@ -37,8 +36,8 @@ class _PurchasedScreenState extends State<PurchasedScreen>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: const WAppBar(
-          title: 'Покупка',
+        appBar: WAppBar(
+          title: LocaleKeys.purchased.tr(),
         ),
         body: MultiBlocProvider(
           providers: [
@@ -66,21 +65,16 @@ class _PurchasedScreenState extends State<PurchasedScreen>
                   indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       color: white,
-                      boxShadow: const [
-                        BoxShadow(
-                            blurRadius: 24,
-                            offset: Offset(0, 8),
-                            color: Color(0x302B8364))
-                      ]),
+                      boxShadow: const [BoxShadow(blurRadius: 24, offset: Offset(0, 8), color: Color(0x302B8364))]),
                   labelColor: black,
                   unselectedLabelColor: textSecondary,
                   controller: _tabController,
-                  tabs: const [
+                  tabs: [
                     Tab(
-                      text: 'Купленные статьи',
+                      text: LocaleKeys.purchased_articles.tr(),
                     ),
                     Tab(
-                      text: 'Купленные выпуски',
+                      text: LocaleKeys.purchased_journals.tr(),
                     ),
                   ],
                 ),
@@ -89,7 +83,8 @@ class _PurchasedScreenState extends State<PurchasedScreen>
                 height: 16,
               ),
               Expanded(
-                  child: TabBarView(controller: _tabController,
+                  child: TabBarView(
+                controller: _tabController,
                 children: [PurchasedArticleList(), PurchasedJournalList()],
               ))
             ],

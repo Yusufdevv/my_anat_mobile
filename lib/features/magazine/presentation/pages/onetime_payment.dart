@@ -104,7 +104,7 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                         children: [
                           const SizedBox(width: 56),
                           Text(
-                            widget.isRegistered ? 'Покупка журнала' : LocaleKeys.only_pay.tr(),
+                            widget.isRegistered ? LocaleKeys.buy_magazine.tr() : LocaleKeys.only_pay.tr(),
                             style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
                           ),
                           WScaleAnimation(
@@ -151,9 +151,9 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                           labelColor: textColor,
                           onTap: (index) {},
                           unselectedLabelColor: textSecondary,
-                          tabs: const [
-                            Tab(text: 'Номер телефона'),
-                            Tab(text: 'Электронная почта'),
+                          tabs: [
+                            Tab(text: LocaleKeys.phone_number.tr()),
+                            Tab(text: LocaleKeys.mail.tr()),
                           ],
                         ),
                       ),
@@ -172,13 +172,13 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                           padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
                           child: PhoneTextField(
                             controller: phoneController,
-                            title: 'Номер телефона',
+                            title: LocaleKeys.phone_number.tr(),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
                           child: DefaultTextField(
-                            title: 'Электронная почта',
+                            title: LocaleKeys.mail.tr(),
                             controller: emailController,
                             onChanged: (value) {},
                             prefix: Padding(
@@ -247,7 +247,7 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                     child: Text(
-                      'Выберите способ оплаты',
+                      LocaleKeys.select_payment_method.tr(),
                       style: Theme.of(context).textTheme.headline1,
                     ),
                   ),
@@ -298,7 +298,7 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                     margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
                     onTap: () {
                       if (currentPaymentMethod.isEmpty) {
-                        context.read<ShowPopUpBloc>().add(ShowPopUp(message: 'To\'lov turini tanlang'));
+                        context.read<ShowPopUpBloc>().add(ShowPopUp(message: LocaleKeys.no_payment_provider));
                       } else {
                         if (widget.isJournal) {
                           context.read<PaymentBloc>().add(
@@ -345,7 +345,7 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
                         }
                       }
                     },
-                    text: 'Подтвердить',
+                    text: LocaleKeys.confirm.tr(),
                   ),
                 ],
               ),

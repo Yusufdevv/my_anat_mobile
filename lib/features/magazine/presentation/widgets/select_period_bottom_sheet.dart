@@ -4,6 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/domain/entities/period_entity.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/select_period_item.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,13 +21,13 @@ class SelectPeriodBottomSheet extends StatefulWidget {
 }
 
 class _SelectPeriodBottomSheetState extends State<SelectPeriodBottomSheet> {
-  PeriodEntity selectedPeriod = const PeriodEntity(title: '30 дней', period: 1);
+  PeriodEntity selectedPeriod = const PeriodEntity(title: LocaleKeys.days_30, period: 1);
 
   List<PeriodEntity> periods = const [
-    PeriodEntity(title: '30 дней', period: 1),
-    PeriodEntity(title: '3 месяца', period: 3),
-    PeriodEntity(title: '6 месяца', period: 6),
-    PeriodEntity(title: '1 года', period: 12),
+    PeriodEntity(title: LocaleKeys.days_30, period: 1),
+    PeriodEntity(title: LocaleKeys.months_3, period: 3),
+    PeriodEntity(title: LocaleKeys.months_6, period: 6),
+    PeriodEntity(title: LocaleKeys.year_1, period: 12),
   ];
 
   @override
@@ -52,7 +54,7 @@ class _SelectPeriodBottomSheetState extends State<SelectPeriodBottomSheet> {
               Padding(
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
-                  'Длительность',
+                  LocaleKeys.period.tr(),
                   style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
                 ),
               ),
@@ -89,7 +91,7 @@ class _SelectPeriodBottomSheetState extends State<SelectPeriodBottomSheet> {
             onTap: () {
               Navigator.of(context).pop(selectedPeriod);
             },
-            text: 'Выбрать',
+            text: LocaleKeys.select.tr(),
           ),
           SizedBox(
             height: MediaQuery.of(context).padding.bottom,

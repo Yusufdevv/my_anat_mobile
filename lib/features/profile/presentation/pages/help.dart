@@ -1,10 +1,13 @@
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
+import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/profile/data/repositories/profile_impl.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_faq_usecase.dart';
 import 'package:anatomica/features/profile/presentation/blocs/faq_bloc/faq_bloc.dart';
 import 'package:anatomica/features/profile/presentation/widgets/help_item.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,19 +19,6 @@ class HelpScreen extends StatefulWidget {
 }
 
 class _HelpScreenState extends State<HelpScreen> {
-  final List<String> titleList = [
-    'Вы государственная компания или частная?',
-    'Сколько стоят ваши услуги?',
-    'Кто может стать вашим клиентом? Пенсионер или миллионер? Для кого вы работаете?',
-    'Что дает «медицинское сопровождение», которое вы предлагаете?',
-    'Какие гарантии на выздоровление вы даете?',
-    'Почему вы претендуете на то, что именно ваши врачи – хорошие?',
-    'Как быстро вы даете ответ по запросу?',
-    'Зачем указывать ориентировочную сумму, на которую я рассчитываю?',
-    'Зачем указывать ориентировочную сумму, на которую я рассчитываю?',
-    'Зачем указывать ориентировочную сумму, на которую я рассчитываю?',
-  ];
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -36,7 +26,7 @@ class _HelpScreenState extends State<HelpScreen> {
       create: (context) =>
           FaqBloc(getFaqUseCase: GetFaqUseCase(repository: serviceLocator<ProfileRepositoryImpl>()))..add(GetFaqs()),
       child: Scaffold(
-        appBar: const WAppBar(title: 'Помощь', hasUnderline: true),
+        appBar: WAppBar(title: LocaleKeys.help.tr(), hasUnderline: true),
         body: BlocBuilder<FaqBloc, FaqState>(
           builder: (context, state) {
             return Paginator(
@@ -49,9 +39,9 @@ class _HelpScreenState extends State<HelpScreen> {
               fetchMoreFunction: () {
                 context.read<FaqBloc>().add(GetMoreFaqs());
               },
-              emptyWidget: Text(
-                'Ma\'lumot yo\'q',
-                style: Theme.of(context).textTheme.headline1,
+              emptyWidget: EmptyWidget(
+                title: LocaleKeys.nothing.tr(),
+                content: LocaleKeys.result_not_found.tr(),
               ),
               hasMoreToFetch: state.fetchMore,
               padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),

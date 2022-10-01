@@ -79,12 +79,12 @@ class FavoritesScreen extends StatelessWidget {
                       SvgPicture.asset(AppIcons.emptyA),
                       const SizedBox(height: 24),
                       Text(
-                        'Ничего не найдено',
+                        LocaleKeys.nothing.tr(),
                         style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Вы ещё не добавили вакансии',
+                        LocaleKeys.did_not_add_vacancy.tr(),
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textSecondary),
                       )
                     ]),
@@ -107,12 +107,12 @@ class FavoritesScreen extends StatelessWidget {
                       SvgPicture.asset(AppIcons.emptyA),
                       const SizedBox(height: 24),
                       Text(
-                        'Ничего не найдено',
+                        LocaleKeys.nothing.tr(),
                         style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Вы ещё не добавили вакансии',
+                        LocaleKeys.did_not_add_candidate.tr(),
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textSecondary),
                       )
                     ]),

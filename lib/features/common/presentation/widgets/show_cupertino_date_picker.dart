@@ -1,5 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 
@@ -78,7 +80,7 @@ class _CupertinoDatePickerWidgetState extends State<CupertinoDatePickerWidget> {
         Container(
           color: white,
           child: WButton(
-            text: 'Выбрать',
+            text: LocaleKeys.select.tr(),
             onTap: () {
               widget.datePicked(initialDateTime ?? DateTime.now());
               Navigator.of(context).pop();

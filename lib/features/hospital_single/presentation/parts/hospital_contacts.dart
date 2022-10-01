@@ -109,10 +109,10 @@ class _HospitalContactsState extends State<HospitalContacts> {
           : const EdgeInsets.all(16).copyWith(bottom: 16 + MediaQuery.of(context).padding.bottom),
       children: [
         if (contacts.isEmpty && socials.isEmpty) ...{
-          const SingleChildScrollView(
+          SingleChildScrollView(
             child: EmptyWidget(
-              title: 'Kontaktlar mavjud emas!',
-              content: 'Bu klinikaning kontaktlari mavjud emas!',
+              title: LocaleKeys.no_contacts.tr(),
+              content: LocaleKeys.no_contacts_in_this_hospital.tr(),
             ),
           )
         } else ...{

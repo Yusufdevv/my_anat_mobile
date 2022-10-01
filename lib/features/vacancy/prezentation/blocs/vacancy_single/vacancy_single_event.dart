@@ -18,3 +18,8 @@ class GetRelatedVacancyList extends VacancySingleEvent {
 }
 
 class GetMoreRelatedVacancyList extends VacancySingleEvent {}
+
+class LikeUnlikeVacancy extends VacancySingleEvent {
+  final VacancyListEntity vacancy;
+  LikeUnlikeVacancy({required this.vacancy});
+}

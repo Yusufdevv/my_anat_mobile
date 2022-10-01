@@ -8,6 +8,8 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/data/models/map_hospital.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_bottom_sheet.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:geolocator/geolocator.dart';
@@ -22,6 +24,17 @@ abstract class MyFunctions {
     } catch (e) {
       print('$e date parse error');
       return date;
+    }
+  }
+
+  static String getJobType(String jobType) {
+    switch (jobType) {
+      case 'full_time':
+        return 'Полная занятность';
+      case 'part_time':
+        return 'Неполная занятость';
+      default:
+        return jobType;
     }
   }
 
@@ -233,29 +246,29 @@ abstract class MyFunctions {
   static String getMonth(int month) {
     switch (month) {
       case 1:
-        return 'Yanvar';
+        return LocaleKeys.january.tr();
       case 2:
-        return 'Fevral';
+        return LocaleKeys.february.tr();
       case 3:
-        return 'Mart';
+        return LocaleKeys.march.tr();
       case 4:
-        return 'Aprel';
+        return LocaleKeys.april.tr();
       case 5:
-        return 'May';
+        return LocaleKeys.may.tr();
       case 6:
-        return 'Iyun';
+        return LocaleKeys.june.tr();
       case 7:
-        return 'Iyul';
+        return LocaleKeys.july.tr();
       case 8:
-        return 'Avgust';
+        return LocaleKeys.august.tr();
       case 9:
-        return 'Sentyabr';
+        return LocaleKeys.september.tr();
       case 10:
-        return 'Oktyabr';
+        return LocaleKeys.october.tr();
       case 11:
-        return 'Noyabr';
+        return LocaleKeys.november.tr();
       case 12:
-        return 'Dekabr';
+        return LocaleKeys.december.tr();
       default:
         return '';
     }

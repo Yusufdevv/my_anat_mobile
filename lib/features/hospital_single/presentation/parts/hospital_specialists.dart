@@ -3,6 +3,8 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_specialist/hospital_specialist_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctor_item.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,10 +28,10 @@ class HospitalSpecialists extends StatelessWidget {
           itemBuilder: (context, index) => DoctorItem(
             entity: state.specialists[index],
           ),
-          emptyWidget: const SingleChildScrollView(
+          emptyWidget: SingleChildScrollView(
             child: EmptyWidget(
-              title: 'Mutaxasislar mavjud emas!',
-              content: 'Bu klinikada mutaxasislar mavjud emas!',
+              title: LocaleKeys.no_specialists.tr(),
+              content: LocaleKeys.no_specialists_in_this_hospital.tr(),
             ),
           ),
           separatorBuilder: (context, index) => const SizedBox(height: 12),

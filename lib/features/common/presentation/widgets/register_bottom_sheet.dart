@@ -4,6 +4,8 @@ import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -34,7 +36,7 @@ class RegisterBottomSheet extends StatelessWidget {
                 AppIcons.registerUserIcon,
               ),
               Text(
-                'Пожалуйста, зарегистрируйтесь,\nчтобы использовать эту функцию',
+                LocaleKeys.please_register.tr(),
                 style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
@@ -45,7 +47,7 @@ class RegisterBottomSheet extends StatelessWidget {
                   Navigator.of(parentContext).push(fade(page: const LoginScreen()));
                 },
                 borderRadius: 8,
-                text: 'Зарегистрироваться',
+                text: LocaleKeys.za_register.tr(),
               )
             ],
           ),

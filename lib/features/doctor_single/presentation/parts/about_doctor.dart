@@ -30,7 +30,7 @@ class AboutDoctor extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               color: white,
-              child: showBio ? Html(data: description) : const Text('Mutaxasis biosini ko\'rsatishni hohlamaydi'),
+              child: showBio ? Html(data: description) : Text(LocaleKeys.doctor_do_not_want_show_bio.tr()),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 32, 0, 12),

@@ -7,7 +7,9 @@ import 'package:anatomica/features/magazine/presentation/bloc/download/download_
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -78,7 +80,7 @@ class MagazineSmallItem extends StatelessWidget {
               margin: const EdgeInsets.only(top: 12),
               onTap: onButtonTap,
               child: Text(
-                journalEntity.isBought ? 'O\'qish' : MyFunctions.getFormatCostFromInt(journalEntity.price),
+                journalEntity.isBought ? LocaleKeys.read.tr() : MyFunctions.getFormatCostFromInt(journalEntity.price),
                 style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
               ),
             ),

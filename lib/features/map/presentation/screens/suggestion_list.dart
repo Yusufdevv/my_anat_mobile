@@ -1,6 +1,4 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/common/presentation/widgets/empty_page.dart';
 import 'package:anatomica/features/map/presentation/blocs/suggestion/suggestion_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/suggestion_item.dart';
 import 'package:flutter/material.dart';
@@ -18,39 +16,36 @@ class SuggestionListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SuggestionBloc, SuggestionState>(
       builder: (context, state) {
-        if (state.list.isEmpty) {
-          return const SingleChildScrollView(
-            child: Center(
-              child: EmptyPage(
-                title: 'Ничего не найдено',
-                iconPath: AppIcons.emptyA,
-                desc: 'Результаты не найдены по вашему запросу',
-              ),
+        return Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            decoration: BoxDecoration(
+              color: textFieldColor,
+              borderRadius: BorderRadius.circular(10),
             ),
-          );
-        } else {
-          return Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              decoration: BoxDecoration(
-                color: textFieldColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ListView.builder(
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) => GestureDetector(
+            child: ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return GestureDetector(
+                      onTap: () {
+                        onTapItem(state.searchText);
+                      },
+                      child: SuggestionItem(title: state.searchText));
+                }
+                return GestureDetector(
                     onTap: () {
-                      onTapItem(state.list[index].title);
+                      onTapItem(state.list[index - 1].title);
                     },
-                    child: SuggestionItem(title: state.list[index].title)),
-                itemCount: state.list.length,
-              ),
+                    child: SuggestionItem(title: state.list[index - 1].title));
+              },
+              itemCount: state.list.length + 1,
             ),
-          );
-        }
+          ),
+        );
       },
     );
   }

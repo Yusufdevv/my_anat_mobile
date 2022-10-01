@@ -14,8 +14,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class FavouriteButtonVacancy extends StatelessWidget {
   final VacancyListEntity vacancy;
+  final Color? activeColor;
+  final Color? inactiveColor;
 
-  const FavouriteButtonVacancy({required this.vacancy, Key? key}) : super(key: key);
+  const FavouriteButtonVacancy({required this.vacancy, this.activeColor, this.inactiveColor, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,9 @@ class FavouriteButtonVacancy extends StatelessWidget {
               context.read<FavouriteBloc>().add(LikeUnlikeVacancy(vacancy: vacancy));
             },
             child: SvgPicture.asset(
-                state.isFavourite ?? vacancy.isFavorite ? AppIcons.favouriteActive : AppIcons.favourite),
+              state.isFavourite ?? vacancy.isFavorite ? AppIcons.favouriteActive : AppIcons.favourite,
+              color: state.isFavourite ?? vacancy.isFavorite ? activeColor : inactiveColor,
+            ),
           );
         },
       ),

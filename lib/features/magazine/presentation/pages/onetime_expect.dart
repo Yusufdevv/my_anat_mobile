@@ -29,7 +29,7 @@ class OneTimeExpect extends StatelessWidget {
               leadingWidth: 0,
               automaticallyImplyLeading: false,
               title: Text(
-                isRegistered ? 'Покупка журнала' : LocaleKeys.only_pay.tr(),
+                isRegistered ? LocaleKeys.buy_magazine.tr() : LocaleKeys.only_pay.tr(),
                 style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
               ),
               actions: [

@@ -6,7 +6,6 @@ import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journ
 import 'package:anatomica/features/magazine/presentation/pages/journal_article_single.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/buy_dialog.dart';
-import 'package:anatomica/features/magazine/presentation/widgets/purchase_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -39,44 +38,30 @@ class FirstArticle extends StatelessWidget {
                     ),
                   );
                 } else {
-                  showModalBottomSheet(
-                    context: context,
-                    useRootNavigator: true,
-                    backgroundColor: Colors.transparent,
-                    isScrollControlled: true,
-                    builder: (_) {
-                      return PurchaseBottomSheet(
-                        amount: state.firstArticle.price,
-                        onButtonTap: () {
-                          Navigator.of(_).pop();
-                          if (context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated) {
-                            Navigator.of(context).push(
-                              fade(
-                                page: OneTimePayment(
-                                  price: state.firstArticle.price,
-                                  title: state.firstArticle.title,
-                                  imageUrl: state.firstArticle.image.middle,
-                                  isJournal: false,
-                                  isRegistered: context.read<AuthenticationBloc>().state.status ==
-                                      AuthenticationStatus.authenticated,
-                                  subtitle: state.firstArticle.redaction,
-                                  id: state.firstArticle.id,
-                                ),
-                              ),
-                            );
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (_) => BuyDialog(
-                                onPaymentTap: () {},
-                                onRegistrationTap: () {},
-                              ),
-                            );
-                          }
-                        },
-                      );
-                    },
-                  );
+                  if (context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated) {
+                    Navigator.of(context).push(
+                      fade(
+                        page: OneTimePayment(
+                          price: state.firstArticle.price,
+                          title: state.firstArticle.title,
+                          imageUrl: state.firstArticle.image.middle,
+                          isJournal: false,
+                          isRegistered:
+                              context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated,
+                          subtitle: state.firstArticle.redaction,
+                          id: state.firstArticle.id,
+                        ),
+                      ),
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (_) => BuyDialog(
+                        onPaymentTap: () {},
+                        onRegistrationTap: () {},
+                      ),
+                    );
+                  }
                 }
               },
               child: Column(

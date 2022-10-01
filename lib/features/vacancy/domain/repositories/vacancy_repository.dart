@@ -14,10 +14,10 @@ import 'package:anatomica/features/vacancy/domain/entities/vacancy.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 
 abstract class VacancyRepository {
-  Future<Either<Failure, VacancyEntity>> getVacancies(
-      {String? next, VacancyParamsEntity? vacancyParamsEntity});
+  Future<Either<Failure, VacancyEntity>> getVacancies({String? next, VacancyParamsEntity? vacancyParamsEntity});
 
   Future<Either<Failure, TopOrganizationEntity>> getTopOrganization();
 
@@ -27,32 +27,26 @@ abstract class VacancyRepository {
 
   Future<Either<Failure, List<VacancyOptionEntity>>> getVacancyOption();
 
-  Future<Either<Failure, GenericPagination<VacancyListEntity>>> getRelationVacancyList(
-      {required String slug});
+  Future<Either<Failure, GenericPagination<VacancyListEntity>>> getRelationVacancyList({required String slug});
 
   Future<Either<Failure, GenericPagination<CandidateListEntity>>> getCandidateList(
-      {String? next, String? search, String? categoryId});
+      {String? next, String? search, String? categoryId, CandidateListParams? params});
 
   Future<Either<Failure, CandidateSingleEntity>> getCandidateSingle({required int id});
 
   Future<Either<Failure, GenericPagination<RegionEntity>>> getRegion({String? next});
 
-  Future<Either<Failure, GenericPagination<DistrictEntity>>> getDistrictList(
-      {String? next, int? id});
+  Future<Either<Failure, GenericPagination<DistrictEntity>>> getDistrictList({String? next, int? id});
 
   Future<Either<Failure, GenericPagination<CategoryListModel>>> getCategoryList({String? next});
 
   Future<Either<Failure, List<VacancyOptionEntity>>> getVacancyFilter();
 
-  Future<Either<Failure, GenericPagination<CertificateEntity>>> getCandidateCertificate(
-      {required int id});
+  Future<Either<Failure, GenericPagination<CertificateEntity>>> getCandidateCertificate({required int id});
 
-  Future<Either<Failure, GenericPagination<CandidateEducationEntity>>> getCandidateEducation(
-      {required int id});
+  Future<Either<Failure, GenericPagination<CandidateEducationEntity>>> getCandidateEducation({required int id});
 
-  Future<Either<Failure, GenericPagination<CandidateWorkEntity>>> getCandidateWork(
-      {required int id});
+  Future<Either<Failure, GenericPagination<CandidateWorkEntity>>> getCandidateWork({required int id});
 
-  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getRelatedCandidateList(
-      {required int id});
+  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getRelatedCandidateList({required int id});
 }

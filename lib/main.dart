@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/themes/theme.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/data/repositories/authentication_repository_impl.dart';
 import 'package:anatomica/features/auth/domain/usecases/get_authentication_status_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/get_user_data_usecase.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await EasyLocalization.ensureInitialized();
+
   await setupLocator();
   runApp(
     EasyLocalization(
@@ -24,8 +26,9 @@ Future<void> main() async {
           Locale('uz'),
           Locale('fr'),
         ],
-        fallbackLocale: const Locale('ru'),
-        startLocale: const Locale('ru'),
+        fallbackLocale: Locale(StorageRepository.getString('device_language', defValue: 'ru')),
+        startLocale: Locale(StorageRepository.getString('device_language', defValue: 'ru')),
+        saveLocale: true,
         child: const MyApp()),
   );
 }

@@ -2,6 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
+import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/phones_bottom_sheet.dart';
@@ -41,7 +43,9 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
   initState() {
     _vacancySingleBloc = VacancySingleBloc(
         relatedVacancyUseCase: RelatedVacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        vacancySingleUseCase: VacancySingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        vacancySingleUseCase: VacancySingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        likeUnlikeVacancyStreamUseCase:
+            LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()));
     _vacancySingleBloc.add(GetRelatedVacancyList(slug: widget.slug));
     super.initState();
   }
@@ -71,6 +75,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                 headerSliverBuilder: (context, index) {
                   return [
                     VacancySingleAppBar(
+                      vacancy: state.vacancyListEntity,
                       shareValue:
                           'https://anatomica.uicgroup.tech/vacancy/vacancy/${state.vacancyListEntity.slug}/detail/',
                     ),
@@ -125,10 +130,10 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                             ),
                           ),
                         ),
-                        const VacancyTitleText(title: 'Тип занятности'),
+                        VacancyTitleText(title: LocaleKeys.employment_type.tr()),
                         const SizedBox(height: 8),
                         Text(
-                          state.vacancyListEntity.workType.name,
+                          state.vacancyListEntity.workType.label,
                           style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                 fontSize: 13,
                                 color: montana,
@@ -214,7 +219,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               VacancyTitleText(title: LocaleKeys.information_work.tr()),
                               Html(data: state.vacancyListEntity.description),
                               Text(
-                                '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt)}',
+                                '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt).tr()}',
                                 style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
                               ),
                               const SizedBox(height: 16),

@@ -45,7 +45,6 @@ class VacancyScreen extends StatefulWidget {
 class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateMixin {
   late TabController tabController;
   bool hasFilter = false;
-  List<String> categoryList = ['Стоматолог', 'Кардиолог', 'Терапевт', 'Пулмонолг'];
   late VacancyBloc vacancyBloc;
   late RegionBloc regionBloc;
 
@@ -219,13 +218,11 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                   ],
                 ),
                 SizedBox(height: tabController.index != 1 ? 16 : 0),
-                tabController.index != 1
-                    ? FilterContainer(
-                        onTap: () {
-                          showFilterBottomSheet(context, regionBloc, vacancyBloc);
-                        },
-                      )
-                    : const SizedBox(),
+                FilterContainer(
+                  onTap: () {
+                    showFilterBottomSheet(context, regionBloc, vacancyBloc, tabController.index != 1);
+                  },
+                ),
                 const SizedBox(height: 20),
                 hasFilter ? const FilterCardList() : const SizedBox(),
                 Expanded(

@@ -205,8 +205,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       onChanged: (v) {
                         context.read<EditProfileBloc>().add(EditProfileEvent.changeEmail(v));
                       },
-                      title: 'Email',
+                      title: LocaleKeys.mail.tr(),
                       hintText: 'example@anatomica.uz',
+                      maxLines: 1,
                       prefix: Padding(
                         padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
                         child: SvgPicture.asset(AppIcons.at, color: primary),

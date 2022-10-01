@@ -23,6 +23,7 @@ import 'package:anatomica/features/vacancy/domain/entities/candidate_work.dart';
 import 'package:anatomica/features/vacancy/domain/entities/certificate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 import 'package:dio/dio.dart';
 
 abstract class VacancyRemoteDataSource {
@@ -42,7 +43,8 @@ abstract class VacancyRemoteDataSource {
 
   Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug});
 
-  Future<GenericPagination<CandidateListModel>> getCandidateList({String? next, String? search, String? categoryId});
+  Future<GenericPagination<CandidateListModel>> getCandidateList(
+      {String? next, String? search, String? categoryId, CandidateListParams? params});
 
   Future<CandidateSingleModel> getCandidateSingle({required int id});
 
@@ -83,13 +85,25 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
         query.putIfAbsent('search', () => vacancyParamsEntity?.search);
       }
       if (vacancyParamsEntity?.salary != null) {
-        query.putIfAbsent('salary', () => vacancyParamsEntity?.salary);
+        var value = '';
+        for (final param in vacancyParamsEntity!.salary!) {
+          value += '$param,';
+        }
+        query.putIfAbsent('salary', () => value);
       }
       if (vacancyParamsEntity?.experience != null) {
-        query.putIfAbsent('experience', () => vacancyParamsEntity?.experience);
+        var value = '';
+        for (final param in vacancyParamsEntity!.experience!) {
+          value += '$param,';
+        }
+        query.putIfAbsent('experience', () => value);
       }
       if (vacancyParamsEntity?.district != null) {
-        query.putIfAbsent('district', () => vacancyParamsEntity?.district);
+        var value = '';
+        for (final param in vacancyParamsEntity!.district!) {
+          value += '$param,';
+        }
+        query.putIfAbsent('district', () => value);
       }
 
       final result = await paginationDatasource.fetchMore(
@@ -231,7 +245,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
 
   @override
   Future<GenericPagination<CandidateListModel>> getCandidateList(
-      {String? next, String? search, String? categoryId}) async {
+      {String? next, String? search, String? categoryId, CandidateListParams? params}) async {
     try {
       final Map<String, dynamic> query = {};
       if (search != null) {
@@ -240,12 +254,29 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       if (categoryId != null) {
         query.putIfAbsent('specialization', () => categoryId);
       }
+      if (params?.experience != null) {
+        var value = '';
+        for (final param in params!.experience!) {
+          print(value);
+          value += '$param,';
+        }
+        query.putIfAbsent('experience', () => value);
+      }
+      if (params?.district != null) {
+        var value = '';
+        for (final param in params!.district!) {
+          value += '$param,';
+        }
+        query.putIfAbsent('district', () => value);
+      }
+      print('query: $query');
       final response = await dio.get(next ?? '/doctor/open-to-work/',
           queryParameters: query,
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
+      print(response.realUri);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));

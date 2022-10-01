@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CircleIndicator extends StatefulWidget {
-  // final int index;
-  const CircleIndicator({/*required this.index,*/ Key? key}) : super(key: key);
+  const CircleIndicator({Key? key}) : super(key: key);
 
   @override
   State<CircleIndicator> createState() => _CircleIndicatorState();
@@ -12,18 +11,11 @@ class _CircleIndicatorState extends State<CircleIndicator> with SingleTickerProv
   late AnimationController controller;
   late Animation<double> animation;
 
-  // late Animation<Color?> colorAnimation;
-
   @override
   void initState() {
     controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
     animation = Tween<double>(begin: 0, end: 1).animate(controller);
     controller.repeat();
-
-    // controller.forward();
-    // colorAnimation = ColorTween(begin: const Color(0xffC4C4C4), end: const Color(0xff131414)).animate(CurvedAnimation(
-    //     parent: controller,
-    //     curve: Interval((0.15 * (widget.index)).toDouble(), 0.15 * (widget.index + 1), curve: Curves.bounceInOut)));
     super.initState();
   }
 
@@ -41,15 +33,6 @@ class _CircleIndicatorState extends State<CircleIndicator> with SingleTickerProv
         painter: _CirclePaint(position: animation),
       ),
     );
-    //   AnimatedBuilder(
-    //   animation: colorAnimation,
-    //   builder: (context, child) => Container(
-    //     height: 10,
-    //     width: 10,
-    //     margin: const EdgeInsets.symmetric(horizontal: 3),
-    //     decoration: BoxDecoration(shape: BoxShape.circle, color: colorAnimation.value),
-    //   ),
-    // );
   }
 }
 

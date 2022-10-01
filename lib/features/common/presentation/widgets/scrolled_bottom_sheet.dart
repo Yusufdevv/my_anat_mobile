@@ -2,6 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -18,6 +20,8 @@ class ScrolledBottomSheet extends StatelessWidget {
   final bool hasDivider;
   final VoidCallback? onTapCancel;
   final bool applyBottomPadding;
+  final bool showClear;
+  final VoidCallback? onClear;
 
   const ScrolledBottomSheet(
       {required this.title,
@@ -32,6 +36,8 @@ class ScrolledBottomSheet extends StatelessWidget {
       this.stackedWButton,
       this.applyBottomPadding = true,
       this.onTapCancel,
+      this.onClear,
+      this.showClear = false,
       Key? key})
       : assert(child == null || children == null),
         super(key: key);
@@ -44,49 +50,69 @@ class ScrolledBottomSheet extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           slivers: [
-            hasHeader
-                ? SliverToBoxAdapter(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      alignment: Alignment.centerLeft,
-                      width: double.infinity,
-                      decoration: const BoxDecoration(
-                          color: white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
-                          )),
-                      height: 55,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          if (isSubScreen)
-                            WScaleAnimation(
-                              child: SvgPicture.asset(AppIcons.leftArrow),
-                              onTap: onTapCancel ?? () {},
+            if (hasHeader)
+              SliverToBoxAdapter(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  alignment: Alignment.centerLeft,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                      )),
+                  height: 55,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      if (showClear) ...{
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: WScaleAnimation(
+                              onTap: onClear ?? () {},
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                child: Text(
+                                  LocaleKeys.clean.tr(),
+                                  style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 12, color: primary),
+                                ),
+                              ),
                             ),
-                          if (isSubScreen) const SizedBox(width: 4),
-                          Text(
-                            title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline1!
-                                .copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                           ),
-                          const Spacer(),
-                          if (hasCancelButton)
-                            WScaleAnimation(
+                        )
+                      },
+                      if (isSubScreen)
+                        WScaleAnimation(
+                          child: SvgPicture.asset(AppIcons.leftArrow),
+                          onTap: onTapCancel ?? () {},
+                        ),
+                      if (isSubScreen) const SizedBox(width: 4),
+                      Text(
+                        title,
+                        style:
+                            Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+                      ),
+                      if (hasCancelButton)
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: WScaleAnimation(
                               child: SvgPicture.asset(AppIcons.bottomSheetCancel),
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
                             ),
-                        ],
-                      ),
-                    ),
-                  )
-                : const SliverToBoxAdapter(child: SizedBox()),
-            SliverToBoxAdapter(child: hasDivider ? WDivider() : SizedBox()),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              )
+            else
+              const SliverToBoxAdapter(child: SizedBox()),
+            SliverToBoxAdapter(child: hasDivider ? const WDivider() : const SizedBox()),
             pinnedChild != null
                 ? SliverToBoxAdapter(
                     child: Container(

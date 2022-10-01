@@ -74,7 +74,7 @@ class VacancyItem extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             VacancyItemTextWidget(
-                title: '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} лет',
+                title: '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} ${LocaleKeys.year.tr()}',
                 icon: AppIcons.briefCase),
             const SizedBox(height: 4),
             VacancyItemTextWidget(title: vacancyEntity.address, icon: AppIcons.mapPin),

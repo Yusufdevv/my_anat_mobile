@@ -6,6 +6,8 @@ import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journ
 import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_small_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +41,7 @@ class AllJournalsScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Все выпуски',
+                LocaleKeys.all_journals.tr(),
                 style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20, color: textColor),
               ),
               const SizedBox(

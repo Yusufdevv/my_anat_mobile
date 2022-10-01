@@ -21,6 +21,8 @@ import 'package:anatomica/features/magazine/presentation/widgets/journal_images.
 import 'package:anatomica/features/magazine/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/select_period_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +41,7 @@ class BuySubscription extends StatefulWidget {
 
 class _BuySubscriptionState extends State<BuySubscription> {
   String currentPaymentMethod = '';
-  PeriodEntity currentPeriod = const PeriodEntity(title: '30 дней', period: 1);
+  PeriodEntity currentPeriod = const PeriodEntity(title: LocaleKeys.days_30, period: 1);
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -64,7 +66,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
               children: [
                 const SizedBox(width: 56),
                 Text(
-                  'Активировать подписку',
+                  LocaleKeys.activate_subscription.tr(),
                   style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
                 ),
                 WScaleAnimation(
@@ -105,7 +107,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                             style: Theme.of(context).textTheme.headline1!.copyWith(color: primary, fontSize: 20),
                             children: [
                               TextSpan(
-                                text: 'в месяц',
+                                text: LocaleKeys.for_month.tr(),
                                 style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                               ),
                             ],
@@ -113,12 +115,12 @@ class _BuySubscriptionState extends State<BuySubscription> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Подписка на все журналы',
+                          LocaleKeys.subscription_for_all_journals.tr(),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Активировав подписку, вы получаете\nдоступ ко всем журналам',
+                          LocaleKeys.subscription_for_all_journals_description.tr(),
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 13),
                         ),
@@ -129,7 +131,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                             Padding(
                               padding: const EdgeInsets.only(left: 16),
                               child: Text(
-                                'Выберите длительность',
+                                LocaleKeys.select_period.tr(),
                                 style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                               ),
                             ),
@@ -165,7 +167,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      currentPeriod.title,
+                                      currentPeriod.title.tr(),
                                       style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                     ),
                                     const Spacer(),
@@ -187,7 +189,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 16),
                                 child: Text(
-                                  'Выберите длительность',
+                                  LocaleKeys.select_payment_method.tr(),
                                   style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                 ),
                               ),
@@ -260,7 +262,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                 }));
                           },
                           margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
-                          text: 'Подтвердить',
+                          text: LocaleKeys.confirm.tr(),
                         ),
                         SizedBox(height: mediaQuery.padding.bottom + 16)
                       ],

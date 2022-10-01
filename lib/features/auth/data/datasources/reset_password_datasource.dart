@@ -1,5 +1,6 @@
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
 
 abstract class ResetPasswordDatasource {
@@ -129,11 +130,11 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
   Future<void> submitPassword(
       {required String password, required String confirmPassword, required String stateId}) async {
     if (password.isEmpty) {
-      throw const ParsingException(errorMessage: "Parol bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.password_cannot_be_empty);
     } else if (confirmPassword.isEmpty) {
-      throw const ParsingException(errorMessage: "Takrorlangan parol bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.repeated_password_cannot_be_empty);
     } else if (password != confirmPassword) {
-      throw const ParsingException(errorMessage: "Parollar mos kelmadi");
+      throw const ParsingException(errorMessage: LocaleKeys.passwords_are_not_same);
     } else {
       try {
         final response = await _dio.post('/auth/restore/', data: {

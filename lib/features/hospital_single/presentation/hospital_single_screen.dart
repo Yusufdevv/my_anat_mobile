@@ -33,6 +33,7 @@ import 'package:anatomica/features/hospital_single/presentation/parts/hospital_v
 import 'package:anatomica/features/hospital_single/presentation/widgets/hospital_single_app_bar.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,14 +62,14 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
 
   int currentImage = 0;
   final tabs = [
-    'О клинике',
-    'Услуги',
-    'Специалисты',
-    'Удобства',
-    'Статьи',
-    'Отзывы',
-    'Вакансии',
-    'Контакты',
+    LocaleKeys.about_clinic,
+    LocaleKeys.service,
+    LocaleKeys.specialists,
+    LocaleKeys.facility,
+    LocaleKeys.articles,
+    LocaleKeys.reviews,
+    LocaleKeys.vacancy,
+    LocaleKeys.contact,
   ];
 
   @override

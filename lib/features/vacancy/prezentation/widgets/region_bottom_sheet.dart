@@ -55,134 +55,137 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
         BlocProvider.value(value: widget.regionBloc),
         BlocProvider.value(value: widget.vacancyBloc),
       ],
-      child: ScrolledBottomSheet(
-        isSubScreen: currentPage == 1 ? true : false,
-        title: currentPage == 0 ? LocaleKeys.region.tr() : 'г.Ташкент',
-        hasHeader: true,
-        onTapCancel: () {
-          if (currentPage == 1) {
-            pageController.previousPage(duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
-          }
-        },
-        applyBottomPadding: !(currentPage == 1 || isCheck),
-        stackedWButton: currentPage == 1 || isCheck
-            ? Container(
-                color: white,
-                child: WButton(
-                  margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 8),
-                  text: 'Выбрать',
-                  onTap: () {
-                    widget.vacancyBloc.add(SelectDistrictEvent(
-                      onSuccess: () {
-                        Navigator.of(context).pop();
-                      },
-                      districtList: list,
-                    ));
-                  },
-                ),
-              )
-            : null,
-        child: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          onPageChanged: (index) {
-            setState(() {
-              currentPage = index;
-            });
+      child: BlocBuilder<RegionBloc, RegionState>(
+        builder: (context, regionState) => ScrolledBottomSheet(
+          isSubScreen: currentPage == 1 ? true : false,
+          title: currentPage == 0 ? LocaleKeys.region.tr() : regionState.selectedRegionName,
+          hasHeader: true,
+          onTapCancel: () {
+            if (currentPage == 1) {
+              pageController.previousPage(duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+            }
           },
-          controller: pageController,
-          children: [
-            BlocBuilder<RegionBloc, RegionState>(
-              builder: (context, state) {
-                if (state.regionStatus == PaginatorStatus.PAGINATOR_INITIAL) {
-                  context.read<RegionBloc>().add(GetRegionEvent());
-                }
-                return Paginator(
-                  hasMoreToFetch: state.fetchMoreRegion,
-                  paginatorStatus: state.regionStatus,
-                  fetchMoreFunction: () {
-                    context.read<RegionBloc>().add(GetMoreRegion());
-                  },
-                  errorWidget: const Text('Fail'),
-                  padding: EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return CheckBoxTitle(
-                        onTap: () {
-                          setState(() {
-                            isCheck = !isCheck;
-                          });
+          applyBottomPadding: !(currentPage == 1 || isCheck),
+          stackedWButton: currentPage == 1 || isCheck
+              ? Container(
+                  color: white,
+                  child: WButton(
+                    margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 8),
+                    text: LocaleKeys.select.tr(),
+                    onTap: () {
+                      widget.vacancyBloc.add(SelectDistrictEvent(
+                        onSuccess: () {
+                          Navigator.of(context).pop();
                         },
-                        isChecked: isCheck,
-                        title: LocaleKeys.all_uzb.tr(),
-                        padding: EdgeInsets.zero,
+                        districtList: isCheck ? [] : list,
+                      ));
+                    },
+                  ),
+                )
+              : null,
+          child: PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            onPageChanged: (index) {
+              setState(() {
+                currentPage = index;
+              });
+            },
+            controller: pageController,
+            children: [
+              BlocBuilder<RegionBloc, RegionState>(
+                builder: (context, state) {
+                  if (state.regionStatus == PaginatorStatus.PAGINATOR_INITIAL) {
+                    context.read<RegionBloc>().add(GetRegionEvent());
+                  }
+                  return Paginator(
+                    hasMoreToFetch: state.fetchMoreRegion,
+                    paginatorStatus: state.regionStatus,
+                    fetchMoreFunction: () {
+                      context.read<RegionBloc>().add(GetMoreRegion());
+                    },
+                    errorWidget: const Text('Fail'),
+                    padding: EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return CheckBoxTitle(
+                          onTap: () {
+                            setState(() {
+                              isCheck = !isCheck;
+                            });
+                          },
+                          isChecked: isCheck,
+                          title: LocaleKeys.all_uzb.tr(),
+                          padding: EdgeInsets.zero,
+                        );
+                      }
+                      return RegionItem(
+                        title: state.regions[index - 1].title,
+                        onTap: () {
+                          context.read<RegionBloc>().add(GetDistrictEvent(
+                              id: state.regions[index - 1].id, selectedRegionName: state.regions[index - 1].title));
+                          pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+                        },
                       );
-                    }
-                    return RegionItem(
-                      title: state.regions[index - 1].title,
-                      onTap: () {
-                        context.read<RegionBloc>().add(GetDistrictEvent(id: state.regions[index - 1].id));
-                        pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) => const SizedBox(height: 16),
-                  itemCount: state.regions.length + 1,
-                );
-              },
-            ),
-            BlocBuilder<RegionBloc, RegionState>(
-              builder: (context, state) {
-                return Paginator(
-                  padding: EdgeInsets.fromLTRB(16, 20, 16, 40 + mediaQuery.padding.bottom),
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(height: 16),
+                    itemCount: state.regions.length + 1,
+                  );
+                },
+              ),
+              BlocBuilder<RegionBloc, RegionState>(
+                builder: (context, state) {
+                  return Paginator(
+                    padding: EdgeInsets.fromLTRB(16, 20, 16, 40 + mediaQuery.padding.bottom),
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return CheckBoxTitle(
+                          isChecked: list.length == widget.regionBloc.state.districts.length,
+                          onTap: () {
+                            setState(() {
+                              var items = widget.regionBloc.state.districts.map((e) => e.id).toList();
+                              if (list.length == items.length) {
+                                list.clear();
+                              } else if (list.isNotEmpty) {
+                                list.clear();
+                                list.addAll(items);
+                              } else {
+                                list.addAll(items);
+                              }
+                            });
+                          },
+                          title: LocaleKeys.all.tr(),
+                          padding: EdgeInsets.zero,
+                        );
+                      }
+
                       return CheckBoxTitle(
-                        isChecked: list.length == widget.regionBloc.state.districts.length,
+                        padding: EdgeInsets.zero,
+                        isChecked: list.contains(widget.regionBloc.state.districts[index - 1].id),
+                        title: state.districts[index - 1].title,
                         onTap: () {
                           setState(() {
-                            var items = widget.regionBloc.state.districts.map((e) => e.id).toList();
-                            if (list.length == items.length) {
-                              list.clear();
-                            } else if (list.isNotEmpty) {
-                              list.clear();
-                              list.addAll(items);
+                            if (list.contains(widget.regionBloc.state.districts[index - 1].id)) {
+                              list.remove(widget.regionBloc.state.districts[index - 1].id);
                             } else {
-                              list.addAll(items);
+                              list.add(widget.regionBloc.state.districts[index - 1].id);
                             }
                           });
                         },
-                        title: LocaleKeys.all.tr(),
-                        padding: EdgeInsets.zero,
                       );
-                    }
-
-                    return CheckBoxTitle(
-                      padding: EdgeInsets.zero,
-                      isChecked: list.contains(widget.regionBloc.state.districts[index - 1].id),
-                      title: state.districts[index - 1].title,
-                      onTap: () {
-                        setState(() {
-                          if (list.contains(widget.regionBloc.state.districts[index - 1].id)) {
-                            list.remove(widget.regionBloc.state.districts[index - 1].id);
-                          } else {
-                            list.add(widget.regionBloc.state.districts[index - 1].id);
-                          }
-                        });
-                      },
-                    );
-                  },
-                  fetchMoreFunction: () {
-                    context.read<RegionBloc>().add(GetMoreDistrict());
-                  },
-                  paginatorStatus: state.districtStatus,
-                  hasMoreToFetch: state.fetchMoreDistrict,
-                  errorWidget: const Center(child: Text('Fail')),
-                  separatorBuilder: (context, index) => const SizedBox(height: 16),
-                  itemCount: state.districts.length + 1,
-                );
-              },
-            ),
-          ],
+                    },
+                    fetchMoreFunction: () {
+                      context.read<RegionBloc>().add(GetMoreDistrict());
+                    },
+                    paginatorStatus: state.districtStatus,
+                    hasMoreToFetch: state.fetchMoreDistrict,
+                    errorWidget: const Center(child: Text('Fail')),
+                    separatorBuilder: (context, index) => const SizedBox(height: 16),
+                    itemCount: state.districts.length + 1,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

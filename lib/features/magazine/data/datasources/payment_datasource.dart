@@ -2,6 +2,7 @@ import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/magazine/data/models/payment_response_model.dart';
 import 'package:anatomica/features/magazine/data/models/prices_model.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
 
 abstract class PaymentDatasource {
@@ -54,7 +55,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
         } else if (email.isNotEmpty) {
           data.putIfAbsent('email', () => email);
         } else {
-          throw const ServerException(statusCode: 141, errorMessage: 'Telefon yoki emailni kiriting');
+          throw const ServerException(statusCode: 141, errorMessage: LocaleKeys.enter_phone_or_email);
         }
       }
       final response = await _dio.post('/payments/order/create/',
@@ -101,7 +102,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
         } else if (email.isNotEmpty) {
           data.putIfAbsent('email', () => email);
         } else {
-          throw const ServerException(statusCode: 141, errorMessage: 'Telefon yoki emailni kiriting');
+          throw const ServerException(statusCode: 141, errorMessage: LocaleKeys.enter_phone_or_email);
         }
       }
       final response = await _dio.post('/payments/order/create/',
@@ -204,7 +205,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
                 statusCode: response.statusCode!,
                 errorMessage: ((response.data as Map).values.isNotEmpty
                         ? (response.data as Map).values.first
-                        : 'Telefon raqam xato')
+                        : LocaleKeys.phone_number_error)
                     .toString());
           } else {
             if (response.data is Map) {
@@ -227,7 +228,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
         );
       }
     } else {
-      throw const ParsingException(errorMessage: "To'lov provayderi tanlanmagan");
+      throw const ParsingException(errorMessage: LocaleKeys.no_payment_provider);
     }
   }
 }

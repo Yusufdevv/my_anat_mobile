@@ -21,7 +21,7 @@ class SettingScreen extends StatelessWidget {
             const SizedBox(height: 20),
             SettingItem(
               title: LocaleKeys.language_app.tr(),
-              icon: context.locale.languageCode=='ru' ? AppIcons.flagRu : AppIcons.flagUz,
+              icon: context.locale.languageCode == 'ru' ? AppIcons.flagRu : AppIcons.flagUz,
               onTap: () {
                 showLanguageBottomSheet(context);
               },

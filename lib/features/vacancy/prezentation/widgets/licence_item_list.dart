@@ -1,6 +1,8 @@
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/candidate_single/candidate_single_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/licence_item.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -28,9 +30,9 @@ class LicenceItemList extends StatelessWidget {
               itemCount: state.certificateList.length,
             );
           } else {
-            return const EmptyWidget(
-              content: 'Sertifikatlar yo\'q',
-              title: 'Sertifikatlar yo\'q',
+            return EmptyWidget(
+              content: LocaleKeys.no_certificates.tr(),
+              title: LocaleKeys.no_certificates.tr(),
             );
           }
         } else if (state.certificateStatus.isSubmissionFailure) {

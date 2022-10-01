@@ -125,7 +125,9 @@ class MagazineItem extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 12),
                         onTap: onRightButtonTap,
                         child: Text(
-                          journalEntity.isBought || !journalEntity.isPremium ? 'Читать' : LocaleKeys.buy.tr(),
+                          journalEntity.isBought || !journalEntity.isPremium
+                              ? LocaleKeys.read.tr()
+                              : LocaleKeys.buy.tr(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
@@ -144,7 +146,7 @@ class MagazineItem extends StatelessWidget {
                         onTap: onLeftButtonTap,
                         child: Text(
                           journalEntity.isBought || !journalEntity.isPremium
-                              ? 'Читать'
+                              ? LocaleKeys.read.tr()
                               : MyFunctions.getFormatCostFromInt(journalEntity.price),
                           style: Theme.of(context)
                               .textTheme

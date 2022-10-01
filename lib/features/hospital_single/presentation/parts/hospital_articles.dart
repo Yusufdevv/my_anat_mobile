@@ -3,6 +3,8 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/h_articles/h_articles_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/article_item.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,10 +26,10 @@ class HospitalArticles extends StatelessWidget {
           padding: state.articles.isEmpty
               ? EdgeInsets.zero
               : const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-          emptyWidget: const SingleChildScrollView(
+          emptyWidget: SingleChildScrollView(
             child: EmptyWidget(
-              title: 'Maqolalar mavjud emas!',
-              content: 'Maqolalar mavjud emas!',
+              title: LocaleKeys.no_articles.tr(),
+              content: LocaleKeys.no_articles.tr(),
             ),
           ),
           itemBuilder: (context, index) => HospitalArticleItem(

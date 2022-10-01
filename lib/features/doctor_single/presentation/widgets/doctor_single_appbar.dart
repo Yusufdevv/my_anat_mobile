@@ -257,6 +257,34 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                 await launchUrlString(doctor.organization.locationUrl,
                                                     mode: LaunchMode.externalApplication);
                                               }
+
+                                              // if (Platform.isAndroid) {
+                                              //   if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
+                                              //     await MapLauncher.showDirections(
+                                              //         mapType: MapType.google,
+                                              //         destination:
+                                              //         Coords(state.hospital.latitude, state.hospital.latitude));
+                                              //   } else {
+                                              //     if (await canLaunchUrlString(state.hospital.locationUrl)) {
+                                              //       await launchUrlString(state.hospital.locationUrl);
+                                              //     } else {
+                                              //       throw 'Can not open Google maps';
+                                              //     }
+                                              //   }
+                                              // } else {
+                                              //   if (await MapLauncher.isMapAvailable(MapType.apple) ?? false) {
+                                              //     await MapLauncher.showDirections(
+                                              //         mapType: MapType.apple,
+                                              //         destination:
+                                              //         Coords(state.hospital.latitude, state.hospital.latitude));
+                                              //   } else {
+                                              //     if (await canLaunchUrlString(state.hospital.locationUrl)) {
+                                              //       await launchUrlString(state.hospital.locationUrl);
+                                              //     } else {
+                                              //       throw 'Can not open Google maps';
+                                              //     }
+                                              //   }
+                                              // }
                                             },
                                             padding: EdgeInsets.zero,
                                             border: Border.all(color: primary),

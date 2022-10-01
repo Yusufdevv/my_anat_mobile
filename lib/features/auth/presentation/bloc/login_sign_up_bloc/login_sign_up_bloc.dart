@@ -12,6 +12,7 @@ import 'package:anatomica/features/auth/domain/usecases/submit_email_usecase.dar
 import 'package:anatomica/features/auth/domain/usecases/submit_name_username_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_password_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_phone_usecase.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         emit(state.copyWith(loginStatus: FormzStatus.submissionSuccess));
       } else {
         if (loginResult.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (loginResult.left is ParsingFailure) {
           event.onError((loginResult.left as ParsingFailure).errorMessage);
         } else if (loginResult.left is ServerFailure) {
@@ -82,7 +83,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
             username: event.username, fullName: event.fullName, onError: event.onError, onSuccess: event.onSuccess));
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -111,7 +112,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -135,7 +136,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -156,7 +157,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -173,7 +174,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -190,7 +191,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         emit(state.copyWith(submitPasswordStatus: FormzStatus.submissionSuccess, stateId: result.right));
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -218,7 +219,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -240,7 +241,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {

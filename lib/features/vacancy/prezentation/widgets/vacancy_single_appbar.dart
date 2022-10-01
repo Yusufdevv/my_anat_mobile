@@ -1,6 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/favourite_button_vacancy.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,8 @@ import 'package:share_plus/share_plus.dart';
 
 class VacancySingleAppBar extends StatelessWidget {
   final String shareValue;
-  const VacancySingleAppBar({required this.shareValue, Key? key}) : super(key: key);
+  final VacancyListEntity vacancy;
+  const VacancySingleAppBar({required this.shareValue, required this.vacancy, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,11 @@ class VacancySingleAppBar extends StatelessWidget {
                   const Spacer(),
                   Text(LocaleKeys.vacancy.tr(), style: Theme.of(context).textTheme.headline2),
                   const Spacer(),
-                  SvgPicture.asset(AppIcons.vacancySingleStar),
+                  FavouriteButtonVacancy(
+                    vacancy: vacancy,
+                    activeColor: white,
+                    inactiveColor: white,
+                  ),
                   const SizedBox(width: 20),
                   WScaleAnimation(
                     onTap: () {

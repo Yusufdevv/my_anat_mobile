@@ -55,9 +55,9 @@ class _HospitalServicesState extends State<HospitalServices> {
               )
             } else if (state.status.isSubmissionSuccess) ...{
               if (state.services.isEmpty) ...{
-                const EmptyWidget(
-                  title: 'Servislar mavjud emas!',
-                  content: 'Bu klinikada servislar mavjud emas!',
+                EmptyWidget(
+                  title: LocaleKeys.no_services.tr(),
+                  content: LocaleKeys.no_services_in_this_hospital.tr(),
                 )
               } else ...{
                 Container(

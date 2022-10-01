@@ -1,4 +1,3 @@
-import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
 import 'package:anatomica/features/vacancy/domain/entities/region.dart';
@@ -8,7 +7,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 part 'region_event.dart';
-
 part 'region_state.dart';
 
 class RegionBloc extends Bloc<RegionEvent, RegionState> {
@@ -60,7 +58,8 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
       }
     });
     on<GetDistrictEvent>((event, emit) async {
-      emit(state.copyWith(districtStatus: PaginatorStatus.PAGINATOR_SUCCESS));
+      emit(state.copyWith(
+          districtStatus: PaginatorStatus.PAGINATOR_SUCCESS, selectedRegionName: event.selectedRegionName));
       final response = await districtUseCase.call(DistrictParams(id: event.id));
       if (response.isRight) {
         final result = response.right;

@@ -3,6 +3,8 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/vacancies/hospital_vacancies_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_vacancy_item.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,10 +22,10 @@ class HospitalVacancies extends StatelessWidget {
             context.read<HospitalVacanciesBloc>().add(HospitalVacanciesEvent.getMoreVacancies());
           },
           hasMoreToFetch: state.fetchMore,
-          emptyWidget: const SingleChildScrollView(
+          emptyWidget: SingleChildScrollView(
             child: EmptyWidget(
-              title: 'Vakansiyalar mavjud emas!',
-              content: 'Bu klinikada bo\'sh ish o\'rinlari mavjud emas!',
+              title: LocaleKeys.no_vacancies.tr(),
+              content: LocaleKeys.no_vacancies_in_this_hospital.tr(),
             ),
           ),
           padding: state.vacancies.isEmpty

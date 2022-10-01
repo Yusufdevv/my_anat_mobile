@@ -17,6 +17,7 @@ import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/domain/repositories/vacancy_repository.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 
 class VacancyRepositoryImpl extends VacancyRepository {
   final VacancyRemoteDataSource dataSource;
@@ -29,8 +30,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
     VacancyParamsEntity? vacancyParamsEntity,
   }) async {
     try {
-      final result =
-          await dataSource.getVacancyList(next: next, vacancyParamsEntity: vacancyParamsEntity);
+      final result = await dataSource.getVacancyList(next: next, vacancyParamsEntity: vacancyParamsEntity);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(statusCode: 141, errorMessage: error.errorMessage));
@@ -43,8 +43,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
       final result = await dataSource.getTopOrganization();
       return Right(result);
     } on ServerException catch (error) {
-      return Left(
-          ServerFailure(statusCode: error.statusCode.toInt(), errorMessage: error.errorMessage));
+      return Left(ServerFailure(statusCode: error.statusCode.toInt(), errorMessage: error.errorMessage));
     }
   }
 
@@ -54,8 +53,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
       final result = await dataSource.getSingleVacancy(slug: slug);
       return Right(result);
     } on ServerException catch (error) {
-      return Left(
-          ServerFailure(statusCode: error.statusCode.toInt(), errorMessage: error.errorMessage));
+      return Left(ServerFailure(statusCode: error.statusCode.toInt(), errorMessage: error.errorMessage));
     }
   }
 
@@ -80,8 +78,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<VacancyListEntity>>> getRelationVacancyList(
-      {required String slug}) async {
+  Future<Either<Failure, GenericPagination<VacancyListEntity>>> getRelationVacancyList({required String slug}) async {
     try {
       final result = await dataSource.getRelatedVacancyList(slug: slug);
       return Right(result);
@@ -92,10 +89,10 @@ class VacancyRepositoryImpl extends VacancyRepository {
 
   @override
   Future<Either<Failure, GenericPagination<CandidateListEntity>>> getCandidateList(
-      {String? next, String? search, String? categoryId}) async {
+      {String? next, String? search, String? categoryId, CandidateListParams? params}) async {
     try {
       final result =
-          await dataSource.getCandidateList(next: next, search: search, categoryId: categoryId);
+          await dataSource.getCandidateList(next: next, search: search, categoryId: categoryId, params: params);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));
@@ -113,8 +110,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<DistrictModel>>> getDistrictList(
-      {String? next, int? id}) async {
+  Future<Either<Failure, GenericPagination<DistrictModel>>> getDistrictList({String? next, int? id}) async {
     try {
       final result = await dataSource.getDistrict(id: id, next: next);
       return Right(result);
@@ -134,8 +130,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CategoryListModel>>> getCategoryList(
-      {String? next}) async {
+  Future<Either<Failure, GenericPagination<CategoryListModel>>> getCategoryList({String? next}) async {
     try {
       final result = await dataSource.getCategoryList();
       return Right(result);
@@ -155,8 +150,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CertificateEntity>>> getCandidateCertificate(
-      {required int id}) async {
+  Future<Either<Failure, GenericPagination<CertificateEntity>>> getCandidateCertificate({required int id}) async {
     try {
       final result = await dataSource.getCandidateCertificate(id: id);
       return Right(result);
@@ -166,8 +160,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CandidateEducationEntity>>> getCandidateEducation(
-      {required int id}) async {
+  Future<Either<Failure, GenericPagination<CandidateEducationEntity>>> getCandidateEducation({required int id}) async {
     try {
       final result = await dataSource.getCandidateEducation(id: id);
       return Right(result);
@@ -177,8 +170,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CandidateWorkEntity>>> getCandidateWork(
-      {required int id}) async {
+  Future<Either<Failure, GenericPagination<CandidateWorkEntity>>> getCandidateWork({required int id}) async {
     try {
       final result = await dataSource.getCandidateWork(id: id);
       return Right(result);
@@ -188,8 +180,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getRelatedCandidateList(
-      {required int id}) async {
+  Future<Either<Failure, GenericPagination<CandidateListEntity>>> getRelatedCandidateList({required int id}) async {
     try {
       final result = await dataSource.getRelatedCandidateList(id: id);
       return Right(result);

@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_radio.dart';
 import 'package:anatomica/features/magazine/domain/entities/period_entity.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SelectPeriodItem extends StatelessWidget {
@@ -40,7 +41,7 @@ class SelectPeriodItem extends StatelessWidget {
                   width: 12,
                 ),
                 Text(
-                  period.title,
+                  period.title.tr(),
                   style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                 )
               ],

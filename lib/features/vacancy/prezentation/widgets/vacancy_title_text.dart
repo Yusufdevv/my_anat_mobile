@@ -10,10 +10,7 @@ class VacancyTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: Theme.of(context)
-          .textTheme
-          .headline1!
-          .copyWith(fontWeight: FontWeight.w600, fontSize: fontSize ?? 16),
+      style: Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w600, fontSize: fontSize ?? 16),
     );
   }
 }

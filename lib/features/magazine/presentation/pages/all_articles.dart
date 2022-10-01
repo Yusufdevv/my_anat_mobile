@@ -4,6 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/article_item.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +39,7 @@ class AllArticlesScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Все статьи',
+                LocaleKeys.all_articles.tr(),
                 style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20, color: textColor),
               ),
               const SizedBox(

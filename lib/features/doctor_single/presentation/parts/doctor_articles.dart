@@ -3,6 +3,8 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/doctor_single/presentation/blocs/doctor_articles_bloc/doctor_articles_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/article_item.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,10 +24,10 @@ class DoctorArticles extends StatelessWidget {
           },
           paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.getArticleStatus),
           errorWidget: const Text('error'),
-          emptyWidget: const SingleChildScrollView(
+          emptyWidget: SingleChildScrollView(
             child: EmptyWidget(
-              content: 'Shifokor maqola yozmagan',
-              title: 'Shifokor maqola yozmagan',
+              content: LocaleKeys.doctor_did_write_article.tr(),
+              title: LocaleKeys.doctor_did_write_article.tr(),
             ),
           ),
           itemCount: state.articles.length,

@@ -7,6 +7,7 @@ import 'package:anatomica/features/magazine/domain/usecases/get_prices_usecase.d
 import 'package:anatomica/features/magazine/domain/usecases/order_create_article_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/order_create_journal_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/pay_for_monthly_subscription_usecase.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       } else {
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -84,7 +85,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       } else {
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -113,7 +114,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       } else {
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {

@@ -84,46 +84,42 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 224,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    WScaleAnimation(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(16, mediaQuery.padding.top + 32, 16, 36),
-                        child: SvgPicture.asset(AppIcons.arrowLeft),
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  WScaleAnimation(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(16, mediaQuery.padding.top + 32, 16, 36),
+                      child: SvgPicture.asset(AppIcons.arrowLeft),
                     ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _getTitle(currentPage),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2!
-                                .copyWith(fontSize: 28, fontWeight: FontWeight.w700),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            _getSubtitle(currentPage),
-                            style: Theme.of(context).textTheme.headline2!.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                          )
-                        ],
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _getTitle(currentPage),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(fontSize: 28, fontWeight: FontWeight.w700),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          _getSubtitle(currentPage),
+                          style: Theme.of(context).textTheme.headline2!.copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                        )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               Expanded(
                 child: Container(

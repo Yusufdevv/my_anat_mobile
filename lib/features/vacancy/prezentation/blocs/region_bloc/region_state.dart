@@ -11,6 +11,7 @@ class RegionState extends Equatable {
   final String? nextDistrict;
   final int? regionId;
   final bool? isCheck;
+  final String selectedRegionName;
   final List<int> select;
 
   const RegionState({
@@ -24,6 +25,7 @@ class RegionState extends Equatable {
     this.nextRegion,
     this.regionId,
     this.isCheck,
+    this.selectedRegionName = '',
     required this.select,
   });
 
@@ -36,6 +38,7 @@ class RegionState extends Equatable {
     PaginatorStatus? districtStatus,
     bool? fetchMoreDistrict,
     String? nextDistrict,
+    String? selectedRegionName,
     int? regionId,
     bool? isCheck,
     List<int>? select,
@@ -52,6 +55,7 @@ class RegionState extends Equatable {
         regionId: regionId ?? this.regionId,
         isCheck: isCheck ?? this.isCheck,
         select: select ?? this.select,
+        selectedRegionName: selectedRegionName ?? this.selectedRegionName,
       );
 
   @override
@@ -66,6 +70,7 @@ class RegionState extends Equatable {
         fetchMoreDistrict,
         regionId,
         isCheck,
+        selectedRegionName,
         select,
       ];
 }

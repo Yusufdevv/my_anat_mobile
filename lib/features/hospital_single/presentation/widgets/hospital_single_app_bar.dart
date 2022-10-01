@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
@@ -15,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class HospitalSingleAppBar extends StatefulWidget {
@@ -313,10 +316,32 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                               child: WButton(
                                                 color: white,
                                                 onTap: () async {
-                                                  if (await canLaunchUrlString(state.hospital.locationUrl)) {
-                                                    await launchUrlString(state.hospital.locationUrl);
+                                                  if (Platform.isAndroid) {
+                                                    if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
+                                                      await MapLauncher.showDirections(
+                                                          mapType: MapType.google,
+                                                          destination:
+                                                              Coords(state.hospital.latitude, state.hospital.latitude));
+                                                    } else {
+                                                      if (await canLaunchUrlString(state.hospital.locationUrl)) {
+                                                        await launchUrlString(state.hospital.locationUrl);
+                                                      } else {
+                                                        throw 'Can not open Google maps';
+                                                      }
+                                                    }
                                                   } else {
-                                                    throw 'Can not open Google maps';
+                                                    if (await MapLauncher.isMapAvailable(MapType.apple) ?? false) {
+                                                      await MapLauncher.showDirections(
+                                                          mapType: MapType.apple,
+                                                          destination:
+                                                              Coords(state.hospital.latitude, state.hospital.latitude));
+                                                    } else {
+                                                      if (await canLaunchUrlString(state.hospital.locationUrl)) {
+                                                        await launchUrlString(state.hospital.locationUrl);
+                                                      } else {
+                                                        throw 'Can not open Google maps';
+                                                      }
+                                                    }
                                                   }
                                                 },
                                                 padding: EdgeInsets.zero,

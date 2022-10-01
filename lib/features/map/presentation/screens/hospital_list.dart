@@ -129,7 +129,8 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                                   searchText: controller.text,
                                   onTapItem: (value) {
                                     controller.text = value;
-
+                                    controller.selection =
+                                        TextSelection.fromPosition(TextPosition(offset: value.length));
                                     bloc
                                       ..add(HospitalListEvent.getHospitals(search: value))
                                       ..add(HospitalListEvent.changePage(CrossFadeState.showFirst));
@@ -145,6 +146,8 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                                   searchText: controller.text,
                                   onTapItem: (value) {
                                     controller.text = value;
+                                    controller.selection =
+                                        TextSelection.fromPosition(TextPosition(offset: value.length));
                                     doctorListBloc.add(DoctorListEvent.getDoctors(search: value));
                                     bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
                                   },
@@ -192,11 +195,8 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                           child: SearchField(
                             controller: controller,
                             onClear: () {
-                              if (_controller.index == 0) {
-                                bloc.add(HospitalListEvent.getHospitals(search: ''));
-                              } else {
-                                doctorListBloc.add(DoctorListEvent.getDoctors(search: ''));
-                              }
+                              bloc.add(HospitalListEvent.getHospitals(search: ''));
+                              doctorListBloc.add(DoctorListEvent.getDoctors(search: ''));
                               bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
                               suggestionBloc.add(SuggestionEvent.getSuggestions(''));
                             },
@@ -206,11 +206,6 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                                 bloc.add(HospitalListEvent.changePage(CrossFadeState.showSecond));
                               } else {
                                 bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
-                              }
-                              if (_controller.index == 0) {
-                                bloc.add(HospitalListEvent.getHospitals(search: value));
-                              } else {
-                                doctorListBloc.add(DoctorListEvent.getDoctors(search: value));
                               }
                             },
                           ),

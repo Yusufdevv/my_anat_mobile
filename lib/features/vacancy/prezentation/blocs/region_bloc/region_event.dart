@@ -10,8 +10,8 @@ class GetMoreRegion extends RegionEvent {}
 
 class GetDistrictEvent extends RegionEvent {
   final int? id;
-
-  GetDistrictEvent({this.id});
+  final String selectedRegionName;
+  GetDistrictEvent({this.id, required this.selectedRegionName});
 }
 
 class GetMoreDistrict extends RegionEvent {}

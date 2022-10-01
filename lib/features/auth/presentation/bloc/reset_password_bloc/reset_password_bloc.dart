@@ -13,6 +13,7 @@ import 'package:anatomica/features/auth/domain/usecases/submit_reset_password_em
 import 'package:anatomica/features/auth/domain/usecases/submit_reset_password_phone_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/submit_reset_password_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/verify_reset_password_code_usecase.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -95,7 +96,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -117,7 +118,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
       } else {
         emit(state.copyWith(submitCodeStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -133,7 +134,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         emit(state.copyWith(submitPasswordStatus: FormzStatus.submissionSuccess));
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -156,7 +157,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {
@@ -179,7 +180,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
-          event.onError('Tarmoqqa ulanishda muammo');
+          event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
           event.onError((result.left as ParsingFailure).errorMessage);
         } else if (result.left is ServerFailure) {

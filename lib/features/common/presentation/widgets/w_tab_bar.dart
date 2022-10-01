@@ -32,7 +32,7 @@ class WTabBar extends StatelessWidget {
         indicatorSize: TabBarIndicatorSize.tab,
         onTap: (s) {},
         unselectedLabelStyle:
-            Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w500),
+            Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
         labelStyle: Theme.of(context).textTheme.headline1!.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w600,

@@ -12,6 +12,8 @@ import 'package:anatomica/features/magazine/presentation/widgets/article_item.da
 import 'package:anatomica/features/magazine/presentation/widgets/downloading_dialog.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -146,7 +148,7 @@ class MagazineSingleItem extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16, bottom: 12, top: 20),
                         child: Text(
-                          'Статьи из выпуска',
+                          LocaleKeys.article_issue.tr(),
                           style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
                         ),
                       ),

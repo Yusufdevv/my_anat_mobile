@@ -1,6 +1,7 @@
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/auth/data/models/user_model.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
 
 abstract class AuthenticationDataSource {
@@ -34,9 +35,10 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         if (response.data is Map) {
           throw ServerException(
               statusCode: response.statusCode!,
-              errorMessage:
-                  ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Login parol xato')
-                      .toString());
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first
+                      : LocaleKeys.incorrect_login)
+                  .toString());
         } else {
           throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
         }
@@ -66,7 +68,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
               statusCode: response.statusCode!,
               errorMessage: ((response.data as Map).values.isNotEmpty
                       ? (response.data as Map).values.first
-                      : 'Foydalanuvchi ma`lumotlarini olishda xato')
+                      : LocaleKeys.error_while_get_user)
                   .toString());
         } else {
           throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -92,9 +94,10 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           if (response.data is Map) {
             throw ServerException(
                 statusCode: response.statusCode!,
-                errorMessage:
-                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Login band')
-                        .toString());
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first
+                        : LocaleKeys.login_busy)
+                    .toString());
           } else {
             throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
           }
@@ -109,7 +112,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: "Login bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.login_cannot_be_empty);
     }
   }
 
@@ -149,7 +152,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                 statusCode: response.statusCode!,
                 errorMessage: ((response.data as Map).values.isNotEmpty
                         ? (response.data as Map).values.first
-                        : 'Ism yoki login xato')
+                        : LocaleKeys.name_login_error)
                     .toString());
           } else {
             throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -163,7 +166,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: "To'liq ism bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.name_cannot_be_empty);
     }
   }
 
@@ -180,7 +183,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                 statusCode: response.statusCode!,
                 errorMessage: ((response.data as Map).values.isNotEmpty
                         ? (response.data as Map).values.first
-                        : 'Tasdiqlash kodi xato')
+                        : LocaleKeys.confirmation_error)
                     .toString());
           } else {
             throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -194,7 +197,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: "Iltimos, hamma bo'sh joylarni to'ldiring");
+      throw const ParsingException(errorMessage: LocaleKeys.fill_all_fields);
     }
   }
 
@@ -213,9 +216,10 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           if (response.data is Map) {
             throw ServerException(
                 statusCode: response.statusCode!,
-                errorMessage:
-                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Email xato')
-                        .toString());
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first
+                        : LocaleKeys.email_error)
+                    .toString());
           } else {
             throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
           }
@@ -228,7 +232,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: "Email bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.email_cannot_be_empty);
     }
   }
 
@@ -236,11 +240,11 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   Future<String> submitPassword(
       {required String password, required String confirmPassword, required String stateId}) async {
     if (password.isEmpty) {
-      throw const ParsingException(errorMessage: "Parol bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.password_cannot_be_empty);
     } else if (confirmPassword.isEmpty) {
-      throw const ParsingException(errorMessage: "Takrorlangan parol bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.repeated_password_cannot_be_empty);
     } else if (password != confirmPassword) {
-      throw const ParsingException(errorMessage: "Parollar mos kelmadi");
+      throw const ParsingException(errorMessage: LocaleKeys.passwords_are_not_same);
     } else {
       try {
         final response = await _dio.post('/auth/registration/', data: {
@@ -288,7 +292,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                 statusCode: response.statusCode!,
                 errorMessage: ((response.data as Map).values.isNotEmpty
                         ? (response.data as Map).values.first
-                        : 'Telefon raqam xato')
+                        : LocaleKeys.phone_number_error)
                     .toString());
           } else {
             if (response.data is Map) {
@@ -309,7 +313,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: "Telefon raqam bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.phone_number_cannot_be_empty);
     }
   }
 
@@ -326,7 +330,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
               statusCode: response.statusCode!,
               errorMessage: ((response.data as Map).values.isNotEmpty
                       ? (response.data as Map).values.first
-                      : 'Smsni qayta jo\'natishda xato')
+                      : LocaleKeys.resend_sms_error)
                   .toString());
         } else {
           throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -356,9 +360,10 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           if (response.data is Map) {
             throw ServerException(
                 statusCode: response.statusCode!,
-                errorMessage:
-                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Email xato')
-                        .toString());
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first
+                        : LocaleKeys.email_error)
+                    .toString());
           } else {
             throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
           }
@@ -371,7 +376,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: "Email bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.email_cannot_be_empty);
     }
   }
 
@@ -390,9 +395,10 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           if (response.data is Map) {
             throw ServerException(
                 statusCode: response.statusCode!,
-                errorMessage:
-                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Email xato')
-                        .toString());
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first
+                        : LocaleKeys.phone_number_error)
+                    .toString());
           } else {
             throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
           }
@@ -405,7 +411,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: "Telefon raqam bo'sh bo'lishi mumkin emas");
+      throw const ParsingException(errorMessage: LocaleKeys.phone_number_cannot_be_empty);
     }
   }
 }

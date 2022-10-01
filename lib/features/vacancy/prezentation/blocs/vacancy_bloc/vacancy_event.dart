@@ -30,8 +30,14 @@ class GetMoreOrganizationVacancyEvent extends VacancyEvent {}
 
 class GetCandidateListEvent extends VacancyEvent {
   final String? categoryId;
+  final CandidateListParams? params;
+  final VoidCallback? onSuccess;
 
-  GetCandidateListEvent({this.categoryId});
+  GetCandidateListEvent({
+    this.categoryId,
+    this.params,
+    this.onSuccess,
+  });
 }
 
 class GetMoreCandidateList extends VacancyEvent {}

@@ -12,7 +12,9 @@ import 'package:anatomica/features/magazine/presentation/pages/magazine_single_i
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/downloading_dialog.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -116,7 +118,7 @@ class SearchedModelsItem extends StatelessWidget {
               child: Text(
                 !(magazineItemEntity.isBought || !magazineItemEntity.isPremium)
                     ? MyFunctions.getFormatCostFromInt(magazineItemEntity.price)
-                    : 'O\'qish',
+                    : LocaleKeys.read.tr(),
                 style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
               ),
             ),

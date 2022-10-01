@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/navigation/presentation/widgets/tab_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
@@ -33,7 +34,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
         unselectedLabelColor: textColor,
         indicatorColor: primary,
         indicator: const CustomTabIndicator(color: primary, radius: 3, horizontalPadding: 9, height: 3),
-        tabs: tabs.map((e) => Tab(text: e)).toList(),
+        tabs: tabs.map((e) => Tab(text: e.tr())).toList(),
       ),
     );
   }

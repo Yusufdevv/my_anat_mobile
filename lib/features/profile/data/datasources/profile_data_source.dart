@@ -7,6 +7,7 @@ import 'package:anatomica/features/profile/data/models/faq_model.dart';
 import 'package:anatomica/features/profile/data/models/uploaded_image_model.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_list.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
 
 abstract class ProfileDatasource {
@@ -116,7 +117,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         if (!(response.data['success'] as bool)) {
-          throw ServerException(errorMessage: 'Eski parol xato kiritildi', statusCode: response.statusCode ?? 0);
+          throw ServerException(errorMessage: LocaleKeys.wrong_old_password, statusCode: response.statusCode ?? 0);
         }
       } else {
         throw ServerException(errorMessage: response.data.toString(), statusCode: response.statusCode ?? 0);

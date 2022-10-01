@@ -50,18 +50,14 @@ class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStat
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.only(top: widget.statusBarHeight + 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
-                        child: SvgPicture.asset(AppIcons.close),
-                      ),
-                    ),
-                  ],
+                alignment: Alignment.centerRight,
+                margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 48),
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                    child: SvgPicture.asset(AppIcons.close),
+                  ),
                 ),
               ),
               Container(
