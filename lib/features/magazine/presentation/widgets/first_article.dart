@@ -92,9 +92,9 @@ class FirstArticle extends StatelessWidget {
                     data: state.firstArticle.shortDescription,
                     style: {
                       'p': Style(
-                        fontSize: const FontSize(13),
+                        fontSize:  FontSize(13),
                         padding: EdgeInsets.zero,
-                        margin: EdgeInsets.zero,
+
                         color: textSecondary,
                       )
                     },

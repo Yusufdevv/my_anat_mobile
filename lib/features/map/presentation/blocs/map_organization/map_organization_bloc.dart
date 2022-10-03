@@ -12,21 +12,28 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'map_organization_bloc.freezed.dart';
+
 part 'map_organization_event.dart';
+
 part 'map_organization_state.dart';
 
-class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationState> {
+class MapOrganizationBloc
+    extends Bloc<MapOrganizationEvent, MapOrganizationState> {
   final GetMapHospitalUseCase getHospitals;
   final GetMapDoctorUseCase getDoctors;
 
-  MapOrganizationBloc(this.getHospitals, this.getDoctors, {required GetTypesUseCase getTypesUseCase})
+  MapOrganizationBloc(this.getHospitals, this.getDoctors,
+      {required GetTypesUseCase getTypesUseCase})
       : super(MapOrganizationState()) {
     on<_GetHospitals>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await getHospitals(state.searchText, param: event.param);
+      final result = await getHospitals(state.searchText,
+          param: MapParameter(
+              lat: state.lat, long: state.long, radius: state.radius));
       if (result.isRight) {
         print('${state.hospitals.length}isLenght141');
-        emit(state.copyWith(hospitals: result.right, status: FormzStatus.submissionSuccess));
+        emit(state.copyWith(
+            hospitals: result.right, status: FormzStatus.submissionSuccess));
         print('${state.hospitals.length}isLenght141');
       } else {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
@@ -34,7 +41,9 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
     });
 
     on<_GetDoctors>((event, emit) async {
-      final result = await getDoctors(state.searchText, param: event.param);
+      final result = await getDoctors(state.searchText,
+          param: MapParameter(
+              lat: state.lat, long: state.long, radius: state.radius));
       if (result.isRight) {
         emit(state.copyWith(
           doctors: result.right,
@@ -48,8 +57,13 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
       emit(state.copyWith(radius: event.radius));
     });
     on<_ChangeLatLong>((event, emit) {
-      emit(state.copyWith(lat: event.lat, long: event.long));
-    });
+      if (event.radius != null) {
+        emit(state.copyWith(
+            lat: event.lat, long: event.long, radius: event.radius!));
+      } else {
+        emit(state.copyWith(lat: event.lat, long: event.long));
+      }
+    }, transformer: debounce(const Duration(milliseconds: 300)));
   }
 
   EventTransformer<MyEvent> debounce<MyEvent>(Duration duration) =>

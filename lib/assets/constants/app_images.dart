@@ -11,5 +11,9 @@ class AppImages {
   static const apelsin = 'assets/images/apelsin.png';
   static const doctor = 'assets/images/doctor.png';
   static const organization = 'assets/images/organization.png';
-// static const placeMarkCluster = 'assets/icons/map_screen/placemark_cluster.png';
+  static const selectedHospital = 'assets/images/selected_hospital.png';
+  static const selectedDoctor = 'assets/images/selected_doctor.png';
+  static const doctorMark = 'assets/images/doctor_mark.png';
+  static const doctorCluster = 'assets/images/doctor_cluster.png';
+  static const hospitalCluster = 'assets/images/hospital_cluster.png';
 }
