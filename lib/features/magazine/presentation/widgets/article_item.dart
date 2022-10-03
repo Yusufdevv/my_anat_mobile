@@ -1,13 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
-import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
-import 'package:anatomica/features/magazine/presentation/pages/journal_article_single.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ArticleItem extends StatelessWidget {
@@ -18,17 +13,13 @@ class ArticleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(
       onTap: () async {
         if (magazineItemEntity.isBought || !magazineItemEntity.isPremium) {
-          Navigator.of(context, rootNavigator: true).push(
-            fade(
-              page: JournalArticleSingle(
-                bloc: context.read<JournalBloc>(),
-                slug: magazineItemEntity.slug,
-              ),
-            ),
-          );
+          if (await canLaunchUrlString('https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}/')) {
+            await launchUrlString('https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}/',
+                mode: LaunchMode.externalApplication);
+          }
         } else {
           if (await canLaunchUrlString('https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}/')) {
             await launchUrlString('https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}/',

@@ -5,6 +5,7 @@ import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/magazine/data/models/journal_article_model.dart';
 import 'package:anatomica/features/magazine/data/models/journal_article_single_model.dart';
 import 'package:anatomica/features/magazine/data/models/journal_model.dart';
+import 'package:anatomica/features/magazine/data/models/journal_single_model.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:dio/dio.dart';
 
@@ -19,6 +20,7 @@ abstract class JournalDatasource {
 
   Future<JournalArticleSingleModel> getJournalArticleSingle({required String slug});
   Future<String> getJournalFile({required String slug});
+  Future<JournalSingleModel> getJournalSingle({required String slug});
 }
 
 class JournalDatasourceImpl extends JournalDatasource {
@@ -173,6 +175,31 @@ class JournalDatasourceImpl extends JournalDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         print(response.data);
         return '';
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<JournalSingleModel> getJournalSingle({required String slug}) async {
+    try {
+      final response = await _dio.get(
+        '/journal/$slug/detail/',
+        options: Options(
+          headers: StorageRepository.getString('token').isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              : {},
+        ),
+      );
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return JournalSingleModel.fromJson(response.data);
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }

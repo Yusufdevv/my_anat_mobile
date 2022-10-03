@@ -107,7 +107,7 @@
   "buy_magazine": "Jurnal sotib olish",
   "sing_up_to_full": "Ilovadan to'liq foydalanish uchun ro'yxatdan o'ting",
   "preview": "Oldindan ko'rish",
-  "buy": "Sotib olish",
+  "buy": "{}'ga sotib oling",
   "subscribe": "Obuna boʻling",
   "about_doctor": "Shifokor haqida",
   "interview": "Intervyu",
@@ -256,5 +256,7 @@
   "october" : "Oktyabr",
   "november" : "Noyabr",
   "december" : "Dekabr",
-  "clean" : "Tozalash"
+  "clean" : "Tozalash",
+  "journal_more" : "Batafsil",
+  "e_magazine" : "Elektron jurnal"
 }

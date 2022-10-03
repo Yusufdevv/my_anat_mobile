@@ -4,16 +4,18 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/magazine/data/repositories/journal_repository_impl.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_article_single_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_articles_usecase.dart';
+import 'package:anatomica/features/magazine/domain/usecases/get_journal_single_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journale_single_articles_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/search_journal_usecase.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/all_articles.dart';
+import 'package:anatomica/features/magazine/presentation/pages/all_journals_screen.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/activate_premium.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/article_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/first_article.dart';
-import 'package:anatomica/features/magazine/presentation/widgets/first_journal.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/journal_big_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journals_list.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/magazine_appbar.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/title_with_suffix_action.dart';
@@ -35,6 +37,9 @@ class MagazineScreen extends StatelessWidget {
       create: (context) => DownloadBloc(),
       child: BlocProvider(
         create: (_) => JournalBloc(
+          getJournalSingleUseCase: GetJournalSingleUseCase(
+            repository: serviceLocator<JournalRepositoryImpl>(),
+          ),
           getJournalUseCase: GetJournalUseCase(
             repository: serviceLocator<JournalRepositoryImpl>(),
           ),
@@ -66,9 +71,26 @@ class MagazineScreen extends StatelessWidget {
                 if (state.status == PaginatorStatus.PAGINATOR_SUCCESS) {
                   return CustomScrollView(
                     slivers: [
-                      if (state.journals.isNotEmpty) ...{
-                        FirstJournal(state: state),
-                      },
+                      if (state.journals.isNotEmpty) ...[
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 16),
+                            child: TitleWithSuffixAction(
+                              title: LocaleKeys.issues.tr(),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  fade(
+                                    page: AllJournalsScreen(
+                                      bloc: context.read<JournalBloc>(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        JournalBigItem(journalEntity: state.journals.first),
+                      ],
                       JournalsList(state: state),
                       if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{
                         ActivatePremium(images: state.journals.map((e) => e.image).toList()),
@@ -82,11 +104,7 @@ class MagazineScreen extends StatelessWidget {
                               title: LocaleKeys.articles.tr(),
                               onTap: () {
                                 Navigator.of(context).push(
-                                  fade(
-                                    page: AllArticlesScreen(
-                                      bloc: context.read<JournalBloc>(),
-                                    ),
-                                  ),
+                                  fade(page: AllArticlesScreen(bloc: context.read<JournalBloc>())),
                                 );
                               },
                             ),

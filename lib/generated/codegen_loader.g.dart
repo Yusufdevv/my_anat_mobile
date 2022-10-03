@@ -123,7 +123,7 @@ class CodegenLoader extends AssetLoader{
   "buy_magazine": "Журнал сотиб олиш",
   "sing_up_to_full": "Иловадан тўлиқ фойдаланиш учун рўйхатдан ўтинг",
   "preview": "Олдиндан кўриш",
-  "buy": "Сотиб олиш",
+  "buy": "{}'га сотиб олинг",
   "subscribe": "Обуна бўлинг",
   "about_doctor": "Шифокор ҳақида",
   "interview": "Интервью",
@@ -271,7 +271,9 @@ class CodegenLoader extends AssetLoader{
   "october": "Октябр",
   "november": "Ноябр",
   "december": "Декабр",
-  "clean": "Тозалаш"
+  "clean": "Тозалаш",
+  "journal_more": "Батафсил",
+  "e_magazine": "Электрон журнал"
 };
 static const Map<String,dynamic> ru = {
   "enter": "Войти",
@@ -382,7 +384,7 @@ static const Map<String,dynamic> ru = {
   "buy_magazine": "Покупка журнала",
   "sing_up_to_full": "Зарегистрируйтесь, чтобы в полной мере использовать возможности приложения",
   "preview": "Предпросмотр",
-  "buy": "Купить",
+  "buy": "Купить за {}",
   "subscribe": "Оформить подписку",
   "about_doctor": "О враче",
   "interview": "Интервью",
@@ -530,7 +532,9 @@ static const Map<String,dynamic> ru = {
   "october": "Октябрь",
   "november": "Ноябрь",
   "december": "Декабрь",
-  "clean": "Очистить"
+  "clean": "Очистить",
+  "journal_more": "Подробно",
+  "e_magazine": "Электронный журнал"
 };
 static const Map<String,dynamic> uz = {
   "enter": "Kirish",
@@ -641,7 +645,7 @@ static const Map<String,dynamic> uz = {
   "buy_magazine": "Jurnal sotib olish",
   "sing_up_to_full": "Ilovadan to'liq foydalanish uchun ro'yxatdan o'ting",
   "preview": "Oldindan ko'rish",
-  "buy": "Sotib olish",
+  "buy": "{}'ga sotib oling",
   "subscribe": "Obuna boʻling",
   "about_doctor": "Shifokor haqida",
   "interview": "Intervyu",
@@ -789,7 +793,9 @@ static const Map<String,dynamic> uz = {
   "october": "Oktyabr",
   "november": "Noyabr",
   "december": "Dekabr",
-  "clean": "Tozalash"
+  "clean": "Tozalash",
+  "journal_more": "Batafsil",
+  "e_magazine": "Elektron jurnal"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"fr": fr, "ru": ru, "uz": uz};
 }

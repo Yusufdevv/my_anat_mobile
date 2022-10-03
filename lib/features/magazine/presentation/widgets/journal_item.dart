@@ -1,17 +1,11 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
-import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
-import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
-import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MagazineItem extends StatelessWidget {
   final JournalEntity journalEntity;
@@ -38,19 +32,14 @@ class MagazineItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          WScaleAnimation(
-            isDisabled: isTapDisabled,
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () {
-              Navigator.push(
-                context,
-                fade(
-                  page: MagazineSingleItem(
-                    journal: journalEntity,
-                    bloc: context.read<JournalBloc>(),
-                    downloadBloc: context.read<DownloadBloc>(),
-                  ),
-                ),
-              );
+              if (!isTapDisabled) {
+                Navigator.of(
+                  context,
+                );
+              }
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,9 +86,23 @@ class MagazineItem extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         )),
                 const SizedBox(height: 8),
-                Text(
-                  journalEntity.name,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                Row(
+                  children: [
+                    Text(
+                      MyFunctions.getFormatCostFromInt(journalEntity.price),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '•',
+                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      LocaleKeys.e_magazine.tr(),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -145,27 +148,11 @@ class MagazineItem extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 12),
                         onTap: onLeftButtonTap,
                         child: Text(
-                          journalEntity.isBought || !journalEntity.isPremium
-                              ? LocaleKeys.read.tr()
-                              : MyFunctions.getFormatCostFromInt(journalEntity.price),
+                          LocaleKeys.journal_more.tr(),
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
                               .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: WButton(
-                        borderRadius: 6,
-                        border: Border.all(color: primary),
-                        color: unFollowButton,
-                        margin: const EdgeInsets.only(top: 12),
-                        onTap: onRightButtonTap,
-                        child: Text(
-                          LocaleKeys.subscribe.tr(),
-                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ),
                     ),

@@ -24,22 +24,21 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
           const DownloadState(
             progress: 0,
             status: FormzStatus.pure,
-            fileAlreadyDownloaded: false,
             fileUrl: '',
-            epubOpeningStatus: FormzStatus.pure,
           ),
         ) {
     on<ChangeProgress>((event, emit) {
       emit(state.copyWith(progress: event.progress));
     });
-    on<CheckWetherFileExists>(_onCheckWetherFileExists);
+    on<CheckWhetherFileExists>(_onCheckWhetherFileExists);
+    on<CheckWhetherFragmentFileExists>(_onCheckWhetherFragmentFileExists);
     on<DownloadFinished>(_onDownloadFinished);
     progressSubscription = progressStream.listen((event) {
       add(ChangeProgress(event));
     });
   }
 
-  Future<void> _onCheckWetherFileExists(CheckWetherFileExists event, Emitter<DownloadState> emit) async {
+  Future<void> _onCheckWhetherFileExists(CheckWhetherFileExists event, Emitter<DownloadState> emit) async {
     if (await Permission.storage.isGranted) {
       await Permission.storage.request();
     }
@@ -48,7 +47,6 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     final path = '${appDocDir.path}/${event.id}.${event.fileType}';
     final file = File(path);
     final rawBooks = await DbHelper.instance.query('downloaded_journals', 'id', event.id);
-    emit(state.copyWith(epubOpeningStatus: FormzStatus.submissionInProgress));
     if (!rawBooks.isNotEmpty) {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       event.onNotDownloaded();
@@ -72,9 +70,46 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     } else {
       event.onDownloaded(file);
       emit(state.copyWith(
-        fileAlreadyDownloaded: true,
         progress: 100,
-        epubOpeningStatus: FormzStatus.submissionSuccess,
+        fileUrl: path,
+      ));
+    }
+  }
+
+  Future<void> _onCheckWhetherFragmentFileExists(
+      CheckWhetherFragmentFileExists event, Emitter<DownloadState> emit) async {
+    if (await Permission.storage.isGranted) {
+      await Permission.storage.request();
+    }
+
+    final appDocDir = Platform.isAndroid ? await getTemporaryDirectory() : await getTemporaryDirectory();
+    final path = '${appDocDir.path}/${event.id}fragment.${event.fileType}';
+    final file = File(path);
+    final rawBooks = await DbHelper.instance.query('downloaded_fragments', 'id', event.id);
+    if (!rawBooks.isNotEmpty) {
+      emit(state.copyWith(status: FormzStatus.submissionInProgress));
+      event.onNotDownloaded();
+      await file.create();
+      final token = StorageRepository.getString('token');
+      await dio.download(event.fileUrl, path,
+          options: Options(headers: token.isNotEmpty ? {'Authorization': "Token $token"} : {}),
+          deleteOnError: true, onReceiveProgress: (receivedBytes, totalBytes) {
+        streamController.add(receivedBytes / totalBytes);
+        if (receivedBytes == totalBytes) {
+          add(
+            DownloadFinished(
+              filename: event.fileName,
+              path: path,
+              id: event.id,
+              isFragment: true,
+            ),
+          );
+        }
+      });
+    } else {
+      event.onDownloaded(file);
+      emit(state.copyWith(
+        progress: 100,
         fileUrl: path,
       ));
     }
@@ -82,13 +117,13 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
 
   Future<void> _onDownloadFinished(DownloadFinished event, Emitter<DownloadState> emit) async {
     try {
-      await DbHelper.instance.insert('downloaded_journals', {
+      await DbHelper.instance.insert(event.isFragment ? 'downloaded_fragments' : 'downloaded_journals', {
         'id': event.id,
         'title': event.filename,
         'path': event.path,
         'downloaded': 1,
       });
-      emit(state.copyWith(status: FormzStatus.submissionSuccess, fileAlreadyDownloaded: true, fileUrl: event.path));
+      emit(state.copyWith(status: FormzStatus.submissionSuccess, fileUrl: event.path));
     } on Exception catch (e) {
       log(e.toString());
     }

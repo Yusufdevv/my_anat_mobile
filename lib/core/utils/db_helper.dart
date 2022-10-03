@@ -34,6 +34,16 @@ class DbHelper {
       )
       ''',
       );
+      await db.execute(
+        '''
+      CREATE TABLE IF NOT EXISTS downloaded_fragments (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       title TEXT,
+       path TEXT,
+       downloaded INTEGER
+      )
+      ''',
+      );
     });
     _isDbInitialized = true;
     return _database;

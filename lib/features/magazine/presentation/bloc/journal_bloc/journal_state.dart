@@ -21,6 +21,8 @@ class JournalState extends Equatable {
   final FormzStatus getFirstArticleStatus;
   final JournalArticleSingleEntity articleSingle;
   final FormzStatus articleSingleStatus;
+  final FormzStatus getJournalSingleStatus;
+  final JournalSingleEntity journalSingle;
   const JournalState({
     this.status = PaginatorStatus.PAGINATOR_INITIAL,
     this.next,
@@ -42,6 +44,8 @@ class JournalState extends Equatable {
     this.getFirstArticleStatus = FormzStatus.pure,
     this.articleSingle = const JournalArticleSingleEntity(),
     this.articleSingleStatus = FormzStatus.pure,
+    this.getJournalSingleStatus = FormzStatus.pure,
+    this.journalSingle = const JournalSingleEntity(),
   });
 
   JournalState copyWith({
@@ -65,6 +69,8 @@ class JournalState extends Equatable {
     FormzStatus? getFirstArticleStatus,
     JournalArticleSingleEntity? articleSingle,
     FormzStatus? articleSingleStatus,
+    FormzStatus? getJournalSingleStatus,
+    JournalSingleEntity? journalSingle,
   }) =>
       JournalState(
         next: next,
@@ -87,6 +93,8 @@ class JournalState extends Equatable {
         getFirstArticleStatus: getFirstArticleStatus ?? this.getFirstArticleStatus,
         articleSingle: articleSingle ?? this.articleSingle,
         articleSingleStatus: articleSingleStatus ?? this.articleSingleStatus,
+        getJournalSingleStatus: getJournalSingleStatus ?? this.getJournalSingleStatus,
+        journalSingle: journalSingle ?? this.journalSingle,
       );
 
   @override
@@ -111,5 +119,7 @@ class JournalState extends Equatable {
         journalArticleFetchMore,
         articleSingle,
         articleSingleStatus,
+        getJournalSingleStatus,
+        journalSingle,
       ];
 }

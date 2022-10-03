@@ -1,11 +1,10 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
-import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
+import 'package:anatomica/features/magazine/presentation/pages/journal_single_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,20 +15,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MagazineSmallItem extends StatelessWidget {
   final JournalEntity journalEntity;
   final EdgeInsets margin;
-  final VoidCallback onButtonTap;
 
-  const MagazineSmallItem(
-      {required this.journalEntity, this.margin = EdgeInsets.zero, required this.onButtonTap, Key? key})
-      : super(key: key);
+  const MagazineSmallItem({required this.journalEntity, this.margin = EdgeInsets.zero, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
+        Navigator.of(context, rootNavigator: true).push(
           fade(
-            page: MagazineSingleItem(
+            page: JournalSingleScreen(
               downloadBloc: context.read<DownloadBloc>(),
               journal: journalEntity,
               bloc: context.read<JournalBloc>(),
@@ -69,8 +64,8 @@ class MagazineSmallItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      journalEntity.name,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                      MyFunctions.getFormatCostFromInt(journalEntity.price),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
@@ -78,9 +73,19 @@ class MagazineSmallItem extends StatelessWidget {
             ),
             WButton(
               margin: const EdgeInsets.only(top: 12),
-              onTap: onButtonTap,
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).push(
+                  fade(
+                    page: JournalSingleScreen(
+                      downloadBloc: context.read<DownloadBloc>(),
+                      journal: journalEntity,
+                      bloc: context.read<JournalBloc>(),
+                    ),
+                  ),
+                );
+              },
               child: Text(
-                journalEntity.isBought ? LocaleKeys.read.tr() : MyFunctions.getFormatCostFromInt(journalEntity.price),
+                LocaleKeys.journal_more.tr(),
                 style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/magazine/data/models/journal_article_single_model.dart';
 import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
 import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
+import 'package:anatomica/features/magazine/domain/entities/journal_single_entity.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 
 abstract class JournalRepository {
@@ -12,4 +13,5 @@ abstract class JournalRepository {
   Future<Either<Failure, GenericPagination<JournalArticleEntity>>> getJournalSingleArticles(
       {required int id, String? next});
   Future<Either<Failure, JournalArticleSingleModel>> getJournalArticleSingle({required String slug});
+  Future<Either<Failure, JournalSingleEntity>> getJournalSingle({required String slug});
 }

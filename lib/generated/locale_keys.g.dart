@@ -258,5 +258,7 @@ abstract class  LocaleKeys {
   static const november = 'november';
   static const december = 'december';
   static const clean = 'clean';
+  static const journal_more = 'journal_more';
+  static const e_magazine = 'e_magazine';
 
 }

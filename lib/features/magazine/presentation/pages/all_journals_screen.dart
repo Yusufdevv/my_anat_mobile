@@ -1,11 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
-import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/journal_small_item.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -71,21 +68,7 @@ class AllJournalsScreen extends StatelessWidget {
                   }
                   return const SizedBox.shrink();
                 } else {
-                  return MagazineSmallItem(
-                    onButtonTap: () {
-                      Navigator.push(
-                        context,
-                        fade(
-                          page: MagazineSingleItem(
-                            downloadBloc: context.read<DownloadBloc>(),
-                            bloc: bloc,
-                            journal: state.journals[index],
-                          ),
-                        ),
-                      );
-                    },
-                    journalEntity: state.journals[index],
-                  );
+                  return MagazineSmallItem(journalEntity: state.journals[index]);
                 }
               },
             );

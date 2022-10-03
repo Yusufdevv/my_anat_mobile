@@ -10,7 +10,7 @@ class ChangeProgress extends DownloadEvent {
   const ChangeProgress(this.progress);
 }
 
-class CheckWetherFileExists extends DownloadEvent {
+class CheckWhetherFileExists extends DownloadEvent {
   final String slug;
   final String filename;
   final int id;
@@ -18,7 +18,7 @@ class CheckWetherFileExists extends DownloadEvent {
   final ValueChanged<File> onDownloaded;
   final String fileType;
 
-  const CheckWetherFileExists({
+  const CheckWhetherFileExists({
     required this.slug,
     required this.filename,
     required this.id,
@@ -28,14 +28,34 @@ class CheckWetherFileExists extends DownloadEvent {
   });
 }
 
+class CheckWhetherFragmentFileExists extends DownloadEvent {
+  final int id;
+  final VoidCallback onNotDownloaded;
+  final ValueChanged<File> onDownloaded;
+  final String fileType;
+  final String fileUrl;
+  final String fileName;
+
+  const CheckWhetherFragmentFileExists({
+    required this.id,
+    required this.onNotDownloaded,
+    required this.fileType,
+    required this.onDownloaded,
+    required this.fileUrl,
+    required this.fileName,
+  });
+}
+
 class DownloadFinished extends DownloadEvent {
   final String filename;
   final String path;
   final int id;
+  final bool isFragment;
 
   const DownloadFinished({
     required this.path,
     required this.filename,
     required this.id,
+    this.isFragment = false,
   });
 }

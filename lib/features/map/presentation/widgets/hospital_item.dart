@@ -10,10 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class HospitalItem extends StatelessWidget {
   final HospitalEntity entity;
 
-  const HospitalItem({
-    required this.entity,
-    Key? key,
-  }) : super(key: key);
+  const HospitalItem({required this.entity, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

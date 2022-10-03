@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
@@ -134,12 +135,14 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                     top: -24,
                     child: YandexMap(
                       rotateGesturesEnabled: false,
-                      onCameraPositionChanged: (cameraPosition, updateReason, isStopped) {
+                      onCameraPositionChanged: (cameraPosition, updateReason, isStopped) async {
                         if (isStopped) {
                           mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
                               lat: cameraPosition.target.latitude, long: cameraPosition.target.longitude));
                           mapOrganizationBloc.add(MapOrganizationEvent.changeRadius(
                               radius: MyFunctions.getRadiusFromZoom(cameraPosition.zoom).floor()));
+                          await StorageRepository.putDouble('lat', cameraPosition.target.latitude);
+                          await StorageRepository.putDouble('long', cameraPosition.target.longitude);
                         }
                       },
                       onMapTap: (point) {
@@ -150,20 +153,39 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                         _mapController = controller;
                         maxZoomLevel = await controller.getMaxZoom();
                         minZoomLevel = await controller.getMinZoom();
-                        final position = await MyFunctions.determinePosition();
-                        currentLocation = Point(latitude: position.latitude, longitude: position.longitude);
-                        mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
-                            param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
-                        mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(
-                            param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
-                        _mapController.moveCamera(
-                          CameraUpdate.newCameraPosition(
-                            CameraPosition(
-                              target: Point(latitude: position.latitude, longitude: position.longitude),
+                        if (StorageRepository.getDouble('lat', defValue: 0) == 0) {
+                          final position = await MyFunctions.determinePosition();
+                          _mapController.moveCamera(
+                            CameraUpdate.newCameraPosition(
+                              CameraPosition(
+                                target: Point(latitude: position.latitude, longitude: position.longitude),
+                              ),
                             ),
-                          ),
-                          animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
-                        );
+                            animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+                          );
+                          currentLocation = Point(latitude: position.latitude, longitude: position.longitude);
+                          mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
+                              param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
+                          mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(
+                              param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
+                        } else {
+                          final position = Point(
+                              latitude: StorageRepository.getDouble('lat'),
+                              longitude: StorageRepository.getDouble('long'));
+                          _mapController.moveCamera(
+                            CameraUpdate.newCameraPosition(
+                              CameraPosition(
+                                target: Point(latitude: position.latitude, longitude: position.longitude),
+                              ),
+                            ),
+                            animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+                          );
+                          currentLocation = Point(latitude: position.latitude, longitude: position.longitude);
+                          mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
+                              param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
+                          mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(
+                              param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
+                        }
                       },
                     ),
                   ),

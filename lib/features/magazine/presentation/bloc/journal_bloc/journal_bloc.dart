@@ -2,8 +2,10 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
 import 'package:anatomica/features/magazine/domain/entities/journal_article_single.dart';
 import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
+import 'package:anatomica/features/magazine/domain/entities/journal_single_entity.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_article_single_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_articles_usecase.dart';
+import 'package:anatomica/features/magazine/domain/usecases/get_journal_single_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journale_single_articles_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/search_journal_usecase.dart';
@@ -22,17 +24,20 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
   final GetJournalArticlesUseCase _getJournalArticlesUseCase;
   final GetJournalArticleSingleUseCase _getJournalArticleSingleUseCase;
   final GetJournalSingleArticlesUseCase _getJournalSingleArticlesUseCase;
+  final GetJournalSingleUseCase _getJournalSingleUseCase;
   JournalBloc({
     required GetJournalUseCase getJournalUseCase,
     required SearchJournalUseCase searchJournalUseCase,
     required GetJournalArticlesUseCase getJournalArticlesUseCase,
     required GetJournalArticleSingleUseCase getJournalArticleSingleUseCase,
     required GetJournalSingleArticlesUseCase getJournalSingleArticlesUseCase,
+    required GetJournalSingleUseCase getJournalSingleUseCase,
   })  : _getJournalUseCase = getJournalUseCase,
         _searchJournalUseCase = searchJournalUseCase,
         _getJournalArticlesUseCase = getJournalArticlesUseCase,
         _getJournalArticleSingleUseCase = getJournalArticleSingleUseCase,
         _getJournalSingleArticlesUseCase = getJournalSingleArticlesUseCase,
+        _getJournalSingleUseCase = getJournalSingleUseCase,
         super(const JournalState()) {
     on<GetJournals>((event, emit) async {
       emit(state.copyWith(status: PaginatorStatus.PAGINATOR_LOADING));
@@ -192,6 +197,17 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
       } else {
         emit(
           state.copyWith(articleSingleStatus: FormzStatus.submissionFailure),
+        );
+      }
+    });
+    on<GetJournalSingle>((event, emit) async {
+      emit(state.copyWith(getJournalSingleStatus: FormzStatus.submissionInProgress));
+      final result = await _getJournalSingleUseCase.call(event.slug);
+      if (result.isRight) {
+        emit(state.copyWith(getJournalSingleStatus: FormzStatus.submissionSuccess, journalSingle: result.right));
+      } else {
+        emit(
+          state.copyWith(getJournalSingleStatus: FormzStatus.submissionFailure),
         );
       }
     });

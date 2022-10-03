@@ -8,7 +8,7 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:anatomica/features/magazine/domain/entities/journal_entity.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
-import 'package:anatomica/features/magazine/presentation/pages/magazine_single_item.dart';
+import 'package:anatomica/features/magazine/presentation/pages/journal_single_screen.dart';
 import 'package:anatomica/features/magazine/presentation/pages/onetime_payment.dart';
 import 'package:anatomica/features/magazine/presentation/widgets/downloading_dialog.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -29,10 +29,9 @@ class SearchedModelsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) => WScaleAnimation(
         onTap: () {
-          Navigator.push(
-            context,
+          Navigator.of(context, rootNavigator: true).push(
             fade(
-              page: MagazineSingleItem(
+              page: JournalSingleScreen(
                 downloadBloc: context.read<DownloadBloc>(),
                 journal: magazineItemEntity,
                 bloc: context.read<JournalBloc>(),
@@ -75,7 +74,7 @@ class SearchedModelsItem extends StatelessWidget {
               onTap: () {
                 if (magazineItemEntity.isBought || !magazineItemEntity.isPremium) {
                   context.read<DownloadBloc>().add(
-                        CheckWetherFileExists(
+                        CheckWhetherFileExists(
                           slug: magazineItemEntity.slug,
                           filename: magazineItemEntity.name,
                           id: magazineItemEntity.id,
