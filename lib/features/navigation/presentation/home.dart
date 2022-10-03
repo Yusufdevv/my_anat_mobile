@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 color: Colors.transparent,
                 child: Container(
                   padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-                  height: 72 + MediaQuery.of(context).padding.bottom,
+                  height: 60 + MediaQuery.of(context).padding.bottom,
                   decoration: BoxDecoration(
                     color: white,
                     border: Border.all(color: textFieldColor),

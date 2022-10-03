@@ -28,14 +28,12 @@ class NavItemWidget extends StatelessWidget {
           Center(
             child: SvgPicture.asset(
               navBar.icon,
-              height: 24,
-              width: 24,
+              height: 16,
+              width: 16,
               color: currentIndex == navBar.id ? primary : textSecondary,
             ),
           ),
-          const SizedBox(
-            height: 4,
-          ),
+          const SizedBox(height: 2),
           Container(
             alignment: Alignment.bottomCenter,
             child: Text(

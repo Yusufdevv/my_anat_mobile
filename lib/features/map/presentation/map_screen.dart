@@ -20,6 +20,7 @@ import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
@@ -83,15 +84,16 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
       ],
       child: WKeyboardDismisser(
         child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            toolbarHeight: 64,
-            titleSpacing: 16,
-            title: SvgPicture.asset(
-              AppIcons.mainLogo,
-              height: 20,
-            ),
-          ),
+          // appBar: AppBar(
+          //   systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+          //   elevation: 0,
+          //   toolbarHeight: 64,
+          //   titleSpacing: 16,
+          //   title: SvgPicture.asset(
+          //     AppIcons.mainLogo,
+          //     height: 20,
+          //   ),
+          // ),
           body: BlocConsumer<MapOrganizationBloc, MapOrganizationState>(
             listenWhen: (state1, state2) {
               bool isBuild = (state1.hospitals.length != state2.hospitals.length) ||
@@ -129,6 +131,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                   },
                   child: Positioned.fill(
                     bottom: 60,
+                    top: -24,
                     child: YandexMap(
                       rotateGesturesEnabled: false,
                       onCameraPositionChanged: (cameraPosition, updateReason, isStopped) {
@@ -185,39 +188,54 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                     return Positioned(
                       left: 16,
                       right: 16,
-                      top: 16,
+                      top: 16 + MediaQuery.of(context).padding.top,
                       child: Container(
-                        height: 36,
                         decoration: BoxDecoration(
-                          color: textFieldColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        child: TabBar(
-                          controller: _controller,
-                          padding: EdgeInsets.zero,
-                          indicatorPadding: EdgeInsets.zero,
-                          indicator: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          labelPadding: EdgeInsets.zero,
-                          labelStyle: Theme.of(context).textTheme.headline3,
-                          labelColor: textColor,
-                          onTap: (index) {
-                            setState(() {
-                              if (index == 0) {
-                                MyFunctions.addHospitals(state.hospitals, context, _mapObjects);
-                              } else {
-                                MyFunctions.addDoctors(state.doctors, context, _mapObjects);
-                              }
-                            });
-                          },
-                          unselectedLabelColor: textSecondary,
-                          tabs: [
-                            Tab(text: LocaleKeys.organization.tr()),
-                            Tab(text: LocaleKeys.doctor.tr()),
+                          color: white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 8),
+                              blurRadius: 19,
+                              color: chipShadowColor.withOpacity(0.19),
+                            ),
                           ],
+                          border: Border.all(color: divider),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.all(4),
+                        child: Container(
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: textFieldColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: const EdgeInsets.all(2),
+                          child: TabBar(
+                            controller: _controller,
+                            padding: EdgeInsets.zero,
+                            indicatorPadding: EdgeInsets.zero,
+                            indicator: BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            labelPadding: EdgeInsets.zero,
+                            labelStyle: Theme.of(context).textTheme.headline3,
+                            labelColor: textColor,
+                            onTap: (index) {
+                              setState(() {
+                                if (index == 0) {
+                                  MyFunctions.addHospitals(state.hospitals, context, _mapObjects);
+                                } else {
+                                  MyFunctions.addDoctors(state.doctors, context, _mapObjects);
+                                }
+                              });
+                            },
+                            unselectedLabelColor: textSecondary,
+                            tabs: [
+                              Tab(text: LocaleKeys.organization.tr()),
+                              Tab(text: LocaleKeys.doctor.tr()),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -237,13 +255,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           children: [
                             MapButton.defaultButton(
                               title: LocaleKeys.list.tr(),
-                              onTap: (id) => Navigator.of(context).push(
-                                fade(
-                                  page: HospitalList(
-                                    controller: _controller,
-                                  ),
-                                ),
-                              ),
+                              onTap: (id) =>
+                                  Navigator.of(context).push(fade(page: HospitalList(controller: _controller))),
                               id: 0,
                             ),
                             BlocBuilder<SpecializationBloc, SpecializationState>(
@@ -255,11 +268,12 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                       CameraUpdate.newCameraPosition(
                                         CameraPosition(
                                           target: Point(latitude: position.latitude, longitude: position.longitude),
-                                          zoom: zoomLevel,
+                                          zoom: 15,
                                         ),
                                       ),
                                       animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                                     );
+                                    zoomLevel = 15;
                                   },
                                   onMinusTap: () {
                                     if (minZoomLevel < zoomLevel) {
@@ -285,35 +299,35 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           ],
                         ),
                       ),
-                      BlocBuilder<SpecializationBloc, SpecializationState>(
-                        builder: (context, state) {
-                          return state.specializations.isEmpty
-                              ? const SizedBox()
-                              : SizedBox(
-                                  height: 36,
-                                  child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    separatorBuilder: (context, index) => const SizedBox(width: 12),
-                                    physics: const BouncingScrollPhysics(),
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                                    itemBuilder: (context, index) => MapButton.chip(
-                                      selected: state.selectedId == state.specializations[index].id,
-                                      title: state.specializations[index].title,
-                                      onTap: (id) {
-                                        if (state.selectedId == state.specializations[index].id) {
-                                          specBloc.add(SpecializationEvent.selectSpec(-1));
-                                        } else {
-                                          specBloc.add(SpecializationEvent.selectSpec(id));
-                                        }
-                                      },
-                                      id: state.specializations[index].id,
-                                    ),
-                                    itemCount: state.specializations.length,
-                                  ),
-                                );
-                        },
-                      ),
-                      const SizedBox(height: 16),
+                      // BlocBuilder<SpecializationBloc, SpecializationState>(
+                      //   builder: (context, state) {
+                      //     return state.specializations.isEmpty
+                      //         ? const SizedBox()
+                      //         : SizedBox(
+                      //             height: 36,
+                      //             child: ListView.separated(
+                      //               scrollDirection: Axis.horizontal,
+                      //               separatorBuilder: (context, index) => const SizedBox(width: 12),
+                      //               physics: const BouncingScrollPhysics(),
+                      //               padding: const EdgeInsets.symmetric(horizontal: 16),
+                      //               itemBuilder: (context, index) => MapButton.chip(
+                      //                 selected: state.selectedId == state.specializations[index].id,
+                      //                 title: state.specializations[index].title,
+                      //                 onTap: (id) {
+                      //                   if (state.selectedId == state.specializations[index].id) {
+                      //                     specBloc.add(SpecializationEvent.selectSpec(-1));
+                      //                   } else {
+                      //                     specBloc.add(SpecializationEvent.selectSpec(id));
+                      //                   }
+                      //                 },
+                      //                 id: state.specializations[index].id,
+                      //               ),
+                      //               itemCount: state.specializations.length,
+                      //             ),
+                      //           );
+                      //   },
+                      // // ),
+                      // const SizedBox(height: 16),
                       Container(
                         padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).viewInsets.bottom + 43),
                         decoration: BoxDecoration(
