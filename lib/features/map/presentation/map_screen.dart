@@ -3,6 +3,7 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
@@ -40,7 +41,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
   final List<MapObject<dynamic>> _mapObjects = [];
   late MapOrganizationBloc mapOrganizationBloc;
   late SpecializationBloc specBloc;
-  Point currentLocation = const Point(latitude: 0, longitude: 0);
 
   double latitude = 0;
   double longitude = 0;
@@ -117,18 +117,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                     return state1.selectedId != state2.selectedId;
                   },
                   listener: (context, state) {
-                    mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(
-                        param: MapParameter(
-                            spec: state.selectedId,
-                            lat: currentLocation.latitude,
-                            long: currentLocation.longitude,
-                            radius: 1000000)));
-                    mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
-                        param: MapParameter(
-                            spec: state.selectedId,
-                            lat: currentLocation.latitude,
-                            long: currentLocation.longitude,
-                            radius: 1000000)));
+                    mapOrganizationBloc.add(MapOrganizationEvent.getDoctors());
+                    mapOrganizationBloc
+                        .add(MapOrganizationEvent.getHospitals());
                   },
                   child: Positioned.fill(
                     bottom: 60,
@@ -136,23 +127,55 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                     child: YandexMap(
                       rotateGesturesEnabled: false,
                       onCameraPositionChanged: (cameraPosition, updateReason, isStopped) async {
+                      onCameraPositionChanged:
+                          (cameraPosition, updateReason, isStopped) {
                         if (isStopped) {
-                          mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
-                              lat: cameraPosition.target.latitude, long: cameraPosition.target.longitude));
-                          mapOrganizationBloc.add(MapOrganizationEvent.changeRadius(
-                              radius: MyFunctions.getRadiusFromZoom(cameraPosition.zoom).floor()));
-                          await StorageRepository.putDouble('lat', cameraPosition.target.latitude);
-                          await StorageRepository.putDouble('long', cameraPosition.target.longitude);
+                          mapOrganizationBloc.add(
+                              MapOrganizationEvent.changeLatLong(
+                                  lat: cameraPosition.target.latitude,
+                                  long: cameraPosition.target.longitude,radius: MyFunctions.getRadiusFromZoom(
+                                  cameraPosition.zoom)
+                                  .floor()));
+
+    await StorageRepository.putDouble('lat', cameraPosition.target.latitude);
+    await StorageRepository.putDouble('long', cameraPosition.target.longitude);
+
                         }
                       },
                       onMapTap: (point) {
-                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                        WidgetsBinding.instance.focusManager.primaryFocus
+                            ?.unfocus();
                       },
                       mapObjects: _mapObjects,
                       onMapCreated: (controller) async {
                         _mapController = controller;
                         maxZoomLevel = await controller.getMaxZoom();
                         minZoomLevel = await controller.getMinZoom();
+                        final position = await MyFunctions.determinePosition();
+                        final camera = await _mapController.getCameraPosition();
+                        mapOrganizationBloc.add(
+                            MapOrganizationEvent.changeLatLong(
+                                lat: position.latitude,
+                                long: position.longitude,
+                                radius:
+                                    MyFunctions.getRadiusFromZoom(camera.zoom)
+                                        .floor()));
+
+                        mapOrganizationBloc
+                            .add(MapOrganizationEvent.getHospitals());
+                        mapOrganizationBloc
+                            .add(MapOrganizationEvent.getDoctors());
+                        _mapController.moveCamera(
+                          CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                              target: Point(
+                                  latitude: position.latitude,
+                                  longitude: position.longitude),
+                            ),
+                          ),
+                          animation: const MapAnimation(
+                              duration: 0.15, type: MapAnimationType.smooth),
+                        );
                         if (StorageRepository.getDouble('lat', defValue: 0) == 0) {
                           final position = await MyFunctions.determinePosition();
                           _mapController.moveCamera(
@@ -193,12 +216,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                 BlocConsumer<MapOrganizationBloc, MapOrganizationState>(
                   listener: (context, state) {
                     _searchFieldController.text = state.searchText;
-                    mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(
-                        param: MapParameter(
-                            lat: currentLocation.latitude, long: currentLocation.longitude, radius: state.radius)));
-                    mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
-                        param: MapParameter(
-                            lat: currentLocation.latitude, long: currentLocation.longitude, radius: state.radius)));
+                    mapOrganizationBloc.add(MapOrganizationEvent.getDoctors());
+                    mapOrganizationBloc
+                        .add(MapOrganizationEvent.getHospitals());
                   },
                   listenWhen: (state1, state2) {
                     return state1.searchText != state2.searchText ||
@@ -246,9 +266,11 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                             onTap: (index) {
                               setState(() {
                                 if (index == 0) {
-                                  MyFunctions.addHospitals(state.hospitals, context, _mapObjects);
+                                  MyFunctions.addHospitals(
+                                      state.hospitals, context, _mapObjects);
                                 } else {
-                                  MyFunctions.addDoctors(state.doctors, context, _mapObjects);
+                                  MyFunctions.addDoctors(
+                                      state.doctors, context, _mapObjects);
                                 }
                               });
                             },
@@ -275,25 +297,26 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            MapButton.defaultButton(
-                              title: LocaleKeys.list.tr(),
-                              onTap: (id) =>
-                                  Navigator.of(context).push(fade(page: HospitalList(controller: _controller))),
-                              id: 0,
-                            ),
-                            BlocBuilder<SpecializationBloc, SpecializationState>(
+                            SizedBox(),
+                            BlocBuilder<SpecializationBloc,
+                                SpecializationState>(
                               builder: (context, state) {
                                 return MapControllerButtons(
                                   onCurrentLocationTap: () async {
-                                    final position = await MyFunctions.determinePosition();
+                                    final position =
+                                        await MyFunctions.determinePosition();
                                     _mapController.moveCamera(
                                       CameraUpdate.newCameraPosition(
                                         CameraPosition(
-                                          target: Point(latitude: position.latitude, longitude: position.longitude),
+                                          target: Point(
+                                              latitude: position.latitude,
+                                              longitude: position.longitude),
                                           zoom: 15,
                                         ),
                                       ),
-                                      animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+                                      animation: const MapAnimation(
+                                          duration: 0.15,
+                                          type: MapAnimationType.smooth),
                                     );
                                     zoomLevel = 15;
                                   },
@@ -301,7 +324,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                     if (minZoomLevel < zoomLevel) {
                                       _mapController.moveCamera(
                                         CameraUpdate.zoomTo(zoomLevel - 1),
-                                        animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
+                                        animation: const MapAnimation(
+                                            duration: 0.2,
+                                            type: MapAnimationType.smooth),
                                       );
                                       zoomLevel--;
                                     }
@@ -310,7 +335,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                     if (maxZoomLevel > zoomLevel) {
                                       _mapController.moveCamera(
                                         CameraUpdate.zoomTo(zoomLevel + 1),
-                                        animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
+                                        animation: const MapAnimation(
+                                            duration: 0.2,
+                                            type: MapAnimationType.smooth),
                                       );
                                       zoomLevel++;
                                     }
@@ -351,63 +378,122 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                       // // ),
                       // const SizedBox(height: 16),
                       Container(
-                        padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).viewInsets.bottom + 43),
+                        padding: EdgeInsets.fromLTRB(16, 16, 16,
+                            MediaQuery.of(context).viewInsets.bottom + 43),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: textFieldColor),
                           color: white,
                         ),
                         child: GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                                isScrollControlled: true,
-                                useRootNavigator: true,
-                                context: context,
-                                builder: (c) {
-                                  return BlocProvider.value(
-                                    value: mapOrganizationBloc,
-                                    child: SuggestionPage(
-                                      statusBarHeight: MediaQuery.of(context).padding.top,
-                                    ),
-                                  );
-                                });
-                          },
-                          child: BlocBuilder<MapOrganizationBloc, MapOrganizationState>(
+                          child: BlocBuilder<MapOrganizationBloc,
+                              MapOrganizationState>(
                             builder: (context, state) {
-                              return Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: lilyWhite),
+                              return Hero(
+                                tag: 'search',
                                 child: Row(
                                   children: [
-                                    SvgPicture.asset(
-                                      AppIcons.search,
-                                      width: 24,
-                                      height: 24,
-                                    ),
-                                    const SizedBox(
-                                      width: 6,
-                                    ),
                                     Expanded(
-                                      child: Text(
-                                        state.searchText.isNotEmpty ? state.searchText : LocaleKeys.search.tr(),
-                                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                                            color: state.searchText.isNotEmpty ? textColor : textSecondary,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14),
+                                      child: WButton(
+                                        onTap: () {
+                                          Navigator.of(context).push(fade(
+                                              page: HospitalList(
+                                                  controller: _controller)));
+                                        },
+                                        border: Border.all(color: divider),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 12),
+                                        borderRadius: 10,
+                                        color: Colors.white,
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              AppIcons.listIcon,
+                                              width: 20,
+                                              height: 20,
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text(
+                                              LocaleKeys.list.tr(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1!
+                                                  .copyWith(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    if (state.searchText.isNotEmpty) ...{
-                                      GestureDetector(
+                                    const SizedBox(
+                                      width: 12,
+                                    ),
+                                    Expanded(
+                                      child: GestureDetector(
                                         onTap: () {
-                                          mapOrganizationBloc.add(MapOrganizationEvent.changeSearchText(''));
+                                          Navigator.of(context).push(fade(
+                                              page: HospitalList(
+                                                  getFocus: true,
+                                                  controller: _controller)));
                                         },
-                                        child: SvgPicture.asset(
-                                          AppIcons.clearRounded,
-                                          width: 24,
-                                          height: 24,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: lilyWhite),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    AppIcons.search,
+                                                    width: 24,
+                                                    height: 24,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 6,
+                                                  ),
+                                                  Expanded(
+                                                    child: Text(
+                                                      LocaleKeys.search.tr(),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline1!
+                                                          .copyWith(
+                                                              color: state
+                                                                      .searchText
+                                                                      .isNotEmpty
+                                                                  ? textColor
+                                                                  : textSecondary,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 14),
+                                                    ),
+                                                  ),
+                                                  if (state.searchText
+                                                      .isNotEmpty) ...{
+                                                    GestureDetector(
+                                                      onTap: () {},
+                                                      child: SvgPicture.asset(
+                                                        AppIcons.clearRounded,
+                                                        width: 24,
+                                                        height: 24,
+                                                      ),
+                                                    )
+                                                  }
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      )
-                                    }
+                                      ),
+                                    ),
                                   ],
                                 ),
                               );

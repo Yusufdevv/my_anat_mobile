@@ -18,35 +18,36 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MapOrganizationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(MapParameter param) getHospitals,
-    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getHospitals,
+    required TResult Function() getDoctors,
     required TResult Function() getTypes,
     required TResult Function() getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(double lat, double long) changeLatLong,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -108,7 +109,6 @@ abstract class _$$_GetHospitalsCopyWith<$Res> {
   factory _$$_GetHospitalsCopyWith(
           _$_GetHospitals value, $Res Function(_$_GetHospitals) then) =
       __$$_GetHospitalsCopyWithImpl<$Res>;
-  $Res call({MapParameter param});
 }
 
 /// @nodoc
@@ -121,92 +121,70 @@ class __$$_GetHospitalsCopyWithImpl<$Res>
 
   @override
   _$_GetHospitals get _value => super._value as _$_GetHospitals;
-
-  @override
-  $Res call({
-    Object? param = freezed,
-  }) {
-    return _then(_$_GetHospitals(
-      param: param == freezed
-          ? _value.param
-          : param // ignore: cast_nullable_to_non_nullable
-              as MapParameter,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$_GetHospitals implements _GetHospitals {
-  _$_GetHospitals({required this.param});
-
-  @override
-  final MapParameter param;
+  _$_GetHospitals();
 
   @override
   String toString() {
-    return 'MapOrganizationEvent.getHospitals(param: $param)';
+    return 'MapOrganizationEvent.getHospitals()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_GetHospitals &&
-            const DeepCollectionEquality().equals(other.param, param));
+        (other.runtimeType == runtimeType && other is _$_GetHospitals);
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(param));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$_GetHospitalsCopyWith<_$_GetHospitals> get copyWith =>
-      __$$_GetHospitalsCopyWithImpl<_$_GetHospitals>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(MapParameter param) getHospitals,
-    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getHospitals,
+    required TResult Function() getDoctors,
     required TResult Function() getTypes,
     required TResult Function() getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(double lat, double long) changeLatLong,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
   }) {
-    return getHospitals(param);
+    return getHospitals();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
   }) {
-    return getHospitals?.call(param);
+    return getHospitals?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
   }) {
     if (getHospitals != null) {
-      return getHospitals(param);
+      return getHospitals();
     }
     return orElse();
   }
@@ -259,12 +237,7 @@ class _$_GetHospitals implements _GetHospitals {
 }
 
 abstract class _GetHospitals implements MapOrganizationEvent {
-  factory _GetHospitals({required final MapParameter param}) = _$_GetHospitals;
-
-  MapParameter get param;
-  @JsonKey(ignore: true)
-  _$$_GetHospitalsCopyWith<_$_GetHospitals> get copyWith =>
-      throw _privateConstructorUsedError;
+  factory _GetHospitals() = _$_GetHospitals;
 }
 
 /// @nodoc
@@ -272,7 +245,6 @@ abstract class _$$_GetDoctorsCopyWith<$Res> {
   factory _$$_GetDoctorsCopyWith(
           _$_GetDoctors value, $Res Function(_$_GetDoctors) then) =
       __$$_GetDoctorsCopyWithImpl<$Res>;
-  $Res call({MapParameter param});
 }
 
 /// @nodoc
@@ -285,92 +257,70 @@ class __$$_GetDoctorsCopyWithImpl<$Res>
 
   @override
   _$_GetDoctors get _value => super._value as _$_GetDoctors;
-
-  @override
-  $Res call({
-    Object? param = freezed,
-  }) {
-    return _then(_$_GetDoctors(
-      param: param == freezed
-          ? _value.param
-          : param // ignore: cast_nullable_to_non_nullable
-              as MapParameter,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$_GetDoctors implements _GetDoctors {
-  _$_GetDoctors({required this.param});
-
-  @override
-  final MapParameter param;
+  _$_GetDoctors();
 
   @override
   String toString() {
-    return 'MapOrganizationEvent.getDoctors(param: $param)';
+    return 'MapOrganizationEvent.getDoctors()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_GetDoctors &&
-            const DeepCollectionEquality().equals(other.param, param));
+        (other.runtimeType == runtimeType && other is _$_GetDoctors);
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(param));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$_GetDoctorsCopyWith<_$_GetDoctors> get copyWith =>
-      __$$_GetDoctorsCopyWithImpl<_$_GetDoctors>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(MapParameter param) getHospitals,
-    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getHospitals,
+    required TResult Function() getDoctors,
     required TResult Function() getTypes,
     required TResult Function() getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(double lat, double long) changeLatLong,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
   }) {
-    return getDoctors(param);
+    return getDoctors();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
   }) {
-    return getDoctors?.call(param);
+    return getDoctors?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
   }) {
     if (getDoctors != null) {
-      return getDoctors(param);
+      return getDoctors();
     }
     return orElse();
   }
@@ -423,12 +373,7 @@ class _$_GetDoctors implements _GetDoctors {
 }
 
 abstract class _GetDoctors implements MapOrganizationEvent {
-  factory _GetDoctors({required final MapParameter param}) = _$_GetDoctors;
-
-  MapParameter get param;
-  @JsonKey(ignore: true)
-  _$$_GetDoctorsCopyWith<_$_GetDoctors> get copyWith =>
-      throw _privateConstructorUsedError;
+  factory _GetDoctors() = _$_GetDoctors;
 }
 
 /// @nodoc
@@ -472,13 +417,14 @@ class _$_GetTypes implements _GetTypes {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(MapParameter param) getHospitals,
-    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getHospitals,
+    required TResult Function() getDoctors,
     required TResult Function() getTypes,
     required TResult Function() getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(double lat, double long) changeLatLong,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
   }) {
     return getTypes();
   }
@@ -486,13 +432,13 @@ class _$_GetTypes implements _GetTypes {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return getTypes?.call();
   }
@@ -500,13 +446,13 @@ class _$_GetTypes implements _GetTypes {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
   }) {
     if (getTypes != null) {
@@ -607,13 +553,14 @@ class _$_GetMoreTypes implements _GetMoreTypes {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(MapParameter param) getHospitals,
-    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getHospitals,
+    required TResult Function() getDoctors,
     required TResult Function() getTypes,
     required TResult Function() getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(double lat, double long) changeLatLong,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
   }) {
     return getMoreTypes();
   }
@@ -621,13 +568,13 @@ class _$_GetMoreTypes implements _GetMoreTypes {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return getMoreTypes?.call();
   }
@@ -635,13 +582,13 @@ class _$_GetMoreTypes implements _GetMoreTypes {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
   }) {
     if (getMoreTypes != null) {
@@ -766,13 +713,14 @@ class _$_ChangeSearchText implements _ChangeSearchText {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(MapParameter param) getHospitals,
-    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getHospitals,
+    required TResult Function() getDoctors,
     required TResult Function() getTypes,
     required TResult Function() getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(double lat, double long) changeLatLong,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
   }) {
     return changeSearchText(text);
   }
@@ -780,13 +728,13 @@ class _$_ChangeSearchText implements _ChangeSearchText {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return changeSearchText?.call(text);
   }
@@ -794,13 +742,13 @@ class _$_ChangeSearchText implements _ChangeSearchText {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
   }) {
     if (changeSearchText != null) {
@@ -930,13 +878,14 @@ class _$_ChangeRadius implements _ChangeRadius {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(MapParameter param) getHospitals,
-    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getHospitals,
+    required TResult Function() getDoctors,
     required TResult Function() getTypes,
     required TResult Function() getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(double lat, double long) changeLatLong,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
   }) {
     return changeRadius(radius);
   }
@@ -944,13 +893,13 @@ class _$_ChangeRadius implements _ChangeRadius {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return changeRadius?.call(radius);
   }
@@ -958,13 +907,13 @@ class _$_ChangeRadius implements _ChangeRadius {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
   }) {
     if (changeRadius != null) {
@@ -1034,7 +983,7 @@ abstract class _$$_ChangeLatLongCopyWith<$Res> {
   factory _$$_ChangeLatLongCopyWith(
           _$_ChangeLatLong value, $Res Function(_$_ChangeLatLong) then) =
       __$$_ChangeLatLongCopyWithImpl<$Res>;
-  $Res call({double lat, double long});
+  $Res call({double lat, double long, int? radius});
 }
 
 /// @nodoc
@@ -1052,6 +1001,7 @@ class __$$_ChangeLatLongCopyWithImpl<$Res>
   $Res call({
     Object? lat = freezed,
     Object? long = freezed,
+    Object? radius = freezed,
   }) {
     return _then(_$_ChangeLatLong(
       lat: lat == freezed
@@ -1062,6 +1012,10 @@ class __$$_ChangeLatLongCopyWithImpl<$Res>
           ? _value.long
           : long // ignore: cast_nullable_to_non_nullable
               as double,
+      radius: radius == freezed
+          ? _value.radius
+          : radius // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -1069,16 +1023,18 @@ class __$$_ChangeLatLongCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ChangeLatLong implements _ChangeLatLong {
-  _$_ChangeLatLong({required this.lat, required this.long});
+  _$_ChangeLatLong({required this.lat, required this.long, this.radius});
 
   @override
   final double lat;
   @override
   final double long;
+  @override
+  final int? radius;
 
   @override
   String toString() {
-    return 'MapOrganizationEvent.changeLatLong(lat: $lat, long: $long)';
+    return 'MapOrganizationEvent.changeLatLong(lat: $lat, long: $long, radius: $radius)';
   }
 
   @override
@@ -1087,14 +1043,16 @@ class _$_ChangeLatLong implements _ChangeLatLong {
         (other.runtimeType == runtimeType &&
             other is _$_ChangeLatLong &&
             const DeepCollectionEquality().equals(other.lat, lat) &&
-            const DeepCollectionEquality().equals(other.long, long));
+            const DeepCollectionEquality().equals(other.long, long) &&
+            const DeepCollectionEquality().equals(other.radius, radius));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(lat),
-      const DeepCollectionEquality().hash(long));
+      const DeepCollectionEquality().hash(long),
+      const DeepCollectionEquality().hash(radius));
 
   @JsonKey(ignore: true)
   @override
@@ -1104,45 +1062,46 @@ class _$_ChangeLatLong implements _ChangeLatLong {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(MapParameter param) getHospitals,
-    required TResult Function(MapParameter param) getDoctors,
+    required TResult Function() getHospitals,
+    required TResult Function() getDoctors,
     required TResult Function() getTypes,
     required TResult Function() getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(double lat, double long) changeLatLong,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
   }) {
-    return changeLatLong(lat, long);
+    return changeLatLong(lat, long, radius);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
   }) {
-    return changeLatLong?.call(lat, long);
+    return changeLatLong?.call(lat, long, radius);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(MapParameter param)? getHospitals,
-    TResult Function(MapParameter param)? getDoctors,
+    TResult Function()? getHospitals,
+    TResult Function()? getDoctors,
     TResult Function()? getTypes,
     TResult Function()? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long)? changeLatLong,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
   }) {
     if (changeLatLong != null) {
-      return changeLatLong(lat, long);
+      return changeLatLong(lat, long, radius);
     }
     return orElse();
   }
@@ -1197,10 +1156,12 @@ class _$_ChangeLatLong implements _ChangeLatLong {
 abstract class _ChangeLatLong implements MapOrganizationEvent {
   factory _ChangeLatLong(
       {required final double lat,
-      required final double long}) = _$_ChangeLatLong;
+      required final double long,
+      final int? radius}) = _$_ChangeLatLong;
 
   double get lat;
   double get long;
+  int? get radius;
   @JsonKey(ignore: true)
   _$$_ChangeLatLongCopyWith<_$_ChangeLatLong> get copyWith =>
       throw _privateConstructorUsedError;

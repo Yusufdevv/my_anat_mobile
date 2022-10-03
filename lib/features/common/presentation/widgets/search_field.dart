@@ -12,8 +12,11 @@ class SearchField extends StatefulWidget {
   final VoidCallback? onClear;
   final Color fillColor;
   final FocusNode? focusNode;
+  final GlobalKey<FormState>? stateKey;
+
   const SearchField({
-     this.focusNode,
+    this.focusNode,
+    this.stateKey,
     required this.controller,
     required this.onChanged,
     this.onClear,
@@ -28,31 +31,35 @@ class SearchField extends StatefulWidget {
 class _SearchFieldState extends State<SearchField> {
   late TextEditingController _controller;
   bool showClear = false;
+
   @override
   void initState() {
     _controller = widget.controller;
-    _controller.addListener(() {
-      if (_controller.text.isNotEmpty && !showClear) {
-        setState(() {
-          showClear = true;
-        });
-      } else if (_controller.text.isEmpty && showClear) {
-        setState(() {
-          showClear = false;
-        });
-      }
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 40,
-      child: TextField(focusNode: widget.focusNode,
+      child: TextFormField(
+        key: widget.stateKey,
+        focusNode: widget.focusNode,
         controller: _controller,
-        onChanged: widget.onChanged,
-        style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+        onChanged: (text) {
+          widget.onChanged(text);
+          if (text.isNotEmpty && !showClear) {
+            setState(() {
+              showClear = true;
+            });
+          } else if (text.isEmpty && showClear) {
+            setState(() {
+              showClear = false;
+            });
+          }
+        },
+        style:
+            Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
           fillColor: widget.fillColor,

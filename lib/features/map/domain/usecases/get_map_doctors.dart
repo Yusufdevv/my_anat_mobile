@@ -1,3 +1,4 @@
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
@@ -9,7 +10,8 @@ class GetMapDoctorUseCase extends UseCase<List<MapDoctorModel>, String> {
   final GlobalRequestRepository repo = GlobalRequestRepository();
 
   @override
-  Future<Either<Failure, List<MapDoctorModel>>> call(search, {MapParameter? param}) {
+  Future<Either<Failure, List<MapDoctorModel>>> call(search,
+      {MapParameter? param}) {
     var query = <String, dynamic>{};
     if (search.isNotEmpty) {
       query.addAll({"search": search});
@@ -20,14 +22,12 @@ class GetMapDoctorUseCase extends UseCase<List<MapDoctorModel>, String> {
         "lon": param.long,
         "rad": param.radius,
       });
-      if(param.spec!=-1){
-        query.addAll({
-          'specialization':param.spec
-        });
-      }
     }
 
-    return repo.getList<MapDoctorModel>(
-        endpoint: '/mobile/doctor/map', fromJson: MapDoctorModel.fromJson, query: query);
+    return repo.getList(
+        endpoint: '/mobile/doctor/map',
+        fromJson: MapDoctorModel.fromJson,
+        query: query,
+        sendToken: StorageRepository.getString('token').isNotEmpty);
   }
 }

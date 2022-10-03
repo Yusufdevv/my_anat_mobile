@@ -18,6 +18,7 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 abstract class MyFunctions {
   static const clusterId = MapObjectId('big_cluster_id');
+
   static String safeDateFormat(String date, String pattern) {
     try {
       return Jiffy(date).format(pattern);
@@ -39,26 +40,38 @@ abstract class MyFunctions {
   }
 
   static Future<Uint8List> getBytesFromCanvas(
-      {required int width, required int height, required int placeCount, required BuildContext context}) async {
+      {required int width,
+      required int height,
+      required int placeCount,
+      required BuildContext context,
+      required String image}) async {
     final pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
     final Paint paint = Paint()..color = Colors.red;
-    canvas.drawImage(await getImageInfo(context).then((value) => value.image), const Offset(0, 3), paint);
+    canvas.drawImage(
+        await getImageInfo(context, image).then((value) => value.image),
+        const Offset(0, 3),
+        paint);
     TextPainter painter = TextPainter(textDirection: ui.TextDirection.ltr);
     painter.text = TextSpan(
       text: placeCount.toString(),
       style: const TextStyle(fontSize: 25.0, color: Colors.white),
     );
     painter.layout();
-    painter.paint(canvas, Offset((width * 0.5) - painter.width * 0.5, (height * 0.5) - painter.height * 0.5));
+    painter.paint(
+        canvas,
+        Offset((width * 0.5) - painter.width * 0.5,
+            (height * 0.5) - painter.height * 0.5));
     final img = await pictureRecorder.endRecording().toImage(width, height);
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
     return data?.buffer.asUint8List() ?? Uint8List(0);
   }
 
-  static Future<ImageInfo> getImageInfo(BuildContext context) async {
-    AssetImage assetImage = const AssetImage(AppImages.placeMarkCluster);
-    ImageStream stream = assetImage.resolve(createLocalImageConfiguration(context));
+  static Future<ImageInfo> getImageInfo(
+      BuildContext context, String image) async {
+    AssetImage assetImage = AssetImage(image);
+    ImageStream stream =
+        assetImage.resolve(createLocalImageConfiguration(context));
     Completer<ImageInfo> completer = Completer();
     stream.addListener(ImageStreamListener((ImageInfo imageInfo, _) {
       return completer.complete(imageInfo);
@@ -66,7 +79,8 @@ abstract class MyFunctions {
     return completer.future;
   }
 
-  static void addHospitals(List<MapHospitalModel> points, BuildContext context, List<MapObject<dynamic>> mapObjects) {
+  static void addHospitals(List<MapHospitalModel> points, BuildContext context,
+      List<MapObject<dynamic>> mapObjects) {
     final placeMarks = points
         .map(
           (e) => PlacemarkMapObject(
@@ -87,13 +101,16 @@ abstract class MyFunctions {
                     phone: e.phoneNumber,
                     address: e.address,
                     images: e.images.map((e) => e.middle).toList(),
-                    location: Point(latitude: e.latitude, longitude: e.longitude),
+                    location:
+                        Point(latitude: e.latitude, longitude: e.longitude),
                     rating: e.rating,
                   ),
                 );
               },
-              icon: PlacemarkIcon.single(
-                  PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon), scale: 3))),
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(scale: 3,
+                  image:
+                      BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon),
+                  ))),
         )
         .toList();
     final clusterItem = ClusterizedPlacemarkCollection(
@@ -108,7 +125,11 @@ abstract class MyFunctions {
             PlacemarkIconStyle(
               image: BitmapDescriptor.fromBytes(
                 await getBytesFromCanvas(
-                    width: 48, height: 50, placeCount: cluster.placemarks.length, context: context),
+                    image: AppImages.hospitalCluster,
+                    width: 48,
+                    height: 50,
+                    placeCount: cluster.placemarks.length,
+                    context: context),
               ),
               scale: 3,
             ),
@@ -121,13 +142,16 @@ abstract class MyFunctions {
     mapObjects.add(clusterItem);
   }
 
-  static void addDoctors(List<MapDoctorModel> points, BuildContext context, List<MapObject<dynamic>> mapObjects) {
+  static void addDoctors(List<MapDoctorModel> points, BuildContext context,
+      List<MapObject<dynamic>> mapObjects) {
     final placeMarks = points
         .map(
           (e) => PlacemarkMapObject(
               opacity: 1,
               mapId: MapObjectId(e.hospital.longitude.toString()),
-              point: Point(latitude: e.hospital.latitude, longitude: e.hospital.longitude),
+              point: Point(
+                  latitude: e.hospital.latitude,
+                  longitude: e.hospital.longitude),
               onTap: (object, point) {
                 showModalBottomSheet(
                   context: context,
@@ -142,13 +166,16 @@ abstract class MyFunctions {
                     phone: e.hospital.phoneNumber,
                     address: e.hospital.address,
                     images: e.hospital.images.map((e) => e.middle).toList(),
-                    location: Point(latitude: e.hospital.latitude, longitude: e.hospital.longitude),
+                    location: Point(
+                        latitude: e.hospital.latitude,
+                        longitude: e.hospital.longitude),
                     rating: e.hospital.rating,
                   ),
                 );
               },
-              icon: PlacemarkIcon.single(
-                  PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon), scale: 3))),
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                  image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark),
+                  scale: 3))),
         )
         .toList();
     final clusterItem = ClusterizedPlacemarkCollection(
@@ -163,7 +190,11 @@ abstract class MyFunctions {
             PlacemarkIconStyle(
               image: BitmapDescriptor.fromBytes(
                 await getBytesFromCanvas(
-                    width: 48, height: 50, placeCount: cluster.placemarks.length, context: context),
+                    width: 48,
+                    height: 50,
+                    placeCount: cluster.placemarks.length,
+                    context: context,
+                    image: AppImages.doctorCluster),
               ),
               scale: 3,
             ),
@@ -190,7 +221,8 @@ abstract class MyFunctions {
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
     return await Geolocator.getCurrentPosition();
   }
@@ -236,7 +268,8 @@ abstract class MyFunctions {
   static String getPublishedDate(String date) {
     if (Jiffy(date).isSame(DateTime.now(), Units.DAY)) {
       return 'Bugun, ${Jiffy(date).format('HH:mm')}';
-    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 || Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
+    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 ||
+        Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
       return 'Kecha, ${Jiffy(date).format('HH:mm')}';
     } else {
       return '${Jiffy(date).date} ${getMonth(Jiffy(date).month)}, ${Jiffy(date).year}';
