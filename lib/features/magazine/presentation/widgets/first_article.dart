@@ -43,7 +43,7 @@ class FirstArticle extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 4),  
                   Html(
                     data: state.firstArticle.shortDescription,
                     style: {

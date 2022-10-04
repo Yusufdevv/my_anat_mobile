@@ -16,4 +16,5 @@ class AppImages {
   static const doctorMark = 'assets/images/doctor_mark.png';
   static const doctorCluster = 'assets/images/doctor_cluster.png';
   static const hospitalCluster = 'assets/images/hospital_cluster.png';
+  static const guestImage = 'assets/images/guest_image.png';
 }

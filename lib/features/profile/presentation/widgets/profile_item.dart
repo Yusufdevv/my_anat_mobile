@@ -12,11 +12,13 @@ class ProfileItem extends StatelessWidget {
   final Color color;
   final Color? iconColor;
   final String? image;
+  final Color? titleColor;
 
   const ProfileItem(
       {required this.onTap,
       this.color = clearDay,
       this.iconColor,
+      this.titleColor,
       required this.title,
       this.icon,
       this.image,
@@ -46,7 +48,10 @@ class ProfileItem extends StatelessWidget {
             const SizedBox(width: 12),
             Text(
               title.tr(),
-              style: Theme.of(context).textTheme.headline1!.copyWith(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(color: titleColor),
             ),
             const Spacer(),
             SvgPicture.asset(AppIcons.arrowRight, color: textSecondary)

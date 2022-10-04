@@ -129,10 +129,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       return TabBar(
                         enableFeedback: true,
                         onTap: (index) {
-                          if (index == 3 && state.status == AuthenticationStatus.unauthenticated) {
-                            showRegisterBottomSheet(context);
-                            _controller.animateTo(_controller.previousIndex);
-                          }
+                          // if (index == 3 && state.status == AuthenticationStatus.unauthenticated) {
+                          //   showRegisterBottomSheet(context);
+                          //   _controller.animateTo(_controller.previousIndex);
+                          // }
                         },
                         controller: _controller,
                         indicatorPadding: EdgeInsets.zero,

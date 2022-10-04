@@ -262,7 +262,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            SizedBox(),
+                            const SizedBox(),
                             BlocBuilder<SpecializationBloc, SpecializationState>(
                               builder: (context, state) {
                                 return MapControllerButtons(
