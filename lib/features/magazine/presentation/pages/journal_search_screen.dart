@@ -1,45 +1,39 @@
-import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/assets/constants/app_images.dart';
-import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
-import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
+import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/magazine/data/repositories/journal_repository_impl.dart';
+import 'package:anatomica/features/magazine/domain/usecases/get_journal_articles_usecase.dart';
+import 'package:anatomica/features/magazine/domain/usecases/search_journal_usecase.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
-import 'package:anatomica/features/magazine/presentation/widgets/search_model_item.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:anatomica/features/magazine/presentation/bloc/journal_search_bloc/journal_search_bloc.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/journal_search_appbar.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/searched_articles.dart';
+import 'package:anatomica/features/magazine/presentation/widgets/searched_journals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MagazineSearchScreen extends StatefulWidget {
   final JournalBloc bloc;
+
   const MagazineSearchScreen({required this.bloc, Key? key}) : super(key: key);
 
   @override
   State<MagazineSearchScreen> createState() => _MagazineSearchScreenState();
 }
 
-class _MagazineSearchScreenState extends State<MagazineSearchScreen> {
-  late TextEditingController searchController;
-  late ScrollController scrollController;
-  bool fetchMore = false;
+class _MagazineSearchScreenState extends State<MagazineSearchScreen> with TickerProviderStateMixin {
+  late TextEditingController _searchController;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    searchController = TextEditingController();
-    scrollController = ScrollController()
-      ..addListener(() {
-        if (scrollController.position.maxScrollExtent - 20 <= scrollController.offset && fetchMore) {
-          widget.bloc.add(MoreSearchJournals());
-        }
-      });
+    _tabController = TabController(length: 2, vsync: this);
+    _searchController = TextEditingController();
   }
 
   @override
   void dispose() {
-    searchController
+    _searchController
       ..clear()
       ..dispose();
     super.dispose();
@@ -49,110 +43,29 @@ class _MagazineSearchScreenState extends State<MagazineSearchScreen> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return WKeyboardDismisser(
-      child: BlocProvider.value(
-        value: widget.bloc,
-        child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(64),
-            child: Container(
-              padding: EdgeInsets.fromLTRB(16, 16 + mediaQuery.padding.top, 0, 8),
-              decoration: BoxDecoration(
-                color: white,
-                boxShadow: [
-                  BoxShadow(
-                    color: woodSmoke.withOpacity(0.12),
-                    blurRadius: 24,
-                    offset: const Offset(0, 8),
-                  )
-                ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => JournalSearchBloc(
+              searchJournalUseCase: SearchJournalUseCase(
+                repository: serviceLocator<JournalRepositoryImpl>(),
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: SearchField(
-                      controller: searchController,
-                      onChanged: (value) {
-                        widget.bloc.add(SearchJournals(query: value));
-                      },
-                      onClear: () {
-                        widget.bloc.add(SearchJournals(query: ''));
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  WScaleAnimation(
-                    onTap: () {
-                      widget.bloc.add(SearchJournals(query: ''));
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      LocaleKeys.close.tr(),
-                      style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 12),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  )
-                ],
+              getJournalArticlesUseCase: GetJournalArticlesUseCase(
+                repository: serviceLocator<JournalRepositoryImpl>(),
               ),
             ),
           ),
-          body: BlocBuilder<JournalBloc, JournalState>(
-            builder: (context, state) {
-              if (state.searchStatus == PaginatorStatus.PAGINATOR_LOADING) {
-                return const Center(
-                  child: CupertinoActivityIndicator(),
-                );
-              } else if (state.searchStatus == PaginatorStatus.PAGINATOR_SUCCESS) {
-                fetchMore = state.searchFetchMore;
-                if (state.searchJournals.isNotEmpty) {
-                  return GridView.builder(
-                      controller: scrollController,
-                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16)
-                          .copyWith(bottom: 20 + MediaQuery.of(context).padding.bottom),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisExtent: 370,
-                          childAspectRatio: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16),
-                      itemCount: state.searchJournals.length,
-                      itemBuilder: (BuildContext ctx, index) {
-                        return SearchedModelsItem(
-                          controller: searchController,
-                          magazineItemEntity: state.searchJournals[index],
-                        );
-                      });
-                } else {
-                  return Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).padding.bottom,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 160, width: 160, child: Image.asset(AppImages.illustrations)),
-                        Text(
-                          LocaleKeys.no_results.tr(),
-                          style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
-                        ),
-                        Text(
-                          LocaleKeys.could_not_find.tr(),
-                          style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              } else if (state.searchStatus == PaginatorStatus.PAGINATOR_ERROR) {
-                return const Center(
-                  child: Text('error'),
-                );
-              } else {
-                return const SizedBox();
-              }
-            },
+          BlocProvider.value(value: widget.bloc),
+        ],
+        child: Scaffold(
+          appBar: JournalSearchAppBar(
+              mediaQuery: mediaQuery, searchController: _searchController, tabController: _tabController),
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              SearchedJournals(searchController: _searchController),
+              SearchedArticles(searchController: _searchController),
+            ],
           ),
         ),
       ),

@@ -7,7 +7,6 @@ import 'package:anatomica/features/magazine/domain/usecases/get_journal_articles
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_single_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journal_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/get_journale_single_articles_usecase.dart';
-import 'package:anatomica/features/magazine/domain/usecases/search_journal_usecase.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/magazine/presentation/pages/all_articles.dart';
@@ -41,9 +40,6 @@ class MagazineScreen extends StatelessWidget {
             repository: serviceLocator<JournalRepositoryImpl>(),
           ),
           getJournalUseCase: GetJournalUseCase(
-            repository: serviceLocator<JournalRepositoryImpl>(),
-          ),
-          searchJournalUseCase: SearchJournalUseCase(
             repository: serviceLocator<JournalRepositoryImpl>(),
           ),
           getJournalArticlesUseCase: GetJournalArticlesUseCase(

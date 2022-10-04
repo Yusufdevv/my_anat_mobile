@@ -21,6 +21,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 import 'package:munir_epub_reader/epub_viewer.dart';
+import 'package:share_plus/share_plus.dart';
 
 class JournalSingleScreen extends StatelessWidget {
   final JournalBloc bloc;
@@ -59,7 +60,9 @@ class JournalSingleScreen extends StatelessWidget {
           ),
           actions: [
             WScaleAnimation(
-              onTap: () {},
+              onTap: () {
+                Share.share('https://anatomica.uz/journal/${journal.slug}');
+              },
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SvgPicture.asset(
@@ -119,7 +122,7 @@ class JournalSingleScreen extends StatelessWidget {
                                   );
                             },
                             onRightButtonTap: () {
-                              if (journal.isBought) {
+                              if (journal.isBought || !journal.isPremium) {
                                 context.read<DownloadBloc>().add(
                                       CheckWhetherFileExists(
                                         slug: journal.slug,

@@ -88,7 +88,9 @@ class JournalSingleBigItem extends StatelessWidget {
         ),
         if (isDownloaded) ...{
           WButton(
+            margin: const EdgeInsets.only(top: 12),
             onTap: () {},
+            text: LocaleKeys.read.tr(),
           )
         } else ...{
           Row(
