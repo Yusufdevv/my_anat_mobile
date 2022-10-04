@@ -1,8 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
-import 'package:anatomica/features/magazine/data/repositories/journal_repository_impl.dart';
-import 'package:anatomica/features/magazine/domain/usecases/get_journal_article_single_usecase.dart';
+import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
+import 'package:anatomica/features/journal/domain/usecases/get_journal_article_single_usecase.dart';
 import 'package:anatomica/features/map/presentation/blocs/article_single_bloc/article_single_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:flutter/cupertino.dart';

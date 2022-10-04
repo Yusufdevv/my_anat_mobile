@@ -10,10 +10,10 @@ import 'package:anatomica/features/doctor_single/data/datasources/doctor_single_
 import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
 import 'package:anatomica/features/hospital_single/data/datasources/hospital_single_datasource.dart';
 import 'package:anatomica/features/hospital_single/data/repository/hospital_repository.dart';
-import 'package:anatomica/features/magazine/data/datasources/journal_datasource.dart';
-import 'package:anatomica/features/magazine/data/datasources/payment_datasource.dart';
-import 'package:anatomica/features/magazine/data/repositories/journal_repository_impl.dart';
-import 'package:anatomica/features/magazine/data/repositories/payment_repository_impl.dart';
+import 'package:anatomica/features/journal/data/datasources/journal_datasource.dart';
+import 'package:anatomica/features/journal/data/datasources/payment_datasource.dart';
+import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
+import 'package:anatomica/features/journal/data/repositories/payment_repository_impl.dart';
 import 'package:anatomica/features/map/data/datasources/map_datasource.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';

@@ -1,5 +1,5 @@
-import 'package:anatomica/features/magazine/domain/entities/journal_article_single.dart';
-import 'package:anatomica/features/magazine/domain/usecases/get_journal_article_single_usecase.dart';
+import 'package:anatomica/features/journal/domain/entities/journal_article_single.dart';
+import 'package:anatomica/features/journal/domain/usecases/get_journal_article_single_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

@@ -1,6 +1,6 @@
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_articles_usecase.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
-import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
+import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';

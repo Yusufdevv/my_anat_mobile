@@ -4,7 +4,7 @@ import 'package:anatomica/features/doctor_single/data/models/doctor_comment.dart
 import 'package:anatomica/features/doctor_single/data/models/doctor_interview_model.dart';
 import 'package:anatomica/features/doctor_single/data/models/doctor_single_model.dart';
 import 'package:anatomica/features/hospital_single/data/models/comment_model.dart';
-import 'package:anatomica/features/magazine/data/models/journal_article_model.dart';
+import 'package:anatomica/features/journal/data/models/journal_article_model.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:dio/dio.dart';
 
@@ -13,13 +13,11 @@ abstract class DoctorSingleDatasource {
 
   Future<GenericPagination<JournalArticleModel>> getDoctorArticles({required int id, String? next});
 
-  Future<GenericPagination<DoctorInterviewModel>> getDoctorInterviews(
-      {required int id, String? next});
+  Future<GenericPagination<DoctorInterviewModel>> getDoctorInterviews({required int id, String? next});
 
   Future<GenericPagination<CommentModel>> getDoctorComments({required int id, String? next});
 
-  Future<DoctorCommentModel> sendDoctorComment(
-      {required int doctor, required double rating, required String comment});
+  Future<DoctorCommentModel> sendDoctorComment({required int doctor, required double rating, required String comment});
 
   Future<String> deleteDoctorComment({required int id});
 }
@@ -37,13 +35,10 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return DoctorSingleModel.fromJson(response.data);
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -55,8 +50,7 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
   }
 
   @override
-  Future<GenericPagination<JournalArticleModel>> getDoctorArticles(
-      {required int id, String? next}) async {
+  Future<GenericPagination<JournalArticleModel>> getDoctorArticles({required int id, String? next}) async {
     try {
       final response = await _dio.get(next ?? '/article/',
           queryParameters: {'authors': id},
@@ -66,14 +60,11 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
                   : {}));
       print(response.data);
       print(response.realUri);
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => JournalArticleModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -85,8 +76,7 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
   }
 
   @override
-  Future<GenericPagination<DoctorInterviewModel>> getDoctorInterviews(
-      {required int id, String? next}) async {
+  Future<GenericPagination<DoctorInterviewModel>> getDoctorInterviews({required int id, String? next}) async {
     try {
       final response = await _dio.get(next ?? '/interview/',
           queryParameters: {'doctors': id},
@@ -96,14 +86,11 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
                   : {}));
       print(response.data);
       print(response.realUri);
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => DoctorInterviewModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -125,14 +112,10 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
                   : {}));
       print(response.data);
       print(response.realUri);
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return GenericPagination.fromJson(
-            response.data, (p0) => CommentModel.fromJson(p0 as Map<String, dynamic>));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data, (p0) => CommentModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -161,14 +144,11 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
       print(response.statusCode);
       print(response.data);
 
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return DoctorCommentModel.fromJson(response.data);
       } else {
         throw ServerException(
-            statusCode: response.statusCode!, errorMessage: (response.data['doctor'] as
-        List<dynamic>).first);
+            statusCode: response.statusCode!, errorMessage: (response.data['doctor'] as List<dynamic>).first);
       }
     } on ServerException {
       rethrow;
@@ -191,13 +171,10 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
       );
       print(response.statusCode);
       print(response.data);
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return '';
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;

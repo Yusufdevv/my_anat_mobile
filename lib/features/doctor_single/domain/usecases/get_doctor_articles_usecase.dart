@@ -3,7 +3,7 @@ import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/doctor_single/domain/repositories/doctor_single_repository.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
-import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
+import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 
 class GetDoctorArticlesUseCase implements UseCase<GenericPagination<JournalArticleEntity>, TypeParameter> {

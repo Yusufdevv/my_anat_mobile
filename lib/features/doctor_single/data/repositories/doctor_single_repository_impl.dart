@@ -7,7 +7,7 @@ import 'package:anatomica/features/doctor_single/domain/entities/doctor_intervie
 import 'package:anatomica/features/doctor_single/domain/entities/doctor_sinlge_entity.dart';
 import 'package:anatomica/features/doctor_single/domain/repositories/doctor_single_repository.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/comment_entity.dart';
-import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
+import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 
 class DoctorSingleRepositoryImpl extends DoctorSingleRepository {
@@ -60,8 +60,7 @@ class DoctorSingleRepositoryImpl extends DoctorSingleRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CommentEntity>>> getDoctorComments(
-      {required int id, String? next}) async {
+  Future<Either<Failure, GenericPagination<CommentEntity>>> getDoctorComments({required int id, String? next}) async {
     try {
       final result = await datasource.getDoctorComments(id: id, next: next);
       return Right(result);

@@ -2,7 +2,7 @@ import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/hospital_single/domain/repositories/hospital_single_repository.dart';
-import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
+import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 
 class GetHArticlesUseCase extends UseCase<GenericPagination<JournalArticleEntity>, TypeParameter> {

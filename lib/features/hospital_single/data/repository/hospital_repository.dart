@@ -9,7 +9,7 @@ import 'package:anatomica/features/hospital_single/domain/entities/hospital_serv
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_single_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/post_comment_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/repositories/hospital_single_repository.dart';
-import 'package:anatomica/features/magazine/domain/entities/article_entity.dart';
+import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
@@ -94,8 +94,7 @@ class HospitalSingleRepositoryImpl extends HospitalSingleRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<CommentEntity>>> getHospitalComments(
-      {required int id, String? next}) async {
+  Future<Either<Failure, GenericPagination<CommentEntity>>> getHospitalComments({required int id, String? next}) async {
     try {
       final result = await datasource.getHospitalComments(id: id, next: next);
       return Right(result);
@@ -124,12 +123,10 @@ class HospitalSingleRepositoryImpl extends HospitalSingleRepository {
   }
 
   @override
-  Future<Either<Failure, void>> postComment(
-      {required int organizationId, required PostCommentEntity comment}) async {
+  Future<Either<Failure, void>> postComment({required int organizationId, required PostCommentEntity comment}) async {
     try {
       await datasource.postComment(
-          organizationId: organizationId,
-          comment: PostCommentModel(rating: comment.rating, comment: comment.comment));
+          organizationId: organizationId, comment: PostCommentModel(rating: comment.rating, comment: comment.comment));
       return Right('');
     } on DioException {
       return Left(DioFailure());
