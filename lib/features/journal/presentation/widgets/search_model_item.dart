@@ -9,7 +9,7 @@ import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
 import 'package:anatomica/features/journal/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/journal_single_screen.dart';
-import 'package:anatomica/features/journal/presentation/pages/onetime_payment.dart';
+import 'package:anatomica/features/journal/presentation/pages/payment_screen.dart';
 import 'package:anatomica/features/journal/presentation/widgets/downloading_dialog.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -100,7 +100,7 @@ class SearchedModelsItem extends StatelessWidget {
                 } else {
                   Navigator.of(context, rootNavigator: true).push(
                     fade(
-                      page: OneTimePayment(
+                      page: PaymentScreen(
                         price: magazineItemEntity.price,
                         title: magazineItemEntity.redaction,
                         imageUrl: magazineItemEntity.image.middle,

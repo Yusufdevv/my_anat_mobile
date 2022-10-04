@@ -105,6 +105,7 @@ class AppIcons {
   static const editImage = 'assets/icons/profile/edit.svg';
   static const changePasswordLock = 'assets/icons/profile/change_password_lock.svg';
 
+  static const paymentMethodCheck = 'assets/icons/magazine/payment_check.svg';
   //magazine
   static const magazineFilter = 'assets/icons/magazine/filter.svg';
   static const magazineSearch = 'assets/icons/magazine/search.svg';

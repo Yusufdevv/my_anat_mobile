@@ -77,5 +77,6 @@ void showRegisterBottomSheet(BuildContext context) => showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
+      useRootNavigator: true,
       builder: (_) => RegisterBottomSheet(parentContext: context),
     );

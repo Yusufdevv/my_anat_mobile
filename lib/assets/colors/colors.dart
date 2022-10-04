@@ -45,6 +45,7 @@ const appBarDivider = _whiteSmoke3;
 const gold = _goldenTainoi;
 const tongerineYellow = _tongerineYellow;
 const journalShadow = _chineseBlack;
+const checkUnselected = _zircon;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -91,3 +92,4 @@ const _whiteSmoke3 = Color(0xffF4F4F4);
 const _goldenTainoi = Color(0xffFFC15D);
 const _tongerineYellow = Color(0xffF8B76B);
 const _chineseBlack = Color(0xff160C0C);
+const _zircon = Color(0xffE1E5E4);

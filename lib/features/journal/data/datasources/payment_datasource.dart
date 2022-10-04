@@ -41,14 +41,15 @@ class PaymentDatasourceImpl extends PaymentDatasource {
   }) async {
     try {
       final data = {
-        "purpose": "jurnal",
+        "purpose": "article",
         "products": [
-          {"object_type": "jurnal", "object_id": articleId, "price": price}
+          {"object_type": "article", "object_id": articleId, "price": price}
         ],
         "description": "",
         "provider": paymentProvider,
         "redirect_url": "/"
       };
+
       if (!isRegistered) {
         if (phoneNumber.isNotEmpty) {
           data.putIfAbsent('phone_number', () => phoneNumber);
@@ -88,16 +89,18 @@ class PaymentDatasourceImpl extends PaymentDatasource {
   }) async {
     try {
       final data = {
-        "purpose": "article",
+        "purpose": "jurnal",
         "products": [
-          {"object_type": "article", "object_id": journalId, "price": price}
+          {"object_type": "jurnal", "object_id": journalId, "price": price}
         ],
         "description": "",
         "provider": paymentProvider,
         "redirect_url": "/"
       };
+      print(isRegistered);
+      print(phoneNumber);
       if (!isRegistered) {
-        if (phoneNumber.isNotEmpty) {
+        if (phoneNumber.isNotEmpty && phoneNumber.length >= 13) {
           data.putIfAbsent('phone_number', () => phoneNumber);
         } else if (email.isNotEmpty) {
           data.putIfAbsent('email', () => email);

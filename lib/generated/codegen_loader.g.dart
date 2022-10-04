@@ -478,7 +478,7 @@ static const Map<String,dynamic> ru = {
   "resend_sms_error": "Ошибка повторной отправки СМС",
   "network_error": "Проблема с подключением к сети",
   "code_error": "Код неверный",
-  "please_register": "Пожалуйста, зарегистрируйтесь,\\nчтобы использовать эту функцию",
+  "please_register": "Пожалуйста, зарегистрируйтесь,\nчтобы использовать эту функцию",
   "select": "Выбрать",
   "doctor_do_not_want_show_bio": "Специалист не хочет показывать свою биографию",
   "doctor_did_write_article": "Статью не врач написал",

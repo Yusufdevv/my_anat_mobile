@@ -3,17 +3,17 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class OneTimePaymentTabs extends StatefulWidget {
+class PaymentScreenTabs extends StatefulWidget {
   // final MagazineItemEntity magazineItemEntity;
   final VoidCallback onTap;
 
-  const OneTimePaymentTabs({/*required this.magazineItemEntity, */ required this.onTap, Key? key}) : super(key: key);
+  const PaymentScreenTabs({/*required this.magazineItemEntity, */ required this.onTap, Key? key}) : super(key: key);
 
   @override
-  State<OneTimePaymentTabs> createState() => _OneTimePaymentTabsState();
+  State<PaymentScreenTabs> createState() => _PaymentScreenTabsState();
 }
 
-class _OneTimePaymentTabsState extends State<OneTimePaymentTabs> with TickerProviderStateMixin {
+class _PaymentScreenTabsState extends State<PaymentScreenTabs> with TickerProviderStateMixin {
   late TabController tabController;
 
   @override

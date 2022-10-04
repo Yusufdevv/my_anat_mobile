@@ -23,11 +23,12 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class OneTimePayment extends StatefulWidget {
+class PaymentScreen extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String subtitle;
@@ -35,7 +36,8 @@ class OneTimePayment extends StatefulWidget {
   final int id;
   final bool isJournal;
   final bool isRegistered;
-  const OneTimePayment(
+
+  const PaymentScreen(
       {required this.price,
       required this.title,
       required this.imageUrl,
@@ -47,15 +49,17 @@ class OneTimePayment extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<OneTimePayment> createState() => _OneTimePaymentState();
+  State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
-class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStateMixin {
+class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateMixin {
   late TabController controller;
   late TextEditingController phoneController;
   late TextEditingController emailController;
   String currentPaymentMethod = '';
   bool isPhone = true;
+  CrossFadeState _inputState = CrossFadeState.showFirst;
+
   @override
   void initState() {
     controller = TabController(length: 2, vsync: this)
@@ -91,161 +95,117 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
               appBar: AppBar(
                 elevation: 1,
                 shadowColor: textFieldColor,
-                toolbarHeight: !widget.isRegistered ? 120 : 52,
+                toolbarHeight: 52,
                 titleSpacing: 0,
                 leadingWidth: 0,
                 automaticallyImplyLeading: false,
                 title: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(width: 56),
-                          Text(
-                            widget.isRegistered ? LocaleKeys.buy_magazine.tr() : LocaleKeys.only_pay.tr(),
-                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
-                          ),
-                          WScaleAnimation(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16),
-                              child: SvgPicture.asset(
-                                AppIcons.close,
-                                color: black,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: WScaleAnimation(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16),
+                                child: SvgPicture.asset(
+                                  AppIcons.chevronLeft,
+                                  color: textSecondary,
+                                ),
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                    if (!widget.isRegistered) ...[
-                      const SizedBox(height: 12),
-                      const Divider(
-                        color: appBarDivider,
-                        height: 0,
-                        thickness: 1,
-                      ),
-                      Container(
-                        height: 36,
-                        padding: const EdgeInsets.all(2),
-                        margin: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: textFieldColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: TabBar(
-                          physics: const BouncingScrollPhysics(),
-                          controller: controller,
-                          padding: EdgeInsets.zero,
-                          indicatorPadding: EdgeInsets.zero,
-                          indicator: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(6),
                           ),
-                          labelPadding: EdgeInsets.zero,
-                          labelStyle: Theme.of(context).textTheme.headline3,
-                          labelColor: textColor,
-                          onTap: (index) {},
-                          unselectedLabelColor: textSecondary,
-                          tabs: [
-                            Tab(text: LocaleKeys.phone_number.tr()),
-                            Tab(text: LocaleKeys.mail.tr()),
-                          ],
                         ),
-                      ),
-                    ],
+                        Text(
+                          widget.isRegistered ? LocaleKeys.buy_magazine.tr() : LocaleKeys.only_pay.tr(),
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
+                        ),
+                        Spacer()
+                      ],
+                    ),
                   ],
                 ),
               ),
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (!widget.isRegistered) ...{
-                    SizedBox(
-                      height: 105,
-                      child: TabBarView(controller: controller, physics: const BouncingScrollPhysics(), children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                          child: PhoneTextField(
-                            controller: phoneController,
-                            title: LocaleKeys.phone_number.tr(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                          child: DefaultTextField(
-                            title: LocaleKeys.mail.tr(),
-                            controller: emailController,
-                            onChanged: (value) {},
-                            prefix: Padding(
-                              padding: const EdgeInsets.only(left: 12, right: 8),
-                              child: SvgPicture.asset(AppIcons.mail),
-                            ),
-                            hintText: 'example@anatomica.uz',
-                          ),
-                        ),
-                      ]),
+                  JournalArticleItem(title: widget.title, price: widget.price, imageUrl: widget.imageUrl),
+                  if (!widget.isRegistered) ...[
+                    const Divider(
+                      height: 0,
+                      thickness: 1,
+                      color: textFieldColor,
                     ),
-                  },
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: widget.isRegistered ? 16 : 0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration:
-                              BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: CachedNetworkImage(
-                              imageUrl: widget.imageUrl,
-                              fit: BoxFit.cover,
-                              height: 120,
-                              width: 120,
-                              // width: double.infinity,
-                            ),
-                          ),
+                    Container(
+                      height: 36,
+                      padding: const EdgeInsets.all(2),
+                      margin: const EdgeInsets.all(16).copyWith(bottom: 0),
+                      decoration: BoxDecoration(
+                        color: textFieldColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: TabBar(
+                        physics: const BouncingScrollPhysics(),
+                        controller: controller,
+                        padding: EdgeInsets.zero,
+                        indicatorPadding: EdgeInsets.zero,
+                        indicator: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(6),
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.title,
-                                style: Theme.of(context).textTheme.headline1!.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                widget.subtitle,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                MyFunctions.getFormatCostFromInt(widget.price),
-                                style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        labelPadding: EdgeInsets.zero,
+                        labelStyle: Theme.of(context).textTheme.headline3,
+                        labelColor: textColor,
+                        onTap: (index) {
+                          if (index == 0) {
+                            setState(() {
+                              _inputState = CrossFadeState.showFirst;
+                            });
+                          } else {
+                            setState(() {
+                              _inputState = CrossFadeState.showSecond;
+                            });
+                          }
+                        },
+                        unselectedLabelColor: textSecondary,
+                        tabs: [
+                          Tab(text: LocaleKeys.phone_number.tr()),
+                          Tab(text: LocaleKeys.mail.tr()),
+                        ],
+                      ),
                     ),
-                  ),
+                    AnimatedCrossFade(
+                      duration: const Duration(milliseconds: 150),
+                      crossFadeState: _inputState,
+                      firstChild: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                        child: PhoneTextField(
+                          controller: phoneController,
+                          title: LocaleKeys.phone_number.tr(),
+                        ),
+                      ),
+                      secondChild: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                        child: DefaultTextField(
+                          title: LocaleKeys.mail.tr(),
+                          controller: emailController,
+                          onChanged: (value) {},
+                          prefix: Padding(
+                            padding: const EdgeInsets.only(left: 12, right: 8),
+                            child: SvgPicture.asset(AppIcons.mail),
+                          ),
+                          hintText: 'example@anatomica.uz',
+                        ),
+                      ),
+                    )
+                  ],
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                     child: Text(
                       LocaleKeys.select_payment_method.tr(),
                       style: Theme.of(context).textTheme.headline1,
@@ -352,6 +312,63 @@ class _OneTimePaymentState extends State<OneTimePayment> with TickerProviderStat
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class JournalArticleItem extends StatelessWidget {
+  const JournalArticleItem({
+    required this.price,
+    required this.title,
+    required this.imageUrl,
+    Key? key,
+  }) : super(key: key);
+  final String imageUrl;
+  final String title;
+  final int price;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16, bottom: 24),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                height: 120,
+                width: 120,
+                // width: double.infinity,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  MyFunctions.getFormatCostFromInt(price),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

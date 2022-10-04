@@ -1,12 +1,16 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/common/presentation/widgets/register_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/journal/presentation/pages/buy_subscription.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ActivatePremium extends StatelessWidget {
   final List<ImageEntity> images;
@@ -41,18 +45,34 @@ class ActivatePremium extends StatelessWidget {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  WButton(
-                    borderRadius: 6,
-                    height: 34,
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    onTap: () => Navigator.of(context, rootNavigator: true).push(fade(
-                        page: BuySubscription(
-                      images: images,
-                    ))),
-                    child: Text(
-                      LocaleKeys.more.tr(),
-                      style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
-                    ),
+                  BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                    builder: (context, state) {
+                      return WButton(
+                        borderRadius: 6,
+                        height: 34,
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        onTap: () {
+                          if (state.status == AuthenticationStatus.authenticated) {
+                            Navigator.of(context, rootNavigator: true).push(
+                              fade(
+                                page: BuySubscription(
+                                  images: images,
+                                ),
+                              ),
+                            );
+                          } else {
+                            showRegisterBottomSheet(context);
+                          }
+                        },
+                        child: Text(
+                          LocaleKeys.more.tr(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
