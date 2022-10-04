@@ -13,13 +13,16 @@ class JournalSearchAppBar extends StatelessWidget implements PreferredSizeWidget
     required this.mediaQuery,
     required TextEditingController searchController,
     required TabController tabController,
+    FocusNode? focusNode,
   })  : _searchController = searchController,
         _tabController = tabController,
+        _focusNode = focusNode,
         super(key: key);
 
   final MediaQueryData mediaQuery;
   final TextEditingController _searchController;
   final TabController _tabController;
+  final FocusNode? _focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +44,15 @@ class JournalSearchAppBar extends StatelessWidget implements PreferredSizeWidget
             children: [
               Expanded(
                 child: SearchField(
+                  focusNode: _focusNode,
                   controller: _searchController,
                   onChanged: (value) {
                     context.read<JournalSearchBloc>().add(SearchJournals(query: value));
+                    context.read<JournalSearchBloc>().add(SearchArticles(query: value));
                   },
                   onClear: () {
                     context.read<JournalSearchBloc>().add(SearchJournals(query: ''));
+                    context.read<JournalSearchBloc>().add(SearchArticles(query: ''));
                   },
                 ),
               ),
@@ -54,6 +60,7 @@ class JournalSearchAppBar extends StatelessWidget implements PreferredSizeWidget
               WScaleAnimation(
                 onTap: () {
                   context.read<JournalSearchBloc>().add(SearchJournals(query: ''));
+                  context.read<JournalSearchBloc>().add(SearchArticles(query: ''));
                   Navigator.pop(context);
                 },
                 child: Text(

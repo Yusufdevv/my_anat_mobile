@@ -9,7 +9,7 @@ import 'package:anatomica/features/pagination/data/models/generic_pagination.dar
 abstract class JournalRepository {
   Future<Either<Failure, GenericPagination<JournalEntity>>> getJournals({String? next});
   Future<Either<Failure, GenericPagination<JournalEntity>>> searchJournals({required String query, String? next});
-  Future<Either<Failure, GenericPagination<JournalArticleEntity>>> getJournalArticles({String? next});
+  Future<Either<Failure, GenericPagination<JournalArticleEntity>>> getJournalArticles({String? next, String query});
   Future<Either<Failure, GenericPagination<JournalArticleEntity>>> getJournalSingleArticles(
       {required int id, String? next});
   Future<Either<Failure, JournalArticleSingleModel>> getJournalArticleSingle({required String slug});

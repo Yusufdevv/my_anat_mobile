@@ -8,7 +8,7 @@ class SearchArticles extends JournalSearchEvent {
   SearchArticles({required this.query});
 }
 
-class MoreSearchArticles extends JournalSearchState {}
+class MoreSearchArticles extends JournalSearchEvent {}
 
 class MoreSearchJournals extends JournalSearchEvent {}
 

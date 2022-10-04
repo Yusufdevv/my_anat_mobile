@@ -11,5 +11,5 @@ class GetJournalArticlesUseCase implements UseCase<GenericPagination<JournalArti
   GetJournalArticlesUseCase({required this.repository});
   @override
   Future<Either<Failure, GenericPagination<JournalArticleEntity>>> call(SearchParams params) async =>
-      await repository.getJournalArticles(next: params.next);
+      await repository.getJournalArticles(next: params.next, query: params.query);
 }

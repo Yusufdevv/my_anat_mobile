@@ -64,7 +64,7 @@ class JournalSearchBloc extends Bloc<JournalSearchEvent, JournalSearchState> {
     }, transformer: droppable());
     on<SearchArticles>((event, emit) async {
       if (event.query.isNotEmpty) {
-        emit(state.copyWith(searchArticleStatus: FormzStatus.submissionInProgress));
+        emit(state.copyWith(searchArticleStatus: FormzStatus.submissionInProgress, query: event.query));
         final results = await _getJournalArticlesUseCase.call(SearchParams(query: event.query));
         if (results.isRight) {
           emit(
@@ -87,9 +87,9 @@ class JournalSearchBloc extends Bloc<JournalSearchEvent, JournalSearchState> {
         );
       }
     }, transformer: restartable());
-    on<MoreSearchJournals>((event, emit) async {
+    on<MoreSearchArticles>((event, emit) async {
       final results =
-          await _getJournalArticlesUseCase.call(SearchParams(query: state.articleQuery, next: state.searchNext));
+          await _getJournalArticlesUseCase.call(SearchParams(query: state.articleQuery, next: state.searchArticleNext));
       if (results.isRight) {
         emit(
           state.copyWith(

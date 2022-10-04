@@ -23,12 +23,14 @@ class MagazineSearchScreen extends StatefulWidget {
 class _MagazineSearchScreenState extends State<MagazineSearchScreen> with TickerProviderStateMixin {
   late TextEditingController _searchController;
   late TabController _tabController;
+  late FocusNode focusNode;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _searchController = TextEditingController();
+    focusNode = FocusNode()..requestFocus();
   }
 
   @override
@@ -59,7 +61,10 @@ class _MagazineSearchScreenState extends State<MagazineSearchScreen> with Ticker
         ],
         child: Scaffold(
           appBar: JournalSearchAppBar(
-              mediaQuery: mediaQuery, searchController: _searchController, tabController: _tabController),
+              focusNode: focusNode,
+              mediaQuery: mediaQuery,
+              searchController: _searchController,
+              tabController: _tabController),
           body: TabBarView(
             controller: _tabController,
             children: [

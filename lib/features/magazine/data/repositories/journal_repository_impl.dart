@@ -42,9 +42,10 @@ class JournalRepositoryImpl extends JournalRepository {
   }
 
   @override
-  Future<Either<Failure, GenericPagination<JournalArticleEntity>>> getJournalArticles({String? next}) async {
+  Future<Either<Failure, GenericPagination<JournalArticleEntity>>> getJournalArticles(
+      {String? next, String query = ''}) async {
     try {
-      final result = await datasource.getJournalArticles(next: next);
+      final result = await datasource.getJournalArticles(next: next, query: query);
       return Right(result);
     } on DioException {
       return Left(DioFailure());
