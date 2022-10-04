@@ -14,7 +14,7 @@ abstract class JournalDatasource {
 
   Future<GenericPagination<JournalModel>> searchJournals({required String query, String? next});
 
-  Future<GenericPagination<JournalArticleModel>> getJournalArticles({String? next});
+  Future<GenericPagination<JournalArticleModel>> getJournalArticles({String? next, String query = ''});
 
   Future<GenericPagination<JournalArticleModel>> getJournalSingleArticles({required int id, String? next});
 
@@ -82,11 +82,11 @@ class JournalDatasourceImpl extends JournalDatasource {
   }
 
   @override
-  Future<GenericPagination<JournalArticleModel>> getJournalArticles({String? next}) async {
+  Future<GenericPagination<JournalArticleModel>> getJournalArticles({String? next, String query = ''}) async {
     try {
       final response = await _dio.get(
         next ?? '/article/',
-        queryParameters: {'ordering': '-publish_date'},
+        queryParameters: {'ordering': '-publish_date', 'search': query},
         options: Options(
           headers: StorageRepository.getString('token').isNotEmpty
               ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}

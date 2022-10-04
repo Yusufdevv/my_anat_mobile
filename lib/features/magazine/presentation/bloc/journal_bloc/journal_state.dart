@@ -5,10 +5,6 @@ class JournalState extends Equatable {
   final String? next;
   final List<JournalEntity> journals;
   final bool fetchMore;
-  final PaginatorStatus searchStatus;
-  final String? searchNext;
-  final List<JournalEntity> searchJournals;
-  final bool searchFetchMore;
   final PaginatorStatus journalArticleStatus;
   final String? journalArticleNext;
   final List<JournalArticleEntity> journalArticles;
@@ -28,10 +24,6 @@ class JournalState extends Equatable {
     this.next,
     this.journals = const [],
     this.fetchMore = false,
-    this.searchStatus = PaginatorStatus.PAGINATOR_SUCCESS,
-    this.searchNext,
-    this.searchJournals = const [],
-    this.searchFetchMore = false,
     this.journalArticleStatus = PaginatorStatus.PAGINATOR_SUCCESS,
     this.journalArticleNext,
     this.journalArticles = const [],
@@ -53,10 +45,6 @@ class JournalState extends Equatable {
     String? next,
     List<JournalEntity>? journals,
     bool? fetchMore,
-    PaginatorStatus? searchStatus,
-    String? searchNext,
-    List<JournalEntity>? searchJournals,
-    bool? searchFetchMore,
     PaginatorStatus? journalArticleStatus,
     String? journalArticleNext,
     List<JournalArticleEntity>? journalArticles,
@@ -77,10 +65,6 @@ class JournalState extends Equatable {
         journals: journals ?? this.journals,
         status: status ?? this.status,
         fetchMore: fetchMore ?? this.fetchMore,
-        searchNext: searchNext,
-        searchJournals: searchJournals ?? this.searchJournals,
-        searchStatus: searchStatus ?? this.searchStatus,
-        searchFetchMore: searchFetchMore ?? this.searchFetchMore,
         journalArticleStatus: journalArticleStatus ?? this.journalArticleStatus,
         journalArticleNext: journalArticleNext ?? this.journalArticleNext,
         journalArticles: journalArticles ?? this.journalArticles,
@@ -103,10 +87,6 @@ class JournalState extends Equatable {
         next,
         journals,
         fetchMore,
-        searchStatus,
-        searchNext,
-        searchJournals,
-        searchFetchMore,
         journalArticleStatus,
         journalArticleNext,
         journalArticles,

@@ -7,17 +7,10 @@ class GetJournals extends JournalEvent {}
 
 class GetMoreJournals extends JournalEvent {}
 
-class SearchJournals extends JournalEvent {
-  final String query;
-  SearchJournals({required this.query});
-}
-
 class GetJournalSingle extends JournalEvent {
   final String slug;
   GetJournalSingle({required this.slug});
 }
-
-class MoreSearchJournals extends JournalEvent {}
 
 class GetJournalArticles extends JournalEvent {}
 

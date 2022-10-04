@@ -223,10 +223,13 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                             controller: _controller,
                             padding: EdgeInsets.zero,
                             indicatorPadding: EdgeInsets.zero,
-                            indicator: BoxDecoration(
-                              color: white,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
+                            indicator: BoxDecoration(color: white, borderRadius: BorderRadius.circular(6), boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 8),
+                                blurRadius: 24,
+                                color: chipShadowColor.withOpacity(0.19),
+                              ),
+                            ]),
                             labelPadding: EdgeInsets.zero,
                             labelStyle: Theme.of(context).textTheme.headline3,
                             labelColor: textColor,

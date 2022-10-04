@@ -10,7 +10,6 @@ import 'package:anatomica/features/magazine/domain/usecases/get_journal_usecase.
 import 'package:anatomica/features/magazine/domain/usecases/get_journale_single_articles_usecase.dart';
 import 'package:anatomica/features/magazine/domain/usecases/search_journal_usecase.dart';
 import 'package:bloc/bloc.dart';
-import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
@@ -20,20 +19,17 @@ part 'journal_state.dart';
 
 class JournalBloc extends Bloc<JournalEvent, JournalState> {
   final GetJournalUseCase _getJournalUseCase;
-  final SearchJournalUseCase _searchJournalUseCase;
   final GetJournalArticlesUseCase _getJournalArticlesUseCase;
   final GetJournalArticleSingleUseCase _getJournalArticleSingleUseCase;
   final GetJournalSingleArticlesUseCase _getJournalSingleArticlesUseCase;
   final GetJournalSingleUseCase _getJournalSingleUseCase;
   JournalBloc({
     required GetJournalUseCase getJournalUseCase,
-    required SearchJournalUseCase searchJournalUseCase,
     required GetJournalArticlesUseCase getJournalArticlesUseCase,
     required GetJournalArticleSingleUseCase getJournalArticleSingleUseCase,
     required GetJournalSingleArticlesUseCase getJournalSingleArticlesUseCase,
     required GetJournalSingleUseCase getJournalSingleUseCase,
   })  : _getJournalUseCase = getJournalUseCase,
-        _searchJournalUseCase = searchJournalUseCase,
         _getJournalArticlesUseCase = getJournalArticlesUseCase,
         _getJournalArticleSingleUseCase = getJournalArticleSingleUseCase,
         _getJournalSingleArticlesUseCase = getJournalSingleArticlesUseCase,
@@ -70,50 +66,10 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
         emit(state.copyWith(status: PaginatorStatus.PAGINATOR_ERROR));
       }
     });
-    on<SearchJournals>((event, emit) async {
-      if (event.query.isNotEmpty) {
-        emit(state.copyWith(searchStatus: PaginatorStatus.PAGINATOR_LOADING));
-        final results = await _searchJournalUseCase.call(SearchParams(query: event.query));
-        if (results.isRight) {
-          emit(
-            state.copyWith(
-              searchJournals: results.right.results,
-              searchStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-              searchFetchMore: results.right.next != null,
-              searchNext: results.right.next,
-            ),
-          );
-        } else {
-          emit(state.copyWith(searchStatus: PaginatorStatus.PAGINATOR_ERROR));
-        }
-      } else {
-        emit(
-          state.copyWith(
-            searchJournals: [],
-            searchStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-          ),
-        );
-      }
-    }, transformer: restartable());
-    on<MoreSearchJournals>((event, emit) async {
-      emit(state.copyWith(searchStatus: PaginatorStatus.PAGINATOR_LOADING));
-      final results = await _searchJournalUseCase.call(SearchParams(query: '', next: state.searchNext));
-      if (results.isRight) {
-        emit(
-          state.copyWith(
-            searchJournals: [...state.searchJournals, ...results.right.results],
-            searchStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-            searchFetchMore: results.right.next != null,
-            searchNext: results.right.next,
-          ),
-        );
-      } else {
-        emit(state.copyWith(searchStatus: PaginatorStatus.PAGINATOR_ERROR));
-      }
-    }, transformer: droppable());
+
     on<GetJournalArticles>((event, emit) async {
       emit(state.copyWith(journalArticleStatus: PaginatorStatus.PAGINATOR_LOADING));
-      final results = await _getJournalArticlesUseCase.call(null);
+      final results = await _getJournalArticlesUseCase.call(const SearchParams(query: ''));
       if (results.isRight) {
         emit(
           state.copyWith(
@@ -131,7 +87,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
       }
     });
     on<GetMoreJournalArticles>((event, emit) async {
-      final results = await _getJournalArticlesUseCase.call(state.journalArticleNext);
+      final results = await _getJournalArticlesUseCase.call(SearchParams(query: '', next: state.journalArticleNext));
       if (results.isRight) {
         emit(
           state.copyWith(
