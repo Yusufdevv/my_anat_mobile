@@ -6,7 +6,6 @@ import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
-import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals.dart';
 import 'package:anatomica/features/map/domain/usecases/get_specialization.dart';
@@ -15,14 +14,11 @@ import 'package:anatomica/features/map/presentation/blocs/map_controller_bloc/ma
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/specialization/specialization_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
-import 'package:anatomica/features/map/presentation/screens/suggestion/suggestion_page.dart';
-import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_controller_buttons.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
@@ -118,8 +114,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                   },
                   listener: (context, state) {
                     mapOrganizationBloc.add(MapOrganizationEvent.getDoctors());
-                    mapOrganizationBloc
-                        .add(MapOrganizationEvent.getHospitals());
+                    mapOrganizationBloc.add(MapOrganizationEvent.getHospitals());
                   },
                   child: Positioned.fill(
                     bottom: 60,
@@ -127,55 +122,24 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                     child: YandexMap(
                       rotateGesturesEnabled: false,
                       onCameraPositionChanged: (cameraPosition, updateReason, isStopped) async {
-                      onCameraPositionChanged:
-                          (cameraPosition, updateReason, isStopped) {
                         if (isStopped) {
-                          mapOrganizationBloc.add(
-                              MapOrganizationEvent.changeLatLong(
-                                  lat: cameraPosition.target.latitude,
-                                  long: cameraPosition.target.longitude,radius: MyFunctions.getRadiusFromZoom(
-                                  cameraPosition.zoom)
-                                  .floor()));
-
-    await StorageRepository.putDouble('lat', cameraPosition.target.latitude);
-    await StorageRepository.putDouble('long', cameraPosition.target.longitude);
-
+                          mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
+                              lat: cameraPosition.target.latitude,
+                              long: cameraPosition.target.longitude,
+                              radius: MyFunctions.getRadiusFromZoom(cameraPosition.zoom).floor()));
+                          await StorageRepository.putDouble('lat', cameraPosition.target.latitude);
+                          await StorageRepository.putDouble('long', cameraPosition.target.longitude);
                         }
                       },
                       onMapTap: (point) {
-                        WidgetsBinding.instance.focusManager.primaryFocus
-                            ?.unfocus();
+                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                       },
                       mapObjects: _mapObjects,
                       onMapCreated: (controller) async {
                         _mapController = controller;
                         maxZoomLevel = await controller.getMaxZoom();
                         minZoomLevel = await controller.getMinZoom();
-                        final position = await MyFunctions.determinePosition();
                         final camera = await _mapController.getCameraPosition();
-                        mapOrganizationBloc.add(
-                            MapOrganizationEvent.changeLatLong(
-                                lat: position.latitude,
-                                long: position.longitude,
-                                radius:
-                                    MyFunctions.getRadiusFromZoom(camera.zoom)
-                                        .floor()));
-
-                        mapOrganizationBloc
-                            .add(MapOrganizationEvent.getHospitals());
-                        mapOrganizationBloc
-                            .add(MapOrganizationEvent.getDoctors());
-                        _mapController.moveCamera(
-                          CameraUpdate.newCameraPosition(
-                            CameraPosition(
-                              target: Point(
-                                  latitude: position.latitude,
-                                  longitude: position.longitude),
-                            ),
-                          ),
-                          animation: const MapAnimation(
-                              duration: 0.15, type: MapAnimationType.smooth),
-                        );
                         if (StorageRepository.getDouble('lat', defValue: 0) == 0) {
                           final position = await MyFunctions.determinePosition();
                           _mapController.moveCamera(
@@ -186,11 +150,14 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                             ),
                             animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                           );
-                          currentLocation = Point(latitude: position.latitude, longitude: position.longitude);
-                          mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
-                              param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
-                          mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(
-                              param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
+
+                          mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
+                              lat: position.latitude,
+                              long: position.longitude,
+                              radius: MyFunctions.getRadiusFromZoom(camera.zoom).floor()));
+
+                          mapOrganizationBloc.add(MapOrganizationEvent.getHospitals());
+                          mapOrganizationBloc.add(MapOrganizationEvent.getDoctors());
                         } else {
                           final position = Point(
                               latitude: StorageRepository.getDouble('lat'),
@@ -203,11 +170,12 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                             ),
                             animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                           );
-                          currentLocation = Point(latitude: position.latitude, longitude: position.longitude);
-                          mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
-                              param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
-                          mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(
-                              param: MapParameter(lat: position.latitude, long: position.longitude, radius: 1000000)));
+                          mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
+                              lat: position.latitude,
+                              long: position.longitude,
+                              radius: MyFunctions.getRadiusFromZoom(camera.zoom).floor()));
+                          mapOrganizationBloc.add(MapOrganizationEvent.getHospitals());
+                          mapOrganizationBloc.add(MapOrganizationEvent.getDoctors());
                         }
                       },
                     ),
@@ -217,8 +185,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                   listener: (context, state) {
                     _searchFieldController.text = state.searchText;
                     mapOrganizationBloc.add(MapOrganizationEvent.getDoctors());
-                    mapOrganizationBloc
-                        .add(MapOrganizationEvent.getHospitals());
+                    mapOrganizationBloc.add(MapOrganizationEvent.getHospitals());
                   },
                   listenWhen: (state1, state2) {
                     return state1.searchText != state2.searchText ||
@@ -266,11 +233,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                             onTap: (index) {
                               setState(() {
                                 if (index == 0) {
-                                  MyFunctions.addHospitals(
-                                      state.hospitals, context, _mapObjects);
+                                  MyFunctions.addHospitals(state.hospitals, context, _mapObjects);
                                 } else {
-                                  MyFunctions.addDoctors(
-                                      state.doctors, context, _mapObjects);
+                                  MyFunctions.addDoctors(state.doctors, context, _mapObjects);
                                 }
                               });
                             },
@@ -298,25 +263,19 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             SizedBox(),
-                            BlocBuilder<SpecializationBloc,
-                                SpecializationState>(
+                            BlocBuilder<SpecializationBloc, SpecializationState>(
                               builder: (context, state) {
                                 return MapControllerButtons(
                                   onCurrentLocationTap: () async {
-                                    final position =
-                                        await MyFunctions.determinePosition();
+                                    final position = await MyFunctions.determinePosition();
                                     _mapController.moveCamera(
                                       CameraUpdate.newCameraPosition(
                                         CameraPosition(
-                                          target: Point(
-                                              latitude: position.latitude,
-                                              longitude: position.longitude),
+                                          target: Point(latitude: position.latitude, longitude: position.longitude),
                                           zoom: 15,
                                         ),
                                       ),
-                                      animation: const MapAnimation(
-                                          duration: 0.15,
-                                          type: MapAnimationType.smooth),
+                                      animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                                     );
                                     zoomLevel = 15;
                                   },
@@ -324,9 +283,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                     if (minZoomLevel < zoomLevel) {
                                       _mapController.moveCamera(
                                         CameraUpdate.zoomTo(zoomLevel - 1),
-                                        animation: const MapAnimation(
-                                            duration: 0.2,
-                                            type: MapAnimationType.smooth),
+                                        animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
                                       );
                                       zoomLevel--;
                                     }
@@ -335,9 +292,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                     if (maxZoomLevel > zoomLevel) {
                                       _mapController.moveCamera(
                                         CameraUpdate.zoomTo(zoomLevel + 1),
-                                        animation: const MapAnimation(
-                                            duration: 0.2,
-                                            type: MapAnimationType.smooth),
+                                        animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
                                       );
                                       zoomLevel++;
                                     }
@@ -378,16 +333,14 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                       // // ),
                       // const SizedBox(height: 16),
                       Container(
-                        padding: EdgeInsets.fromLTRB(16, 16, 16,
-                            MediaQuery.of(context).viewInsets.bottom + 43),
+                        padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).viewInsets.bottom + 43),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: textFieldColor),
                           color: white,
                         ),
                         child: GestureDetector(
-                          child: BlocBuilder<MapOrganizationBloc,
-                              MapOrganizationState>(
+                          child: BlocBuilder<MapOrganizationBloc, MapOrganizationState>(
                             builder: (context, state) {
                               return Hero(
                                 tag: 'search',
@@ -396,13 +349,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                     Expanded(
                                       child: WButton(
                                         onTap: () {
-                                          Navigator.of(context).push(fade(
-                                              page: HospitalList(
-                                                  controller: _controller)));
+                                          Navigator.of(context).push(fade(page: HospitalList(controller: _controller)));
                                         },
                                         border: Border.all(color: divider),
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 12),
+                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                                         borderRadius: 10,
                                         color: Colors.white,
                                         child: Row(
@@ -420,10 +370,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .headline1!
-                                                  .copyWith(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600),
+                                                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                                             )
                                           ],
                                         ),
@@ -435,17 +382,13 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                     Expanded(
                                       child: GestureDetector(
                                         onTap: () {
-                                          Navigator.of(context).push(fade(
-                                              page: HospitalList(
-                                                  getFocus: true,
-                                                  controller: _controller)));
+                                          Navigator.of(context)
+                                              .push(fade(page: HospitalList(getFocus: true, controller: _controller)));
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: lilyWhite),
+                                          decoration:
+                                              BoxDecoration(borderRadius: BorderRadius.circular(10), color: lilyWhite),
                                           child: Column(
                                             children: [
                                               Row(
@@ -461,23 +404,14 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                                   Expanded(
                                                     child: Text(
                                                       LocaleKeys.search.tr(),
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline1!
-                                                          .copyWith(
-                                                              color: state
-                                                                      .searchText
-                                                                      .isNotEmpty
-                                                                  ? textColor
-                                                                  : textSecondary,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 14),
+                                                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                                                          color:
+                                                              state.searchText.isNotEmpty ? textColor : textSecondary,
+                                                          fontWeight: FontWeight.w600,
+                                                          fontSize: 14),
                                                     ),
                                                   ),
-                                                  if (state.searchText
-                                                      .isNotEmpty) ...{
+                                                  if (state.searchText.isNotEmpty) ...{
                                                     GestureDetector(
                                                       onTap: () {},
                                                       child: SvgPicture.asset(

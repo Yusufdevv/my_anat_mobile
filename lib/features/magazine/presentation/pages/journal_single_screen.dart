@@ -40,7 +40,7 @@ class JournalSingleScreen extends StatelessWidget {
             ..add(GetJournalSingle(slug: journal.slug)),
         ),
         BlocProvider.value(
-          value: downloadBloc,
+          value: downloadBloc..add(CheckWhetherFileAlreadyDownloaded(id: journal.id)),
         ),
       ],
       child: Scaffold(
@@ -88,82 +88,87 @@ class JournalSingleScreen extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
-                      child: JournalSingleBigItem(
-                        onLeftButtonTap: () {
-                          context.read<DownloadBloc>().add(
-                                CheckWhetherFragmentFileExists(
-                                  fileName: journal.redaction,
-                                  fileUrl: state.journalSingle.preview.url,
-                                  id: journal.id,
-                                  onNotDownloaded: () async {
-                                    SystemChrome.setSystemUIOverlayStyle(
-                                        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-                                    await showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      barrierColor: primary.withOpacity(0.84),
-                                      builder: (_) => BlocProvider.value(
-                                        value: context.read<DownloadBloc>(),
-                                        child:
-                                            DownloadingDialog(bookTitle: 'widget.book.title', parentContext: context),
+                      child: BlocBuilder<DownloadBloc, DownloadState>(
+                        builder: (context, downloadState) {
+                          return JournalSingleBigItem(
+                            onLeftButtonTap: () {
+                              context.read<DownloadBloc>().add(
+                                    CheckWhetherFragmentFileExists(
+                                      fileName: journal.redaction,
+                                      fileUrl: state.journalSingle.preview.url,
+                                      id: journal.id,
+                                      onNotDownloaded: () async {
+                                        SystemChrome.setSystemUIOverlayStyle(
+                                            const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+                                        await showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          barrierColor: primary.withOpacity(0.84),
+                                          builder: (_) => BlocProvider.value(
+                                            value: context.read<DownloadBloc>(),
+                                            child: DownloadingDialog(
+                                                bookTitle: 'widget.book.title', parentContext: context),
+                                          ),
+                                        );
+                                      },
+                                      fileType: journal.fileExtension,
+                                      onDownloaded: (file) {
+                                        EpubViewer.open(file.path);
+                                      },
+                                    ),
+                                  );
+                            },
+                            onRightButtonTap: () {
+                              if (journal.isBought) {
+                                context.read<DownloadBloc>().add(
+                                      CheckWhetherFileExists(
+                                        slug: journal.slug,
+                                        filename: journal.name,
+                                        id: journal.id,
+                                        onNotDownloaded: () async {
+                                          SystemChrome.setSystemUIOverlayStyle(
+                                              const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+                                          await showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            barrierColor: primary.withOpacity(0.84),
+                                            builder: (_) => BlocProvider.value(
+                                              value: context.read<DownloadBloc>(),
+                                              child: DownloadingDialog(
+                                                  bookTitle: 'widget.book.title', parentContext: context),
+                                            ),
+                                          );
+                                        },
+                                        fileType: journal.fileExtension,
+                                        onDownloaded: (file) {
+                                          print(file.path);
+                                          // final encryptor = EncryptorRepository(iv: 'iv', key: '${journal.id}hC2uG1dQ8tK5nS1q');
+                                          // final decryptedFile = encryptor.getDecryptedDAta(file.readAsBytesSync());
+                                          EpubViewer.open(file.path);
+                                        },
                                       ),
                                     );
-                                  },
-                                  fileType: journal.fileExtension,
-                                  onDownloaded: (file) {
-                                    EpubViewer.open(file.path);
-                                  },
-                                ),
-                              );
-                        },
-                        onRightButtonTap: () {
-                          if (journal.isBought) {
-                            context.read<DownloadBloc>().add(
-                                  CheckWhetherFileExists(
-                                    slug: journal.slug,
-                                    filename: journal.name,
-                                    id: journal.id,
-                                    onNotDownloaded: () async {
-                                      SystemChrome.setSystemUIOverlayStyle(
-                                          const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-                                      await showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        barrierColor: primary.withOpacity(0.84),
-                                        builder: (_) => BlocProvider.value(
-                                          value: context.read<DownloadBloc>(),
-                                          child:
-                                              DownloadingDialog(bookTitle: 'widget.book.title', parentContext: context),
-                                        ),
-                                      );
-                                    },
-                                    fileType: journal.fileExtension,
-                                    onDownloaded: (file) {
-                                      print(file.path);
-                                      // final encryptor = EncryptorRepository(iv: 'iv', key: '${journal.id}hC2uG1dQ8tK5nS1q');
-                                      // final decryptedFile = encryptor.getDecryptedDAta(file.readAsBytesSync());
-                                      EpubViewer.open(file.path);
-                                    },
+                              } else {
+                                Navigator.of(context, rootNavigator: true).push(
+                                  fade(
+                                    page: OneTimePayment(
+                                      price: journal.price,
+                                      title: journal.redaction,
+                                      imageUrl: journal.image.middle,
+                                      isJournal: false,
+                                      isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                          AuthenticationStatus.authenticated,
+                                      subtitle: journal.redaction,
+                                      id: journal.id,
+                                    ),
                                   ),
                                 );
-                          } else {
-                            Navigator.of(context, rootNavigator: true).push(
-                              fade(
-                                page: OneTimePayment(
-                                  price: journal.price,
-                                  title: journal.redaction,
-                                  imageUrl: journal.image.middle,
-                                  isJournal: false,
-                                  isRegistered: context.read<AuthenticationBloc>().state.status ==
-                                      AuthenticationStatus.authenticated,
-                                  subtitle: journal.redaction,
-                                  id: journal.id,
-                                ),
-                              ),
-                            );
-                          }
+                              }
+                            },
+                            journalEntity: journal,
+                            isDownloaded: downloadState.isFileAlreadyDownloaded,
+                          );
                         },
-                        journalEntity: journal,
                       ),
                     ),
                   ),

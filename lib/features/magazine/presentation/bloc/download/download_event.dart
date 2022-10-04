@@ -59,3 +59,8 @@ class DownloadFinished extends DownloadEvent {
     this.isFragment = false,
   });
 }
+
+class CheckWhetherFileAlreadyDownloaded extends DownloadEvent {
+  final int id;
+  const CheckWhetherFileAlreadyDownloaded({required this.id});
+}

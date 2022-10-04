@@ -11,11 +11,12 @@ class JournalSingleBigItem extends StatelessWidget {
   final JournalEntity journalEntity;
   final VoidCallback onLeftButtonTap;
   final VoidCallback onRightButtonTap;
-
+  final bool isDownloaded;
   const JournalSingleBigItem({
     required this.journalEntity,
     required this.onLeftButtonTap,
     required this.onRightButtonTap,
+    required this.isDownloaded,
     Key? key,
   }) : super(key: key);
 
@@ -85,38 +86,44 @@ class JournalSingleBigItem extends StatelessWidget {
             ),
           ],
         ),
-        Row(
-          children: [
-            Expanded(
-              child: WButton(
-                border: Border.all(color: primary),
-                color: unFollowButton,
-                margin: const EdgeInsets.only(top: 12),
-                onTap: onLeftButtonTap,
-                child: Text(
-                  LocaleKeys.preview.tr(),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+        if (isDownloaded) ...{
+          WButton(
+            onTap: () {},
+          )
+        } else ...{
+          Row(
+            children: [
+              Expanded(
+                child: WButton(
+                  border: Border.all(color: primary),
+                  color: unFollowButton,
+                  margin: const EdgeInsets.only(top: 12),
+                  onTap: onLeftButtonTap,
+                  child: Text(
+                    LocaleKeys.preview.tr(),
+                    style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: WButton(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                margin: const EdgeInsets.only(top: 12),
-                onTap: onRightButtonTap,
-                child: Text(
-                  journalEntity.isBought || !journalEntity.isPremium
-                      ? LocaleKeys.read.tr()
-                      : LocaleKeys.buy.tr(args: [MyFunctions.getFormatCostFromInt(journalEntity.price)]),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+              const SizedBox(width: 12),
+              Expanded(
+                child: WButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  margin: const EdgeInsets.only(top: 12),
+                  onTap: onRightButtonTap,
+                  child: Text(
+                    journalEntity.isBought || !journalEntity.isPremium
+                        ? LocaleKeys.read.tr()
+                        : LocaleKeys.buy.tr(args: [MyFunctions.getFormatCostFromInt(journalEntity.price)]),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
-            ),
-          ],
-        )
+            ],
+          )
+        }
       ],
     );
   }

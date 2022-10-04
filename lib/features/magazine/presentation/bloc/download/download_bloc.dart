@@ -21,11 +21,7 @@ part 'download_state.dart';
 class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
   DownloadBloc()
       : super(
-          const DownloadState(
-            progress: 0,
-            status: FormzStatus.pure,
-            fileUrl: '',
-          ),
+          const DownloadState(progress: 0, status: FormzStatus.pure, fileUrl: '', isFileAlreadyDownloaded: false),
         ) {
     on<ChangeProgress>((event, emit) {
       emit(state.copyWith(progress: event.progress));
@@ -35,6 +31,15 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     on<DownloadFinished>(_onDownloadFinished);
     progressSubscription = progressStream.listen((event) {
       add(ChangeProgress(event));
+    });
+    on<CheckWhetherFileAlreadyDownloaded>((event, emit) async {
+      final rawBooks = await DbHelper.instance.query('downloaded_journals', 'id', event.id);
+      print(rawBooks);
+      if (rawBooks.isNotEmpty) {
+        emit(state.copyWith(isFileAlreadyDownloaded: true, fileUrl: rawBooks.first['path']));
+      } else {
+        emit(state.copyWith(isFileAlreadyDownloaded: false));
+      }
     });
   }
 
