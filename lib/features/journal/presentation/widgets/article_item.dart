@@ -2,9 +2,10 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/highlighted_text.dart';
 import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/web_view/web_view_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class ArticleItem extends StatelessWidget {
   final JournalArticleEntity magazineItemEntity;
@@ -18,17 +19,21 @@ class ArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (magazineItemEntity.isBought || !magazineItemEntity.isPremium) {
-          if (await canLaunchUrlString('https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}/')) {
-            await launchUrlString('https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}/',
-                mode: LaunchMode.externalApplication);
-          }
-        } else {
-          if (await canLaunchUrlString('https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}/')) {
-            await launchUrlString('https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}/',
-                mode: LaunchMode.externalApplication);
-          }
-        }
+        Navigator.of(context, rootNavigator: true).push(fade(
+            page: const WebViewScreen(
+          page: 'PurchasedArticlePage',
+        )));
+        // if (magazineItemEntity.isBought || !magazineItemEntity.isPremium) {
+        //   if (await canLaunchUrlString('https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}/')) {
+        //     await launchUrlString('https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}/',
+        //         mode: LaunchMode.externalApplication);
+        //   }
+        // } else {
+        //   if (await canLaunchUrlString('https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}/')) {
+        //     await launchUrlString('https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}/',
+        //         mode: LaunchMode.externalApplication);
+        //   }
+        // }
       },
       child: Container(
         height: 78,

@@ -7,8 +7,10 @@ import 'package:share_plus/share_plus.dart';
 
 class HospitalSingleAppBarBody extends StatelessWidget {
   final String shareValue;
+  final VoidCallback? onPop;
   const HospitalSingleAppBarBody({
     this.shareValue = '',
+    this.onPop,
     Key? key,
   }) : super(key: key);
 
@@ -18,7 +20,7 @@ class HospitalSingleAppBarBody extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         WScaleAnimation(
-          onTap: () => Navigator.of(context).pop(),
+          onTap: onPop ?? () => Navigator.of(context).pop(),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: SvgPicture.asset(
@@ -28,18 +30,22 @@ class HospitalSingleAppBarBody extends StatelessWidget {
           ),
         ),
         SvgPicture.asset(AppIcons.mainLogo, height: 20),
-        WScaleAnimation(
-          onTap: () async {
-            await Share.share(shareValue);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: SvgPicture.asset(
-              AppIcons.share,
-              color: darkGreen,
+        if (shareValue.isNotEmpty) ...{
+          WScaleAnimation(
+            onTap: () async {
+              await Share.share(shareValue);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: SvgPicture.asset(
+                AppIcons.share,
+                color: darkGreen,
+              ),
             ),
           ),
-        ),
+        } else ...{
+          const SizedBox(width: 56)
+        }
       ],
     );
   }
