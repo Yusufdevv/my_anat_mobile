@@ -2,11 +2,10 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
-import 'package:anatomica/features/map/presentation/screens/hospital_article_single.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/web_view/web_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class HospitalArticleItem extends StatelessWidget {
   final JournalArticleEntity entity;
@@ -20,13 +19,20 @@ class HospitalArticleItem extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () async {
-        if (entity.isBought || !entity.isPremium) {
-          Navigator.of(context).push(fade(page: HospitalArticleSingle(slug: entity.slug)));
-        } else {
-          if (await canLaunchUrlString('https://anatomica.uicgroup.tech/premium-article/${entity.slug}')) {
-            await launchUrlString('https://anatomica.uicgroup.tech/premium-article/${entity.slug}');
-          }
-        }
+        Navigator.of(context, rootNavigator: true).push(
+          fade(
+            page: const WebViewScreen(
+              page: 'PurchasedArticlePage',
+            ),
+          ),
+        );
+        // if (entity.isBought || !entity.isPremium) {
+        //   Navigator.of(context).push(fade(page: HospitalArticleSingle(slug: entity.slug)));
+        // } else {
+        //   if (await canLaunchUrlString('https://anatomica.uicgroup.tech/premium-article/${entity.slug}')) {
+        //     await launchUrlString('https://anatomica.uicgroup.tech/premium-article/${entity.slug}');
+        //   }
+        // }
       },
       child: Container(
         padding: const EdgeInsets.all(8),

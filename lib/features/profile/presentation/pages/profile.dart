@@ -29,7 +29,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -120,11 +119,18 @@ class ProfileScreen extends StatelessWidget {
                           },
                           if (state.profileEntity.isOrganization) ...{
                             ProfileItem(
-                                title: LocaleKeys.organization_office,
-                                image: AppImages.organization,
-                                onTap: () {
-                                  Navigator.of(context, rootNavigator: true).push(fade(page: WebViewScreen()));
-                                }),
+                              title: LocaleKeys.organization_office,
+                              image: AppImages.organization,
+                              onTap: () {
+                                Navigator.of(context, rootNavigator: true).push(
+                                  fade(
+                                    page: const WebViewScreen(
+                                      page: '',
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           },
                           const SizedBox(height: 12),
                           ProfileItem(
@@ -188,7 +194,10 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 OtherProfileItem(
                                   onTap: () async {
-                                    Navigator.of(context, rootNavigator: true).push(fade(page: WebViewScreen()));
+                                    Navigator.of(context, rootNavigator: true).push(fade(
+                                        page: const WebViewScreen(
+                                      page: 'CreateDoctorPage',
+                                    )));
                                     // if (await canLaunchUrlString('https://anatomica.uicgroup.tech/create-doctor')) {
                                     //   await launchUrlString('https://anatomica.uicgroup.tech/create-doctor',
                                     //       mode: LaunchMode.externalApplication);
@@ -198,11 +207,18 @@ class ProfileScreen extends StatelessWidget {
                                 const SizedBox(height: 12),
                                 OtherProfileItem(
                                   onTap: () async {
-                                    if (await canLaunchUrlString(
-                                        'https://anatomica.uicgroup.tech/create-organization')) {
-                                      await launchUrlString('https://anatomica.uicgroup.tech/create-organization',
-                                          mode: LaunchMode.externalApplication);
-                                    }
+                                    Navigator.of(context, rootNavigator: true).push(
+                                      fade(
+                                        page: const WebViewScreen(
+                                          page: 'CreateOrganizationPage',
+                                        ),
+                                      ),
+                                    );
+                                    // if (await canLaunchUrlString(
+                                    //     'https://anatomica.uicgroup.tech/create-organization')) {
+                                    //   await launchUrlString('https://anatomica.uicgroup.tech/create-organization',
+                                    //       mode: LaunchMode.externalApplication);
+                                    // }
                                   },
                                   iconBackgroundColor: steelBlue,
                                   icon: AppIcons.icHospital,

@@ -1,43 +1,61 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
+import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WebViewScreen extends StatefulWidget {
-  const WebViewScreen({Key? key}) : super(key: key);
+  final String page;
+  const WebViewScreen({required this.page, Key? key}) : super(key: key);
 
   @override
   State<WebViewScreen> createState() => _WebViewScreenState();
 }
 
 class _WebViewScreenState extends State<WebViewScreen> {
+  late InAppWebViewController _controller;
   @override
   Widget build(BuildContext context) {
-    print(StorageRepository.getString('token'));
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(statusBarColor: white),
-      child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        child: InAppWebView(
-          onWebViewCreated: (controller) {},
-          initialUrlRequest: URLRequest(
-            url: Uri.parse(
-                'https://anatomica.uicgroup.tech/page-test/?token=${StorageRepository.getString("token")}&mobile=true'),
+      child: WillPopScope(
+        onWillPop: () async {
+          print(await _controller.canGoBack());
+          if (await _controller.canGoBack()) {
+            await _controller.goBack();
+            return false;
+          } else {
+            Navigator.of(context).pop();
+            return true;
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            titleSpacing: 0,
+            leadingWidth: 0,
+            elevation: 1,
+            shadowColor: textSecondary,
+            title: const HospitalSingleAppBarBody(
+                // onPop: () async {
+                //   // if (await _controller.canGoBack()) {
+                //   //   await _controller.goBack();
+                //   // } else {
+                //     Navigator.of(context).pop();
+                //   //}
+                // },
+                ),
+          ),
+          body: InAppWebView(
+            onWebViewCreated: (controller) {
+              _controller = controller;
+            },
+            initialUrlRequest: URLRequest(
+              url: Uri.parse(
+                  'https://anatomica.uicgroup.tech/mobile-auth/?token=${StorageRepository.getString("token")}&mobile=true&page=${widget.page}'),
+            ),
           ),
         ),
-        // WebView(
-        //   javascriptMode: JavascriptMode.unrestricted,
-        //   onWebViewCreated: (controller) {
-        //     controller.loadUrl(
-        //       'https://anatomica.uicgroup.tech/page-test/',
-        //       headers: {
-        //         'Authorization': 'Token ${StorageRepository.getString('token')}',
-        //         'mobile': 'true',
-        //       },
-        //     );
-        //   },
-        // ),
       ),
     );
   }
