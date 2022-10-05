@@ -7,7 +7,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class JournalSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
+class JournalSearchAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
   const JournalSearchAppBar({
     Key? key,
     required this.mediaQuery,
@@ -47,25 +48,42 @@ class JournalSearchAppBar extends StatelessWidget implements PreferredSizeWidget
                   focusNode: _focusNode,
                   controller: _searchController,
                   onChanged: (value) {
-                    context.read<JournalSearchBloc>().add(SearchJournals(query: value));
-                    context.read<JournalSearchBloc>().add(SearchArticles(query: value));
+                    if (value.length >= 3||value.isEmpty) {
+                      context
+                          .read<JournalSearchBloc>()
+                          .add(SearchJournals(query: value));
+                      context
+                          .read<JournalSearchBloc>()
+                          .add(SearchArticles(query: value));
+                    }
                   },
                   onClear: () {
-                    context.read<JournalSearchBloc>().add(SearchJournals(query: ''));
-                    context.read<JournalSearchBloc>().add(SearchArticles(query: ''));
+                    context
+                        .read<JournalSearchBloc>()
+                        .add(SearchJournals(query: ''));
+                    context
+                        .read<JournalSearchBloc>()
+                        .add(SearchArticles(query: ''));
                   },
                 ),
               ),
               const SizedBox(width: 8),
               WScaleAnimation(
                 onTap: () {
-                  context.read<JournalSearchBloc>().add(SearchJournals(query: ''));
-                  context.read<JournalSearchBloc>().add(SearchArticles(query: ''));
+                  context
+                      .read<JournalSearchBloc>()
+                      .add(SearchJournals(query: ''));
+                  context
+                      .read<JournalSearchBloc>()
+                      .add(SearchArticles(query: ''));
                   Navigator.pop(context);
                 },
                 child: Text(
                   LocaleKeys.close.tr(),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 12),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4!
+                      .copyWith(fontSize: 12),
                 ),
               ),
               const SizedBox(
@@ -85,13 +103,16 @@ class JournalSearchAppBar extends StatelessWidget implements PreferredSizeWidget
               controller: _tabController,
               padding: EdgeInsets.zero,
               indicatorPadding: EdgeInsets.zero,
-              indicator: BoxDecoration(color: white, borderRadius: BorderRadius.circular(6), boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0, 8),
-                  blurRadius: 24,
-                  color: chipShadowColor.withOpacity(0.19),
-                ),
-              ]),
+              indicator: BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 8),
+                      blurRadius: 24,
+                      color: chipShadowColor.withOpacity(0.19),
+                    ),
+                  ]),
               labelPadding: EdgeInsets.zero,
               labelStyle: Theme.of(context).textTheme.headline3,
               labelColor: textColor,

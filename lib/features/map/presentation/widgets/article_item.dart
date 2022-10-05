@@ -50,7 +50,7 @@ class HospitalArticleItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                entity.image.middle,
+                entity.image.middle,errorBuilder: (a,b,c)=>const SizedBox(width: 82,height: 100,),
                 height: 100,
                 width: 82,
                 fit: BoxFit.cover,

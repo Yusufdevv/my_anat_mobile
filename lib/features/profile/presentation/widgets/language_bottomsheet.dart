@@ -11,7 +11,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class LanguageBottomSheet extends StatefulWidget {
-  const LanguageBottomSheet({Key? key}) : super(key: key);
+  final Locale currentLocale;
+
+  const LanguageBottomSheet({required this.currentLocale, Key? key})
+      : super(key: key);
 
   @override
   State<LanguageBottomSheet> createState() => _LanguageBottomSheetState();
@@ -19,6 +22,18 @@ class LanguageBottomSheet extends StatefulWidget {
 
 class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
   int currentStatus = 0;
+
+  @override
+  void initState() {
+    if (widget.currentLocale.languageCode == 'ru') {
+      currentStatus = 1;
+    } else if (widget.currentLocale.languageCode == 'uz') {
+      currentStatus = 3;
+    } else if (widget.currentLocale.languageCode == 'fr') {
+      currentStatus = 2;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +118,9 @@ void showLanguageBottomSheet(BuildContext context) {
     context: context,
     backgroundColor: Colors.transparent,
     useRootNavigator: true,
-    builder: (context) => const LanguageBottomSheet(),
+    builder: (context) => LanguageBottomSheet(
+      currentLocale: context.locale,
+    ),
   );
 }
 

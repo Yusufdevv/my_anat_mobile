@@ -55,8 +55,9 @@ class MagazineScreen extends StatelessWidget {
           ..add(GetJournals())
           ..add(GetJournalArticles()),
         child: AnnotatedRegion(
-          value:
-              const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark),
+          value: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark),
           child: Scaffold(
             appBar: const PreferredSize(
               preferredSize: Size.fromHeight(64),
@@ -65,71 +66,94 @@ class MagazineScreen extends StatelessWidget {
             body: BlocBuilder<JournalBloc, JournalState>(
               builder: (context, state) {
                 if (state.status == PaginatorStatus.PAGINATOR_SUCCESS) {
-                  return CustomScrollView(
-                    slivers: [
-                      if (state.journals.isNotEmpty) ...[
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: TitleWithSuffixAction(
-                              title: LocaleKeys.issues.tr(),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  fade(
-                                    page: AllJournalsScreen(
-                                      bloc: context.read<JournalBloc>(),
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      context.read<JournalBloc>().add(GetJournals());
+                      context.read<JournalBloc>().add(GetJournalArticles());
+                      return await Future.delayed(const Duration(seconds: 1));
+                    },
+                    child: CustomScrollView(
+                      slivers: [
+                        if (state.journals.isNotEmpty) ...[
+                          SliverToBoxAdapter(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 16),
+                              child: TitleWithSuffixAction(
+                                title: LocaleKeys.issues.tr(),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    fade(
+                                      page: AllJournalsScreen(
+                                        bloc: context.read<JournalBloc>(),
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        JournalBigItem(journalEntity: state.journals.first),
-                      ],
-                      JournalsList(state: state),
-                      if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{
-                        ActivatePremium(images: state.journals.map((e) => e.image).toList()),
-                      },
-                      if (state.journalArticleStatus == PaginatorStatus.PAGINATOR_SUCCESS &&
-                          state.journalArticles.isNotEmpty) ...[
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: TitleWithSuffixAction(
-                              title: LocaleKeys.articles.tr(),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  fade(page: AllArticlesScreen(bloc: context.read<JournalBloc>())),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        if (state.getFirstArticleStatus.isSubmissionSuccess) ...{
-                          FirstArticle(state: state),
+                          JournalBigItem(journalEntity: state.journals.first),
+                        ],
+                        JournalsList(state: state),
+                        if (!context
+                            .watch<AuthenticationBloc>()
+                            .state
+                            .user
+                            .isSubscribed) ...{
+                          ActivatePremium(
+                              images:
+                                  state.journals.map((e) => e.image).toList()),
                         },
-                        SliverPadding(
-                          padding: EdgeInsets.only(
-                            top: 6,
-                            left: 16,
-                            right: 16,
-                            bottom: MediaQuery.of(context).padding.bottom,
-                          ),
-                          sliver: SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                return ArticleItem(
-                                  margin: const EdgeInsets.only(bottom: 12),
-                                  magazineItemEntity: state.journalArticles.skip(1).take(4).toList()[index],
-                                );
-                              },
-                              childCount: state.journalArticles.skip(1).take(4).length, // 1000 list items
+                        if (state.journalArticleStatus ==
+                                PaginatorStatus.PAGINATOR_SUCCESS &&
+                            state.journalArticles.isNotEmpty) ...[
+                          SliverToBoxAdapter(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 16),
+                              child: TitleWithSuffixAction(
+                                title: LocaleKeys.articles.tr(),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    fade(
+                                        page: AllArticlesScreen(
+                                            bloc: context.read<JournalBloc>())),
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
+                          if (state
+                              .getFirstArticleStatus.isSubmissionSuccess) ...{
+                            FirstArticle(state: state),
+                          },
+                          SliverPadding(
+                            padding: EdgeInsets.only(
+                              top: 6,
+                              left: 16,
+                              right: 16,
+                              bottom: MediaQuery.of(context).padding.bottom,
+                            ),
+                            sliver: SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (BuildContext context, int index) {
+                                  return ArticleItem(
+                                    margin: const EdgeInsets.only(bottom: 12),
+                                    magazineItemEntity: state.journalArticles
+                                        .skip(1)
+                                        .take(4)
+                                        .toList()[index],
+                                  );
+                                },
+                                childCount: state.journalArticles
+                                    .skip(1)
+                                    .take(4)
+                                    .length, // 1000 list items
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   );
                 } else if (state.status == PaginatorStatus.PAGINATOR_LOADING) {
                   return const Center(

@@ -8,7 +8,9 @@ class LanguageItem extends StatelessWidget {
   final VoidCallback onTap;
   final int status;
 
-  const LanguageItem({this.status = 0, required this.onTap, required this.language, Key? key}) : super(key: key);
+  const LanguageItem(
+      {this.status = 0, required this.onTap, required this.language, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class LanguageItem extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 6),
         height: 44,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -31,7 +34,9 @@ class LanguageItem extends StatelessWidget {
                   ),
             ),
             const Spacer(),
-            status == language.status ? SvgPicture.asset(AppIcons.check) : const SizedBox()
+            status == language.status
+                ? SvgPicture.asset(AppIcons.check)
+                : const SizedBox()
           ],
         ),
       ),

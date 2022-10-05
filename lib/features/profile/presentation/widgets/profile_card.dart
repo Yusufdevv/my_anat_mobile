@@ -9,22 +9,30 @@ import 'package:anatomica/features/profile/presentation/widgets/profile_image.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:formz/formz.dart';
 
 class ProfileCard extends StatelessWidget {
   final UserEntity user;
-  const ProfileCard({required this.user, Key? key}) : super(key: key);
+  final FormzStatus status;
+
+  const ProfileCard({required this.user, required this.status, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return WScaleAnimation(
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
-        Navigator.of(context, rootNavigator: true).push(
-          fade(
-            page: MyInfoScreen(
-              profileBloc: context.read<ProfileBloc>(),
+        if (status == FormzStatus.submissionFailure) {
+        } else {
+          Navigator.of(context, rootNavigator: true).push(
+            fade(
+              page: MyInfoScreen(
+                profileBloc: context.read<ProfileBloc>(),
+              ),
             ),
-          ),
-        );
+          );
+        }
       },
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -55,7 +63,9 @@ class ProfileCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user.fullName,
+                    status == FormzStatus.submissionFailure
+                        ? 'User'
+                        : user.fullName,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headline1,
                     maxLines: 2,

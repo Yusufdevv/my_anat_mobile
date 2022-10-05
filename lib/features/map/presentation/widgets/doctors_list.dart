@@ -23,30 +23,43 @@ class _DoctorsListState extends State<DoctorsList> {
       builder: (context, state) {
         return Align(
           alignment: Alignment.topCenter,
-          child: Paginator(
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
-              padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 136),
-              emptyWidget: Center(
-                child: SingleChildScrollView(
-                  child: EmptyPage(
-                    title: LocaleKeys.nothing.tr(),
-                    desc: LocaleKeys.result_not_found.tr(),
-                    iconPath: AppIcons.emptyA,
+          child: RefreshIndicator(
+            onRefresh: () async {
+              context
+                  .read<DoctorListBloc>()
+                  .add(DoctorListEvent.getDoctors(search: ''));
+              return await Future.delayed(const Duration(seconds: 1));
+            },
+            child: Paginator(
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
+                padding: const EdgeInsets.all(16).copyWith(
+                    bottom: MediaQuery.of(context).padding.bottom + 136),
+                emptyWidget: Center(
+                  child: SingleChildScrollView(
+                    child: EmptyPage(
+                      title: LocaleKeys.nothing.tr(),
+                      desc: LocaleKeys.result_not_found.tr(),
+                      iconPath: AppIcons.emptyA,
+                    ),
                   ),
                 ),
-              ),
-              paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
-              itemBuilder: (c, index) {
-                return DoctorItem(
-                  entity: state.doctors[index],
-                );
-              },
-              itemCount: state.doctors.length,
-              fetchMoreFunction: () {
-                context.read<DoctorListBloc>().add(DoctorListEvent.getMoreDoctors());
-              },
-              hasMoreToFetch: state.count > state.doctors.length,
-              errorWidget: const SizedBox()),
+                paginatorStatus:
+                    MyFunctions.formzStatusToPaginatorStatus(state.status),
+                itemBuilder: (c, index) {
+                  return DoctorItem(
+                    entity: state.doctors[index],
+                  );
+                },
+                itemCount: state.doctors.length,
+                fetchMoreFunction: () {
+                  context
+                      .read<DoctorListBloc>()
+                      .add(DoctorListEvent.getMoreDoctors());
+                },
+                hasMoreToFetch: state.count > state.doctors.length,
+                errorWidget: const SizedBox()),
+          ),
         );
       },
     );

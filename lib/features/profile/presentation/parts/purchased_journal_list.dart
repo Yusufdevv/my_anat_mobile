@@ -14,7 +14,8 @@ class PurchasedJournalList extends StatelessWidget {
   const PurchasedJournalList({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<PurchasedJournalBloc, PurchasedJournalState>(
+  Widget build(BuildContext context) =>
+      BlocBuilder<PurchasedJournalBloc, PurchasedJournalState>(
         builder: (context, state) {
           return GridPaginator(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -23,24 +24,26 @@ class PurchasedJournalList extends StatelessWidget {
               iconPath: AppIcons.emptyA,
               desc: LocaleKeys.no_purchased_journals.tr(),
             ),
-            paginatorStatus: state.paginationStatus == FormzStatus.submissionInProgress
-                ? PaginatorStatus.PAGINATOR_LOADING
-                : PaginatorStatus.PAGINATOR_SUCCESS,
+            paginatorStatus:
+                state.paginationStatus == FormzStatus.submissionInProgress
+                    ? PaginatorStatus.PAGINATOR_LOADING
+                    : PaginatorStatus.PAGINATOR_SUCCESS,
             itemBuilder: (context, index) => PurchasedJournalCard(
               entity: state.journals[index],
             ),
             itemCount: state.journals.length,
             fetchMoreFunction: () {
-              context.read<PurchasedJournalBloc>().add(PurchasedJournalEvent.getMoreArticle());
+              context
+                  .read<PurchasedJournalBloc>()
+                  .add(PurchasedJournalEvent.getMoreArticle());
             },
             hasMoreToFetch: state.count > state.journals.length,
             errorWidget: const SizedBox(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisExtent: 278,
-              crossAxisCount: 2,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 16,
-            ),
+                mainAxisExtent: 290,
+                crossAxisCount: 2,
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 20),
           );
         },
       );
