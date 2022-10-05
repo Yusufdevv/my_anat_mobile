@@ -1,5 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/web_view/web_view_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -19,7 +21,12 @@ class FirstArticle extends StatelessWidget {
         child: Column(
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).push(fade(
+                    page: const WebViewScreen(
+                  page: 'PurchasedArticlePage',
+                )));
+              },
               child: Column(
                 children: [
                   Container(
