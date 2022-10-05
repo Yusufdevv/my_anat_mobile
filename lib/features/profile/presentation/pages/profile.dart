@@ -13,6 +13,7 @@ import 'package:anatomica/features/profile/domain/usecases/get_profile.dart';
 import 'package:anatomica/features/profile/presentation/blocs/profile_bloc/profile_bloc.dart';
 import 'package:anatomica/features/profile/presentation/pages/favorites.dart';
 import 'package:anatomica/features/profile/presentation/pages/help.dart';
+import 'package:anatomica/features/profile/presentation/pages/purchased_screen.dart';
 import 'package:anatomica/features/profile/presentation/pages/safety.dart';
 import 'package:anatomica/features/profile/presentation/pages/setting.dart';
 import 'package:anatomica/features/profile/presentation/widgets/guest_card.dart';
@@ -21,6 +22,7 @@ import 'package:anatomica/features/profile/presentation/widgets/other_profile_it
 import 'package:anatomica/features/profile/presentation/widgets/profile_app_bar.dart';
 import 'package:anatomica/features/profile/presentation/widgets/profile_card.dart';
 import 'package:anatomica/features/profile/presentation/widgets/profile_item.dart';
+import 'package:anatomica/features/web_view/web_view_screen.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -118,7 +120,11 @@ class ProfileScreen extends StatelessWidget {
                           },
                           if (state.profileEntity.isOrganization) ...{
                             ProfileItem(
-                                title: LocaleKeys.organization_office, image: AppImages.organization, onTap: () {}),
+                                title: LocaleKeys.organization_office,
+                                image: AppImages.organization,
+                                onTap: () {
+                                  Navigator.of(context, rootNavigator: true).push(fade(page: WebViewScreen()));
+                                }),
                           },
                           const SizedBox(height: 12),
                           ProfileItem(
@@ -150,6 +156,13 @@ class ProfileScreen extends StatelessWidget {
                               }),
                           const SizedBox(height: 12),
                           ProfileItem(
+                              title: LocaleKeys.purchased,
+                              icon: AppIcons.purchased,
+                              onTap: () {
+                                Navigator.of(context, rootNavigator: true).push(fade(page: const PurchasedScreen()));
+                              }),
+                          const SizedBox(height: 12),
+                          ProfileItem(
                               title: LocaleKeys.help,
                               icon: AppIcons.help,
                               onTap: () {
@@ -175,10 +188,11 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 OtherProfileItem(
                                   onTap: () async {
-                                    if (await canLaunchUrlString('https://anatomica.uicgroup.tech/create-doctor')) {
-                                      await launchUrlString('https://anatomica.uicgroup.tech/create-doctor',
-                                          mode: LaunchMode.externalApplication);
-                                    }
+                                    Navigator.of(context, rootNavigator: true).push(fade(page: WebViewScreen()));
+                                    // if (await canLaunchUrlString('https://anatomica.uicgroup.tech/create-doctor')) {
+                                    //   await launchUrlString('https://anatomica.uicgroup.tech/create-doctor',
+                                    //       mode: LaunchMode.externalApplication);
+                                    // }
                                   },
                                 ),
                                 const SizedBox(height: 12),

@@ -94,6 +94,9 @@ class JournalSingleScreen extends StatelessWidget {
                       child: BlocBuilder<DownloadBloc, DownloadState>(
                         builder: (context, downloadState) {
                           return JournalSingleBigItem(
+                            onTap: () {
+                              EpubViewer.open(downloadState.fileUrl);
+                            },
                             onLeftButtonTap: () {
                               context.read<DownloadBloc>().add(
                                     CheckWhetherFragmentFileExists(

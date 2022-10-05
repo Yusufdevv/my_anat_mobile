@@ -12,11 +12,13 @@ class JournalSingleBigItem extends StatelessWidget {
   final VoidCallback onLeftButtonTap;
   final VoidCallback onRightButtonTap;
   final bool isDownloaded;
+  final VoidCallback? onTap;
   const JournalSingleBigItem({
     required this.journalEntity,
     required this.onLeftButtonTap,
     required this.onRightButtonTap,
     required this.isDownloaded,
+    this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -89,7 +91,7 @@ class JournalSingleBigItem extends StatelessWidget {
         if (isDownloaded) ...{
           WButton(
             margin: const EdgeInsets.only(top: 12),
-            onTap: () {},
+            onTap: onTap ?? () {},
             text: LocaleKeys.read.tr(),
           )
         } else ...{

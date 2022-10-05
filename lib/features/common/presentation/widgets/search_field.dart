@@ -1,10 +1,10 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchField extends StatefulWidget {
   final TextEditingController controller;
@@ -12,6 +12,7 @@ class SearchField extends StatefulWidget {
   final VoidCallback? onClear;
   final Color fillColor;
   final FocusNode? focusNode;
+  final double borderRadius;
   final GlobalKey<FormState>? stateKey;
 
   const SearchField({
@@ -20,6 +21,7 @@ class SearchField extends StatefulWidget {
     required this.controller,
     required this.onChanged,
     this.onClear,
+    this.borderRadius = 10,
     this.fillColor = textFieldColor,
     Key? key,
   }) : super(key: key);
@@ -40,7 +42,7 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 40,
       child: TextFormField(
         key: widget.stateKey,
@@ -58,8 +60,7 @@ class _SearchFieldState extends State<SearchField> {
             });
           }
         },
-        style:
-            Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+        style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
           fillColor: widget.fillColor,
@@ -89,15 +90,15 @@ class _SearchFieldState extends State<SearchField> {
                 )
               : null,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
             borderSide: const BorderSide(color: textFieldColor),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
             borderSide: const BorderSide(color: textFieldColor),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
             borderSide: const BorderSide(color: primary),
           ),
         ),

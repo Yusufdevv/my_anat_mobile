@@ -398,8 +398,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                                 children: [
                                                   SvgPicture.asset(
                                                     AppIcons.search,
-                                                    width: 24,
-                                                    height: 24,
+                                                    width: 20,
+                                                    height: 20,
                                                   ),
                                                   const SizedBox(
                                                     width: 6,

@@ -36,7 +36,11 @@ class PurchasedJournalList extends StatelessWidget {
             hasMoreToFetch: state.count > state.journals.length,
             errorWidget: const SizedBox(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisExtent: 290, crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 20),
+              mainAxisExtent: 278,
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 16,
+            ),
           );
         },
       );

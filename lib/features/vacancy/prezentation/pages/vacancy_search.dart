@@ -1,10 +1,11 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
+import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
+import 'package:anatomica/features/common/domain/usecases/like_unlike_doctor_stream_usecase.dart';
+import 'package:anatomica/features/common/domain/usecases/like_unlike_vacancy_stream_usecase.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
+import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
@@ -17,8 +18,8 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item.dar
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class VacancySearchScreen extends StatefulWidget {
@@ -32,14 +33,23 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
   late TabController tabController;
   late TextEditingController controller;
   late VacancySearchBloc vacancySearchBloc;
+  late FocusNode _focusNode;
 
   @override
   initState() {
     tabController = TabController(length: 2, vsync: this);
     controller = TextEditingController();
+    _focusNode = FocusNode()..requestFocus();
     vacancySearchBloc = VacancySearchBloc(
-        candidateListUseCase: CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+      candidateListUseCase: CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
+        repository: serviceLocator<LikeUnlikeRepositoryImpl>(),
+      ),
+      likeUnlikeDoctorStreamUseCase: LikeUnlikeDoctorStreamUseCase(
+        repository: serviceLocator<LikeUnlikeRepositoryImpl>(),
+      ),
+    );
     vacancySearchBloc.add(GetVacancySearchEvent(search: ''));
     vacancySearchBloc.add(GetCandidateSearchEvent(search: ''));
     super.initState();
@@ -64,7 +74,7 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
             preferredSize: const Size.fromHeight(148),
             child: Container(
               alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.fromLTRB(16, 8 + mediaQuery.padding.top, 16, 16),
+              padding: EdgeInsets.fromLTRB(16, 8 + mediaQuery.padding.top, 16, 12),
               decoration: BoxDecoration(
                 color: white,
                 boxShadow: [
@@ -80,6 +90,24 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                 children: [
                   Row(
                     children: [
+                      Expanded(
+                        child: SearchField(
+                          focusNode: _focusNode,
+                          controller: controller,
+                          onChanged: (value) {
+                            if (tabController.index == 0) {
+                              vacancySearchBloc.add(GetVacancySearchEvent(search: value));
+                            } else {
+                              vacancySearchBloc.add(GetCandidateSearchEvent(search: value));
+                            }
+                          },
+                          onClear: () {
+                            vacancySearchBloc.add(GetVacancySearchEvent(search: ''));
+                            vacancySearchBloc.add(GetCandidateSearchEvent(search: ''));
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
                       WScaleAnimation(
                         onTap: () {
                           Navigator.of(context).pop();
@@ -89,41 +117,37 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                           style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: DefaultTextField(
-                          controller: controller,
-                          height: 40,
-                          onChanged: (value) {
-                            if (tabController.index == 0) {
-                              vacancySearchBloc.add(GetVacancySearchEvent(search: value));
-                            } else {
-                              vacancySearchBloc.add(GetCandidateSearchEvent(search: value));
-                            }
-                          },
-                          suffix: WScaleAnimation(
-                            onTap: () {
-                              setState(() {
-                                controller.clear();
-                              });
-                              vacancySearchBloc.add(GetVacancySearchEvent(search: ''));
-                              vacancySearchBloc.add(GetCandidateSearchEvent(search: ''));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: SvgPicture.asset(AppIcons.x),
-                            ),
-                          ),
-                        ),
-                      )
                     ],
                   ),
-                  WTabBar(
-                    tabController: tabController,
-                    tabs: [
-                      Tab(text: LocaleKeys.vacancy.tr()),
-                      Tab(text: LocaleKeys.candidate.tr()),
-                    ],
+                  Container(
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: textFieldColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.all(6),
+                    margin: const EdgeInsets.only(top: 28),
+                    child: TabBar(
+                      controller: tabController,
+                      padding: EdgeInsets.zero,
+                      indicatorPadding: EdgeInsets.zero,
+                      indicator: BoxDecoration(color: white, borderRadius: BorderRadius.circular(6), boxShadow: [
+                        BoxShadow(
+                          offset: const Offset(0, 8),
+                          blurRadius: 24,
+                          color: chipShadowColor.withOpacity(0.19),
+                        ),
+                      ]),
+                      labelPadding: EdgeInsets.zero,
+                      labelStyle: Theme.of(context).textTheme.headline3,
+                      labelColor: textColor,
+                      onTap: (index) {},
+                      unselectedLabelColor: textSecondary,
+                      tabs: [
+                        Tab(text: LocaleKeys.vacancy.tr()),
+                        Tab(text: LocaleKeys.candidate.tr()),
+                      ],
+                    ),
                   ),
                 ],
               ),

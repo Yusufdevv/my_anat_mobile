@@ -3,6 +3,7 @@ import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismis
 import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
 import 'package:anatomica/features/journal/domain/usecases/get_journal_articles_usecase.dart';
 import 'package:anatomica/features/journal/domain/usecases/search_journal_usecase.dart';
+import 'package:anatomica/features/journal/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_search_bloc/journal_search_bloc.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_search_appbar.dart';
@@ -13,8 +14,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MagazineSearchScreen extends StatefulWidget {
   final JournalBloc bloc;
+  final DownloadBloc downloadBloc;
 
-  const MagazineSearchScreen({required this.bloc, Key? key}) : super(key: key);
+  const MagazineSearchScreen({required this.bloc, required this.downloadBloc, Key? key}) : super(key: key);
 
   @override
   State<MagazineSearchScreen> createState() => _MagazineSearchScreenState();
@@ -58,6 +60,7 @@ class _MagazineSearchScreenState extends State<MagazineSearchScreen> with Ticker
             ),
           ),
           BlocProvider.value(value: widget.bloc),
+          BlocProvider.value(value: widget.downloadBloc),
         ],
         child: Scaffold(
           appBar: JournalSearchAppBar(

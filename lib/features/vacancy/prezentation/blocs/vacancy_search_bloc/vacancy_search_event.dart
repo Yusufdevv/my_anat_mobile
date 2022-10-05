@@ -14,3 +14,13 @@ class GetCandidateSearchEvent extends VacancySearchEvent {
 
   GetCandidateSearchEvent({required this.search});
 }
+
+class LikeUnlikeVacancyEvent extends VacancySearchEvent {
+  final VacancyListEntity vacancy;
+  LikeUnlikeVacancyEvent({required this.vacancy});
+}
+
+class LikeUnlikeCandidateEvent extends VacancySearchEvent {
+  final CandidateListEntity candidate;
+  LikeUnlikeCandidateEvent({required this.candidate});
+}

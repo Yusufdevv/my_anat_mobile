@@ -58,6 +58,7 @@ dependencies:
   easy_localization: ^3.0.1
   webview_flutter: ^3.0.4
   map_launcher: ^2.4.0
+  flutter_inappwebview: ^5.4.4+2
 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0

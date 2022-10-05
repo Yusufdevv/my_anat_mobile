@@ -44,7 +44,7 @@ class RegisterBottomSheet extends StatelessWidget {
               WButton(
                 onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.of(parentContext).push(fade(page: const LoginScreen()));
+                  Navigator.of(parentContext, rootNavigator: true).push(fade(page: const LoginScreen()));
                 },
                 borderRadius: 8,
                 text: LocaleKeys.za_register.tr(),

@@ -18,7 +18,7 @@ class PurchasedArticleList extends StatelessWidget {
           return Paginator(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               emptyWidget: EmptyPage(
-                title: LocaleKeys.nothing,
+                title: LocaleKeys.nothing.tr(),
                 iconPath: AppIcons.emptyA,
                 desc: LocaleKeys.no_purchased_articles.tr(),
               ),

@@ -1,11 +1,14 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/common/domain/usecases/like_doctor_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/like_vacancy_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/unlike_doctor_usecase.dart';
 import 'package:anatomica/features/common/domain/usecases/unlike_vacancy_usecase.dart';
 import 'package:anatomica/features/common/presentation/bloc/favourite_bloc/favourite_bloc.dart';
+import 'package:anatomica/features/common/presentation/widgets/register_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,14 +29,22 @@ class FavouriteButtonCandidate extends StatelessWidget {
         likeVacancyUseCase: LikeVacancyUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
         unlikeVacancyUseCase: UnlikeVacancyUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
       ),
-      child: BlocBuilder<FavouriteBloc, FavouriteState>(
-        builder: (context, state) {
-          return WScaleAnimation(
-            onTap: () {
-              context.read<FavouriteBloc>().add(LikeUnlikeCandidate(candidate: candidate));
+      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (context, authState) {
+          return BlocBuilder<FavouriteBloc, FavouriteState>(
+            builder: (context, state) {
+              return WScaleAnimation(
+                onTap: () {
+                  if (authState.status == AuthenticationStatus.authenticated) {
+                    context.read<FavouriteBloc>().add(LikeUnlikeCandidate(candidate: candidate));
+                  } else {
+                    showRegisterBottomSheet(context);
+                  }
+                },
+                child: SvgPicture.asset(
+                    state.isFavourite ?? candidate.isFavorite ? AppIcons.favouriteActive : AppIcons.favourite),
+              );
             },
-            child: SvgPicture.asset(
-                state.isFavourite ?? candidate.isFavorite ? AppIcons.favouriteActive : AppIcons.favourite),
           );
         },
       ),
