@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_purchased_article.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_purchased_journal.dart';
@@ -7,6 +8,7 @@ import 'package:anatomica/features/profile/presentation/blocs/purchased_article/
 import 'package:anatomica/features/profile/presentation/blocs/purchased_journal/purchased_journal_bloc.dart';
 import 'package:anatomica/features/profile/presentation/parts/purchased_article_list.dart';
 import 'package:anatomica/features/profile/presentation/parts/purchased_journal_list.dart';
+import 'package:anatomica/features/profile/presentation/widgets/popups/restore_phone.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,7 +24,8 @@ class PurchasedScreen extends StatefulWidget {
   State<PurchasedScreen> createState() => _PurchasedScreenState();
 }
 
-class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderStateMixin {
+class _PurchasedScreenState extends State<PurchasedScreen>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late PurchasedJournalBloc purchasedJournalBloc;
   late PurchasedArticleBloc purchasedArticleBloc;
@@ -58,7 +61,10 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
           centerTitle: true,
           title: Text(
             LocaleKeys.purchased.tr(),
-            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+            style: Theme.of(context)
+                .textTheme
+                .headline1!
+                .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
           ),
           titleSpacing: 0,
         ),
@@ -85,7 +91,12 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                   indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       color: white,
-                      boxShadow: const [BoxShadow(blurRadius: 24, offset: Offset(0, 8), color: Color(0x302B8364))]),
+                      boxShadow: const [
+                        BoxShadow(
+                            blurRadius: 24,
+                            offset: Offset(0, 8),
+                            color: Color(0x302B8364))
+                      ]),
                   labelColor: textColor,
                   unselectedLabelColor: textSecondary,
                   labelStyle: Theme.of(context).textTheme.headline3,
@@ -103,6 +114,48 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
               const SizedBox(
                 height: 16,
               ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 12),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16), color: primary),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      AppIcons.edit,
+                      width: 24,
+                      height: 24,
+                      color: white,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Восстановление купленных статьей/выпусков без регистрации',
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                            fontWeight: FontWeight.w600, fontSize: 12),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    WButton(
+                      borderRadius: 8,
+                      text: 'Восстановить',
+                      textColor: primary,
+                      color: white,
+                      width: 105,
+                      onTap: () {
+                        showRestorePhoneDialog(context);
+                      },
+                      height: 36,
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16,),
               Expanded(
                   child: TabBarView(
                 controller: _tabController,
