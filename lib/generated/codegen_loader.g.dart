@@ -59,7 +59,7 @@ class CodegenLoader extends AssetLoader{
   "mail_u": "электрон почта",
   "organization": "Ташкилотлар",
   "doctor": "Шифокорлар",
-  "list": "Рўйхат",
+  "list": "рўйхати",
   "dentistry": "Стоматология",
   "laboratory": "Лаборатория",
   "analysis_blood": "Қон таҳлили",
@@ -275,13 +275,7 @@ class CodegenLoader extends AssetLoader{
   "journal_more": "Батафсил",
   "e_magazine": "Электрон журнал",
   "not_registered_account": "Рўйхатдан ўтмаган \nаккаунт",
-  "download": "Юклаш",
-  "resend_code": "Қайта юбориш",
-  "restore_things": "Рўйхатдан ўтмасдан сотиб олинган мақолалар/нашрларни тиклаш",
-  "restore": "Қайта тиклаш",
-  "restore_purchased_articles": "Сотиб олинган мақолаларни тиклаш",
-  "write_sent_code": "Рақамга юборилган кодни киритинг",
-  "write_phone_restore": "Тиклаш учун телефон рақамни киритинг"
+  "download": "Юклаш"
 };
 static const Map<String,dynamic> ru = {
   "enter": "Войти",
@@ -544,13 +538,7 @@ static const Map<String,dynamic> ru = {
   "journal_more": "Подробно",
   "e_magazine": "Электронный журнал",
   "not_registered_account": "Незарегистрированныйn \nаккаунт",
-  "download": "Скачать",
-  "resend_code": "Отправить снова",
-  "restore_things": "Восстановление купленных статьей/выпусков без регистрации",
-  "restore": "Восстановить",
-  "restore_purchased_articles": "Восстановление купленных статьей",
-  "write_sent_code": "Введите код который был отправлен на номер",
-  "write_phone_restore": "Введите номер телефона для восстановление"
+  "download": "Скачать"
 };
 static const Map<String,dynamic> uz = {
   "enter": "Kirish",
@@ -597,7 +585,7 @@ static const Map<String,dynamic> uz = {
   "mail_u": "Elektron pochta",
   "organization": "Tashkilotlar",
   "doctor": "Shifokorlar",
-  "list": "Ro'yxat",
+  "list": "Ro'yxati",
   "dentistry": "Stomatologiya",
   "laboratory": "Laboratoriya",
   "analysis_blood": "Qon tahlili",
@@ -812,14 +800,8 @@ static const Map<String,dynamic> uz = {
   "clean": "Tozalash",
   "journal_more": "Batafsil",
   "e_magazine": "Elektron jurnal",
-  "download": "Yuklash",
   "not_registered_account": "Ro'yxatdan o'tmagan \nakkaunt",
-  "resend_code": "Qayta yuborish",
-  "restore_things": "Ro'yxatdan o'tmasdan sotib olingan maqolalar/nashrlarni tiklash",
-  "restore": "Qayta tiklash",
-  "restore_purchased_articles": "Sotib olingan maqolalarni tiklash",
-  "write_sent_code": "Raqamga yuborilgan kodni kiriting",
-  "write_phone_restore": "Tiklash uchun telefon raqamni kiriting"
+  "download": "Yuklash"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"fr": fr, "ru": ru, "uz": uz};
 }
