@@ -128,6 +128,7 @@ class AppIcons {
   static const favouriteActive = 'assets/icons/profile/favourite_active.svg';
   static const defaultImg = 'assets/icons/profile/default_img.svg';
   static const guestCard = 'assets/icons/profile/guest_icon.svg';
+  static const download = 'assets/icons/magazine/download.svg';
 
 //  static const refresh = 'assets/icons/magazine/refresh.svg';
 }

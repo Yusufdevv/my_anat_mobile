@@ -44,6 +44,16 @@ class DbHelper {
       )
       ''',
       );
+      await db.execute(
+        '''
+      CREATE TABLE IF NOT EXISTS unregistered_journals (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       redaction TEXT,
+       image_url TEXT,
+       journal_id INTEGER
+      )
+      ''',
+      );
     });
     _isDbInitialized = true;
     return _database;
