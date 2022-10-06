@@ -22,10 +22,13 @@ class FirstArticle extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.of(context, rootNavigator: true).push(fade(
+                Navigator.of(context, rootNavigator: true).push(
+                  fade(
                     page: const WebViewScreen(
-                  page: 'PurchasedArticlePage',
-                )));
+                      page: 'PurchasedArticlePage',
+                    ),
+                  ),
+                );
               },
               child: Column(
                 children: [

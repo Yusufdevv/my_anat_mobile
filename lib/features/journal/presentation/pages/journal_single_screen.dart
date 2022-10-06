@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
@@ -9,6 +10,7 @@ import 'package:anatomica/features/journal/presentation/bloc/download/download_b
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_screen.dart';
 import 'package:anatomica/features/journal/presentation/widgets/article_item.dart';
+import 'package:anatomica/features/journal/presentation/widgets/buy_dialog.dart';
 import 'package:anatomica/features/journal/presentation/widgets/downloading_dialog.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_single_big_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -46,7 +48,8 @@ class JournalSingleScreen extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: white),
+          systemOverlayStyle:
+              const SystemUiOverlayStyle(statusBarColor: white, statusBarIconBrightness: Brightness.dark),
           elevation: 0,
           leading: WScaleAnimation(
             onTap: () => Navigator.of(context).pop(),
@@ -155,18 +158,28 @@ class JournalSingleScreen extends StatelessWidget {
                                       ),
                                     );
                               } else {
-                                Navigator.of(context, rootNavigator: true).push(
-                                  fade(
-                                    page: PaymentScreen(
-                                      price: journal.price,
-                                      title: journal.redaction,
-                                      imageUrl: journal.image.middle,
-                                      isJournal: true,
-                                      isRegistered: context.read<AuthenticationBloc>().state.status ==
-                                          AuthenticationStatus.authenticated,
-                                      subtitle: journal.redaction,
-                                      id: journal.id,
-                                    ),
+                                showDialog(
+                                  context: context,
+                                  builder: (ctx) => BuyDialog(
+                                    onPaymentTap: () {
+                                      Navigator.of(context, rootNavigator: true).push(
+                                        fade(
+                                          page: PaymentScreen(
+                                            price: journal.price,
+                                            title: journal.redaction,
+                                            imageUrl: journal.image.middle,
+                                            isJournal: true,
+                                            isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                                AuthenticationStatus.authenticated,
+                                            subtitle: journal.redaction,
+                                            id: journal.id,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    onRegistrationTap: () {
+                                      Navigator.of(context).push(fade(page: const LoginScreen()));
+                                    },
                                   ),
                                 );
                               }

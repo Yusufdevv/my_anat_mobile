@@ -258,5 +258,6 @@
   "clean" : "Тозалаш",
   "journal_more" : "Батафсил",
   "e_magazine" : "Электрон журнал",
-  "not_registered_account" : "Рўйхатдан ўтмаган \nаккаунт"
+  "not_registered_account" : "Рўйхатдан ўтмаган \nаккаунт",
+  "download": "Юклаш"
 }

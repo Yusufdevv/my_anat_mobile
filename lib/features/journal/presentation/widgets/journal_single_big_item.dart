@@ -1,4 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
@@ -6,6 +7,7 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class JournalSingleBigItem extends StatelessWidget {
   final JournalEntity journalEntity;
@@ -115,14 +117,34 @@ class JournalSingleBigItem extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   margin: const EdgeInsets.only(top: 12),
                   onTap: onRightButtonTap,
-                  child: Text(
-                    journalEntity.isBought || !journalEntity.isPremium
-                        ? LocaleKeys.read.tr()
-                        : LocaleKeys.buy.tr(args: [MyFunctions.getFormatCostFromInt(journalEntity.price)]),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
-                  ),
+                  child: journalEntity.isBought || !journalEntity.isPremium
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(AppIcons.download),
+                            const SizedBox(width: 8),
+                            Text(
+                              LocaleKeys.download.tr(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                            )
+                          ],
+                        )
+                      : Text(
+                          journalEntity.isBought || !journalEntity.isPremium
+                              ? LocaleKeys.read.tr()
+                              : LocaleKeys.buy.tr(args: [MyFunctions.getFormatCostFromInt(journalEntity.price)]),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
                 ),
               ),
             ],
