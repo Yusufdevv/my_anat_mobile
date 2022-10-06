@@ -8,7 +8,9 @@ import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'edit_profile_bloc.freezed.dart';
+
 part 'edit_profile_event.dart';
+
 part 'edit_profile_state.dart';
 
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
@@ -47,6 +49,13 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         if (state.imageId > 0) {
           map.putIfAbsent('img', () => state.imageId);
         }
+        if (state.birthDate.isNotEmpty) {
+          map.addAll({
+            "birth_day":state.birthDate
+
+          });
+        }
+        print(map);
         final result =
             await _editProfileUseCase.call(EditProfileParams(data: map));
         if (result.isRight) {

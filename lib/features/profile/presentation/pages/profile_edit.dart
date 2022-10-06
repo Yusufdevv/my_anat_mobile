@@ -32,7 +32,9 @@ class ProfileEditScreen extends StatefulWidget {
   final UserEntity userEntity;
   final ProfileBloc profileBloc;
 
-  const ProfileEditScreen({required this.userEntity, required this.profileBloc, Key? key}) : super(key: key);
+  const ProfileEditScreen(
+      {required this.userEntity, required this.profileBloc, Key? key})
+      : super(key: key);
 
   @override
   State<ProfileEditScreen> createState() => _ProfileEditScreenState();
@@ -49,10 +51,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   Future<String> getImage(bool isGallery) async {
     if (isGallery) {
-      var photo = await imagePicker.pickImage(source: ImageSource.gallery, imageQuality: 100);
+      var photo = await imagePicker.pickImage(
+          source: ImageSource.gallery, imageQuality: 100);
       return photo!.path;
     } else {
-      var photo = await imagePicker.pickImage(source: ImageSource.camera, imageQuality: 100);
+      var photo = await imagePicker.pickImage(
+          source: ImageSource.camera, imageQuality: 100);
       return photo!.path;
     }
   }
@@ -64,10 +68,15 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     nameController = TextEditingController(
       text: widget.userEntity.fullName,
     );
-    phoneController = TextEditingController(text: MyFunctions.formatPhoneForInput(widget.userEntity.phoneNumber));
+    print(widget.userEntity.birthDay);
+    date = Jiffy(widget.userEntity.birthDay).dateTime;
+    phoneController = TextEditingController(
+        text: MyFunctions.formatPhoneForInput(widget.userEntity.phoneNumber));
     emailController = TextEditingController(text: widget.userEntity.email);
-    editBloc = EditProfileBloc(EditProfileUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
-        UploadImageUseCase(profileRepository: serviceLocator<ProfileRepositoryImpl>()));
+    editBloc = EditProfileBloc(
+        EditProfileUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
+        UploadImageUseCase(
+            profileRepository: serviceLocator<ProfileRepositoryImpl>()));
     _localUser = widget.userEntity;
   }
 
@@ -118,7 +127,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             return Scaffold(
                 appBar: WAppBar(title: LocaleKeys.edit.tr()),
                 bottomNavigationBar: WButton(
-                  margin: EdgeInsets.fromLTRB(16, 0, 16, 12 + mediaQuery.padding.bottom),
+                  margin: EdgeInsets.fromLTRB(
+                      16, 0, 16, 12 + mediaQuery.padding.bottom),
                   text: LocaleKeys.save.tr(),
                   isLoading: state.status.isSubmissionInProgress,
                   onTap: () {
@@ -127,10 +137,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           widget.profileBloc.add(
                             UpdateProfileEvent(
                               profileEntity: _localUser.copyWith(
+                                birthDate: date.toString(),
                                 fullName: nameController.text,
-                                phoneNumber: '+998${phoneController.text.replaceAll(' ', '')}',
+                                phoneNumber:
+                                    '+998${phoneController.text.replaceAll(' ', '')}',
                                 email: emailController.text,
-                                img: state.imageUrl.isNotEmpty ? ImageEntity(middle: state.imageUrl) : _localUser.img,
+                                img: state.imageUrl.isNotEmpty
+                                    ? ImageEntity(middle: state.imageUrl)
+                                    : _localUser.img,
                               ),
                             ),
                           );
@@ -140,7 +154,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   },
                 ),
                 body: ListView(
-                  padding: EdgeInsets.fromLTRB(16, 24, 16, 12 + mediaQuery.padding.bottom),
+                  padding: EdgeInsets.fromLTRB(
+                      16, 24, 16, 12 + mediaQuery.padding.bottom),
                   physics: const BouncingScrollPhysics(),
                   children: [
                     Center(
@@ -157,7 +172,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               left: 0,
                               right: 0,
                               child: ProfileImage(
-                                url: state.imageUrl.isNotEmpty ? state.imageUrl : widget.userEntity.img.middle,
+                                url: state.imageUrl.isNotEmpty
+                                    ? state.imageUrl
+                                    : widget.userEntity.img.middle,
                               ),
                             ),
                             Positioned(
@@ -182,7 +199,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       maxLines: 1,
                       controller: nameController,
                       onChanged: (v) {
-                        context.read<EditProfileBloc>().add(EditProfileEvent.changeName(v));
+                        context
+                            .read<EditProfileBloc>()
+                            .add(EditProfileEvent.changeName(v));
                       },
                       title: LocaleKeys.name.tr(),
                       prefix: Padding(
@@ -193,7 +212,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     const SizedBox(height: 16),
                     PhoneTextField(
                       onChanged: (value) {
-                        context.read<EditProfileBloc>().add(EditProfileEvent.changePhoneNumber(value));
+                        context
+                            .read<EditProfileBloc>()
+                            .add(EditProfileEvent.changePhoneNumber(value));
                       },
                       prefixIconColor: primary,
                       controller: phoneController,
@@ -203,7 +224,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     DefaultTextField(
                       controller: emailController,
                       onChanged: (v) {
-                        context.read<EditProfileBloc>().add(EditProfileEvent.changeEmail(v));
+                        context
+                            .read<EditProfileBloc>()
+                            .add(EditProfileEvent.changeEmail(v));
                       },
                       title: LocaleKeys.mail.tr(),
                       hintText: 'example@anatomica.uz',
@@ -233,9 +256,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             setState(() {
                               this.date = date;
                             });
-                            context
-                                .read<EditProfileBloc>()
-                                .add(EditProfileEvent.changeDate(Jiffy(date).format('dd.MM.yyyy')));
+                            context.read<EditProfileBloc>().add(
+                                EditProfileEvent.changeDate(
+                                    Jiffy(date).format('yyyy-MM-dd')));
                           },
                           DateTime(
                             Jiffy(date).year,
@@ -255,7 +278,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           children: [
                             Text(
                               Jiffy(date).format('dd.MM.yyyy'),
-                              style: Theme.of(context).textTheme.headline1!.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                   ),

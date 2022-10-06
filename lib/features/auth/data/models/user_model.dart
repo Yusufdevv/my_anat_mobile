@@ -22,6 +22,7 @@ class UserModel extends UserEntity {
     required super.img,
     required super.id,
     required super.phoneNumber,
+    required super.birthDay
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

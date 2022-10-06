@@ -43,7 +43,7 @@
   "mail_u": "Elektron pochta",
   "organization": "Tashkilotlar",
   "doctor": "Shifokorlar",
-  "list": "Ro'yxati",
+  "list": "Ro'yxat",
   "dentistry": "Stomatologiya",
   "laboratory": "Laboratoriya",
   "analysis_blood": "Qon tahlili",
@@ -259,5 +259,14 @@
   "clean" : "Tozalash",
   "journal_more" : "Batafsil",
   "e_magazine" : "Elektron jurnal",
-  "not_registered_account": "Ro'yxatdan o'tmagan \nakkaunt"
+  "not_registered_account": "Ro'yxatdan o'tmagan \nakkaunt",
+
+  "resend_code": "Qayta yuborish",
+  "restore_things": "Ro'yxatdan o'tmasdan sotib olingan maqolalar/nashrlarni tiklash",
+  "restore": "Qayta tiklash",
+  "restore_purchased_articles": "Sotib olingan maqolalarni tiklash",
+  "write_sent_code": "Raqamga yuborilgan kodni kiriting",
+  "write_phone_restore": "Tiklash uchun telefon raqamni kiriting"
+
+
 }

@@ -16,6 +16,7 @@ class UserEntity extends Equatable {
   final bool isDoctor;
   final bool isOrganization;
   final bool isSubscribed;
+  final String birthDay;
   @DoctorConverter()
   final DoctorEntity doctor;
   @OrganizationConverter()
@@ -23,6 +24,7 @@ class UserEntity extends Equatable {
 
   const UserEntity({
     this.id = 0,
+    this.birthDay='' ,
     this.img = const ImageEntity(),
     this.fullName = '',
     this.email = '',
@@ -37,6 +39,7 @@ class UserEntity extends Equatable {
 
   UserEntity copyWith(
           {int? id,
+          String? birthDate,
           String? fullName,
           String? email,
           String? username,
@@ -48,6 +51,7 @@ class UserEntity extends Equatable {
           DoctorEntity? doctor,
           List<OrganizationEntity>? organizations}) =>
       UserEntity(
+        birthDay: birthDate ?? birthDay,
         id: id ?? this.id,
         doctor: doctor ?? this.doctor,
         email: email ?? this.email,
@@ -65,6 +69,7 @@ class UserEntity extends Equatable {
   List<Object?> get props => [
         id,
         fullName,
+        birthDay,
         email,
         username,
         img,

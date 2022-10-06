@@ -76,6 +76,9 @@ class ProfileDatasourceImpl extends ProfileDatasource {
       final response = await _dio.patch('/user/profile/update/',
           data: FormData.fromMap(data),
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      print(response.data);
+      print(response.realUri);
+      print(response.statusCode);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(errorMessage: response.data.toString(), statusCode: response.statusCode ?? 0);

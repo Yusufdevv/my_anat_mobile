@@ -28,6 +28,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
               .fromJson(json['img'] as Map<String, dynamic>?),
       id: json['id'] as int? ?? 0,
       phoneNumber: json['phone_number'] as String? ?? '',
+      birthDay: json['birth_day'] as String? ?? '',
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -40,6 +41,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'is_doctor': instance.isDoctor,
       'is_organization': instance.isOrganization,
       'is_subscribed': instance.isSubscribed,
+      'birth_day': instance.birthDay,
       'doctor': const DoctorConverter().toJson(instance.doctor),
       'organizations': instance.organizations
           .map(const OrganizationConverter().toJson)
