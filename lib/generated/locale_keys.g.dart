@@ -261,6 +261,7 @@ abstract class  LocaleKeys {
   static const journal_more = 'journal_more';
   static const e_magazine = 'e_magazine';
   static const not_registered_account = 'not_registered_account';
+  static const download = 'download';
   static const resend_code = 'resend_code';
   static const restore_things = 'restore_things';
   static const restore = 'restore';
