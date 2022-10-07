@@ -281,7 +281,9 @@ class CodegenLoader extends AssetLoader{
   "restore": "Восстановить",
   "restore_purchased_articles": "Восстановление купленных статьей",
   "write_sent_code": "Введите код который был отправлен на номер",
-  "write_phone_restore": "Введите номер телефона для восстановление"
+  "write_phone_restore": "Введите номер телефона для восстановление",
+  "today": "Сегодня",
+  "yesterday": "Вчера"
 };
 static const Map<String,dynamic> fr = {
   "enter": "Кириш",
@@ -550,7 +552,9 @@ static const Map<String,dynamic> fr = {
   "restore": "Қайта тиклаш",
   "restore_purchased_articles": "Сотиб олинган мақолаларни тиклаш",
   "write_sent_code": "Рақамга юборилган кодни киритинг",
-  "write_phone_restore": "Тиклаш учун телефон рақамни киритинг"
+  "write_phone_restore": "Тиклаш учун телефон рақамни киритинг",
+  "today": "Бугун",
+  "yesterday": "Кеча"
 };
 static const Map<String,dynamic> uz = {
   "enter": "Kirish",
@@ -819,7 +823,9 @@ static const Map<String,dynamic> uz = {
   "restore": "Qayta tiklash",
   "restore_purchased_articles": "Sotib olingan maqolalarni tiklash",
   "write_sent_code": "Raqamga yuborilgan kodni kiriting",
-  "write_phone_restore": "Tiklash uchun telefon raqamni kiriting"
+  "write_phone_restore": "Tiklash uchun telefon raqamni kiriting",
+  "today": "Bugun",
+  "yesterday": "Kecha"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "fr": fr, "uz": uz};
 }

@@ -267,12 +267,12 @@ abstract class MyFunctions {
 
   static String getPublishedDate(String date) {
     if (Jiffy(date).isSame(DateTime.now(), Units.DAY)) {
-      return 'Bugun, ${Jiffy(date).format('HH:mm')}';
+      return '${LocaleKeys.today.tr()}, ${Jiffy(date).format('HH:mm')}';
     } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 ||
         Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
-      return 'Kecha, ${Jiffy(date).format('HH:mm')}';
+      return '${LocaleKeys.yesterday.tr()}, ${Jiffy(date).format('HH:mm')}';
     } else {
-      return '${Jiffy(date).date} ${getMonth(Jiffy(date).month)}, ${Jiffy(date).year}';
+      return '${Jiffy(date).date}${getMonth(Jiffy(date).month)}, ${Jiffy(date).year}';
     }
   }
 

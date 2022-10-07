@@ -267,7 +267,9 @@
   "restore": "Қайта тиклаш",
   "restore_purchased_articles": "Сотиб олинган мақолаларни тиклаш",
   "write_sent_code": "Рақамга юборилган кодни киритинг",
-  "write_phone_restore": "Тиклаш учун телефон рақамни киритинг"
+  "write_phone_restore": "Тиклаш учун телефон рақамни киритинг",
+  "today": "Бугун",
+  "yesterday": "Кеча"
 
 
 }

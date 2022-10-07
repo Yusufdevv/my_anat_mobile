@@ -6,11 +6,13 @@ import 'package:anatomica/features/map/domain/usecases/get_hospitals.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 
-class GetDoctorsUseCase extends UseCase<GenericPagination<HospitalDoctorsModel>, SearchParam> {
+class GetDoctorsUseCase
+    extends UseCase<GenericPagination<HospitalDoctorsModel>, SearchParam> {
   final PaginationRepository repo = PaginationRepository();
 
   @override
-  Future<Either<Failure, GenericPagination<HospitalDoctorsModel>>> call(SearchParam param) {
+  Future<Either<Failure, GenericPagination<HospitalDoctorsModel>>> call(
+      SearchParam param) {
     return repo.fetchMore<HospitalDoctorsModel>(
         url: '/doctor/',
         next: param.next.isNotEmpty ? param.next : null,

@@ -274,20 +274,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.1"
-  epub_view:
-    dependency: "direct main"
-    description:
-      path: "custom_packages/epub_view"
-      relative: true
-    source: path
-    version: "3.0.0"
-  epubx:
-    dependency: transitive
-    description:
-      path: "custom_packages/epubx"
-      relative: true
-    source: path
-    version: "3.0.0"
   equatable:
     dependency: "direct main"
     description:
@@ -365,13 +351,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0-alpha.6"
-  flutter_inappwebview:
-    dependency: "direct main"
-    description:
-      name: flutter_inappwebview
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.4.4+2"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -688,13 +667,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.5"
-  measure_size:
-    dependency: transitive
-    description:
-      name: measure_size
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.1"
   meta:
     dependency: transitive
     description:
@@ -714,10 +686,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: fdb2be5e3441af21f54cf14c74fdbb282aa6cfa0
+      resolved-ref: "0c8d85ba44019f8d2763b450e96f8d5774e160a1"
       url: "https://gitlab.uicgroup.tech/munir/munir-epub-reader-flutter.git"
     source: git
-    version: "0.0.12"
+    version: "0.0.17"
   nested:
     dependency: transitive
     description:
@@ -768,7 +740,7 @@ packages:
     source: hosted
     version: "0.2.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -928,13 +900,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.0"
   rxdart:
     dependency: "direct main"
     description:
@@ -984,13 +949,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.0"
-  scrollable_positioned_list:
-    dependency: transitive
-    description:
-      name: scrollable_positioned_list
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.5"
   share_plus:
     dependency: "direct main"
     description:
@@ -1220,13 +1178,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.1"
-  universal_file:
-    dependency: transitive
-    description:
-      name: universal_file
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   url_launcher:
     dependency: "direct main"
     description:
@@ -1338,7 +1289,7 @@ packages:
       name: webview_flutter_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.10.3"
+    version: "2.10.4"
   webview_flutter_platform_interface:
     dependency: transitive
     description:

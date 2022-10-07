@@ -10,12 +10,12 @@ class RestoreUseCase extends UseCase<String, RestoreParam> {
   Future<Either<Failure, String>> call(RestoreParam param) {
     print(param.signature);
     print(param.isArticle);
-    return repo.postAndSingle(
+    return repo.postAndSingle(errorFieldKey: 'message',
         endpoint: param.isArticle ? '/article/restore/' : '/journal/restore/',
         fromJson: (data) => '',
         data: {
           "signature": param.signature,
-          "phone":param.phone
+          "phone_number":param.phone
         });
   }
 }
