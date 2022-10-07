@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/features/common/presentation/widgets/phone_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/profile/presentation/blocs/purchased_article/purchased_article_bloc.dart';
 import 'package:anatomica/features/profile/presentation/blocs/purchased_journal/purchased_journal_bloc.dart';

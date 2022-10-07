@@ -262,5 +262,11 @@ abstract class  LocaleKeys {
   static const e_magazine = 'e_magazine';
   static const not_registered_account = 'not_registered_account';
   static const download = 'download';
+  static const resend_code = 'resend_code';
+  static const restore_things = 'restore_things';
+  static const restore = 'restore';
+  static const restore_purchased_articles = 'restore_purchased_articles';
+  static const write_sent_code = 'write_sent_code';
+  static const write_phone_restore = 'write_phone_restore';
 
 }

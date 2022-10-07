@@ -261,8 +261,10 @@ class _HospitalListState extends State<HospitalList>
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 12,
+                               SizedBox(
+                                width:isSearching || controller.text.isNotEmpty
+                                    ? 0
+                                    : 12,
                               ),
                               Expanded(
                                 child: SearchField(
@@ -301,7 +303,7 @@ class _HospitalListState extends State<HospitalList>
                                         margin: const EdgeInsets.only(
                                             left: 12, right: 4),
                                         child: Text(
-                                          LocaleKeys.close,
+                                          LocaleKeys.close.tr(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline4!

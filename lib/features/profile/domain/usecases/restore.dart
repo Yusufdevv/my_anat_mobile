@@ -15,6 +15,7 @@ class RestoreUseCase extends UseCase<String, RestoreParam> {
         fromJson: (data) => '',
         data: {
           "signature": param.signature,
+          "phone":param.phone
         });
   }
 }
@@ -22,6 +23,7 @@ class RestoreUseCase extends UseCase<String, RestoreParam> {
 class RestoreParam {
   final bool isArticle;
   final String signature;
+  final String phone;
 
-  RestoreParam({required this.signature, required this.isArticle});
+  RestoreParam({required this.signature, required this.isArticle,required this.phone});
 }
