@@ -16,13 +16,16 @@ class MagazineSearchScreen extends StatefulWidget {
   final JournalBloc bloc;
   final DownloadBloc downloadBloc;
 
-  const MagazineSearchScreen({required this.bloc, required this.downloadBloc, Key? key}) : super(key: key);
+  const MagazineSearchScreen(
+      {required this.bloc, required this.downloadBloc, Key? key})
+      : super(key: key);
 
   @override
   State<MagazineSearchScreen> createState() => _MagazineSearchScreenState();
 }
 
-class _MagazineSearchScreenState extends State<MagazineSearchScreen> with TickerProviderStateMixin {
+class _MagazineSearchScreenState extends State<MagazineSearchScreen>
+    with TickerProviderStateMixin {
   late TextEditingController _searchController;
   late TabController _tabController;
   late FocusNode focusNode;
@@ -57,7 +60,9 @@ class _MagazineSearchScreenState extends State<MagazineSearchScreen> with Ticker
               getJournalArticlesUseCase: GetJournalArticlesUseCase(
                 repository: serviceLocator<JournalRepositoryImpl>(),
               ),
-            ),
+            )
+              ..add(SearchArticles(query: ''))
+              ..add(SearchJournals(query: '')),
           ),
           BlocProvider.value(value: widget.bloc),
           BlocProvider.value(value: widget.downloadBloc),
