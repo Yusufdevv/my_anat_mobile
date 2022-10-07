@@ -59,6 +59,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
             serviceLocator<DioSettings>().setBaseOptions(lang: 'ru');
             StorageRepository.putString('language', 'ru');
             StorageRepository.putString('device_language', 'ru');
+            Navigator.pop(context);
             await context.setLocale(const Locale('ru'));
             setState(() {
               currentStatus = 1;
@@ -77,6 +78,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
             serviceLocator<DioSettings>().setBaseOptions(lang: 'uzc');
             StorageRepository.putString('language', 'uzc');
             StorageRepository.putString('device_language', 'fr');
+            Navigator.pop(context);
             await context.setLocale(const Locale('fr'));
             setState(() {
               currentStatus = 2;
@@ -95,19 +97,13 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
             serviceLocator<DioSettings>().setBaseOptions(lang: 'uz');
             StorageRepository.putString('language', 'uz');
             StorageRepository.putString('device_language', 'uz');
+            Navigator.pop(context);
             await context.setLocale(const Locale('uz'));
             setState(() {
               currentStatus = 3;
             });
           },
         ),
-        const SizedBox(height: 24),
-        WButton(
-          text: LocaleKeys.apply.tr(),
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-        )
       ],
     );
   }

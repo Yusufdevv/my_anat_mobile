@@ -268,5 +268,7 @@ abstract class  LocaleKeys {
   static const restore_purchased_articles = 'restore_purchased_articles';
   static const write_sent_code = 'write_sent_code';
   static const write_phone_restore = 'write_phone_restore';
+  static const today = 'today';
+  static const yesterday = 'yesterday';
 
 }

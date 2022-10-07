@@ -13,7 +13,10 @@ import 'package:share_plus/share_plus.dart';
 class VacancySingleAppBar extends StatelessWidget {
   final String shareValue;
   final VacancyListEntity vacancy;
-  const VacancySingleAppBar({required this.shareValue, required this.vacancy, Key? key}) : super(key: key);
+
+  const VacancySingleAppBar(
+      {required this.shareValue, required this.vacancy, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,31 +44,49 @@ class VacancySingleAppBar extends StatelessWidget {
           height: 60,
           decoration: BoxDecoration(
             color: primary,
-            boxShadow: [BoxShadow(color: woodSmoke.withOpacity(0.12), offset: const Offset(0, 8), blurRadius: 24)],
+            boxShadow: [
+              BoxShadow(
+                  color: woodSmoke.withOpacity(0.12),
+                  offset: const Offset(0, 8),
+                  blurRadius: 24)
+            ],
           ),
           child: Column(
             children: [
-              Row(
+              Stack(
                 children: [
-                  WScaleAnimation(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: SvgPicture.asset(AppIcons.chevronLeft)),
-                  const Spacer(),
-                  Text(LocaleKeys.vacancy.tr(), style: Theme.of(context).textTheme.headline2),
-                  const Spacer(),
-                  FavouriteButtonVacancy(
-                    vacancy: vacancy,
-                    activeColor: white,
-                    inactiveColor: white,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(LocaleKeys.vacancy.tr(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(
+                                  fontSize: 20, fontWeight: FontWeight.w600)),
+                    ],
                   ),
-                  const SizedBox(width: 20),
-                  WScaleAnimation(
-                    onTap: () {
-                      Share.share(shareValue);
-                    },
-                    child: SvgPicture.asset(AppIcons.share),
+                  Row(
+                    children: [
+                      WScaleAnimation(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: SvgPicture.asset(AppIcons.chevronLeft)),
+                      const Spacer(),
+                      FavouriteButtonVacancy(
+                        vacancy: vacancy,
+                        activeColor: white,
+                        inactiveColor: white,
+                      ),
+                      const SizedBox(width: 20),
+                      WScaleAnimation(
+                        onTap: () {
+                          Share.share(shareValue);
+                        },
+                        child: SvgPicture.asset(AppIcons.share),
+                      ),
+                    ],
                   ),
                 ],
               ),

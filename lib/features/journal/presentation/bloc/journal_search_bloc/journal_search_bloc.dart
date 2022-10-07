@@ -22,7 +22,7 @@ class JournalSearchBloc extends Bloc<JournalSearchEvent, JournalSearchState> {
         _getJournalArticlesUseCase = getJournalArticlesUseCase,
         super(const JournalSearchState()) {
     on<SearchJournals>((event, emit) async {
-      if (event.query.isNotEmpty) {
+
         emit(state.copyWith(searchStatus: PaginatorStatus.PAGINATOR_LOADING));
         final results = await _searchJournalUseCase.call(SearchParams(query: event.query));
         if (results.isRight) {
@@ -37,14 +37,7 @@ class JournalSearchBloc extends Bloc<JournalSearchEvent, JournalSearchState> {
         } else {
           emit(state.copyWith(searchStatus: PaginatorStatus.PAGINATOR_ERROR));
         }
-      } else {
-        emit(
-          state.copyWith(
-            searchJournals: [],
-            searchStatus: PaginatorStatus.PAGINATOR_SUCCESS,
-          ),
-        );
-      }
+
     }, transformer: restartable());
     on<MoreSearchJournals>((event, emit) async {
       emit(state.copyWith(searchStatus: PaginatorStatus.PAGINATOR_LOADING));
@@ -63,7 +56,7 @@ class JournalSearchBloc extends Bloc<JournalSearchEvent, JournalSearchState> {
       }
     }, transformer: droppable());
     on<SearchArticles>((event, emit) async {
-      if (event.query.isNotEmpty) {
+
         emit(state.copyWith(searchArticleStatus: FormzStatus.submissionInProgress, query: event.query));
         final results = await _getJournalArticlesUseCase.call(SearchParams(query: event.query));
         if (results.isRight) {
@@ -78,14 +71,7 @@ class JournalSearchBloc extends Bloc<JournalSearchEvent, JournalSearchState> {
         } else {
           emit(state.copyWith(searchArticleStatus: FormzStatus.submissionFailure));
         }
-      } else {
-        emit(
-          state.copyWith(
-            searchArticles: [],
-            searchArticleStatus: FormzStatus.submissionSuccess,
-          ),
-        );
-      }
+
     }, transformer: restartable());
     on<MoreSearchArticles>((event, emit) async {
       final results =

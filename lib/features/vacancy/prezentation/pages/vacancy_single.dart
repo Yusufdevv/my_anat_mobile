@@ -42,10 +42,12 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
   @override
   initState() {
     _vacancySingleBloc = VacancySingleBloc(
-        relatedVacancyUseCase: RelatedVacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        vacancySingleUseCase: VacancySingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        likeUnlikeVacancyStreamUseCase:
-            LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()));
+        relatedVacancyUseCase: RelatedVacancyListUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        vacancySingleUseCase: VacancySingleUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
+            repository: serviceLocator<LikeUnlikeRepositoryImpl>()));
     _vacancySingleBloc.add(GetRelatedVacancyList(slug: widget.slug));
     super.initState();
   }
@@ -67,7 +69,9 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
         body: BlocBuilder<VacancySingleBloc, VacancySingleState>(
           builder: (context, state) {
             if (state.status.isPure) {
-              context.read<VacancySingleBloc>().add(GetSingleVacancyEvent(slug: widget.slug));
+              context
+                  .read<VacancySingleBloc>()
+                  .add(GetSingleVacancyEvent(slug: widget.slug));
             } else if (state.status.isSubmissionInProgress) {
               return const Center(child: CupertinoActivityIndicator());
             } else if (state.status.isSubmissionSuccess) {
@@ -79,200 +83,266 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                       shareValue:
                           'https://anatomica.uicgroup.tech/vacancy/vacancy/${state.vacancyListEntity.slug}/detail/',
                     ),
-                    VacancySingleAppBarHeader(vacancyEntity: state.vacancyListEntity),
+                    VacancySingleAppBarHeader(
+                        vacancyEntity: state.vacancyListEntity),
                   ];
                 },
                 body: ListView(
-                  padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
+                  padding: EdgeInsets.fromLTRB(
+                      0, 16, 0, 16 + mediaQuery.padding.bottom),
                   physics: const BouncingScrollPhysics(),
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        VacancySingleTextWidget(
-                            title:
-                                '${state.vacancyListEntity.experienceFrom} - ${state.vacancyListEntity.experienceTo} лет',
-                            icon: AppIcons.briefCase),
-                        const SizedBox(height: 10),
-                        VacancySingleTextWidget(title: state.vacancyListEntity.address, icon: AppIcons.mapPin),
-                        const SizedBox(height: 10),
-                        VacancySingleTextWidget(
-                            title:
-                                '${MyFunctions.getPriceFormat(state.vacancyListEntity.salaryFrom)} - ${MyFunctions.getPriceFormat(state.vacancyListEntity.salaryTo)}',
-                            icon: AppIcons.cashBanknote),
-                        const SizedBox(height: 24),
-                        Text(
-                          LocaleKeys.about_vacancy.tr(),
-                          style: Theme.of(context).textTheme.headline1!.copyWith(
-                                fontWeight: FontWeight.w600,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              VacancySingleTextWidget(
+                                  title:
+                                      '${state.vacancyListEntity.experienceFrom} - ${state.vacancyListEntity.experienceTo} лет',
+                                  icon: AppIcons.briefCase),
+                              const SizedBox(height: 10),
+                              VacancySingleTextWidget(
+                                  title: state.vacancyListEntity.address,
+                                  icon: AppIcons.mapPin),
+                              const SizedBox(height: 10),
+                              VacancySingleTextWidget(
+                                  title:
+                                      '${MyFunctions.getPriceFormat(state.vacancyListEntity.salaryFrom)} - ${MyFunctions.getPriceFormat(state.vacancyListEntity.salaryTo)}',
+                                  icon: AppIcons.cashBanknote),
+                              const SizedBox(height: 24),
+                              Text(
+                                LocaleKeys.about_vacancy.tr(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
+                              Html(
+                                data: state.vacancyListEntity.description,
+                                style: const {},
+                              ),
+                              VacancyTitleText(title: LocaleKeys.category.tr()),
+                            ],
+                          ),
                         ),
-                        Html(
-                          data: state.vacancyListEntity.description,
-                          style: const {},
-                        ),
-                        VacancyTitleText(title: LocaleKeys.category.tr()),
                         SizedBox(
                           child: SingleChildScrollView(
-                            padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
+                            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: List.generate(
-                                state.vacancyListEntity.organization.speciazilation.length,
+                                state.vacancyListEntity.organization
+                                    .speciazilation.length,
                                 (index) => CategoryContainer(
                                   isDisabled: true,
                                   margin: const EdgeInsets.only(right: 12),
                                   onTap: () {},
-                                  title: state.vacancyListEntity.organization.speciazilation[index].title,
+                                  title: state.vacancyListEntity.organization
+                                      .speciazilation[index].title,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        VacancyTitleText(title: LocaleKeys.employment_type.tr()),
-                        const SizedBox(height: 8),
-                        Text(
-                          state.vacancyListEntity.workType.label,
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                                fontSize: 13,
-                                color: montana,
-                              ),
-                        ),
-                        const SizedBox(height: 16),
-                        VacancyTitleText(title: LocaleKeys.requirement.tr()),
-                        ...List.generate(
-                          state.vacancyListEntity.requirements.length,
-                          (index) => RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Container(
-                                    width: 3,
-                                    height: 3,
-                                    margin: const EdgeInsets.only(right: 8),
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: black,
-                                    ),
-                                  ),
-                                  alignment: PlaceholderAlignment.middle,
-                                ),
-                                TextSpan(
-                                  text: state.vacancyListEntity.requirements[index].description,
-                                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        VacancyTitleText(title: LocaleKeys.responsible.tr()),
-                        ...List.generate(
-                          state.vacancyListEntity.obligations.length,
-                          (index) => RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Container(
-                                    width: 3,
-                                    height: 3,
-                                    margin: const EdgeInsets.only(right: 8),
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: black,
-                                    ),
-                                  ),
-                                  alignment: PlaceholderAlignment.middle,
-                                ),
-                                TextSpan(
-                                  text: state.vacancyListEntity.obligations[index].description,
-                                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                              color: white,
-                              border: Border.all(width: 1, color: lilyWhite),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: const Offset(0, 8),
-                                  blurRadius: 24,
-                                  color: darkerGreen.withOpacity(0.09),
-                                )
-                              ]),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              VacancyTitleText(title: LocaleKeys.information_work.tr()),
-                              Html(data: state.vacancyListEntity.description),
+                              VacancyTitleText(
+                                  title: LocaleKeys.employment_type.tr()),
+                              const SizedBox(height: 8),
                               Text(
-                                '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt).tr()}',
-                                style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                                state.vacancyListEntity.workType.label,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      fontSize: 13,
+                                      color: montana,
+                                    ),
                               ),
                               const SizedBox(height: 16),
-                              WButton(
-                                onTap: () {
-                                  showPhonesBottomSheet(
-                                      context,
-                                      state.vacancyListEntity.organization.phoneNumbers
-                                          .map((e) => e.phoneNumber)
-                                          .toList());
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                              VacancyTitleText(
+                                  title: LocaleKeys.requirement.tr()),
+                              ...List.generate(
+                                state.vacancyListEntity.requirements.length,
+                                (index) => RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Container(
+                                          width: 3,
+                                          height: 3,
+                                          margin:
+                                              const EdgeInsets.only(right: 8),
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: black,
+                                          ),
+                                        ),
+                                        alignment: PlaceholderAlignment.middle,
+                                      ),
+                                      TextSpan(
+                                        text: state.vacancyListEntity
+                                            .requirements[index].description,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline1!
+                                            .copyWith(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              VacancyTitleText(
+                                  title: LocaleKeys.responsible.tr()),
+                              ...List.generate(
+                                state.vacancyListEntity.obligations.length,
+                                (index) => RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Container(
+                                          width: 3,
+                                          height: 3,
+                                          margin:
+                                              const EdgeInsets.only(right: 8),
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: black,
+                                          ),
+                                        ),
+                                        alignment: PlaceholderAlignment.middle,
+                                      ),
+                                      TextSpan(
+                                        text: state.vacancyListEntity
+                                            .obligations[index].description,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline1!
+                                            .copyWith(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                    color: white,
+                                    border:
+                                        Border.all(width: 1, color: lilyWhite),
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(0, 8),
+                                        blurRadius: 24,
+                                        color: darkerGreen.withOpacity(0.09),
+                                      )
+                                    ]),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SvgPicture.asset(AppIcons.phone, color: white),
-                                    const SizedBox(width: 8),
+                                    VacancyTitleText(
+                                        title:
+                                            LocaleKeys.information_work.tr()),
+                                    Html(
+                                        data: state
+                                            .vacancyListEntity.description),
                                     Text(
-                                      LocaleKeys.show_number.tr(),
+                                      '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt).tr()}',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline2!
-                                          .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
-                                    )
+                                          .subtitle2!
+                                          .copyWith(fontSize: 14),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    state.vacancyListEntity.organization
+                                            .phoneNumbers.isEmpty
+                                        ? const SizedBox()
+                                        : WButton(
+                                            onTap: () {
+                                              showPhonesBottomSheet(
+                                                  context,
+                                                  state.vacancyListEntity
+                                                      .organization.phoneNumbers
+                                                      .map((e) => e.phoneNumber)
+                                                      .toList());
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SvgPicture.asset(AppIcons.phone,
+                                                    color: white),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  LocaleKeys.show_number.tr(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline2!
+                                                      .copyWith(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                )
+                                              ],
+                                            ),
+                                          )
                                   ],
                                 ),
+                              ),
+                              const SizedBox(height: 20),
+                              VacancyTitleText(
+                                  title:
+                                      '${state.relatedVacancyList.length} ${LocaleKeys.similar_vacancy.tr()}'),
+                              const SizedBox(height: 16),
+                              Paginator(
+                                padding: const EdgeInsets.only(top: 20),
+                                paginatorStatus: state.paginatorStatus,
+                                errorWidget: const Text('Fail'),
+                                itemBuilder: (context, index) {
+                                  return VacancyItem(
+                                    margin: EdgeInsets.zero,
+                                    vacancyEntity:
+                                        state.relatedVacancyList[index],
+                                    onTap: () {
+                                      Navigator.of(context).push(fade(
+                                          page: VacancySingleScreen(
+                                              slug: state
+                                                  .relatedVacancyList[index]
+                                                  .slug)));
+                                    },
+                                  );
+                                },
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 12),
+                                hasMoreToFetch: state.fetchMore,
+                                fetchMoreFunction: () {
+                                  context
+                                      .read<VacancySingleBloc>()
+                                      .add(GetMoreRelatedVacancyList());
+                                },
+                                itemCount: state.relatedVacancyList.length,
                               )
                             ],
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        VacancyTitleText(
-                            title: '${state.relatedVacancyList.length} ${LocaleKeys.similar_vacancy.tr()}'),
-                        const SizedBox(height: 16),
-                        Paginator(
-                          padding: const EdgeInsets.only(top: 20),
-                          paginatorStatus: state.paginatorStatus,
-                          errorWidget: const Text('Fail'),
-                          itemBuilder: (context, index) {
-                            return VacancyItem(
-                              margin: EdgeInsets.zero,
-                              vacancyEntity: state.relatedVacancyList[index],
-                              onTap: () {
-                                Navigator.of(context)
-                                    .push(fade(page: VacancySingleScreen(slug: state.relatedVacancyList[index].slug)));
-                              },
-                            );
-                          },
-                          separatorBuilder: (context, index) => const SizedBox(height: 12),
-                          hasMoreToFetch: state.fetchMore,
-                          fetchMoreFunction: () {
-                            context.read<VacancySingleBloc>().add(GetMoreRelatedVacancyList());
-                          },
-                          itemCount: state.relatedVacancyList.length,
                         )
                       ],
                     ),

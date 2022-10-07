@@ -106,29 +106,18 @@ class _RegionBottomSheetState extends State<RegionBottomSheet> {
                     errorWidget: const Text('Fail'),
                     padding: EdgeInsets.fromLTRB(16, 20, 16, 12 + mediaQuery.padding.bottom),
                     itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return CheckBoxTitle(
-                          onTap: () {
-                            setState(() {
-                              isCheck = !isCheck;
-                            });
-                          },
-                          isChecked: isCheck,
-                          title: LocaleKeys.all_uzb.tr(),
-                          padding: EdgeInsets.zero,
-                        );
-                      }
+
                       return RegionItem(
-                        title: state.regions[index - 1].title,
+                        title: state.regions[index ].title,
                         onTap: () {
                           context.read<RegionBloc>().add(GetDistrictEvent(
-                              id: state.regions[index - 1].id, selectedRegionName: state.regions[index - 1].title));
+                              id: state.regions[index ].id, selectedRegionName: state.regions[index ].title));
                           pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
                         },
                       );
                     },
                     separatorBuilder: (context, index) => const SizedBox(height: 16),
-                    itemCount: state.regions.length + 1,
+                    itemCount: state.regions.length ,
                   );
                 },
               ),

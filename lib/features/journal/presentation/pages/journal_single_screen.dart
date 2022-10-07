@@ -25,31 +25,41 @@ import 'package:formz/formz.dart';
 import 'package:munir_epub_reader/epub_viewer.dart';
 import 'package:share_plus/share_plus.dart';
 
-class JournalSingleScreen extends StatelessWidget {
+class JournalSingleScreen extends StatefulWidget {
   final JournalBloc bloc;
   final DownloadBloc downloadBloc;
   final JournalEntity journal;
 
-  const JournalSingleScreen({required this.bloc, required this.journal, required this.downloadBloc, Key? key})
+  const JournalSingleScreen(
+      {required this.bloc,
+      required this.journal,
+      required this.downloadBloc,
+      Key? key})
       : super(key: key);
 
+  @override
+  State<JournalSingleScreen> createState() => _JournalSingleScreenState();
+}
+
+class _JournalSingleScreenState extends State<JournalSingleScreen> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(
-          value: bloc
-            ..add(GetJournalSingleArticles(id: journal.id))
-            ..add(GetJournalSingle(slug: journal.slug)),
+          value: widget.bloc
+            ..add(GetJournalSingleArticles(id: widget.journal.id))
+            ..add(GetJournalSingle(slug: widget.journal.slug)),
         ),
         BlocProvider.value(
-          value: downloadBloc..add(CheckWhetherFileAlreadyDownloaded(id: journal.id)),
+          value: widget.downloadBloc
+            ..add(CheckWhetherFileAlreadyDownloaded(id: widget.journal.id)),
         ),
       ],
       child: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle:
-              const SystemUiOverlayStyle(statusBarColor: white, statusBarIconBrightness: Brightness.dark),
+          systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: white, statusBarIconBrightness: Brightness.dark),
           elevation: 0,
           leading: WScaleAnimation(
             onTap: () => Navigator.of(context).pop(),
@@ -64,7 +74,8 @@ class JournalSingleScreen extends StatelessWidget {
           actions: [
             WScaleAnimation(
               onTap: () {
-                Share.share('https://anatomica.uz/journal/${journal.slug}');
+                Share.share(
+                    'https://anatomica.uz/journal/${widget.journal.slug}');
               },
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -98,61 +109,111 @@ class JournalSingleScreen extends StatelessWidget {
                         builder: (context, downloadState) {
                           return JournalSingleBigItem(
                             onTap: () {
+                              print('error141');
+                              print('big');
+                              print(downloadState.fileUrl);
+                              EpubViewer.setConfig(
+                                themeColor: Theme.of(context).primaryColor,
+                                identifier: 'iosBook',
+                                scrollDirection:
+                                    EpubScrollDirection.ALLDIRECTIONS,
+                                allowSharing: true,
+                                enableTts: true,
+                                nightMode: true,
+                              );
                               EpubViewer.open(downloadState.fileUrl);
                             },
                             onLeftButtonTap: () {
+                              print('error141');
+                              print('small left');
                               context.read<DownloadBloc>().add(
                                     CheckWhetherFragmentFileExists(
-                                      fileName: journal.redaction,
+                                      fileName: widget.journal.redaction,
                                       fileUrl: state.journalSingle.preview.url,
-                                      id: journal.id,
+                                      id: widget.journal.id,
                                       onNotDownloaded: () async {
                                         SystemChrome.setSystemUIOverlayStyle(
-                                            const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+                                            const SystemUiOverlayStyle(
+                                                statusBarColor:
+                                                    Colors.transparent));
                                         await showDialog(
                                           barrierDismissible: false,
                                           context: context,
-                                          barrierColor: primary.withOpacity(0.84),
+                                          barrierColor:
+                                              primary.withOpacity(0.84),
                                           builder: (_) => BlocProvider.value(
                                             value: context.read<DownloadBloc>(),
                                             child: DownloadingDialog(
-                                                bookTitle: 'widget.book.title', parentContext: context),
+                                                bookTitle: 'widget.book.title',
+                                                parentContext: context),
                                           ),
                                         );
                                       },
-                                      fileType: journal.fileExtension,
+                                      fileType: widget.journal.fileExtension,
                                       onDownloaded: (file) {
+                                        print(file.path);
+                                        print('path141');
+                                        EpubViewer.setConfig(
+                                          themeColor:
+                                              Theme.of(context).primaryColor,
+                                          identifier: 'iosBook',
+                                          scrollDirection:
+                                              EpubScrollDirection.ALLDIRECTIONS,
+                                          allowSharing: true,
+                                          enableTts: true,
+                                          nightMode: true,
+                                        );
                                         EpubViewer.open(file.path);
                                       },
                                     ),
                                   );
                             },
                             onRightButtonTap: () {
-                              if (journal.isBought || !journal.isPremium) {
+                              if (widget.journal.isBought ||
+                                  !widget.journal.isPremium) {
                                 context.read<DownloadBloc>().add(
                                       CheckWhetherFileExists(
-                                        slug: journal.slug,
-                                        filename: journal.name,
-                                        id: journal.id,
+                                        slug: widget.journal.slug,
+                                        filename: widget.journal.name,
+                                        id: widget.journal.id,
                                         onNotDownloaded: () async {
                                           SystemChrome.setSystemUIOverlayStyle(
-                                              const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+                                              const SystemUiOverlayStyle(
+                                                  statusBarColor:
+                                                      Colors.transparent));
                                           await showDialog(
                                             barrierDismissible: false,
                                             context: context,
-                                            barrierColor: primary.withOpacity(0.84),
+                                            barrierColor:
+                                                primary.withOpacity(0.84),
                                             builder: (_) => BlocProvider.value(
-                                              value: context.read<DownloadBloc>(),
+                                              value:
+                                                  context.read<DownloadBloc>(),
                                               child: DownloadingDialog(
-                                                  bookTitle: 'widget.book.title', parentContext: context),
+                                                  bookTitle:
+                                                      'widget.book.title',
+                                                  parentContext: context),
                                             ),
                                           );
                                         },
-                                        fileType: journal.fileExtension,
+                                        fileType: widget.journal.fileExtension,
                                         onDownloaded: (file) {
                                           print(file.path);
+                                          print('error141');
                                           // final encryptor = EncryptorRepository(iv: 'iv', key: '${journal.id}hC2uG1dQ8tK5nS1q');
                                           // final decryptedFile = encryptor.getDecryptedDAta(file.readAsBytesSync());
+                                          EpubViewer.setConfig(
+                                            themeColor:
+                                                Theme.of(context).primaryColor,
+                                            identifier: 'iosBook',
+                                            scrollDirection: EpubScrollDirection
+                                                .ALLDIRECTIONS,
+                                            allowSharing: true,
+                                            enableTts: true,
+                                            nightMode: true,
+                                          );
+                                          EpubViewer.setConfig(
+                                              identifier: 'iosBook');
                                           EpubViewer.open(file.path);
                                         },
                                       ),
@@ -162,43 +223,55 @@ class JournalSingleScreen extends StatelessWidget {
                                   context: context,
                                   builder: (ctx) => BuyDialog(
                                     onPaymentTap: () {
-                                      Navigator.of(context, rootNavigator: true).push(
+                                      Navigator.of(context, rootNavigator: true)
+                                          .push(
                                         fade(
                                           page: PaymentScreen(
-                                            price: journal.price,
-                                            title: journal.redaction,
-                                            imageUrl: journal.image.middle,
+                                            price: widget.journal.price,
+                                            title: widget.journal.redaction,
+                                            imageUrl:
+                                                widget.journal.image.middle,
                                             isJournal: true,
-                                            isRegistered: context.read<AuthenticationBloc>().state.status ==
-                                                AuthenticationStatus.authenticated,
-                                            subtitle: journal.redaction,
-                                            id: journal.id,
+                                            isRegistered: context
+                                                    .read<AuthenticationBloc>()
+                                                    .state
+                                                    .status ==
+                                                AuthenticationStatus
+                                                    .authenticated,
+                                            subtitle: widget.journal.redaction,
+                                            id: widget.journal.id,
                                           ),
                                         ),
                                       );
                                     },
                                     onRegistrationTap: () {
-                                      Navigator.of(context).push(fade(page: const LoginScreen()));
+                                      Navigator.of(context).push(
+                                          fade(page: const LoginScreen()));
                                     },
                                   ),
                                 );
                               }
                             },
-                            journalEntity: journal,
+                            journalEntity: widget.journal,
                             isDownloaded: downloadState.isFileAlreadyDownloaded,
                           );
                         },
                       ),
                     ),
                   ),
-                  if (state.journalSingleArticleStatus == PaginatorStatus.PAGINATOR_SUCCESS) ...[
+                  if (state.journalSingleArticleStatus ==
+                      PaginatorStatus.PAGINATOR_SUCCESS) ...[
                     if (state.journalSingleArticles.isNotEmpty) ...{
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 16, bottom: 12, top: 20),
+                          padding: const EdgeInsets.only(
+                              left: 16, bottom: 12, top: 20),
                           child: Text(
                             LocaleKeys.article_issue.tr(),
-                            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(fontSize: 18),
                           ),
                         ),
                       ),
@@ -215,20 +288,24 @@ class JournalSingleScreen extends StatelessWidget {
                           (BuildContext context, int index) {
                             return ArticleItem(
                               margin: const EdgeInsets.only(bottom: 12),
-                              magazineItemEntity: state.journalSingleArticles[index],
+                              magazineItemEntity:
+                                  state.journalSingleArticles[index],
                             );
                           },
-                          childCount: state.journalSingleArticles.length, // 1000 list items
+                          childCount: state
+                              .journalSingleArticles.length, // 1000 list items
                         ),
                       ),
                     )
-                  ] else if (state.journalSingleArticleStatus == PaginatorStatus.PAGINATOR_LOADING) ...{
+                  ] else if (state.journalSingleArticleStatus ==
+                      PaginatorStatus.PAGINATOR_LOADING) ...{
                     const SliverToBoxAdapter(
                       child: Center(
                         child: CupertinoActivityIndicator(),
                       ),
                     )
-                  } else if (state.journalSingleArticleStatus == PaginatorStatus.PAGINATOR_ERROR) ...{
+                  } else if (state.journalSingleArticleStatus ==
+                      PaginatorStatus.PAGINATOR_ERROR) ...{
                     const SliverToBoxAdapter(
                       child: Center(
                         child: Text('Error'),
