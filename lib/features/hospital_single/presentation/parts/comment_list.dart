@@ -17,7 +17,9 @@ class HospitalCommentList extends StatelessWidget {
   final VoidCallback onTapAll;
   final String description;
 
-  const HospitalCommentList({required this.onTapAll, Key? key, required this.description}) : super(key: key);
+  const HospitalCommentList(
+      {required this.onTapAll, Key? key, required this.description})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +29,23 @@ class HospitalCommentList extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                color: white,
-                child: Html(data: description),
-              ),
+              if (description.isNotEmpty) ...{
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  color: white,
+                  child: Html(data: description),
+                )
+              },
               if (state.comments.isNotEmpty) ...[
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 32, 0, 12),
                   child: Text(
                     LocaleKeys.reviews.tr(),
-                    style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline1!
+                        .copyWith(fontSize: 20),
                   ),
                 ),
                 Column(
@@ -50,7 +58,8 @@ class HospitalCommentList extends StatelessWidget {
                 ),
                 WButton(
                   onTap: onTapAll,
-                  margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                  margin: const EdgeInsets.all(16).copyWith(
+                      bottom: MediaQuery.of(context).padding.bottom + 16),
                   color: commentButton,
                   text: LocaleKeys.all_reviews.tr(),
                   textColor: textSecondary,
@@ -60,7 +69,8 @@ class HospitalCommentList extends StatelessWidget {
                   builder: (context, state) {
                     return EmptyWidget(
                       onButtonTap: () {
-                        if (state.status == AuthenticationStatus.authenticated) {
+                        if (state.status ==
+                            AuthenticationStatus.authenticated) {
                           showModalBottomSheet(
                             backgroundColor: Colors.transparent,
                             context: context,

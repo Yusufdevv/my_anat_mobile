@@ -9,7 +9,11 @@ class SuggestionListScreen extends StatelessWidget {
   final String searchText;
   final bool isDoctor;
 
-  const SuggestionListScreen({required this.onTapItem, required this.isDoctor, required this.searchText, Key? key})
+  const SuggestionListScreen(
+      {required this.onTapItem,
+      required this.isDoctor,
+      required this.searchText,
+      Key? key})
       : super(key: key);
 
   @override
@@ -34,13 +38,20 @@ class SuggestionListScreen extends StatelessWidget {
                       onTap: () {
                         onTapItem(state.searchText);
                       },
-                      child: SuggestionItem(title: state.searchText));
+                      child: SuggestionItem(
+                        title: state.searchText,
+                        searchText: state.searchText,
+                      ));
                 }
                 return GestureDetector(
                     onTap: () {
                       onTapItem(state.list[index - 1].title);
                     },
-                    child: SuggestionItem(title: state.list[index - 1].title));
+                    child: SuggestionItem(
+                      title: state.list[index - 1].title,
+                      searchText: state.searchText,
+                      isLast: index == state.list.length,
+                    ));
               },
               itemCount: state.list.length + 1,
             ),

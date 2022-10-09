@@ -16,16 +16,21 @@ class HospitalSpecialists extends StatelessWidget {
     return BlocBuilder<HospitalSpecialistBloc, HospitalSpecialistState>(
       builder: (context, state) {
         return Paginator(
-          paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
+          paginatorStatus:
+              MyFunctions.formzStatusToPaginatorStatus(state.status),
           errorWidget: const Text('error'),
           fetchMoreFunction: () {
-            context.read<HospitalSpecialistBloc>().add(HospitalSpecialistEvent.getMoreSpecialists());
+            context
+                .read<HospitalSpecialistBloc>()
+                .add(HospitalSpecialistEvent.getMoreSpecialists());
           },
           hasMoreToFetch: state.fetchMore,
           padding: state.specialists.isEmpty
               ? EdgeInsets.zero
-              : const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+              : const EdgeInsets.all(16)
+                  .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
           itemBuilder: (context, index) => DoctorItem(
+            showPosition: true,
             entity: state.specialists[index],
           ),
           emptyWidget: SingleChildScrollView(

@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
@@ -14,7 +15,8 @@ class HospitalVacancyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WScaleAnimation(
-      onTap: () => Navigator.of(context).push(fade(page: VacancySingleScreen(slug: entity.slug))),
+      onTap: () => Navigator.of(context)
+          .push(fade(page: VacancySingleScreen(slug: entity.slug))),
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
         decoration: BoxDecoration(
@@ -38,8 +40,11 @@ class HospitalVacancyItem extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '${entity.salaryFrom} - ${entity.salaryTo} UZS',
-              style: Theme.of(context).textTheme.headline1!.copyWith(color: primary, fontSize: 18),
+              '${MyFunctions.getFormatCostFromInt(entity.salaryFrom, false)} - ${MyFunctions.getFormatCostFromInt(entity.salaryTo)}',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(color: primary, fontSize: 18),
             ),
             const SizedBox(height: 12),
             const Divider(
@@ -58,7 +63,10 @@ class HospitalVacancyItem extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   '${entity.experienceFrom} - ${entity.experienceTo} лет',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: textColor, fontSize: 13),
                 )
               ],
             ),
@@ -73,7 +81,10 @@ class HospitalVacancyItem extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   entity.address,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: textColor, fontSize: 13),
                 )
               ],
             ),

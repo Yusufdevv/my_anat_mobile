@@ -9,6 +9,7 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_item.dart';
+import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class DoctorComments extends StatelessWidget {
   final double rating;
   final int? doctor;
 
-  const DoctorComments({this.doctor, required this.rating, Key? key}) : super(key: key);
+  const DoctorComments({this.doctor, required this.rating, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,12 @@ class DoctorComments extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    rating.toString(),
+                    (rating > 5
+                            ? 5.0
+                            : rating < 0
+                                ? 0.0
+                                : rating)
+                        .toString(),
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           color: textSecondary,
                           fontSize: 40,
@@ -55,7 +62,10 @@ class DoctorComments extends StatelessWidget {
                         const SizedBox(height: 6),
                         Text(
                           '${state.doctorComments.length} ${LocaleKeys.review.tr()}',
-                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(color: textColor, fontSize: 13),
                         ),
                       ],
                     ),
@@ -65,7 +75,8 @@ class DoctorComments extends StatelessWidget {
                       builder: (context, authState) {
                         return WButton(
                           onTap: () {
-                            if (authState.status == AuthenticationStatus.authenticated) {
+                            if (authState.status ==
+                                AuthenticationStatus.authenticated) {
                               showModalBottomSheet(
                                 backgroundColor: Colors.transparent,
                                 context: context,
@@ -91,27 +102,59 @@ class DoctorComments extends StatelessWidget {
             ),
             Expanded(
               child: Paginator(
-                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-                separatorBuilder: (context, index) => const SizedBox(height: 16),
+                padding: const EdgeInsets.all(16).copyWith(
+                    bottom: MediaQuery.of(context).padding.bottom + 16),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16),
                 itemBuilder: (context, index) => CommentItem(
                   onTapDelete: () {
                     print('del');
-                    context.read<CommentsBloc>().add(CommentsEvent.deleteDoctorComment(
-                        id: state.doctorComments[index].id,
-                        onError: () {
-                          print('ui error');
-                        },
-                        onSuccess: () {
-                          print('success deleted');
-                        }));
+                    context
+                        .read<CommentsBloc>()
+                        .add(CommentsEvent.deleteDoctorComment(
+                            id: state.doctorComments[index].id,
+                            onError: () {
+                              print('ui error');
+                            },
+                            onSuccess: () {
+                              print('success deleted');
+                            }));
                   },
                   entity: state.doctorComments[index],
                 ),
                 itemCount: state.doctorComments.length,
-                paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.doctorCommentStatus),
+                paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
+                    state.doctorCommentStatus),
                 fetchMoreFunction: () {
-                  context.read<CommentsBloc>().add(CommentsEvent.getMoreDoctorComments());
+                  context
+                      .read<CommentsBloc>()
+                      .add(CommentsEvent.getMoreDoctorComments());
                 },
+                emptyWidget: SingleChildScrollView(
+                    child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (context, authState) {
+                    return EmptyWidget(
+                      onButtonTap: () {
+                        if (authState.status ==
+                            AuthenticationStatus.authenticated) {
+                          showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (_) => CommentBottomSheet(
+                              parentContext: context,
+                              isDoctor: true,
+                              commentsBloc: context.read<CommentsBloc>(),
+                              doctor: doctor,
+                            ),
+                          );
+                        } else {
+                          showRegisterBottomSheet(context);
+                        }
+                      },
+                    );
+                  },
+                )),
                 hasMoreToFetch: state.doctorCommentFetchMore,
                 errorWidget: const Text('error'),
               ),

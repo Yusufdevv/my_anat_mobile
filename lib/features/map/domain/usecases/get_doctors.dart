@@ -15,7 +15,7 @@ class GetDoctorsUseCase
       SearchParam param) {
     return repo.fetchMore<HospitalDoctorsModel>(
         url: '/doctor/',
-        next: param.next.isNotEmpty ? param.next : null,
+        next: param.next,
         fromJson: HospitalDoctorsModel.fromJson,
         query: param.search != null ? {"search": param.search} : {});
   }

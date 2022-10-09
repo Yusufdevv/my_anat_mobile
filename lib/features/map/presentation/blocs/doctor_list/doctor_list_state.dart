@@ -5,7 +5,7 @@ class DoctorListState with _$DoctorListState {
   factory DoctorListState({
     @Default([]) List<HospitalDoctorsEntity> doctors,
     @Default(FormzStatus.pure) FormzStatus status,
-    @Default('') String next,
-    @Default(0) int count,
+    String? next,
+    @Default(false) bool fetchMore,
   }) = _DoctorListState;
 }

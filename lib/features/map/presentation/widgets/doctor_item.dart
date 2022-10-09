@@ -9,8 +9,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class DoctorItem extends StatelessWidget {
   final HospitalDoctorsEntity entity;
+  final bool showPosition;
   const DoctorItem({
     required this.entity,
+    this.showPosition = false,
     Key? key,
   }) : super(key: key);
 
@@ -71,8 +73,11 @@ class DoctorItem extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          entity.position,
-                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                          showPosition ? entity.position : entity.specialization.title,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(fontSize: 14),
                         ),
                       ],
                     ),
@@ -80,7 +85,7 @@ class DoctorItem extends StatelessWidget {
                 ],
               ),
             ),
-            if (entity.rating != 0) ...{
+            if (entity.rating > 0) ...{
               Positioned(
                 left: -9,
                 bottom: 18,
@@ -103,8 +108,11 @@ class DoctorItem extends StatelessWidget {
                       SvgPicture.asset(AppIcons.star),
                       const SizedBox(width: 4),
                       Text(
-                        entity.rating.toString(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
+                        (entity.rating > 5 ? 5.0 : entity.rating).toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(color: darkGreen, fontSize: 14),
                       ),
                     ],
                   ),

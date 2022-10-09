@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/presentation/pages/login.dart';
+import 'package:anatomica/features/auth/presentation/pages/register.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -44,7 +45,7 @@ class RegisterBottomSheet extends StatelessWidget {
               WButton(
                 onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.of(parentContext, rootNavigator: true).push(fade(page: const LoginScreen()));
+                  Navigator.of(parentContext, rootNavigator: true).push(fade(page: const RegisterScreen()));
                 },
                 borderRadius: 8,
                 text: LocaleKeys.za_register.tr(),

@@ -13,15 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final LoginSignUpBloc bloc;
-
-  const RegisterScreen({required this.bloc, Key? key}) : super(key: key);
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStateMixin {
+class _RegisterScreenState extends State<RegisterScreen>
+    with TickerProviderStateMixin {
   late PageController pageController;
   late TabController tabController;
   int currentPage = 0;
@@ -42,95 +41,93 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: widget.bloc,
-      child: CustomScreen(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: darkGreen,
-          body: Column(
-            children: [
-              Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      Container(
-                        height: 69,
-                        decoration: const BoxDecoration(
-                          color: primary,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
-                          ),
+    return CustomScreen(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: darkGreen,
+        body: Column(
+          children: [
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Container(
+                      height: 69,
+                      decoration: const BoxDecoration(
+                        color: primary,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
                         ),
                       ),
-                      Container(
-                        height: 16,
-                        decoration: BoxDecoration(
-                          color: white,
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, -4),
-                              blurRadius: 20,
-                              color: woodSmoke.withOpacity(0.06),
-                            )
-                          ],
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
-                          ),
+                    ),
+                    Container(
+                      height: 16,
+                      decoration: BoxDecoration(
+                        color: white,
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, -4),
+                            blurRadius: 20,
+                            color: woodSmoke.withOpacity(0.06),
+                          )
+                        ],
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
                         ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AuthHeader(
-                        title: _getTitle(currentPage),
-                        subTitle: _getSubtitle(currentPage),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 42),
-                        child: RegistrationProgress(
-                          currentPosition: currentPage,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-              Expanded(
-                child: Container(
-                  color: white,
-                  child: PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    onPageChanged: (index) {
-                      setState(() {
-                        currentPage = index;
-                      });
-                    },
-                    controller: pageController,
-                    children: [
-                      RegisterFeed(
-                        pageController: pageController,
+                    )
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AuthHeader(
+                      title: _getTitle(currentPage),
+                      subTitle: _getSubtitle(currentPage),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16)
+                          .copyWith(bottom: 42),
+                      child: RegistrationProgress(
+                        currentPosition: currentPage,
                       ),
-                      RegisterPhone(
-                        tabController: tabController,
-                        pageController: pageController,
-                      ),
-                      RegisterVerify(
-                        pageController: pageController,
-                      ),
-                      const PasswordScreen()
-                    ],
-                  ),
+                    )
+                  ],
+                )
+              ],
+            ),
+            Expanded(
+              child: Container(
+                color: white,
+                child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentPage = index;
+                    });
+                  },
+                  controller: pageController,
+                  children: [
+                    RegisterFeed(
+                      pageController: pageController,
+                    ),
+                    RegisterPhone(
+                      tabController: tabController,
+                      pageController: pageController,
+                    ),
+                    RegisterVerify(
+                      pageController: pageController,
+                    ),
+                    const PasswordScreen()
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

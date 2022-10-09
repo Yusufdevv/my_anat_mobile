@@ -107,10 +107,10 @@ abstract class MyFunctions {
                   ),
                 );
               },
-              icon: PlacemarkIcon.single(PlacemarkIconStyle(scale: 3,
-                  image:
-                      BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon),
-                  ))),
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                scale: 3,
+                image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon),
+              ))),
         )
         .toList();
     final clusterItem = ClusterizedPlacemarkCollection(
@@ -272,7 +272,7 @@ abstract class MyFunctions {
         Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
       return '${LocaleKeys.yesterday.tr()}, ${Jiffy(date).format('HH:mm')}';
     } else {
-      return '${Jiffy(date).date}${getMonth(Jiffy(date).month)}, ${Jiffy(date).year}';
+      return '${Jiffy(date).date} ${getMonth(Jiffy(date).month)}, ${Jiffy(date).year}';
     }
   }
 
@@ -307,7 +307,7 @@ abstract class MyFunctions {
     }
   }
 
-  static String getFormatCostFromInt(int price) {
+  static String getFormatCostFromInt(int price, [bool showCurrency = true]) {
     if (price == 0) {
       return '0 UZS';
     } else {
@@ -318,7 +318,7 @@ abstract class MyFunctions {
         if ((oldCost.length - i) % 3 == 0 && i != 0) newCost.write(' ');
         newCost.write(oldCost.toString()[i]);
       }
-      return '$newCost UZS';
+      return '$newCost${showCurrency ? ' UZS' : ''}';
     }
   }
 

@@ -57,7 +57,7 @@ class _DoctorsListState extends State<DoctorsList> {
                       .read<DoctorListBloc>()
                       .add(DoctorListEvent.getMoreDoctors());
                 },
-                hasMoreToFetch: state.count > state.doctors.length,
+                hasMoreToFetch: state.fetchMore,
                 errorWidget: const SizedBox()),
           ),
         );

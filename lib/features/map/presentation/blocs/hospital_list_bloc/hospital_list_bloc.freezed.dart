@@ -476,8 +476,8 @@ mixin _$HospitalListState {
   CrossFadeState get crossFadeState => throw _privateConstructorUsedError;
   List<HospitalEntity> get hospitals => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
-  String get next => throw _privateConstructorUsedError;
-  int get totalCount => throw _privateConstructorUsedError;
+  String? get next => throw _privateConstructorUsedError;
+  bool get fetchMore => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HospitalListStateCopyWith<HospitalListState> get copyWith =>
@@ -493,8 +493,8 @@ abstract class $HospitalListStateCopyWith<$Res> {
       {CrossFadeState crossFadeState,
       List<HospitalEntity> hospitals,
       FormzStatus status,
-      String next,
-      int totalCount});
+      String? next,
+      bool fetchMore});
 }
 
 /// @nodoc
@@ -512,7 +512,7 @@ class _$HospitalListStateCopyWithImpl<$Res>
     Object? hospitals = freezed,
     Object? status = freezed,
     Object? next = freezed,
-    Object? totalCount = freezed,
+    Object? fetchMore = freezed,
   }) {
     return _then(_value.copyWith(
       crossFadeState: crossFadeState == freezed
@@ -530,11 +530,11 @@ class _$HospitalListStateCopyWithImpl<$Res>
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
-      totalCount: totalCount == freezed
-          ? _value.totalCount
-          : totalCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String?,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -550,8 +550,8 @@ abstract class _$$_HospitalListStateCopyWith<$Res>
       {CrossFadeState crossFadeState,
       List<HospitalEntity> hospitals,
       FormzStatus status,
-      String next,
-      int totalCount});
+      String? next,
+      bool fetchMore});
 }
 
 /// @nodoc
@@ -571,7 +571,7 @@ class __$$_HospitalListStateCopyWithImpl<$Res>
     Object? hospitals = freezed,
     Object? status = freezed,
     Object? next = freezed,
-    Object? totalCount = freezed,
+    Object? fetchMore = freezed,
   }) {
     return _then(_$_HospitalListState(
       crossFadeState: crossFadeState == freezed
@@ -589,11 +589,11 @@ class __$$_HospitalListStateCopyWithImpl<$Res>
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
-      totalCount: totalCount == freezed
-          ? _value.totalCount
-          : totalCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String?,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -605,8 +605,8 @@ class _$_HospitalListState implements _HospitalListState {
       {this.crossFadeState = CrossFadeState.showFirst,
       final List<HospitalEntity> hospitals = const [],
       this.status = FormzStatus.pure,
-      this.next = '',
-      this.totalCount = 0})
+      this.next,
+      this.fetchMore = false})
       : _hospitals = hospitals;
 
   @override
@@ -624,15 +624,14 @@ class _$_HospitalListState implements _HospitalListState {
   @JsonKey()
   final FormzStatus status;
   @override
-  @JsonKey()
-  final String next;
+  final String? next;
   @override
   @JsonKey()
-  final int totalCount;
+  final bool fetchMore;
 
   @override
   String toString() {
-    return 'HospitalListState(crossFadeState: $crossFadeState, hospitals: $hospitals, status: $status, next: $next, totalCount: $totalCount)';
+    return 'HospitalListState(crossFadeState: $crossFadeState, hospitals: $hospitals, status: $status, next: $next, fetchMore: $fetchMore)';
   }
 
   @override
@@ -646,8 +645,7 @@ class _$_HospitalListState implements _HospitalListState {
                 .equals(other._hospitals, _hospitals) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality()
-                .equals(other.totalCount, totalCount));
+            const DeepCollectionEquality().equals(other.fetchMore, fetchMore));
   }
 
   @override
@@ -657,7 +655,7 @@ class _$_HospitalListState implements _HospitalListState {
       const DeepCollectionEquality().hash(_hospitals),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(totalCount));
+      const DeepCollectionEquality().hash(fetchMore));
 
   @JsonKey(ignore: true)
   @override
@@ -671,8 +669,8 @@ abstract class _HospitalListState implements HospitalListState {
       {final CrossFadeState crossFadeState,
       final List<HospitalEntity> hospitals,
       final FormzStatus status,
-      final String next,
-      final int totalCount}) = _$_HospitalListState;
+      final String? next,
+      final bool fetchMore}) = _$_HospitalListState;
 
   @override
   CrossFadeState get crossFadeState;
@@ -681,9 +679,9 @@ abstract class _HospitalListState implements HospitalListState {
   @override
   FormzStatus get status;
   @override
-  String get next;
+  String? get next;
   @override
-  int get totalCount;
+  bool get fetchMore;
   @override
   @JsonKey(ignore: true)
   _$$_HospitalListStateCopyWith<_$_HospitalListState> get copyWith =>

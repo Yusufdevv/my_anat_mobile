@@ -22,6 +22,7 @@ class ServiceItem extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             Navigator.of(context).push(
               fade(

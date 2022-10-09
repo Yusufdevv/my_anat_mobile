@@ -49,7 +49,8 @@ class CommentItem extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        border: entity.isOwn ? Border.all(color: primary) : null,
+                        border:
+                            entity.isOwn ? Border.all(color: primary) : null,
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
@@ -61,9 +62,13 @@ class CommentItem extends StatelessWidget {
                             color: textFieldColor,
                             alignment: Alignment.center,
                             child: Text(
-                              entity.userFullName.isNotEmpty ? entity.userFullName[0] : '',
-                              style:
-                                  Theme.of(context).textTheme.headline1!.copyWith(color: textSecondary, fontSize: 15),
+                              entity.userFullName.isNotEmpty
+                                  ? entity.userFullName[0]
+                                  : '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1!
+                                  .copyWith(color: textSecondary, fontSize: 15),
                             ),
                           ),
                           height: 40,
@@ -86,12 +91,17 @@ class CommentItem extends StatelessWidget {
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline4!
-                                      .copyWith(fontSize: 15, fontWeight: FontWeight.w400),
+                                      .copyWith(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400),
                                 ),
                               }
                             ],
                           ),
-                          style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 15),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1!
+                              .copyWith(fontSize: 15),
                         ),
                         const SizedBox(height: 4),
                         Row(
@@ -99,8 +109,11 @@ class CommentItem extends StatelessWidget {
                             SvgPicture.asset(AppIcons.mapCalendar),
                             const SizedBox(width: 6),
                             Text(
-                              MyFunctions.safeDateFormat(entity.createdAt, 'dd MMMM yyyy'),
-                              style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13),
+                              MyFunctions.getPublishedDate(entity.createdAt),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline3!
+                                  .copyWith(fontSize: 13),
                             ),
                           ],
                         ),
@@ -114,7 +127,8 @@ class CommentItem extends StatelessWidget {
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (_) => DeleteCommentDialog(onTapDelete: onTapDelete),
+                      builder: (_) =>
+                          DeleteCommentDialog(onTapDelete: onTapDelete),
                     );
                   },
                   child: Padding(
@@ -134,7 +148,10 @@ class CommentItem extends StatelessWidget {
             children: [
               Text(
                 entity.rating.toString(),
-                style: Theme.of(context).textTheme.headline3!.copyWith(color: primary),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(color: primary),
               ),
               const SizedBox(width: 8),
               RatingStars(

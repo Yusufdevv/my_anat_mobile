@@ -54,7 +54,7 @@ class ResultList extends StatelessWidget {
                       .read<HospitalListBloc>()
                       .add(HospitalListEvent.getMoreHospitals());
                 },
-                hasMoreToFetch: state.totalCount > state.hospitals.length,
+                hasMoreToFetch: state.fetchMore,
                 errorWidget: const SizedBox()),
           ),
         );

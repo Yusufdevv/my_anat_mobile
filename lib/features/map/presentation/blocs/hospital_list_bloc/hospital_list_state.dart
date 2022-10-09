@@ -6,7 +6,7 @@ class HospitalListState with _$HospitalListState {
     @Default(CrossFadeState.showFirst) CrossFadeState crossFadeState,
     @Default([]) List<HospitalEntity> hospitals,
     @Default(FormzStatus.pure) FormzStatus status,
-    @Default('') String next,
-    @Default(0) int totalCount,
+    String? next,
+    @Default(false) bool fetchMore,
   }) = _HospitalListState;
 }

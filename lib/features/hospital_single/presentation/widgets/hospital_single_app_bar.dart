@@ -18,13 +18,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class HospitalSingleAppBar extends StatefulWidget {
   final HeaderManagerBloc headerManagerBloc;
   final PageController pageController;
 
-  const HospitalSingleAppBar({required this.headerManagerBloc, required this.pageController, Key? key})
+  const HospitalSingleAppBar(
+      {required this.headerManagerBloc, required this.pageController, Key? key})
       : super(key: key);
 
   @override
@@ -47,9 +49,20 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
               sliver: SliverAppBar(
                 systemOverlayStyle: SystemUiOverlayStyle(
                   statusBarColor: Colors.transparent,
-                  statusBarIconBrightness: state.isHeaderScrolled ? Brightness.dark : Brightness.light,
+                  statusBarIconBrightness: state.isHeaderScrolled
+                      ? Brightness.dark
+                      : Brightness.light,
                 ),
-                title: state.isHeaderScrolled ? const HospitalSingleAppBarBody() : Container(),
+                title: state.isHeaderScrolled
+                    ? BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                        builder: (context, state) {
+                          return HospitalSingleAppBarBody(
+                            shareValue:
+                                'https:anatomica.uz/organization/${state.hospital.slug}',
+                          );
+                        },
+                      )
+                    : Container(),
                 shadowColor: textFieldColor,
                 stretch: true,
                 expandedHeight: 496,
@@ -73,14 +86,16 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                         child: Stack(
                           children: [
                             Positioned.fill(
-                              child: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                              child: BlocBuilder<HospitalSingleBloc,
+                                  HospitalSingleState>(
                                 builder: (context, state) {
                                   return PageView.builder(
                                     itemBuilder: (context, index) => Stack(
                                       children: [
                                         Positioned.fill(
                                           child: WImage(
-                                            imageUrl: state.hospital.images[index].middle,
+                                            imageUrl: state
+                                                .hospital.images[index].middle,
                                             fit: BoxFit.cover,
                                             onErrorColor: Colors.red,
                                             onErrorWidget: SvgPicture.asset(
@@ -116,9 +131,11 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).padding.top),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   WScaleAnimation(
                                     onTap: () => Navigator.of(context).pop(),
@@ -130,20 +147,29 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                       ),
                                     ),
                                   ),
-                                  WScaleAnimation(
-                                    onTap: () {},
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16),
-                                      child: SvgPicture.asset(
-                                        AppIcons.share,
-                                        color: white,
-                                      ),
-                                    ),
+                                  BlocBuilder<HospitalSingleBloc,
+                                      HospitalSingleState>(
+                                    builder: (context, state) {
+                                      return WScaleAnimation(
+                                        onTap: () {
+                                          Share.share(
+                                              'https:anatomica.uz/organization/${state.hospital.slug}');
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16),
+                                          child: SvgPicture.asset(
+                                            AppIcons.share,
+                                            color: white,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
                             ),
-                            BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                            BlocBuilder<HospitalSingleBloc,
+                                HospitalSingleState>(
                               builder: (context, state) {
                                 return state.hospital.images.length > 1
                                     ? Positioned(
@@ -151,7 +177,8 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                         right: 0,
                                         bottom: 32,
                                         child: ImageSliderIndicator(
-                                          itemCount: state.hospital.images.length,
+                                          itemCount:
+                                              state.hospital.images.length,
                                           currentIndex: currentImage,
                                         ),
                                       )
@@ -164,7 +191,8 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                       Positioned(
                         left: 0,
                         right: 0,
-                        child: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                        child: BlocBuilder<HospitalSingleBloc,
+                            HospitalSingleState>(
                           builder: (context, state) {
                             return Container(
                               decoration: const BoxDecoration(
@@ -176,23 +204,29 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                               child: Column(
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20, horizontal: 16),
                                     child: Column(
                                       children: [
                                         Row(
                                           children: [
                                             DecoratedBox(
                                               decoration: BoxDecoration(
-                                                border: Border.all(color: divider),
-                                                borderRadius: BorderRadius.circular(6),
+                                                border:
+                                                    Border.all(color: divider),
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
                                               ),
                                               child: WImage(
                                                 height: 40,
                                                 width: 40,
-                                                imageUrl: state.hospital.logo.middle,
-                                                borderRadius: BorderRadius.circular(6),
-                                                onErrorWidget:
-                                                    SvgPicture.asset(AppIcons.smallImageError, fit: BoxFit.cover),
+                                                imageUrl:
+                                                    state.hospital.logo.middle,
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                                onErrorWidget: SvgPicture.asset(
+                                                    AppIcons.smallImageError,
+                                                    fit: BoxFit.cover),
                                               ),
                                             ),
                                             const SizedBox(width: 12),
@@ -201,7 +235,10 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                 state.hospital.title,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline1!
+                                                    .copyWith(fontSize: 20),
                                               ),
                                             )
                                           ],
@@ -213,7 +250,9 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                             const SizedBox(width: 6),
                                             Text(
                                               state.hospital.address,
-                                              style: Theme.of(context).textTheme.headline3,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3,
                                             ),
                                           ],
                                         ),
@@ -223,14 +262,21 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                         state.hospital.phoneNumber.isEmpty
                                             ? const SizedBox()
                                             : Container(
-                                                margin: const EdgeInsets.only(bottom: 16),
+                                                margin: const EdgeInsets.only(
+                                                    bottom: 16),
                                                 child: Row(
                                                   children: [
-                                                    SvgPicture.asset(AppIcons.phone),
+                                                    SvgPicture.asset(
+                                                        AppIcons.phone),
                                                     const SizedBox(width: 6),
                                                     Text(
-                                                      MyFunctions.formatPhone(state.hospital.phoneNumber, false),
-                                                      style: Theme.of(context).textTheme.headline3,
+                                                      MyFunctions.formatPhone(
+                                                          state.hospital
+                                                              .phoneNumber,
+                                                          false),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline3,
                                                     ),
                                                   ],
                                                 ),
@@ -239,21 +285,31 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                           children: [
                                             Text(
                                               state.hospital.rating.toString(),
-                                              style: Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3!
+                                                  .copyWith(color: darkGreen),
                                             ),
                                             const SizedBox(width: 8),
                                             ...List.generate(
                                               state.hospital.rating.truncate(),
                                               (index) => Padding(
-                                                padding: const EdgeInsets.only(right: 4),
-                                                child: SvgPicture.asset(AppIcons.star),
+                                                padding: const EdgeInsets.only(
+                                                    right: 4),
+                                                child: SvgPicture.asset(
+                                                    AppIcons.star),
                                               ),
                                             ),
                                             ...List.generate(
-                                              5 - state.hospital.rating.truncate(),
+                                              5 -
+                                                  state.hospital.rating
+                                                      .truncate(),
                                               (index) => Padding(
-                                                padding: const EdgeInsets.only(right: 4),
-                                                child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
+                                                padding: const EdgeInsets.only(
+                                                    right: 4),
+                                                child: SvgPicture.asset(
+                                                    AppIcons.star,
+                                                    color: inactiveStar),
                                               ),
                                             ),
                                           ],
@@ -265,26 +321,41 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                               child: WButton(
                                                 color: primary,
                                                 onTap: () async {
-                                                  if (state.hospital.phoneNumbers.isNotEmpty &&
-                                                      !state.hospital.phoneNumbers
-                                                          .map((e) => e.phoneNumber)
+                                                  if (state
+                                                          .hospital
+                                                          .phoneNumbers
+                                                          .isNotEmpty &&
+                                                      !state
+                                                          .hospital.phoneNumbers
+                                                          .map((e) =>
+                                                              e.phoneNumber)
                                                           .toList()
-                                                          .contains(state.hospital.phoneNumber)) {
+                                                          .contains(state
+                                                              .hospital
+                                                              .phoneNumber)) {
                                                     showModalBottomSheet(
                                                       context: context,
                                                       isScrollControlled: true,
-                                                      backgroundColor: Colors.transparent,
-                                                      builder: (_) => PhonesBottomSheet(
-                                                        phones: state.hospital.phoneNumbers
-                                                            .map((e) => e.phoneNumber)
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      builder: (_) =>
+                                                          PhonesBottomSheet(
+                                                        phones: state.hospital
+                                                            .phoneNumbers
+                                                            .map((e) =>
+                                                                e.phoneNumber)
                                                             .toList(),
                                                       ),
                                                     );
                                                   } else {
-                                                    if (state.hospital.phoneNumber.isNotEmpty) {
+                                                    if (state
+                                                        .hospital
+                                                        .phoneNumber
+                                                        .isNotEmpty) {
                                                       if (await canLaunchUrlString(
                                                           'tel:${state.hospital.phoneNumber}')) {
-                                                        await launchUrlString('tel:${state.hospital.phoneNumber}');
+                                                        await launchUrlString(
+                                                            'tel:${state.hospital.phoneNumber}');
                                                       } else {
                                                         throw 'Can not open phone number';
                                                       }
@@ -293,7 +364,8 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                 },
                                                 padding: EdgeInsets.zero,
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
                                                   children: [
                                                     SvgPicture.asset(
                                                       AppIcons.phone,
@@ -304,8 +376,11 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                     const SizedBox(width: 8),
                                                     Text(
                                                       LocaleKeys.call.tr(),
-                                                      style:
-                                                          Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline3!
+                                                          .copyWith(
+                                                              color: white),
                                                     )
                                                   ],
                                                 ),
@@ -317,27 +392,53 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                 color: white,
                                                 onTap: () async {
                                                   if (Platform.isAndroid) {
-                                                    if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
-                                                      await MapLauncher.showDirections(
-                                                          mapType: MapType.google,
-                                                          destination:
-                                                              Coords(state.hospital.latitude, state.hospital.latitude));
+                                                    if (await MapLauncher
+                                                            .isMapAvailable(
+                                                                MapType
+                                                                    .google) ??
+                                                        false) {
+                                                      await MapLauncher
+                                                          .showDirections(
+                                                              mapType: MapType
+                                                                  .google,
+                                                              destination: Coords(
+                                                                  state.hospital
+                                                                      .latitude,
+                                                                  state.hospital
+                                                                      .latitude));
                                                     } else {
-                                                      if (await canLaunchUrlString(state.hospital.locationUrl)) {
-                                                        await launchUrlString(state.hospital.locationUrl);
+                                                      if (await canLaunchUrlString(
+                                                          state.hospital
+                                                              .locationUrl)) {
+                                                        await launchUrlString(
+                                                            state.hospital
+                                                                .locationUrl);
                                                       } else {
                                                         throw 'Can not open Google maps';
                                                       }
                                                     }
                                                   } else {
-                                                    if (await MapLauncher.isMapAvailable(MapType.apple) ?? false) {
-                                                      await MapLauncher.showDirections(
-                                                          mapType: MapType.apple,
-                                                          destination:
-                                                              Coords(state.hospital.latitude, state.hospital.latitude));
+                                                    if (await MapLauncher
+                                                            .isMapAvailable(
+                                                                MapType
+                                                                    .apple) ??
+                                                        false) {
+                                                      await MapLauncher
+                                                          .showDirections(
+                                                              mapType:
+                                                                  MapType.apple,
+                                                              destination: Coords(
+                                                                  state.hospital
+                                                                      .latitude,
+                                                                  state.hospital
+                                                                      .latitude));
                                                     } else {
-                                                      if (await canLaunchUrlString(state.hospital.locationUrl)) {
-                                                        await launchUrlString(state.hospital.locationUrl);
+                                                      if (await canLaunchUrlString(
+                                                          state.hospital
+                                                              .locationUrl)) {
+                                                        await launchUrlString(
+                                                            state.hospital
+                                                                .locationUrl);
                                                       } else {
                                                         throw 'Can not open Google maps';
                                                       }
@@ -345,9 +446,11 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                   }
                                                 },
                                                 padding: EdgeInsets.zero,
-                                                border: Border.all(color: primary),
+                                                border:
+                                                    Border.all(color: primary),
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
                                                   children: [
                                                     SvgPicture.asset(
                                                       AppIcons.mapRoute,
@@ -360,7 +463,8 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .headline3!
-                                                          .copyWith(color: primary),
+                                                          .copyWith(
+                                                              color: primary),
                                                     )
                                                   ],
                                                 ),
@@ -371,7 +475,10 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                       ],
                                     ),
                                   ),
-                                  const Divider(height: 0, thickness: 1, color: textFieldColor)
+                                  const Divider(
+                                      height: 0,
+                                      thickness: 1,
+                                      color: textFieldColor)
                                 ],
                               ),
                             );

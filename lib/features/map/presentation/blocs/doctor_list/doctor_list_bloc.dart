@@ -20,13 +20,14 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
   DoctorListBloc(this.useCase) : super(DoctorListState()) {
     on<_GetDoctors>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await useCase(SearchParam(next: '',search: event.search));
+      final result = await useCase(SearchParam(search: event.search));
       if (result.isRight) {
         emit(state.copyWith(
-            status: FormzStatus.submissionSuccess,
-            doctors: result.right.results,
-            next: result.right.next ?? '',
-            count: result.right.count));
+          status: FormzStatus.submissionSuccess,
+          doctors: result.right.results,
+          next: result.right.next,
+          fetchMore: result.right.next != null,
+        ));
       } else {
         emit(state.copyWith(
           status: FormzStatus.submissionFailure,
@@ -34,14 +35,16 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
       }
     });
     on<_GetMoreDoctors>((event, emit) async {
-      emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await useCase(SearchParam(next: state.next, ));
+      final result = await useCase(SearchParam(
+        next: state.next,
+      ));
       if (result.isRight) {
         emit(state.copyWith(
-            status: FormzStatus.submissionSuccess,
-            doctors: [...state.doctors, ...result.right.results],
-            next: result.right.next ?? '',
-            count: result.right.count));
+          status: FormzStatus.submissionSuccess,
+          doctors: [...state.doctors, ...result.right.results],
+          next: result.right.next,
+          fetchMore: result.right.next != null,
+        ));
       } else {
         emit(state.copyWith(
           status: FormzStatus.submissionFailure,
@@ -51,5 +54,5 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
   }
 
   EventTransformer<MyEvent> debounce<MyEvent>(Duration duration) =>
-          (events, mapper) => events.debounceTime(duration).flatMap(mapper);
+      (events, mapper) => events.debounceTime(duration).flatMap(mapper);
 }

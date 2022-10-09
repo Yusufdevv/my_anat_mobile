@@ -33,16 +33,21 @@ class _HospitalServicesState extends State<HospitalServices> {
       builder: (context, state) {
         return ListView(
           padding: state.services.isNotEmpty
-              ? const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16)
+              ? const EdgeInsets.all(16)
+                  .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16)
               : EdgeInsets.zero,
           children: [
             if (state.serviceCount > 20) ...[
               Padding(
-                padding: state.services.isNotEmpty ? EdgeInsets.zero : const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                padding: state.services.isNotEmpty
+                    ? EdgeInsets.zero
+                    : const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 child: SearchField(
                   controller: _textController,
                   onChanged: (value) {
-                    context.read<ServicesBloc>().add(ServicesEvent.searchServices(query: value));
+                    context
+                        .read<ServicesBloc>()
+                        .add(ServicesEvent.searchServices(query: value));
                   },
                   fillColor: white,
                 ),
@@ -56,8 +61,12 @@ class _HospitalServicesState extends State<HospitalServices> {
             } else if (state.status.isSubmissionSuccess) ...{
               if (state.services.isEmpty) ...{
                 EmptyWidget(
-                  title: LocaleKeys.no_services.tr(),
-                  content: LocaleKeys.no_services_in_this_hospital.tr(),
+                  title: state.searchQuery.isNotEmpty
+                      ? LocaleKeys.nothing.tr()
+                      : LocaleKeys.no_services.tr(),
+                  content: state.searchQuery.isNotEmpty
+                      ? LocaleKeys.result_not_found.tr()
+                      : LocaleKeys.no_services_in_this_hospital.tr(),
                 )
               } else ...{
                 Container(
@@ -91,7 +100,9 @@ class _HospitalServicesState extends State<HospitalServices> {
               } else ...{
                 WButton(
                   onTap: () {
-                    context.read<ServicesBloc>().add(ServicesEvent.getMoreServices());
+                    context
+                        .read<ServicesBloc>()
+                        .add(ServicesEvent.getMoreServices());
                   },
                   color: commentButton,
                   text: LocaleKeys.download_more.tr(),

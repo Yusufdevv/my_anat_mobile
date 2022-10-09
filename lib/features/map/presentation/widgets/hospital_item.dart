@@ -16,8 +16,13 @@ class HospitalItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () => Navigator.of(context, rootNavigator: true)
-          .push(fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id))),
+      onTap: () {
+        print(entity.images.map((e) => e.middle).toList());
+        print(entity.images.map((e) => e.small).toList());
+        print(entity.images.map((e) => e.origin).toList());
+        Navigator.of(context, rootNavigator: true).push(
+            fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id)));
+      },
       child: DecoratedBox(
         decoration: BoxDecoration(
           boxShadow: [
@@ -44,23 +49,36 @@ class HospitalItem extends StatelessWidget {
                     height: 140,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: ListView.separated(
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: entity.images.length,
-                        separatorBuilder: (context, index) => const SizedBox(width: 8),
-                        itemBuilder: (context, index) => ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: WImage(
-                            imageUrl: entity.images[index].middle,
-                            fit: BoxFit.cover,
-                            onErrorWidget: SvgPicture.asset(
-                              AppIcons.bigImageError,
-                              fit: BoxFit.cover,
+                      child: entity.images.isNotEmpty
+                          ? ListView.separated(
+                              padding: EdgeInsets.zero,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: entity.images.length,
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 8),
+                              itemBuilder: (context, index) => ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: WImage(
+                                  imageUrl: entity.images[index].middle,
+                                  fit: BoxFit.cover,
+                                  onErrorWidget: SvgPicture.asset(
+                                    AppIcons.bigImageError,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                        alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: errorImageBackground),
+                              child: SvgPicture.asset(
+                                AppIcons.logo,
+                                height: 100,
+                                color: textFieldColor,
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                   Padding(
@@ -77,7 +95,10 @@ class HospitalItem extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           entity.addres,
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textSecondary),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: textSecondary),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -105,7 +126,10 @@ class HospitalItem extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         entity.rating.toString(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(color: darkGreen, fontSize: 14),
                       ),
                       const SizedBox(width: 8),
                       Container(

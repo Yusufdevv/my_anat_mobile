@@ -316,8 +316,8 @@ abstract class _GetMoreDoctors implements DoctorListEvent {
 mixin _$DoctorListState {
   List<HospitalDoctorsEntity> get doctors => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
-  String get next => throw _privateConstructorUsedError;
-  int get count => throw _privateConstructorUsedError;
+  String? get next => throw _privateConstructorUsedError;
+  bool get fetchMore => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DoctorListStateCopyWith<DoctorListState> get copyWith =>
@@ -332,8 +332,8 @@ abstract class $DoctorListStateCopyWith<$Res> {
   $Res call(
       {List<HospitalDoctorsEntity> doctors,
       FormzStatus status,
-      String next,
-      int count});
+      String? next,
+      bool fetchMore});
 }
 
 /// @nodoc
@@ -350,7 +350,7 @@ class _$DoctorListStateCopyWithImpl<$Res>
     Object? doctors = freezed,
     Object? status = freezed,
     Object? next = freezed,
-    Object? count = freezed,
+    Object? fetchMore = freezed,
   }) {
     return _then(_value.copyWith(
       doctors: doctors == freezed
@@ -364,11 +364,11 @@ class _$DoctorListStateCopyWithImpl<$Res>
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String?,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -383,8 +383,8 @@ abstract class _$$_DoctorListStateCopyWith<$Res>
   $Res call(
       {List<HospitalDoctorsEntity> doctors,
       FormzStatus status,
-      String next,
-      int count});
+      String? next,
+      bool fetchMore});
 }
 
 /// @nodoc
@@ -403,7 +403,7 @@ class __$$_DoctorListStateCopyWithImpl<$Res>
     Object? doctors = freezed,
     Object? status = freezed,
     Object? next = freezed,
-    Object? count = freezed,
+    Object? fetchMore = freezed,
   }) {
     return _then(_$_DoctorListState(
       doctors: doctors == freezed
@@ -417,11 +417,11 @@ class __$$_DoctorListStateCopyWithImpl<$Res>
       next: next == freezed
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
-      count: count == freezed
-          ? _value.count
-          : count // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String?,
+      fetchMore: fetchMore == freezed
+          ? _value.fetchMore
+          : fetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -432,8 +432,8 @@ class _$_DoctorListState implements _DoctorListState {
   _$_DoctorListState(
       {final List<HospitalDoctorsEntity> doctors = const [],
       this.status = FormzStatus.pure,
-      this.next = '',
-      this.count = 0})
+      this.next,
+      this.fetchMore = false})
       : _doctors = doctors;
 
   final List<HospitalDoctorsEntity> _doctors;
@@ -448,15 +448,14 @@ class _$_DoctorListState implements _DoctorListState {
   @JsonKey()
   final FormzStatus status;
   @override
-  @JsonKey()
-  final String next;
+  final String? next;
   @override
   @JsonKey()
-  final int count;
+  final bool fetchMore;
 
   @override
   String toString() {
-    return 'DoctorListState(doctors: $doctors, status: $status, next: $next, count: $count)';
+    return 'DoctorListState(doctors: $doctors, status: $status, next: $next, fetchMore: $fetchMore)';
   }
 
   @override
@@ -467,7 +466,7 @@ class _$_DoctorListState implements _DoctorListState {
             const DeepCollectionEquality().equals(other._doctors, _doctors) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality().equals(other.count, count));
+            const DeepCollectionEquality().equals(other.fetchMore, fetchMore));
   }
 
   @override
@@ -476,7 +475,7 @@ class _$_DoctorListState implements _DoctorListState {
       const DeepCollectionEquality().hash(_doctors),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(count));
+      const DeepCollectionEquality().hash(fetchMore));
 
   @JsonKey(ignore: true)
   @override
@@ -488,17 +487,17 @@ abstract class _DoctorListState implements DoctorListState {
   factory _DoctorListState(
       {final List<HospitalDoctorsEntity> doctors,
       final FormzStatus status,
-      final String next,
-      final int count}) = _$_DoctorListState;
+      final String? next,
+      final bool fetchMore}) = _$_DoctorListState;
 
   @override
   List<HospitalDoctorsEntity> get doctors;
   @override
   FormzStatus get status;
   @override
-  String get next;
+  String? get next;
   @override
-  int get count;
+  bool get fetchMore;
   @override
   @JsonKey(ignore: true)
   _$$_DoctorListStateCopyWith<_$_DoctorListState> get copyWith =>

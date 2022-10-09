@@ -14,12 +14,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class DoctorSingleAppBar extends StatelessWidget {
   final HeaderManagerBloc headerManagerBloc;
   final DoctorSingleEntity doctor;
-  const DoctorSingleAppBar({required this.headerManagerBloc, required this.doctor, Key? key}) : super(key: key);
+  const DoctorSingleAppBar(
+      {required this.headerManagerBloc, required this.doctor, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +36,14 @@ class DoctorSingleAppBar extends StatelessWidget {
               top: false,
               bottom: false,
               sliver: SliverAppBar(
-                title: state.isHeaderScrolled ? const HospitalSingleAppBarBody() : Container(),
+                title: state.isHeaderScrolled
+                    ? HospitalSingleAppBarBody(
+                        shareValue: 'https:anatomica.uz/doctor/${doctor.id}',
+                      )
+                    : Container(),
                 systemOverlayStyle: const SystemUiOverlayStyle(
-                    statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark),
+                    statusBarColor: Colors.transparent,
+                    statusBarIconBrightness: Brightness.dark),
                 shadowColor: textFieldColor,
                 stretch: true,
                 expandedHeight: 496,
@@ -66,7 +74,8 @@ class DoctorSingleAppBar extends StatelessWidget {
                                       imageUrl: doctor.img.middle,
                                       fit: BoxFit.cover,
                                       height: 277,
-                                      onErrorWidget: SvgPicture.asset(AppIcons.bigImageError),
+                                      onErrorWidget: SvgPicture.asset(
+                                          AppIcons.bigImageError),
                                     ),
                                   ),
                                   Positioned.fill(
@@ -95,11 +104,15 @@ class DoctorSingleAppBar extends StatelessWidget {
                                 children: [
                                   Text(
                                     doctor.fullName,
-                                    style: Theme.of(context).textTheme.headline1!.copyWith(color: white, fontSize: 22),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .copyWith(color: white, fontSize: 22),
                                   ),
                                   const SizedBox(height: 16),
                                   Container(
-                                    padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(12, 6, 12, 8),
                                     decoration: BoxDecoration(
                                       color: white.withOpacity(0.12),
                                       borderRadius: BorderRadius.circular(10),
@@ -107,7 +120,10 @@ class DoctorSingleAppBar extends StatelessWidget {
                                     ),
                                     child: Text(
                                       doctor.specialization.title,
-                                      style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline3!
+                                          .copyWith(color: white),
                                     ),
                                   )
                                 ],
@@ -119,9 +135,11 @@ class DoctorSingleAppBar extends StatelessWidget {
                             //   ),
                             // ),
                             Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).padding.top),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   WScaleAnimation(
                                     onTap: () => Navigator.of(context).pop(),
@@ -134,7 +152,10 @@ class DoctorSingleAppBar extends StatelessWidget {
                                     ),
                                   ),
                                   WScaleAnimation(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Share.share(
+                                          'https:anatomica.uz/doctor/${doctor.id}');
+                                    },
                                     child: Padding(
                                       padding: const EdgeInsets.all(16),
                                       child: SvgPicture.asset(
@@ -162,7 +183,8 @@ class DoctorSingleAppBar extends StatelessWidget {
                           child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 16),
                                 child: Column(
                                   children: [
                                     Row(
@@ -174,7 +196,10 @@ class DoctorSingleAppBar extends StatelessWidget {
                                             doctor.address,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3!
+                                                .copyWith(color: textColor),
                                           ),
                                         ),
                                       ],
@@ -185,8 +210,12 @@ class DoctorSingleAppBar extends StatelessWidget {
                                         SvgPicture.asset(AppIcons.phone),
                                         const SizedBox(width: 6),
                                         Text(
-                                          MyFunctions.formatPhone(doctor.phoneNumber, false),
-                                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                          MyFunctions.formatPhone(
+                                              doctor.phoneNumber, false),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline3!
+                                              .copyWith(color: textColor),
                                         ),
                                       ],
                                     ),
@@ -200,7 +229,10 @@ class DoctorSingleAppBar extends StatelessWidget {
                                             doctor.work,
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3!
+                                                .copyWith(color: textColor),
                                           ),
                                         ),
                                       ],
@@ -209,12 +241,22 @@ class DoctorSingleAppBar extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          doctor.rating.toString(),
-                                          style: Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
+                                          (doctor.rating > 5
+                                                  ? 5.0
+                                                  : doctor.rating < 0
+                                                      ? 0.0
+                                                      : doctor.rating)
+                                              .toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline3!
+                                              .copyWith(color: darkGreen),
                                         ),
                                         const SizedBox(width: 8),
                                         RatingStars(
-                                          rate: doctor.rating < 5 ? doctor.rating : 5,
+                                          rate: doctor.rating < 5
+                                              ? doctor.rating
+                                              : 5,
                                         )
                                       ],
                                     ),
@@ -225,13 +267,16 @@ class DoctorSingleAppBar extends StatelessWidget {
                                           child: WButton(
                                             color: primary,
                                             onTap: () async {
-                                              if (await canLaunchUrlString('tel:${doctor.phoneNumber}')) {
-                                                await launchUrlString('tel:${doctor.phoneNumber}');
+                                              if (await canLaunchUrlString(
+                                                  'tel:${doctor.phoneNumber}')) {
+                                                await launchUrlString(
+                                                    'tel:${doctor.phoneNumber}');
                                               }
                                             },
                                             padding: EdgeInsets.zero,
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 SvgPicture.asset(
                                                   AppIcons.phone,
@@ -242,7 +287,10 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                 const SizedBox(width: 8),
                                                 Text(
                                                   LocaleKeys.call.tr(),
-                                                  style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline3!
+                                                      .copyWith(color: white),
                                                 )
                                               ],
                                             ),
@@ -253,9 +301,14 @@ class DoctorSingleAppBar extends StatelessWidget {
                                           child: WButton(
                                             color: white,
                                             onTap: () async {
-                                              if (await canLaunchUrlString(doctor.organization.locationUrl)) {
-                                                await launchUrlString(doctor.organization.locationUrl,
-                                                    mode: LaunchMode.externalApplication);
+                                              if (await canLaunchUrlString(
+                                                  doctor.organization
+                                                      .locationUrl)) {
+                                                await launchUrlString(
+                                                    doctor.organization
+                                                        .locationUrl,
+                                                    mode: LaunchMode
+                                                        .externalApplication);
                                               }
 
                                               // if (Platform.isAndroid) {
@@ -289,7 +342,8 @@ class DoctorSingleAppBar extends StatelessWidget {
                                             padding: EdgeInsets.zero,
                                             border: Border.all(color: primary),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 SvgPicture.asset(
                                                   AppIcons.mapRoute,
@@ -299,8 +353,10 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                 const SizedBox(width: 8),
                                                 Text(
                                                   LocaleKeys.get.tr(),
-                                                  style:
-                                                      Theme.of(context).textTheme.headline3!.copyWith(color: primary),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline3!
+                                                      .copyWith(color: primary),
                                                 )
                                               ],
                                             ),
@@ -311,7 +367,10 @@ class DoctorSingleAppBar extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const Divider(height: 0, thickness: 1, color: textFieldColor)
+                              const Divider(
+                                  height: 0,
+                                  thickness: 1,
+                                  color: textFieldColor)
                             ],
                           ),
                         ),

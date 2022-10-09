@@ -119,9 +119,15 @@ class _HospitalListState extends State<HospitalList>
                     padding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.zero,
                     indicator: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
+                        color: white,
+                        borderRadius: BorderRadius.circular(6),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 8),
+                            blurRadius: 24,
+                            color: chipShadowColor.withOpacity(0.19),
+                          ),
+                        ]),
                     labelPadding: EdgeInsets.zero,
                     labelStyle: Theme.of(context).textTheme.headline3,
                     labelColor: textColor,
@@ -235,7 +241,9 @@ class _HospitalListState extends State<HospitalList>
                                             : 0),
                                     child: isSearching ||
                                             controller.text.isNotEmpty
-                                        ? const SizedBox(key: ValueKey<int>(2),)
+                                        ? const SizedBox(
+                                            key: ValueKey<int>(2),
+                                          )
                                         : Row(
                                             children: [
                                               SvgPicture.asset(
@@ -261,8 +269,8 @@ class _HospitalListState extends State<HospitalList>
                                   ),
                                 ),
                               ),
-                               SizedBox(
-                                width:isSearching || controller.text.isNotEmpty
+                              SizedBox(
+                                width: isSearching || controller.text.isNotEmpty
                                     ? 0
                                     : 12,
                               ),

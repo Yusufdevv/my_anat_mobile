@@ -81,6 +81,9 @@ class _SearchFieldState extends State<SearchField> {
                     _controller.clear();
                     if (widget.onClear != null) {
                       widget.onClear!();
+                      setState(() {
+                        showClear = false;
+                      });
                     }
                   },
                   child: Padding(
