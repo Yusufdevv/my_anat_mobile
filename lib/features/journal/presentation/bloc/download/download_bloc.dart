@@ -129,7 +129,10 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
         'downloaded': 1,
       });
       emit(state.copyWith(
-          status: FormzStatus.submissionSuccess, fileUrl: event.path, isFileAlreadyDownloaded: true, progress: 0));
+          status: FormzStatus.submissionSuccess,
+          fileUrl: event.path,
+          isFileAlreadyDownloaded: !event.isFragment,
+          progress: 0));
     } on Exception catch (e) {
       log(e.toString());
     }

@@ -1,14 +1,15 @@
 import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/common/data/models/titler.dart';
+import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'purchased_journal.g.dart';
 
+part 'purchased_journal.g.dart';
 
 @JsonSerializable()
 class PurchasedJournalModel {
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'name',defaultValue: '')
+  @JsonKey(name: 'name', defaultValue: '')
   final String name;
   @JsonKey(name: 'slug')
   final String slug;
@@ -17,7 +18,7 @@ class PurchasedJournalModel {
   @JsonKey(name: 'image')
   final ImageModel image;
   @JsonKey(name: 'category')
-  final TitlerModel category;
+  final CategoryModel category;
   @JsonKey(name: 'organization')
   final int organization;
   @JsonKey(name: 'redaction')
@@ -28,26 +29,30 @@ class PurchasedJournalModel {
   final double price;
   @JsonKey(name: 'publish_date')
   final String publishDate;
+  @JsonKey(name: 'file_extension')
+  final String fileExtension;
   @JsonKey(name: 'tags')
   final List<TitlerModel> tags;
   @JsonKey(name: 'is_bought')
   final bool isBought;
 
-  PurchasedJournalModel(
-      { this.redaction='',
-       this.isPremium=false,
-       this.category=const TitlerModel(title: '',id: 0),
-       this.publishDate='',
-       this.id=0,
-    required   this.name,
-       this.price=0,
-       this.image=const ImageModel(origin: '', small: '', middle: '', id: 0),
-       this.description='',
-       this.slug='',
-       this.isBought=false,
-       this.organization=0,
-       this.tags=const []});
+  PurchasedJournalModel({
+    this.redaction = '',
+    this.isPremium = false,
+    this.category = const CategoryModel(title: '', id: 0),
+    this.publishDate = '',
+    this.id = 0,
+    required this.name,
+    this.price = 0,
+    this.image = const ImageModel(origin: '', small: '', middle: '', id: 0),
+    this.description = '',
+    this.slug = '',
+    this.fileExtension = '',
+    this.isBought = false,
+    this.organization = 0,
+    this.tags = const [],
+  });
 
-  factory PurchasedJournalModel.fromJson(Map<String,dynamic> json)=>_$PurchasedJournalModelFromJson(json);
+  factory PurchasedJournalModel.fromJson(Map<String, dynamic> json) => _$PurchasedJournalModelFromJson(json);
+  Map<String, dynamic> toJson() => _$PurchasedJournalModelToJson(this);
 }
-

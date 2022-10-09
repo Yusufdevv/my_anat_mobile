@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/profile/presentation/blocs/purchased_article/purchased_article_bloc.dart';
 import 'package:anatomica/features/profile/presentation/blocs/purchased_journal/purchased_journal_bloc.dart';
@@ -20,8 +21,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 class RestoreVerifyDialog extends StatefulWidget {
   final bool isJournal;
 
-  const RestoreVerifyDialog({required this.isJournal, Key? key})
-      : super(key: key);
+  const RestoreVerifyDialog({required this.isJournal, Key? key}) : super(key: key);
 
   @override
   State<RestoreVerifyDialog> createState() => _RestoreVerifyDialogState();
@@ -54,8 +54,8 @@ class _RestoreVerifyDialogState extends State<RestoreVerifyDialog> {
                     Expanded(
                       child: Text(
                         LocaleKeys.verify.tr(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 20),
+                        style:
+                            Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
                       ),
                     ),
                     const SizedBox(
@@ -78,43 +78,29 @@ class _RestoreVerifyDialogState extends State<RestoreVerifyDialog> {
                 ),
                 Text(
                   LocaleKeys.write_sent_code.tr(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
+                  style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400, fontSize: 14),
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 20),
                   decoration: BoxDecoration(
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Color(0x292B8364),
-                            blurRadius: 12,
-                            offset: Offset(0, 4))
-                      ],
+                      boxShadow: const [BoxShadow(color: Color(0x292B8364), blurRadius: 12, offset: Offset(0, 4))],
                       color: const Color(0x1F43B7B1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: primary)),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   child: BlocBuilder<RestoreBloc, RestoreState>(
                     builder: (context, state) {
                       return Text(
-                        state.phone.isEmpty
-                            ? '**************'
-                            : state.phone.replaceRange(6, 11, '******'),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 14),
+                        state.phone.isEmpty ? '**************' : state.phone.replaceRange(6, 11, '******'),
+                        style:
+                            Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w600, fontSize: 14),
                       );
                     },
                   ),
                 ),
                 Text(
                   LocaleKeys.write_code.tr(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1!
-                      .copyWith(fontWeight: FontWeight.w600, fontSize: 14),
+                  style: Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w600, fontSize: 14),
                 ),
                 const SizedBox(
                   height: 12,
@@ -133,10 +119,7 @@ class _RestoreVerifyDialogState extends State<RestoreVerifyDialog> {
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
-                              .copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                  color: red),
+                              .copyWith(fontWeight: FontWeight.w500, fontSize: 14, color: red),
                         ),
                       );
                     } else {
@@ -154,26 +137,23 @@ class _RestoreVerifyDialogState extends State<RestoreVerifyDialog> {
                     if (controller.text.length == 6) {
                       context.read<RestoreBloc>().add(RestoreEvent.verifyCode(
                           code: controller.text,
-                          onSuccess: (signature) {
-                            context
-                                .read<RestoreBloc>()
-                                .add(RestoreEvent.sendRestore(
-                                    isJournal: widget.isJournal,
-                                    onSuccess: () {
-                                      if (widget.isJournal) {
-                                        context
-                                            .read<PurchasedJournalBloc>()
-                                            .add(PurchasedJournalEvent
-                                                .getArticle(isRefresh: false));
-                                      } else {
-                                        context
-                                            .read<PurchasedArticleBloc>()
-                                            .add(PurchasedArticleEvent
-                                                .getArticle(isRefresh: false));
-                                      }
-                                      Navigator.pop(context);
-                                    },
-                                    signature: signature));
+                          onSuccess: (signature) async {
+                            context.read<RestoreBloc>().add(RestoreEvent.sendRestore(
+                                isJournal: widget.isJournal,
+                                onSuccess: () {
+                                  if (widget.isJournal) {
+                                    context
+                                        .read<PurchasedJournalBloc>()
+                                        .add(PurchasedJournalEvent.getArticle(isRefresh: false));
+                                  } else {
+                                    context
+                                        .read<PurchasedArticleBloc>()
+                                        .add(PurchasedArticleEvent.getArticle(isRefresh: false));
+                                  }
+                                  Navigator.pop(context);
+                                },
+                                signature: signature));
+                            await StorageRepository.putBool(key: 'is_purchase_restored', value: true);
                           },
                           onError: (error) {
                             _errorController.sink.add(ErrorAnimationType.shake);

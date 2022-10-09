@@ -8,5 +8,6 @@ class RestoreState with _$RestoreState {
     @Default('') String signature,
     @Default('') String phone,
     @Default('') String verifyError,
+    bool? showRestore,
   }) = _RestoreState;
 }

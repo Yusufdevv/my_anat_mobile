@@ -100,9 +100,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
             listener: (context, state) {
               setState(() {
                 if (_controller.index == 0) {
-                  MyFunctions.addHospitals(state.hospitals, context, _mapObjects);
+                  MyFunctions.addHospitals(state.hospitals, context, _mapObjects, _mapController);
                 } else {
-                  MyFunctions.addDoctors(state.doctors, context, _mapObjects);
+                  MyFunctions.addDoctors(state.doctors, context, _mapObjects, _mapController);
                 }
               });
             },
@@ -123,6 +123,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                       rotateGesturesEnabled: false,
                       onCameraPositionChanged: (cameraPosition, updateReason, isStopped) async {
                         if (isStopped) {
+                          zoomLevel = cameraPosition.zoom;
                           mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
                               lat: cameraPosition.target.latitude,
                               long: cameraPosition.target.longitude,
@@ -236,9 +237,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                             onTap: (index) {
                               setState(() {
                                 if (index == 0) {
-                                  MyFunctions.addHospitals(state.hospitals, context, _mapObjects);
+                                  MyFunctions.addHospitals(state.hospitals, context, _mapObjects, _mapController);
                                 } else {
-                                  MyFunctions.addDoctors(state.doctors, context, _mapObjects);
+                                  MyFunctions.addDoctors(state.doctors, context, _mapObjects, _mapController);
                                 }
                               });
                             },

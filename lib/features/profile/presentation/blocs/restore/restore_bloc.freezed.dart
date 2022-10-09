@@ -948,6 +948,7 @@ mixin _$RestoreState {
   String get signature => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   String get verifyError => throw _privateConstructorUsedError;
+  bool? get showRestore => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RestoreStateCopyWith<RestoreState> get copyWith =>
@@ -964,7 +965,8 @@ abstract class $RestoreStateCopyWith<$Res> {
       FormzStatus verifyStatus,
       String signature,
       String phone,
-      String verifyError});
+      String verifyError,
+      bool? showRestore});
 }
 
 /// @nodoc
@@ -982,6 +984,7 @@ class _$RestoreStateCopyWithImpl<$Res> implements $RestoreStateCopyWith<$Res> {
     Object? signature = freezed,
     Object? phone = freezed,
     Object? verifyError = freezed,
+    Object? showRestore = freezed,
   }) {
     return _then(_value.copyWith(
       sendCodeStatus: sendCodeStatus == freezed
@@ -1004,6 +1007,10 @@ class _$RestoreStateCopyWithImpl<$Res> implements $RestoreStateCopyWith<$Res> {
           ? _value.verifyError
           : verifyError // ignore: cast_nullable_to_non_nullable
               as String,
+      showRestore: showRestore == freezed
+          ? _value.showRestore
+          : showRestore // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1020,7 +1027,8 @@ abstract class _$$_RestoreStateCopyWith<$Res>
       FormzStatus verifyStatus,
       String signature,
       String phone,
-      String verifyError});
+      String verifyError,
+      bool? showRestore});
 }
 
 /// @nodoc
@@ -1041,6 +1049,7 @@ class __$$_RestoreStateCopyWithImpl<$Res>
     Object? signature = freezed,
     Object? phone = freezed,
     Object? verifyError = freezed,
+    Object? showRestore = freezed,
   }) {
     return _then(_$_RestoreState(
       sendCodeStatus: sendCodeStatus == freezed
@@ -1063,6 +1072,10 @@ class __$$_RestoreStateCopyWithImpl<$Res>
           ? _value.verifyError
           : verifyError // ignore: cast_nullable_to_non_nullable
               as String,
+      showRestore: showRestore == freezed
+          ? _value.showRestore
+          : showRestore // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1075,7 +1088,8 @@ class _$_RestoreState implements _RestoreState {
       this.verifyStatus = FormzStatus.pure,
       this.signature = '',
       this.phone = '',
-      this.verifyError = ''});
+      this.verifyError = '',
+      this.showRestore});
 
   @override
   @JsonKey()
@@ -1092,10 +1106,12 @@ class _$_RestoreState implements _RestoreState {
   @override
   @JsonKey()
   final String verifyError;
+  @override
+  final bool? showRestore;
 
   @override
   String toString() {
-    return 'RestoreState(sendCodeStatus: $sendCodeStatus, verifyStatus: $verifyStatus, signature: $signature, phone: $phone, verifyError: $verifyError)';
+    return 'RestoreState(sendCodeStatus: $sendCodeStatus, verifyStatus: $verifyStatus, signature: $signature, phone: $phone, verifyError: $verifyError, showRestore: $showRestore)';
   }
 
   @override
@@ -1110,7 +1126,9 @@ class _$_RestoreState implements _RestoreState {
             const DeepCollectionEquality().equals(other.signature, signature) &&
             const DeepCollectionEquality().equals(other.phone, phone) &&
             const DeepCollectionEquality()
-                .equals(other.verifyError, verifyError));
+                .equals(other.verifyError, verifyError) &&
+            const DeepCollectionEquality()
+                .equals(other.showRestore, showRestore));
   }
 
   @override
@@ -1120,7 +1138,8 @@ class _$_RestoreState implements _RestoreState {
       const DeepCollectionEquality().hash(verifyStatus),
       const DeepCollectionEquality().hash(signature),
       const DeepCollectionEquality().hash(phone),
-      const DeepCollectionEquality().hash(verifyError));
+      const DeepCollectionEquality().hash(verifyError),
+      const DeepCollectionEquality().hash(showRestore));
 
   @JsonKey(ignore: true)
   @override
@@ -1134,7 +1153,8 @@ abstract class _RestoreState implements RestoreState {
       final FormzStatus verifyStatus,
       final String signature,
       final String phone,
-      final String verifyError}) = _$_RestoreState;
+      final String verifyError,
+      final bool? showRestore}) = _$_RestoreState;
 
   @override
   FormzStatus get sendCodeStatus;
@@ -1146,6 +1166,8 @@ abstract class _RestoreState implements RestoreState {
   String get phone;
   @override
   String get verifyError;
+  @override
+  bool? get showRestore;
   @override
   @JsonKey(ignore: true)
   _$$_RestoreStateCopyWith<_$_RestoreState> get copyWith =>

@@ -1,10 +1,12 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
+import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/auth/presentation/widgets/info_container.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +112,7 @@ class _RegisterFeedState extends State<RegisterFeed> {
                   const SizedBox(width: 4),
                   WScaleAnimation(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacement(fade(page: const LoginScreen()));
                     },
                     child: Text(
                       LocaleKeys.enter.tr(),

@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';

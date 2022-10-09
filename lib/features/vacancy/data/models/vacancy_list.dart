@@ -1,5 +1,5 @@
+import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
-import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -77,13 +77,6 @@ class WorkTypeModel extends WorkType {
   const WorkTypeModel({required super.label, required super.name});
 
   factory WorkTypeModel.fromJson(Map<String, dynamic> json) => _$WorkTypeModelFromJson(json);
-}
-
-@JsonSerializable()
-class ImageModel extends ImageEntity {
-  const ImageModel({required super.origin, required super.small, required super.middle});
-
-  factory ImageModel.fromJson(Map<String, dynamic> json) => _$ImageModelFromJson(json);
 }
 
 @JsonSerializable()

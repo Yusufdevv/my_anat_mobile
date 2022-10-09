@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anatomica/assets/themes/theme.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
@@ -19,9 +21,19 @@ import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/au
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
+import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
+import 'package:anatomica/features/journal/domain/usecases/get_journal_article_single_usecase.dart';
+import 'package:anatomica/features/journal/domain/usecases/get_journal_articles_usecase.dart';
+import 'package:anatomica/features/journal/domain/usecases/get_journal_single_usecase.dart';
+import 'package:anatomica/features/journal/domain/usecases/get_journal_usecase.dart';
+import 'package:anatomica/features/journal/domain/usecases/get_journale_single_articles_usecase.dart';
+import 'package:anatomica/features/journal/presentation/bloc/download/download_bloc.dart';
+import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart' as fire;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,24 +41,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
-  runApp(
-    EasyLocalization(
-        path: 'lib/assets/translations',
-        supportedLocales: const [
-          Locale('ru'),
-          Locale('uz'),
-          Locale('fr'),
-        ],
-        fallbackLocale: Locale(
-            StorageRepository.getString('device_language', defValue: 'ru')),
-        startLocale: Locale(
-            StorageRepository.getString('device_language', defValue: 'ru')),
-        saveLocale: true,
-        child: const MyApp()),
-  );
+  FlutterError.onError = fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
+  runZonedGuarded(
+      () => runApp(EasyLocalization(
+            path: 'lib/assets/translations',
+            supportedLocales: const [
+              Locale('ru'),
+              Locale('uz'),
+              Locale('fr'),
+            ],
+            fallbackLocale: Locale(StorageRepository.getString('device_language', defValue: 'ru')),
+            startLocale: Locale(StorageRepository.getString('device_language', defValue: 'ru')),
+            saveLocale: true,
+            child: const MyApp(),
+          )), (error, stack) {
+    print('error from zone: $error');
+    fire.FirebaseCrashlytics.instance.recordError(error, stack);
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -77,6 +91,28 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => ShowPopUpBloc(),
+        ),
+        BlocProvider(
+          create: (context) => DownloadBloc(),
+        ),
+        BlocProvider(
+          create: (context) => JournalBloc(
+            getJournalSingleUseCase: GetJournalSingleUseCase(
+              repository: serviceLocator<JournalRepositoryImpl>(),
+            ),
+            getJournalUseCase: GetJournalUseCase(
+              repository: serviceLocator<JournalRepositoryImpl>(),
+            ),
+            getJournalArticlesUseCase: GetJournalArticlesUseCase(
+              repository: serviceLocator<JournalRepositoryImpl>(),
+            ),
+            getJournalArticleSingleUseCase: GetJournalArticleSingleUseCase(
+              repository: serviceLocator<JournalRepositoryImpl>(),
+            ),
+            getJournalSingleArticlesUseCase: GetJournalSingleArticlesUseCase(
+              repository: serviceLocator<JournalRepositoryImpl>(),
+            ),
+          ),
         ),
         BlocProvider(
           create: (_) => LoginSignUpBloc(
@@ -126,8 +162,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
-              navigator.pushAndRemoveUntil(
-                  fade(page: const HomeScreen()), (route) => false);
+              navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
               // switch (state.status) {
               //   case AuthenticationStatus.unauthenticated:
               //     navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);

@@ -12,8 +12,8 @@ PurchasedJournalModel _$PurchasedJournalModelFromJson(
       redaction: json['redaction'] as String? ?? '',
       isPremium: json['is_premium'] as bool? ?? false,
       category: json['category'] == null
-          ? const TitlerModel(title: '', id: 0)
-          : TitlerModel.fromJson(json['category'] as Map<String, dynamic>),
+          ? const CategoryModel(title: '', id: 0)
+          : CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
       publishDate: json['publish_date'] as String? ?? '',
       id: json['id'] as int? ?? 0,
       name: json['name'] as String? ?? '',
@@ -23,6 +23,7 @@ PurchasedJournalModel _$PurchasedJournalModelFromJson(
           : ImageModel.fromJson(json['image'] as Map<String, dynamic>),
       description: json['description'] as String? ?? '',
       slug: json['slug'] as String? ?? '',
+      fileExtension: json['file_extension'] as String? ?? '',
       isBought: json['is_bought'] as bool? ?? false,
       organization: json['organization'] as int? ?? 0,
       tags: (json['tags'] as List<dynamic>?)
@@ -45,6 +46,7 @@ Map<String, dynamic> _$PurchasedJournalModelToJson(
       'is_premium': instance.isPremium,
       'price': instance.price,
       'publish_date': instance.publishDate,
+      'file_extension': instance.fileExtension,
       'tags': instance.tags,
       'is_bought': instance.isBought,
     };

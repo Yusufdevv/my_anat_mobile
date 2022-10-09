@@ -2,10 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/phone_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/profile/presentation/blocs/purchased_article/purchased_article_bloc.dart';
-import 'package:anatomica/features/profile/presentation/blocs/purchased_journal/purchased_journal_bloc.dart';
 import 'package:anatomica/features/profile/presentation/blocs/restore/restore_bloc.dart';
-import 'package:anatomica/features/profile/presentation/widgets/popups/restore_verify.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,8 +14,7 @@ class RestorePhoneDialog extends StatefulWidget {
   final bool isJournal;
   final VoidCallback onSucces;
 
-  const RestorePhoneDialog({required this.isJournal,required this.onSucces, Key? key})
-      : super(key: key);
+  const RestorePhoneDialog({required this.isJournal, required this.onSucces, Key? key}) : super(key: key);
 
   @override
   State<RestorePhoneDialog> createState() => _RestorePhoneDialogState();
@@ -37,9 +33,10 @@ class _RestorePhoneDialogState extends State<RestorePhoneDialog> {
   Widget build(BuildContext context) => Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Container(
-          height: 270,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,10 +44,7 @@ class _RestorePhoneDialogState extends State<RestorePhoneDialog> {
                   Expanded(
                     child: Text(
                       LocaleKeys.restore_purchased_articles.tr(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline1!
-                          .copyWith(fontWeight: FontWeight.w600, fontSize: 20),
+                      style: Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
                     ),
                   ),
                   const SizedBox(
@@ -73,10 +67,7 @@ class _RestorePhoneDialogState extends State<RestorePhoneDialog> {
               ),
               Text(
                 LocaleKeys.write_phone_restore.tr(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
+                style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400, fontSize: 14),
               ),
               const SizedBox(
                 height: 12,
@@ -94,8 +85,8 @@ class _RestorePhoneDialogState extends State<RestorePhoneDialog> {
                   if (controller.text.length == 12) {
                     context.read<RestoreBloc>().add(RestoreEvent.sendCode(
                         phone: '+998${controller.text.replaceAll(' ', '')}',
-                        onSuccess: () async{
-                          Navigator.pop(context,true);
+                        onSuccess: () async {
+                          Navigator.pop(context, true);
                           widget.onSucces();
                         }));
                   }

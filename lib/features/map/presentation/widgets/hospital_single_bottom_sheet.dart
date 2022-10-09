@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/doctor_single/presentation/doctor_single_screen.dart';
 import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:map_launcher/map_launcher.dart' as map_launcher;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
@@ -15,15 +20,10 @@ class HospitalSingleBottomSheet extends StatelessWidget {
   final String title;
   final String slug;
   final int id;
-
   final List<String> images;
-
   final String address;
-
   final String phone;
-
   final Point location;
-
   final double rating;
   final bool isHospital;
 
@@ -67,7 +67,19 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            child: Image.network(images[index]),
+                            child: WImage(
+                              imageUrl: images[index],
+                              onErrorWidget: Container(
+                                width: MediaQuery.of(context).size.width - 24,
+                                alignment: Alignment.center,
+                                color: errorImageBackground,
+                                child: SvgPicture.asset(
+                                  AppIcons.logo,
+                                  height: 100,
+                                  color: textFieldColor,
+                                ),
+                              ),
+                            ),
                           ),
                           itemCount: images.length,
                           separatorBuilder: (context, index) => const SizedBox(width: 8),
@@ -148,7 +160,15 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                                     ),
                                   ),
                                 );
-                              } else {}
+                              } else {
+                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                  fade(
+                                    page: DoctorSingleScreen(
+                                      id: id,
+                                    ),
+                                  ),
+                                );
+                              }
                             },
                             text: LocaleKeys.more.tr(),
                             textColor: white,
@@ -159,8 +179,28 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           width: 40,
                           color: white,
                           onTap: () async {
-                            var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
-                            await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
+                            Navigator.of(context).pop();
+                            if (Platform.isAndroid) {
+                              if (await map_launcher.MapLauncher.isMapAvailable(map_launcher.MapType.google) ?? false) {
+                                await map_launcher.MapLauncher.showDirections(
+                                    mapType: map_launcher.MapType.google,
+                                    destination: map_launcher.Coords(location.latitude, location.longitude));
+                              } else {
+                                var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
+                                await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
+                              }
+                            } else {
+                              if (await map_launcher.MapLauncher.isMapAvailable(map_launcher.MapType.apple) ?? false) {
+                                await map_launcher.MapLauncher.showDirections(
+                                    mapType: map_launcher.MapType.apple,
+                                    destination: map_launcher.Coords(location.latitude, location.longitude));
+                              } else {
+                                var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
+                                await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
+                              }
+                            }
+                            // var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
+                            // await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
                           },
                           border: Border.all(color: primary),
                           padding: const EdgeInsets.all(8),

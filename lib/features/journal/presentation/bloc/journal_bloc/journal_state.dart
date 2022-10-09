@@ -101,5 +101,6 @@ class JournalState extends Equatable {
         articleSingleStatus,
         getJournalSingleStatus,
         journalSingle,
+        journalSingleArticleStatus,
       ];
 }

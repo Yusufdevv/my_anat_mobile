@@ -1,10 +1,4 @@
-
-import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
-import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
-import 'package:anatomica/features/common/data/models/logo.dart';
-import 'package:anatomica/features/common/data/models/titler.dart';
-import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_spec_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -22,6 +16,7 @@ class DoctorSpecModel extends DoctorSpecEntity {
     required super.rating,
     required super.address,
     required super.workExperience,
+    required super.image,
   });
 
   factory DoctorSpecModel.fromJson(Map<String, dynamic> json) => _$DoctorSpecModelFromJson(json);
