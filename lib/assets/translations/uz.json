@@ -269,7 +269,8 @@
   "write_sent_code": "Raqamga yuborilgan kodni kiriting",
   "write_phone_restore": "Tiklash uchun telefon raqamni kiriting",
   "today": "Bugun",
-  "yesterday": "Kecha"
+  "yesterday": "Kecha",
+  "subscription_title" : "Obuna sotib olish"
 
 
 }

@@ -348,8 +348,8 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                     if (await MapLauncher.isMapAvailable(MapType.apple) ?? false) {
                                                       await MapLauncher.showDirections(
                                                           mapType: MapType.apple,
-                                                          destination:
-                                                              Coords(state.hospital.latitude, state.hospital.latitude));
+                                                          destination: Coords(
+                                                              state.hospital.latitude, state.hospital.longitude));
                                                     } else {
                                                       if (await canLaunchUrlString(state.hospital.locationUrl)) {
                                                         await launchUrlString(state.hospital.locationUrl);

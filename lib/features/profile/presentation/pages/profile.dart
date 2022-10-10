@@ -122,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
                                   Navigator.of(context, rootNavigator: true).push(
                                     fade(
                                       page: const WebViewScreen(
-                                        page: 'CreateDoctorPage',
+                                        page: 'CabinetDoctorAboutPage',
                                       ),
                                     ),
                                   );
@@ -136,7 +136,7 @@ class ProfileScreen extends StatelessWidget {
                                 Navigator.of(context, rootNavigator: true).push(
                                   fade(
                                     page: const WebViewScreen(
-                                      page: 'CreateOrganizationPage',
+                                      page: 'CabinetOrganizationAboutPage',
                                     ),
                                   ),
                                 );
@@ -209,10 +209,6 @@ class ProfileScreen extends StatelessWidget {
                                         page: const WebViewScreen(
                                       page: 'CreateDoctorPage',
                                     )));
-                                    // if (await canLaunchUrlString('https://anatomica.uicgroup.tech/create-doctor')) {
-                                    //   await launchUrlString('https://anatomica.uicgroup.tech/create-doctor',
-                                    //       mode: LaunchMode.externalApplication);
-                                    // }
                                   },
                                 ),
                                 const SizedBox(height: 12),
@@ -225,11 +221,6 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                       ),
                                     );
-                                    // if (await canLaunchUrlString(
-                                    //     'https://anatomica.uicgroup.tech/create-organization')) {
-                                    //   await launchUrlString('https://anatomica.uicgroup.tech/create-organization',
-                                    //       mode: LaunchMode.externalApplication);
-                                    // }
                                   },
                                   iconBackgroundColor: steelBlue,
                                   icon: AppIcons.icHospital,

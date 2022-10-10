@@ -1,4 +1,3 @@
-import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/data/models/type_model.dart';
@@ -23,6 +22,8 @@ class OrganizationModel extends OrganizationEntity {
     required super.locationUrl,
     required super.images,
     required super.slug,
+    required super.latitude,
+    required super.longitude,
   });
   factory OrganizationModel.fromJson(Map<String, dynamic> json) => _$OrganizationModelFromJson(json);
   Map<String, dynamic> toJson() => _$OrganizationModelToJson(this);

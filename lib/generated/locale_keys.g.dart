@@ -270,5 +270,6 @@ abstract class  LocaleKeys {
   static const write_phone_restore = 'write_phone_restore';
   static const today = 'today';
   static const yesterday = 'yesterday';
+  static const subscription_title = 'subscription_title';
 
 }

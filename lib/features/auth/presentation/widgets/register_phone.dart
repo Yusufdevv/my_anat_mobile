@@ -102,6 +102,7 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: DefaultTextField(
+                      maxLines: 1,
                       title: LocaleKeys.mail.tr(),
                       controller: emailController,
                       hasError: state.confirmationType == 'email' && state.submitPhoneEmailStatus.isSubmissionFailure,

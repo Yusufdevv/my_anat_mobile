@@ -762,11 +762,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "0c8d85ba44019f8d2763b450e96f8d5774e160a1"
+      ref: d0795dcc77db6f0f2fb05728132799580e112e92
+      resolved-ref: d0795dcc77db6f0f2fb05728132799580e112e92
       url: "https://gitlab.uicgroup.tech/munir/munir-epub-reader-flutter.git"
     source: git
-    version: "0.0.17"
+    version: "0.0.7"
   nested:
     dependency: transitive
     description:
@@ -1367,6 +1367,34 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  webview_flutter:
+    dependency: "direct main"
+    description:
+      name: webview_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.4"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.10.4"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.9.5"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.9.5"
   win32:
     dependency: transitive
     description:

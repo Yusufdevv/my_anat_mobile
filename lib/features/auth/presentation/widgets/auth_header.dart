@@ -32,7 +32,7 @@ class AuthHeader extends StatelessWidget {
             )
           },
           SvgPicture.asset(AppIcons.logo),
-          const SizedBox(height: 36),
+          const SizedBox(height: 24),
           Text(title,
               style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 28, fontWeight: FontWeight.w700)),
           const SizedBox(height: 8),
@@ -40,7 +40,7 @@ class AuthHeader extends StatelessWidget {
             subTitle,
             style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 24),
         ],
       ),
     );

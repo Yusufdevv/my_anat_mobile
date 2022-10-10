@@ -1,4 +1,3 @@
-import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/data/models/type_model.dart';
@@ -30,6 +29,10 @@ class OrganizationEntity extends Equatable {
   final List<PhoneNumberEntity> phoneNumbers;
   @JsonKey(defaultValue: 0)
   final double rating;
+  @JsonKey(defaultValue: 0)
+  final double latitude;
+  @JsonKey(defaultValue: 0)
+  final double longitude;
   @JsonKey(defaultValue: [])
   @SpecializationConverter()
   final List<SpecializationEntity> specialization;
@@ -45,6 +48,8 @@ class OrganizationEntity extends Equatable {
     this.specialization = const [],
     this.address = '',
     this.rating = 0,
+    this.latitude = 0,
+    this.longitude = 0,
     this.slug = '',
     this.images = const [],
     this.locationUrl = '',

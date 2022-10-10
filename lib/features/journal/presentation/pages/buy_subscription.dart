@@ -251,6 +251,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                     fade(
                                       page: OneTimeExpect(
                                         isRegistered: true,
+                                        isSubscription: true,
                                         bloc: context.read<PaymentBloc>(),
                                       ),
                                     ),

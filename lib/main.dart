@@ -45,22 +45,23 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
   FlutterError.onError = fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
-  runZonedGuarded(
-      () => runApp(EasyLocalization(
-            path: 'lib/assets/translations',
-            supportedLocales: const [
-              Locale('ru'),
-              Locale('uz'),
-              Locale('fr'),
-            ],
-            fallbackLocale: Locale(StorageRepository.getString('device_language', defValue: 'ru')),
-            startLocale: Locale(StorageRepository.getString('device_language', defValue: 'ru')),
-            saveLocale: true,
-            child: const MyApp(),
-          )), (error, stack) {
-    print('error from zone: $error');
-    fire.FirebaseCrashlytics.instance.recordError(error, stack);
-  });
+
+  runApp(EasyLocalization(
+      path: 'lib/assets/translations',
+      supportedLocales: const [
+        Locale('ru'),
+        Locale('uz'),
+        Locale('fr'),
+      ],
+      fallbackLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
+      startLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
+      saveLocale: true,
+      child: const MyApp()));
+  // runZonedGuarded(
+  //     () => , (error, stack) {
+  //   print('error from zone: $error');
+  //   fire.FirebaseCrashlytics.instance.recordError(error, stack);
+  // });
 }
 
 class MyApp extends StatefulWidget {

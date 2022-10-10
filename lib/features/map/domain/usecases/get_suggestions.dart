@@ -12,6 +12,7 @@ class GetSuggestionsUseCase extends UseCase<List<SuggestionModel>, SuggestionPar
     return repo.getList(
         endpoint: param.isDoctor ? '/doctor/search/suggest/' : '/organization/search/suggest/',
         fromJson: SuggestionModel.fromJson,
+        sendToken: false,
         query: {
           'search': param.search,
         });

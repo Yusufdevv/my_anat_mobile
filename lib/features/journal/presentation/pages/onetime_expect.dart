@@ -12,7 +12,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class OneTimeExpect extends StatelessWidget {
   final bool isRegistered;
   final PaymentBloc bloc;
-  const OneTimeExpect({required this.bloc, required this.isRegistered, Key? key}) : super(key: key);
+  final bool isSubscription;
+  const OneTimeExpect({required this.bloc, required this.isRegistered, this.isSubscription = false, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,11 @@ class OneTimeExpect extends StatelessWidget {
               leadingWidth: 0,
               automaticallyImplyLeading: false,
               title: Text(
-                isRegistered ? LocaleKeys.buy_magazine.tr() : LocaleKeys.only_pay.tr(),
+                isSubscription
+                    ? LocaleKeys.subscription_title.tr()
+                    : isRegistered
+                        ? LocaleKeys.buy_magazine.tr()
+                        : LocaleKeys.only_pay.tr(),
                 style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
               ),
               actions: [

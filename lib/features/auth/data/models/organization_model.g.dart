@@ -39,6 +39,8 @@ OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
               .toList() ??
           [],
       slug: json['slug'] as String? ?? '',
+      latitude: (json['latitude'] as num?)?.toDouble() ?? 0,
+      longitude: (json['longitude'] as num?)?.toDouble() ?? 0,
     );
 
 Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
@@ -54,6 +56,8 @@ Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
           .map(const PhoneNumberConverter().toJson)
           .toList(),
       'rating': instance.rating,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
       'specialization': instance.specialization
           .map(const SpecializationConverter().toJson)
           .toList(),

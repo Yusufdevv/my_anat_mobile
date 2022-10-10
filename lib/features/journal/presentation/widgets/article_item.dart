@@ -23,26 +23,16 @@ class ArticleItem extends StatelessWidget {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         return GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () async {
             if (state.status == AuthenticationStatus.authenticated) {
-              Navigator.of(context, rootNavigator: true).push(
-                fade(
-                  page: WebViewScreen(
-                    shareValue: !magazineItemEntity.isPremium || magazineItemEntity.isBought
-                        ? 'https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}'
-                        : 'https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}',
-                    page: 'PurchasedArticlePage',
-                  ),
-                ),
-              );
-            } else {
               if (!magazineItemEntity.isPremium || magazineItemEntity.isBought) {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: WebViewScreen(
                       shareValue: 'https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}',
-                      page: '',
-                      url: 'https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}',
+                      page: 'ArticleSinglePage',
+                      slug: magazineItemEntity.slug,
                     ),
                   ),
                 );
@@ -51,25 +41,37 @@ class ArticleItem extends StatelessWidget {
                   fade(
                     page: WebViewScreen(
                       shareValue: 'https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}',
-                      page: '',
-                      url: 'https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}',
+                      page: 'PremiumArticleSinglePage',
+                      slug: magazineItemEntity.slug,
+                    ),
+                  ),
+                );
+              }
+            } else {
+              if (magazineItemEntity.isPremium) {
+                Navigator.of(context, rootNavigator: true).push(
+                  fade(
+                    page: WebViewScreen(
+                      sendToken: false,
+                      shareValue: 'https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}',
+                      page: 'PremiumArticleSinglePage',
+                      slug: magazineItemEntity.slug,
+                    ),
+                  ),
+                );
+              } else {
+                Navigator.of(context, rootNavigator: true).push(
+                  fade(
+                    page: WebViewScreen(
+                      sendToken: false,
+                      shareValue: 'https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}',
+                      page: 'ArticleSinglePage',
+                      slug: magazineItemEntity.slug,
                     ),
                   ),
                 );
               }
             }
-
-            // if (magazineItemEntity.isBought || !magazineItemEntity.isPremium) {
-            //   if (await canLaunchUrlString('https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}/')) {
-            //     await launchUrlString('https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}/',
-            //         mode: LaunchMode.externalApplication);
-            //   }
-            // } else {
-            //   if (await canLaunchUrlString('https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}/')) {
-            //     await launchUrlString('https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}/',
-            //         mode: LaunchMode.externalApplication);
-            //   }
-            // }
           },
           child: Container(
             height: 78,

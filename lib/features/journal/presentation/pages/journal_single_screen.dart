@@ -1,15 +1,21 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/auth/presentation/pages/register.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
 import 'package:anatomica/features/journal/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
+import 'package:anatomica/features/journal/presentation/pages/payment_screen.dart';
 import 'package:anatomica/features/journal/presentation/widgets/article_item.dart';
+import 'package:anatomica/features/journal/presentation/widgets/buy_dialog.dart';
+import 'package:anatomica/features/journal/presentation/widgets/downloading_dialog.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_single_big_item.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -111,141 +117,110 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                               EpubViewer.open(downloadState.fileUrl);
                             },
                             onLeftButtonTap: () {
-                              try {
-                                print('path141');
-                                EpubViewer.setConfig(
-                                  themeColor: Theme.of(context).primaryColor,
-                                  identifier: 'iosBook',
-                                  scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-                                  allowSharing: true,
-                                  enableTts: true,
-                                  nightMode: true,
-                                );
-                                EpubViewer.openAsset('assets/books/test_epub.epub');
-                              } catch (e) {
-                                FirebaseCrashlytics.instance.recordError(e, StackTrace.fromString(e.toString()));
-                                FirebaseCrashlytics.instance.recordFlutterFatalError(FlutterErrorDetails(exception: e));
-                              }
-                              // print('error141');
-                              // print('small left');
-                              // context.read<DownloadBloc>().add(
-                              //       CheckWhetherFragmentFileExists(
-                              //         fileName: state.journalSingle.redaction,
-                              //         fileUrl: state.journalSingle.preview.url,
-                              //         id: state.journalSingle.id,
-                              //         onNotDownloaded: () async {
-                              //           SystemChrome.setSystemUIOverlayStyle(
-                              //               const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-                              //           await showDialog(
-                              //             barrierDismissible: false,
-                              //             context: context,
-                              //             barrierColor: primary.withOpacity(0.84),
-                              //             builder: (_) => BlocProvider.value(
-                              //               value: context.read<DownloadBloc>(),
-                              //               child: DownloadingDialog(
-                              //                   bookTitle: 'widget.book.title', parentContext: context),
-                              //             ),
-                              //           );
-                              //         },
-                              //         fileType: widget.journal.fileExtension,
-                              //         onDownloaded: (file) {
-                              //           print(file.path);
-                              //           print('path141');
-                              //           EpubViewer.setConfig(
-                              //             themeColor: Theme.of(context).primaryColor,
-                              //             identifier: 'iosBook',
-                              //             scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-                              //             allowSharing: true,
-                              //             enableTts: true,
-                              //             nightMode: true,
-                              //           );
-                              //           EpubViewer.open(file.path);
-                              //         },
-                              //       ),
-                              //     );
+                              print('error141');
+                              print('small left');
+                              context.read<DownloadBloc>().add(
+                                    CheckWhetherFragmentFileExists(
+                                      fileName: state.journalSingle.redaction,
+                                      fileUrl: state.journalSingle.preview.url,
+                                      id: state.journalSingle.id,
+                                      onNotDownloaded: () async {
+                                        SystemChrome.setSystemUIOverlayStyle(
+                                            const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+                                        await showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          barrierColor: primary.withOpacity(0.84),
+                                          builder: (_) => BlocProvider.value(
+                                            value: context.read<DownloadBloc>(),
+                                            child: DownloadingDialog(
+                                                bookTitle: 'widget.book.title', parentContext: context),
+                                          ),
+                                        );
+                                      },
+                                      fileType: widget.journal.fileExtension,
+                                      onDownloaded: (file) {
+                                        print(file.path);
+                                        print('path141');
+                                        EpubViewer.setConfig(
+                                          themeColor: Theme.of(context).primaryColor,
+                                          identifier: 'iosBook',
+                                          scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
+                                          allowSharing: true,
+                                          enableTts: true,
+                                          nightMode: true,
+                                        );
+                                        EpubViewer.open(file.path);
+                                      },
+                                    ),
+                                  );
                             },
                             onRightButtonTap: () {
-                              try {
-                                print('path141');
-                                EpubViewer.setConfig(
-                                  themeColor: Theme.of(context).primaryColor,
-                                  identifier: 'iosBook',
-                                  scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-                                  allowSharing: true,
-                                  enableTts: true,
-                                  nightMode: true,
+                              if (widget.journal.isBought || !state.journalSingle.isPremium) {
+                                context.read<DownloadBloc>().add(
+                                      CheckWhetherFileExists(
+                                        slug: state.journalSingle.slug,
+                                        filename: state.journalSingle.name,
+                                        id: state.journalSingle.id,
+                                        onNotDownloaded: () async {
+                                          SystemChrome.setSystemUIOverlayStyle(
+                                              const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+                                          await showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            barrierColor: primary.withOpacity(0.84),
+                                            builder: (_) => BlocProvider.value(
+                                              value: context.read<DownloadBloc>(),
+                                              child: DownloadingDialog(
+                                                  bookTitle: 'widget.book.title', parentContext: context),
+                                            ),
+                                          );
+                                        },
+                                        fileType: widget.journal.fileExtension,
+                                        onDownloaded: (file) {
+                                          print(file.path);
+                                          print('error141');
+                                          // final encryptor = EncryptorRepository(iv: 'iv', key: '${journal.id}hC2uG1dQ8tK5nS1q');
+                                          // final decryptedFile = encryptor.getDecryptedDAta(file.readAsBytesSync());
+                                          EpubViewer.setConfig(
+                                            themeColor: Theme.of(context).primaryColor,
+                                            identifier: 'iosBook',
+                                            scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
+                                            allowSharing: true,
+                                            enableTts: true,
+                                            nightMode: true,
+                                          );
+                                          EpubViewer.setConfig(identifier: 'iosBook');
+                                          EpubViewer.open(file.path);
+                                        },
+                                      ),
+                                    );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (ctx) => BuyDialog(
+                                    onPaymentTap: () {
+                                      Navigator.of(context, rootNavigator: true).push(
+                                        fade(
+                                          page: PaymentScreen(
+                                            price: state.journalSingle.price,
+                                            title: state.journalSingle.redaction,
+                                            imageUrl: state.journalSingle.image.middle,
+                                            isJournal: true,
+                                            isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                                AuthenticationStatus.authenticated,
+                                            subtitle: state.journalSingle.redaction,
+                                            id: state.journalSingle.id,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    onRegistrationTap: () {
+                                      Navigator.of(context).push(fade(page: const RegisterScreen()));
+                                    },
+                                  ),
                                 );
-                                EpubViewer.openAsset('assets/books/test_epub.epub');
-                              } catch (e) {
-                                FirebaseCrashlytics.instance.recordError(e, StackTrace.fromString(e.toString()));
-                                FirebaseCrashlytics.instance.recordFlutterFatalError(FlutterErrorDetails(exception: e));
                               }
-
-                              // if (widget.journal.isBought || !state.journalSingle.isPremium) {
-                              //   context.read<DownloadBloc>().add(
-                              //         CheckWhetherFileExists(
-                              //           slug: state.journalSingle.slug,
-                              //           filename: state.journalSingle.name,
-                              //           id: state.journalSingle.id,
-                              //           onNotDownloaded: () async {
-                              //             SystemChrome.setSystemUIOverlayStyle(
-                              //                 const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-                              //             await showDialog(
-                              //               barrierDismissible: false,
-                              //               context: context,
-                              //               barrierColor: primary.withOpacity(0.84),
-                              //               builder: (_) => BlocProvider.value(
-                              //                 value: context.read<DownloadBloc>(),
-                              //                 child: DownloadingDialog(
-                              //                     bookTitle: 'widget.book.title', parentContext: context),
-                              //               ),
-                              //             );
-                              //           },
-                              //           fileType: widget.journal.fileExtension,
-                              //           onDownloaded: (file) {
-                              //             print(file.path);
-                              //             print('error141');
-                              //             // final encryptor = EncryptorRepository(iv: 'iv', key: '${journal.id}hC2uG1dQ8tK5nS1q');
-                              //             // final decryptedFile = encryptor.getDecryptedDAta(file.readAsBytesSync());
-                              //             EpubViewer.setConfig(
-                              //               themeColor: Theme.of(context).primaryColor,
-                              //               identifier: 'iosBook',
-                              //               scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-                              //               allowSharing: true,
-                              //               enableTts: true,
-                              //               nightMode: true,
-                              //             );
-                              //             EpubViewer.setConfig(identifier: 'iosBook');
-                              //             EpubViewer.open(file.path);
-                              //           },
-                              //         ),
-                              //       );
-                              // } else {
-                              //   showDialog(
-                              //     context: context,
-                              //     builder: (ctx) => BuyDialog(
-                              //       onPaymentTap: () {
-                              //         Navigator.of(context, rootNavigator: true).push(
-                              //           fade(
-                              //             page: PaymentScreen(
-                              //               price: state.journalSingle.price,
-                              //               title: state.journalSingle.redaction,
-                              //               imageUrl: state.journalSingle.image.middle,
-                              //               isJournal: true,
-                              //               isRegistered: context.read<AuthenticationBloc>().state.status ==
-                              //                   AuthenticationStatus.authenticated,
-                              //               subtitle: state.journalSingle.redaction,
-                              //               id: state.journalSingle.id,
-                              //             ),
-                              //           ),
-                              //         );
-                              //       },
-                              //       onRegistrationTap: () {
-                              //         Navigator.of(context).push(fade(page: const LoginScreen()));
-                              //       },
-                              //     ),
-                              //   );
-                              // }
                             },
                             journalEntity: widget.journal,
                             isDownloaded: downloadState.isFileAlreadyDownloaded,
