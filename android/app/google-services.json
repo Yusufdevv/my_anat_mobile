@@ -29,6 +29,13 @@
             {
               "client_id": "700964691007-pggoptvgcuabme1gol0ghp6m2i9gslqd.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "700964691007-ki6f1ej8sj1nrmgj45093100d7lp8m78.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.uicgroup.anatomica"
+              }
             }
           ]
         }
