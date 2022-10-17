@@ -91,27 +91,33 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                 physics: const NeverScrollableScrollPhysics(),
                 controller: widget.tabController,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: PhoneTextField(
-                      title: LocaleKeys.phone_number.tr(),
-                      controller: phoneController,
-                      hasError: state.confirmationType == 'phone' && state.submitPhoneEmailStatus.isSubmissionFailure,
+                  SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: PhoneTextField(
+                        title: LocaleKeys.phone_number.tr(),
+                        controller: phoneController,
+                        hasError: state.confirmationType == 'phone' && state.submitPhoneEmailStatus.isSubmissionFailure,
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: DefaultTextField(
-                      maxLines: 1,
-                      title: LocaleKeys.mail.tr(),
-                      controller: emailController,
-                      hasError: state.confirmationType == 'email' && state.submitPhoneEmailStatus.isSubmissionFailure,
-                      onChanged: (value) {},
-                      prefix: Padding(
-                        padding: const EdgeInsets.only(left: 12, right: 8),
-                        child: SvgPicture.asset(AppIcons.mail),
+                  SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: DefaultTextField(
+                        maxLines: 1,
+                        title: LocaleKeys.mail.tr(),
+                        controller: emailController,
+                        hasError: state.confirmationType == 'email' && state.submitPhoneEmailStatus.isSubmissionFailure,
+                        onChanged: (value) {},
+                        prefix: Padding(
+                          padding: const EdgeInsets.only(left: 12, right: 8),
+                          child: SvgPicture.asset(AppIcons.mail),
+                        ),
+                        hintText: 'example@anatomica.uz',
                       ),
-                      hintText: 'example@anatomica.uz',
                     ),
                   ),
                 ],

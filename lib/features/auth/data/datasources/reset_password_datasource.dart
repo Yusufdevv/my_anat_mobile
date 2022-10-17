@@ -25,7 +25,16 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
         print(response.data);
         return response.data['state_id'];
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first.toString().replaceAll(RegExp(r'\[?]?'), '')
+                      : LocaleKeys.incorrect_login)
+                  .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       }
     } on ServerException {
       rethrow;
@@ -45,7 +54,16 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
       print(response.data);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first.toString().replaceAll(RegExp(r'\[?]?'), '')
+                      : LocaleKeys.incorrect_login)
+                  .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       }
     } on ServerException {
       rethrow;
@@ -68,7 +86,16 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return response.data['state_id'] as String;
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first.toString().replaceAll(RegExp(r'\[?]?'), '')
+                      : LocaleKeys.incorrect_login)
+                  .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       }
     } on ServerException {
       rethrow;
@@ -91,7 +118,16 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return response.data['state_id'] as String;
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first.toString().replaceAll(RegExp(r'\[?]?'), '')
+                      : LocaleKeys.incorrect_login)
+                  .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       }
     } on ServerException {
       rethrow;
@@ -114,7 +150,16 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return response.data['state_id'] as String;
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first.toString().replaceAll(RegExp(r'\[?]?'), '')
+                      : LocaleKeys.incorrect_login)
+                  .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       }
     } on ServerException {
       rethrow;
@@ -146,7 +191,16 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
           print(response.data);
           await StorageRepository.putString('token', response.data['token']);
         } else {
-          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          if (response.data is Map) {
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first.toString().replaceAll(RegExp(r'\[?]?'), '')
+                        : LocaleKeys.incorrect_login)
+                    .toString());
+          } else {
+            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          }
         }
       } on ServerException {
         rethrow;
@@ -170,7 +224,16 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return response.data['state_id'] as String;
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first.toString().replaceAll(RegExp(r'\[?]?'), '')
+                      : LocaleKeys.incorrect_login)
+                  .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       }
     } on ServerException {
       rethrow;
@@ -189,7 +252,16 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return response.data['state_id'] as String;
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        if (response.data is Map) {
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: ((response.data as Map).values.isNotEmpty
+                      ? (response.data as Map).values.first.toString().replaceAll(RegExp(r'\[?]?'), '')
+                      : LocaleKeys.incorrect_login)
+                  .toString());
+        } else {
+          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        }
       }
     } on ServerException {
       rethrow;
