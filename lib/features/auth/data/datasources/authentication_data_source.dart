@@ -9,13 +9,21 @@ abstract class AuthenticationDataSource {
   Future<UserModel> getUserData();
   Future<bool> checkUserName({required String username});
   Future<String> createNewState();
-  Future<String> submitNameUsername({required String username, required String fullName, required String stateId});
+  Future<String> submitNameUsername(
+      {required String username,
+      required String fullName,
+      required String stateId});
   Future<String> submitPhone({required String phone, required String stateId});
   Future<String> submitEmail({required String email, required String stateId});
-  Future<String> submitChangedPhone({required String phone, required String stateId});
-  Future<String> submitChangedEmail({required String email, required String stateId});
+  Future<String> submitChangedPhone(
+      {required String phone, required String stateId});
+  Future<String> submitChangedEmail(
+      {required String email, required String stateId});
   Future<String> confirmCode({required String code, required String stateId});
-  Future<String> submitPassword({required String password, required String confirmPassword, required String stateId});
+  Future<String> submitPassword(
+      {required String password,
+      required String confirmPassword,
+      required String stateId});
   Future<void> resendCode({required String stateId});
 }
 
@@ -23,15 +31,20 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   final Dio _dio;
   AuthenticationDataSourceImpl(this._dio);
   @override
-  Future<void> login({required String username, required String password}) async {
+  Future<void> login(
+      {required String username, required String password}) async {
     try {
       final response = await _dio.post('/auth/token/', data: {
         "username": username,
         "password": password,
       });
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
         await StorageRepository.putString('token', response.data['token']);
-      } else if (response.statusCode != null && response.statusCode! >= 400 && response.statusCode! < 500) {
+      } else if (response.statusCode != null &&
+          response.statusCode! >= 400 &&
+          response.statusCode! < 500) {
         if (response.data is Map) {
           throw ServerException(
               statusCode: response.statusCode!,
@@ -40,10 +53,14 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                       : LocaleKeys.incorrect_login)
                   .toString());
         } else {
-          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: response.data.toString());
         }
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -58,8 +75,12 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   Future<UserModel> getUserData() async {
     try {
       final response = await _dio.get('/user/profile/',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+          options: Options(headers: {
+            'Authorization': 'Token ${StorageRepository.getString('token')}'
+          }));
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
         return UserModel.fromJson(response.data);
       } else {
         await StorageRepository.deleteString('token');
@@ -71,7 +92,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                       : LocaleKeys.error_while_get_user)
                   .toString());
         } else {
-          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: response.data.toString());
         }
       }
     } on ServerException {
@@ -88,9 +111,15 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     if (username.isNotEmpty) {
       try {
         final response = await _dio.get('/auth/check/username/$username');
-        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        print(response.realUri);
+        print(response.headers);
+        if (response.statusCode != null &&
+            response.statusCode! >= 200 &&
+            response.statusCode! < 300) {
           return true;
-        } else if (response.statusCode != null && response.statusCode! >= 400 && response.statusCode! < 500) {
+        } else if (response.statusCode != null &&
+            response.statusCode! >= 400 &&
+            response.statusCode! < 500) {
           if (response.data is Map) {
             throw ServerException(
                 statusCode: response.statusCode!,
@@ -99,10 +128,14 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                         : LocaleKeys.login_busy)
                     .toString());
           } else {
-            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: response.data.toString());
           }
         } else {
-          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: response.data.toString());
         }
       } on ServerException {
         rethrow;
@@ -112,7 +145,8 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: LocaleKeys.login_cannot_be_empty);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.login_cannot_be_empty);
     }
   }
 
@@ -120,10 +154,14 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   Future<String> createNewState() async {
     try {
       final response = await _dio.post('/auth/registration/new-state/');
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
         return response.data['state_id'] as String;
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -136,7 +174,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
 
   @override
   Future<String> submitNameUsername(
-      {required String username, required String fullName, required String stateId}) async {
+      {required String username,
+      required String fullName,
+      required String stateId}) async {
     if (fullName.isNotEmpty) {
       try {
         final response = await _dio.post('/auth/registration/', data: {
@@ -144,7 +184,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           "full_name": fullName,
           "login": username,
         });
-        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        if (response.statusCode != null &&
+            response.statusCode! >= 200 &&
+            response.statusCode! < 300) {
           return response.data['state_id'] as String;
         } else {
           if (response.data is Map) {
@@ -155,7 +197,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                         : LocaleKeys.name_login_error)
                     .toString());
           } else {
-            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: response.data.toString());
           }
         }
       } on ServerException {
@@ -166,16 +210,21 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: LocaleKeys.name_cannot_be_empty);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.name_cannot_be_empty);
     }
   }
 
   @override
-  Future<String> confirmCode({required String code, required String stateId}) async {
+  Future<String> confirmCode(
+      {required String code, required String stateId}) async {
     if (code.length >= 6) {
       try {
-        final response = await _dio.post('/auth/registration/', data: {"state_id": stateId, "code": code});
-        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        final response = await _dio.post('/auth/registration/',
+            data: {"state_id": stateId, "code": code});
+        if (response.statusCode != null &&
+            response.statusCode! >= 200 &&
+            response.statusCode! < 300) {
           return response.data['state_id'] as String;
         } else {
           if (response.data is Map) {
@@ -186,7 +235,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                         : LocaleKeys.confirmation_error)
                     .toString());
           } else {
-            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: response.data.toString());
           }
         }
       } on ServerException {
@@ -202,7 +253,8 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   }
 
   @override
-  Future<String> submitEmail({required String email, required String stateId}) async {
+  Future<String> submitEmail(
+      {required String email, required String stateId}) async {
     if (email.isNotEmpty) {
       try {
         final response = await _dio.post('/auth/registration/', data: {
@@ -210,7 +262,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           "confirmation_type": 'email',
           "email": email,
         });
-        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        if (response.statusCode != null &&
+            response.statusCode! >= 200 &&
+            response.statusCode! < 300) {
           return response.data['state_id'] as String;
         } else {
           if (response.data is Map) {
@@ -221,7 +275,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                         : LocaleKeys.email_error)
                     .toString());
           } else {
-            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: response.data.toString());
           }
         }
       } on ServerException {
@@ -232,19 +288,25 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: LocaleKeys.email_cannot_be_empty);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.email_cannot_be_empty);
     }
   }
 
   @override
   Future<String> submitPassword(
-      {required String password, required String confirmPassword, required String stateId}) async {
+      {required String password,
+      required String confirmPassword,
+      required String stateId}) async {
     if (password.isEmpty) {
-      throw const ParsingException(errorMessage: LocaleKeys.password_cannot_be_empty);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.password_cannot_be_empty);
     } else if (confirmPassword.isEmpty) {
-      throw const ParsingException(errorMessage: LocaleKeys.repeated_password_cannot_be_empty);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.repeated_password_cannot_be_empty);
     } else if (password != confirmPassword) {
-      throw const ParsingException(errorMessage: LocaleKeys.passwords_are_not_same);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.passwords_are_not_same);
     } else {
       try {
         final response = await _dio.post('/auth/registration/', data: {
@@ -252,17 +314,23 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           "password": password,
         });
 
-        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        if (response.statusCode != null &&
+            response.statusCode! >= 200 &&
+            response.statusCode! < 300) {
           await StorageRepository.putString('token', response.data['token']);
           return '';
         } else {
           if (response.data is Map) {
             throw ServerException(
                 statusCode: response.statusCode!,
-                errorMessage:
-                    ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : '').toString());
+                errorMessage: ((response.data as Map).values.isNotEmpty
+                        ? (response.data as Map).values.first
+                        : '')
+                    .toString());
           } else {
-            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: response.data.toString());
           }
         }
       } on ServerException {
@@ -276,7 +344,8 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   }
 
   @override
-  Future<String> submitPhone({required String phone, required String stateId}) async {
+  Future<String> submitPhone(
+      {required String phone, required String stateId}) async {
     if (phone.isNotEmpty) {
       try {
         final response = await _dio.post('/auth/registration/', data: {
@@ -284,7 +353,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           "confirmation_type": 'phone',
           "phone": phone,
         });
-        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        if (response.statusCode != null &&
+            response.statusCode! >= 200 &&
+            response.statusCode! < 300) {
           return response.data['state_id'] as String;
         } else {
           if (response.data is Map) {
@@ -298,10 +369,14 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
             if (response.data is Map) {
               throw ServerException(
                   statusCode: response.statusCode!,
-                  errorMessage:
-                      ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : '').toString());
+                  errorMessage: ((response.data as Map).values.isNotEmpty
+                          ? (response.data as Map).values.first
+                          : '')
+                      .toString());
             } else {
-              throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+              throw ServerException(
+                  statusCode: response.statusCode!,
+                  errorMessage: response.data.toString());
             }
           }
         }
@@ -313,17 +388,21 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: LocaleKeys.phone_number_cannot_be_empty);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.phone_number_cannot_be_empty);
     }
   }
 
   @override
   Future<void> resendCode({required String stateId}) async {
     try {
-      final response = await _dio.post('/auth/registration/resend-code/', data: {
+      final response =
+          await _dio.post('/auth/registration/resend-code/', data: {
         "state_id": stateId,
       });
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
       } else {
         if (response.data is Map) {
           throw ServerException(
@@ -333,7 +412,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                       : LocaleKeys.resend_sms_error)
                   .toString());
         } else {
-          throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+          throw ServerException(
+              statusCode: response.statusCode!,
+              errorMessage: response.data.toString());
         }
       }
     } on ServerException {
@@ -346,7 +427,8 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   }
 
   @override
-  Future<String> submitChangedEmail({required String email, required String stateId}) async {
+  Future<String> submitChangedEmail(
+      {required String email, required String stateId}) async {
     if (email.isNotEmpty) {
       try {
         final response = await _dio.post('/auth/registration/back/', data: {
@@ -354,7 +436,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           "confirmation_type": 'email',
           "email": email,
         });
-        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        if (response.statusCode != null &&
+            response.statusCode! >= 200 &&
+            response.statusCode! < 300) {
           return response.data['state_id'] as String;
         } else {
           if (response.data is Map) {
@@ -365,7 +449,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                         : LocaleKeys.email_error)
                     .toString());
           } else {
-            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: response.data.toString());
           }
         }
       } on ServerException {
@@ -376,12 +462,14 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: LocaleKeys.email_cannot_be_empty);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.email_cannot_be_empty);
     }
   }
 
   @override
-  Future<String> submitChangedPhone({required String phone, required String stateId}) async {
+  Future<String> submitChangedPhone(
+      {required String phone, required String stateId}) async {
     if (phone.isNotEmpty) {
       try {
         final response = await _dio.post('/auth/registration/back/', data: {
@@ -389,7 +477,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           "confirmation_type": 'phone',
           "phone": phone,
         });
-        if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        if (response.statusCode != null &&
+            response.statusCode! >= 200 &&
+            response.statusCode! < 300) {
           return response.data['state_id'] as String;
         } else {
           if (response.data is Map) {
@@ -400,7 +490,9 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                         : LocaleKeys.phone_number_error)
                     .toString());
           } else {
-            throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+            throw ServerException(
+                statusCode: response.statusCode!,
+                errorMessage: response.data.toString());
           }
         }
       } on ServerException {
@@ -411,7 +503,8 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: LocaleKeys.phone_number_cannot_be_empty);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.phone_number_cannot_be_empty);
     }
   }
 }
