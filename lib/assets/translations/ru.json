@@ -268,5 +268,6 @@
   "write_phone_restore": "Введите номер телефона для восстановление",
   "today": "Сегодня",
   "yesterday": "Вчера",
-  "subscription_title" : "Активируйте подписку"
+  "subscription_title" : "Активируйте подписку",
+  "professions": "Профессия"
 }

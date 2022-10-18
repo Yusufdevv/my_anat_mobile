@@ -28,7 +28,7 @@ class VacancyState extends Equatable {
   final List<String>? salaryKey;
   final List<String>? experienceKey;
   final List<int> districtList;
-  final int selectCategoryId;
+  final List<int> selectCategoryId;
 
   const VacancyState({
     required this.organizationNext,
@@ -58,7 +58,7 @@ class VacancyState extends Equatable {
     this.salaryKey,
     this.experienceKey,
     this.districtList = const [],
-    this.selectCategoryId = 0,
+    this.selectCategoryId = const [],
   });
 
   VacancyState copyWith({
@@ -89,7 +89,7 @@ class VacancyState extends Equatable {
     List<String>? salaryKey,
     List<String>? experienceKey,
     List<int>? districtList,
-    int? selectCategoryId,
+    List<int>? selectCategoryId,
   }) =>
       VacancyState(
         paginatorStatus: paginatorStatus ?? this.paginatorStatus,
@@ -103,8 +103,7 @@ class VacancyState extends Equatable {
         vacancyOptionList: vacancyOptionList ?? this.vacancyOptionList,
         organizationVacancyStatus: organizationVacancyStatus ?? this.organizationVacancyStatus,
         fetchMoreOrganization: fetchMoreOrganization ?? this.fetchMoreOrganization,
-        paginatorStatusOrganization:
-            paginatorStatusOrganization ?? this.paginatorStatusOrganization,
+        paginatorStatusOrganization: paginatorStatusOrganization ?? this.paginatorStatusOrganization,
         organizationVacancyList: organizationVacancyList ?? this.organizationVacancyList,
         organizationCount: organizationCount ?? this.organizationCount,
         organizationNext: organizationNext ?? this.organizationNext,

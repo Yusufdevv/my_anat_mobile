@@ -6,6 +6,7 @@ import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/experience_bottomsheet.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filter_item.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/profession_bottom_sheet.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/region_bottom_sheet.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/salary_bottom_sheet.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -37,12 +38,9 @@ class FilterBottomSheet extends StatelessWidget {
             hasHeader: true,
             showClear: true,
             onClear: () {
-              vacancyBloc.add(
-                  SelectSalaryFilterEvent(salaryKey: null, onSuccess: () {}));
-              vacancyBloc.add(
-                  SelectExperienceEvent(onSuccess: () {}, experienceKey: null));
-              vacancyBloc.add(
-                  SelectDistrictEvent(onSuccess: () {}, districtList: null));
+              vacancyBloc.add(SelectSalaryFilterEvent(salaryKey: null, onSuccess: () {}));
+              vacancyBloc.add(SelectExperienceEvent(onSuccess: () {}, experienceKey: null));
+              vacancyBloc.add(SelectDistrictEvent(onSuccess: () {}, districtList: null));
             },
             stackedWButton: WButton(
               padding: EdgeInsets.zero,
@@ -82,10 +80,9 @@ class FilterBottomSheet extends StatelessWidget {
               const SizedBox(height: 16),
               FilterItem(
                 onTap: () {
-                  showExperienceBottomSheet(
-                      context, vacancyBloc, state.experienceKey ?? []);
+                  showProfessionBottomSheet(context, vacancyBloc, state.selectCategoryId);
                 },
-                title: LocaleKeys.experience.tr(),
+                title: LocaleKeys.professions.tr(),
               ),
               const SizedBox(height: 12),
               hasSalary
@@ -102,8 +99,7 @@ class FilterBottomSheet extends StatelessWidget {
               const SizedBox(height: 12),
               FilterItem(
                 onTap: () {
-                  showExperienceBottomSheet(
-                      context, vacancyBloc, state.experienceKey ?? []);
+                  showExperienceBottomSheet(context, vacancyBloc, state.experienceKey ?? []);
                 },
                 title: LocaleKeys.experience.tr(),
               ),
@@ -128,8 +124,7 @@ class FilterBottomSheet extends StatelessWidget {
   }
 }
 
-void showFilterBottomSheet(BuildContext context, RegionBloc regionBloc,
-    VacancyBloc vacancyBloc, bool hasSalary) {
+void showFilterBottomSheet(BuildContext context, RegionBloc regionBloc, VacancyBloc vacancyBloc, bool hasSalary) {
   showModalBottomSheet(
     context: context,
     useRootNavigator: true,

@@ -96,7 +96,6 @@ class LikeUnlikeCandidate extends VacancyEvent {
 }
 
 class SelectCategoryEvent extends VacancyEvent {
-  final int id;
-
+  final List<int> id;
   SelectCategoryEvent({required this.id});
 }

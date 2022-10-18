@@ -20,14 +20,14 @@ class CheckBoxTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: onTap,
-            child: Row(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Padding(
+        padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            Row(
               children: [
                 WCheckBox(isChecked: isChecked),
                 const SizedBox(width: 12),
@@ -37,11 +37,11 @@ class CheckBoxTitle extends StatelessWidget {
                 )
               ],
             ),
-          ),
-          const SizedBox(height: 16),
-          !isLast ? const WDivider() : const SizedBox(),
-          SizedBox(height: isLast ? 8 : 16),
-        ],
+            const SizedBox(height: 16),
+            !isLast ? const WDivider() : const SizedBox(),
+            SizedBox(height: isLast ? 8 : 16),
+          ],
+        ),
       ),
     );
   }

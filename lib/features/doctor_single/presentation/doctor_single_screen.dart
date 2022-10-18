@@ -122,7 +122,6 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                 } else if (state.getDoctorSingleStatus.isSubmissionSuccess) {
                   return NestedScrollView(
                     floatHeaderSlivers: false,
-                    controller: _scrollController,
                     headerSliverBuilder: (context, isHeaderScrolled) => [
                       DoctorSingleAppBar(headerManagerBloc: _headerManagerBloc, doctor: state.doctorSingle),
                       SliverOverlapAbsorber(
