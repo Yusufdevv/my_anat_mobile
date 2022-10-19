@@ -31,13 +31,13 @@ mixin _$EditProfileEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? changeName,
-    TResult Function(String text)? changeSurname,
-    TResult Function(String text)? changePhoneNumber,
-    TResult Function(String text)? changeEmail,
-    TResult Function(String text)? changeDate,
-    TResult Function(String image)? changeImage,
-    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) =>
       throw _privateConstructorUsedError;
@@ -67,13 +67,13 @@ mixin _$EditProfileEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangeName value)? changeName,
-    TResult Function(_ChangeSurname value)? changeSurname,
-    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
-    TResult Function(_ChangeEmail value)? changeEmail,
-    TResult Function(_ChangeDate value)? changeDate,
-    TResult Function(_ChangeImage value)? changeImage,
-    TResult Function(_SaveData value)? saveData,
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_SaveData value)? saveData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -94,17 +94,18 @@ mixin _$EditProfileEvent {
 abstract class $EditProfileEventCopyWith<$Res> {
   factory $EditProfileEventCopyWith(
           EditProfileEvent value, $Res Function(EditProfileEvent) then) =
-      _$EditProfileEventCopyWithImpl<$Res>;
+      _$EditProfileEventCopyWithImpl<$Res, EditProfileEvent>;
 }
 
 /// @nodoc
-class _$EditProfileEventCopyWithImpl<$Res>
+class _$EditProfileEventCopyWithImpl<$Res, $Val extends EditProfileEvent>
     implements $EditProfileEventCopyWith<$Res> {
   _$EditProfileEventCopyWithImpl(this._value, this._then);
 
-  final EditProfileEvent _value;
   // ignore: unused_field
-  final $Res Function(EditProfileEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -112,26 +113,25 @@ abstract class _$$_ChangeNameCopyWith<$Res> {
   factory _$$_ChangeNameCopyWith(
           _$_ChangeName value, $Res Function(_$_ChangeName) then) =
       __$$_ChangeNameCopyWithImpl<$Res>;
+  @useResult
   $Res call({String text});
 }
 
 /// @nodoc
 class __$$_ChangeNameCopyWithImpl<$Res>
-    extends _$EditProfileEventCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_ChangeName>
     implements _$$_ChangeNameCopyWith<$Res> {
   __$$_ChangeNameCopyWithImpl(
       _$_ChangeName _value, $Res Function(_$_ChangeName) _then)
-      : super(_value, (v) => _then(v as _$_ChangeName));
+      : super(_value, _then);
 
-  @override
-  _$_ChangeName get _value => super._value as _$_ChangeName;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? text = freezed,
+    Object? text = null,
   }) {
     return _then(_$_ChangeName(
-      text == freezed
+      null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
@@ -157,15 +157,15 @@ class _$_ChangeName implements _ChangeName {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangeName &&
-            const DeepCollectionEquality().equals(other.text, text));
+            (identical(other.text, text) || other.text == text));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(text));
+  int get hashCode => Object.hash(runtimeType, text);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangeNameCopyWith<_$_ChangeName> get copyWith =>
       __$$_ChangeNameCopyWithImpl<_$_ChangeName>(this, _$identity);
 
@@ -188,13 +188,13 @@ class _$_ChangeName implements _ChangeName {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? changeName,
-    TResult Function(String text)? changeSurname,
-    TResult Function(String text)? changePhoneNumber,
-    TResult Function(String text)? changeEmail,
-    TResult Function(String text)? changeDate,
-    TResult Function(String image)? changeImage,
-    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
     return changeName?.call(text);
@@ -236,13 +236,13 @@ class _$_ChangeName implements _ChangeName {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangeName value)? changeName,
-    TResult Function(_ChangeSurname value)? changeSurname,
-    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
-    TResult Function(_ChangeEmail value)? changeEmail,
-    TResult Function(_ChangeDate value)? changeDate,
-    TResult Function(_ChangeImage value)? changeImage,
-    TResult Function(_SaveData value)? saveData,
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_SaveData value)? saveData,
   }) {
     return changeName?.call(this);
   }
@@ -280,26 +280,25 @@ abstract class _$$_ChangeSurnameCopyWith<$Res> {
   factory _$$_ChangeSurnameCopyWith(
           _$_ChangeSurname value, $Res Function(_$_ChangeSurname) then) =
       __$$_ChangeSurnameCopyWithImpl<$Res>;
+  @useResult
   $Res call({String text});
 }
 
 /// @nodoc
 class __$$_ChangeSurnameCopyWithImpl<$Res>
-    extends _$EditProfileEventCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_ChangeSurname>
     implements _$$_ChangeSurnameCopyWith<$Res> {
   __$$_ChangeSurnameCopyWithImpl(
       _$_ChangeSurname _value, $Res Function(_$_ChangeSurname) _then)
-      : super(_value, (v) => _then(v as _$_ChangeSurname));
+      : super(_value, _then);
 
-  @override
-  _$_ChangeSurname get _value => super._value as _$_ChangeSurname;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? text = freezed,
+    Object? text = null,
   }) {
     return _then(_$_ChangeSurname(
-      text == freezed
+      null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
@@ -325,15 +324,15 @@ class _$_ChangeSurname implements _ChangeSurname {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangeSurname &&
-            const DeepCollectionEquality().equals(other.text, text));
+            (identical(other.text, text) || other.text == text));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(text));
+  int get hashCode => Object.hash(runtimeType, text);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangeSurnameCopyWith<_$_ChangeSurname> get copyWith =>
       __$$_ChangeSurnameCopyWithImpl<_$_ChangeSurname>(this, _$identity);
 
@@ -356,13 +355,13 @@ class _$_ChangeSurname implements _ChangeSurname {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? changeName,
-    TResult Function(String text)? changeSurname,
-    TResult Function(String text)? changePhoneNumber,
-    TResult Function(String text)? changeEmail,
-    TResult Function(String text)? changeDate,
-    TResult Function(String image)? changeImage,
-    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
     return changeSurname?.call(text);
@@ -404,13 +403,13 @@ class _$_ChangeSurname implements _ChangeSurname {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangeName value)? changeName,
-    TResult Function(_ChangeSurname value)? changeSurname,
-    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
-    TResult Function(_ChangeEmail value)? changeEmail,
-    TResult Function(_ChangeDate value)? changeDate,
-    TResult Function(_ChangeImage value)? changeImage,
-    TResult Function(_SaveData value)? saveData,
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_SaveData value)? saveData,
   }) {
     return changeSurname?.call(this);
   }
@@ -448,26 +447,25 @@ abstract class _$$_ChangePhoneNumberCopyWith<$Res> {
   factory _$$_ChangePhoneNumberCopyWith(_$_ChangePhoneNumber value,
           $Res Function(_$_ChangePhoneNumber) then) =
       __$$_ChangePhoneNumberCopyWithImpl<$Res>;
+  @useResult
   $Res call({String text});
 }
 
 /// @nodoc
 class __$$_ChangePhoneNumberCopyWithImpl<$Res>
-    extends _$EditProfileEventCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_ChangePhoneNumber>
     implements _$$_ChangePhoneNumberCopyWith<$Res> {
   __$$_ChangePhoneNumberCopyWithImpl(
       _$_ChangePhoneNumber _value, $Res Function(_$_ChangePhoneNumber) _then)
-      : super(_value, (v) => _then(v as _$_ChangePhoneNumber));
+      : super(_value, _then);
 
-  @override
-  _$_ChangePhoneNumber get _value => super._value as _$_ChangePhoneNumber;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? text = freezed,
+    Object? text = null,
   }) {
     return _then(_$_ChangePhoneNumber(
-      text == freezed
+      null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
@@ -493,15 +491,15 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangePhoneNumber &&
-            const DeepCollectionEquality().equals(other.text, text));
+            (identical(other.text, text) || other.text == text));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(text));
+  int get hashCode => Object.hash(runtimeType, text);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangePhoneNumberCopyWith<_$_ChangePhoneNumber> get copyWith =>
       __$$_ChangePhoneNumberCopyWithImpl<_$_ChangePhoneNumber>(
           this, _$identity);
@@ -525,13 +523,13 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? changeName,
-    TResult Function(String text)? changeSurname,
-    TResult Function(String text)? changePhoneNumber,
-    TResult Function(String text)? changeEmail,
-    TResult Function(String text)? changeDate,
-    TResult Function(String image)? changeImage,
-    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
     return changePhoneNumber?.call(text);
@@ -573,13 +571,13 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangeName value)? changeName,
-    TResult Function(_ChangeSurname value)? changeSurname,
-    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
-    TResult Function(_ChangeEmail value)? changeEmail,
-    TResult Function(_ChangeDate value)? changeDate,
-    TResult Function(_ChangeImage value)? changeImage,
-    TResult Function(_SaveData value)? saveData,
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_SaveData value)? saveData,
   }) {
     return changePhoneNumber?.call(this);
   }
@@ -617,26 +615,25 @@ abstract class _$$_ChangeEmailCopyWith<$Res> {
   factory _$$_ChangeEmailCopyWith(
           _$_ChangeEmail value, $Res Function(_$_ChangeEmail) then) =
       __$$_ChangeEmailCopyWithImpl<$Res>;
+  @useResult
   $Res call({String text});
 }
 
 /// @nodoc
 class __$$_ChangeEmailCopyWithImpl<$Res>
-    extends _$EditProfileEventCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_ChangeEmail>
     implements _$$_ChangeEmailCopyWith<$Res> {
   __$$_ChangeEmailCopyWithImpl(
       _$_ChangeEmail _value, $Res Function(_$_ChangeEmail) _then)
-      : super(_value, (v) => _then(v as _$_ChangeEmail));
+      : super(_value, _then);
 
-  @override
-  _$_ChangeEmail get _value => super._value as _$_ChangeEmail;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? text = freezed,
+    Object? text = null,
   }) {
     return _then(_$_ChangeEmail(
-      text == freezed
+      null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
@@ -662,15 +659,15 @@ class _$_ChangeEmail implements _ChangeEmail {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangeEmail &&
-            const DeepCollectionEquality().equals(other.text, text));
+            (identical(other.text, text) || other.text == text));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(text));
+  int get hashCode => Object.hash(runtimeType, text);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangeEmailCopyWith<_$_ChangeEmail> get copyWith =>
       __$$_ChangeEmailCopyWithImpl<_$_ChangeEmail>(this, _$identity);
 
@@ -693,13 +690,13 @@ class _$_ChangeEmail implements _ChangeEmail {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? changeName,
-    TResult Function(String text)? changeSurname,
-    TResult Function(String text)? changePhoneNumber,
-    TResult Function(String text)? changeEmail,
-    TResult Function(String text)? changeDate,
-    TResult Function(String image)? changeImage,
-    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
     return changeEmail?.call(text);
@@ -741,13 +738,13 @@ class _$_ChangeEmail implements _ChangeEmail {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangeName value)? changeName,
-    TResult Function(_ChangeSurname value)? changeSurname,
-    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
-    TResult Function(_ChangeEmail value)? changeEmail,
-    TResult Function(_ChangeDate value)? changeDate,
-    TResult Function(_ChangeImage value)? changeImage,
-    TResult Function(_SaveData value)? saveData,
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_SaveData value)? saveData,
   }) {
     return changeEmail?.call(this);
   }
@@ -785,26 +782,25 @@ abstract class _$$_ChangeDateCopyWith<$Res> {
   factory _$$_ChangeDateCopyWith(
           _$_ChangeDate value, $Res Function(_$_ChangeDate) then) =
       __$$_ChangeDateCopyWithImpl<$Res>;
+  @useResult
   $Res call({String text});
 }
 
 /// @nodoc
 class __$$_ChangeDateCopyWithImpl<$Res>
-    extends _$EditProfileEventCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_ChangeDate>
     implements _$$_ChangeDateCopyWith<$Res> {
   __$$_ChangeDateCopyWithImpl(
       _$_ChangeDate _value, $Res Function(_$_ChangeDate) _then)
-      : super(_value, (v) => _then(v as _$_ChangeDate));
+      : super(_value, _then);
 
-  @override
-  _$_ChangeDate get _value => super._value as _$_ChangeDate;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? text = freezed,
+    Object? text = null,
   }) {
     return _then(_$_ChangeDate(
-      text == freezed
+      null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
@@ -830,15 +826,15 @@ class _$_ChangeDate implements _ChangeDate {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangeDate &&
-            const DeepCollectionEquality().equals(other.text, text));
+            (identical(other.text, text) || other.text == text));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(text));
+  int get hashCode => Object.hash(runtimeType, text);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangeDateCopyWith<_$_ChangeDate> get copyWith =>
       __$$_ChangeDateCopyWithImpl<_$_ChangeDate>(this, _$identity);
 
@@ -861,13 +857,13 @@ class _$_ChangeDate implements _ChangeDate {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? changeName,
-    TResult Function(String text)? changeSurname,
-    TResult Function(String text)? changePhoneNumber,
-    TResult Function(String text)? changeEmail,
-    TResult Function(String text)? changeDate,
-    TResult Function(String image)? changeImage,
-    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
     return changeDate?.call(text);
@@ -909,13 +905,13 @@ class _$_ChangeDate implements _ChangeDate {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangeName value)? changeName,
-    TResult Function(_ChangeSurname value)? changeSurname,
-    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
-    TResult Function(_ChangeEmail value)? changeEmail,
-    TResult Function(_ChangeDate value)? changeDate,
-    TResult Function(_ChangeImage value)? changeImage,
-    TResult Function(_SaveData value)? saveData,
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_SaveData value)? saveData,
   }) {
     return changeDate?.call(this);
   }
@@ -953,26 +949,25 @@ abstract class _$$_ChangeImageCopyWith<$Res> {
   factory _$$_ChangeImageCopyWith(
           _$_ChangeImage value, $Res Function(_$_ChangeImage) then) =
       __$$_ChangeImageCopyWithImpl<$Res>;
+  @useResult
   $Res call({String image});
 }
 
 /// @nodoc
 class __$$_ChangeImageCopyWithImpl<$Res>
-    extends _$EditProfileEventCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_ChangeImage>
     implements _$$_ChangeImageCopyWith<$Res> {
   __$$_ChangeImageCopyWithImpl(
       _$_ChangeImage _value, $Res Function(_$_ChangeImage) _then)
-      : super(_value, (v) => _then(v as _$_ChangeImage));
+      : super(_value, _then);
 
-  @override
-  _$_ChangeImage get _value => super._value as _$_ChangeImage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? image = freezed,
+    Object? image = null,
   }) {
     return _then(_$_ChangeImage(
-      image == freezed
+      null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
@@ -998,15 +993,15 @@ class _$_ChangeImage implements _ChangeImage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangeImage &&
-            const DeepCollectionEquality().equals(other.image, image));
+            (identical(other.image, image) || other.image == image));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(image));
+  int get hashCode => Object.hash(runtimeType, image);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangeImageCopyWith<_$_ChangeImage> get copyWith =>
       __$$_ChangeImageCopyWithImpl<_$_ChangeImage>(this, _$identity);
 
@@ -1029,13 +1024,13 @@ class _$_ChangeImage implements _ChangeImage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? changeName,
-    TResult Function(String text)? changeSurname,
-    TResult Function(String text)? changePhoneNumber,
-    TResult Function(String text)? changeEmail,
-    TResult Function(String text)? changeDate,
-    TResult Function(String image)? changeImage,
-    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
     return changeImage?.call(image);
@@ -1077,13 +1072,13 @@ class _$_ChangeImage implements _ChangeImage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangeName value)? changeName,
-    TResult Function(_ChangeSurname value)? changeSurname,
-    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
-    TResult Function(_ChangeEmail value)? changeEmail,
-    TResult Function(_ChangeDate value)? changeDate,
-    TResult Function(_ChangeImage value)? changeImage,
-    TResult Function(_SaveData value)? saveData,
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_SaveData value)? saveData,
   }) {
     return changeImage?.call(this);
   }
@@ -1121,31 +1116,30 @@ abstract class _$$_SaveDataCopyWith<$Res> {
   factory _$$_SaveDataCopyWith(
           _$_SaveData value, $Res Function(_$_SaveData) then) =
       __$$_SaveDataCopyWithImpl<$Res>;
+  @useResult
   $Res call({ValueChanged<String> onError, VoidCallback onSuccess});
 }
 
 /// @nodoc
 class __$$_SaveDataCopyWithImpl<$Res>
-    extends _$EditProfileEventCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_SaveData>
     implements _$$_SaveDataCopyWith<$Res> {
   __$$_SaveDataCopyWithImpl(
       _$_SaveData _value, $Res Function(_$_SaveData) _then)
-      : super(_value, (v) => _then(v as _$_SaveData));
+      : super(_value, _then);
 
-  @override
-  _$_SaveData get _value => super._value as _$_SaveData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? onError = freezed,
-    Object? onSuccess = freezed,
+    Object? onError = null,
+    Object? onSuccess = null,
   }) {
     return _then(_$_SaveData(
-      onError: onError == freezed
+      onError: null == onError
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
               as ValueChanged<String>,
-      onSuccess: onSuccess == freezed
+      onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as VoidCallback,
@@ -1183,6 +1177,7 @@ class _$_SaveData implements _SaveData {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SaveDataCopyWith<_$_SaveData> get copyWith =>
       __$$_SaveDataCopyWithImpl<_$_SaveData>(this, _$identity);
 
@@ -1205,13 +1200,13 @@ class _$_SaveData implements _SaveData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? changeName,
-    TResult Function(String text)? changeSurname,
-    TResult Function(String text)? changePhoneNumber,
-    TResult Function(String text)? changeEmail,
-    TResult Function(String text)? changeDate,
-    TResult Function(String image)? changeImage,
-    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
     return saveData?.call(onError, onSuccess);
@@ -1253,13 +1248,13 @@ class _$_SaveData implements _SaveData {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangeName value)? changeName,
-    TResult Function(_ChangeSurname value)? changeSurname,
-    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
-    TResult Function(_ChangeEmail value)? changeEmail,
-    TResult Function(_ChangeDate value)? changeDate,
-    TResult Function(_ChangeImage value)? changeImage,
-    TResult Function(_SaveData value)? saveData,
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_SaveData value)? saveData,
   }) {
     return saveData?.call(this);
   }

@@ -25,9 +25,9 @@ mixin _$HospitalListEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function(String search)? getHospitals,
-    TResult Function()? getMoreHospitals,
+    TResult? Function(CrossFadeState crossFadeState)? changePage,
+    TResult? Function(String search)? getHospitals,
+    TResult? Function()? getMoreHospitals,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$HospitalListEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangePage value)? changePage,
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetMoreHospitals value)? getMoreHospitals,
+    TResult? Function(_ChangePage value)? changePage,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetMoreHospitals value)? getMoreHospitals,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,17 +66,18 @@ mixin _$HospitalListEvent {
 abstract class $HospitalListEventCopyWith<$Res> {
   factory $HospitalListEventCopyWith(
           HospitalListEvent value, $Res Function(HospitalListEvent) then) =
-      _$HospitalListEventCopyWithImpl<$Res>;
+      _$HospitalListEventCopyWithImpl<$Res, HospitalListEvent>;
 }
 
 /// @nodoc
-class _$HospitalListEventCopyWithImpl<$Res>
+class _$HospitalListEventCopyWithImpl<$Res, $Val extends HospitalListEvent>
     implements $HospitalListEventCopyWith<$Res> {
   _$HospitalListEventCopyWithImpl(this._value, this._then);
 
-  final HospitalListEvent _value;
   // ignore: unused_field
-  final $Res Function(HospitalListEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -84,26 +85,25 @@ abstract class _$$_ChangePageCopyWith<$Res> {
   factory _$$_ChangePageCopyWith(
           _$_ChangePage value, $Res Function(_$_ChangePage) then) =
       __$$_ChangePageCopyWithImpl<$Res>;
+  @useResult
   $Res call({CrossFadeState crossFadeState});
 }
 
 /// @nodoc
 class __$$_ChangePageCopyWithImpl<$Res>
-    extends _$HospitalListEventCopyWithImpl<$Res>
+    extends _$HospitalListEventCopyWithImpl<$Res, _$_ChangePage>
     implements _$$_ChangePageCopyWith<$Res> {
   __$$_ChangePageCopyWithImpl(
       _$_ChangePage _value, $Res Function(_$_ChangePage) _then)
-      : super(_value, (v) => _then(v as _$_ChangePage));
+      : super(_value, _then);
 
-  @override
-  _$_ChangePage get _value => super._value as _$_ChangePage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? crossFadeState = freezed,
+    Object? crossFadeState = null,
   }) {
     return _then(_$_ChangePage(
-      crossFadeState == freezed
+      null == crossFadeState
           ? _value.crossFadeState
           : crossFadeState // ignore: cast_nullable_to_non_nullable
               as CrossFadeState,
@@ -129,16 +129,16 @@ class _$_ChangePage implements _ChangePage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangePage &&
-            const DeepCollectionEquality()
-                .equals(other.crossFadeState, crossFadeState));
+            (identical(other.crossFadeState, crossFadeState) ||
+                other.crossFadeState == crossFadeState));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(crossFadeState));
+  int get hashCode => Object.hash(runtimeType, crossFadeState);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangePageCopyWith<_$_ChangePage> get copyWith =>
       __$$_ChangePageCopyWithImpl<_$_ChangePage>(this, _$identity);
 
@@ -155,9 +155,9 @@ class _$_ChangePage implements _ChangePage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function(String search)? getHospitals,
-    TResult Function()? getMoreHospitals,
+    TResult? Function(CrossFadeState crossFadeState)? changePage,
+    TResult? Function(String search)? getHospitals,
+    TResult? Function()? getMoreHospitals,
   }) {
     return changePage?.call(crossFadeState);
   }
@@ -189,9 +189,9 @@ class _$_ChangePage implements _ChangePage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangePage value)? changePage,
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetMoreHospitals value)? getMoreHospitals,
+    TResult? Function(_ChangePage value)? changePage,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetMoreHospitals value)? getMoreHospitals,
   }) {
     return changePage?.call(this);
   }
@@ -225,26 +225,25 @@ abstract class _$$_GetHospitalsCopyWith<$Res> {
   factory _$$_GetHospitalsCopyWith(
           _$_GetHospitals value, $Res Function(_$_GetHospitals) then) =
       __$$_GetHospitalsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String search});
 }
 
 /// @nodoc
 class __$$_GetHospitalsCopyWithImpl<$Res>
-    extends _$HospitalListEventCopyWithImpl<$Res>
+    extends _$HospitalListEventCopyWithImpl<$Res, _$_GetHospitals>
     implements _$$_GetHospitalsCopyWith<$Res> {
   __$$_GetHospitalsCopyWithImpl(
       _$_GetHospitals _value, $Res Function(_$_GetHospitals) _then)
-      : super(_value, (v) => _then(v as _$_GetHospitals));
+      : super(_value, _then);
 
-  @override
-  _$_GetHospitals get _value => super._value as _$_GetHospitals;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? search = freezed,
+    Object? search = null,
   }) {
     return _then(_$_GetHospitals(
-      search: search == freezed
+      search: null == search
           ? _value.search
           : search // ignore: cast_nullable_to_non_nullable
               as String,
@@ -270,15 +269,15 @@ class _$_GetHospitals implements _GetHospitals {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetHospitals &&
-            const DeepCollectionEquality().equals(other.search, search));
+            (identical(other.search, search) || other.search == search));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(search));
+  int get hashCode => Object.hash(runtimeType, search);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetHospitalsCopyWith<_$_GetHospitals> get copyWith =>
       __$$_GetHospitalsCopyWithImpl<_$_GetHospitals>(this, _$identity);
 
@@ -295,9 +294,9 @@ class _$_GetHospitals implements _GetHospitals {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function(String search)? getHospitals,
-    TResult Function()? getMoreHospitals,
+    TResult? Function(CrossFadeState crossFadeState)? changePage,
+    TResult? Function(String search)? getHospitals,
+    TResult? Function()? getMoreHospitals,
   }) {
     return getHospitals?.call(search);
   }
@@ -329,9 +328,9 @@ class _$_GetHospitals implements _GetHospitals {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangePage value)? changePage,
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetMoreHospitals value)? getMoreHospitals,
+    TResult? Function(_ChangePage value)? changePage,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetMoreHospitals value)? getMoreHospitals,
   }) {
     return getHospitals?.call(this);
   }
@@ -369,14 +368,11 @@ abstract class _$$_GetMoreHospitalsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreHospitalsCopyWithImpl<$Res>
-    extends _$HospitalListEventCopyWithImpl<$Res>
+    extends _$HospitalListEventCopyWithImpl<$Res, _$_GetMoreHospitals>
     implements _$$_GetMoreHospitalsCopyWith<$Res> {
   __$$_GetMoreHospitalsCopyWithImpl(
       _$_GetMoreHospitals _value, $Res Function(_$_GetMoreHospitals) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreHospitals));
-
-  @override
-  _$_GetMoreHospitals get _value => super._value as _$_GetMoreHospitals;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -411,9 +407,9 @@ class _$_GetMoreHospitals implements _GetMoreHospitals {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function(String search)? getHospitals,
-    TResult Function()? getMoreHospitals,
+    TResult? Function(CrossFadeState crossFadeState)? changePage,
+    TResult? Function(String search)? getHospitals,
+    TResult? Function()? getMoreHospitals,
   }) {
     return getMoreHospitals?.call();
   }
@@ -445,9 +441,9 @@ class _$_GetMoreHospitals implements _GetMoreHospitals {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ChangePage value)? changePage,
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetMoreHospitals value)? getMoreHospitals,
+    TResult? Function(_ChangePage value)? changePage,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetMoreHospitals value)? getMoreHospitals,
   }) {
     return getMoreHospitals?.call(this);
   }
@@ -488,7 +484,8 @@ mixin _$HospitalListState {
 abstract class $HospitalListStateCopyWith<$Res> {
   factory $HospitalListStateCopyWith(
           HospitalListState value, $Res Function(HospitalListState) then) =
-      _$HospitalListStateCopyWithImpl<$Res>;
+      _$HospitalListStateCopyWithImpl<$Res, HospitalListState>;
+  @useResult
   $Res call(
       {CrossFadeState crossFadeState,
       List<HospitalEntity> hospitals,
@@ -498,44 +495,46 @@ abstract class $HospitalListStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$HospitalListStateCopyWithImpl<$Res>
+class _$HospitalListStateCopyWithImpl<$Res, $Val extends HospitalListState>
     implements $HospitalListStateCopyWith<$Res> {
   _$HospitalListStateCopyWithImpl(this._value, this._then);
 
-  final HospitalListState _value;
   // ignore: unused_field
-  final $Res Function(HospitalListState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? crossFadeState = freezed,
-    Object? hospitals = freezed,
-    Object? status = freezed,
+    Object? crossFadeState = null,
+    Object? hospitals = null,
+    Object? status = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
+    Object? fetchMore = null,
   }) {
     return _then(_value.copyWith(
-      crossFadeState: crossFadeState == freezed
+      crossFadeState: null == crossFadeState
           ? _value.crossFadeState
           : crossFadeState // ignore: cast_nullable_to_non_nullable
               as CrossFadeState,
-      hospitals: hospitals == freezed
+      hospitals: null == hospitals
           ? _value.hospitals
           : hospitals // ignore: cast_nullable_to_non_nullable
               as List<HospitalEntity>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -546,6 +545,7 @@ abstract class _$$_HospitalListStateCopyWith<$Res>
           $Res Function(_$_HospitalListState) then) =
       __$$_HospitalListStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {CrossFadeState crossFadeState,
       List<HospitalEntity> hospitals,
@@ -556,41 +556,39 @@ abstract class _$$_HospitalListStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_HospitalListStateCopyWithImpl<$Res>
-    extends _$HospitalListStateCopyWithImpl<$Res>
+    extends _$HospitalListStateCopyWithImpl<$Res, _$_HospitalListState>
     implements _$$_HospitalListStateCopyWith<$Res> {
   __$$_HospitalListStateCopyWithImpl(
       _$_HospitalListState _value, $Res Function(_$_HospitalListState) _then)
-      : super(_value, (v) => _then(v as _$_HospitalListState));
+      : super(_value, _then);
 
-  @override
-  _$_HospitalListState get _value => super._value as _$_HospitalListState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? crossFadeState = freezed,
-    Object? hospitals = freezed,
-    Object? status = freezed,
+    Object? crossFadeState = null,
+    Object? hospitals = null,
+    Object? status = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
+    Object? fetchMore = null,
   }) {
     return _then(_$_HospitalListState(
-      crossFadeState: crossFadeState == freezed
+      crossFadeState: null == crossFadeState
           ? _value.crossFadeState
           : crossFadeState // ignore: cast_nullable_to_non_nullable
               as CrossFadeState,
-      hospitals: hospitals == freezed
+      hospitals: null == hospitals
           ? _value._hospitals
           : hospitals // ignore: cast_nullable_to_non_nullable
               as List<HospitalEntity>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -639,26 +637,23 @@ class _$_HospitalListState implements _HospitalListState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HospitalListState &&
-            const DeepCollectionEquality()
-                .equals(other.crossFadeState, crossFadeState) &&
+            (identical(other.crossFadeState, crossFadeState) ||
+                other.crossFadeState == crossFadeState) &&
             const DeepCollectionEquality()
                 .equals(other._hospitals, _hospitals) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality().equals(other.fetchMore, fetchMore));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.next, next) || other.next == next) &&
+            (identical(other.fetchMore, fetchMore) ||
+                other.fetchMore == fetchMore));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(crossFadeState),
-      const DeepCollectionEquality().hash(_hospitals),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(fetchMore));
+  int get hashCode => Object.hash(runtimeType, crossFadeState,
+      const DeepCollectionEquality().hash(_hospitals), status, next, fetchMore);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HospitalListStateCopyWith<_$_HospitalListState> get copyWith =>
       __$$_HospitalListStateCopyWithImpl<_$_HospitalListState>(
           this, _$identity);

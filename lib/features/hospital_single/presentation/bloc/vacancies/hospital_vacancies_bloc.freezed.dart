@@ -24,8 +24,8 @@ mixin _$HospitalVacanciesEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getVacancies,
-    TResult Function()? getMoreVacancies,
+    TResult? Function(int organizationId)? getVacancies,
+    TResult? Function()? getMoreVacancies,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$HospitalVacanciesEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetVacancies value)? getVacancies,
-    TResult Function(_GetMoreVacancies value)? getMoreVacancies,
+    TResult? Function(_GetVacancies value)? getVacancies,
+    TResult? Function(_GetMoreVacancies value)? getMoreVacancies,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,17 +60,19 @@ mixin _$HospitalVacanciesEvent {
 abstract class $HospitalVacanciesEventCopyWith<$Res> {
   factory $HospitalVacanciesEventCopyWith(HospitalVacanciesEvent value,
           $Res Function(HospitalVacanciesEvent) then) =
-      _$HospitalVacanciesEventCopyWithImpl<$Res>;
+      _$HospitalVacanciesEventCopyWithImpl<$Res, HospitalVacanciesEvent>;
 }
 
 /// @nodoc
-class _$HospitalVacanciesEventCopyWithImpl<$Res>
+class _$HospitalVacanciesEventCopyWithImpl<$Res,
+        $Val extends HospitalVacanciesEvent>
     implements $HospitalVacanciesEventCopyWith<$Res> {
   _$HospitalVacanciesEventCopyWithImpl(this._value, this._then);
 
-  final HospitalVacanciesEvent _value;
   // ignore: unused_field
-  final $Res Function(HospitalVacanciesEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -78,26 +80,25 @@ abstract class _$$_GetVacanciesCopyWith<$Res> {
   factory _$$_GetVacanciesCopyWith(
           _$_GetVacancies value, $Res Function(_$_GetVacancies) then) =
       __$$_GetVacanciesCopyWithImpl<$Res>;
+  @useResult
   $Res call({int organizationId});
 }
 
 /// @nodoc
 class __$$_GetVacanciesCopyWithImpl<$Res>
-    extends _$HospitalVacanciesEventCopyWithImpl<$Res>
+    extends _$HospitalVacanciesEventCopyWithImpl<$Res, _$_GetVacancies>
     implements _$$_GetVacanciesCopyWith<$Res> {
   __$$_GetVacanciesCopyWithImpl(
       _$_GetVacancies _value, $Res Function(_$_GetVacancies) _then)
-      : super(_value, (v) => _then(v as _$_GetVacancies));
+      : super(_value, _then);
 
-  @override
-  _$_GetVacancies get _value => super._value as _$_GetVacancies;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? organizationId = freezed,
+    Object? organizationId = null,
   }) {
     return _then(_$_GetVacancies(
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -123,16 +124,16 @@ class _$_GetVacancies implements _GetVacancies {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetVacancies &&
-            const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId));
+            (identical(other.organizationId, organizationId) ||
+                other.organizationId == organizationId));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(organizationId));
+  int get hashCode => Object.hash(runtimeType, organizationId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetVacanciesCopyWith<_$_GetVacancies> get copyWith =>
       __$$_GetVacanciesCopyWithImpl<_$_GetVacancies>(this, _$identity);
 
@@ -148,8 +149,8 @@ class _$_GetVacancies implements _GetVacancies {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getVacancies,
-    TResult Function()? getMoreVacancies,
+    TResult? Function(int organizationId)? getVacancies,
+    TResult? Function()? getMoreVacancies,
   }) {
     return getVacancies?.call(organizationId);
   }
@@ -179,8 +180,8 @@ class _$_GetVacancies implements _GetVacancies {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetVacancies value)? getVacancies,
-    TResult Function(_GetMoreVacancies value)? getMoreVacancies,
+    TResult? Function(_GetVacancies value)? getVacancies,
+    TResult? Function(_GetMoreVacancies value)? getMoreVacancies,
   }) {
     return getVacancies?.call(this);
   }
@@ -217,14 +218,11 @@ abstract class _$$_GetMoreVacanciesCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreVacanciesCopyWithImpl<$Res>
-    extends _$HospitalVacanciesEventCopyWithImpl<$Res>
+    extends _$HospitalVacanciesEventCopyWithImpl<$Res, _$_GetMoreVacancies>
     implements _$$_GetMoreVacanciesCopyWith<$Res> {
   __$$_GetMoreVacanciesCopyWithImpl(
       _$_GetMoreVacancies _value, $Res Function(_$_GetMoreVacancies) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreVacancies));
-
-  @override
-  _$_GetMoreVacancies get _value => super._value as _$_GetMoreVacancies;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -258,8 +256,8 @@ class _$_GetMoreVacancies implements _GetMoreVacancies {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getVacancies,
-    TResult Function()? getMoreVacancies,
+    TResult? Function(int organizationId)? getVacancies,
+    TResult? Function()? getMoreVacancies,
   }) {
     return getMoreVacancies?.call();
   }
@@ -289,8 +287,8 @@ class _$_GetMoreVacancies implements _GetMoreVacancies {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetVacancies value)? getVacancies,
-    TResult Function(_GetMoreVacancies value)? getMoreVacancies,
+    TResult? Function(_GetVacancies value)? getVacancies,
+    TResult? Function(_GetMoreVacancies value)? getMoreVacancies,
   }) {
     return getMoreVacancies?.call(this);
   }
@@ -330,7 +328,8 @@ mixin _$HospitalVacanciesState {
 abstract class $HospitalVacanciesStateCopyWith<$Res> {
   factory $HospitalVacanciesStateCopyWith(HospitalVacanciesState value,
           $Res Function(HospitalVacanciesState) then) =
-      _$HospitalVacanciesStateCopyWithImpl<$Res>;
+      _$HospitalVacanciesStateCopyWithImpl<$Res, HospitalVacanciesState>;
+  @useResult
   $Res call(
       {FormzStatus status,
       List<VacancyListEntity> vacancies,
@@ -340,44 +339,47 @@ abstract class $HospitalVacanciesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$HospitalVacanciesStateCopyWithImpl<$Res>
+class _$HospitalVacanciesStateCopyWithImpl<$Res,
+        $Val extends HospitalVacanciesState>
     implements $HospitalVacanciesStateCopyWith<$Res> {
   _$HospitalVacanciesStateCopyWithImpl(this._value, this._then);
 
-  final HospitalVacanciesState _value;
   // ignore: unused_field
-  final $Res Function(HospitalVacanciesState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? vacancies = freezed,
+    Object? status = null,
+    Object? vacancies = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
-    Object? organizationId = freezed,
+    Object? fetchMore = null,
+    Object? organizationId = null,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      vacancies: vacancies == freezed
+      vacancies: null == vacancies
           ? _value.vacancies
           : vacancies // ignore: cast_nullable_to_non_nullable
               as List<VacancyListEntity>,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -388,6 +390,7 @@ abstract class _$$_HospitalVacanciesStateCopyWith<$Res>
           $Res Function(_$_HospitalVacanciesState) then) =
       __$$_HospitalVacanciesStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {FormzStatus status,
       List<VacancyListEntity> vacancies,
@@ -398,42 +401,40 @@ abstract class _$$_HospitalVacanciesStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_HospitalVacanciesStateCopyWithImpl<$Res>
-    extends _$HospitalVacanciesStateCopyWithImpl<$Res>
+    extends _$HospitalVacanciesStateCopyWithImpl<$Res,
+        _$_HospitalVacanciesState>
     implements _$$_HospitalVacanciesStateCopyWith<$Res> {
   __$$_HospitalVacanciesStateCopyWithImpl(_$_HospitalVacanciesState _value,
       $Res Function(_$_HospitalVacanciesState) _then)
-      : super(_value, (v) => _then(v as _$_HospitalVacanciesState));
+      : super(_value, _then);
 
-  @override
-  _$_HospitalVacanciesState get _value =>
-      super._value as _$_HospitalVacanciesState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? vacancies = freezed,
+    Object? status = null,
+    Object? vacancies = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
-    Object? organizationId = freezed,
+    Object? fetchMore = null,
+    Object? organizationId = null,
   }) {
     return _then(_$_HospitalVacanciesState(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      vacancies: vacancies == freezed
+      vacancies: null == vacancies
           ? _value._vacancies
           : vacancies // ignore: cast_nullable_to_non_nullable
               as List<VacancyListEntity>,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -482,26 +483,28 @@ class _$_HospitalVacanciesState implements _HospitalVacanciesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HospitalVacanciesState &&
-            const DeepCollectionEquality().equals(other.status, status) &&
+            (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality()
                 .equals(other._vacancies, _vacancies) &&
-            const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality().equals(other.fetchMore, fetchMore) &&
-            const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId));
+            (identical(other.next, next) || other.next == next) &&
+            (identical(other.fetchMore, fetchMore) ||
+                other.fetchMore == fetchMore) &&
+            (identical(other.organizationId, organizationId) ||
+                other.organizationId == organizationId));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(status),
+      status,
       const DeepCollectionEquality().hash(_vacancies),
-      const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(fetchMore),
-      const DeepCollectionEquality().hash(organizationId));
+      next,
+      fetchMore,
+      organizationId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HospitalVacanciesStateCopyWith<_$_HospitalVacanciesState> get copyWith =>
       __$$_HospitalVacanciesStateCopyWithImpl<_$_HospitalVacanciesState>(
           this, _$identity);

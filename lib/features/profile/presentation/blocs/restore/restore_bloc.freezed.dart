@@ -31,14 +31,14 @@ mixin _$RestoreEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
-    TResult Function(String code, dynamic Function(String) onSuccess,
+    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
-    TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
+    TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
-    TResult Function()? clear,
+    TResult? Function()? clear,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,11 +65,11 @@ mixin _$RestoreEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SendCode value)? sendCode,
-    TResult Function(_ResendCode value)? resendCode,
-    TResult Function(_VerifyCode value)? verifyCode,
-    TResult Function(_SendRestore value)? sendRestore,
-    TResult Function(_Clear value)? clear,
+    TResult? Function(_SendCode value)? sendCode,
+    TResult? Function(_ResendCode value)? resendCode,
+    TResult? Function(_VerifyCode value)? verifyCode,
+    TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_Clear value)? clear,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -88,16 +88,18 @@ mixin _$RestoreEvent {
 abstract class $RestoreEventCopyWith<$Res> {
   factory $RestoreEventCopyWith(
           RestoreEvent value, $Res Function(RestoreEvent) then) =
-      _$RestoreEventCopyWithImpl<$Res>;
+      _$RestoreEventCopyWithImpl<$Res, RestoreEvent>;
 }
 
 /// @nodoc
-class _$RestoreEventCopyWithImpl<$Res> implements $RestoreEventCopyWith<$Res> {
+class _$RestoreEventCopyWithImpl<$Res, $Val extends RestoreEvent>
+    implements $RestoreEventCopyWith<$Res> {
   _$RestoreEventCopyWithImpl(this._value, this._then);
 
-  final RestoreEvent _value;
   // ignore: unused_field
-  final $Res Function(RestoreEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -105,30 +107,30 @@ abstract class _$$_SendCodeCopyWith<$Res> {
   factory _$$_SendCodeCopyWith(
           _$_SendCode value, $Res Function(_$_SendCode) then) =
       __$$_SendCodeCopyWithImpl<$Res>;
+  @useResult
   $Res call({String phone, VoidCallback onSuccess});
 }
 
 /// @nodoc
-class __$$_SendCodeCopyWithImpl<$Res> extends _$RestoreEventCopyWithImpl<$Res>
+class __$$_SendCodeCopyWithImpl<$Res>
+    extends _$RestoreEventCopyWithImpl<$Res, _$_SendCode>
     implements _$$_SendCodeCopyWith<$Res> {
   __$$_SendCodeCopyWithImpl(
       _$_SendCode _value, $Res Function(_$_SendCode) _then)
-      : super(_value, (v) => _then(v as _$_SendCode));
+      : super(_value, _then);
 
-  @override
-  _$_SendCode get _value => super._value as _$_SendCode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? phone = freezed,
-    Object? onSuccess = freezed,
+    Object? phone = null,
+    Object? onSuccess = null,
   }) {
     return _then(_$_SendCode(
-      phone: phone == freezed
+      phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      onSuccess: onSuccess == freezed
+      onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as VoidCallback,
@@ -156,17 +158,17 @@ class _$_SendCode implements _SendCode {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SendCode &&
-            const DeepCollectionEquality().equals(other.phone, phone) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.onSuccess, onSuccess) ||
                 other.onSuccess == onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(phone), onSuccess);
+  int get hashCode => Object.hash(runtimeType, phone, onSuccess);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SendCodeCopyWith<_$_SendCode> get copyWith =>
       __$$_SendCodeCopyWithImpl<_$_SendCode>(this, _$identity);
 
@@ -189,14 +191,14 @@ class _$_SendCode implements _SendCode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
-    TResult Function(String code, dynamic Function(String) onSuccess,
+    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
-    TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
+    TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
-    TResult Function()? clear,
+    TResult? Function()? clear,
   }) {
     return sendCode?.call(phone, onSuccess);
   }
@@ -235,11 +237,11 @@ class _$_SendCode implements _SendCode {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SendCode value)? sendCode,
-    TResult Function(_ResendCode value)? resendCode,
-    TResult Function(_VerifyCode value)? verifyCode,
-    TResult Function(_SendRestore value)? sendRestore,
-    TResult Function(_Clear value)? clear,
+    TResult? Function(_SendCode value)? sendCode,
+    TResult? Function(_ResendCode value)? resendCode,
+    TResult? Function(_VerifyCode value)? verifyCode,
+    TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_Clear value)? clear,
   }) {
     return sendCode?.call(this);
   }
@@ -278,25 +280,25 @@ abstract class _$$_ResendCodeCopyWith<$Res> {
   factory _$$_ResendCodeCopyWith(
           _$_ResendCode value, $Res Function(_$_ResendCode) then) =
       __$$_ResendCodeCopyWithImpl<$Res>;
+  @useResult
   $Res call({VoidCallback onSuccess});
 }
 
 /// @nodoc
-class __$$_ResendCodeCopyWithImpl<$Res> extends _$RestoreEventCopyWithImpl<$Res>
+class __$$_ResendCodeCopyWithImpl<$Res>
+    extends _$RestoreEventCopyWithImpl<$Res, _$_ResendCode>
     implements _$$_ResendCodeCopyWith<$Res> {
   __$$_ResendCodeCopyWithImpl(
       _$_ResendCode _value, $Res Function(_$_ResendCode) _then)
-      : super(_value, (v) => _then(v as _$_ResendCode));
+      : super(_value, _then);
 
-  @override
-  _$_ResendCode get _value => super._value as _$_ResendCode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? onSuccess = freezed,
+    Object? onSuccess = null,
   }) {
     return _then(_$_ResendCode(
-      onSuccess: onSuccess == freezed
+      onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as VoidCallback,
@@ -331,6 +333,7 @@ class _$_ResendCode implements _ResendCode {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ResendCodeCopyWith<_$_ResendCode> get copyWith =>
       __$$_ResendCodeCopyWithImpl<_$_ResendCode>(this, _$identity);
 
@@ -353,14 +356,14 @@ class _$_ResendCode implements _ResendCode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
-    TResult Function(String code, dynamic Function(String) onSuccess,
+    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
-    TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
+    TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
-    TResult Function()? clear,
+    TResult? Function()? clear,
   }) {
     return resendCode?.call(onSuccess);
   }
@@ -399,11 +402,11 @@ class _$_ResendCode implements _ResendCode {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SendCode value)? sendCode,
-    TResult Function(_ResendCode value)? resendCode,
-    TResult Function(_VerifyCode value)? verifyCode,
-    TResult Function(_SendRestore value)? sendRestore,
-    TResult Function(_Clear value)? clear,
+    TResult? Function(_SendCode value)? sendCode,
+    TResult? Function(_ResendCode value)? resendCode,
+    TResult? Function(_VerifyCode value)? verifyCode,
+    TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_Clear value)? clear,
   }) {
     return resendCode?.call(this);
   }
@@ -439,6 +442,7 @@ abstract class _$$_VerifyCodeCopyWith<$Res> {
   factory _$$_VerifyCodeCopyWith(
           _$_VerifyCode value, $Res Function(_$_VerifyCode) then) =
       __$$_VerifyCodeCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {String code,
       dynamic Function(String) onSuccess,
@@ -446,31 +450,30 @@ abstract class _$$_VerifyCodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_VerifyCodeCopyWithImpl<$Res> extends _$RestoreEventCopyWithImpl<$Res>
+class __$$_VerifyCodeCopyWithImpl<$Res>
+    extends _$RestoreEventCopyWithImpl<$Res, _$_VerifyCode>
     implements _$$_VerifyCodeCopyWith<$Res> {
   __$$_VerifyCodeCopyWithImpl(
       _$_VerifyCode _value, $Res Function(_$_VerifyCode) _then)
-      : super(_value, (v) => _then(v as _$_VerifyCode));
+      : super(_value, _then);
 
-  @override
-  _$_VerifyCode get _value => super._value as _$_VerifyCode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? code = freezed,
-    Object? onSuccess = freezed,
-    Object? onError = freezed,
+    Object? code = null,
+    Object? onSuccess = null,
+    Object? onError = null,
   }) {
     return _then(_$_VerifyCode(
-      code: code == freezed
+      code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String,
-      onSuccess: onSuccess == freezed
+      onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as dynamic Function(String),
-      onError: onError == freezed
+      onError: null == onError
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
               as dynamic Function(String),
@@ -501,18 +504,18 @@ class _$_VerifyCode implements _VerifyCode {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_VerifyCode &&
-            const DeepCollectionEquality().equals(other.code, code) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.onSuccess, onSuccess) ||
                 other.onSuccess == onSuccess) &&
             (identical(other.onError, onError) || other.onError == onError));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(code), onSuccess, onError);
+  int get hashCode => Object.hash(runtimeType, code, onSuccess, onError);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_VerifyCodeCopyWith<_$_VerifyCode> get copyWith =>
       __$$_VerifyCodeCopyWithImpl<_$_VerifyCode>(this, _$identity);
 
@@ -535,14 +538,14 @@ class _$_VerifyCode implements _VerifyCode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
-    TResult Function(String code, dynamic Function(String) onSuccess,
+    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
-    TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
+    TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
-    TResult Function()? clear,
+    TResult? Function()? clear,
   }) {
     return verifyCode?.call(code, onSuccess, onError);
   }
@@ -581,11 +584,11 @@ class _$_VerifyCode implements _VerifyCode {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SendCode value)? sendCode,
-    TResult Function(_ResendCode value)? resendCode,
-    TResult Function(_VerifyCode value)? verifyCode,
-    TResult Function(_SendRestore value)? sendRestore,
-    TResult Function(_Clear value)? clear,
+    TResult? Function(_SendCode value)? sendCode,
+    TResult? Function(_ResendCode value)? resendCode,
+    TResult? Function(_VerifyCode value)? verifyCode,
+    TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_Clear value)? clear,
   }) {
     return verifyCode?.call(this);
   }
@@ -626,36 +629,35 @@ abstract class _$$_SendRestoreCopyWith<$Res> {
   factory _$$_SendRestoreCopyWith(
           _$_SendRestore value, $Res Function(_$_SendRestore) then) =
       __$$_SendRestoreCopyWithImpl<$Res>;
+  @useResult
   $Res call({bool isJournal, VoidCallback onSuccess, String signature});
 }
 
 /// @nodoc
 class __$$_SendRestoreCopyWithImpl<$Res>
-    extends _$RestoreEventCopyWithImpl<$Res>
+    extends _$RestoreEventCopyWithImpl<$Res, _$_SendRestore>
     implements _$$_SendRestoreCopyWith<$Res> {
   __$$_SendRestoreCopyWithImpl(
       _$_SendRestore _value, $Res Function(_$_SendRestore) _then)
-      : super(_value, (v) => _then(v as _$_SendRestore));
+      : super(_value, _then);
 
-  @override
-  _$_SendRestore get _value => super._value as _$_SendRestore;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isJournal = freezed,
-    Object? onSuccess = freezed,
-    Object? signature = freezed,
+    Object? isJournal = null,
+    Object? onSuccess = null,
+    Object? signature = null,
   }) {
     return _then(_$_SendRestore(
-      isJournal: isJournal == freezed
+      isJournal: null == isJournal
           ? _value.isJournal
           : isJournal // ignore: cast_nullable_to_non_nullable
               as bool,
-      onSuccess: onSuccess == freezed
+      onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as VoidCallback,
-      signature: signature == freezed
+      signature: null == signature
           ? _value.signature
           : signature // ignore: cast_nullable_to_non_nullable
               as String,
@@ -688,21 +690,20 @@ class _$_SendRestore implements _SendRestore {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SendRestore &&
-            const DeepCollectionEquality().equals(other.isJournal, isJournal) &&
+            (identical(other.isJournal, isJournal) ||
+                other.isJournal == isJournal) &&
             (identical(other.onSuccess, onSuccess) ||
                 other.onSuccess == onSuccess) &&
-            const DeepCollectionEquality().equals(other.signature, signature));
+            (identical(other.signature, signature) ||
+                other.signature == signature));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(isJournal),
-      onSuccess,
-      const DeepCollectionEquality().hash(signature));
+  int get hashCode => Object.hash(runtimeType, isJournal, onSuccess, signature);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SendRestoreCopyWith<_$_SendRestore> get copyWith =>
       __$$_SendRestoreCopyWithImpl<_$_SendRestore>(this, _$identity);
 
@@ -725,14 +726,14 @@ class _$_SendRestore implements _SendRestore {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
-    TResult Function(String code, dynamic Function(String) onSuccess,
+    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
-    TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
+    TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
-    TResult Function()? clear,
+    TResult? Function()? clear,
   }) {
     return sendRestore?.call(isJournal, onSuccess, signature);
   }
@@ -771,11 +772,11 @@ class _$_SendRestore implements _SendRestore {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SendCode value)? sendCode,
-    TResult Function(_ResendCode value)? resendCode,
-    TResult Function(_VerifyCode value)? verifyCode,
-    TResult Function(_SendRestore value)? sendRestore,
-    TResult Function(_Clear value)? clear,
+    TResult? Function(_SendCode value)? sendCode,
+    TResult? Function(_ResendCode value)? resendCode,
+    TResult? Function(_VerifyCode value)? verifyCode,
+    TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_Clear value)? clear,
   }) {
     return sendRestore?.call(this);
   }
@@ -818,13 +819,11 @@ abstract class _$$_ClearCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ClearCopyWithImpl<$Res> extends _$RestoreEventCopyWithImpl<$Res>
+class __$$_ClearCopyWithImpl<$Res>
+    extends _$RestoreEventCopyWithImpl<$Res, _$_Clear>
     implements _$$_ClearCopyWith<$Res> {
   __$$_ClearCopyWithImpl(_$_Clear _value, $Res Function(_$_Clear) _then)
-      : super(_value, (v) => _then(v as _$_Clear));
-
-  @override
-  _$_Clear get _value => super._value as _$_Clear;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -865,14 +864,14 @@ class _$_Clear implements _Clear {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
-    TResult Function(String code, dynamic Function(String) onSuccess,
+    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
-    TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
+    TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
-    TResult Function()? clear,
+    TResult? Function()? clear,
   }) {
     return clear?.call();
   }
@@ -911,11 +910,11 @@ class _$_Clear implements _Clear {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_SendCode value)? sendCode,
-    TResult Function(_ResendCode value)? resendCode,
-    TResult Function(_VerifyCode value)? verifyCode,
-    TResult Function(_SendRestore value)? sendRestore,
-    TResult Function(_Clear value)? clear,
+    TResult? Function(_SendCode value)? sendCode,
+    TResult? Function(_ResendCode value)? resendCode,
+    TResult? Function(_VerifyCode value)? verifyCode,
+    TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_Clear value)? clear,
   }) {
     return clear?.call(this);
   }
@@ -959,7 +958,8 @@ mixin _$RestoreState {
 abstract class $RestoreStateCopyWith<$Res> {
   factory $RestoreStateCopyWith(
           RestoreState value, $Res Function(RestoreState) then) =
-      _$RestoreStateCopyWithImpl<$Res>;
+      _$RestoreStateCopyWithImpl<$Res, RestoreState>;
+  @useResult
   $Res call(
       {FormzStatus sendCodeStatus,
       FormzStatus verifyStatus,
@@ -970,48 +970,51 @@ abstract class $RestoreStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$RestoreStateCopyWithImpl<$Res> implements $RestoreStateCopyWith<$Res> {
+class _$RestoreStateCopyWithImpl<$Res, $Val extends RestoreState>
+    implements $RestoreStateCopyWith<$Res> {
   _$RestoreStateCopyWithImpl(this._value, this._then);
 
-  final RestoreState _value;
   // ignore: unused_field
-  final $Res Function(RestoreState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sendCodeStatus = freezed,
-    Object? verifyStatus = freezed,
-    Object? signature = freezed,
-    Object? phone = freezed,
-    Object? verifyError = freezed,
+    Object? sendCodeStatus = null,
+    Object? verifyStatus = null,
+    Object? signature = null,
+    Object? phone = null,
+    Object? verifyError = null,
     Object? showRestore = freezed,
   }) {
     return _then(_value.copyWith(
-      sendCodeStatus: sendCodeStatus == freezed
+      sendCodeStatus: null == sendCodeStatus
           ? _value.sendCodeStatus
           : sendCodeStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      verifyStatus: verifyStatus == freezed
+      verifyStatus: null == verifyStatus
           ? _value.verifyStatus
           : verifyStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      signature: signature == freezed
+      signature: null == signature
           ? _value.signature
           : signature // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: phone == freezed
+      phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      verifyError: verifyError == freezed
+      verifyError: null == verifyError
           ? _value.verifyError
           : verifyError // ignore: cast_nullable_to_non_nullable
               as String,
-      showRestore: showRestore == freezed
+      showRestore: freezed == showRestore
           ? _value.showRestore
           : showRestore // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1022,6 +1025,7 @@ abstract class _$$_RestoreStateCopyWith<$Res>
           _$_RestoreState value, $Res Function(_$_RestoreState) then) =
       __$$_RestoreStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {FormzStatus sendCodeStatus,
       FormzStatus verifyStatus,
@@ -1033,46 +1037,44 @@ abstract class _$$_RestoreStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_RestoreStateCopyWithImpl<$Res>
-    extends _$RestoreStateCopyWithImpl<$Res>
+    extends _$RestoreStateCopyWithImpl<$Res, _$_RestoreState>
     implements _$$_RestoreStateCopyWith<$Res> {
   __$$_RestoreStateCopyWithImpl(
       _$_RestoreState _value, $Res Function(_$_RestoreState) _then)
-      : super(_value, (v) => _then(v as _$_RestoreState));
+      : super(_value, _then);
 
-  @override
-  _$_RestoreState get _value => super._value as _$_RestoreState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sendCodeStatus = freezed,
-    Object? verifyStatus = freezed,
-    Object? signature = freezed,
-    Object? phone = freezed,
-    Object? verifyError = freezed,
+    Object? sendCodeStatus = null,
+    Object? verifyStatus = null,
+    Object? signature = null,
+    Object? phone = null,
+    Object? verifyError = null,
     Object? showRestore = freezed,
   }) {
     return _then(_$_RestoreState(
-      sendCodeStatus: sendCodeStatus == freezed
+      sendCodeStatus: null == sendCodeStatus
           ? _value.sendCodeStatus
           : sendCodeStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      verifyStatus: verifyStatus == freezed
+      verifyStatus: null == verifyStatus
           ? _value.verifyStatus
           : verifyStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      signature: signature == freezed
+      signature: null == signature
           ? _value.signature
           : signature // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: phone == freezed
+      phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      verifyError: verifyError == freezed
+      verifyError: null == verifyError
           ? _value.verifyError
           : verifyError // ignore: cast_nullable_to_non_nullable
               as String,
-      showRestore: showRestore == freezed
+      showRestore: freezed == showRestore
           ? _value.showRestore
           : showRestore // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -1119,30 +1121,26 @@ class _$_RestoreState implements _RestoreState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RestoreState &&
-            const DeepCollectionEquality()
-                .equals(other.sendCodeStatus, sendCodeStatus) &&
-            const DeepCollectionEquality()
-                .equals(other.verifyStatus, verifyStatus) &&
-            const DeepCollectionEquality().equals(other.signature, signature) &&
-            const DeepCollectionEquality().equals(other.phone, phone) &&
-            const DeepCollectionEquality()
-                .equals(other.verifyError, verifyError) &&
-            const DeepCollectionEquality()
-                .equals(other.showRestore, showRestore));
+            (identical(other.sendCodeStatus, sendCodeStatus) ||
+                other.sendCodeStatus == sendCodeStatus) &&
+            (identical(other.verifyStatus, verifyStatus) ||
+                other.verifyStatus == verifyStatus) &&
+            (identical(other.signature, signature) ||
+                other.signature == signature) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.verifyError, verifyError) ||
+                other.verifyError == verifyError) &&
+            (identical(other.showRestore, showRestore) ||
+                other.showRestore == showRestore));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(sendCodeStatus),
-      const DeepCollectionEquality().hash(verifyStatus),
-      const DeepCollectionEquality().hash(signature),
-      const DeepCollectionEquality().hash(phone),
-      const DeepCollectionEquality().hash(verifyError),
-      const DeepCollectionEquality().hash(showRestore));
+  int get hashCode => Object.hash(runtimeType, sendCodeStatus, verifyStatus,
+      signature, phone, verifyError, showRestore);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RestoreStateCopyWith<_$_RestoreState> get copyWith =>
       __$$_RestoreStateCopyWithImpl<_$_RestoreState>(this, _$identity);
 }

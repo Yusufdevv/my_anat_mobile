@@ -49,6 +49,8 @@ class HospitalSingleEntity extends Equatable {
   final String facebook;
   final String telegram;
   final bool workAllDay;
+  final String videoLink;
+  final String videoDescription;
   const HospitalSingleEntity({
     this.id = 0,
     this.title = '',
@@ -77,6 +79,8 @@ class HospitalSingleEntity extends Equatable {
     this.instagram = '',
     this.facebook = '',
     this.telegram = '',
+    this.videoDescription = '',
+    this.videoLink = '',
     this.workAllDay = false,
   });
 

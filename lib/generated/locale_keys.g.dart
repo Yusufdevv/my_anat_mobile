@@ -272,5 +272,6 @@ abstract class  LocaleKeys {
   static const yesterday = 'yesterday';
   static const subscription_title = 'subscription_title';
   static const professions = 'professions';
+  static const videos = 'videos';
 
 }

@@ -24,8 +24,8 @@ mixin _$PurchasedJournalEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getArticle,
-    TResult Function()? getMoreArticle,
+    TResult? Function(bool isRefresh)? getArticle,
+    TResult? Function()? getMoreArticle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$PurchasedJournalEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetJournal value)? getArticle,
-    TResult Function(_GetMoreJournal value)? getMoreArticle,
+    TResult? Function(_GetJournal value)? getArticle,
+    TResult? Function(_GetMoreJournal value)? getMoreArticle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,17 +60,19 @@ mixin _$PurchasedJournalEvent {
 abstract class $PurchasedJournalEventCopyWith<$Res> {
   factory $PurchasedJournalEventCopyWith(PurchasedJournalEvent value,
           $Res Function(PurchasedJournalEvent) then) =
-      _$PurchasedJournalEventCopyWithImpl<$Res>;
+      _$PurchasedJournalEventCopyWithImpl<$Res, PurchasedJournalEvent>;
 }
 
 /// @nodoc
-class _$PurchasedJournalEventCopyWithImpl<$Res>
+class _$PurchasedJournalEventCopyWithImpl<$Res,
+        $Val extends PurchasedJournalEvent>
     implements $PurchasedJournalEventCopyWith<$Res> {
   _$PurchasedJournalEventCopyWithImpl(this._value, this._then);
 
-  final PurchasedJournalEvent _value;
   // ignore: unused_field
-  final $Res Function(PurchasedJournalEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -78,26 +80,25 @@ abstract class _$$_GetJournalCopyWith<$Res> {
   factory _$$_GetJournalCopyWith(
           _$_GetJournal value, $Res Function(_$_GetJournal) then) =
       __$$_GetJournalCopyWithImpl<$Res>;
+  @useResult
   $Res call({bool isRefresh});
 }
 
 /// @nodoc
 class __$$_GetJournalCopyWithImpl<$Res>
-    extends _$PurchasedJournalEventCopyWithImpl<$Res>
+    extends _$PurchasedJournalEventCopyWithImpl<$Res, _$_GetJournal>
     implements _$$_GetJournalCopyWith<$Res> {
   __$$_GetJournalCopyWithImpl(
       _$_GetJournal _value, $Res Function(_$_GetJournal) _then)
-      : super(_value, (v) => _then(v as _$_GetJournal));
+      : super(_value, _then);
 
-  @override
-  _$_GetJournal get _value => super._value as _$_GetJournal;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isRefresh = freezed,
+    Object? isRefresh = null,
   }) {
     return _then(_$_GetJournal(
-      isRefresh: isRefresh == freezed
+      isRefresh: null == isRefresh
           ? _value.isRefresh
           : isRefresh // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -123,15 +124,16 @@ class _$_GetJournal implements _GetJournal {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetJournal &&
-            const DeepCollectionEquality().equals(other.isRefresh, isRefresh));
+            (identical(other.isRefresh, isRefresh) ||
+                other.isRefresh == isRefresh));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(isRefresh));
+  int get hashCode => Object.hash(runtimeType, isRefresh);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetJournalCopyWith<_$_GetJournal> get copyWith =>
       __$$_GetJournalCopyWithImpl<_$_GetJournal>(this, _$identity);
 
@@ -147,8 +149,8 @@ class _$_GetJournal implements _GetJournal {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getArticle,
-    TResult Function()? getMoreArticle,
+    TResult? Function(bool isRefresh)? getArticle,
+    TResult? Function()? getMoreArticle,
   }) {
     return getArticle?.call(isRefresh);
   }
@@ -178,8 +180,8 @@ class _$_GetJournal implements _GetJournal {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetJournal value)? getArticle,
-    TResult Function(_GetMoreJournal value)? getMoreArticle,
+    TResult? Function(_GetJournal value)? getArticle,
+    TResult? Function(_GetMoreJournal value)? getMoreArticle,
   }) {
     return getArticle?.call(this);
   }
@@ -216,14 +218,11 @@ abstract class _$$_GetMoreJournalCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreJournalCopyWithImpl<$Res>
-    extends _$PurchasedJournalEventCopyWithImpl<$Res>
+    extends _$PurchasedJournalEventCopyWithImpl<$Res, _$_GetMoreJournal>
     implements _$$_GetMoreJournalCopyWith<$Res> {
   __$$_GetMoreJournalCopyWithImpl(
       _$_GetMoreJournal _value, $Res Function(_$_GetMoreJournal) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreJournal));
-
-  @override
-  _$_GetMoreJournal get _value => super._value as _$_GetMoreJournal;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -257,8 +256,8 @@ class _$_GetMoreJournal implements _GetMoreJournal {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getArticle,
-    TResult Function()? getMoreArticle,
+    TResult? Function(bool isRefresh)? getArticle,
+    TResult? Function()? getMoreArticle,
   }) {
     return getMoreArticle?.call();
   }
@@ -288,8 +287,8 @@ class _$_GetMoreJournal implements _GetMoreJournal {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetJournal value)? getArticle,
-    TResult Function(_GetMoreJournal value)? getMoreArticle,
+    TResult? Function(_GetJournal value)? getArticle,
+    TResult? Function(_GetMoreJournal value)? getMoreArticle,
   }) {
     return getMoreArticle?.call(this);
   }
@@ -330,7 +329,8 @@ mixin _$PurchasedJournalState {
 abstract class $PurchasedJournalStateCopyWith<$Res> {
   factory $PurchasedJournalStateCopyWith(PurchasedJournalState value,
           $Res Function(PurchasedJournalState) then) =
-      _$PurchasedJournalStateCopyWithImpl<$Res>;
+      _$PurchasedJournalStateCopyWithImpl<$Res, PurchasedJournalState>;
+  @useResult
   $Res call(
       {FormzStatus status,
       FormzStatus paginationStatus,
@@ -340,44 +340,47 @@ abstract class $PurchasedJournalStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PurchasedJournalStateCopyWithImpl<$Res>
+class _$PurchasedJournalStateCopyWithImpl<$Res,
+        $Val extends PurchasedJournalState>
     implements $PurchasedJournalStateCopyWith<$Res> {
   _$PurchasedJournalStateCopyWithImpl(this._value, this._then);
 
-  final PurchasedJournalState _value;
   // ignore: unused_field
-  final $Res Function(PurchasedJournalState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? paginationStatus = freezed,
-    Object? journals = freezed,
-    Object? count = freezed,
+    Object? status = null,
+    Object? paginationStatus = null,
+    Object? journals = null,
+    Object? count = null,
     Object? next = freezed,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      paginationStatus: paginationStatus == freezed
+      paginationStatus: null == paginationStatus
           ? _value.paginationStatus
           : paginationStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      journals: journals == freezed
+      journals: null == journals
           ? _value.journals
           : journals // ignore: cast_nullable_to_non_nullable
               as List<PurchasedJournalModel>,
-      count: count == freezed
+      count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -388,6 +391,7 @@ abstract class _$$_PurchasedJournalStateCopyWith<$Res>
           $Res Function(_$_PurchasedJournalState) then) =
       __$$_PurchasedJournalStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {FormzStatus status,
       FormzStatus paginationStatus,
@@ -398,42 +402,39 @@ abstract class _$$_PurchasedJournalStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_PurchasedJournalStateCopyWithImpl<$Res>
-    extends _$PurchasedJournalStateCopyWithImpl<$Res>
+    extends _$PurchasedJournalStateCopyWithImpl<$Res, _$_PurchasedJournalState>
     implements _$$_PurchasedJournalStateCopyWith<$Res> {
   __$$_PurchasedJournalStateCopyWithImpl(_$_PurchasedJournalState _value,
       $Res Function(_$_PurchasedJournalState) _then)
-      : super(_value, (v) => _then(v as _$_PurchasedJournalState));
+      : super(_value, _then);
 
-  @override
-  _$_PurchasedJournalState get _value =>
-      super._value as _$_PurchasedJournalState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? paginationStatus = freezed,
-    Object? journals = freezed,
-    Object? count = freezed,
+    Object? status = null,
+    Object? paginationStatus = null,
+    Object? journals = null,
+    Object? count = null,
     Object? next = freezed,
   }) {
     return _then(_$_PurchasedJournalState(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      paginationStatus: paginationStatus == freezed
+      paginationStatus: null == paginationStatus
           ? _value.paginationStatus
           : paginationStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      journals: journals == freezed
+      journals: null == journals
           ? _value._journals
           : journals // ignore: cast_nullable_to_non_nullable
               as List<PurchasedJournalModel>,
-      count: count == freezed
+      count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -482,25 +483,21 @@ class _$_PurchasedJournalState implements _PurchasedJournalState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PurchasedJournalState &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.paginationStatus, paginationStatus) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.paginationStatus, paginationStatus) ||
+                other.paginationStatus == paginationStatus) &&
             const DeepCollectionEquality().equals(other._journals, _journals) &&
-            const DeepCollectionEquality().equals(other.count, count) &&
-            const DeepCollectionEquality().equals(other.next, next));
+            (identical(other.count, count) || other.count == count) &&
+            (identical(other.next, next) || other.next == next));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(paginationStatus),
-      const DeepCollectionEquality().hash(_journals),
-      const DeepCollectionEquality().hash(count),
-      const DeepCollectionEquality().hash(next));
+  int get hashCode => Object.hash(runtimeType, status, paginationStatus,
+      const DeepCollectionEquality().hash(_journals), count, next);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PurchasedJournalStateCopyWith<_$_PurchasedJournalState> get copyWith =>
       __$$_PurchasedJournalStateCopyWithImpl<_$_PurchasedJournalState>(
           this, _$identity);

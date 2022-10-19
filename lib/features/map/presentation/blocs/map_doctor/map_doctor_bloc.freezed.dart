@@ -26,7 +26,7 @@ mixin _$MapDoctorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String search, MapParameter? params)? getMapDoctors,
+    TResult? Function(String search, MapParameter? params)? getMapDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -42,7 +42,7 @@ mixin _$MapDoctorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetMapDoctors value)? getMapDoctors,
+    TResult? Function(_GetMapDoctors value)? getMapDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,34 +61,37 @@ mixin _$MapDoctorEvent {
 abstract class $MapDoctorEventCopyWith<$Res> {
   factory $MapDoctorEventCopyWith(
           MapDoctorEvent value, $Res Function(MapDoctorEvent) then) =
-      _$MapDoctorEventCopyWithImpl<$Res>;
+      _$MapDoctorEventCopyWithImpl<$Res, MapDoctorEvent>;
+  @useResult
   $Res call({String search, MapParameter? params});
 }
 
 /// @nodoc
-class _$MapDoctorEventCopyWithImpl<$Res>
+class _$MapDoctorEventCopyWithImpl<$Res, $Val extends MapDoctorEvent>
     implements $MapDoctorEventCopyWith<$Res> {
   _$MapDoctorEventCopyWithImpl(this._value, this._then);
 
-  final MapDoctorEvent _value;
   // ignore: unused_field
-  final $Res Function(MapDoctorEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? search = freezed,
+    Object? search = null,
     Object? params = freezed,
   }) {
     return _then(_value.copyWith(
-      search: search == freezed
+      search: null == search
           ? _value.search
           : search // ignore: cast_nullable_to_non_nullable
               as String,
-      params: params == freezed
+      params: freezed == params
           ? _value.params
           : params // ignore: cast_nullable_to_non_nullable
               as MapParameter?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -99,31 +102,30 @@ abstract class _$$_GetMapDoctorsCopyWith<$Res>
           _$_GetMapDoctors value, $Res Function(_$_GetMapDoctors) then) =
       __$$_GetMapDoctorsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String search, MapParameter? params});
 }
 
 /// @nodoc
 class __$$_GetMapDoctorsCopyWithImpl<$Res>
-    extends _$MapDoctorEventCopyWithImpl<$Res>
+    extends _$MapDoctorEventCopyWithImpl<$Res, _$_GetMapDoctors>
     implements _$$_GetMapDoctorsCopyWith<$Res> {
   __$$_GetMapDoctorsCopyWithImpl(
       _$_GetMapDoctors _value, $Res Function(_$_GetMapDoctors) _then)
-      : super(_value, (v) => _then(v as _$_GetMapDoctors));
+      : super(_value, _then);
 
-  @override
-  _$_GetMapDoctors get _value => super._value as _$_GetMapDoctors;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? search = freezed,
+    Object? search = null,
     Object? params = freezed,
   }) {
     return _then(_$_GetMapDoctors(
-      search: search == freezed
+      search: null == search
           ? _value.search
           : search // ignore: cast_nullable_to_non_nullable
               as String,
-      params: params == freezed
+      params: freezed == params
           ? _value.params
           : params // ignore: cast_nullable_to_non_nullable
               as MapParameter?,
@@ -151,18 +153,16 @@ class _$_GetMapDoctors implements _GetMapDoctors {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetMapDoctors &&
-            const DeepCollectionEquality().equals(other.search, search) &&
-            const DeepCollectionEquality().equals(other.params, params));
+            (identical(other.search, search) || other.search == search) &&
+            (identical(other.params, params) || other.params == params));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(search),
-      const DeepCollectionEquality().hash(params));
+  int get hashCode => Object.hash(runtimeType, search, params);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetMapDoctorsCopyWith<_$_GetMapDoctors> get copyWith =>
       __$$_GetMapDoctorsCopyWithImpl<_$_GetMapDoctors>(this, _$identity);
 
@@ -178,7 +178,7 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String search, MapParameter? params)? getMapDoctors,
+    TResult? Function(String search, MapParameter? params)? getMapDoctors,
   }) {
     return getMapDoctors?.call(search, params);
   }
@@ -206,7 +206,7 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetMapDoctors value)? getMapDoctors,
+    TResult? Function(_GetMapDoctors value)? getMapDoctors,
   }) {
     return getMapDoctors?.call(this);
   }
@@ -253,34 +253,37 @@ mixin _$MapDoctorState {
 abstract class $MapDoctorStateCopyWith<$Res> {
   factory $MapDoctorStateCopyWith(
           MapDoctorState value, $Res Function(MapDoctorState) then) =
-      _$MapDoctorStateCopyWithImpl<$Res>;
+      _$MapDoctorStateCopyWithImpl<$Res, MapDoctorState>;
+  @useResult
   $Res call({List<MapDoctorModel> doctors, FormzStatus status});
 }
 
 /// @nodoc
-class _$MapDoctorStateCopyWithImpl<$Res>
+class _$MapDoctorStateCopyWithImpl<$Res, $Val extends MapDoctorState>
     implements $MapDoctorStateCopyWith<$Res> {
   _$MapDoctorStateCopyWithImpl(this._value, this._then);
 
-  final MapDoctorState _value;
   // ignore: unused_field
-  final $Res Function(MapDoctorState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? doctors = freezed,
-    Object? status = freezed,
+    Object? doctors = null,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
-      doctors: doctors == freezed
+      doctors: null == doctors
           ? _value.doctors
           : doctors // ignore: cast_nullable_to_non_nullable
               as List<MapDoctorModel>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-    ));
+    ) as $Val);
   }
 }
 
@@ -291,31 +294,30 @@ abstract class _$$_MapDoctorStateCopyWith<$Res>
           _$_MapDoctorState value, $Res Function(_$_MapDoctorState) then) =
       __$$_MapDoctorStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<MapDoctorModel> doctors, FormzStatus status});
 }
 
 /// @nodoc
 class __$$_MapDoctorStateCopyWithImpl<$Res>
-    extends _$MapDoctorStateCopyWithImpl<$Res>
+    extends _$MapDoctorStateCopyWithImpl<$Res, _$_MapDoctorState>
     implements _$$_MapDoctorStateCopyWith<$Res> {
   __$$_MapDoctorStateCopyWithImpl(
       _$_MapDoctorState _value, $Res Function(_$_MapDoctorState) _then)
-      : super(_value, (v) => _then(v as _$_MapDoctorState));
+      : super(_value, _then);
 
-  @override
-  _$_MapDoctorState get _value => super._value as _$_MapDoctorState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? doctors = freezed,
-    Object? status = freezed,
+    Object? doctors = null,
+    Object? status = null,
   }) {
     return _then(_$_MapDoctorState(
-      doctors: doctors == freezed
+      doctors: null == doctors
           ? _value._doctors
           : doctors // ignore: cast_nullable_to_non_nullable
               as List<MapDoctorModel>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
@@ -354,17 +356,16 @@ class _$_MapDoctorState implements _MapDoctorState {
         (other.runtimeType == runtimeType &&
             other is _$_MapDoctorState &&
             const DeepCollectionEquality().equals(other._doctors, _doctors) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_doctors),
-      const DeepCollectionEquality().hash(status));
+      runtimeType, const DeepCollectionEquality().hash(_doctors), status);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MapDoctorStateCopyWith<_$_MapDoctorState> get copyWith =>
       __$$_MapDoctorStateCopyWithImpl<_$_MapDoctorState>(this, _$identity);
 }

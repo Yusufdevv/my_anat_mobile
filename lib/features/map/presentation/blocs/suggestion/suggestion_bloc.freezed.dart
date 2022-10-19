@@ -24,8 +24,8 @@ mixin _$SuggestionEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? getSuggestions,
-    TResult Function(int page)? changePage,
+    TResult? Function(String text)? getSuggestions,
+    TResult? Function(int page)? changePage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$SuggestionEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetSuggestions value)? getSuggestions,
-    TResult Function(_ChangePage value)? changePage,
+    TResult? Function(_GetSuggestions value)? getSuggestions,
+    TResult? Function(_ChangePage value)? changePage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,17 +60,18 @@ mixin _$SuggestionEvent {
 abstract class $SuggestionEventCopyWith<$Res> {
   factory $SuggestionEventCopyWith(
           SuggestionEvent value, $Res Function(SuggestionEvent) then) =
-      _$SuggestionEventCopyWithImpl<$Res>;
+      _$SuggestionEventCopyWithImpl<$Res, SuggestionEvent>;
 }
 
 /// @nodoc
-class _$SuggestionEventCopyWithImpl<$Res>
+class _$SuggestionEventCopyWithImpl<$Res, $Val extends SuggestionEvent>
     implements $SuggestionEventCopyWith<$Res> {
   _$SuggestionEventCopyWithImpl(this._value, this._then);
 
-  final SuggestionEvent _value;
   // ignore: unused_field
-  final $Res Function(SuggestionEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -78,26 +79,25 @@ abstract class _$$_GetSuggestionsCopyWith<$Res> {
   factory _$$_GetSuggestionsCopyWith(
           _$_GetSuggestions value, $Res Function(_$_GetSuggestions) then) =
       __$$_GetSuggestionsCopyWithImpl<$Res>;
+  @useResult
   $Res call({String text});
 }
 
 /// @nodoc
 class __$$_GetSuggestionsCopyWithImpl<$Res>
-    extends _$SuggestionEventCopyWithImpl<$Res>
+    extends _$SuggestionEventCopyWithImpl<$Res, _$_GetSuggestions>
     implements _$$_GetSuggestionsCopyWith<$Res> {
   __$$_GetSuggestionsCopyWithImpl(
       _$_GetSuggestions _value, $Res Function(_$_GetSuggestions) _then)
-      : super(_value, (v) => _then(v as _$_GetSuggestions));
+      : super(_value, _then);
 
-  @override
-  _$_GetSuggestions get _value => super._value as _$_GetSuggestions;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? text = freezed,
+    Object? text = null,
   }) {
     return _then(_$_GetSuggestions(
-      text == freezed
+      null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
@@ -123,15 +123,15 @@ class _$_GetSuggestions implements _GetSuggestions {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetSuggestions &&
-            const DeepCollectionEquality().equals(other.text, text));
+            (identical(other.text, text) || other.text == text));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(text));
+  int get hashCode => Object.hash(runtimeType, text);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetSuggestionsCopyWith<_$_GetSuggestions> get copyWith =>
       __$$_GetSuggestionsCopyWithImpl<_$_GetSuggestions>(this, _$identity);
 
@@ -147,8 +147,8 @@ class _$_GetSuggestions implements _GetSuggestions {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? getSuggestions,
-    TResult Function(int page)? changePage,
+    TResult? Function(String text)? getSuggestions,
+    TResult? Function(int page)? changePage,
   }) {
     return getSuggestions?.call(text);
   }
@@ -178,8 +178,8 @@ class _$_GetSuggestions implements _GetSuggestions {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetSuggestions value)? getSuggestions,
-    TResult Function(_ChangePage value)? changePage,
+    TResult? Function(_GetSuggestions value)? getSuggestions,
+    TResult? Function(_ChangePage value)? changePage,
   }) {
     return getSuggestions?.call(this);
   }
@@ -212,26 +212,25 @@ abstract class _$$_ChangePageCopyWith<$Res> {
   factory _$$_ChangePageCopyWith(
           _$_ChangePage value, $Res Function(_$_ChangePage) then) =
       __$$_ChangePageCopyWithImpl<$Res>;
+  @useResult
   $Res call({int page});
 }
 
 /// @nodoc
 class __$$_ChangePageCopyWithImpl<$Res>
-    extends _$SuggestionEventCopyWithImpl<$Res>
+    extends _$SuggestionEventCopyWithImpl<$Res, _$_ChangePage>
     implements _$$_ChangePageCopyWith<$Res> {
   __$$_ChangePageCopyWithImpl(
       _$_ChangePage _value, $Res Function(_$_ChangePage) _then)
-      : super(_value, (v) => _then(v as _$_ChangePage));
+      : super(_value, _then);
 
-  @override
-  _$_ChangePage get _value => super._value as _$_ChangePage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? page = freezed,
+    Object? page = null,
   }) {
     return _then(_$_ChangePage(
-      page == freezed
+      null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
@@ -257,15 +256,15 @@ class _$_ChangePage implements _ChangePage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangePage &&
-            const DeepCollectionEquality().equals(other.page, page));
+            (identical(other.page, page) || other.page == page));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(page));
+  int get hashCode => Object.hash(runtimeType, page);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangePageCopyWith<_$_ChangePage> get copyWith =>
       __$$_ChangePageCopyWithImpl<_$_ChangePage>(this, _$identity);
 
@@ -281,8 +280,8 @@ class _$_ChangePage implements _ChangePage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text)? getSuggestions,
-    TResult Function(int page)? changePage,
+    TResult? Function(String text)? getSuggestions,
+    TResult? Function(int page)? changePage,
   }) {
     return changePage?.call(page);
   }
@@ -312,8 +311,8 @@ class _$_ChangePage implements _ChangePage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetSuggestions value)? getSuggestions,
-    TResult Function(_ChangePage value)? changePage,
+    TResult? Function(_GetSuggestions value)? getSuggestions,
+    TResult? Function(_ChangePage value)? changePage,
   }) {
     return changePage?.call(this);
   }
@@ -357,7 +356,8 @@ mixin _$SuggestionState {
 abstract class $SuggestionStateCopyWith<$Res> {
   factory $SuggestionStateCopyWith(
           SuggestionState value, $Res Function(SuggestionState) then) =
-      _$SuggestionStateCopyWithImpl<$Res>;
+      _$SuggestionStateCopyWithImpl<$Res, SuggestionState>;
+  @useResult
   $Res call(
       {List<SuggestionModel> list,
       FormzStatus status,
@@ -366,39 +366,41 @@ abstract class $SuggestionStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SuggestionStateCopyWithImpl<$Res>
+class _$SuggestionStateCopyWithImpl<$Res, $Val extends SuggestionState>
     implements $SuggestionStateCopyWith<$Res> {
   _$SuggestionStateCopyWithImpl(this._value, this._then);
 
-  final SuggestionState _value;
   // ignore: unused_field
-  final $Res Function(SuggestionState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? list = freezed,
-    Object? status = freezed,
-    Object? currentPage = freezed,
-    Object? searchText = freezed,
+    Object? list = null,
+    Object? status = null,
+    Object? currentPage = null,
+    Object? searchText = null,
   }) {
     return _then(_value.copyWith(
-      list: list == freezed
+      list: null == list
           ? _value.list
           : list // ignore: cast_nullable_to_non_nullable
               as List<SuggestionModel>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      currentPage: currentPage == freezed
+      currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as int,
-      searchText: searchText == freezed
+      searchText: null == searchText
           ? _value.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -409,6 +411,7 @@ abstract class _$$_SuggestionStateCopyWith<$Res>
           _$_SuggestionState value, $Res Function(_$_SuggestionState) then) =
       __$$_SuggestionStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<SuggestionModel> list,
       FormzStatus status,
@@ -418,36 +421,34 @@ abstract class _$$_SuggestionStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_SuggestionStateCopyWithImpl<$Res>
-    extends _$SuggestionStateCopyWithImpl<$Res>
+    extends _$SuggestionStateCopyWithImpl<$Res, _$_SuggestionState>
     implements _$$_SuggestionStateCopyWith<$Res> {
   __$$_SuggestionStateCopyWithImpl(
       _$_SuggestionState _value, $Res Function(_$_SuggestionState) _then)
-      : super(_value, (v) => _then(v as _$_SuggestionState));
+      : super(_value, _then);
 
-  @override
-  _$_SuggestionState get _value => super._value as _$_SuggestionState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? list = freezed,
-    Object? status = freezed,
-    Object? currentPage = freezed,
-    Object? searchText = freezed,
+    Object? list = null,
+    Object? status = null,
+    Object? currentPage = null,
+    Object? searchText = null,
   }) {
     return _then(_$_SuggestionState(
-      list: list == freezed
+      list: null == list
           ? _value._list
           : list // ignore: cast_nullable_to_non_nullable
               as List<SuggestionModel>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      currentPage: currentPage == freezed
+      currentPage: null == currentPage
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as int,
-      searchText: searchText == freezed
+      searchText: null == searchText
           ? _value.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
               as String,
@@ -494,23 +495,24 @@ class _$_SuggestionState implements _SuggestionState {
         (other.runtimeType == runtimeType &&
             other is _$_SuggestionState &&
             const DeepCollectionEquality().equals(other._list, _list) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.currentPage, currentPage) &&
-            const DeepCollectionEquality()
-                .equals(other.searchText, searchText));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_list),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(currentPage),
-      const DeepCollectionEquality().hash(searchText));
+      status,
+      currentPage,
+      searchText);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SuggestionStateCopyWith<_$_SuggestionState> get copyWith =>
       __$$_SuggestionStateCopyWithImpl<_$_SuggestionState>(this, _$identity);
 }

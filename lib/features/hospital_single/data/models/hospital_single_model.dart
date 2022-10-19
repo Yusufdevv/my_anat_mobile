@@ -43,7 +43,10 @@ class HospitalSingleModel extends HospitalSingleEntity {
     required super.workAllDay,
     required super.workFrom,
     required super.workTo,
+    required super.videoLink,
+    required super.videoDescription,
   });
 
-  factory HospitalSingleModel.fromJson(Map<String, dynamic> json) => _$HospitalSingleModelFromJson(json);
+  factory HospitalSingleModel.fromJson(Map<String, dynamic> json) =>
+      _$HospitalSingleModelFromJson(json);
 }

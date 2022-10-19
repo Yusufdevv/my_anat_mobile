@@ -25,9 +25,9 @@ mixin _$SpecializationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getSpecs,
-    TResult Function()? getMoreSpecs,
-    TResult Function(int id)? selectSpec,
+    TResult? Function()? getSpecs,
+    TResult? Function()? getMoreSpecs,
+    TResult? Function(int id)? selectSpec,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$SpecializationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetSpecs value)? getSpecs,
-    TResult Function(_GetMoreSpecs value)? getMoreSpecs,
-    TResult Function(_SelectSpec value)? selectSpec,
+    TResult? Function(_GetSpecs value)? getSpecs,
+    TResult? Function(_GetMoreSpecs value)? getMoreSpecs,
+    TResult? Function(_SelectSpec value)? selectSpec,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,17 +66,18 @@ mixin _$SpecializationEvent {
 abstract class $SpecializationEventCopyWith<$Res> {
   factory $SpecializationEventCopyWith(
           SpecializationEvent value, $Res Function(SpecializationEvent) then) =
-      _$SpecializationEventCopyWithImpl<$Res>;
+      _$SpecializationEventCopyWithImpl<$Res, SpecializationEvent>;
 }
 
 /// @nodoc
-class _$SpecializationEventCopyWithImpl<$Res>
+class _$SpecializationEventCopyWithImpl<$Res, $Val extends SpecializationEvent>
     implements $SpecializationEventCopyWith<$Res> {
   _$SpecializationEventCopyWithImpl(this._value, this._then);
 
-  final SpecializationEvent _value;
   // ignore: unused_field
-  final $Res Function(SpecializationEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -88,14 +89,11 @@ abstract class _$$_GetSpecsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetSpecsCopyWithImpl<$Res>
-    extends _$SpecializationEventCopyWithImpl<$Res>
+    extends _$SpecializationEventCopyWithImpl<$Res, _$_GetSpecs>
     implements _$$_GetSpecsCopyWith<$Res> {
   __$$_GetSpecsCopyWithImpl(
       _$_GetSpecs _value, $Res Function(_$_GetSpecs) _then)
-      : super(_value, (v) => _then(v as _$_GetSpecs));
-
-  @override
-  _$_GetSpecs get _value => super._value as _$_GetSpecs;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -130,9 +128,9 @@ class _$_GetSpecs implements _GetSpecs {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getSpecs,
-    TResult Function()? getMoreSpecs,
-    TResult Function(int id)? selectSpec,
+    TResult? Function()? getSpecs,
+    TResult? Function()? getMoreSpecs,
+    TResult? Function(int id)? selectSpec,
   }) {
     return getSpecs?.call();
   }
@@ -164,9 +162,9 @@ class _$_GetSpecs implements _GetSpecs {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetSpecs value)? getSpecs,
-    TResult Function(_GetMoreSpecs value)? getMoreSpecs,
-    TResult Function(_SelectSpec value)? selectSpec,
+    TResult? Function(_GetSpecs value)? getSpecs,
+    TResult? Function(_GetMoreSpecs value)? getMoreSpecs,
+    TResult? Function(_SelectSpec value)? selectSpec,
   }) {
     return getSpecs?.call(this);
   }
@@ -199,14 +197,11 @@ abstract class _$$_GetMoreSpecsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreSpecsCopyWithImpl<$Res>
-    extends _$SpecializationEventCopyWithImpl<$Res>
+    extends _$SpecializationEventCopyWithImpl<$Res, _$_GetMoreSpecs>
     implements _$$_GetMoreSpecsCopyWith<$Res> {
   __$$_GetMoreSpecsCopyWithImpl(
       _$_GetMoreSpecs _value, $Res Function(_$_GetMoreSpecs) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreSpecs));
-
-  @override
-  _$_GetMoreSpecs get _value => super._value as _$_GetMoreSpecs;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -241,9 +236,9 @@ class _$_GetMoreSpecs implements _GetMoreSpecs {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getSpecs,
-    TResult Function()? getMoreSpecs,
-    TResult Function(int id)? selectSpec,
+    TResult? Function()? getSpecs,
+    TResult? Function()? getMoreSpecs,
+    TResult? Function(int id)? selectSpec,
   }) {
     return getMoreSpecs?.call();
   }
@@ -275,9 +270,9 @@ class _$_GetMoreSpecs implements _GetMoreSpecs {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetSpecs value)? getSpecs,
-    TResult Function(_GetMoreSpecs value)? getMoreSpecs,
-    TResult Function(_SelectSpec value)? selectSpec,
+    TResult? Function(_GetSpecs value)? getSpecs,
+    TResult? Function(_GetMoreSpecs value)? getMoreSpecs,
+    TResult? Function(_SelectSpec value)? selectSpec,
   }) {
     return getMoreSpecs?.call(this);
   }
@@ -306,26 +301,25 @@ abstract class _$$_SelectSpecCopyWith<$Res> {
   factory _$$_SelectSpecCopyWith(
           _$_SelectSpec value, $Res Function(_$_SelectSpec) then) =
       __$$_SelectSpecCopyWithImpl<$Res>;
+  @useResult
   $Res call({int id});
 }
 
 /// @nodoc
 class __$$_SelectSpecCopyWithImpl<$Res>
-    extends _$SpecializationEventCopyWithImpl<$Res>
+    extends _$SpecializationEventCopyWithImpl<$Res, _$_SelectSpec>
     implements _$$_SelectSpecCopyWith<$Res> {
   __$$_SelectSpecCopyWithImpl(
       _$_SelectSpec _value, $Res Function(_$_SelectSpec) _then)
-      : super(_value, (v) => _then(v as _$_SelectSpec));
+      : super(_value, _then);
 
-  @override
-  _$_SelectSpec get _value => super._value as _$_SelectSpec;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
   }) {
     return _then(_$_SelectSpec(
-      id == freezed
+      null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
@@ -351,15 +345,15 @@ class _$_SelectSpec implements _SelectSpec {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SelectSpec &&
-            const DeepCollectionEquality().equals(other.id, id));
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+  int get hashCode => Object.hash(runtimeType, id);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SelectSpecCopyWith<_$_SelectSpec> get copyWith =>
       __$$_SelectSpecCopyWithImpl<_$_SelectSpec>(this, _$identity);
 
@@ -376,9 +370,9 @@ class _$_SelectSpec implements _SelectSpec {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getSpecs,
-    TResult Function()? getMoreSpecs,
-    TResult Function(int id)? selectSpec,
+    TResult? Function()? getSpecs,
+    TResult? Function()? getMoreSpecs,
+    TResult? Function(int id)? selectSpec,
   }) {
     return selectSpec?.call(id);
   }
@@ -410,9 +404,9 @@ class _$_SelectSpec implements _SelectSpec {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetSpecs value)? getSpecs,
-    TResult Function(_GetMoreSpecs value)? getMoreSpecs,
-    TResult Function(_SelectSpec value)? selectSpec,
+    TResult? Function(_GetSpecs value)? getSpecs,
+    TResult? Function(_GetMoreSpecs value)? getMoreSpecs,
+    TResult? Function(_SelectSpec value)? selectSpec,
   }) {
     return selectSpec?.call(this);
   }
@@ -458,7 +452,8 @@ mixin _$SpecializationState {
 abstract class $SpecializationStateCopyWith<$Res> {
   factory $SpecializationStateCopyWith(
           SpecializationState value, $Res Function(SpecializationState) then) =
-      _$SpecializationStateCopyWithImpl<$Res>;
+      _$SpecializationStateCopyWithImpl<$Res, SpecializationState>;
+  @useResult
   $Res call(
       {FormzStatus status,
       List<TitlerModel> specializations,
@@ -468,44 +463,46 @@ abstract class $SpecializationStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SpecializationStateCopyWithImpl<$Res>
+class _$SpecializationStateCopyWithImpl<$Res, $Val extends SpecializationState>
     implements $SpecializationStateCopyWith<$Res> {
   _$SpecializationStateCopyWithImpl(this._value, this._then);
 
-  final SpecializationState _value;
   // ignore: unused_field
-  final $Res Function(SpecializationState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? specializations = freezed,
-    Object? selectedId = freezed,
-    Object? count = freezed,
+    Object? status = null,
+    Object? specializations = null,
+    Object? selectedId = null,
+    Object? count = null,
     Object? next = freezed,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      specializations: specializations == freezed
+      specializations: null == specializations
           ? _value.specializations
           : specializations // ignore: cast_nullable_to_non_nullable
               as List<TitlerModel>,
-      selectedId: selectedId == freezed
+      selectedId: null == selectedId
           ? _value.selectedId
           : selectedId // ignore: cast_nullable_to_non_nullable
               as int,
-      count: count == freezed
+      count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -516,6 +513,7 @@ abstract class _$$_SpecializationStateCopyWith<$Res>
           $Res Function(_$_SpecializationState) then) =
       __$$_SpecializationStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {FormzStatus status,
       List<TitlerModel> specializations,
@@ -526,41 +524,39 @@ abstract class _$$_SpecializationStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_SpecializationStateCopyWithImpl<$Res>
-    extends _$SpecializationStateCopyWithImpl<$Res>
+    extends _$SpecializationStateCopyWithImpl<$Res, _$_SpecializationState>
     implements _$$_SpecializationStateCopyWith<$Res> {
   __$$_SpecializationStateCopyWithImpl(_$_SpecializationState _value,
       $Res Function(_$_SpecializationState) _then)
-      : super(_value, (v) => _then(v as _$_SpecializationState));
+      : super(_value, _then);
 
-  @override
-  _$_SpecializationState get _value => super._value as _$_SpecializationState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? specializations = freezed,
-    Object? selectedId = freezed,
-    Object? count = freezed,
+    Object? status = null,
+    Object? specializations = null,
+    Object? selectedId = null,
+    Object? count = null,
     Object? next = freezed,
   }) {
     return _then(_$_SpecializationState(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      specializations: specializations == freezed
+      specializations: null == specializations
           ? _value._specializations
           : specializations // ignore: cast_nullable_to_non_nullable
               as List<TitlerModel>,
-      selectedId: selectedId == freezed
+      selectedId: null == selectedId
           ? _value.selectedId
           : selectedId // ignore: cast_nullable_to_non_nullable
               as int,
-      count: count == freezed
+      count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -609,26 +605,27 @@ class _$_SpecializationState implements _SpecializationState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SpecializationState &&
-            const DeepCollectionEquality().equals(other.status, status) &&
+            (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality()
                 .equals(other._specializations, _specializations) &&
-            const DeepCollectionEquality()
-                .equals(other.selectedId, selectedId) &&
-            const DeepCollectionEquality().equals(other.count, count) &&
-            const DeepCollectionEquality().equals(other.next, next));
+            (identical(other.selectedId, selectedId) ||
+                other.selectedId == selectedId) &&
+            (identical(other.count, count) || other.count == count) &&
+            (identical(other.next, next) || other.next == next));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(status),
+      status,
       const DeepCollectionEquality().hash(_specializations),
-      const DeepCollectionEquality().hash(selectedId),
-      const DeepCollectionEquality().hash(count),
-      const DeepCollectionEquality().hash(next));
+      selectedId,
+      count,
+      next);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SpecializationStateCopyWith<_$_SpecializationState> get copyWith =>
       __$$_SpecializationStateCopyWithImpl<_$_SpecializationState>(
           this, _$identity);

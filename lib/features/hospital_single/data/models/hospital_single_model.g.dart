@@ -64,6 +64,8 @@ HospitalSingleModel _$HospitalSingleModelFromJson(Map<String, dynamic> json) =>
       workAllDay: json['work_all_day'] as bool? ?? false,
       workFrom: json['work_from'] as String? ?? '',
       workTo: json['work_to'] as String? ?? '',
+      videoLink: json['video_link'] as String? ?? '',
+      videoDescription: json['video_description'] as String? ?? '',
     );
 
 Map<String, dynamic> _$HospitalSingleModelToJson(
@@ -102,4 +104,6 @@ Map<String, dynamic> _$HospitalSingleModelToJson(
       'facebook': instance.facebook,
       'telegram': instance.telegram,
       'work_all_day': instance.workAllDay,
+      'video_link': instance.videoLink,
+      'video_description': instance.videoDescription,
     };

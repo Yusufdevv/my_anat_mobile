@@ -25,9 +25,9 @@ mixin _$ServicesEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getServices,
-    TResult Function()? getMoreServices,
-    TResult Function(String query)? searchServices,
+    TResult? Function(int organizationId)? getServices,
+    TResult? Function()? getMoreServices,
+    TResult? Function(String query)? searchServices,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$ServicesEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetServices value)? getServices,
-    TResult Function(_GetMoreServices value)? getMoreServices,
-    TResult Function(_SearchServices value)? searchServices,
+    TResult? Function(_GetServices value)? getServices,
+    TResult? Function(_GetMoreServices value)? getMoreServices,
+    TResult? Function(_SearchServices value)? searchServices,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,17 +66,18 @@ mixin _$ServicesEvent {
 abstract class $ServicesEventCopyWith<$Res> {
   factory $ServicesEventCopyWith(
           ServicesEvent value, $Res Function(ServicesEvent) then) =
-      _$ServicesEventCopyWithImpl<$Res>;
+      _$ServicesEventCopyWithImpl<$Res, ServicesEvent>;
 }
 
 /// @nodoc
-class _$ServicesEventCopyWithImpl<$Res>
+class _$ServicesEventCopyWithImpl<$Res, $Val extends ServicesEvent>
     implements $ServicesEventCopyWith<$Res> {
   _$ServicesEventCopyWithImpl(this._value, this._then);
 
-  final ServicesEvent _value;
   // ignore: unused_field
-  final $Res Function(ServicesEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -84,26 +85,25 @@ abstract class _$$_GetServicesCopyWith<$Res> {
   factory _$$_GetServicesCopyWith(
           _$_GetServices value, $Res Function(_$_GetServices) then) =
       __$$_GetServicesCopyWithImpl<$Res>;
+  @useResult
   $Res call({int organizationId});
 }
 
 /// @nodoc
 class __$$_GetServicesCopyWithImpl<$Res>
-    extends _$ServicesEventCopyWithImpl<$Res>
+    extends _$ServicesEventCopyWithImpl<$Res, _$_GetServices>
     implements _$$_GetServicesCopyWith<$Res> {
   __$$_GetServicesCopyWithImpl(
       _$_GetServices _value, $Res Function(_$_GetServices) _then)
-      : super(_value, (v) => _then(v as _$_GetServices));
+      : super(_value, _then);
 
-  @override
-  _$_GetServices get _value => super._value as _$_GetServices;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? organizationId = freezed,
+    Object? organizationId = null,
   }) {
     return _then(_$_GetServices(
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -129,16 +129,16 @@ class _$_GetServices implements _GetServices {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetServices &&
-            const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId));
+            (identical(other.organizationId, organizationId) ||
+                other.organizationId == organizationId));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(organizationId));
+  int get hashCode => Object.hash(runtimeType, organizationId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetServicesCopyWith<_$_GetServices> get copyWith =>
       __$$_GetServicesCopyWithImpl<_$_GetServices>(this, _$identity);
 
@@ -155,9 +155,9 @@ class _$_GetServices implements _GetServices {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getServices,
-    TResult Function()? getMoreServices,
-    TResult Function(String query)? searchServices,
+    TResult? Function(int organizationId)? getServices,
+    TResult? Function()? getMoreServices,
+    TResult? Function(String query)? searchServices,
   }) {
     return getServices?.call(organizationId);
   }
@@ -189,9 +189,9 @@ class _$_GetServices implements _GetServices {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetServices value)? getServices,
-    TResult Function(_GetMoreServices value)? getMoreServices,
-    TResult Function(_SearchServices value)? searchServices,
+    TResult? Function(_GetServices value)? getServices,
+    TResult? Function(_GetMoreServices value)? getMoreServices,
+    TResult? Function(_SearchServices value)? searchServices,
   }) {
     return getServices?.call(this);
   }
@@ -229,14 +229,11 @@ abstract class _$$_GetMoreServicesCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreServicesCopyWithImpl<$Res>
-    extends _$ServicesEventCopyWithImpl<$Res>
+    extends _$ServicesEventCopyWithImpl<$Res, _$_GetMoreServices>
     implements _$$_GetMoreServicesCopyWith<$Res> {
   __$$_GetMoreServicesCopyWithImpl(
       _$_GetMoreServices _value, $Res Function(_$_GetMoreServices) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreServices));
-
-  @override
-  _$_GetMoreServices get _value => super._value as _$_GetMoreServices;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -271,9 +268,9 @@ class _$_GetMoreServices implements _GetMoreServices {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getServices,
-    TResult Function()? getMoreServices,
-    TResult Function(String query)? searchServices,
+    TResult? Function(int organizationId)? getServices,
+    TResult? Function()? getMoreServices,
+    TResult? Function(String query)? searchServices,
   }) {
     return getMoreServices?.call();
   }
@@ -305,9 +302,9 @@ class _$_GetMoreServices implements _GetMoreServices {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetServices value)? getServices,
-    TResult Function(_GetMoreServices value)? getMoreServices,
-    TResult Function(_SearchServices value)? searchServices,
+    TResult? Function(_GetServices value)? getServices,
+    TResult? Function(_GetMoreServices value)? getMoreServices,
+    TResult? Function(_SearchServices value)? searchServices,
   }) {
     return getMoreServices?.call(this);
   }
@@ -336,26 +333,25 @@ abstract class _$$_SearchServicesCopyWith<$Res> {
   factory _$$_SearchServicesCopyWith(
           _$_SearchServices value, $Res Function(_$_SearchServices) then) =
       __$$_SearchServicesCopyWithImpl<$Res>;
+  @useResult
   $Res call({String query});
 }
 
 /// @nodoc
 class __$$_SearchServicesCopyWithImpl<$Res>
-    extends _$ServicesEventCopyWithImpl<$Res>
+    extends _$ServicesEventCopyWithImpl<$Res, _$_SearchServices>
     implements _$$_SearchServicesCopyWith<$Res> {
   __$$_SearchServicesCopyWithImpl(
       _$_SearchServices _value, $Res Function(_$_SearchServices) _then)
-      : super(_value, (v) => _then(v as _$_SearchServices));
+      : super(_value, _then);
 
-  @override
-  _$_SearchServices get _value => super._value as _$_SearchServices;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? query = freezed,
+    Object? query = null,
   }) {
     return _then(_$_SearchServices(
-      query: query == freezed
+      query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as String,
@@ -381,15 +377,15 @@ class _$_SearchServices implements _SearchServices {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SearchServices &&
-            const DeepCollectionEquality().equals(other.query, query));
+            (identical(other.query, query) || other.query == query));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(query));
+  int get hashCode => Object.hash(runtimeType, query);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SearchServicesCopyWith<_$_SearchServices> get copyWith =>
       __$$_SearchServicesCopyWithImpl<_$_SearchServices>(this, _$identity);
 
@@ -406,9 +402,9 @@ class _$_SearchServices implements _SearchServices {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getServices,
-    TResult Function()? getMoreServices,
-    TResult Function(String query)? searchServices,
+    TResult? Function(int organizationId)? getServices,
+    TResult? Function()? getMoreServices,
+    TResult? Function(String query)? searchServices,
   }) {
     return searchServices?.call(query);
   }
@@ -440,9 +436,9 @@ class _$_SearchServices implements _SearchServices {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetServices value)? getServices,
-    TResult Function(_GetMoreServices value)? getMoreServices,
-    TResult Function(_SearchServices value)? searchServices,
+    TResult? Function(_GetServices value)? getServices,
+    TResult? Function(_GetMoreServices value)? getMoreServices,
+    TResult? Function(_SearchServices value)? searchServices,
   }) {
     return searchServices?.call(this);
   }
@@ -492,7 +488,8 @@ mixin _$ServicesState {
 abstract class $ServicesStateCopyWith<$Res> {
   factory $ServicesStateCopyWith(
           ServicesState value, $Res Function(ServicesState) then) =
-      _$ServicesStateCopyWithImpl<$Res>;
+      _$ServicesStateCopyWithImpl<$Res, ServicesState>;
+  @useResult
   $Res call(
       {FormzStatus status,
       FormzStatus paginationStatus,
@@ -505,59 +502,61 @@ abstract class $ServicesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ServicesStateCopyWithImpl<$Res>
+class _$ServicesStateCopyWithImpl<$Res, $Val extends ServicesState>
     implements $ServicesStateCopyWith<$Res> {
   _$ServicesStateCopyWithImpl(this._value, this._then);
 
-  final ServicesState _value;
   // ignore: unused_field
-  final $Res Function(ServicesState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? paginationStatus = freezed,
-    Object? services = freezed,
+    Object? status = null,
+    Object? paginationStatus = null,
+    Object? services = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
-    Object? hospitalId = freezed,
-    Object? searchQuery = freezed,
-    Object? serviceCount = freezed,
+    Object? fetchMore = null,
+    Object? hospitalId = null,
+    Object? searchQuery = null,
+    Object? serviceCount = null,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      paginationStatus: paginationStatus == freezed
+      paginationStatus: null == paginationStatus
           ? _value.paginationStatus
           : paginationStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      services: services == freezed
+      services: null == services
           ? _value.services
           : services // ignore: cast_nullable_to_non_nullable
               as List<HospitalServiceEntity>,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      hospitalId: hospitalId == freezed
+      hospitalId: null == hospitalId
           ? _value.hospitalId
           : hospitalId // ignore: cast_nullable_to_non_nullable
               as int,
-      searchQuery: searchQuery == freezed
+      searchQuery: null == searchQuery
           ? _value.searchQuery
           : searchQuery // ignore: cast_nullable_to_non_nullable
               as String,
-      serviceCount: serviceCount == freezed
+      serviceCount: null == serviceCount
           ? _value.serviceCount
           : serviceCount // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -568,6 +567,7 @@ abstract class _$$_ServicesStateCopyWith<$Res>
           _$_ServicesState value, $Res Function(_$_ServicesState) then) =
       __$$_ServicesStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {FormzStatus status,
       FormzStatus paginationStatus,
@@ -581,56 +581,54 @@ abstract class _$$_ServicesStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_ServicesStateCopyWithImpl<$Res>
-    extends _$ServicesStateCopyWithImpl<$Res>
+    extends _$ServicesStateCopyWithImpl<$Res, _$_ServicesState>
     implements _$$_ServicesStateCopyWith<$Res> {
   __$$_ServicesStateCopyWithImpl(
       _$_ServicesState _value, $Res Function(_$_ServicesState) _then)
-      : super(_value, (v) => _then(v as _$_ServicesState));
+      : super(_value, _then);
 
-  @override
-  _$_ServicesState get _value => super._value as _$_ServicesState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? paginationStatus = freezed,
-    Object? services = freezed,
+    Object? status = null,
+    Object? paginationStatus = null,
+    Object? services = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
-    Object? hospitalId = freezed,
-    Object? searchQuery = freezed,
-    Object? serviceCount = freezed,
+    Object? fetchMore = null,
+    Object? hospitalId = null,
+    Object? searchQuery = null,
+    Object? serviceCount = null,
   }) {
     return _then(_$_ServicesState(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      paginationStatus: paginationStatus == freezed
+      paginationStatus: null == paginationStatus
           ? _value.paginationStatus
           : paginationStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      services: services == freezed
+      services: null == services
           ? _value._services
           : services // ignore: cast_nullable_to_non_nullable
               as List<HospitalServiceEntity>,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      hospitalId: hospitalId == freezed
+      hospitalId: null == hospitalId
           ? _value.hospitalId
           : hospitalId // ignore: cast_nullable_to_non_nullable
               as int,
-      searchQuery: searchQuery == freezed
+      searchQuery: null == searchQuery
           ? _value.searchQuery
           : searchQuery // ignore: cast_nullable_to_non_nullable
               as String,
-      serviceCount: serviceCount == freezed
+      serviceCount: null == serviceCount
           ? _value.serviceCount
           : serviceCount // ignore: cast_nullable_to_non_nullable
               as int,
@@ -691,34 +689,36 @@ class _$_ServicesState implements _ServicesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ServicesState &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.paginationStatus, paginationStatus) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.paginationStatus, paginationStatus) ||
+                other.paginationStatus == paginationStatus) &&
             const DeepCollectionEquality().equals(other._services, _services) &&
-            const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality().equals(other.fetchMore, fetchMore) &&
-            const DeepCollectionEquality()
-                .equals(other.hospitalId, hospitalId) &&
-            const DeepCollectionEquality()
-                .equals(other.searchQuery, searchQuery) &&
-            const DeepCollectionEquality()
-                .equals(other.serviceCount, serviceCount));
+            (identical(other.next, next) || other.next == next) &&
+            (identical(other.fetchMore, fetchMore) ||
+                other.fetchMore == fetchMore) &&
+            (identical(other.hospitalId, hospitalId) ||
+                other.hospitalId == hospitalId) &&
+            (identical(other.searchQuery, searchQuery) ||
+                other.searchQuery == searchQuery) &&
+            (identical(other.serviceCount, serviceCount) ||
+                other.serviceCount == serviceCount));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(paginationStatus),
+      status,
+      paginationStatus,
       const DeepCollectionEquality().hash(_services),
-      const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(fetchMore),
-      const DeepCollectionEquality().hash(hospitalId),
-      const DeepCollectionEquality().hash(searchQuery),
-      const DeepCollectionEquality().hash(serviceCount));
+      next,
+      fetchMore,
+      hospitalId,
+      searchQuery,
+      serviceCount);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ServicesStateCopyWith<_$_ServicesState> get copyWith =>
       __$$_ServicesStateCopyWithImpl<_$_ServicesState>(this, _$identity);
 }

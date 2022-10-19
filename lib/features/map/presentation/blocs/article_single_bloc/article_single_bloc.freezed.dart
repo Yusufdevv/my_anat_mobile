@@ -24,7 +24,7 @@ mixin _$ArticleSingleEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String slug)? getSingleArticle,
+    TResult? Function(String slug)? getSingleArticle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,7 +40,7 @@ mixin _$ArticleSingleEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetSingleArticle value)? getSingleArticle,
+    TResult? Function(_GetSingleArticle value)? getSingleArticle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,29 +59,32 @@ mixin _$ArticleSingleEvent {
 abstract class $ArticleSingleEventCopyWith<$Res> {
   factory $ArticleSingleEventCopyWith(
           ArticleSingleEvent value, $Res Function(ArticleSingleEvent) then) =
-      _$ArticleSingleEventCopyWithImpl<$Res>;
+      _$ArticleSingleEventCopyWithImpl<$Res, ArticleSingleEvent>;
+  @useResult
   $Res call({String slug});
 }
 
 /// @nodoc
-class _$ArticleSingleEventCopyWithImpl<$Res>
+class _$ArticleSingleEventCopyWithImpl<$Res, $Val extends ArticleSingleEvent>
     implements $ArticleSingleEventCopyWith<$Res> {
   _$ArticleSingleEventCopyWithImpl(this._value, this._then);
 
-  final ArticleSingleEvent _value;
   // ignore: unused_field
-  final $Res Function(ArticleSingleEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? slug = freezed,
+    Object? slug = null,
   }) {
     return _then(_value.copyWith(
-      slug: slug == freezed
+      slug: null == slug
           ? _value.slug
           : slug // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -92,26 +95,25 @@ abstract class _$$_GetSingleArticleCopyWith<$Res>
           _$_GetSingleArticle value, $Res Function(_$_GetSingleArticle) then) =
       __$$_GetSingleArticleCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String slug});
 }
 
 /// @nodoc
 class __$$_GetSingleArticleCopyWithImpl<$Res>
-    extends _$ArticleSingleEventCopyWithImpl<$Res>
+    extends _$ArticleSingleEventCopyWithImpl<$Res, _$_GetSingleArticle>
     implements _$$_GetSingleArticleCopyWith<$Res> {
   __$$_GetSingleArticleCopyWithImpl(
       _$_GetSingleArticle _value, $Res Function(_$_GetSingleArticle) _then)
-      : super(_value, (v) => _then(v as _$_GetSingleArticle));
+      : super(_value, _then);
 
-  @override
-  _$_GetSingleArticle get _value => super._value as _$_GetSingleArticle;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? slug = freezed,
+    Object? slug = null,
   }) {
     return _then(_$_GetSingleArticle(
-      slug: slug == freezed
+      slug: null == slug
           ? _value.slug
           : slug // ignore: cast_nullable_to_non_nullable
               as String,
@@ -137,15 +139,15 @@ class _$_GetSingleArticle implements _GetSingleArticle {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetSingleArticle &&
-            const DeepCollectionEquality().equals(other.slug, slug));
+            (identical(other.slug, slug) || other.slug == slug));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(slug));
+  int get hashCode => Object.hash(runtimeType, slug);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetSingleArticleCopyWith<_$_GetSingleArticle> get copyWith =>
       __$$_GetSingleArticleCopyWithImpl<_$_GetSingleArticle>(this, _$identity);
 
@@ -160,7 +162,7 @@ class _$_GetSingleArticle implements _GetSingleArticle {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String slug)? getSingleArticle,
+    TResult? Function(String slug)? getSingleArticle,
   }) {
     return getSingleArticle?.call(slug);
   }
@@ -188,7 +190,7 @@ class _$_GetSingleArticle implements _GetSingleArticle {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetSingleArticle value)? getSingleArticle,
+    TResult? Function(_GetSingleArticle value)? getSingleArticle,
   }) {
     return getSingleArticle?.call(this);
   }
@@ -232,35 +234,38 @@ mixin _$ArticleSingleState {
 abstract class $ArticleSingleStateCopyWith<$Res> {
   factory $ArticleSingleStateCopyWith(
           ArticleSingleState value, $Res Function(ArticleSingleState) then) =
-      _$ArticleSingleStateCopyWithImpl<$Res>;
+      _$ArticleSingleStateCopyWithImpl<$Res, ArticleSingleState>;
+  @useResult
   $Res call(
       {JournalArticleSingleEntity articleSingle, FormzStatus getSingleStatus});
 }
 
 /// @nodoc
-class _$ArticleSingleStateCopyWithImpl<$Res>
+class _$ArticleSingleStateCopyWithImpl<$Res, $Val extends ArticleSingleState>
     implements $ArticleSingleStateCopyWith<$Res> {
   _$ArticleSingleStateCopyWithImpl(this._value, this._then);
 
-  final ArticleSingleState _value;
   // ignore: unused_field
-  final $Res Function(ArticleSingleState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? articleSingle = freezed,
-    Object? getSingleStatus = freezed,
+    Object? articleSingle = null,
+    Object? getSingleStatus = null,
   }) {
     return _then(_value.copyWith(
-      articleSingle: articleSingle == freezed
+      articleSingle: null == articleSingle
           ? _value.articleSingle
           : articleSingle // ignore: cast_nullable_to_non_nullable
               as JournalArticleSingleEntity,
-      getSingleStatus: getSingleStatus == freezed
+      getSingleStatus: null == getSingleStatus
           ? _value.getSingleStatus
           : getSingleStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-    ));
+    ) as $Val);
   }
 }
 
@@ -271,32 +276,31 @@ abstract class _$$_ArticleSingleStateCopyWith<$Res>
           $Res Function(_$_ArticleSingleState) then) =
       __$$_ArticleSingleStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {JournalArticleSingleEntity articleSingle, FormzStatus getSingleStatus});
 }
 
 /// @nodoc
 class __$$_ArticleSingleStateCopyWithImpl<$Res>
-    extends _$ArticleSingleStateCopyWithImpl<$Res>
+    extends _$ArticleSingleStateCopyWithImpl<$Res, _$_ArticleSingleState>
     implements _$$_ArticleSingleStateCopyWith<$Res> {
   __$$_ArticleSingleStateCopyWithImpl(
       _$_ArticleSingleState _value, $Res Function(_$_ArticleSingleState) _then)
-      : super(_value, (v) => _then(v as _$_ArticleSingleState));
+      : super(_value, _then);
 
-  @override
-  _$_ArticleSingleState get _value => super._value as _$_ArticleSingleState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? articleSingle = freezed,
-    Object? getSingleStatus = freezed,
+    Object? articleSingle = null,
+    Object? getSingleStatus = null,
   }) {
     return _then(_$_ArticleSingleState(
-      articleSingle: articleSingle == freezed
+      articleSingle: null == articleSingle
           ? _value.articleSingle
           : articleSingle // ignore: cast_nullable_to_non_nullable
               as JournalArticleSingleEntity,
-      getSingleStatus: getSingleStatus == freezed
+      getSingleStatus: null == getSingleStatus
           ? _value.getSingleStatus
           : getSingleStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
@@ -328,20 +332,18 @@ class _$_ArticleSingleState implements _ArticleSingleState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ArticleSingleState &&
-            const DeepCollectionEquality()
-                .equals(other.articleSingle, articleSingle) &&
-            const DeepCollectionEquality()
-                .equals(other.getSingleStatus, getSingleStatus));
+            (identical(other.articleSingle, articleSingle) ||
+                other.articleSingle == articleSingle) &&
+            (identical(other.getSingleStatus, getSingleStatus) ||
+                other.getSingleStatus == getSingleStatus));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(articleSingle),
-      const DeepCollectionEquality().hash(getSingleStatus));
+  int get hashCode => Object.hash(runtimeType, articleSingle, getSingleStatus);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ArticleSingleStateCopyWith<_$_ArticleSingleState> get copyWith =>
       __$$_ArticleSingleStateCopyWithImpl<_$_ArticleSingleState>(
           this, _$identity);

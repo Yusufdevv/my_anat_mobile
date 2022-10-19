@@ -30,13 +30,13 @@ mixin _$MapOrganizationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getHospitals,
-    TResult Function()? getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
-    TResult Function(String text)? changeSearchText,
-    TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    TResult? Function()? getHospitals,
+    TResult? Function()? getDoctors,
+    TResult? Function()? getTypes,
+    TResult? Function()? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,13 +64,13 @@ mixin _$MapOrganizationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetDoctors value)? getDoctors,
-    TResult Function(_GetTypes value)? getTypes,
-    TResult Function(_GetMoreTypes value)? getMoreTypes,
-    TResult Function(_ChangeSearchText value)? changeSearchText,
-    TResult Function(_ChangeRadius value)? changeRadius,
-    TResult Function(_ChangeLatLong value)? changeLatLong,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -91,17 +91,19 @@ mixin _$MapOrganizationEvent {
 abstract class $MapOrganizationEventCopyWith<$Res> {
   factory $MapOrganizationEventCopyWith(MapOrganizationEvent value,
           $Res Function(MapOrganizationEvent) then) =
-      _$MapOrganizationEventCopyWithImpl<$Res>;
+      _$MapOrganizationEventCopyWithImpl<$Res, MapOrganizationEvent>;
 }
 
 /// @nodoc
-class _$MapOrganizationEventCopyWithImpl<$Res>
+class _$MapOrganizationEventCopyWithImpl<$Res,
+        $Val extends MapOrganizationEvent>
     implements $MapOrganizationEventCopyWith<$Res> {
   _$MapOrganizationEventCopyWithImpl(this._value, this._then);
 
-  final MapOrganizationEvent _value;
   // ignore: unused_field
-  final $Res Function(MapOrganizationEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -113,14 +115,11 @@ abstract class _$$_GetHospitalsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetHospitalsCopyWithImpl<$Res>
-    extends _$MapOrganizationEventCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res, _$_GetHospitals>
     implements _$$_GetHospitalsCopyWith<$Res> {
   __$$_GetHospitalsCopyWithImpl(
       _$_GetHospitals _value, $Res Function(_$_GetHospitals) _then)
-      : super(_value, (v) => _then(v as _$_GetHospitals));
-
-  @override
-  _$_GetHospitals get _value => super._value as _$_GetHospitals;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -160,13 +159,13 @@ class _$_GetHospitals implements _GetHospitals {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getHospitals,
-    TResult Function()? getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
-    TResult Function(String text)? changeSearchText,
-    TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    TResult? Function()? getHospitals,
+    TResult? Function()? getDoctors,
+    TResult? Function()? getTypes,
+    TResult? Function()? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return getHospitals?.call();
   }
@@ -206,13 +205,13 @@ class _$_GetHospitals implements _GetHospitals {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetDoctors value)? getDoctors,
-    TResult Function(_GetTypes value)? getTypes,
-    TResult Function(_GetMoreTypes value)? getMoreTypes,
-    TResult Function(_ChangeSearchText value)? changeSearchText,
-    TResult Function(_ChangeRadius value)? changeRadius,
-    TResult Function(_ChangeLatLong value)? changeLatLong,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
     return getHospitals?.call(this);
   }
@@ -249,14 +248,11 @@ abstract class _$$_GetDoctorsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetDoctorsCopyWithImpl<$Res>
-    extends _$MapOrganizationEventCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res, _$_GetDoctors>
     implements _$$_GetDoctorsCopyWith<$Res> {
   __$$_GetDoctorsCopyWithImpl(
       _$_GetDoctors _value, $Res Function(_$_GetDoctors) _then)
-      : super(_value, (v) => _then(v as _$_GetDoctors));
-
-  @override
-  _$_GetDoctors get _value => super._value as _$_GetDoctors;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -296,13 +292,13 @@ class _$_GetDoctors implements _GetDoctors {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getHospitals,
-    TResult Function()? getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
-    TResult Function(String text)? changeSearchText,
-    TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    TResult? Function()? getHospitals,
+    TResult? Function()? getDoctors,
+    TResult? Function()? getTypes,
+    TResult? Function()? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return getDoctors?.call();
   }
@@ -342,13 +338,13 @@ class _$_GetDoctors implements _GetDoctors {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetDoctors value)? getDoctors,
-    TResult Function(_GetTypes value)? getTypes,
-    TResult Function(_GetMoreTypes value)? getMoreTypes,
-    TResult Function(_ChangeSearchText value)? changeSearchText,
-    TResult Function(_ChangeRadius value)? changeRadius,
-    TResult Function(_ChangeLatLong value)? changeLatLong,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
     return getDoctors?.call(this);
   }
@@ -385,14 +381,11 @@ abstract class _$$_GetTypesCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetTypesCopyWithImpl<$Res>
-    extends _$MapOrganizationEventCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res, _$_GetTypes>
     implements _$$_GetTypesCopyWith<$Res> {
   __$$_GetTypesCopyWithImpl(
       _$_GetTypes _value, $Res Function(_$_GetTypes) _then)
-      : super(_value, (v) => _then(v as _$_GetTypes));
-
-  @override
-  _$_GetTypes get _value => super._value as _$_GetTypes;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -432,13 +425,13 @@ class _$_GetTypes implements _GetTypes {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getHospitals,
-    TResult Function()? getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
-    TResult Function(String text)? changeSearchText,
-    TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    TResult? Function()? getHospitals,
+    TResult? Function()? getDoctors,
+    TResult? Function()? getTypes,
+    TResult? Function()? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return getTypes?.call();
   }
@@ -478,13 +471,13 @@ class _$_GetTypes implements _GetTypes {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetDoctors value)? getDoctors,
-    TResult Function(_GetTypes value)? getTypes,
-    TResult Function(_GetMoreTypes value)? getMoreTypes,
-    TResult Function(_ChangeSearchText value)? changeSearchText,
-    TResult Function(_ChangeRadius value)? changeRadius,
-    TResult Function(_ChangeLatLong value)? changeLatLong,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
     return getTypes?.call(this);
   }
@@ -521,14 +514,11 @@ abstract class _$$_GetMoreTypesCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreTypesCopyWithImpl<$Res>
-    extends _$MapOrganizationEventCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res, _$_GetMoreTypes>
     implements _$$_GetMoreTypesCopyWith<$Res> {
   __$$_GetMoreTypesCopyWithImpl(
       _$_GetMoreTypes _value, $Res Function(_$_GetMoreTypes) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreTypes));
-
-  @override
-  _$_GetMoreTypes get _value => super._value as _$_GetMoreTypes;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -568,13 +558,13 @@ class _$_GetMoreTypes implements _GetMoreTypes {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getHospitals,
-    TResult Function()? getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
-    TResult Function(String text)? changeSearchText,
-    TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    TResult? Function()? getHospitals,
+    TResult? Function()? getDoctors,
+    TResult? Function()? getTypes,
+    TResult? Function()? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return getMoreTypes?.call();
   }
@@ -614,13 +604,13 @@ class _$_GetMoreTypes implements _GetMoreTypes {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetDoctors value)? getDoctors,
-    TResult Function(_GetTypes value)? getTypes,
-    TResult Function(_GetMoreTypes value)? getMoreTypes,
-    TResult Function(_ChangeSearchText value)? changeSearchText,
-    TResult Function(_ChangeRadius value)? changeRadius,
-    TResult Function(_ChangeLatLong value)? changeLatLong,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
     return getMoreTypes?.call(this);
   }
@@ -653,26 +643,25 @@ abstract class _$$_ChangeSearchTextCopyWith<$Res> {
   factory _$$_ChangeSearchTextCopyWith(
           _$_ChangeSearchText value, $Res Function(_$_ChangeSearchText) then) =
       __$$_ChangeSearchTextCopyWithImpl<$Res>;
+  @useResult
   $Res call({String text});
 }
 
 /// @nodoc
 class __$$_ChangeSearchTextCopyWithImpl<$Res>
-    extends _$MapOrganizationEventCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res, _$_ChangeSearchText>
     implements _$$_ChangeSearchTextCopyWith<$Res> {
   __$$_ChangeSearchTextCopyWithImpl(
       _$_ChangeSearchText _value, $Res Function(_$_ChangeSearchText) _then)
-      : super(_value, (v) => _then(v as _$_ChangeSearchText));
+      : super(_value, _then);
 
-  @override
-  _$_ChangeSearchText get _value => super._value as _$_ChangeSearchText;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? text = freezed,
+    Object? text = null,
   }) {
     return _then(_$_ChangeSearchText(
-      text == freezed
+      null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
@@ -698,15 +687,15 @@ class _$_ChangeSearchText implements _ChangeSearchText {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangeSearchText &&
-            const DeepCollectionEquality().equals(other.text, text));
+            (identical(other.text, text) || other.text == text));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(text));
+  int get hashCode => Object.hash(runtimeType, text);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangeSearchTextCopyWith<_$_ChangeSearchText> get copyWith =>
       __$$_ChangeSearchTextCopyWithImpl<_$_ChangeSearchText>(this, _$identity);
 
@@ -728,13 +717,13 @@ class _$_ChangeSearchText implements _ChangeSearchText {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getHospitals,
-    TResult Function()? getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
-    TResult Function(String text)? changeSearchText,
-    TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    TResult? Function()? getHospitals,
+    TResult? Function()? getDoctors,
+    TResult? Function()? getTypes,
+    TResult? Function()? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return changeSearchText?.call(text);
   }
@@ -774,13 +763,13 @@ class _$_ChangeSearchText implements _ChangeSearchText {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetDoctors value)? getDoctors,
-    TResult Function(_GetTypes value)? getTypes,
-    TResult Function(_GetMoreTypes value)? getMoreTypes,
-    TResult Function(_ChangeSearchText value)? changeSearchText,
-    TResult Function(_ChangeRadius value)? changeRadius,
-    TResult Function(_ChangeLatLong value)? changeLatLong,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
     return changeSearchText?.call(this);
   }
@@ -818,26 +807,25 @@ abstract class _$$_ChangeRadiusCopyWith<$Res> {
   factory _$$_ChangeRadiusCopyWith(
           _$_ChangeRadius value, $Res Function(_$_ChangeRadius) then) =
       __$$_ChangeRadiusCopyWithImpl<$Res>;
+  @useResult
   $Res call({int radius});
 }
 
 /// @nodoc
 class __$$_ChangeRadiusCopyWithImpl<$Res>
-    extends _$MapOrganizationEventCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res, _$_ChangeRadius>
     implements _$$_ChangeRadiusCopyWith<$Res> {
   __$$_ChangeRadiusCopyWithImpl(
       _$_ChangeRadius _value, $Res Function(_$_ChangeRadius) _then)
-      : super(_value, (v) => _then(v as _$_ChangeRadius));
+      : super(_value, _then);
 
-  @override
-  _$_ChangeRadius get _value => super._value as _$_ChangeRadius;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? radius = freezed,
+    Object? radius = null,
   }) {
     return _then(_$_ChangeRadius(
-      radius: radius == freezed
+      radius: null == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
               as int,
@@ -863,15 +851,15 @@ class _$_ChangeRadius implements _ChangeRadius {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangeRadius &&
-            const DeepCollectionEquality().equals(other.radius, radius));
+            (identical(other.radius, radius) || other.radius == radius));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(radius));
+  int get hashCode => Object.hash(runtimeType, radius);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangeRadiusCopyWith<_$_ChangeRadius> get copyWith =>
       __$$_ChangeRadiusCopyWithImpl<_$_ChangeRadius>(this, _$identity);
 
@@ -893,13 +881,13 @@ class _$_ChangeRadius implements _ChangeRadius {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getHospitals,
-    TResult Function()? getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
-    TResult Function(String text)? changeSearchText,
-    TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    TResult? Function()? getHospitals,
+    TResult? Function()? getDoctors,
+    TResult? Function()? getTypes,
+    TResult? Function()? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return changeRadius?.call(radius);
   }
@@ -939,13 +927,13 @@ class _$_ChangeRadius implements _ChangeRadius {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetDoctors value)? getDoctors,
-    TResult Function(_GetTypes value)? getTypes,
-    TResult Function(_GetMoreTypes value)? getMoreTypes,
-    TResult Function(_ChangeSearchText value)? changeSearchText,
-    TResult Function(_ChangeRadius value)? changeRadius,
-    TResult Function(_ChangeLatLong value)? changeLatLong,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
     return changeRadius?.call(this);
   }
@@ -983,36 +971,35 @@ abstract class _$$_ChangeLatLongCopyWith<$Res> {
   factory _$$_ChangeLatLongCopyWith(
           _$_ChangeLatLong value, $Res Function(_$_ChangeLatLong) then) =
       __$$_ChangeLatLongCopyWithImpl<$Res>;
+  @useResult
   $Res call({double lat, double long, int? radius});
 }
 
 /// @nodoc
 class __$$_ChangeLatLongCopyWithImpl<$Res>
-    extends _$MapOrganizationEventCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res, _$_ChangeLatLong>
     implements _$$_ChangeLatLongCopyWith<$Res> {
   __$$_ChangeLatLongCopyWithImpl(
       _$_ChangeLatLong _value, $Res Function(_$_ChangeLatLong) _then)
-      : super(_value, (v) => _then(v as _$_ChangeLatLong));
+      : super(_value, _then);
 
-  @override
-  _$_ChangeLatLong get _value => super._value as _$_ChangeLatLong;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lat = freezed,
-    Object? long = freezed,
+    Object? lat = null,
+    Object? long = null,
     Object? radius = freezed,
   }) {
     return _then(_$_ChangeLatLong(
-      lat: lat == freezed
+      lat: null == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
               as double,
-      long: long == freezed
+      long: null == long
           ? _value.long
           : long // ignore: cast_nullable_to_non_nullable
               as double,
-      radius: radius == freezed
+      radius: freezed == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -1042,20 +1029,17 @@ class _$_ChangeLatLong implements _ChangeLatLong {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChangeLatLong &&
-            const DeepCollectionEquality().equals(other.lat, lat) &&
-            const DeepCollectionEquality().equals(other.long, long) &&
-            const DeepCollectionEquality().equals(other.radius, radius));
+            (identical(other.lat, lat) || other.lat == lat) &&
+            (identical(other.long, long) || other.long == long) &&
+            (identical(other.radius, radius) || other.radius == radius));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(lat),
-      const DeepCollectionEquality().hash(long),
-      const DeepCollectionEquality().hash(radius));
+  int get hashCode => Object.hash(runtimeType, lat, long, radius);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ChangeLatLongCopyWith<_$_ChangeLatLong> get copyWith =>
       __$$_ChangeLatLongCopyWithImpl<_$_ChangeLatLong>(this, _$identity);
 
@@ -1077,13 +1061,13 @@ class _$_ChangeLatLong implements _ChangeLatLong {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? getHospitals,
-    TResult Function()? getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
-    TResult Function(String text)? changeSearchText,
-    TResult Function(int radius)? changeRadius,
-    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    TResult? Function()? getHospitals,
+    TResult? Function()? getDoctors,
+    TResult? Function()? getTypes,
+    TResult? Function()? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
     return changeLatLong?.call(lat, long, radius);
   }
@@ -1123,13 +1107,13 @@ class _$_ChangeLatLong implements _ChangeLatLong {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospitals value)? getHospitals,
-    TResult Function(_GetDoctors value)? getDoctors,
-    TResult Function(_GetTypes value)? getTypes,
-    TResult Function(_GetMoreTypes value)? getMoreTypes,
-    TResult Function(_ChangeSearchText value)? changeSearchText,
-    TResult Function(_ChangeRadius value)? changeRadius,
-    TResult Function(_ChangeLatLong value)? changeLatLong,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
     return changeLatLong?.call(this);
   }
@@ -1190,7 +1174,8 @@ mixin _$MapOrganizationState {
 abstract class $MapOrganizationStateCopyWith<$Res> {
   factory $MapOrganizationStateCopyWith(MapOrganizationState value,
           $Res Function(MapOrganizationState) then) =
-      _$MapOrganizationStateCopyWithImpl<$Res>;
+      _$MapOrganizationStateCopyWithImpl<$Res, MapOrganizationState>;
+  @useResult
   $Res call(
       {List<MapHospitalModel> hospitals,
       List<MapDoctorModel> doctors,
@@ -1206,74 +1191,77 @@ abstract class $MapOrganizationStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MapOrganizationStateCopyWithImpl<$Res>
+class _$MapOrganizationStateCopyWithImpl<$Res,
+        $Val extends MapOrganizationState>
     implements $MapOrganizationStateCopyWith<$Res> {
   _$MapOrganizationStateCopyWithImpl(this._value, this._then);
 
-  final MapOrganizationState _value;
   // ignore: unused_field
-  final $Res Function(MapOrganizationState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? hospitals = freezed,
-    Object? doctors = freezed,
-    Object? types = freezed,
-    Object? radius = freezed,
-    Object? status = freezed,
-    Object? getTypesStatus = freezed,
-    Object? lat = freezed,
-    Object? long = freezed,
-    Object? searchText = freezed,
+    Object? hospitals = null,
+    Object? doctors = null,
+    Object? types = null,
+    Object? radius = null,
+    Object? status = null,
+    Object? getTypesStatus = null,
+    Object? lat = null,
+    Object? long = null,
+    Object? searchText = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
+    Object? fetchMore = null,
   }) {
     return _then(_value.copyWith(
-      hospitals: hospitals == freezed
+      hospitals: null == hospitals
           ? _value.hospitals
           : hospitals // ignore: cast_nullable_to_non_nullable
               as List<MapHospitalModel>,
-      doctors: doctors == freezed
+      doctors: null == doctors
           ? _value.doctors
           : doctors // ignore: cast_nullable_to_non_nullable
               as List<MapDoctorModel>,
-      types: types == freezed
+      types: null == types
           ? _value.types
           : types // ignore: cast_nullable_to_non_nullable
               as List<TypeEntity>,
-      radius: radius == freezed
+      radius: null == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
               as int,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      getTypesStatus: getTypesStatus == freezed
+      getTypesStatus: null == getTypesStatus
           ? _value.getTypesStatus
           : getTypesStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      lat: lat == freezed
+      lat: null == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
               as double,
-      long: long == freezed
+      long: null == long
           ? _value.long
           : long // ignore: cast_nullable_to_non_nullable
               as double,
-      searchText: searchText == freezed
+      searchText: null == searchText
           ? _value.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
               as String,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1284,6 +1272,7 @@ abstract class _$$_MapOrganizationStateCopyWith<$Res>
           $Res Function(_$_MapOrganizationState) then) =
       __$$_MapOrganizationStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<MapHospitalModel> hospitals,
       List<MapDoctorModel> doctors,
@@ -1300,71 +1289,69 @@ abstract class _$$_MapOrganizationStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_MapOrganizationStateCopyWithImpl<$Res>
-    extends _$MapOrganizationStateCopyWithImpl<$Res>
+    extends _$MapOrganizationStateCopyWithImpl<$Res, _$_MapOrganizationState>
     implements _$$_MapOrganizationStateCopyWith<$Res> {
   __$$_MapOrganizationStateCopyWithImpl(_$_MapOrganizationState _value,
       $Res Function(_$_MapOrganizationState) _then)
-      : super(_value, (v) => _then(v as _$_MapOrganizationState));
+      : super(_value, _then);
 
-  @override
-  _$_MapOrganizationState get _value => super._value as _$_MapOrganizationState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? hospitals = freezed,
-    Object? doctors = freezed,
-    Object? types = freezed,
-    Object? radius = freezed,
-    Object? status = freezed,
-    Object? getTypesStatus = freezed,
-    Object? lat = freezed,
-    Object? long = freezed,
-    Object? searchText = freezed,
+    Object? hospitals = null,
+    Object? doctors = null,
+    Object? types = null,
+    Object? radius = null,
+    Object? status = null,
+    Object? getTypesStatus = null,
+    Object? lat = null,
+    Object? long = null,
+    Object? searchText = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
+    Object? fetchMore = null,
   }) {
     return _then(_$_MapOrganizationState(
-      hospitals: hospitals == freezed
+      hospitals: null == hospitals
           ? _value._hospitals
           : hospitals // ignore: cast_nullable_to_non_nullable
               as List<MapHospitalModel>,
-      doctors: doctors == freezed
+      doctors: null == doctors
           ? _value._doctors
           : doctors // ignore: cast_nullable_to_non_nullable
               as List<MapDoctorModel>,
-      types: types == freezed
+      types: null == types
           ? _value._types
           : types // ignore: cast_nullable_to_non_nullable
               as List<TypeEntity>,
-      radius: radius == freezed
+      radius: null == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
               as int,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      getTypesStatus: getTypesStatus == freezed
+      getTypesStatus: null == getTypesStatus
           ? _value.getTypesStatus
           : getTypesStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      lat: lat == freezed
+      lat: null == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
               as double,
-      long: long == freezed
+      long: null == long
           ? _value.long
           : long // ignore: cast_nullable_to_non_nullable
               as double,
-      searchText: searchText == freezed
+      searchText: null == searchText
           ? _value.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
               as String,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -1453,16 +1440,17 @@ class _$_MapOrganizationState implements _MapOrganizationState {
                 .equals(other._hospitals, _hospitals) &&
             const DeepCollectionEquality().equals(other._doctors, _doctors) &&
             const DeepCollectionEquality().equals(other._types, _types) &&
-            const DeepCollectionEquality().equals(other.radius, radius) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.getTypesStatus, getTypesStatus) &&
-            const DeepCollectionEquality().equals(other.lat, lat) &&
-            const DeepCollectionEquality().equals(other.long, long) &&
-            const DeepCollectionEquality()
-                .equals(other.searchText, searchText) &&
-            const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality().equals(other.fetchMore, fetchMore));
+            (identical(other.radius, radius) || other.radius == radius) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.getTypesStatus, getTypesStatus) ||
+                other.getTypesStatus == getTypesStatus) &&
+            (identical(other.lat, lat) || other.lat == lat) &&
+            (identical(other.long, long) || other.long == long) &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText) &&
+            (identical(other.next, next) || other.next == next) &&
+            (identical(other.fetchMore, fetchMore) ||
+                other.fetchMore == fetchMore));
   }
 
   @override
@@ -1471,17 +1459,18 @@ class _$_MapOrganizationState implements _MapOrganizationState {
       const DeepCollectionEquality().hash(_hospitals),
       const DeepCollectionEquality().hash(_doctors),
       const DeepCollectionEquality().hash(_types),
-      const DeepCollectionEquality().hash(radius),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(getTypesStatus),
-      const DeepCollectionEquality().hash(lat),
-      const DeepCollectionEquality().hash(long),
-      const DeepCollectionEquality().hash(searchText),
-      const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(fetchMore));
+      radius,
+      status,
+      getTypesStatus,
+      lat,
+      long,
+      searchText,
+      next,
+      fetchMore);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MapOrganizationStateCopyWith<_$_MapOrganizationState> get copyWith =>
       __$$_MapOrganizationStateCopyWithImpl<_$_MapOrganizationState>(
           this, _$identity);

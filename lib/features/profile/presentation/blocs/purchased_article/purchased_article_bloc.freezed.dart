@@ -24,8 +24,8 @@ mixin _$PurchasedArticleEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getArticle,
-    TResult Function()? getMoreArticle,
+    TResult? Function(bool isRefresh)? getArticle,
+    TResult? Function()? getMoreArticle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$PurchasedArticleEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetArticle value)? getArticle,
-    TResult Function(_GetMoreArticle value)? getMoreArticle,
+    TResult? Function(_GetArticle value)? getArticle,
+    TResult? Function(_GetMoreArticle value)? getMoreArticle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,17 +60,19 @@ mixin _$PurchasedArticleEvent {
 abstract class $PurchasedArticleEventCopyWith<$Res> {
   factory $PurchasedArticleEventCopyWith(PurchasedArticleEvent value,
           $Res Function(PurchasedArticleEvent) then) =
-      _$PurchasedArticleEventCopyWithImpl<$Res>;
+      _$PurchasedArticleEventCopyWithImpl<$Res, PurchasedArticleEvent>;
 }
 
 /// @nodoc
-class _$PurchasedArticleEventCopyWithImpl<$Res>
+class _$PurchasedArticleEventCopyWithImpl<$Res,
+        $Val extends PurchasedArticleEvent>
     implements $PurchasedArticleEventCopyWith<$Res> {
   _$PurchasedArticleEventCopyWithImpl(this._value, this._then);
 
-  final PurchasedArticleEvent _value;
   // ignore: unused_field
-  final $Res Function(PurchasedArticleEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -78,26 +80,25 @@ abstract class _$$_GetArticleCopyWith<$Res> {
   factory _$$_GetArticleCopyWith(
           _$_GetArticle value, $Res Function(_$_GetArticle) then) =
       __$$_GetArticleCopyWithImpl<$Res>;
+  @useResult
   $Res call({bool isRefresh});
 }
 
 /// @nodoc
 class __$$_GetArticleCopyWithImpl<$Res>
-    extends _$PurchasedArticleEventCopyWithImpl<$Res>
+    extends _$PurchasedArticleEventCopyWithImpl<$Res, _$_GetArticle>
     implements _$$_GetArticleCopyWith<$Res> {
   __$$_GetArticleCopyWithImpl(
       _$_GetArticle _value, $Res Function(_$_GetArticle) _then)
-      : super(_value, (v) => _then(v as _$_GetArticle));
+      : super(_value, _then);
 
-  @override
-  _$_GetArticle get _value => super._value as _$_GetArticle;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isRefresh = freezed,
+    Object? isRefresh = null,
   }) {
     return _then(_$_GetArticle(
-      isRefresh: isRefresh == freezed
+      isRefresh: null == isRefresh
           ? _value.isRefresh
           : isRefresh // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -123,15 +124,16 @@ class _$_GetArticle implements _GetArticle {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetArticle &&
-            const DeepCollectionEquality().equals(other.isRefresh, isRefresh));
+            (identical(other.isRefresh, isRefresh) ||
+                other.isRefresh == isRefresh));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(isRefresh));
+  int get hashCode => Object.hash(runtimeType, isRefresh);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetArticleCopyWith<_$_GetArticle> get copyWith =>
       __$$_GetArticleCopyWithImpl<_$_GetArticle>(this, _$identity);
 
@@ -147,8 +149,8 @@ class _$_GetArticle implements _GetArticle {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getArticle,
-    TResult Function()? getMoreArticle,
+    TResult? Function(bool isRefresh)? getArticle,
+    TResult? Function()? getMoreArticle,
   }) {
     return getArticle?.call(isRefresh);
   }
@@ -178,8 +180,8 @@ class _$_GetArticle implements _GetArticle {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetArticle value)? getArticle,
-    TResult Function(_GetMoreArticle value)? getMoreArticle,
+    TResult? Function(_GetArticle value)? getArticle,
+    TResult? Function(_GetMoreArticle value)? getMoreArticle,
   }) {
     return getArticle?.call(this);
   }
@@ -216,14 +218,11 @@ abstract class _$$_GetMoreArticleCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreArticleCopyWithImpl<$Res>
-    extends _$PurchasedArticleEventCopyWithImpl<$Res>
+    extends _$PurchasedArticleEventCopyWithImpl<$Res, _$_GetMoreArticle>
     implements _$$_GetMoreArticleCopyWith<$Res> {
   __$$_GetMoreArticleCopyWithImpl(
       _$_GetMoreArticle _value, $Res Function(_$_GetMoreArticle) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreArticle));
-
-  @override
-  _$_GetMoreArticle get _value => super._value as _$_GetMoreArticle;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -257,8 +256,8 @@ class _$_GetMoreArticle implements _GetMoreArticle {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getArticle,
-    TResult Function()? getMoreArticle,
+    TResult? Function(bool isRefresh)? getArticle,
+    TResult? Function()? getMoreArticle,
   }) {
     return getMoreArticle?.call();
   }
@@ -288,8 +287,8 @@ class _$_GetMoreArticle implements _GetMoreArticle {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetArticle value)? getArticle,
-    TResult Function(_GetMoreArticle value)? getMoreArticle,
+    TResult? Function(_GetArticle value)? getArticle,
+    TResult? Function(_GetMoreArticle value)? getMoreArticle,
   }) {
     return getMoreArticle?.call(this);
   }
@@ -330,7 +329,8 @@ mixin _$PurchasedArticleState {
 abstract class $PurchasedArticleStateCopyWith<$Res> {
   factory $PurchasedArticleStateCopyWith(PurchasedArticleState value,
           $Res Function(PurchasedArticleState) then) =
-      _$PurchasedArticleStateCopyWithImpl<$Res>;
+      _$PurchasedArticleStateCopyWithImpl<$Res, PurchasedArticleState>;
+  @useResult
   $Res call(
       {FormzStatus status,
       FormzStatus paginationStatus,
@@ -340,44 +340,47 @@ abstract class $PurchasedArticleStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PurchasedArticleStateCopyWithImpl<$Res>
+class _$PurchasedArticleStateCopyWithImpl<$Res,
+        $Val extends PurchasedArticleState>
     implements $PurchasedArticleStateCopyWith<$Res> {
   _$PurchasedArticleStateCopyWithImpl(this._value, this._then);
 
-  final PurchasedArticleState _value;
   // ignore: unused_field
-  final $Res Function(PurchasedArticleState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? paginationStatus = freezed,
-    Object? articles = freezed,
-    Object? count = freezed,
+    Object? status = null,
+    Object? paginationStatus = null,
+    Object? articles = null,
+    Object? count = null,
     Object? next = freezed,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      paginationStatus: paginationStatus == freezed
+      paginationStatus: null == paginationStatus
           ? _value.paginationStatus
           : paginationStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      articles: articles == freezed
+      articles: null == articles
           ? _value.articles
           : articles // ignore: cast_nullable_to_non_nullable
               as List<PurchasedArticleModel>,
-      count: count == freezed
+      count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -388,6 +391,7 @@ abstract class _$$_PurchasedArticleStateCopyWith<$Res>
           $Res Function(_$_PurchasedArticleState) then) =
       __$$_PurchasedArticleStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {FormzStatus status,
       FormzStatus paginationStatus,
@@ -398,42 +402,39 @@ abstract class _$$_PurchasedArticleStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_PurchasedArticleStateCopyWithImpl<$Res>
-    extends _$PurchasedArticleStateCopyWithImpl<$Res>
+    extends _$PurchasedArticleStateCopyWithImpl<$Res, _$_PurchasedArticleState>
     implements _$$_PurchasedArticleStateCopyWith<$Res> {
   __$$_PurchasedArticleStateCopyWithImpl(_$_PurchasedArticleState _value,
       $Res Function(_$_PurchasedArticleState) _then)
-      : super(_value, (v) => _then(v as _$_PurchasedArticleState));
+      : super(_value, _then);
 
-  @override
-  _$_PurchasedArticleState get _value =>
-      super._value as _$_PurchasedArticleState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? paginationStatus = freezed,
-    Object? articles = freezed,
-    Object? count = freezed,
+    Object? status = null,
+    Object? paginationStatus = null,
+    Object? articles = null,
+    Object? count = null,
     Object? next = freezed,
   }) {
     return _then(_$_PurchasedArticleState(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      paginationStatus: paginationStatus == freezed
+      paginationStatus: null == paginationStatus
           ? _value.paginationStatus
           : paginationStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      articles: articles == freezed
+      articles: null == articles
           ? _value._articles
           : articles // ignore: cast_nullable_to_non_nullable
               as List<PurchasedArticleModel>,
-      count: count == freezed
+      count: null == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -482,25 +483,21 @@ class _$_PurchasedArticleState implements _PurchasedArticleState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PurchasedArticleState &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.paginationStatus, paginationStatus) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.paginationStatus, paginationStatus) ||
+                other.paginationStatus == paginationStatus) &&
             const DeepCollectionEquality().equals(other._articles, _articles) &&
-            const DeepCollectionEquality().equals(other.count, count) &&
-            const DeepCollectionEquality().equals(other.next, next));
+            (identical(other.count, count) || other.count == count) &&
+            (identical(other.next, next) || other.next == next));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(paginationStatus),
-      const DeepCollectionEquality().hash(_articles),
-      const DeepCollectionEquality().hash(count),
-      const DeepCollectionEquality().hash(next));
+  int get hashCode => Object.hash(runtimeType, status, paginationStatus,
+      const DeepCollectionEquality().hash(_articles), count, next);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PurchasedArticleStateCopyWith<_$_PurchasedArticleState> get copyWith =>
       __$$_PurchasedArticleStateCopyWithImpl<_$_PurchasedArticleState>(
           this, _$identity);

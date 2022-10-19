@@ -36,6 +36,7 @@ class AppIcons {
   static const interviewTime = 'assets/icons/map_screen/clock.svg';
   static const delete = 'assets/icons/map_screen/delete.svg';
   static const commentEmpty = 'assets/icons/map_screen/comment_empty.svg';
+  static const playIcon = 'assets/icons/map_screen/play_icon.svg';
 
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';

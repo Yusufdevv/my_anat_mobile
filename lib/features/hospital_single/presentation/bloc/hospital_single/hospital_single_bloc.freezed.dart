@@ -24,7 +24,7 @@ mixin _$HospitalSingleEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String slug)? getHospital,
+    TResult? Function(String slug)? getHospital,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,7 +40,7 @@ mixin _$HospitalSingleEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospital value)? getHospital,
+    TResult? Function(_GetHospital value)? getHospital,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,29 +59,32 @@ mixin _$HospitalSingleEvent {
 abstract class $HospitalSingleEventCopyWith<$Res> {
   factory $HospitalSingleEventCopyWith(
           HospitalSingleEvent value, $Res Function(HospitalSingleEvent) then) =
-      _$HospitalSingleEventCopyWithImpl<$Res>;
+      _$HospitalSingleEventCopyWithImpl<$Res, HospitalSingleEvent>;
+  @useResult
   $Res call({String slug});
 }
 
 /// @nodoc
-class _$HospitalSingleEventCopyWithImpl<$Res>
+class _$HospitalSingleEventCopyWithImpl<$Res, $Val extends HospitalSingleEvent>
     implements $HospitalSingleEventCopyWith<$Res> {
   _$HospitalSingleEventCopyWithImpl(this._value, this._then);
 
-  final HospitalSingleEvent _value;
   // ignore: unused_field
-  final $Res Function(HospitalSingleEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? slug = freezed,
+    Object? slug = null,
   }) {
     return _then(_value.copyWith(
-      slug: slug == freezed
+      slug: null == slug
           ? _value.slug
           : slug // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -92,26 +95,25 @@ abstract class _$$_GetHospitalCopyWith<$Res>
           _$_GetHospital value, $Res Function(_$_GetHospital) then) =
       __$$_GetHospitalCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String slug});
 }
 
 /// @nodoc
 class __$$_GetHospitalCopyWithImpl<$Res>
-    extends _$HospitalSingleEventCopyWithImpl<$Res>
+    extends _$HospitalSingleEventCopyWithImpl<$Res, _$_GetHospital>
     implements _$$_GetHospitalCopyWith<$Res> {
   __$$_GetHospitalCopyWithImpl(
       _$_GetHospital _value, $Res Function(_$_GetHospital) _then)
-      : super(_value, (v) => _then(v as _$_GetHospital));
+      : super(_value, _then);
 
-  @override
-  _$_GetHospital get _value => super._value as _$_GetHospital;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? slug = freezed,
+    Object? slug = null,
   }) {
     return _then(_$_GetHospital(
-      slug == freezed
+      null == slug
           ? _value.slug
           : slug // ignore: cast_nullable_to_non_nullable
               as String,
@@ -137,15 +139,15 @@ class _$_GetHospital implements _GetHospital {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetHospital &&
-            const DeepCollectionEquality().equals(other.slug, slug));
+            (identical(other.slug, slug) || other.slug == slug));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(slug));
+  int get hashCode => Object.hash(runtimeType, slug);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetHospitalCopyWith<_$_GetHospital> get copyWith =>
       __$$_GetHospitalCopyWithImpl<_$_GetHospital>(this, _$identity);
 
@@ -160,7 +162,7 @@ class _$_GetHospital implements _GetHospital {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String slug)? getHospital,
+    TResult? Function(String slug)? getHospital,
   }) {
     return getHospital?.call(slug);
   }
@@ -188,7 +190,7 @@ class _$_GetHospital implements _GetHospital {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetHospital value)? getHospital,
+    TResult? Function(_GetHospital value)? getHospital,
   }) {
     return getHospital?.call(this);
   }
@@ -231,34 +233,37 @@ mixin _$HospitalSingleState {
 abstract class $HospitalSingleStateCopyWith<$Res> {
   factory $HospitalSingleStateCopyWith(
           HospitalSingleState value, $Res Function(HospitalSingleState) then) =
-      _$HospitalSingleStateCopyWithImpl<$Res>;
+      _$HospitalSingleStateCopyWithImpl<$Res, HospitalSingleState>;
+  @useResult
   $Res call({HospitalSingleEntity hospital, FormzStatus status});
 }
 
 /// @nodoc
-class _$HospitalSingleStateCopyWithImpl<$Res>
+class _$HospitalSingleStateCopyWithImpl<$Res, $Val extends HospitalSingleState>
     implements $HospitalSingleStateCopyWith<$Res> {
   _$HospitalSingleStateCopyWithImpl(this._value, this._then);
 
-  final HospitalSingleState _value;
   // ignore: unused_field
-  final $Res Function(HospitalSingleState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? hospital = freezed,
-    Object? status = freezed,
+    Object? hospital = null,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
-      hospital: hospital == freezed
+      hospital: null == hospital
           ? _value.hospital
           : hospital // ignore: cast_nullable_to_non_nullable
               as HospitalSingleEntity,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-    ));
+    ) as $Val);
   }
 }
 
@@ -269,31 +274,30 @@ abstract class _$$_HospitalSingleStateCopyWith<$Res>
           $Res Function(_$_HospitalSingleState) then) =
       __$$_HospitalSingleStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({HospitalSingleEntity hospital, FormzStatus status});
 }
 
 /// @nodoc
 class __$$_HospitalSingleStateCopyWithImpl<$Res>
-    extends _$HospitalSingleStateCopyWithImpl<$Res>
+    extends _$HospitalSingleStateCopyWithImpl<$Res, _$_HospitalSingleState>
     implements _$$_HospitalSingleStateCopyWith<$Res> {
   __$$_HospitalSingleStateCopyWithImpl(_$_HospitalSingleState _value,
       $Res Function(_$_HospitalSingleState) _then)
-      : super(_value, (v) => _then(v as _$_HospitalSingleState));
+      : super(_value, _then);
 
-  @override
-  _$_HospitalSingleState get _value => super._value as _$_HospitalSingleState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? hospital = freezed,
-    Object? status = freezed,
+    Object? hospital = null,
+    Object? status = null,
   }) {
     return _then(_$_HospitalSingleState(
-      hospital: hospital == freezed
+      hospital: null == hospital
           ? _value.hospital
           : hospital // ignore: cast_nullable_to_non_nullable
               as HospitalSingleEntity,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
@@ -325,18 +329,17 @@ class _$_HospitalSingleState implements _HospitalSingleState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HospitalSingleState &&
-            const DeepCollectionEquality().equals(other.hospital, hospital) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            (identical(other.hospital, hospital) ||
+                other.hospital == hospital) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(hospital),
-      const DeepCollectionEquality().hash(status));
+  int get hashCode => Object.hash(runtimeType, hospital, status);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HospitalSingleStateCopyWith<_$_HospitalSingleState> get copyWith =>
       __$$_HospitalSingleStateCopyWithImpl<_$_HospitalSingleState>(
           this, _$identity);

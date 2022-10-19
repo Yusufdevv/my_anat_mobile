@@ -35,18 +35,18 @@ mixin _$CommentsEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getComments,
-    TResult Function()? getMoreComments,
-    TResult Function(int doctorId)? getDoctorComments,
-    TResult Function()? getMoreDoctorComments,
-    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+    TResult? Function(int organizationId)? getComments,
+    TResult? Function()? getMoreComments,
+    TResult? Function(int doctorId)? getDoctorComments,
+    TResult? Function()? getMoreDoctorComments,
+    TResult? Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(int doctor, double rating, String comment,
+    TResult? Function(int doctor, double rating, String comment,
             Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteHospitalComment,
   }) =>
       throw _privateConstructorUsedError;
@@ -84,14 +84,14 @@ mixin _$CommentsEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetComments value)? getComments,
-    TResult Function(_GetMoreComments value)? getMoreComments,
-    TResult Function(_GetDoctorComments value)? getDoctorComments,
-    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
-    TResult Function(_PostComment value)? postComment,
-    TResult Function(_SendDoctorComment value)? sendDoctorComment,
-    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
-    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    TResult? Function(_GetComments value)? getComments,
+    TResult? Function(_GetMoreComments value)? getMoreComments,
+    TResult? Function(_GetDoctorComments value)? getDoctorComments,
+    TResult? Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult? Function(_PostComment value)? postComment,
+    TResult? Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult? Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult? Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -113,17 +113,18 @@ mixin _$CommentsEvent {
 abstract class $CommentsEventCopyWith<$Res> {
   factory $CommentsEventCopyWith(
           CommentsEvent value, $Res Function(CommentsEvent) then) =
-      _$CommentsEventCopyWithImpl<$Res>;
+      _$CommentsEventCopyWithImpl<$Res, CommentsEvent>;
 }
 
 /// @nodoc
-class _$CommentsEventCopyWithImpl<$Res>
+class _$CommentsEventCopyWithImpl<$Res, $Val extends CommentsEvent>
     implements $CommentsEventCopyWith<$Res> {
   _$CommentsEventCopyWithImpl(this._value, this._then);
 
-  final CommentsEvent _value;
   // ignore: unused_field
-  final $Res Function(CommentsEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -131,26 +132,25 @@ abstract class _$$_GetCommentsCopyWith<$Res> {
   factory _$$_GetCommentsCopyWith(
           _$_GetComments value, $Res Function(_$_GetComments) then) =
       __$$_GetCommentsCopyWithImpl<$Res>;
+  @useResult
   $Res call({int organizationId});
 }
 
 /// @nodoc
 class __$$_GetCommentsCopyWithImpl<$Res>
-    extends _$CommentsEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$_GetComments>
     implements _$$_GetCommentsCopyWith<$Res> {
   __$$_GetCommentsCopyWithImpl(
       _$_GetComments _value, $Res Function(_$_GetComments) _then)
-      : super(_value, (v) => _then(v as _$_GetComments));
+      : super(_value, _then);
 
-  @override
-  _$_GetComments get _value => super._value as _$_GetComments;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? organizationId = freezed,
+    Object? organizationId = null,
   }) {
     return _then(_$_GetComments(
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -176,16 +176,16 @@ class _$_GetComments implements _GetComments {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetComments &&
-            const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId));
+            (identical(other.organizationId, organizationId) ||
+                other.organizationId == organizationId));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(organizationId));
+  int get hashCode => Object.hash(runtimeType, organizationId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetCommentsCopyWith<_$_GetComments> get copyWith =>
       __$$_GetCommentsCopyWithImpl<_$_GetComments>(this, _$identity);
 
@@ -212,18 +212,18 @@ class _$_GetComments implements _GetComments {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getComments,
-    TResult Function()? getMoreComments,
-    TResult Function(int doctorId)? getDoctorComments,
-    TResult Function()? getMoreDoctorComments,
-    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+    TResult? Function(int organizationId)? getComments,
+    TResult? Function()? getMoreComments,
+    TResult? Function(int doctorId)? getDoctorComments,
+    TResult? Function()? getMoreDoctorComments,
+    TResult? Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(int doctor, double rating, String comment,
+    TResult? Function(int doctor, double rating, String comment,
             Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteHospitalComment,
   }) {
     return getComments?.call(organizationId);
@@ -273,14 +273,14 @@ class _$_GetComments implements _GetComments {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetComments value)? getComments,
-    TResult Function(_GetMoreComments value)? getMoreComments,
-    TResult Function(_GetDoctorComments value)? getDoctorComments,
-    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
-    TResult Function(_PostComment value)? postComment,
-    TResult Function(_SendDoctorComment value)? sendDoctorComment,
-    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
-    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    TResult? Function(_GetComments value)? getComments,
+    TResult? Function(_GetMoreComments value)? getMoreComments,
+    TResult? Function(_GetDoctorComments value)? getDoctorComments,
+    TResult? Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult? Function(_PostComment value)? postComment,
+    TResult? Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult? Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult? Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return getComments?.call(this);
   }
@@ -323,14 +323,11 @@ abstract class _$$_GetMoreCommentsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreCommentsCopyWithImpl<$Res>
-    extends _$CommentsEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$_GetMoreComments>
     implements _$$_GetMoreCommentsCopyWith<$Res> {
   __$$_GetMoreCommentsCopyWithImpl(
       _$_GetMoreComments _value, $Res Function(_$_GetMoreComments) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreComments));
-
-  @override
-  _$_GetMoreComments get _value => super._value as _$_GetMoreComments;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -375,18 +372,18 @@ class _$_GetMoreComments implements _GetMoreComments {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getComments,
-    TResult Function()? getMoreComments,
-    TResult Function(int doctorId)? getDoctorComments,
-    TResult Function()? getMoreDoctorComments,
-    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+    TResult? Function(int organizationId)? getComments,
+    TResult? Function()? getMoreComments,
+    TResult? Function(int doctorId)? getDoctorComments,
+    TResult? Function()? getMoreDoctorComments,
+    TResult? Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(int doctor, double rating, String comment,
+    TResult? Function(int doctor, double rating, String comment,
             Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteHospitalComment,
   }) {
     return getMoreComments?.call();
@@ -436,14 +433,14 @@ class _$_GetMoreComments implements _GetMoreComments {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetComments value)? getComments,
-    TResult Function(_GetMoreComments value)? getMoreComments,
-    TResult Function(_GetDoctorComments value)? getDoctorComments,
-    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
-    TResult Function(_PostComment value)? postComment,
-    TResult Function(_SendDoctorComment value)? sendDoctorComment,
-    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
-    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    TResult? Function(_GetComments value)? getComments,
+    TResult? Function(_GetMoreComments value)? getMoreComments,
+    TResult? Function(_GetDoctorComments value)? getDoctorComments,
+    TResult? Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult? Function(_PostComment value)? postComment,
+    TResult? Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult? Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult? Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return getMoreComments?.call(this);
   }
@@ -477,26 +474,25 @@ abstract class _$$_GetDoctorCommentsCopyWith<$Res> {
   factory _$$_GetDoctorCommentsCopyWith(_$_GetDoctorComments value,
           $Res Function(_$_GetDoctorComments) then) =
       __$$_GetDoctorCommentsCopyWithImpl<$Res>;
+  @useResult
   $Res call({int doctorId});
 }
 
 /// @nodoc
 class __$$_GetDoctorCommentsCopyWithImpl<$Res>
-    extends _$CommentsEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$_GetDoctorComments>
     implements _$$_GetDoctorCommentsCopyWith<$Res> {
   __$$_GetDoctorCommentsCopyWithImpl(
       _$_GetDoctorComments _value, $Res Function(_$_GetDoctorComments) _then)
-      : super(_value, (v) => _then(v as _$_GetDoctorComments));
+      : super(_value, _then);
 
-  @override
-  _$_GetDoctorComments get _value => super._value as _$_GetDoctorComments;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? doctorId = freezed,
+    Object? doctorId = null,
   }) {
     return _then(_$_GetDoctorComments(
-      doctorId: doctorId == freezed
+      doctorId: null == doctorId
           ? _value.doctorId
           : doctorId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -522,15 +518,16 @@ class _$_GetDoctorComments implements _GetDoctorComments {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetDoctorComments &&
-            const DeepCollectionEquality().equals(other.doctorId, doctorId));
+            (identical(other.doctorId, doctorId) ||
+                other.doctorId == doctorId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(doctorId));
+  int get hashCode => Object.hash(runtimeType, doctorId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetDoctorCommentsCopyWith<_$_GetDoctorComments> get copyWith =>
       __$$_GetDoctorCommentsCopyWithImpl<_$_GetDoctorComments>(
           this, _$identity);
@@ -558,18 +555,18 @@ class _$_GetDoctorComments implements _GetDoctorComments {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getComments,
-    TResult Function()? getMoreComments,
-    TResult Function(int doctorId)? getDoctorComments,
-    TResult Function()? getMoreDoctorComments,
-    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+    TResult? Function(int organizationId)? getComments,
+    TResult? Function()? getMoreComments,
+    TResult? Function(int doctorId)? getDoctorComments,
+    TResult? Function()? getMoreDoctorComments,
+    TResult? Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(int doctor, double rating, String comment,
+    TResult? Function(int doctor, double rating, String comment,
             Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteHospitalComment,
   }) {
     return getDoctorComments?.call(doctorId);
@@ -619,14 +616,14 @@ class _$_GetDoctorComments implements _GetDoctorComments {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetComments value)? getComments,
-    TResult Function(_GetMoreComments value)? getMoreComments,
-    TResult Function(_GetDoctorComments value)? getDoctorComments,
-    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
-    TResult Function(_PostComment value)? postComment,
-    TResult Function(_SendDoctorComment value)? sendDoctorComment,
-    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
-    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    TResult? Function(_GetComments value)? getComments,
+    TResult? Function(_GetMoreComments value)? getMoreComments,
+    TResult? Function(_GetDoctorComments value)? getDoctorComments,
+    TResult? Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult? Function(_PostComment value)? postComment,
+    TResult? Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult? Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult? Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return getDoctorComments?.call(this);
   }
@@ -670,15 +667,11 @@ abstract class _$$_GetMoreDoctorCommentsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreDoctorCommentsCopyWithImpl<$Res>
-    extends _$CommentsEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$_GetMoreDoctorComments>
     implements _$$_GetMoreDoctorCommentsCopyWith<$Res> {
   __$$_GetMoreDoctorCommentsCopyWithImpl(_$_GetMoreDoctorComments _value,
       $Res Function(_$_GetMoreDoctorComments) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreDoctorComments));
-
-  @override
-  _$_GetMoreDoctorComments get _value =>
-      super._value as _$_GetMoreDoctorComments;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -723,18 +716,18 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getComments,
-    TResult Function()? getMoreComments,
-    TResult Function(int doctorId)? getDoctorComments,
-    TResult Function()? getMoreDoctorComments,
-    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+    TResult? Function(int organizationId)? getComments,
+    TResult? Function()? getMoreComments,
+    TResult? Function(int doctorId)? getDoctorComments,
+    TResult? Function()? getMoreDoctorComments,
+    TResult? Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(int doctor, double rating, String comment,
+    TResult? Function(int doctor, double rating, String comment,
             Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteHospitalComment,
   }) {
     return getMoreDoctorComments?.call();
@@ -784,14 +777,14 @@ class _$_GetMoreDoctorComments implements _GetMoreDoctorComments {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetComments value)? getComments,
-    TResult Function(_GetMoreComments value)? getMoreComments,
-    TResult Function(_GetDoctorComments value)? getDoctorComments,
-    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
-    TResult Function(_PostComment value)? postComment,
-    TResult Function(_SendDoctorComment value)? sendDoctorComment,
-    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
-    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    TResult? Function(_GetComments value)? getComments,
+    TResult? Function(_GetMoreComments value)? getMoreComments,
+    TResult? Function(_GetDoctorComments value)? getDoctorComments,
+    TResult? Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult? Function(_PostComment value)? postComment,
+    TResult? Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult? Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult? Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return getMoreDoctorComments?.call(this);
   }
@@ -825,31 +818,30 @@ abstract class _$$_PostCommentCopyWith<$Res> {
   factory _$$_PostCommentCopyWith(
           _$_PostComment value, $Res Function(_$_PostComment) then) =
       __$$_PostCommentCopyWithImpl<$Res>;
+  @useResult
   $Res call({PostCommentEntity comment, VoidCallback onSuccess});
 }
 
 /// @nodoc
 class __$$_PostCommentCopyWithImpl<$Res>
-    extends _$CommentsEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$_PostComment>
     implements _$$_PostCommentCopyWith<$Res> {
   __$$_PostCommentCopyWithImpl(
       _$_PostComment _value, $Res Function(_$_PostComment) _then)
-      : super(_value, (v) => _then(v as _$_PostComment));
+      : super(_value, _then);
 
-  @override
-  _$_PostComment get _value => super._value as _$_PostComment;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? comment = freezed,
-    Object? onSuccess = freezed,
+    Object? comment = null,
+    Object? onSuccess = null,
   }) {
     return _then(_$_PostComment(
-      comment: comment == freezed
+      comment: null == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as PostCommentEntity,
-      onSuccess: onSuccess == freezed
+      onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as VoidCallback,
@@ -877,17 +869,17 @@ class _$_PostComment implements _PostComment {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PostComment &&
-            const DeepCollectionEquality().equals(other.comment, comment) &&
+            (identical(other.comment, comment) || other.comment == comment) &&
             (identical(other.onSuccess, onSuccess) ||
                 other.onSuccess == onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(comment), onSuccess);
+  int get hashCode => Object.hash(runtimeType, comment, onSuccess);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PostCommentCopyWith<_$_PostComment> get copyWith =>
       __$$_PostCommentCopyWithImpl<_$_PostComment>(this, _$identity);
 
@@ -914,18 +906,18 @@ class _$_PostComment implements _PostComment {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getComments,
-    TResult Function()? getMoreComments,
-    TResult Function(int doctorId)? getDoctorComments,
-    TResult Function()? getMoreDoctorComments,
-    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+    TResult? Function(int organizationId)? getComments,
+    TResult? Function()? getMoreComments,
+    TResult? Function(int doctorId)? getDoctorComments,
+    TResult? Function()? getMoreDoctorComments,
+    TResult? Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(int doctor, double rating, String comment,
+    TResult? Function(int doctor, double rating, String comment,
             Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteHospitalComment,
   }) {
     return postComment?.call(comment, onSuccess);
@@ -975,14 +967,14 @@ class _$_PostComment implements _PostComment {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetComments value)? getComments,
-    TResult Function(_GetMoreComments value)? getMoreComments,
-    TResult Function(_GetDoctorComments value)? getDoctorComments,
-    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
-    TResult Function(_PostComment value)? postComment,
-    TResult Function(_SendDoctorComment value)? sendDoctorComment,
-    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
-    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    TResult? Function(_GetComments value)? getComments,
+    TResult? Function(_GetMoreComments value)? getMoreComments,
+    TResult? Function(_GetDoctorComments value)? getDoctorComments,
+    TResult? Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult? Function(_PostComment value)? postComment,
+    TResult? Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult? Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult? Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return postComment?.call(this);
   }
@@ -1024,6 +1016,7 @@ abstract class _$$_SendDoctorCommentCopyWith<$Res> {
   factory _$$_SendDoctorCommentCopyWith(_$_SendDoctorComment value,
           $Res Function(_$_SendDoctorComment) then) =
       __$$_SendDoctorCommentCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {int doctor,
       double rating,
@@ -1034,41 +1027,39 @@ abstract class _$$_SendDoctorCommentCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SendDoctorCommentCopyWithImpl<$Res>
-    extends _$CommentsEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$_SendDoctorComment>
     implements _$$_SendDoctorCommentCopyWith<$Res> {
   __$$_SendDoctorCommentCopyWithImpl(
       _$_SendDoctorComment _value, $Res Function(_$_SendDoctorComment) _then)
-      : super(_value, (v) => _then(v as _$_SendDoctorComment));
+      : super(_value, _then);
 
-  @override
-  _$_SendDoctorComment get _value => super._value as _$_SendDoctorComment;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? doctor = freezed,
-    Object? rating = freezed,
-    Object? comment = freezed,
-    Object? onSuccess = freezed,
-    Object? onError = freezed,
+    Object? doctor = null,
+    Object? rating = null,
+    Object? comment = null,
+    Object? onSuccess = null,
+    Object? onError = null,
   }) {
     return _then(_$_SendDoctorComment(
-      doctor: doctor == freezed
+      doctor: null == doctor
           ? _value.doctor
           : doctor // ignore: cast_nullable_to_non_nullable
               as int,
-      rating: rating == freezed
+      rating: null == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
               as double,
-      comment: comment == freezed
+      comment: null == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String,
-      onSuccess: onSuccess == freezed
+      onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as Function,
-      onError: onError == freezed
+      onError: null == onError
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
               as dynamic Function(String),
@@ -1107,24 +1098,21 @@ class _$_SendDoctorComment implements _SendDoctorComment {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SendDoctorComment &&
-            const DeepCollectionEquality().equals(other.doctor, doctor) &&
-            const DeepCollectionEquality().equals(other.rating, rating) &&
-            const DeepCollectionEquality().equals(other.comment, comment) &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
+            (identical(other.doctor, doctor) || other.doctor == doctor) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.comment, comment) || other.comment == comment) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess) &&
             (identical(other.onError, onError) || other.onError == onError));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(doctor),
-      const DeepCollectionEquality().hash(rating),
-      const DeepCollectionEquality().hash(comment),
-      const DeepCollectionEquality().hash(onSuccess),
-      onError);
+  int get hashCode =>
+      Object.hash(runtimeType, doctor, rating, comment, onSuccess, onError);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SendDoctorCommentCopyWith<_$_SendDoctorComment> get copyWith =>
       __$$_SendDoctorCommentCopyWithImpl<_$_SendDoctorComment>(
           this, _$identity);
@@ -1152,18 +1140,18 @@ class _$_SendDoctorComment implements _SendDoctorComment {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getComments,
-    TResult Function()? getMoreComments,
-    TResult Function(int doctorId)? getDoctorComments,
-    TResult Function()? getMoreDoctorComments,
-    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+    TResult? Function(int organizationId)? getComments,
+    TResult? Function()? getMoreComments,
+    TResult? Function(int doctorId)? getDoctorComments,
+    TResult? Function()? getMoreDoctorComments,
+    TResult? Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(int doctor, double rating, String comment,
+    TResult? Function(int doctor, double rating, String comment,
             Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteHospitalComment,
   }) {
     return sendDoctorComment?.call(doctor, rating, comment, onSuccess, onError);
@@ -1213,14 +1201,14 @@ class _$_SendDoctorComment implements _SendDoctorComment {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetComments value)? getComments,
-    TResult Function(_GetMoreComments value)? getMoreComments,
-    TResult Function(_GetDoctorComments value)? getDoctorComments,
-    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
-    TResult Function(_PostComment value)? postComment,
-    TResult Function(_SendDoctorComment value)? sendDoctorComment,
-    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
-    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    TResult? Function(_GetComments value)? getComments,
+    TResult? Function(_GetMoreComments value)? getMoreComments,
+    TResult? Function(_GetDoctorComments value)? getDoctorComments,
+    TResult? Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult? Function(_PostComment value)? postComment,
+    TResult? Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult? Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult? Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return sendDoctorComment?.call(this);
   }
@@ -1268,36 +1256,35 @@ abstract class _$$_DeleteDoctorCommentCopyWith<$Res> {
   factory _$$_DeleteDoctorCommentCopyWith(_$_DeleteDoctorComment value,
           $Res Function(_$_DeleteDoctorComment) then) =
       __$$_DeleteDoctorCommentCopyWithImpl<$Res>;
+  @useResult
   $Res call({int id, Function onSuccess, Function onError});
 }
 
 /// @nodoc
 class __$$_DeleteDoctorCommentCopyWithImpl<$Res>
-    extends _$CommentsEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$_DeleteDoctorComment>
     implements _$$_DeleteDoctorCommentCopyWith<$Res> {
   __$$_DeleteDoctorCommentCopyWithImpl(_$_DeleteDoctorComment _value,
       $Res Function(_$_DeleteDoctorComment) _then)
-      : super(_value, (v) => _then(v as _$_DeleteDoctorComment));
+      : super(_value, _then);
 
-  @override
-  _$_DeleteDoctorComment get _value => super._value as _$_DeleteDoctorComment;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? onSuccess = freezed,
-    Object? onError = freezed,
+    Object? id = null,
+    Object? onSuccess = null,
+    Object? onError = null,
   }) {
     return _then(_$_DeleteDoctorComment(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      onSuccess: onSuccess == freezed
+      onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as Function,
-      onError: onError == freezed
+      onError: null == onError
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
               as Function,
@@ -1328,20 +1315,18 @@ class _$_DeleteDoctorComment implements _DeleteDoctorComment {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DeleteDoctorComment &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
-            const DeepCollectionEquality().equals(other.onError, onError));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess) &&
+            (identical(other.onError, onError) || other.onError == onError));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(onSuccess),
-      const DeepCollectionEquality().hash(onError));
+  int get hashCode => Object.hash(runtimeType, id, onSuccess, onError);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DeleteDoctorCommentCopyWith<_$_DeleteDoctorComment> get copyWith =>
       __$$_DeleteDoctorCommentCopyWithImpl<_$_DeleteDoctorComment>(
           this, _$identity);
@@ -1369,18 +1354,18 @@ class _$_DeleteDoctorComment implements _DeleteDoctorComment {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getComments,
-    TResult Function()? getMoreComments,
-    TResult Function(int doctorId)? getDoctorComments,
-    TResult Function()? getMoreDoctorComments,
-    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+    TResult? Function(int organizationId)? getComments,
+    TResult? Function()? getMoreComments,
+    TResult? Function(int doctorId)? getDoctorComments,
+    TResult? Function()? getMoreDoctorComments,
+    TResult? Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(int doctor, double rating, String comment,
+    TResult? Function(int doctor, double rating, String comment,
             Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteHospitalComment,
   }) {
     return deleteDoctorComment?.call(id, onSuccess, onError);
@@ -1430,14 +1415,14 @@ class _$_DeleteDoctorComment implements _DeleteDoctorComment {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetComments value)? getComments,
-    TResult Function(_GetMoreComments value)? getMoreComments,
-    TResult Function(_GetDoctorComments value)? getDoctorComments,
-    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
-    TResult Function(_PostComment value)? postComment,
-    TResult Function(_SendDoctorComment value)? sendDoctorComment,
-    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
-    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    TResult? Function(_GetComments value)? getComments,
+    TResult? Function(_GetMoreComments value)? getMoreComments,
+    TResult? Function(_GetDoctorComments value)? getDoctorComments,
+    TResult? Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult? Function(_PostComment value)? postComment,
+    TResult? Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult? Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult? Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return deleteDoctorComment?.call(this);
   }
@@ -1481,37 +1466,35 @@ abstract class _$$_DeleteHospitalCommentCopyWith<$Res> {
   factory _$$_DeleteHospitalCommentCopyWith(_$_DeleteHospitalComment value,
           $Res Function(_$_DeleteHospitalComment) then) =
       __$$_DeleteHospitalCommentCopyWithImpl<$Res>;
+  @useResult
   $Res call({int id, Function onSuccess, Function onError});
 }
 
 /// @nodoc
 class __$$_DeleteHospitalCommentCopyWithImpl<$Res>
-    extends _$CommentsEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$_DeleteHospitalComment>
     implements _$$_DeleteHospitalCommentCopyWith<$Res> {
   __$$_DeleteHospitalCommentCopyWithImpl(_$_DeleteHospitalComment _value,
       $Res Function(_$_DeleteHospitalComment) _then)
-      : super(_value, (v) => _then(v as _$_DeleteHospitalComment));
+      : super(_value, _then);
 
-  @override
-  _$_DeleteHospitalComment get _value =>
-      super._value as _$_DeleteHospitalComment;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? onSuccess = freezed,
-    Object? onError = freezed,
+    Object? id = null,
+    Object? onSuccess = null,
+    Object? onError = null,
   }) {
     return _then(_$_DeleteHospitalComment(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      onSuccess: onSuccess == freezed
+      onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as Function,
-      onError: onError == freezed
+      onError: null == onError
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
               as Function,
@@ -1542,20 +1525,18 @@ class _$_DeleteHospitalComment implements _DeleteHospitalComment {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DeleteHospitalComment &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
-            const DeepCollectionEquality().equals(other.onError, onError));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess) &&
+            (identical(other.onError, onError) || other.onError == onError));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(onSuccess),
-      const DeepCollectionEquality().hash(onError));
+  int get hashCode => Object.hash(runtimeType, id, onSuccess, onError);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DeleteHospitalCommentCopyWith<_$_DeleteHospitalComment> get copyWith =>
       __$$_DeleteHospitalCommentCopyWithImpl<_$_DeleteHospitalComment>(
           this, _$identity);
@@ -1583,18 +1564,18 @@ class _$_DeleteHospitalComment implements _DeleteHospitalComment {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getComments,
-    TResult Function()? getMoreComments,
-    TResult Function(int doctorId)? getDoctorComments,
-    TResult Function()? getMoreDoctorComments,
-    TResult Function(PostCommentEntity comment, VoidCallback onSuccess)?
+    TResult? Function(int organizationId)? getComments,
+    TResult? Function()? getMoreComments,
+    TResult? Function(int doctorId)? getDoctorComments,
+    TResult? Function()? getMoreDoctorComments,
+    TResult? Function(PostCommentEntity comment, VoidCallback onSuccess)?
         postComment,
-    TResult Function(int doctor, double rating, String comment,
+    TResult? Function(int doctor, double rating, String comment,
             Function onSuccess, dynamic Function(String) onError)?
         sendDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteDoctorComment,
-    TResult Function(int id, Function onSuccess, Function onError)?
+    TResult? Function(int id, Function onSuccess, Function onError)?
         deleteHospitalComment,
   }) {
     return deleteHospitalComment?.call(id, onSuccess, onError);
@@ -1644,14 +1625,14 @@ class _$_DeleteHospitalComment implements _DeleteHospitalComment {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetComments value)? getComments,
-    TResult Function(_GetMoreComments value)? getMoreComments,
-    TResult Function(_GetDoctorComments value)? getDoctorComments,
-    TResult Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
-    TResult Function(_PostComment value)? postComment,
-    TResult Function(_SendDoctorComment value)? sendDoctorComment,
-    TResult Function(_DeleteDoctorComment value)? deleteDoctorComment,
-    TResult Function(_DeleteHospitalComment value)? deleteHospitalComment,
+    TResult? Function(_GetComments value)? getComments,
+    TResult? Function(_GetMoreComments value)? getMoreComments,
+    TResult? Function(_GetDoctorComments value)? getDoctorComments,
+    TResult? Function(_GetMoreDoctorComments value)? getMoreDoctorComments,
+    TResult? Function(_PostComment value)? postComment,
+    TResult? Function(_SendDoctorComment value)? sendDoctorComment,
+    TResult? Function(_DeleteDoctorComment value)? deleteDoctorComment,
+    TResult? Function(_DeleteHospitalComment value)? deleteHospitalComment,
   }) {
     return deleteHospitalComment?.call(this);
   }
@@ -1716,7 +1697,8 @@ mixin _$CommentsState {
 abstract class $CommentsStateCopyWith<$Res> {
   factory $CommentsStateCopyWith(
           CommentsState value, $Res Function(CommentsState) then) =
-      _$CommentsStateCopyWithImpl<$Res>;
+      _$CommentsStateCopyWithImpl<$Res, CommentsState>;
+  @useResult
   $Res call(
       {FormzStatus status,
       List<CommentEntity> comments,
@@ -1735,89 +1717,91 @@ abstract class $CommentsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CommentsStateCopyWithImpl<$Res>
+class _$CommentsStateCopyWithImpl<$Res, $Val extends CommentsState>
     implements $CommentsStateCopyWith<$Res> {
   _$CommentsStateCopyWithImpl(this._value, this._then);
 
-  final CommentsState _value;
   // ignore: unused_field
-  final $Res Function(CommentsState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? comments = freezed,
+    Object? status = null,
+    Object? comments = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
-    Object? organizationId = freezed,
-    Object? doctorCommentStatus = freezed,
-    Object? doctorComments = freezed,
+    Object? fetchMore = null,
+    Object? organizationId = null,
+    Object? doctorCommentStatus = null,
+    Object? doctorComments = null,
     Object? doctorCommentNext = freezed,
-    Object? doctorCommentFetchMore = freezed,
-    Object? doctorId = freezed,
-    Object? doctorCommentCount = freezed,
-    Object? hospitalCommentCount = freezed,
-    Object? postCommentStatus = freezed,
-    Object? sendDoctorCommentStatus = freezed,
+    Object? doctorCommentFetchMore = null,
+    Object? doctorId = null,
+    Object? doctorCommentCount = null,
+    Object? hospitalCommentCount = null,
+    Object? postCommentStatus = null,
+    Object? sendDoctorCommentStatus = null,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      comments: comments == freezed
+      comments: null == comments
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
               as List<CommentEntity>,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
-      doctorCommentStatus: doctorCommentStatus == freezed
+      doctorCommentStatus: null == doctorCommentStatus
           ? _value.doctorCommentStatus
           : doctorCommentStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      doctorComments: doctorComments == freezed
+      doctorComments: null == doctorComments
           ? _value.doctorComments
           : doctorComments // ignore: cast_nullable_to_non_nullable
               as List<CommentEntity>,
-      doctorCommentNext: doctorCommentNext == freezed
+      doctorCommentNext: freezed == doctorCommentNext
           ? _value.doctorCommentNext
           : doctorCommentNext // ignore: cast_nullable_to_non_nullable
               as String?,
-      doctorCommentFetchMore: doctorCommentFetchMore == freezed
+      doctorCommentFetchMore: null == doctorCommentFetchMore
           ? _value.doctorCommentFetchMore
           : doctorCommentFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      doctorId: doctorId == freezed
+      doctorId: null == doctorId
           ? _value.doctorId
           : doctorId // ignore: cast_nullable_to_non_nullable
               as int,
-      doctorCommentCount: doctorCommentCount == freezed
+      doctorCommentCount: null == doctorCommentCount
           ? _value.doctorCommentCount
           : doctorCommentCount // ignore: cast_nullable_to_non_nullable
               as int,
-      hospitalCommentCount: hospitalCommentCount == freezed
+      hospitalCommentCount: null == hospitalCommentCount
           ? _value.hospitalCommentCount
           : hospitalCommentCount // ignore: cast_nullable_to_non_nullable
               as int,
-      postCommentStatus: postCommentStatus == freezed
+      postCommentStatus: null == postCommentStatus
           ? _value.postCommentStatus
           : postCommentStatus // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      sendDoctorCommentStatus: sendDoctorCommentStatus == freezed
+      sendDoctorCommentStatus: null == sendDoctorCommentStatus
           ? _value.sendDoctorCommentStatus
           : sendDoctorCommentStatus // ignore: cast_nullable_to_non_nullable
               as dynamic,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1828,6 +1812,7 @@ abstract class _$$_CommentsStateCopyWith<$Res>
           _$_CommentsState value, $Res Function(_$_CommentsState) then) =
       __$$_CommentsStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {FormzStatus status,
       List<CommentEntity> comments,
@@ -1847,85 +1832,83 @@ abstract class _$$_CommentsStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_CommentsStateCopyWithImpl<$Res>
-    extends _$CommentsStateCopyWithImpl<$Res>
+    extends _$CommentsStateCopyWithImpl<$Res, _$_CommentsState>
     implements _$$_CommentsStateCopyWith<$Res> {
   __$$_CommentsStateCopyWithImpl(
       _$_CommentsState _value, $Res Function(_$_CommentsState) _then)
-      : super(_value, (v) => _then(v as _$_CommentsState));
+      : super(_value, _then);
 
-  @override
-  _$_CommentsState get _value => super._value as _$_CommentsState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? comments = freezed,
+    Object? status = null,
+    Object? comments = null,
     Object? next = freezed,
-    Object? fetchMore = freezed,
-    Object? organizationId = freezed,
-    Object? doctorCommentStatus = freezed,
-    Object? doctorComments = freezed,
+    Object? fetchMore = null,
+    Object? organizationId = null,
+    Object? doctorCommentStatus = null,
+    Object? doctorComments = null,
     Object? doctorCommentNext = freezed,
-    Object? doctorCommentFetchMore = freezed,
-    Object? doctorId = freezed,
-    Object? doctorCommentCount = freezed,
-    Object? hospitalCommentCount = freezed,
-    Object? postCommentStatus = freezed,
-    Object? sendDoctorCommentStatus = freezed,
+    Object? doctorCommentFetchMore = null,
+    Object? doctorId = null,
+    Object? doctorCommentCount = null,
+    Object? hospitalCommentCount = null,
+    Object? postCommentStatus = null,
+    Object? sendDoctorCommentStatus = null,
   }) {
     return _then(_$_CommentsState(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      comments: comments == freezed
+      comments: null == comments
           ? _value._comments
           : comments // ignore: cast_nullable_to_non_nullable
               as List<CommentEntity>,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
-      doctorCommentStatus: doctorCommentStatus == freezed
+      doctorCommentStatus: null == doctorCommentStatus
           ? _value.doctorCommentStatus
           : doctorCommentStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      doctorComments: doctorComments == freezed
+      doctorComments: null == doctorComments
           ? _value._doctorComments
           : doctorComments // ignore: cast_nullable_to_non_nullable
               as List<CommentEntity>,
-      doctorCommentNext: doctorCommentNext == freezed
+      doctorCommentNext: freezed == doctorCommentNext
           ? _value.doctorCommentNext
           : doctorCommentNext // ignore: cast_nullable_to_non_nullable
               as String?,
-      doctorCommentFetchMore: doctorCommentFetchMore == freezed
+      doctorCommentFetchMore: null == doctorCommentFetchMore
           ? _value.doctorCommentFetchMore
           : doctorCommentFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      doctorId: doctorId == freezed
+      doctorId: null == doctorId
           ? _value.doctorId
           : doctorId // ignore: cast_nullable_to_non_nullable
               as int,
-      doctorCommentCount: doctorCommentCount == freezed
+      doctorCommentCount: null == doctorCommentCount
           ? _value.doctorCommentCount
           : doctorCommentCount // ignore: cast_nullable_to_non_nullable
               as int,
-      hospitalCommentCount: hospitalCommentCount == freezed
+      hospitalCommentCount: null == hospitalCommentCount
           ? _value.hospitalCommentCount
           : hospitalCommentCount // ignore: cast_nullable_to_non_nullable
               as int,
-      postCommentStatus: postCommentStatus == freezed
+      postCommentStatus: null == postCommentStatus
           ? _value.postCommentStatus
           : postCommentStatus,
-      sendDoctorCommentStatus: sendDoctorCommentStatus == freezed
+      sendDoctorCommentStatus: null == sendDoctorCommentStatus
           ? _value.sendDoctorCommentStatus
           : sendDoctorCommentStatus,
     ));
@@ -2014,25 +1997,27 @@ class _$_CommentsState implements _CommentsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CommentsState &&
-            const DeepCollectionEquality().equals(other.status, status) &&
+            (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
-            const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality().equals(other.fetchMore, fetchMore) &&
-            const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId) &&
-            const DeepCollectionEquality()
-                .equals(other.doctorCommentStatus, doctorCommentStatus) &&
+            (identical(other.next, next) || other.next == next) &&
+            (identical(other.fetchMore, fetchMore) ||
+                other.fetchMore == fetchMore) &&
+            (identical(other.organizationId, organizationId) ||
+                other.organizationId == organizationId) &&
+            (identical(other.doctorCommentStatus, doctorCommentStatus) ||
+                other.doctorCommentStatus == doctorCommentStatus) &&
             const DeepCollectionEquality()
                 .equals(other._doctorComments, _doctorComments) &&
-            const DeepCollectionEquality()
-                .equals(other.doctorCommentNext, doctorCommentNext) &&
-            const DeepCollectionEquality()
-                .equals(other.doctorCommentFetchMore, doctorCommentFetchMore) &&
-            const DeepCollectionEquality().equals(other.doctorId, doctorId) &&
-            const DeepCollectionEquality()
-                .equals(other.doctorCommentCount, doctorCommentCount) &&
-            const DeepCollectionEquality()
-                .equals(other.hospitalCommentCount, hospitalCommentCount) &&
+            (identical(other.doctorCommentNext, doctorCommentNext) ||
+                other.doctorCommentNext == doctorCommentNext) &&
+            (identical(other.doctorCommentFetchMore, doctorCommentFetchMore) ||
+                other.doctorCommentFetchMore == doctorCommentFetchMore) &&
+            (identical(other.doctorId, doctorId) ||
+                other.doctorId == doctorId) &&
+            (identical(other.doctorCommentCount, doctorCommentCount) ||
+                other.doctorCommentCount == doctorCommentCount) &&
+            (identical(other.hospitalCommentCount, hospitalCommentCount) ||
+                other.hospitalCommentCount == hospitalCommentCount) &&
             const DeepCollectionEquality()
                 .equals(other.postCommentStatus, postCommentStatus) &&
             const DeepCollectionEquality().equals(
@@ -2042,23 +2027,24 @@ class _$_CommentsState implements _CommentsState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(status),
+      status,
       const DeepCollectionEquality().hash(_comments),
-      const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(fetchMore),
-      const DeepCollectionEquality().hash(organizationId),
-      const DeepCollectionEquality().hash(doctorCommentStatus),
+      next,
+      fetchMore,
+      organizationId,
+      doctorCommentStatus,
       const DeepCollectionEquality().hash(_doctorComments),
-      const DeepCollectionEquality().hash(doctorCommentNext),
-      const DeepCollectionEquality().hash(doctorCommentFetchMore),
-      const DeepCollectionEquality().hash(doctorId),
-      const DeepCollectionEquality().hash(doctorCommentCount),
-      const DeepCollectionEquality().hash(hospitalCommentCount),
+      doctorCommentNext,
+      doctorCommentFetchMore,
+      doctorId,
+      doctorCommentCount,
+      hospitalCommentCount,
       const DeepCollectionEquality().hash(postCommentStatus),
       const DeepCollectionEquality().hash(sendDoctorCommentStatus));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CommentsStateCopyWith<_$_CommentsState> get copyWith =>
       __$$_CommentsStateCopyWithImpl<_$_CommentsState>(this, _$identity);
 }

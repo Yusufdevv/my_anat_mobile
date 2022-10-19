@@ -24,8 +24,8 @@ mixin _$HArticlesEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getArticles,
-    TResult Function()? getMoreArticles,
+    TResult? Function(int organizationId)? getArticles,
+    TResult? Function()? getMoreArticles,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$HArticlesEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetArticles value)? getArticles,
-    TResult Function(_GetMoreArticles value)? getMoreArticles,
+    TResult? Function(_GetArticles value)? getArticles,
+    TResult? Function(_GetMoreArticles value)? getMoreArticles,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,17 +60,18 @@ mixin _$HArticlesEvent {
 abstract class $HArticlesEventCopyWith<$Res> {
   factory $HArticlesEventCopyWith(
           HArticlesEvent value, $Res Function(HArticlesEvent) then) =
-      _$HArticlesEventCopyWithImpl<$Res>;
+      _$HArticlesEventCopyWithImpl<$Res, HArticlesEvent>;
 }
 
 /// @nodoc
-class _$HArticlesEventCopyWithImpl<$Res>
+class _$HArticlesEventCopyWithImpl<$Res, $Val extends HArticlesEvent>
     implements $HArticlesEventCopyWith<$Res> {
   _$HArticlesEventCopyWithImpl(this._value, this._then);
 
-  final HArticlesEvent _value;
   // ignore: unused_field
-  final $Res Function(HArticlesEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -78,26 +79,25 @@ abstract class _$$_GetArticlesCopyWith<$Res> {
   factory _$$_GetArticlesCopyWith(
           _$_GetArticles value, $Res Function(_$_GetArticles) then) =
       __$$_GetArticlesCopyWithImpl<$Res>;
+  @useResult
   $Res call({int organizationId});
 }
 
 /// @nodoc
 class __$$_GetArticlesCopyWithImpl<$Res>
-    extends _$HArticlesEventCopyWithImpl<$Res>
+    extends _$HArticlesEventCopyWithImpl<$Res, _$_GetArticles>
     implements _$$_GetArticlesCopyWith<$Res> {
   __$$_GetArticlesCopyWithImpl(
       _$_GetArticles _value, $Res Function(_$_GetArticles) _then)
-      : super(_value, (v) => _then(v as _$_GetArticles));
+      : super(_value, _then);
 
-  @override
-  _$_GetArticles get _value => super._value as _$_GetArticles;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? organizationId = freezed,
+    Object? organizationId = null,
   }) {
     return _then(_$_GetArticles(
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -123,16 +123,16 @@ class _$_GetArticles implements _GetArticles {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetArticles &&
-            const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId));
+            (identical(other.organizationId, organizationId) ||
+                other.organizationId == organizationId));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(organizationId));
+  int get hashCode => Object.hash(runtimeType, organizationId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetArticlesCopyWith<_$_GetArticles> get copyWith =>
       __$$_GetArticlesCopyWithImpl<_$_GetArticles>(this, _$identity);
 
@@ -148,8 +148,8 @@ class _$_GetArticles implements _GetArticles {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getArticles,
-    TResult Function()? getMoreArticles,
+    TResult? Function(int organizationId)? getArticles,
+    TResult? Function()? getMoreArticles,
   }) {
     return getArticles?.call(organizationId);
   }
@@ -179,8 +179,8 @@ class _$_GetArticles implements _GetArticles {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetArticles value)? getArticles,
-    TResult Function(_GetMoreArticles value)? getMoreArticles,
+    TResult? Function(_GetArticles value)? getArticles,
+    TResult? Function(_GetMoreArticles value)? getMoreArticles,
   }) {
     return getArticles?.call(this);
   }
@@ -217,14 +217,11 @@ abstract class _$$_GetMoreArticlesCopyWith<$Res> {
 
 /// @nodoc
 class __$$_GetMoreArticlesCopyWithImpl<$Res>
-    extends _$HArticlesEventCopyWithImpl<$Res>
+    extends _$HArticlesEventCopyWithImpl<$Res, _$_GetMoreArticles>
     implements _$$_GetMoreArticlesCopyWith<$Res> {
   __$$_GetMoreArticlesCopyWithImpl(
       _$_GetMoreArticles _value, $Res Function(_$_GetMoreArticles) _then)
-      : super(_value, (v) => _then(v as _$_GetMoreArticles));
-
-  @override
-  _$_GetMoreArticles get _value => super._value as _$_GetMoreArticles;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -258,8 +255,8 @@ class _$_GetMoreArticles implements _GetMoreArticles {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(int organizationId)? getArticles,
-    TResult Function()? getMoreArticles,
+    TResult? Function(int organizationId)? getArticles,
+    TResult? Function()? getMoreArticles,
   }) {
     return getMoreArticles?.call();
   }
@@ -289,8 +286,8 @@ class _$_GetMoreArticles implements _GetMoreArticles {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_GetArticles value)? getArticles,
-    TResult Function(_GetMoreArticles value)? getMoreArticles,
+    TResult? Function(_GetArticles value)? getArticles,
+    TResult? Function(_GetMoreArticles value)? getMoreArticles,
   }) {
     return getMoreArticles?.call(this);
   }
@@ -330,7 +327,8 @@ mixin _$HArticlesState {
 abstract class $HArticlesStateCopyWith<$Res> {
   factory $HArticlesStateCopyWith(
           HArticlesState value, $Res Function(HArticlesState) then) =
-      _$HArticlesStateCopyWithImpl<$Res>;
+      _$HArticlesStateCopyWithImpl<$Res, HArticlesState>;
+  @useResult
   $Res call(
       {List<JournalArticleEntity> articles,
       FormzStatus status,
@@ -340,44 +338,46 @@ abstract class $HArticlesStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$HArticlesStateCopyWithImpl<$Res>
+class _$HArticlesStateCopyWithImpl<$Res, $Val extends HArticlesState>
     implements $HArticlesStateCopyWith<$Res> {
   _$HArticlesStateCopyWithImpl(this._value, this._then);
 
-  final HArticlesState _value;
   // ignore: unused_field
-  final $Res Function(HArticlesState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? articles = freezed,
-    Object? status = freezed,
-    Object? fetchMore = freezed,
+    Object? articles = null,
+    Object? status = null,
+    Object? fetchMore = null,
     Object? next = freezed,
-    Object? organizationId = freezed,
+    Object? organizationId = null,
   }) {
     return _then(_value.copyWith(
-      articles: articles == freezed
+      articles: null == articles
           ? _value.articles
           : articles // ignore: cast_nullable_to_non_nullable
               as List<JournalArticleEntity>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -388,6 +388,7 @@ abstract class _$$_HArticlesStateCopyWith<$Res>
           _$_HArticlesState value, $Res Function(_$_HArticlesState) then) =
       __$$_HArticlesStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<JournalArticleEntity> articles,
       FormzStatus status,
@@ -398,41 +399,39 @@ abstract class _$$_HArticlesStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_HArticlesStateCopyWithImpl<$Res>
-    extends _$HArticlesStateCopyWithImpl<$Res>
+    extends _$HArticlesStateCopyWithImpl<$Res, _$_HArticlesState>
     implements _$$_HArticlesStateCopyWith<$Res> {
   __$$_HArticlesStateCopyWithImpl(
       _$_HArticlesState _value, $Res Function(_$_HArticlesState) _then)
-      : super(_value, (v) => _then(v as _$_HArticlesState));
+      : super(_value, _then);
 
-  @override
-  _$_HArticlesState get _value => super._value as _$_HArticlesState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? articles = freezed,
-    Object? status = freezed,
-    Object? fetchMore = freezed,
+    Object? articles = null,
+    Object? status = null,
+    Object? fetchMore = null,
     Object? next = freezed,
-    Object? organizationId = freezed,
+    Object? organizationId = null,
   }) {
     return _then(_$_HArticlesState(
-      articles: articles == freezed
+      articles: null == articles
           ? _value._articles
           : articles // ignore: cast_nullable_to_non_nullable
               as List<JournalArticleEntity>,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      fetchMore: fetchMore == freezed
+      fetchMore: null == fetchMore
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      next: next == freezed
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
               as String?,
-      organizationId: organizationId == freezed
+      organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -482,24 +481,26 @@ class _$_HArticlesState implements _HArticlesState {
         (other.runtimeType == runtimeType &&
             other is _$_HArticlesState &&
             const DeepCollectionEquality().equals(other._articles, _articles) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.fetchMore, fetchMore) &&
-            const DeepCollectionEquality().equals(other.next, next) &&
-            const DeepCollectionEquality()
-                .equals(other.organizationId, organizationId));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.fetchMore, fetchMore) ||
+                other.fetchMore == fetchMore) &&
+            (identical(other.next, next) || other.next == next) &&
+            (identical(other.organizationId, organizationId) ||
+                other.organizationId == organizationId));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_articles),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(fetchMore),
-      const DeepCollectionEquality().hash(next),
-      const DeepCollectionEquality().hash(organizationId));
+      status,
+      fetchMore,
+      next,
+      organizationId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HArticlesStateCopyWith<_$_HArticlesState> get copyWith =>
       __$$_HArticlesStateCopyWithImpl<_$_HArticlesState>(this, _$identity);
 }
