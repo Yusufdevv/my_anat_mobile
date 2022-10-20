@@ -1,10 +1,8 @@
-import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/journal_screen.dart';
 import 'package:anatomica/features/map/presentation/map_screen.dart';
 import 'package:anatomica/features/profile/presentation/pages/profile.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home.dart';
 
@@ -29,9 +27,7 @@ class _TabNavigatorState extends State<TabNavigator> with AutomaticKeepAliveClie
         return {TabNavigatorRoutes.root: (context) => const MapScreen()};
       case NavItemEnum.magazine:
         return {
-          TabNavigatorRoutes.root: (context) => MagazineScreen(
-                journalBloc: context.read<JournalBloc>(),
-              ),
+          TabNavigatorRoutes.root: (context) => const MagazineScreen(),
         };
       case NavItemEnum.vacancies:
         return {

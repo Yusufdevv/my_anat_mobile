@@ -9,7 +9,6 @@ import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardel
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_tab_bar.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
-import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/category_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/district.dart';
@@ -22,7 +21,6 @@ import 'package:anatomica/features/vacancy/domain/usecases/vacancy_option.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item_list.dart';
-import 'package:anatomica/features/vacancy/prezentation/widgets/category_container.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/company_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filter_bottom_sheet.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/filter_card_list.dart';
@@ -42,8 +40,7 @@ class VacancyScreen extends StatefulWidget {
   State<VacancyScreen> createState() => _VacancyScreenState();
 }
 
-class _VacancyScreenState extends State<VacancyScreen>
-    with TickerProviderStateMixin {
+class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateMixin {
   late TabController tabController;
   bool hasFilter = false;
   late VacancyBloc vacancyBloc;
@@ -56,30 +53,21 @@ class _VacancyScreenState extends State<VacancyScreen>
         setState(() {});
       });
     vacancyBloc = VacancyBloc(
-      vacancyFilterUseCase: VacancyFilterUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      categoryListUseCase: CategoryListUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      candidateListUseCase: CandidateListUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyOptionUseCase: VacancyOptionUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      organizationVacancyUseCase: OrganizationVacancyUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyListUseCase: VacancyListUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      topOrganizationUseCase: TopOrganizationUseCase(
-          repository: serviceLocator<VacancyRepositoryImpl>()),
-      likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
-          repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
-      likeUnlikeDoctorStreamUseCase: LikeUnlikeDoctorStreamUseCase(
-          repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+      vacancyFilterUseCase: VacancyFilterUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      categoryListUseCase: CategoryListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      candidateListUseCase: CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyOptionUseCase: VacancyOptionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      organizationVacancyUseCase: OrganizationVacancyUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      topOrganizationUseCase: TopOrganizationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      likeUnlikeVacancyStreamUseCase:
+          LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+      likeUnlikeDoctorStreamUseCase:
+          LikeUnlikeDoctorStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
     );
     regionBloc = RegionBloc(
-        districtUseCase: DistrictUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        regionUseCase:
-            RegionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        districtUseCase: DistrictUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        regionUseCase: RegionUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
     vacancyBloc.add(GetVacancyListEvent(onSuccess: () {}));
     vacancyBloc.add(GetTopOrganizationEvent());
     vacancyBloc.add(GetCandidateListEvent());
@@ -120,99 +108,42 @@ class _VacancyScreenState extends State<VacancyScreen>
                     return SliverPersistentHeader(
                       pinned: false,
                       delegate: SliverTabBarDelegate(
-                        height:
-                            state.organizationVacancyList.isEmpty ? 126 : 280,
+                        height: state.organizationVacancyList.isEmpty ? 126 : 280,
                         color: Colors.white,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Padding(
-                            //   padding: const EdgeInsets.only(left: 16, bottom: 12, top: 16),
-                            //   child: Text(
-                            //     LocaleKeys.categories.tr(),
-                            //     style: Theme.of(context).textTheme.headline1!.copyWith(
-                            //           fontWeight: FontWeight.w600,
-                            //         ),
-                            //   ),
-                            // ),
-                            // SingleChildScrollView(
-                            //   physics: const BouncingScrollPhysics(),
-                            //   scrollDirection: Axis.horizontal,
-                            //   padding: const EdgeInsets.symmetric(horizontal: 16),
-                            //   child: Row(
-                            //     children: List.generate(
-                            //       state.categoryList.length,
-                            //       (index) => CategoryContainer(
-                            //         isSelect: state.selectCategoryId == state.categoryList[index].id,
-                            //         onTap: () {
-                            //           if (state.selectCategoryId == 0 ||
-                            //               state.selectCategoryId != state.categoryList[index].id) {
-                            //             vacancyBloc.add(SelectCategoryEvent(id: state.categoryList[index].id));
-                            //             vacancyBloc.add(GetVacancyListEvent(
-                            //                 onSuccess: () {},
-                            //                 vacancyParamsEntity:
-                            //                     VacancyParamsEntity(category: '${state.categoryList[index].id}')));
-                            //             vacancyBloc.add(
-                            //                 GetOrganizationVacancyEvent(category: '${state.categoryList[index].id}'));
-                            //             vacancyBloc
-                            //                 .add(GetCandidateListEvent(categoryId: '${state.categoryList[index].id}'));
-                            //           } else {
-                            //             vacancyBloc.add(SelectCategoryEvent(id: 0));
-                            //             vacancyBloc.add(GetVacancyListEvent(
-                            //               onSuccess: () {},
-                            //             ));
-                            //             vacancyBloc.add(GetOrganizationVacancyEvent());
-                            //             vacancyBloc.add(GetCandidateListEvent());
-                            //           }
-                            //         },
-                            //         title: state.categoryList[index].title,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                             const SizedBox(height: 24),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 16, bottom: 12),
+                                  padding: const EdgeInsets.only(left: 16, bottom: 12),
                                   child: Text(
                                     LocaleKeys.vacancy_company.tr(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .copyWith(
+                                    style: Theme.of(context).textTheme.headline1!.copyWith(
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
                                 ),
                                 Container(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 16),
+                                  padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                                  margin: const EdgeInsets.symmetric(horizontal: 16),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                        width: 1, color: pattensBlue),
+                                    border: Border.all(width: 1, color: pattensBlue),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 12),
-                                        child: CompanyCard(
-                                            vacancyBloc: vacancyBloc),
+                                        padding: const EdgeInsets.only(left: 12),
+                                        child: CompanyCard(vacancyBloc: vacancyBloc),
                                       ),
                                       state.organizationVacancyList.isEmpty
                                           ? const SizedBox()
                                           : Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10),
+                                              margin: const EdgeInsets.symmetric(vertical: 10),
                                               child: const WDivider(),
                                             ),
                                       Stack(
@@ -247,8 +178,7 @@ class _VacancyScreenState extends State<VacancyScreen>
                 const SizedBox(height: 16),
                 FilterContainer(
                   onTap: () {
-                    showFilterBottomSheet(context, regionBloc, vacancyBloc,
-                        tabController.index != 1);
+                    showFilterBottomSheet(context, regionBloc, vacancyBloc, tabController.index != 1);
                   },
                 ),
                 const SizedBox(height: 20),
@@ -260,9 +190,7 @@ class _VacancyScreenState extends State<VacancyScreen>
                     children: [
                       VacancyItemList(
                         onSuccess: (text) {
-                          context
-                              .read<ShowPopUpBloc>()
-                              .add(ShowPopUp(message: text));
+                          context.read<ShowPopUpBloc>().add(ShowPopUp(message: text));
                         },
                       ),
                       const CandidateItemList(),

@@ -273,5 +273,7 @@ abstract class  LocaleKeys {
   static const subscription_title = 'subscription_title';
   static const professions = 'professions';
   static const videos = 'videos';
+  static const no_video = 'no_video';
+  static const no_info = 'no_info';
 
 }

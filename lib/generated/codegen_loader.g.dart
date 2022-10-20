@@ -286,7 +286,9 @@ class CodegenLoader extends AssetLoader{
   "yesterday": "Кеча",
   "subscription_title": "Обуна сотиб олиш",
   "professions": "Касб",
-  "videos": "Видео"
+  "videos": "Видео",
+  "no_video": "Видео мавжуд эмас",
+  "no_info": "Клиника ҳақида малумот мавжуд эмас"
 };
 static const Map<String,dynamic> ru = {
   "enter": "Войти",
@@ -560,7 +562,9 @@ static const Map<String,dynamic> ru = {
   "yesterday": "Вчера",
   "subscription_title": "Активируйте подписку",
   "professions": "Профессия",
-  "videos": "Видео"
+  "videos": "Видео",
+  "no_video": "Видео недоступно",
+  "no_info": "Информации о клинике нет."
 };
 static const Map<String,dynamic> uz = {
   "enter": "Kirish",
@@ -834,7 +838,9 @@ static const Map<String,dynamic> uz = {
   "yesterday": "Kecha",
   "subscription_title": "Obuna sotib olish",
   "professions": "Kasb",
-  "videos": "Video"
+  "videos": "Video",
+  "no_video": "Video mavjud emas",
+  "no_info": "Klinika haqida malumot mavjud emas"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"fr": fr, "ru": ru, "uz": uz};
 }

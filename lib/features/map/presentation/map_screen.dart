@@ -81,16 +81,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
       ],
       child: WKeyboardDismisser(
         child: Scaffold(
-          // appBar: AppBar(
-          //   systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-          //   elevation: 0,
-          //   toolbarHeight: 64,
-          //   titleSpacing: 16,
-          //   title: SvgPicture.asset(
-          //     AppIcons.mainLogo,
-          //     height: 20,
-          //   ),
-          // ),
           body: BlocConsumer<MapOrganizationBloc, MapOrganizationState>(
             listenWhen: (state1, state2) {
               bool isBuild = (state1.hospitals.length != state2.hospitals.length) ||
@@ -307,35 +297,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           ],
                         ),
                       ),
-                      // BlocBuilder<SpecializationBloc, SpecializationState>(
-                      //   builder: (context, state) {
-                      //     return state.specializations.isEmpty
-                      //         ? const SizedBox()
-                      //         : SizedBox(
-                      //             height: 36,
-                      //             child: ListView.separated(
-                      //               scrollDirection: Axis.horizontal,
-                      //               separatorBuilder: (context, index) => const SizedBox(width: 12),
-                      //               physics: const BouncingScrollPhysics(),
-                      //               padding: const EdgeInsets.symmetric(horizontal: 16),
-                      //               itemBuilder: (context, index) => MapButton.chip(
-                      //                 selected: state.selectedId == state.specializations[index].id,
-                      //                 title: state.specializations[index].title,
-                      //                 onTap: (id) {
-                      //                   if (state.selectedId == state.specializations[index].id) {
-                      //                     specBloc.add(SpecializationEvent.selectSpec(-1));
-                      //                   } else {
-                      //                     specBloc.add(SpecializationEvent.selectSpec(id));
-                      //                   }
-                      //                 },
-                      //                 id: state.specializations[index].id,
-                      //               ),
-                      //               itemCount: state.specializations.length,
-                      //             ),
-                      //           );
-                      //   },
-                      // // ),
-                      // const SizedBox(height: 16),
                       Container(
                         padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).viewInsets.bottom + 43),
                         decoration: BoxDecoration(

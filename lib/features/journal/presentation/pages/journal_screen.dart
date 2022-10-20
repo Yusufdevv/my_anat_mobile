@@ -20,13 +20,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 class MagazineScreen extends StatelessWidget {
-  final JournalBloc journalBloc;
-  const MagazineScreen({required this.journalBloc, Key? key}) : super(key: key);
+  const MagazineScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: journalBloc
+      value: context.read<JournalBloc>()
         ..add(GetJournals())
         ..add(GetJournalArticles()),
       child: AnnotatedRegion(

@@ -20,7 +20,7 @@ class CandidateListUseCase extends UseCase<GenericPagination<CandidateListEntity
 class CandidateListParams extends Equatable {
   final String? next;
   final String? search;
-  final String? categoryId;
+  final List<int>? categoryId;
   final List<String>? experience;
   final List<int>? district;
 

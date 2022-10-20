@@ -54,7 +54,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                     ? BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
                         builder: (context, state) {
                           return HospitalSingleAppBarBody(
-                            shareValue: 'https:anatomica.uz/organization/${state.hospital.slug}',
+                            shareValue: 'https://anatomica.uz/organization/${state.hospital.slug}',
                           );
                         },
                       )
@@ -143,7 +143,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                     builder: (context, state) {
                                       return WScaleAnimation(
                                         onTap: () {
-                                          Share.share('https:anatomica.uz/organization/${state.hospital.slug}');
+                                          Share.share('https://anatomica.uz/organization/${state.hospital.slug}');
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(16),

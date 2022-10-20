@@ -103,7 +103,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               const SizedBox(height: 10),
                               VacancySingleTextWidget(
                                   title:
-                                      '${MyFunctions.getPriceFormat(state.vacancyListEntity.salaryFrom)} - ${MyFunctions.getPriceFormat(state.vacancyListEntity.salaryTo)}',
+                                      '${MyFunctions.getFormatCostFromInt(state.vacancyListEntity.salaryFrom)} - ${MyFunctions.getFormatCostFromInt(state.vacancyListEntity.salaryTo)}',
                                   icon: AppIcons.cashBanknote),
                               const SizedBox(height: 24),
                               Text(

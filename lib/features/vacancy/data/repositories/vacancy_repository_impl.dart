@@ -89,7 +89,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
 
   @override
   Future<Either<Failure, GenericPagination<CandidateListEntity>>> getCandidateList(
-      {String? next, String? search, String? categoryId, CandidateListParams? params}) async {
+      {String? next, String? search, List<int>? categoryId, CandidateListParams? params}) async {
     try {
       final result =
           await dataSource.getCandidateList(next: next, search: search, categoryId: categoryId, params: params);

@@ -272,7 +272,9 @@
   "yesterday": "Кеча",
   "subscription_title" : "Обуна сотиб олиш",
   "professions": "Касб",
-  "videos": "Видео"
+  "videos": "Видео",
+  "no_video" : "Видео мавжуд эмас",
+  "no_info" : "Клиника ҳақида малумот мавжуд эмас"
 
 
 }

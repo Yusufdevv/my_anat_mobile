@@ -21,6 +21,7 @@ import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/au
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
+import 'package:anatomica/features/deeplinking/deep_link_bloc.dart';
 import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
 import 'package:anatomica/features/journal/domain/usecases/get_journal_article_single_usecase.dart';
 import 'package:anatomica/features/journal/domain/usecases/get_journal_articles_usecase.dart';
@@ -43,11 +44,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
-  FlutterError.onError =
-      fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
+  FlutterError.onError = fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   runApp(EasyLocalization(
       path: 'lib/assets/translations',
@@ -56,10 +55,8 @@ Future<void> main() async {
         Locale('uz'),
         Locale('fr'),
       ],
-      fallbackLocale: Locale(
-          StorageRepository.getString('device_language', defValue: 'uz')),
-      startLocale: Locale(
-          StorageRepository.getString('device_language', defValue: 'uz')),
+      fallbackLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
+      startLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
       saveLocale: true,
       child: const MyApp()));
   // runZonedGuarded(
@@ -101,6 +98,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => DownloadBloc(),
         ),
+        BlocProvider(create: (context) => DeepLinkBloc()),
         BlocProvider(
           create: (context) => JournalBloc(
             getJournalSingleUseCase: GetJournalSingleUseCase(
@@ -168,8 +166,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
-              navigator.pushAndRemoveUntil(
-                  fade(page: const HomeScreen()), (route) => false);
+              navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
               // switch (state.status) {
               //   case AuthenticationStatus.unauthenticated:
               //     navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);

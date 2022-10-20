@@ -1,11 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
-import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
-import 'package:anatomica/features/common/presentation/widgets/register_bottom_sheet.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
@@ -36,31 +30,25 @@ import 'package:anatomica/features/hospital_single/presentation/parts/hospital_c
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_sevices.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_specialists.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_vacancies.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_video.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/hospital_single_app_bar.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
-import 'package:anatomica/features/map/presentation/widgets/comment_about_hospital.dart';
-import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet.dart';
-import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class HospitalSingleScreen extends StatefulWidget {
   final String slug;
   final int id;
 
-  const HospitalSingleScreen({required this.id, required this.slug, Key? key})
-      : super(key: key);
+  const HospitalSingleScreen({required this.id, required this.slug, Key? key}) : super(key: key);
 
   @override
   State<HospitalSingleScreen> createState() => _HospitalSingleScreenState();
 }
 
-class _HospitalSingleScreenState extends State<HospitalSingleScreen>
-    with TickerProviderStateMixin {
+class _HospitalSingleScreenState extends State<HospitalSingleScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
@@ -96,40 +84,31 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
   @override
   void initState() {
     super.initState();
-    vacanciesBloc = HospitalVacanciesBloc(GetHospitalVacancies(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-      ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
-    articlesBloc = HArticlesBloc(GetHArticlesUseCase(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    vacanciesBloc =
+        HospitalVacanciesBloc(GetHospitalVacancies(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+          ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
+    articlesBloc = HArticlesBloc(GetHArticlesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HArticlesEvent.getArticles(organizationId: widget.id));
-    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(FacilitiesEvent.getFacilities(organizationId: widget.id));
     hospitalSpecialistBloc = HospitalSpecialistBloc(
-        GetHospitalSpecialistsUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+        GetHospitalSpecialistsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HospitalSpecialistEvent.getSpecialists(organizationId: widget.id));
-    servicesBloc = ServicesBloc(GetServicesUseCase(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    servicesBloc = ServicesBloc(GetServicesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(ServicesEvent.getServices(organizationId: widget.id));
 
     commentsBloc = CommentsBloc(
-        deletePostCommentUseCase: DeletePostCommentUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        doctorCommentDeleteUseCase: DoctorCommentDeleteUseCase(
-            repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-        doctorCommentUseCase: DoctorCommentUseCase(
-            repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-        GetCommentsUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        postCommentUseCase: PostCommentUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(
-            repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+        deletePostCommentUseCase: DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        doctorCommentDeleteUseCase:
+            DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+        doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+        GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
       ..add(CommentsEvent.getComments(organizationId: widget.id));
-    hospitalSingleBloc = HospitalSingleBloc(GetSingleHospitalUseCase(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-      ..add(HospitalSingleEvent.getHospital(widget.slug));
+    hospitalSingleBloc =
+        HospitalSingleBloc(GetSingleHospitalUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+          ..add(HospitalSingleEvent.getHospital(widget.slug));
     _tabController = TabController(length: tabs.length, vsync: this);
     _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
@@ -138,8 +117,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(
-        ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
+    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
   }
 
   @override
@@ -152,9 +130,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
             floatHeaderSlivers: false,
             controller: _scrollController,
             headerSliverBuilder: (context, isHeaderScrolled) => [
-              HospitalSingleAppBar(
-                  headerManagerBloc: _headerManagerBloc,
-                  pageController: _pageController),
+              HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
               SliverOverlapAbsorber(
                 handle: SliverOverlapAbsorberHandle(),
                 sliver: SliverSafeArea(
@@ -193,20 +169,16 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                     ),
                     BlocProvider.value(
                       value: commentsBloc,
-                      child:  HospitalVideo(
+                      child: HospitalVideo(
+                        videoUrl: state.hospital.videoLink,
                         videoDescription: state.hospital.videoDescription,
+                        tabController: _tabController,
                       ),
                     ),
-                    BlocProvider.value(
-                        value: servicesBloc, child: const HospitalServices()),
-                    BlocProvider.value(
-                        value: hospitalSpecialistBloc,
-                        child: const HospitalSpecialists()),
-                    BlocProvider.value(
-                        value: facilitiesBloc,
-                        child: const HospitalConditions()),
-                    BlocProvider.value(
-                        value: articlesBloc, child: const HospitalArticles()),
+                    BlocProvider.value(value: servicesBloc, child: const HospitalServices()),
+                    BlocProvider.value(value: hospitalSpecialistBloc, child: const HospitalSpecialists()),
+                    BlocProvider.value(value: facilitiesBloc, child: const HospitalConditions()),
+                    BlocProvider.value(value: articlesBloc, child: const HospitalArticles()),
                     BlocProvider.value(
                       value: commentsBloc,
                       child: HospitalComments(
@@ -215,8 +187,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                         overallRating: state.hospital.rating,
                       ),
                     ),
-                    BlocProvider.value(
-                        value: vacanciesBloc, child: const HospitalVacancies()),
+                    BlocProvider.value(value: vacanciesBloc, child: const HospitalVacancies()),
                     BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
                       builder: (context, state) {
                         return HospitalContacts(
@@ -226,9 +197,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                           phone: state.hospital.phoneNumber,
                           telegram: state.hospital.telegram,
                           website: state.hospital.website,
-                          phoneNumbers: state.hospital.phoneNumbers
-                              .map((e) => e.phoneNumber)
-                              .toList(),
+                          phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
                         );
                       },
                     ),
@@ -240,123 +209,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
         ),
         backgroundColor: textFieldColor,
       ),
-    );
-  }
-}
-
-class HospitalVideo extends StatelessWidget {
-  final String videoDescription;
-  const HospitalVideo({
-    required this.videoDescription,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<CommentsBloc, CommentsState>(
-      builder: (context, state) {
-        return SingleChildScrollView(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-          child: Column(
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                margin: const EdgeInsets.symmetric(vertical: 20),
-                color: white,
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        WImage(
-                          width: double.maxFinite,
-                          imageUrl: 'https://picsum.photos/300/200',
-                          height: 140,
-                          fit: BoxFit.cover,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        Positioned.fill(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: textColor.withOpacity(0.47),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            alignment: Alignment.center,
-                            child: Container(
-                                height: 36,
-                                width: 36,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: white.withOpacity(0.4)),
-                                child: SvgPicture.asset(AppIcons.playIcon)),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      videoDescription,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    )
-                  ],
-                ),
-              ),
-              if (state.comments.isNotEmpty) ...[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 32, 0, 12),
-                  child: Text(
-                    LocaleKeys.reviews.tr(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline1!
-                        .copyWith(fontSize: 20),
-                  ),
-                ),
-                Column(
-                  children: List.generate(
-                    state.comments.take(3).length,
-                    (index) => CommentAboutHospital(
-                      entity: state.comments[index],
-                    ),
-                  ),
-                ),
-                WButton(
-                  onTap: () {},
-                  margin: const EdgeInsets.all(16).copyWith(
-                      bottom: MediaQuery.of(context).padding.bottom + 16),
-                  color: commentButton,
-                  text: LocaleKeys.all_reviews.tr(),
-                  textColor: textSecondary,
-                )
-              ] else ...{
-                BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                  builder: (context, state) {
-                    return EmptyWidget(
-                      onButtonTap: () {
-                        if (state.status ==
-                            AuthenticationStatus.authenticated) {
-                          showModalBottomSheet(
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (_) => CommentBottomSheet(
-                              parentContext: context,
-                              commentsBloc: context.read<CommentsBloc>(),
-                            ),
-                          );
-                        } else {
-                          showRegisterBottomSheet(context);
-                        }
-                      },
-                    );
-                  },
-                )
-              },
-            ],
-          ),
-        );
-      },
     );
   }
 }

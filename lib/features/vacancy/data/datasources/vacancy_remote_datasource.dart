@@ -44,7 +44,7 @@ abstract class VacancyRemoteDataSource {
   Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug});
 
   Future<GenericPagination<CandidateListModel>> getCandidateList(
-      {String? next, String? search, String? categoryId, CandidateListParams? params});
+      {String? next, String? search, List<int>? categoryId, CandidateListParams? params});
 
   Future<CandidateSingleModel> getCandidateSingle({required int id});
 
@@ -75,35 +75,42 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     try {
       const url = '/vacancy/vacancy/list/';
       final Map<String, dynamic> query = {};
-      if (vacancyParamsEntity?.category != null) {
-        query.putIfAbsent('category', () => vacancyParamsEntity?.category);
-      }
-      if (vacancyParamsEntity?.organization != null) {
-        query.putIfAbsent('organization', () => vacancyParamsEntity?.organization);
-      }
-      if (vacancyParamsEntity?.search != null) {
-        query.putIfAbsent('search', () => vacancyParamsEntity?.search);
-      }
-      if (vacancyParamsEntity?.salary != null) {
-        var value = '';
-        for (final param in vacancyParamsEntity!.salary!) {
-          value += '$param,';
+      if (vacancyParamsEntity != null) {
+        if (vacancyParamsEntity.category != null && vacancyParamsEntity.category!.isNotEmpty) {
+          var value = '';
+          for (var i = 0; i < vacancyParamsEntity.category!.length; i++) {
+            print(value);
+            value += '${vacancyParamsEntity.category![i]}${i == vacancyParamsEntity.category!.length - 1 ? '' : ','}';
+          }
+          query.putIfAbsent('category', () => value);
         }
-        query.putIfAbsent('salary', () => value);
-      }
-      if (vacancyParamsEntity?.experience != null) {
-        var value = '';
-        for (final param in vacancyParamsEntity!.experience!) {
-          value += '$param,';
+        if (vacancyParamsEntity.organization != null) {
+          query.putIfAbsent('organization', () => vacancyParamsEntity.organization);
         }
-        query.putIfAbsent('experience', () => value);
-      }
-      if (vacancyParamsEntity?.district != null) {
-        var value = '';
-        for (final param in vacancyParamsEntity!.district!) {
-          value += '$param,';
+        if (vacancyParamsEntity.search != null) {
+          query.putIfAbsent('search', () => vacancyParamsEntity.search);
         }
-        query.putIfAbsent('district', () => value);
+        if (vacancyParamsEntity.salary != null) {
+          var value = '';
+          for (final param in vacancyParamsEntity.salary!) {
+            value += '$param,';
+          }
+          query.putIfAbsent('salary', () => value);
+        }
+        if (vacancyParamsEntity.experience != null) {
+          var value = '';
+          for (final param in vacancyParamsEntity.experience!) {
+            value += '$param,';
+          }
+          query.putIfAbsent('experience', () => value);
+        }
+        if (vacancyParamsEntity.district != null) {
+          var value = '';
+          for (final param in vacancyParamsEntity.district!) {
+            value += '$param,';
+          }
+          query.putIfAbsent('district', () => value);
+        }
       }
 
       final result = await paginationDatasource.fetchMore(
@@ -245,14 +252,19 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
 
   @override
   Future<GenericPagination<CandidateListModel>> getCandidateList(
-      {String? next, String? search, String? categoryId, CandidateListParams? params}) async {
+      {String? next, String? search, List<int>? categoryId, CandidateListParams? params}) async {
     try {
       final Map<String, dynamic> query = {};
       if (search != null) {
         query.putIfAbsent('search', () => search);
       }
-      if (categoryId != null) {
-        query.putIfAbsent('specialization', () => categoryId);
+      if (categoryId != null && categoryId.isNotEmpty) {
+        var value = '';
+        for (var i = 0; i < categoryId.length; i++) {
+          print(value);
+          value += '${categoryId[i]}${i == categoryId.length - 1 ? '' : ','}';
+        }
+        query.putIfAbsent('specialization', () => value);
       }
       if (params?.experience != null) {
         var value = '';

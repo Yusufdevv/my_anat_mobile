@@ -152,11 +152,9 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
           OrganizationVacancyParams(
             vacancyParamsEntity: VacancyParamsEntity(
               organization: state.topOrganizationEntity.id.toString(),
-              category: event.category,
             ),
           ),
         );
-
         if (response.isRight) {
           final result = response.right;
           emit(state.copyWith(

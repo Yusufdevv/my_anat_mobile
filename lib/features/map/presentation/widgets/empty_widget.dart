@@ -29,7 +29,8 @@ class EmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(AppIcons.commentEmpty),
+          SvgPicture.asset(AppIcons.emptyA),
+          const SizedBox(height: 16),
           Text(
             title ?? LocaleKeys.no_reviews.tr(),
             style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),

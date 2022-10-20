@@ -41,6 +41,7 @@ class FilterBottomSheet extends StatelessWidget {
               vacancyBloc.add(SelectSalaryFilterEvent(salaryKey: null, onSuccess: () {}));
               vacancyBloc.add(SelectExperienceEvent(onSuccess: () {}, experienceKey: null));
               vacancyBloc.add(SelectDistrictEvent(onSuccess: () {}, districtList: null));
+              vacancyBloc.add(SelectCategoryEvent(id: const []));
             },
             stackedWButton: WButton(
               padding: EdgeInsets.zero,
@@ -51,10 +52,10 @@ class FilterBottomSheet extends StatelessWidget {
                   vacancyBloc.add(
                     GetVacancyListEvent(
                       vacancyParamsEntity: VacancyParamsEntity(
-                        salary: state.salaryKey,
-                        experience: state.experienceKey,
-                        district: state.districtList,
-                      ),
+                          salary: state.salaryKey,
+                          experience: state.experienceKey,
+                          district: state.districtList,
+                          category: state.selectCategoryId),
                       onSuccess: () {
                         Navigator.of(context).pop();
                       },
@@ -68,6 +69,7 @@ class FilterBottomSheet extends StatelessWidget {
                         params: CandidateListParams(
                           experience: state.experienceKey,
                           district: state.districtList,
+                          categoryId: state.selectCategoryId,
                         ),
                         onSuccess: () {
                           Navigator.of(context).pop();

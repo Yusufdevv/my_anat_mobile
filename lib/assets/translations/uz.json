@@ -272,7 +272,8 @@
   "yesterday": "Kecha",
   "subscription_title" : "Obuna sotib olish",
   "professions": "Kasb",
-  "videos": "Video"
-
+  "videos": "Video",
+  "no_video" : "Video mavjud emas",
+  "no_info" : "Klinika haqida malumot mavjud emas"
 
 }

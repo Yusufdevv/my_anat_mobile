@@ -2,14 +2,12 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/journal_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OneTimeCheck extends StatelessWidget {
@@ -90,12 +88,7 @@ class OneTimeCheck extends StatelessWidget {
         text: LocaleKeys.to_main.tr(),
         margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom, left: 16, right: 16),
         onTap: () {
-          Navigator.push(
-              context,
-              fade(
-                  page: MagazineScreen(
-                journalBloc: context.read<JournalBloc>(),
-              )));
+          Navigator.push(context, fade(page: const MagazineScreen()));
         },
       ),
     );

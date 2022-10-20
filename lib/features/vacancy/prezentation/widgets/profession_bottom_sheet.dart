@@ -65,13 +65,15 @@ class _ProfessionBottomSheetState extends State<ProfessionBottomSheet> {
                       (index) => CheckBoxTitle(
                         isChecked: selectedList.contains(state.categoryList[index].id),
                         onTap: () {
-                          setState(() {
-                            if (selectedList.contains(state.categoryList[index].id)) {
+                          if (selectedList.contains(state.categoryList[index].id)) {
+                            setState(() {
                               selectedList.remove(state.categoryList[index].id);
-                            } else {
+                            });
+                          } else {
+                            setState(() {
                               selectedList.add(state.categoryList[index].id);
-                            }
-                          });
+                            });
+                          }
                         },
                         isLast: index == state.categoryList.length - 1,
                         title: state.categoryList[index].title,

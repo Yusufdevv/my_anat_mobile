@@ -30,7 +30,7 @@ abstract class VacancyRepository {
   Future<Either<Failure, GenericPagination<VacancyListEntity>>> getRelationVacancyList({required String slug});
 
   Future<Either<Failure, GenericPagination<CandidateListEntity>>> getCandidateList(
-      {String? next, String? search, String? categoryId, CandidateListParams? params});
+      {String? next, String? search, List<int>? categoryId, CandidateListParams? params});
 
   Future<Either<Failure, CandidateSingleEntity>> getCandidateSingle({required int id});
 
