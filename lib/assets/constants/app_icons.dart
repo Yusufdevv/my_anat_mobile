@@ -82,6 +82,7 @@ class AppIcons {
   static const instagram = 'assets/icons/vacancy/instagram.svg';
   static const telegram = 'assets/icons/vacancy/telegram.svg';
   static const leftArrow = 'assets/icons/vacancy/arrow_left.svg';
+  static const externalLink = 'assets/icons/magazine/external_link.svg';
   static const bottomSheetCancel = 'assets/icons/vacancy/bottomsheet_cancel.svg';
 
   //profile

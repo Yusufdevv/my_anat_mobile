@@ -17,11 +17,8 @@ class HospitalItem extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        print(entity.images.map((e) => e.middle).toList());
-        print(entity.images.map((e) => e.small).toList());
-        print(entity.images.map((e) => e.origin).toList());
-        Navigator.of(context, rootNavigator: true).push(
-            fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id)));
+        Navigator.of(context, rootNavigator: true)
+            .push(fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id)));
       },
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -51,11 +48,11 @@ class HospitalItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       child: entity.images.isNotEmpty
                           ? ListView.separated(
+                              physics: const BouncingScrollPhysics(),
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.horizontal,
                               itemCount: entity.images.length,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(width: 8),
+                              separatorBuilder: (context, index) => const SizedBox(width: 8),
                               itemBuilder: (context, index) => ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: WImage(
@@ -69,10 +66,9 @@ class HospitalItem extends StatelessWidget {
                               ),
                             )
                           : Container(
-                        alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: errorImageBackground),
+                              alignment: Alignment.center,
+                              decoration:
+                                  BoxDecoration(borderRadius: BorderRadius.circular(8), color: errorImageBackground),
                               child: SvgPicture.asset(
                                 AppIcons.logo,
                                 height: 100,
@@ -95,10 +91,7 @@ class HospitalItem extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           entity.addres,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: textSecondary),
+                          style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textSecondary),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -126,10 +119,7 @@ class HospitalItem extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         entity.rating.toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1!
-                            .copyWith(color: darkGreen, fontSize: 14),
+                        style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
                       ),
                       const SizedBox(width: 8),
                       Container(

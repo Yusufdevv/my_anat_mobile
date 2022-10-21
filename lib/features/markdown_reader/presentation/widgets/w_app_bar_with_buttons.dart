@@ -10,14 +10,18 @@ class WAppBarWithButtons extends StatelessWidget implements PreferredSizeWidget 
     Key? key,
     this.buttons = const SizedBox.shrink(),
     this.onTitleTap,
+    this.backgroundColor = white,
+    this.titleColor = textColor,
   }) : super(key: key);
   final String title;
   final Widget buttons;
+  final Color backgroundColor;
+  final Color titleColor;
   final VoidCallback? onTitleTap;
   @override
   Widget build(BuildContext context) => Container(
         decoration: BoxDecoration(
-          color: white,
+          color: backgroundColor,
           boxShadow: [
             BoxShadow(
                 offset: const Offset(-1, 4),
@@ -28,9 +32,9 @@ class WAppBarWithButtons extends StatelessWidget implements PreferredSizeWidget 
         ),
         child: SafeArea(
           child: Container(
-            decoration: const BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.vertical(
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: const BorderRadius.vertical(
                 bottom: Radius.circular(16),
               ),
             ),
@@ -63,12 +67,7 @@ class WAppBarWithButtons extends StatelessWidget implements PreferredSizeWidget 
                     onTap: onTitleTap,
                     child: Text(
                       title,
-                      style: const TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: primary,
-                          overflow: TextOverflow.ellipsis),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: titleColor),
                       textAlign: TextAlign.center,
                       maxLines: 1,
                     ),

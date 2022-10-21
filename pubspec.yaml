@@ -117,3 +117,17 @@ flutter:
           weight: 300
         - asset: assets/fonts/averta_cy/AvertaCyrillicExtraThin.otf
           weight: 200
+    - family: IBM Plex Serif
+      fonts:
+        - asset: assets/fonts/ibm_plex_serif/IBMPlexSerif-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/ibm_plex_serif/IBMPlexSerif-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/ibm_plex_serif/IBMPlexSerif-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/ibm_plex_serif/IBMPlexSerif.ttf
+          weight: 400
+        - asset: assets/fonts/ibm_plex_serif/IBMPlexSerif-Light.ttf
+          weight: 300
+        - asset: assets/fonts/ibm_plex_serif/IBMPlexSerif-ExtraLight.ttf
+          weight: 200

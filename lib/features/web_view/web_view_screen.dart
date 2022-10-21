@@ -24,7 +24,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     print(
-        'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : '&'}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}');
+        'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : ''}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}');
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(statusBarColor: white),
       child: WillPopScope(

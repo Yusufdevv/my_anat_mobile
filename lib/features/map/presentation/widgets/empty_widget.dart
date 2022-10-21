@@ -33,6 +33,7 @@ class EmptyWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             title ?? LocaleKeys.no_reviews.tr(),
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
           ),
           const SizedBox(height: 8),

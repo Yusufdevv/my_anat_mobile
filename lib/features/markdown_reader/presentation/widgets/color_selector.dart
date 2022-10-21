@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ColorSelector extends StatelessWidget {
   final Color color;
-  final ValueChanged<Color> onTap;
+  final Function(Color, Color) onTap;
   final Color value;
   final Color groupValue;
 
@@ -21,7 +21,7 @@ class ColorSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(
         child: WScaleAnimation(
-          onTap: () => onTap(value),
+          onTap: () => onTap(value, color.red > 200 ? textColor : white),
           child: Container(
             height: 40,
             margin: const EdgeInsets.symmetric(horizontal: 3),

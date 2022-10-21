@@ -157,6 +157,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                           value: commentsBloc,
                           child: HospitalCommentList(
                             description: state.hospital.description,
+                            images: state.hospital.images,
                             onTapAll: () {
                               _tabController.animateTo(
                                 5,

@@ -8,8 +8,10 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/doctor_single/domain/entities/doctor_sinlge_entity.dart';
+import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -200,22 +202,40 @@ class DoctorSingleAppBar extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(AppIcons.building),
-                                        const SizedBox(width: 6),
-                                        Expanded(
-                                          child: Text(
-                                            doctor.work,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          fade(
+                                            page: HospitalSingleScreen(
+                                              id: doctor.organization.first.id,
+                                              slug: doctor.organization.first.slug,
+                                            ),
                                           ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 10, bottom: 16),
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(AppIcons.building),
+                                            const SizedBox(width: 6),
+                                            ConstrainedBox(
+                                              constraints:
+                                                  BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 74),
+                                              child: Text(
+                                                doctor.organization.first.title,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style:
+                                                    Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 4),
+                                            SvgPicture.asset(AppIcons.externalLink)
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                    const SizedBox(height: 16),
                                     Row(
                                       children: [
                                         Text(

@@ -6,10 +6,12 @@ class SelectFontFamilyItem extends StatelessWidget {
   final String fontFamily;
   final VoidCallback onTap;
   final bool isSelected;
+  final Color selectedLabelColor;
   const SelectFontFamilyItem({
     required this.fontFamily,
     required this.onTap,
     required this.isSelected,
+    this.selectedLabelColor = textColor,
     Key? key,
   }) : super(key: key);
 
@@ -26,7 +28,7 @@ class SelectFontFamilyItem extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: divider),
                 borderRadius: BorderRadius.circular(4),
-                color: isSelected ? primary : white,
+                color: isSelected ? textColor : white,
               ),
               alignment: Alignment.center,
               child: AnimatedDefaultTextStyle(
@@ -43,11 +45,11 @@ class SelectFontFamilyItem extends StatelessWidget {
             ),
             Text(
               fontFamily,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
-                fontFamily: 'OpenSans',
-                color: primary,
+                fontFamily: fontFamily,
+                color: isSelected ? selectedLabelColor : textSecondary,
               ),
             ),
           ],

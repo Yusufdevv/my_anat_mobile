@@ -1,9 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_hospitals.dart';
 import 'package:anatomica/features/map/domain/usecases/get_suggestions.dart';
@@ -13,8 +11,6 @@ import 'package:anatomica/features/map/presentation/blocs/suggestion/suggestion_
 import 'package:anatomica/features/map/presentation/screens/result_list.dart';
 import 'package:anatomica/features/map/presentation/screens/suggestion_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctors_list.dart';
-import 'package:anatomica/features/map/presentation/widgets/map_button.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +21,13 @@ class HospitalList extends StatefulWidget {
   final TabController controller;
   final bool getFocus;
 
-  const HospitalList(
-      {required this.controller, this.getFocus = false, Key? key})
-      : super(key: key);
+  const HospitalList({required this.controller, this.getFocus = false, Key? key}) : super(key: key);
 
   @override
   State<HospitalList> createState() => _HospitalListState();
 }
 
-class _HospitalListState extends State<HospitalList>
-    with TickerProviderStateMixin {
+class _HospitalListState extends State<HospitalList> with TickerProviderStateMixin {
   late TabController _controller;
   late TextEditingController controller;
   late HospitalListBloc bloc;
@@ -63,10 +56,8 @@ class _HospitalListState extends State<HospitalList>
     if (widget.getFocus) {
       focusNode.requestFocus();
     }
-    doctorListBloc = DoctorListBloc(GetDoctorsUseCase())
-      ..add(DoctorListEvent.getDoctors(search: ''));
-    bloc = HospitalListBloc(GetHospitalsUseCase())
-      ..add(HospitalListEvent.getHospitals(search: ''));
+    doctorListBloc = DoctorListBloc(GetDoctorsUseCase())..add(DoctorListEvent.getDoctors(search: ''));
+    bloc = HospitalListBloc(GetHospitalsUseCase())..add(HospitalListEvent.getHospitals(search: ''));
     suggestionBloc = SuggestionBloc(GetSuggestionsUseCase());
     controller = TextEditingController();
     _controller = TabController(length: 2, vsync: this)
@@ -108,8 +99,7 @@ class _HospitalListState extends State<HospitalList>
                 Container(
                   height: 36,
                   padding: const EdgeInsets.all(2),
-                  margin: const EdgeInsets.symmetric(horizontal: 16)
-                      .copyWith(bottom: 16),
+                  margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 16),
                   decoration: BoxDecoration(
                     color: textFieldColor,
                     borderRadius: BorderRadius.circular(8),
@@ -118,16 +108,13 @@ class _HospitalListState extends State<HospitalList>
                     controller: _controller,
                     padding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.zero,
-                    indicator: BoxDecoration(
-                        color: white,
-                        borderRadius: BorderRadius.circular(6),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 8),
-                            blurRadius: 24,
-                            color: chipShadowColor.withOpacity(0.19),
-                          ),
-                        ]),
+                    indicator: BoxDecoration(color: white, borderRadius: BorderRadius.circular(6), boxShadow: [
+                      BoxShadow(
+                        offset: const Offset(0, 8),
+                        blurRadius: 24,
+                        color: chipShadowColor.withOpacity(0.19),
+                      ),
+                    ]),
                     labelPadding: EdgeInsets.zero,
                     labelStyle: Theme.of(context).textTheme.headline3,
                     labelColor: textColor,
@@ -148,12 +135,12 @@ class _HospitalListState extends State<HospitalList>
                 children: [
                   Positioned.fill(
                     child: TabBarView(
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: _controller,
                       children: [
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 150),
-                          child: state.crossFadeState ==
-                                  CrossFadeState.showFirst
+                          child: state.crossFadeState == CrossFadeState.showFirst
                               ? const ResultList()
                               : SuggestionListScreen(
                                   isDoctor: false,
@@ -162,20 +149,16 @@ class _HospitalListState extends State<HospitalList>
                                     focusNode.unfocus();
                                     controller.text = value;
                                     controller.selection =
-                                        TextSelection.fromPosition(
-                                            TextPosition(offset: value.length));
+                                        TextSelection.fromPosition(TextPosition(offset: value.length));
                                     bloc
-                                      ..add(HospitalListEvent.getHospitals(
-                                          search: value))
-                                      ..add(HospitalListEvent.changePage(
-                                          CrossFadeState.showFirst));
+                                      ..add(HospitalListEvent.getHospitals(search: value))
+                                      ..add(HospitalListEvent.changePage(CrossFadeState.showFirst));
                                   },
                                 ),
                         ),
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 150),
-                          child: state.crossFadeState ==
-                                  CrossFadeState.showFirst
+                          child: state.crossFadeState == CrossFadeState.showFirst
                               ? const DoctorsList()
                               : SuggestionListScreen(
                                   isDoctor: true,
@@ -184,13 +167,9 @@ class _HospitalListState extends State<HospitalList>
                                     focusNode.unfocus();
                                     controller.text = value;
                                     controller.selection =
-                                        TextSelection.fromPosition(
-                                            TextPosition(offset: value.length));
-                                    doctorListBloc.add(
-                                        DoctorListEvent.getDoctors(
-                                            search: value));
-                                    bloc.add(HospitalListEvent.changePage(
-                                        CrossFadeState.showFirst));
+                                        TextSelection.fromPosition(TextPosition(offset: value.length));
+                                    doctorListBloc.add(DoctorListEvent.getDoctors(search: value));
+                                    bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
                                   },
                                 ),
                         ),
@@ -218,29 +197,23 @@ class _HospitalListState extends State<HospitalList>
                               AnimatedContainer(
                                 duration: const Duration(milliseconds: 300),
                                 height: 40,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 12),
+                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(color: divider)),
                                 width: isSearching || controller.text.isNotEmpty
                                     ? 0
-                                    : (MediaQuery.of(context).size.width - 44) /
-                                        2,
+                                    : (MediaQuery.of(context).size.width - 44) / 2,
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.translucent,
                                   onTap: () {
                                     Navigator.pop(context);
                                   },
                                   child: AnimatedSwitcher(
-                                    duration: Duration(
-                                        milliseconds: isSearching ||
-                                                controller.text.isNotEmpty
-                                            ? 300
-                                            : 0),
-                                    child: isSearching ||
-                                            controller.text.isNotEmpty
+                                    duration:
+                                        Duration(milliseconds: isSearching || controller.text.isNotEmpty ? 300 : 0),
+                                    child: isSearching || controller.text.isNotEmpty
                                         ? const SizedBox(
                                             key: ValueKey<int>(2),
                                           )
@@ -259,10 +232,7 @@ class _HospitalListState extends State<HospitalList>
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headline1!
-                                                    .copyWith(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w600),
+                                                    .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                                               )
                                             ],
                                           ),
@@ -270,9 +240,7 @@ class _HospitalListState extends State<HospitalList>
                                 ),
                               ),
                               SizedBox(
-                                width: isSearching || controller.text.isNotEmpty
-                                    ? 0
-                                    : 12,
+                                width: isSearching || controller.text.isNotEmpty ? 0 : 12,
                               ),
                               Expanded(
                                 child: SearchField(
@@ -280,24 +248,17 @@ class _HospitalListState extends State<HospitalList>
                                   focusNode: focusNode,
                                   controller: controller,
                                   onClear: () {
-                                    bloc.add(HospitalListEvent.getHospitals(
-                                        search: ''));
-                                    doctorListBloc.add(
-                                        DoctorListEvent.getDoctors(search: ''));
-                                    bloc.add(HospitalListEvent.changePage(
-                                        CrossFadeState.showFirst));
-                                    suggestionBloc.add(
-                                        SuggestionEvent.getSuggestions(''));
+                                    bloc.add(HospitalListEvent.getHospitals(search: ''));
+                                    doctorListBloc.add(DoctorListEvent.getDoctors(search: ''));
+                                    bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
+                                    suggestionBloc.add(SuggestionEvent.getSuggestions(''));
                                   },
                                   onChanged: (value) {
-                                    suggestionBloc.add(
-                                        SuggestionEvent.getSuggestions(value));
+                                    suggestionBloc.add(SuggestionEvent.getSuggestions(value));
                                     if (value.isNotEmpty) {
-                                      bloc.add(HospitalListEvent.changePage(
-                                          CrossFadeState.showSecond));
+                                      bloc.add(HospitalListEvent.changePage(CrossFadeState.showSecond));
                                     } else {
-                                      bloc.add(HospitalListEvent.changePage(
-                                          CrossFadeState.showFirst));
+                                      bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
                                     }
                                   },
                                 ),
@@ -308,16 +269,13 @@ class _HospitalListState extends State<HospitalList>
                                         focusNode.unfocus();
                                       },
                                       child: Container(
-                                        margin: const EdgeInsets.only(
-                                            left: 12, right: 4),
+                                        margin: const EdgeInsets.only(left: 12, right: 4),
                                         child: Text(
                                           LocaleKeys.close.tr(),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline4!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 12),
+                                              .copyWith(fontWeight: FontWeight.w600, fontSize: 12),
                                         ),
                                       ),
                                     )

@@ -48,6 +48,9 @@ const journalShadow = _chineseBlack;
 const checkUnselected = _zircon;
 const errorImageBackground = _mintCream;
 const grey = _fiord;
+const paper = _bianca;
+const night = _nightRider;
+const dark = _dark;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -97,3 +100,6 @@ const _chineseBlack = Color(0xff160C0C);
 const _zircon = Color(0xffE1E5E4);
 const _mintCream = Color(0xffF7FAF9);
 const _fiord = Color(0xff4A4F61);
+const _bianca = Color(0xffF7F1E5);
+const _nightRider = Color(0xff2E2C2C);
+const _dark = Color(0xff010101);
