@@ -16,6 +16,8 @@ import 'package:anatomica/features/journal/data/repositories/journal_repository_
 import 'package:anatomica/features/journal/data/repositories/payment_repository_impl.dart';
 import 'package:anatomica/features/map/data/datasources/map_datasource.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
+import 'package:anatomica/features/markdown_reader/data/datasources/journal_pages_datasource.dart';
+import 'package:anatomica/features/markdown_reader/data/repositories/journal_pages_repository_impl.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 import 'package:anatomica/features/profile/data/datasources/profile_data_source.dart';
 import 'package:anatomica/features/profile/data/repositories/profile_impl.dart';
@@ -63,4 +65,7 @@ Future<void> setupLocator() async {
       () => DoctorSingleRepositoryImpl(datasource: serviceLocator<DoctorSingleDatasourceImpl>()));
   serviceLocator.registerLazySingleton(() => MapDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(() => MapRepositoryImpl(datasource: serviceLocator<MapDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => JournalPagesDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(
+      () => JournalPagesRepositoryImpl(datasource: serviceLocator<JournalPagesDatasourceImpl>()));
 }

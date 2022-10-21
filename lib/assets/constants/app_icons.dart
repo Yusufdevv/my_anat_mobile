@@ -114,7 +114,7 @@ class AppIcons {
   static const premiumBottomSheetClose = 'assets/icons/magazine/premium_bottom_sheet_close.svg';
   static const fontSizeUp = 'assets/icons/magazine/font_size_up.svg';
   static const fontSizeDown = 'assets/icons/magazine/font_size_down.svg';
-  static const readerCheck = 'assets/icons/magazine/check.svg';
+  static const readerCheck = 'assets/icons/magazine/reader_check.svg';
   static const brightness = 'assets/icons/magazine/brightness.svg';
 
   //static const close = 'assets/icons/magazine/close.svg';

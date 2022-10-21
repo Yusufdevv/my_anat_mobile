@@ -47,6 +47,7 @@ const tongerineYellow = _tongerineYellow;
 const journalShadow = _chineseBlack;
 const checkUnselected = _zircon;
 const errorImageBackground = _mintCream;
+const grey = _fiord;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -95,3 +96,4 @@ const _tongerineYellow = Color(0xffF8B76B);
 const _chineseBlack = Color(0xff160C0C);
 const _zircon = Color(0xffE1E5E4);
 const _mintCream = Color(0xffF7FAF9);
+const _fiord = Color(0xff4A4F61);
