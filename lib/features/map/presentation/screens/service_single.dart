@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ServiceSingleScreen extends StatefulWidget {
   final String url;
@@ -17,7 +20,7 @@ class ServiceSingleScreen extends StatefulWidget {
 class _ServiceSingleScreenState extends State<ServiceSingleScreen> {
   @override
   void initState() {
-    //if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    if (Platform.isAndroid) WebView.platform = AndroidWebView();
     super.initState();
   }
 
@@ -35,12 +38,12 @@ class _ServiceSingleScreenState extends State<ServiceSingleScreen> {
       backgroundColor: white,
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: WebView(
-          //     initialUrl: widget.url,
-          //     javascriptMode: JavascriptMode.unrestricted,
-          //   ),
-          // ),
+          Positioned.fill(
+            child: WebView(
+              initialUrl: widget.url,
+              javascriptMode: JavascriptMode.unrestricted,
+            ),
+          ),
           Positioned(
             left: 16,
             right: 16,

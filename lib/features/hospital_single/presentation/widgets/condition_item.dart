@@ -9,24 +9,33 @@ class ConditionItem extends StatelessWidget {
   const ConditionItem({required this.entity, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.network(
-              entity.icon.file.url,
+  Widget build(BuildContext context) {
+    print(entity.name);
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SvgPicture.network(
+            entity.icon.file.url,
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                entity.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
+              ),
             ),
-            const Spacer(),
-            Text(
-              entity.name,
-              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
-            )
-          ],
-        ),
-      );
+          )
+        ],
+      ),
+    );
+  }
 }

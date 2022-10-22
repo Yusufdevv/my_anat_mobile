@@ -85,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             DefaultTextField(
                               title: LocaleKeys.login.tr(),
                               controller: loginController,
+                              maxLines: 1,
                               onChanged: (value) {},
                               hasError: state.loginStatus.isSubmissionFailure,
                               hintText: LocaleKeys.write_login.tr(),

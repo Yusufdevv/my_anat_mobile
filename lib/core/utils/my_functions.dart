@@ -372,6 +372,6 @@ abstract class MyFunctions {
   }
 
   static double getRadiusFromZoom(double zoom) {
-    return 40000 / pow(2, zoom);
+    return 40000 / pow(2, zoom) > 1 ? 40000 / pow(2, zoom) : 1;
   }
 }
