@@ -117,7 +117,7 @@ class JournalSingleBigItem extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   margin: const EdgeInsets.only(top: 12),
                   onTap: onRightButtonTap,
-                  child: journalEntity.isBought || !journalEntity.isPremium
+                  child: journalEntity.isBought
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -135,7 +135,7 @@ class JournalSingleBigItem extends StatelessWidget {
                           ],
                         )
                       : Text(
-                          journalEntity.isBought || !journalEntity.isPremium
+                          journalEntity.isBought
                               ? LocaleKeys.read.tr()
                               : LocaleKeys.buy.tr(args: [MyFunctions.getFormatCostFromInt(journalEntity.price)]),
                           maxLines: 1,

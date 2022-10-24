@@ -157,7 +157,7 @@ class CandidateSingleHeader extends StatelessWidget {
                                   ),
                                   WScaleAnimation(
                                     onTap: () {
-                                      Share.share('https://anatomica.uicgroup.tech/doctor/${candidate.id}/detail/');
+                                      Share.share('https://anatomica.uz/doctor/${candidate.id}/detail/');
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(16),

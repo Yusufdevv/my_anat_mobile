@@ -32,8 +32,8 @@ class FirstArticle extends StatelessWidget {
                         fade(
                           page: WebViewScreen(
                             shareValue: !state.firstArticle.isPremium || state.journalArticles.first.isBought
-                                ? 'https://anatomica.uicgroup.tech/article/${state.firstArticle.slug}'
-                                : 'https://anatomica.uicgroup.tech/premium-article/${state.firstArticle.slug}',
+                                ? 'https://anatomica.uz/article/${state.firstArticle.slug}'
+                                : 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
                             page: 'PurchasedArticlePage',
                           ),
                         ),
@@ -43,9 +43,9 @@ class FirstArticle extends StatelessWidget {
                         Navigator.of(context, rootNavigator: true).push(
                           fade(
                             page: WebViewScreen(
-                              shareValue: 'https://anatomica.uicgroup.tech/article/${state.firstArticle.slug}',
+                              shareValue: 'https://anatomica.uz/article/${state.firstArticle.slug}',
                               page: '',
-                              url: 'https://anatomica.uicgroup.tech/article/${state.firstArticle.slug}',
+                              url: 'https://anatomica.uz/article/${state.firstArticle.slug}',
                             ),
                           ),
                         );
@@ -53,9 +53,9 @@ class FirstArticle extends StatelessWidget {
                         Navigator.of(context, rootNavigator: true).push(
                           fade(
                             page: WebViewScreen(
-                              shareValue: 'https://anatomica.uicgroup.tech/premium-article/${state.firstArticle.slug}',
+                              shareValue: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
                               page: '',
-                              url: 'https://anatomica.uicgroup.tech/premium-article/${state.firstArticle.slug}',
+                              url: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
                             ),
                           ),
                         );

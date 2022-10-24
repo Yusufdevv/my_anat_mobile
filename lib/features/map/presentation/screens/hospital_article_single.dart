@@ -38,7 +38,7 @@ class HospitalArticleSingle extends StatelessWidget {
           automaticallyImplyLeading: false,
           elevation: 1,
           title: HospitalSingleAppBarBody(
-            shareValue: 'https://anatomica.uicgroup.tech/article/$slug',
+            shareValue: 'https://anatomica.uz/article/$slug',
           ),
           shadowColor: textFieldColor,
         ),

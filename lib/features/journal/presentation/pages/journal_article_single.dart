@@ -24,7 +24,7 @@ class JournalArticleSingle extends StatelessWidget {
           leadingWidth: 0,
           automaticallyImplyLeading: false,
           elevation: 1,
-          title: HospitalSingleAppBarBody(shareValue: 'https://anatomica.uicgroup.tech/article/$slug'),
+          title: HospitalSingleAppBarBody(shareValue: 'https://anatomica.uz/article/$slug'),
           shadowColor: textFieldColor,
         ),
         body: BlocBuilder<JournalBloc, JournalState>(

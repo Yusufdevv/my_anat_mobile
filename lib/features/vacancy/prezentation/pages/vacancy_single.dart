@@ -77,7 +77,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                     VacancySingleAppBar(
                       vacancy: state.vacancyListEntity,
                       shareValue:
-                          'https://anatomica.uicgroup.tech/vacancy/vacancy/${state.vacancyListEntity.slug}/detail/',
+                          'https://anatomica.uz/vacancy/vacancy/${state.vacancyListEntity.slug}/detail/',
                     ),
                     VacancySingleAppBarHeader(vacancyEntity: state.vacancyListEntity),
                   ];
