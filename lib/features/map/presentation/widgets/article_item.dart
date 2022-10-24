@@ -29,8 +29,8 @@ class HospitalArticleItem extends StatelessWidget {
         // if (entity.isBought || !entity.isPremium) {
         //   Navigator.of(context).push(fade(page: HospitalArticleSingle(slug: entity.slug)));
         // } else {
-        //   if (await canLaunchUrlString('https://anatomica.uicgroup.tech/premium-article/${entity.slug}')) {
-        //     await launchUrlString('https://anatomica.uicgroup.tech/premium-article/${entity.slug}');
+        //   if (await canLaunchUrlString('https://anatomica.uz/premium-article/${entity.slug}')) {
+        //     await launchUrlString('https://anatomica.uz/premium-article/${entity.slug}');
         //   }
         // }
       },

@@ -39,6 +39,9 @@ class JournalDatasourceImpl extends JournalDatasource {
               : {},
         ),
       );
+      log(response.realUri.toString());
+      log(response.data.toString());
+
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => JournalModel.fromJson(p0 as Map<String, dynamic>? ?? {}));

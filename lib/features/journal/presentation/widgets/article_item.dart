@@ -30,7 +30,7 @@ class ArticleItem extends StatelessWidget {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: WebViewScreen(
-                      shareValue: 'https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}',
+                      shareValue: 'https://anatomica.uz/article/${magazineItemEntity.slug}',
                       page: 'ArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),
@@ -40,7 +40,7 @@ class ArticleItem extends StatelessWidget {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: WebViewScreen(
-                      shareValue: 'https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}',
+                      shareValue: 'https://anatomica.uz/premium-article/${magazineItemEntity.slug}',
                       page: 'PremiumArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),
@@ -53,7 +53,7 @@ class ArticleItem extends StatelessWidget {
                   fade(
                     page: WebViewScreen(
                       sendToken: false,
-                      shareValue: 'https://anatomica.uicgroup.tech/premium-article/${magazineItemEntity.slug}',
+                      shareValue: 'https://anatomica.uz/premium-article/${magazineItemEntity.slug}',
                       page: 'PremiumArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),
@@ -64,7 +64,7 @@ class ArticleItem extends StatelessWidget {
                   fade(
                     page: WebViewScreen(
                       sendToken: false,
-                      shareValue: 'https://anatomica.uicgroup.tech/article/${magazineItemEntity.slug}',
+                      shareValue: 'https://anatomica.uz/article/${magazineItemEntity.slug}',
                       page: 'ArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),

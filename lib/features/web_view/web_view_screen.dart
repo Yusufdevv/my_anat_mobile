@@ -62,10 +62,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
               onWebViewCreated: (controller) {
                 _controller = controller;
                 controller.loadUrl(
-                    'https://anatomica.uicgroup.tech/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : '&'}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}');
+                    'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : '&'}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}');
               },
               initialUrl: widget.url ??
-                  'https://anatomica.uicgroup.tech/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : '&'}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}',
+                  'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : '&'}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}',
             ),
           ),
         ),
