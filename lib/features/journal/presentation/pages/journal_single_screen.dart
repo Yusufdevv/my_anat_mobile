@@ -23,7 +23,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-import 'package:munir_epub_reader/epub_viewer.dart';
 import 'package:share_plus/share_plus.dart';
 
 class JournalSingleScreen extends StatefulWidget {
@@ -31,7 +30,11 @@ class JournalSingleScreen extends StatefulWidget {
   final DownloadBloc downloadBloc;
   final JournalEntity journal;
 
-  const JournalSingleScreen({required this.bloc, required this.journal, required this.downloadBloc, Key? key})
+  const JournalSingleScreen(
+      {required this.bloc,
+      required this.journal,
+      required this.downloadBloc,
+      Key? key})
       : super(key: key);
 
   @override
@@ -49,13 +52,14 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
             ..add(GetJournalSingle(slug: widget.journal.slug)),
         ),
         BlocProvider.value(
-          value: widget.downloadBloc..add(CheckWhetherFileAlreadyDownloaded(id: widget.journal.id)),
+          value: widget.downloadBloc
+            ..add(CheckWhetherFileAlreadyDownloaded(id: widget.journal.id)),
         ),
       ],
       child: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle:
-              const SystemUiOverlayStyle(statusBarColor: white, statusBarIconBrightness: Brightness.dark),
+          systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: white, statusBarIconBrightness: Brightness.dark),
           elevation: 0,
           leading: WScaleAnimation(
             onTap: () => Navigator.of(context).pop(),
@@ -70,7 +74,8 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
           actions: [
             WScaleAnimation(
               onTap: () {
-                Share.share('https://anatomica.uz/journal/${widget.journal.slug}');
+                Share.share(
+                    'https://anatomica.uz/journal/${widget.journal.slug}');
               },
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -174,7 +179,7 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                               //     );
                             },
                             onRightButtonTap: () {
-                              if (widget.journal.isBought ) {
+                              if (widget.journal.isBought) {
                                 Navigator.of(context).push(fade(
                                     page: JournalMarkdownPageReader(
                                   title: widget.journal.redaction,
@@ -187,15 +192,21 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                                         id: state.journalSingle.id,
                                         onNotDownloaded: () async {
                                           SystemChrome.setSystemUIOverlayStyle(
-                                              const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+                                              const SystemUiOverlayStyle(
+                                                  statusBarColor:
+                                                      Colors.transparent));
                                           await showDialog(
                                             barrierDismissible: false,
                                             context: context,
-                                            barrierColor: primary.withOpacity(0.84),
+                                            barrierColor:
+                                                primary.withOpacity(0.84),
                                             builder: (_) => BlocProvider.value(
-                                              value: context.read<DownloadBloc>(),
+                                              value:
+                                                  context.read<DownloadBloc>(),
                                               child: DownloadingDialog(
-                                                  bookTitle: 'widget.book.title', parentContext: context),
+                                                  bookTitle:
+                                                      'widget.book.title',
+                                                  parentContext: context),
                                             ),
                                           );
                                         },
@@ -203,9 +214,9 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                                         onDownloaded: (file) {
                                           Navigator.of(context).push(fade(
                                               page: JournalMarkdownPageReader(
-                                                title: widget.journal.redaction,
-                                                slug: widget.journal.slug,
-                                              )));
+                                            title: widget.journal.redaction,
+                                            slug: widget.journal.slug,
+                                          )));
                                         },
                                       ),
                                     );
@@ -214,23 +225,32 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                                   context: context,
                                   builder: (ctx) => BuyDialog(
                                     onPaymentTap: () {
-                                      Navigator.of(context, rootNavigator: true).push(
+                                      Navigator.of(context, rootNavigator: true)
+                                          .push(
                                         fade(
                                           page: PaymentScreen(
                                             price: state.journalSingle.price,
-                                            title: state.journalSingle.redaction,
-                                            imageUrl: state.journalSingle.image.middle,
+                                            title:
+                                                state.journalSingle.redaction,
+                                            imageUrl: state
+                                                .journalSingle.image.middle,
                                             isJournal: true,
-                                            isRegistered: context.read<AuthenticationBloc>().state.status ==
-                                                AuthenticationStatus.authenticated,
-                                            subtitle: state.journalSingle.redaction,
+                                            isRegistered: context
+                                                    .read<AuthenticationBloc>()
+                                                    .state
+                                                    .status ==
+                                                AuthenticationStatus
+                                                    .authenticated,
+                                            subtitle:
+                                                state.journalSingle.redaction,
                                             id: state.journalSingle.id,
                                           ),
                                         ),
                                       );
                                     },
                                     onRegistrationTap: () {
-                                      Navigator.of(context).push(fade(page: const RegisterScreen()));
+                                      Navigator.of(context).push(
+                                          fade(page: const RegisterScreen()));
                                     },
                                   ),
                                 );
@@ -243,14 +263,19 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                       ),
                     ),
                   ),
-                  if (state.journalSingleArticleStatus == PaginatorStatus.PAGINATOR_SUCCESS) ...[
+                  if (state.journalSingleArticleStatus ==
+                      PaginatorStatus.PAGINATOR_SUCCESS) ...[
                     if (state.journalSingleArticles.isNotEmpty) ...{
                       SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 16, bottom: 12, top: 20),
+                          padding: const EdgeInsets.only(
+                              left: 16, bottom: 12, top: 20),
                           child: Text(
                             LocaleKeys.article_issue.tr(),
-                            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(fontSize: 18),
                           ),
                         ),
                       ),
@@ -267,20 +292,24 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                           (BuildContext context, int index) {
                             return ArticleItem(
                               margin: const EdgeInsets.only(bottom: 12),
-                              magazineItemEntity: state.journalSingleArticles[index],
+                              magazineItemEntity:
+                                  state.journalSingleArticles[index],
                             );
                           },
-                          childCount: state.journalSingleArticles.length, // 1000 list items
+                          childCount: state
+                              .journalSingleArticles.length, // 1000 list items
                         ),
                       ),
                     )
-                  ] else if (state.journalSingleArticleStatus == PaginatorStatus.PAGINATOR_LOADING) ...{
+                  ] else if (state.journalSingleArticleStatus ==
+                      PaginatorStatus.PAGINATOR_LOADING) ...{
                     const SliverToBoxAdapter(
                       child: Center(
                         child: CupertinoActivityIndicator(),
                       ),
                     )
-                  } else if (state.journalSingleArticleStatus == PaginatorStatus.PAGINATOR_ERROR) ...{
+                  } else if (state.journalSingleArticleStatus ==
+                      PaginatorStatus.PAGINATOR_ERROR) ...{
                     const SliverToBoxAdapter(
                       child: Center(
                         child: Text('Error'),

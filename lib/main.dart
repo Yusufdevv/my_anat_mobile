@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:anatomica/assets/themes/theme.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
@@ -34,8 +35,8 @@ import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart' as fire;
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_crashlytics/firebase_crashlytics.dart' as fire;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,11 +44,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
-  FlutterError.onError = fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
-
+  // FlutterError.onError =
+  //     fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
+  HttpOverrides.global = MyHttpOverrides();
   runApp(EasyLocalization(
       path: 'lib/assets/translations',
       supportedLocales: const [
@@ -55,8 +58,10 @@ Future<void> main() async {
         Locale('uz'),
         Locale('fr'),
       ],
-      fallbackLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
-      startLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
+      fallbackLocale: Locale(
+          StorageRepository.getString('device_language', defValue: 'uz')),
+      startLocale: Locale(
+          StorageRepository.getString('device_language', defValue: 'uz')),
       saveLocale: true,
       child: const MyApp()));
   // runZonedGuarded(
@@ -64,6 +69,15 @@ Future<void> main() async {
   //   print('error from zone: $error');
   //   fire.FirebaseCrashlytics.instance.recordError(error, stack);
   // });
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -166,7 +180,8 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
-              navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
+              navigator.pushAndRemoveUntil(
+                  fade(page: const HomeScreen()), (route) => false);
               // switch (state.status) {
               //   case AuthenticationStatus.unauthenticated:
               //     navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
