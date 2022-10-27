@@ -2,7 +2,6 @@ import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/auth/data/models/user_model.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
-import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 import 'package:anatomica/features/profile/data/models/faq_model.dart';
 import 'package:anatomica/features/profile/data/models/uploaded_image_model.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_list.dart';
@@ -11,8 +10,6 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
 
 abstract class ProfileDatasource {
-  final PaginationDatasource paginationDatasource;
-  ProfileDatasource({required this.paginationDatasource});
   Future<GenericPagination<VacancyListModel>> getLikedVacancyList({String? next});
   Future<GenericPagination<CandidateListModel>> getLikedCandidateList({String? next});
   Future<UserModel> getProfile();
@@ -26,7 +23,7 @@ abstract class ProfileDatasource {
 class ProfileDatasourceImpl extends ProfileDatasource {
   final Dio _dio;
 
-  ProfileDatasourceImpl(this._dio, {required super.paginationDatasource});
+  ProfileDatasourceImpl(this._dio);
 
   @override
   Future<GenericPagination<VacancyListModel>> getLikedVacancyList({String? next}) async {

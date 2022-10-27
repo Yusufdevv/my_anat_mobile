@@ -30,53 +30,64 @@ class WAppBarWithButtons extends StatelessWidget implements PreferredSizeWidget 
                 color: divider.withOpacity(0.08)),
           ],
         ),
+        // height: kToolbarHeight,
         child: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(16),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                height: kToolbarHeight,
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: const BorderRadius.vertical(
+                    bottom: Radius.circular(16),
+                  ),
+                ),
+                padding: const EdgeInsets.all(18),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    WScaleAnimation(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 30,
+                        alignment: Alignment.centerLeft,
+                        child: SvgPicture.asset(
+                          AppIcons.chevronLeft,
+                          width: 22,
+                          height: 22,
+                          color: textSecondary,
+                          fit: BoxFit.none,
+                        ),
+                      ),
+                    ),
+                    buttons,
+                  ],
+                ),
               ),
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 18,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                WScaleAnimation(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                    width: 50,
-                    height: 30,
-                    alignment: Alignment.centerLeft,
-                    child: SvgPicture.asset(
-                      AppIcons.chevronLeft,
-                      width: 22,
-                      height: 22,
-                      color: grey,
-                      fit: BoxFit.none,
-                    ),
-                  ),
+              GestureDetector(
+                onTap: onTitleTap,
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline3!.copyWith(color: titleColor),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
                 ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: onTitleTap,
-                    child: Text(
-                      title,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: titleColor),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                    ),
-                  ),
+              ),
+              const Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Divider(
+                  height: 0,
+                  color: appBarDivider,
+                  thickness: 1,
                 ),
-                const SizedBox(width: 50),
-                buttons,
-              ],
-            ),
+              )
+            ],
           ),
         ),
       );

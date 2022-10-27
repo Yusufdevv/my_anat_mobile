@@ -1,7 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/journal/presentation/pages/journal_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -10,8 +9,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class OneTimeCheck extends StatelessWidget {
-  const OneTimeCheck({Key? key}) : super(key: key);
+class PaymentSuccess extends StatelessWidget {
+  final bool isSubscription;
+  final bool isRegistered;
+  const PaymentSuccess({
+    required this.isRegistered,
+    required this.isSubscription,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,26 +27,28 @@ class OneTimeCheck extends StatelessWidget {
         centerTitle: true,
         shadowColor: textFieldColor,
         titleSpacing: 0,
-        leadingWidth: 0,
+        leadingWidth: 56,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16).copyWith(bottom: 12),
+            child: SvgPicture.asset(
+              AppIcons.chevronLeft,
+              color: textSecondary,
+            ),
+          ),
+        ),
         automaticallyImplyLeading: false,
         title: Text(
-          LocaleKeys.only_pay.tr(),
+          isSubscription
+              ? LocaleKeys.subscription_title.tr()
+              : isRegistered
+                  ? LocaleKeys.buy_magazine.tr()
+                  : LocaleKeys.only_pay.tr(),
           style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: WScaleAnimation(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SvgPicture.asset(
-                AppIcons.close,
-                color: black,
-              ),
-            ),
-          )
-        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

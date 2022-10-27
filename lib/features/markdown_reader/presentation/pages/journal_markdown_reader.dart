@@ -1,7 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/markdown_reader/data/repositories/journal_pages_repository_impl.dart';
 import 'package:anatomica/features/markdown_reader/domain/usecases/get_journal_pages_usecase.dart';
@@ -12,9 +14,9 @@ import 'package:anatomica/features/markdown_reader/presentation/widgets/w_app_ba
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class JournalMarkdownPageReader extends StatefulWidget {
   final String slug;
@@ -111,6 +113,7 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                               }
                               return JournalMarkdownPage(
                                 data: pages[index].content,
+                                path: state.pagePath,
                               );
                             },
                             itemCount: state.fetchMore ? pages.length + 1 : pages.length,
@@ -147,9 +150,11 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
 
 class JournalMarkdownPage extends StatefulWidget {
   final String data;
+  final String path;
 
   const JournalMarkdownPage({
     required this.data,
+    required this.path,
     Key? key,
   }) : super(key: key);
 
@@ -163,52 +168,119 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
     final mediaQueryData = MediaQuery.of(context);
     return BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
       builder: (context, state) {
-        return Markdown(
-          styleSheet: MarkdownStyleSheet(
-            a: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily),
-            blockquote: TextStyle(
-                color: state.selectedTextColor,
-                fontWeight: FontWeight.w400,
-                fontSize: 15 * state.fontSizePercentage,
-                fontFamily: state.selectedFontFamily),
-            checkbox: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily),
-            code: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily,),
-            del: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily,),
-            em: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily, fontSize: 16 * state.fontSizePercentage,),
-            h1: TextStyle(
-                color: state.selectedTextColor,
-                fontWeight: FontWeight.w700,
-                fontSize: 32 * state.fontSizePercentage,
-                fontFamily: state.selectedFontFamily),
-            h2: TextStyle(
-              color: state.selectedTextColor,
-              fontWeight: FontWeight.w600,
-              fontSize: 26 * state.fontSizePercentage,
-              fontFamily: state.selectedFontFamily,
-            ),
-            h3: TextStyle(
-              color: state.selectedTextColor,
-              fontFamily: state.selectedFontFamily, fontSize: 22 * state.fontSizePercentage,
-            ),
-            h4: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily, fontSize: 20 * state.fontSizePercentage,),
-            h5: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily, fontSize: 18 * state.fontSizePercentage,),
-            h6: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily, fontSize: 16 * state.fontSizePercentage,),
-            img: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily, fontSize: 22 * state.fontSizePercentage,),
-            listBullet: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily, fontSize: 22 * state.fontSizePercentage,),
-            p: TextStyle(
-              color: state.selectedTextColor,
-              fontFamily: state.selectedFontFamily, fontSize: 16 * state.fontSizePercentage,
-            ),
-            strong: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily, fontSize: 16 * state.fontSizePercentage,),
-            tableBody: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily, fontSize: 18 * state.fontSizePercentage,),
-            tableHead: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily, fontSize: 20 * state.fontSizePercentage,),
-          ),
-          padding: EdgeInsets.fromLTRB(24, mediaQueryData.padding.top + 16, 24, mediaQueryData.padding.bottom),
-          data: widget.data,
-          imageBuilder: (uri, title, alt) => WImage(
-            imageUrl: uri.toString(),
-          ),
+        //return SingleChildScrollView(child: Text(widget.data));
+        //log(widget.data);
+        log(Uri.dataFromString(
+                widget.data.replaceAll(
+                    RegExp(r'''<body[^>]+class\s*=\s*['"]([^'"]+)['"][^>]*>''').firstMatch(widget.data)?.group(1) ?? '',
+                    'dsa'),
+                mimeType: 'text/html',
+                encoding: Encoding.getByName('utf-8'))
+            .toString());
+        // log(widget.data.replaceAll(
+        //     RegExp(r'''<body[^>]+class\s*=\s*['"]([^'"]+)['"][^>]*>''').firstMatch(widget.data)?.group(1) ?? '',
+        //     'yellow'));
+        return WebView(
+          initialUrl: Uri.dataFromString(
+                  widget.data.replaceAll(
+                      RegExp(r'''<body[^>]+class\s*=\s*['"]([^'"]+)['"][^>]*>''').firstMatch(widget.data)?.group(1) ??
+                          '',
+                      'dsa'),
+                  mimeType: 'text/html',
+                  encoding: Encoding.getByName('utf-8'))
+              .toString(),
         );
+        // return Markdown(
+        //   physics: BouncingScrollPhysics(),
+        //   styleSheet: MarkdownStyleSheet(
+        //     a: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily),
+        //     blockquote: TextStyle(
+        //         color: state.selectedTextColor,
+        //         fontWeight: FontWeight.w400,
+        //         fontSize: 15 * state.fontSizePercentage,
+        //         fontFamily: state.selectedFontFamily),
+        //     checkbox: TextStyle(color: state.selectedTextColor, fontFamily: state.selectedFontFamily),
+        //     code: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //     ),
+        //     del: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //     ),
+        //     em: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 16 * state.fontSizePercentage,
+        //     ),
+        //     h1: TextStyle(
+        //         color: state.selectedTextColor,
+        //         fontWeight: FontWeight.w700,
+        //         fontSize: 32 * state.fontSizePercentage,
+        //         fontFamily: state.selectedFontFamily),
+        //     h2: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontWeight: FontWeight.w600,
+        //       fontSize: 26 * state.fontSizePercentage,
+        //       fontFamily: state.selectedFontFamily,
+        //     ),
+        //     h3: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 22 * state.fontSizePercentage,
+        //     ),
+        //     h4: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 20 * state.fontSizePercentage,
+        //     ),
+        //     h5: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 18 * state.fontSizePercentage,
+        //     ),
+        //     h6: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 16 * state.fontSizePercentage,
+        //     ),
+        //     img: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 22 * state.fontSizePercentage,
+        //     ),
+        //     listBullet: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 22 * state.fontSizePercentage,
+        //     ),
+        //     p: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 16 * state.fontSizePercentage,
+        //     ),
+        //     strong: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 16 * state.fontSizePercentage,
+        //     ),
+        //     tableBody: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 18 * state.fontSizePercentage,
+        //     ),
+        //     tableHead: TextStyle(
+        //       color: state.selectedTextColor,
+        //       fontFamily: state.selectedFontFamily,
+        //       fontSize: 20 * state.fontSizePercentage,
+        //     ),
+        //   ),
+        //   padding: EdgeInsets.fromLTRB(24, mediaQueryData.padding.top + 16, 24, mediaQueryData.padding.bottom),
+        //   data: widget.data,
+        //   imageBuilder: (uri, title, alt) => WImage(
+        //     imageUrl: uri.toString(),
+        //   ),
+        // );
       },
     );
   }

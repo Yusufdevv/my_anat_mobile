@@ -53,7 +53,6 @@ Future<void> main() async {
       supportedLocales: const [
         Locale('ru'),
         Locale('uz'),
-        Locale('fr'),
       ],
       fallbackLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
       startLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),

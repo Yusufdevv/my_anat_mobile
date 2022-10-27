@@ -43,7 +43,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
       child: BlocBuilder<HeaderManagerBloc, HeaderManagerState>(
         builder: (context, state) {
           return SliverOverlapAbsorber(
-            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+            handle: SliverOverlapAbsorberHandle(),
             sliver: SliverSafeArea(
               top: false,
               bottom: false,
@@ -239,9 +239,13 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                               children: [
                                                 SvgPicture.asset(AppIcons.location),
                                                 const SizedBox(width: 6),
-                                                Text(
-                                                  state.hospital.address,
-                                                  style: Theme.of(context).textTheme.headline3,
+                                                Expanded(
+                                                  child: Text(
+                                                    state.hospital.address,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: Theme.of(context).textTheme.headline3,
+                                                  ),
                                                 ),
                                               ],
                                             ),

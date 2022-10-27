@@ -11,7 +11,6 @@ import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journa
 import 'package:anatomica/features/journal/presentation/pages/payment_screen.dart';
 import 'package:anatomica/features/journal/presentation/widgets/article_item.dart';
 import 'package:anatomica/features/journal/presentation/widgets/buy_dialog.dart';
-import 'package:anatomica/features/journal/presentation/widgets/downloading_dialog.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_single_big_item.dart';
 import 'package:anatomica/features/markdown_reader/presentation/pages/journal_markdown_reader.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -23,7 +22,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-import 'package:munir_epub_reader/epub_viewer.dart';
 import 'package:share_plus/share_plus.dart';
 
 class JournalSingleScreen extends StatefulWidget {
@@ -112,18 +110,6 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                                   ),
                                 ),
                               );
-                              // print('error141');
-                              // print('big');
-                              // print(downloadState.fileUrl);
-                              // EpubViewer.setConfig(
-                              //   themeColor: Theme.of(context).primaryColor,
-                              //   identifier: 'iosBook',
-                              //   scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-                              //   allowSharing: true,
-                              //   enableTts: true,
-                              //   nightMode: true,
-                              // );
-                              // EpubViewer.open(downloadState.fileUrl);
                             },
                             onLeftButtonTap: () {
                               Navigator.of(context).push(
@@ -135,80 +121,14 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                                   ),
                                 ),
                               );
-                              // print('error141');
-                              // print('small left');
-                              // context.read<DownloadBloc>().add(
-                              //       CheckWhetherFragmentFileExists(
-                              //         fileName: state.journalSingle.redaction,
-                              //         fileUrl: state.journalSingle.preview.url,
-                              //         id: state.journalSingle.id,
-                              //         onNotDownloaded: () async {
-                              //           SystemChrome.setSystemUIOverlayStyle(
-                              //               const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-                              //           await showDialog(
-                              //             barrierDismissible: false,
-                              //             context: context,
-                              //             barrierColor: primary.withOpacity(0.84),
-                              //             builder: (_) => BlocProvider.value(
-                              //               value: context.read<DownloadBloc>(),
-                              //               child: DownloadingDialog(
-                              //                   bookTitle: 'widget.book.title', parentContext: context),
-                              //             ),
-                              //           );
-                              //         },
-                              //         fileType: widget.journal.fileExtension,
-                              //         onDownloaded: (file) {
-                              //           print(file.path);
-                              //           print('path141');
-                              //           EpubViewer.setConfig(
-                              //             themeColor: Theme.of(context).primaryColor,
-                              //             identifier: 'iosBook',
-                              //             scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-                              //             allowSharing: true,
-                              //             enableTts: true,
-                              //             nightMode: true,
-                              //           );
-                              //           EpubViewer.open(file.path);
-                              //         },
-                              //       ),
-                              //     );
                             },
                             onRightButtonTap: () {
-                              if (widget.journal.isBought ) {
+                              if (widget.journal.isBought || !widget.journal.isPremium) {
                                 Navigator.of(context).push(fade(
                                     page: JournalMarkdownPageReader(
                                   title: widget.journal.redaction,
                                   slug: widget.journal.slug,
                                 )));
-                                context.read<DownloadBloc>().add(
-                                      CheckWhetherFileExists(
-                                        slug: state.journalSingle.slug,
-                                        filename: state.journalSingle.name,
-                                        id: state.journalSingle.id,
-                                        onNotDownloaded: () async {
-                                          SystemChrome.setSystemUIOverlayStyle(
-                                              const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-                                          await showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            barrierColor: primary.withOpacity(0.84),
-                                            builder: (_) => BlocProvider.value(
-                                              value: context.read<DownloadBloc>(),
-                                              child: DownloadingDialog(
-                                                  bookTitle: 'widget.book.title', parentContext: context),
-                                            ),
-                                          );
-                                        },
-                                        fileType: widget.journal.fileExtension,
-                                        onDownloaded: (file) {
-                                          Navigator.of(context).push(fade(
-                                              page: JournalMarkdownPageReader(
-                                                title: widget.journal.redaction,
-                                                slug: widget.journal.slug,
-                                              )));
-                                        },
-                                      ),
-                                    );
                               } else {
                                 showDialog(
                                   context: context,
@@ -237,7 +157,7 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                               }
                             },
                             journalEntity: widget.journal,
-                            isDownloaded: downloadState.isFileAlreadyDownloaded,
+                            isDownloaded: !widget.journal.isPremium || widget.journal.isBought,
                           );
                         },
                       ),

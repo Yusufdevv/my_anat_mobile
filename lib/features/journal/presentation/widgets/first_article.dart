@@ -27,25 +27,14 @@ class FirstArticle extends StatelessWidget {
               builder: (context, authState) {
                 return GestureDetector(
                   onTap: () {
-                    if (authState.status == AuthenticationStatus.authenticated) {
-                      Navigator.of(context, rootNavigator: true).push(
-                        fade(
-                          page: WebViewScreen(
-                            shareValue: !state.firstArticle.isPremium || state.journalArticles.first.isBought
-                                ? 'https://anatomica.uz/article/${state.firstArticle.slug}'
-                                : 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
-                            page: 'PurchasedArticlePage',
-                          ),
-                        ),
-                      );
-                    } else {
+                    if (state.status == AuthenticationStatus.authenticated) {
                       if (!state.firstArticle.isPremium || state.journalArticles.first.isBought) {
                         Navigator.of(context, rootNavigator: true).push(
                           fade(
                             page: WebViewScreen(
                               shareValue: 'https://anatomica.uz/article/${state.firstArticle.slug}',
-                              page: '',
-                              url: 'https://anatomica.uz/article/${state.firstArticle.slug}',
+                              page: 'ArticleSinglePage',
+                              slug: state.firstArticle.slug,
                             ),
                           ),
                         );
@@ -54,8 +43,32 @@ class FirstArticle extends StatelessWidget {
                           fade(
                             page: WebViewScreen(
                               shareValue: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
-                              page: '',
-                              url: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
+                              page: 'PremiumArticleSinglePage',
+                              slug: state.firstArticle.slug,
+                            ),
+                          ),
+                        );
+                      }
+                    } else {
+                      if (state.firstArticle.isPremium) {
+                        Navigator.of(context, rootNavigator: true).push(
+                          fade(
+                            page: WebViewScreen(
+                              sendToken: false,
+                              shareValue: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
+                              page: 'PremiumArticleSinglePage',
+                              slug: state.firstArticle.slug,
+                            ),
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context, rootNavigator: true).push(
+                          fade(
+                            page: WebViewScreen(
+                              sendToken: false,
+                              shareValue: 'https://anatomica.uz/article/${state.firstArticle.slug}',
+                              page: 'ArticleSinglePage',
+                              slug: state.firstArticle.slug,
                             ),
                           ),
                         );
@@ -90,6 +103,8 @@ class FirstArticle extends StatelessWidget {
                         data: state.firstArticle.shortDescription,
                         style: {
                           'p': Style(
+                            maxLines: 3,
+                            textOverflow: TextOverflow.ellipsis,
                             fontSize: FontSize(13),
                             padding: EdgeInsets.zero,
                             color: textSecondary,

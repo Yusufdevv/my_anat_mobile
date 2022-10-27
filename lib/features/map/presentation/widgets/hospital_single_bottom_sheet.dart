@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
@@ -65,10 +66,31 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         child: ListView.separated(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              if (isHospital) {
+                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                  fade(
+                                    page: HospitalSingleScreen(
+                                      slug: slug,
+                                      id: id,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                  fade(
+                                    page: DoctorSingleScreen(
+                                      id: id,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
                             child: WImage(
+                              borderRadius: BorderRadius.circular(8),
                               imageUrl: images[index],
+                              width: MediaQuery.of(context).size.shortestSide - 100,
                               onErrorWidget: Container(
                                 width: MediaQuery.of(context).size.width - 24,
                                 alignment: Alignment.center,
@@ -104,9 +126,13 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                       children: [
                         SvgPicture.asset(AppIcons.location),
                         const SizedBox(width: 6),
-                        Text(
-                          address,
-                          style: Theme.of(context).textTheme.headline3,
+                        Expanded(
+                          child: Text(
+                            address,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.headline3,
+                          ),
                         ),
                       ],
                     ),
@@ -116,7 +142,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         SvgPicture.asset(AppIcons.phone),
                         const SizedBox(width: 6),
                         Text(
-                          phone,
+                          MyFunctions.formatPhone(phone, false),
                           style: Theme.of(context).textTheme.headline3,
                         ),
                       ],

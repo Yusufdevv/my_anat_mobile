@@ -709,6 +709,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  local_assets_server:
+    dependency: "direct main"
+    description:
+      name: local_assets_server
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2+12"
   logging:
     dependency: transitive
     description:
@@ -1055,7 +1062,7 @@ packages:
     source: hosted
     version: "0.1.1"
   scrollable_positioned_list:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: scrollable_positioned_list
       url: "https://pub.dartlang.org"

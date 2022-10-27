@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/register.dart';
@@ -148,6 +149,7 @@ class ProfileScreen extends StatelessWidget {
                               title: LocaleKeys.setting,
                               icon: AppIcons.setting,
                               onTap: () {
+                                print(StorageRepository.getString('token'));
                                 Navigator.of(context).push(
                                   fade(
                                     page: const SettingScreen(),

@@ -72,16 +72,18 @@ class JournalSingleBigItem extends StatelessWidget {
             const SizedBox(height: 8),
             Row(
               children: [
-                Text(
-                  MyFunctions.getFormatCostFromInt(journalEntity.price),
-                  style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  '•',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
-                ),
-                const SizedBox(width: 4),
+                if (!(!journalEntity.isPremium || journalEntity.isBought)) ...[
+                  Text(
+                    MyFunctions.getFormatCostFromInt(journalEntity.price),
+                    style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    '•',
+                    style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(width: 4),
+                ],
                 Text(
                   LocaleKeys.e_magazine.tr(),
                   style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
@@ -135,7 +137,7 @@ class JournalSingleBigItem extends StatelessWidget {
                           ],
                         )
                       : Text(
-                          journalEntity.isBought
+                          journalEntity.isBought || !journalEntity.isPremium
                               ? LocaleKeys.read.tr()
                               : LocaleKeys.buy.tr(args: [MyFunctions.getFormatCostFromInt(journalEntity.price)]),
                           maxLines: 1,

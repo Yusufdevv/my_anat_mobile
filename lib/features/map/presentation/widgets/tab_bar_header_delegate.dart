@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
   final TabController tabController;
   final List<String> tabs;
+  final ValueChanged<int>? onTabTap;
   TabBarHeaderDelegate({
     required this.tabController,
     required this.tabs,
+    this.onTabTap,
   });
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -33,6 +35,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
         padding: const EdgeInsets.symmetric(horizontal: 7),
         unselectedLabelColor: textColor,
         indicatorColor: primary,
+        onTap: onTabTap,
         indicator: const CustomTabIndicator(color: primary, radius: 3, horizontalPadding: 9, height: 3),
         tabs: tabs.map((e) => Tab(text: e.tr())).toList(),
       ),

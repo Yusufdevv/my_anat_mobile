@@ -108,18 +108,20 @@ class DoctorSingleAppBar extends StatelessWidget {
                                     style: Theme.of(context).textTheme.headline1!.copyWith(color: white, fontSize: 22),
                                   ),
                                   const SizedBox(height: 16),
-                                  Container(
-                                    padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
-                                    decoration: BoxDecoration(
-                                      color: white.withOpacity(0.12),
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(color: primary),
-                                    ),
-                                    child: Text(
-                                      doctor.specialization.title,
-                                      style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
-                                    ),
-                                  )
+                                  if (doctor.specialization.title.isNotEmpty) ...{
+                                    Container(
+                                      padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+                                      decoration: BoxDecoration(
+                                        color: white.withOpacity(0.12),
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: primary),
+                                      ),
+                                      child: Text(
+                                        doctor.specialization.title,
+                                        style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                      ),
+                                    )
+                                  }
                                 ],
                               ),
                             ),
@@ -204,14 +206,16 @@ class DoctorSingleAppBar extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Navigator.of(context).push(
-                                          fade(
-                                            page: HospitalSingleScreen(
-                                              id: doctor.organization.first.id,
-                                              slug: doctor.organization.first.slug,
+                                        if (doctor.organization.isNotEmpty) {
+                                          Navigator.of(context).push(
+                                            fade(
+                                              page: HospitalSingleScreen(
+                                                id: doctor.organization.first.id,
+                                                slug: doctor.organization.first.slug,
+                                              ),
                                             ),
-                                          ),
-                                        );
+                                          );
+                                        }
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(top: 10, bottom: 16),
@@ -223,15 +227,17 @@ class DoctorSingleAppBar extends StatelessWidget {
                                               constraints:
                                                   BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 74),
                                               child: Text(
-                                                doctor.organization.first.title,
+                                                doctor.work,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style:
                                                     Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                               ),
                                             ),
-                                            const SizedBox(width: 4),
-                                            SvgPicture.asset(AppIcons.externalLink)
+                                            if (doctor.organization.isNotEmpty) ...[
+                                              const SizedBox(width: 4),
+                                              SvgPicture.asset(AppIcons.externalLink)
+                                            ]
                                           ],
                                         ),
                                       ),

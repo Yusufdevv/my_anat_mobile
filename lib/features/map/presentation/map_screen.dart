@@ -3,14 +3,14 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
+import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals.dart';
 import 'package:anatomica/features/map/domain/usecases/get_specialization.dart';
 import 'package:anatomica/features/map/domain/usecases/get_types_usecase.dart';
-import 'package:anatomica/features/map/presentation/blocs/map_controller_bloc/map_controller_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/specialization/specialization_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
@@ -69,9 +69,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => MapControllerBloc()..add(GetPoints()),
-        ),
         BlocProvider.value(
           value: mapOrganizationBloc,
         ),
@@ -79,7 +76,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
           value: specBloc,
         ),
       ],
-      child: WKeyboardDismisser(
+      child: CustomScreen(
         child: Scaffold(
           body: BlocConsumer<MapOrganizationBloc, MapOrganizationState>(
             listenWhen: (state1, state2) {
@@ -98,78 +95,80 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
             },
             builder: (context, mapOrganizationState) => Stack(
               children: [
-                BlocListener<SpecializationBloc, SpecializationState>(
-                  listenWhen: (state1, state2) {
-                    return state1.selectedId != state2.selectedId;
-                  },
-                  listener: (context, state) {
-                    mapOrganizationBloc.add(MapOrganizationEvent.getDoctors());
-                    mapOrganizationBloc.add(MapOrganizationEvent.getHospitals());
-                  },
-                  child: Positioned.fill(
-                    bottom: 60,
-                    top: -24,
-                    child: YandexMap(
-                      rotateGesturesEnabled: false,
-                      onCameraPositionChanged: (cameraPosition, updateReason, isStopped) async {
-                        if (isStopped) {
-                          zoomLevel = cameraPosition.zoom;
-                          mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
-                              lat: cameraPosition.target.latitude,
-                              long: cameraPosition.target.longitude,
-                              radius: MyFunctions.getRadiusFromZoom(cameraPosition.zoom).floor()));
-                          await StorageRepository.putDouble('lat', cameraPosition.target.latitude);
-                          await StorageRepository.putDouble('long', cameraPosition.target.longitude);
-                        }
-                      },
-                      onMapTap: (point) {
-                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-                      },
-                      mapObjects: _mapObjects,
-                      onMapCreated: (controller) async {
-                        _mapController = controller;
-                        maxZoomLevel = await controller.getMaxZoom();
-                        minZoomLevel = await controller.getMinZoom();
-                        final camera = await _mapController.getCameraPosition();
-                        if (StorageRepository.getDouble('lat', defValue: 0) == 0) {
-                          final position = await MyFunctions.determinePosition();
-                          _mapController.moveCamera(
-                            CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                target: Point(latitude: position.latitude, longitude: position.longitude),
-                              ),
-                            ),
-                            animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
-                          );
+                Positioned.fill(
+                  bottom: 60,
+                  top: -24,
+                  child: YandexMap(
+                    rotateGesturesEnabled: false,
+                    onCameraPositionChanged: (cameraPosition, updateReason, isStopped) async {
+                      if (isStopped) {
+                        zoomLevel = cameraPosition.zoom;
+                        mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
+                            lat: cameraPosition.target.latitude,
+                            long: cameraPosition.target.longitude,
+                            radius: MyFunctions.getRadiusFromZoom(cameraPosition.zoom).floor()));
+                        await StorageRepository.putDouble('lat', cameraPosition.target.latitude);
+                        await StorageRepository.putDouble('long', cameraPosition.target.longitude);
+                      }
+                    },
+                    onMapTap: (point) {
+                      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                    },
+                    mapObjects: _mapObjects,
+                    onMapCreated: (controller) async {
+                      _mapController = controller;
+                      maxZoomLevel = await controller.getMaxZoom();
+                      minZoomLevel = await controller.getMinZoom();
+                      final camera = await _mapController.getCameraPosition();
+                      final position = Point(
+                          latitude: StorageRepository.getDouble('lat', defValue: 41.310990),
+                          longitude: StorageRepository.getDouble('long', defValue: 69.281997));
+                      _mapController.moveCamera(
+                        CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            target: Point(latitude: position.latitude, longitude: position.longitude),
+                          ),
+                        ),
+                        animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+                      );
+                      context.read<MapOrganizationBloc>().add(
+                            MapOrganizationEvent.getCurrentLocation(
+                              onError: (message) {
+                                context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                              },
+                              onSuccess: (position) {
+                                _mapController.moveCamera(
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: Point(latitude: position.latitude, longitude: position.longitude),
+                                    ),
+                                  ),
+                                  animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+                                );
 
-                          mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
-                              lat: position.latitude,
-                              long: position.longitude,
-                              radius: MyFunctions.getRadiusFromZoom(camera.zoom).floor()));
+                                mapOrganizationBloc.add(
+                                  MapOrganizationEvent.changeLatLong(
+                                    lat: position.latitude,
+                                    long: position.longitude,
+                                    radius: MyFunctions.getRadiusFromZoom(camera.zoom).floor(),
+                                  ),
+                                );
 
-                          mapOrganizationBloc.add(MapOrganizationEvent.getHospitals());
-                          mapOrganizationBloc.add(MapOrganizationEvent.getDoctors());
-                        } else {
-                          final position = Point(
-                              latitude: StorageRepository.getDouble('lat'),
-                              longitude: StorageRepository.getDouble('long'));
-                          _mapController.moveCamera(
-                            CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                target: Point(latitude: position.latitude, longitude: position.longitude),
-                              ),
+                                mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(
+                                    latitude: position.latitude,
+                                    longitude: position.longitude,
+                                    radius: MyFunctions.getRadiusFromZoom(camera.zoom)));
+                                mapOrganizationBloc.add(
+                                  MapOrganizationEvent.getDoctors(
+                                    latitude: position.latitude,
+                                    longitude: position.longitude,
+                                    radius: MyFunctions.getRadiusFromZoom(camera.zoom),
+                                  ),
+                                );
+                              },
                             ),
-                            animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                           );
-                          mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
-                              lat: position.latitude,
-                              long: position.longitude,
-                              radius: MyFunctions.getRadiusFromZoom(camera.zoom).floor()));
-                          mapOrganizationBloc.add(MapOrganizationEvent.getHospitals());
-                          mapOrganizationBloc.add(MapOrganizationEvent.getDoctors());
-                        }
-                      },
-                    ),
+                    },
                   ),
                 ),
                 BlocConsumer<MapOrganizationBloc, MapOrganizationState>(
@@ -257,43 +256,50 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             const SizedBox(),
-                            BlocBuilder<SpecializationBloc, SpecializationState>(
-                              builder: (context, state) {
-                                return MapControllerButtons(
-                                  onCurrentLocationTap: () async {
-                                    final position = await MyFunctions.determinePosition();
-                                    _mapController.moveCamera(
-                                      CameraUpdate.newCameraPosition(
-                                        CameraPosition(
-                                          target: Point(latitude: position.latitude, longitude: position.longitude),
-                                          zoom: 15,
-                                        ),
+                            MapControllerButtons(
+                              onCurrentLocationTap: () async {
+                                context.read<MapOrganizationBloc>().add(
+                                      MapOrganizationEvent.getCurrentLocation(
+                                        onSuccess: (position) {
+                                          _mapController.moveCamera(
+                                            CameraUpdate.newCameraPosition(
+                                              CameraPosition(
+                                                target:
+                                                    Point(latitude: position.latitude, longitude: position.longitude),
+                                                zoom: 15,
+                                              ),
+                                            ),
+                                            animation:
+                                                const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+                                          );
+                                          zoomLevel = 15;
+                                        },
+                                        onError: (message) {
+                                          context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                                        },
                                       ),
-                                      animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
                                     );
-                                    zoomLevel = 15;
-                                  },
-                                  onMinusTap: () {
-                                    if (minZoomLevel < zoomLevel) {
-                                      _mapController.moveCamera(
-                                        CameraUpdate.zoomTo(zoomLevel - 1),
-                                        animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
-                                      );
-                                      zoomLevel--;
-                                    }
-                                  },
-                                  onPlusTap: () async {
-                                    if (maxZoomLevel > zoomLevel) {
-                                      _mapController.moveCamera(
-                                        CameraUpdate.zoomTo(zoomLevel + 1),
-                                        animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
-                                      );
-                                      zoomLevel++;
-                                    }
-                                  },
-                                );
+                                zoomLevel = 15;
                               },
-                            ),
+                              onMinusTap: () {
+                                if (minZoomLevel < zoomLevel) {
+                                  _mapController.moveCamera(
+                                    CameraUpdate.zoomTo(zoomLevel - 1),
+                                    animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
+                                  );
+                                  zoomLevel--;
+                                }
+                              },
+                              onPlusTap: () async {
+                                if (maxZoomLevel > zoomLevel) {
+                                  _mapController.moveCamera(
+                                    CameraUpdate.zoomTo(zoomLevel + 1),
+                                    animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
+                                  );
+                                  zoomLevel++;
+                                }
+                              },
+                            )
                           ],
                         ),
                       ),

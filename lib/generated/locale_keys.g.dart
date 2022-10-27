@@ -275,5 +275,9 @@ abstract class  LocaleKeys {
   static const videos = 'videos';
   static const no_video = 'no_video';
   static const no_info = 'no_info';
+  static const subscription_waiting = 'subscription_waiting';
+  static const location_permission_disabled = 'location_permission_disabled';
+  static const location_permission_permanent_disabled = 'location_permission_permanent_disabled';
+  static const location_services_disabled = 'location_services_disabled';
 
 }

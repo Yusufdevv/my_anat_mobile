@@ -16,7 +16,7 @@ import 'package:anatomica/features/journal/domain/usecases/order_create_article_
 import 'package:anatomica/features/journal/domain/usecases/order_create_journal_usecase.dart';
 import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
-import 'package:anatomica/features/journal/presentation/pages/onetime_expect.dart';
+import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:formz/formz.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -185,6 +186,7 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                       firstChild: Padding(
                         padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
                         child: PhoneTextField(
+                          hasError: state.orderCreateStatus.isSubmissionFailure,
                           controller: phoneController,
                           title: LocaleKeys.phone_number.tr(),
                         ),
@@ -194,6 +196,7 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                         child: DefaultTextField(
                           title: LocaleKeys.mail.tr(),
                           controller: emailController,
+                          hasError: state.orderCreateStatus.isSubmissionFailure,
                           onChanged: (value) {},
                           prefix: Padding(
                             padding: const EdgeInsets.only(left: 12, right: 8),
@@ -271,26 +274,10 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                                   paymentProvider: currentPaymentMethod,
                                   onSuccess: (value) {
                                     launchUrlString(value, mode: LaunchMode.externalApplication);
-                                  },
-                                  onError: (message) {
-                                    context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
-                                  },
-                                ),
-                              );
-                        } else {
-                          context.read<PaymentBloc>().add(
-                                OrderCreateArticle(
-                                  isRegistered: widget.isRegistered,
-                                  articleId: widget.id,
-                                  price: widget.price,
-                                  phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
-                                  email: !isPhone ? emailController.text : '',
-                                  paymentProvider: currentPaymentMethod,
-                                  onSuccess: (value) {
-                                    launchUrlString(value, mode: LaunchMode.externalApplication);
                                     Navigator.of(context).push(
                                       fade(
-                                        page: OneTimeExpect(
+                                        page: PaymentResultScreen(
+                                          title: widget.title,
                                           isRegistered: widget.isRegistered,
                                           bloc: context.read<PaymentBloc>(),
                                         ),

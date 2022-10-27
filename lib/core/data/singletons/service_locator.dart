@@ -50,8 +50,7 @@ Future<void> setupLocator() async {
   serviceLocator.registerLazySingleton(() => PaymentDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator
       .registerLazySingleton(() => PaymentRepositoryImpl(datasource: serviceLocator<PaymentDatasourceImpl>()));
-  serviceLocator.registerLazySingleton(() => ProfileDatasourceImpl(serviceLocator<DioSettings>().dio,
-      paginationDatasource: serviceLocator<PaginationDatasource>()));
+  serviceLocator.registerLazySingleton(() => ProfileDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator
       .registerLazySingleton(() => ProfileRepositoryImpl(profileDatasource: serviceLocator<ProfileDatasourceImpl>()));
   serviceLocator.registerLazySingleton(() => LikeUnlikeDatasourceImpl(serviceLocator<DioSettings>().dio));

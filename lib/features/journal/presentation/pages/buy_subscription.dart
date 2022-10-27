@@ -16,7 +16,7 @@ import 'package:anatomica/features/journal/domain/usecases/order_create_article_
 import 'package:anatomica/features/journal/domain/usecases/order_create_journal_usecase.dart';
 import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
-import 'package:anatomica/features/journal/presentation/pages/onetime_expect.dart';
+import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_images.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/journal/presentation/widgets/select_period_bottom_sheet.dart';
@@ -249,7 +249,8 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                   launchUrlString(value.transactionCheckoutUrl, mode: LaunchMode.externalApplication);
                                   Navigator.of(context).push(
                                     fade(
-                                      page: OneTimeExpect(
+                                      page: PaymentResultScreen(
+                                        title: '',
                                         isRegistered: true,
                                         isSubscription: true,
                                         bloc: context.read<PaymentBloc>(),

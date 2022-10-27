@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:anatomica/assets/constants/app_images.dart';
+import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/data/models/map_hospital.dart';
@@ -211,17 +212,22 @@ abstract class MyFunctions {
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      throw const ParsingException(errorMessage: LocaleKeys.location_services_disabled);
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
+        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
+      } else if (permission == LocationPermission.deniedForever) {
+        throw const ParsingException(errorMessage: LocaleKeys.location_permission_permanent_disabled);
+      }
     }
     return await Geolocator.getCurrentPosition();
   }

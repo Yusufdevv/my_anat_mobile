@@ -3,7 +3,6 @@ import 'package:anatomica/core/data/singletons/dio_settings.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_bottom_sheet.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/profile/presentation/widgets/language_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -13,8 +12,7 @@ import 'package:flutter/material.dart';
 class LanguageBottomSheet extends StatefulWidget {
   final Locale currentLocale;
 
-  const LanguageBottomSheet({required this.currentLocale, Key? key})
-      : super(key: key);
+  const LanguageBottomSheet({required this.currentLocale, Key? key}) : super(key: key);
 
   @override
   State<LanguageBottomSheet> createState() => _LanguageBottomSheetState();
@@ -63,25 +61,6 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
             await context.setLocale(const Locale('ru'));
             setState(() {
               currentStatus = 1;
-            });
-          },
-        ),
-        const WDivider(),
-        LanguageItem(
-          status: currentStatus,
-          language: Language(
-            title: LocaleKeys.uzb_kr.tr(),
-            icon: AppIcons.flagUz,
-            status: 2,
-          ),
-          onTap: () async {
-            serviceLocator<DioSettings>().setBaseOptions(lang: 'uzc');
-            StorageRepository.putString('language', 'uzc');
-            StorageRepository.putString('device_language', 'fr');
-            Navigator.pop(context);
-            await context.setLocale(const Locale('fr'));
-            setState(() {
-              currentStatus = 2;
             });
           },
         ),
