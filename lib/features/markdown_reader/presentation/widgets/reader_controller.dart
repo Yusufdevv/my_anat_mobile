@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/markdown_reader/domain/entities/named_color_entity.dart';
 import 'package:anatomica/features/markdown_reader/presentation/bloc/reader_controller_bloc/reader_controller_bloc.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/change_font_size_button.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/color_selector.dart';
@@ -25,11 +26,11 @@ class _ReaderControllerState extends State<ReaderController> {
     super.initState();
   }
 
-  final List<Color> colors = [
-    white,
-    paper,
-    night,
-    dark,
+  final List<NamedColorEntity> colors = const [
+    NamedColorEntity(color: white, name: ''),
+    NamedColorEntity(color: paper, name: 'yellow'),
+    NamedColorEntity(color: night, name: 'grey'),
+    NamedColorEntity(color: dark, name: 'dark'),
   ];
   Color selectedColor = white;
   final List<String> fontFamily = ['Averta CY', 'IBM Plex Serif'];
@@ -171,14 +172,13 @@ class _ReaderControllerState extends State<ReaderController> {
                             children: List.generate(
                               colors.length,
                               (index) => ColorSelector(
-                                color: colors[index],
+                                color: colors[index].color,
                                 onTap: (color, textColor) {
-                                  context
-                                      .read<ReaderControllerBloc>()
-                                      .add(SelectColor(textColor: textColor, color: color));
+                                  context.read<ReaderControllerBloc>().add(
+                                      SelectColor(textColor: textColor, color: color, colorName: colors[index].name));
                                 },
                                 groupValue: state.selectedColor,
-                                value: colors[index],
+                                value: colors[index].color,
                               ),
                             ),
                           ),
