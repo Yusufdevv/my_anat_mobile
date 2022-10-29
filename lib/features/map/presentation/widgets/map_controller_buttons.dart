@@ -126,6 +126,12 @@ class _AnimatedLocationIconState extends State<AnimatedLocationIcon> with Ticker
   }
 
   @override
+  void dispose() {
+    _iconAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,

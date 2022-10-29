@@ -1,10 +1,9 @@
+import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/domain/entities/contact_entity.dart';
 import 'package:anatomica/features/map/presentation/widgets/contacts_container.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
-import 'package:anatomica/features/map/presentation/widgets/phones_bottom_sheet.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -47,13 +46,18 @@ class _HospitalContactsState extends State<HospitalContacts> {
 
   @override
   void initState() {
-    if (widget.phone.isNotEmpty) {
-      contacts.add(ContactEntity(
-          icon: AppIcons.boldPhone,
-          content: MyFunctions.formatPhone(widget.phone, false),
-          onTap: () {
-            launchDefault('tel:${widget.phone}');
-          }));
+    if (widget.phoneNumbers.isNotEmpty) {
+      contacts.addAll(
+        widget.phoneNumbers.map(
+          (e) => ContactEntity(
+            icon: AppIcons.boldPhone,
+            content: MyFunctions.formatPhone(e, false),
+            onTap: () {
+              launchDefault('tel:${widget.phone}');
+            },
+          ),
+        ),
+      );
     }
     if (widget.email.isNotEmpty) {
       contacts.add(ContactEntity(
@@ -103,57 +107,35 @@ class _HospitalContactsState extends State<HospitalContacts> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: contacts.isEmpty && socials.isEmpty
-          ? EdgeInsets.zero
-          : const EdgeInsets.all(16).copyWith(bottom: 16 + MediaQuery.of(context).padding.bottom),
-      children: [
-        if (contacts.isEmpty && socials.isEmpty) ...{
-          SingleChildScrollView(
-            child: EmptyWidget(
-              title: LocaleKeys.no_contacts.tr(),
-              content: LocaleKeys.no_contacts_in_this_hospital.tr(),
-            ),
-          )
-        } else ...{
-          if (contacts.isNotEmpty) ...[
-            ContactsContainer(contacts: contacts),
-            const SizedBox(height: 16),
-          ],
-          if (socials.isNotEmpty) ...[
-            ContactsContainer(contacts: socials),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-          if (widget.phoneNumbers.isNotEmpty || widget.phone.isNotEmpty) ...{
-            WButton(
-              onTap: () async {
-                print(widget.phoneNumbers.length);
-                if (widget.phoneNumbers.length > 1) {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (_) => PhonesBottomSheet(
-                      phones: widget.phoneNumbers,
-                    ),
-                  );
-                } else {
-                  if (widget.phone.isNotEmpty) {
-                    if (await canLaunchUrlString('tel:${widget.phone}')) {
-                      await launchUrlString('tel:${widget.phone}');
-                    } else {
-                      throw 'Can not open phone number';
-                    }
-                  }
-                }
-              },
-              text: LocaleKeys.call.tr(),
+    return Container(
+      color: white,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            LocaleKeys.contact.tr(),
+            style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
+          ),
+          const SizedBox(height: 16),
+          if (contacts.isEmpty && socials.isEmpty) ...{
+            SingleChildScrollView(
+              child: EmptyWidget(
+                title: LocaleKeys.no_contacts.tr(),
+                content: LocaleKeys.no_contacts_in_this_hospital.tr(),
+              ),
             )
+          } else ...{
+            if (contacts.isNotEmpty) ...[
+              ContactsContainer(contacts: contacts),
+            ],
+            if (socials.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              ContactsContainer(contacts: socials),
+            ],
           }
-        }
-      ],
+        ],
+      ),
     );
   }
 }

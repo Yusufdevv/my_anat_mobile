@@ -12,11 +12,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentItem extends StatelessWidget {
   final CommentEntity entity;
+  final bool isMainScreen;
   final VoidCallback? onTapDelete;
+  final bool hasShadow;
 
   const CommentItem({
     required this.entity,
+    this.isMainScreen = false,
     this.onTapDelete,
+    this.hasShadow = true,
     Key? key,
   }) : super(key: key);
 
@@ -27,13 +31,15 @@ class CommentItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: white,
-        boxShadow: [
-          BoxShadow(
-            color: darkerGreen.withOpacity(0.09),
-            offset: const Offset(0, 8),
-            blurRadius: 24,
-          )
-        ],
+        boxShadow: hasShadow
+            ? [
+                BoxShadow(
+                  color: darkerGreen.withOpacity(0.09),
+                  offset: const Offset(0, 8),
+                  blurRadius: 24,
+                )
+              ]
+            : [],
         border: Border.all(color: textFieldColor),
       ),
       child: Column(
@@ -49,8 +55,7 @@ class CommentItem extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        border:
-                            entity.isOwn ? Border.all(color: primary) : null,
+                        border: entity.isOwn ? Border.all(color: primary) : null,
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
@@ -62,13 +67,9 @@ class CommentItem extends StatelessWidget {
                             color: textFieldColor,
                             alignment: Alignment.center,
                             child: Text(
-                              entity.userFullName.isNotEmpty
-                                  ? entity.userFullName[0]
-                                  : '',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1!
-                                  .copyWith(color: textSecondary, fontSize: 15),
+                              entity.userFullName.isNotEmpty ? entity.userFullName[0] : '',
+                              style:
+                                  Theme.of(context).textTheme.headline1!.copyWith(color: textSecondary, fontSize: 15),
                             ),
                           ),
                           height: 40,
@@ -91,17 +92,12 @@ class CommentItem extends StatelessWidget {
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline4!
-                                      .copyWith(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w400),
+                                      .copyWith(fontSize: 15, fontWeight: FontWeight.w400),
                                 ),
                               }
                             ],
                           ),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(fontSize: 15),
+                          style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 15),
                         ),
                         const SizedBox(height: 4),
                         Row(
@@ -110,10 +106,7 @@ class CommentItem extends StatelessWidget {
                             const SizedBox(width: 6),
                             Text(
                               MyFunctions.getPublishedDate(entity.createdAt),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3!
-                                  .copyWith(fontSize: 13),
+                              style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13),
                             ),
                           ],
                         ),
@@ -127,8 +120,7 @@ class CommentItem extends StatelessWidget {
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (_) =>
-                          DeleteCommentDialog(onTapDelete: onTapDelete),
+                      builder: (_) => DeleteCommentDialog(onTapDelete: onTapDelete),
                     );
                   },
                   child: Padding(
@@ -148,10 +140,7 @@ class CommentItem extends StatelessWidget {
             children: [
               Text(
                 entity.rating.toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: primary),
+                style: Theme.of(context).textTheme.headline3!.copyWith(color: primary),
               ),
               const SizedBox(width: 8),
               RatingStars(
@@ -161,11 +150,15 @@ class CommentItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Text(
-              entity.comment,
-              style: Theme.of(context).textTheme.bodyText1,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Text(
+                entity.comment,
+                maxLines: isMainScreen ? 2 : null,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
           )
         ],

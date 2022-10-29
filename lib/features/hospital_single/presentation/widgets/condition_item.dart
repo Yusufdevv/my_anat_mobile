@@ -15,6 +15,7 @@ class ConditionItem extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: white,
+        border: Border.all(color: textFieldColor),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(

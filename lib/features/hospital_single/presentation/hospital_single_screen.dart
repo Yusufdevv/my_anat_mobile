@@ -23,14 +23,13 @@ import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_si
 import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_specialist/hospital_specialist_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/services/services_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/vacancies/hospital_vacancies_bloc.dart';
-import 'package:anatomica/features/hospital_single/presentation/parts/comment_list.dart';
-import 'package:anatomica/features/hospital_single/presentation/parts/hospital_articles.dart';
-import 'package:anatomica/features/hospital_single/presentation/parts/hospital_comments.dart';
-import 'package:anatomica/features/hospital_single/presentation/parts/hospital_conditions.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/about_hospital.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_comments_horizontal_list.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_conditions_horizontal_list.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_contacts.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_sevices.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_specialists.dart';
-import 'package:anatomica/features/hospital_single/presentation/parts/hospital_vacancies.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_vacancies_hosizontal_list.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_video.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/hospital_single_app_bar.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
@@ -38,6 +37,8 @@ import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_deleg
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inview_notifier_list/inview_notifier_list.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class HospitalSingleScreen extends StatefulWidget {
   final String slug;
@@ -61,6 +62,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
   late FacilitiesBloc facilitiesBloc;
   late HArticlesBloc articlesBloc;
   late HospitalVacanciesBloc vacanciesBloc;
+  late AutoScrollController controller;
 
   int currentImage = 0;
   final tabs = <HospitalSingleWidgetType>[
@@ -85,6 +87,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
   @override
   void initState() {
     super.initState();
+
+    controller = AutoScrollController();
     vacanciesBloc =
         HospitalVacanciesBloc(GetHospitalVacancies(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
           ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
@@ -114,18 +118,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
     _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
     _pageController = PageController();
-    _scrollController.addListener(_scrollListener);
+    controller.addListener(_scrollListener);
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
-  }
-
-  Future<void> scrollToItem(BuildContext context) async {
-    await Scrollable.ensureVisible(
-      context,
-      duration: const Duration(milliseconds: 150),
-    );
+    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: controller.offset));
   }
 
   @override
@@ -133,173 +130,191 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
     return WKeyboardDismisser(
       child: Scaffold(
         body: BlocProvider.value(
-          value: hospitalSingleBloc,
-          child:
-              // CustomScrollView(
-              //   slivers: [
-              //     HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
-              //     SliverOverlapAbsorber(
-              //       handle: SliverOverlapAbsorberHandle(),
-              //       sliver: SliverSafeArea(
-              //         top: false,
-              //         bottom: false,
-              //         sliver: SliverPersistentHeader(
-              //           pinned: true,
-              //           delegate: TabBarHeaderDelegate(
-              //             onTabTap: (value) async {
-              //               await scrollToItem(tabs[value].key.currentContext!);
-              //             },
-              //             tabController: _tabController,
-              //             tabs: tabs.map((e) => e.title).toList(),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     SliverFillRemaining(
-              //       fillOverscroll: true,
-              //       child: ScrollablePositionedList.separated(
-              //         itemCount: 10,
-              //         separatorBuilder: (context, index) => const SizedBox(height: 16),
-              //         itemBuilder: (context, index) => Container(
-              //           padding: EdgeInsets.all(16),
-              //           child: const Text('Видео'),
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // )
-
-              NestedScrollView(
-            floatHeaderSlivers: false,
-            controller: _scrollController,
-            headerSliverBuilder: (context, isHeaderScrolled) => [
-              HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
-              SliverOverlapAbsorber(
-                handle: SliverOverlapAbsorberHandle(),
-                sliver: SliverSafeArea(
-                  top: false,
-                  bottom: false,
-                  sliver: SliverPersistentHeader(
-                    pinned: true,
-                    delegate: TabBarHeaderDelegate(
-                      onTabTap: (value) async {
-                        await scrollToItem(tabs[value].key.currentContext!);
-                      },
-                      tabController: _tabController,
-                      tabs: tabs.map((e) => e.title).toList(),
-                    ),
-                  ),
-                ),
-              )
-            ],
-            body: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+            value: hospitalSingleBloc,
+            child: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
               builder: (context, state) {
-                // return SingleChildScrollView(
-                //   child: Column(
-                //     children: List.generate(
-                //       tabs.length,
-                //       (index) => Container(
-                //         key: tabs[index].key,
-                //         margin: const EdgeInsets.only(bottom: 16),
-                //         padding: const EdgeInsets.only(top: 12, bottom: 100),
-                //         color: white,
-                //         width: double.maxFinite,
-                //         child: Column(
-                //           crossAxisAlignment: CrossAxisAlignment.start,
-                //           children: [
-                //             Padding(
-                //               padding: const EdgeInsets.only(left: 16, bottom: 16),
-                //               child: Text(
-                //                 tabs[index].title.tr(),
-                //                 style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // );
-                // return ScrollablePositionedList.separated(
-                //   itemCount: 10,
-                //   separatorBuilder: (context, index) => const SizedBox(height: 16),
-                //   itemBuilder: (context, index) => Container(
-                //     padding: const EdgeInsets.only(top: 12, bottom: 20),
-                //     color: white,
-                //     child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Padding(
-                //           padding: const EdgeInsets.only(left: 16, bottom: 16),
-                //           child: Text(
-                //             'Видео',
-                //             style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // );
-                return TabBarView(
-                  controller: _tabController,
-                  children: [
-                    BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-                      builder: (context, state) {
-                        return BlocProvider.value(
-                          value: commentsBloc,
-                          child: HospitalCommentList(
-                            description: state.hospital.description,
-                            images: state.hospital.images,
-                            onTapAll: () {
-                              _tabController.animateTo(
-                                5,
-                                duration: const Duration(milliseconds: 150),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    BlocProvider.value(
-                      value: commentsBloc,
-                      child: HospitalVideo(
-                        videoUrl: state.hospital.videoLink,
-                        videoDescription: state.hospital.videoDescription,
+                return InViewNotifierCustomScrollView(
+                  controller: controller,
+                  throttleDuration: const Duration(milliseconds: 300),
+                  slivers: [
+                    HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: TabBarHeaderDelegate(
+                        onTabTap: (value) async {
+                          controller.scrollToIndex(
+                            value,
+                            preferPosition: AutoScrollPosition.begin,
+                            duration: const Duration(milliseconds: 200),
+                          );
+                        },
                         tabController: _tabController,
+                        tabs: tabs.map((e) => e.title).toList(),
                       ),
                     ),
-                    BlocProvider.value(value: servicesBloc, child: const HospitalServices()),
-                    BlocProvider.value(value: hospitalSpecialistBloc, child: const HospitalSpecialists()),
-                    BlocProvider.value(value: facilitiesBloc, child: const HospitalConditions()),
-                    BlocProvider.value(value: articlesBloc, child: const HospitalArticles()),
-                    BlocProvider.value(
-                      value: commentsBloc,
-                      child: HospitalComments(
-                        commentCount: state.hospital.commentCount,
-                        commentsBloc: commentsBloc,
-                        overallRating: state.hospital.rating,
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          const SizedBox(height: 20),
+                          InViewNotifierWidget(
+                            id: '1',
+                            builder: (context, isInView, child) {
+                              print('1-$isInView');
+                              return child ?? const SizedBox();
+                            },
+                            child: AboutHospital(
+                              hospital: state.hospital,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          InViewNotifierWidget(
+                            id: '2',
+                            builder: (context, isInView, child) {
+                              print('2-$isInView');
+                              return child ?? const SizedBox();
+                            },
+                            child: BlocProvider.value(
+                              value: commentsBloc,
+                              child: HospitalVideo(
+                                  videoUrl: state.hospital.videoLink,
+                                  videoDescription: state.hospital.videoDescription,
+                                  tabController: _tabController),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          InViewNotifierWidget(
+                              id: '3',
+                              builder: (context, isInView, child) {
+                                print('3-$isInView');
+                                return child ?? const SizedBox();
+                              },
+                              child: HospitalServices(servicesBloc: servicesBloc)),
+                          const SizedBox(height: 16),
+                          InViewNotifierWidget(
+                              id: '4',
+                              builder: (context, isInView, child) {
+                                print('4-$isInView');
+                                return child ?? const SizedBox();
+                              },
+                              child: HospitalSpecialists(hospitalSpecialistBloc: hospitalSpecialistBloc)),
+                          const SizedBox(height: 16),
+                          InViewNotifierWidget(
+                              id: '5',
+                              builder: (context, isInView, child) {
+                                print('5-$isInView');
+                                return child ?? const SizedBox();
+                              },
+                              child: HospitalConditionsHorizontalList(facilitiesBloc: facilitiesBloc)),
+                          const SizedBox(height: 16),
+                          InViewNotifierWidget(
+                              id: '6',
+                              builder: (context, isInView, child) {
+                                print('6-$isInView');
+                                return child ?? const SizedBox();
+                              },
+                              child:
+                                  HospitalCommentsHorizontalList(commentsBloc: commentsBloc, hospital: state.hospital)),
+                          const SizedBox(height: 16),
+                          InViewNotifierWidget(
+                              id: '7',
+                              builder: (context, isInView, child) {
+                                print('7-$isInView');
+                                return child ?? const SizedBox();
+                              },
+                              child: HospitalVacanciesHorizontalList(vacanciesBloc: vacanciesBloc)),
+                          const SizedBox(height: 16),
+                          InViewNotifierWidget(
+                            id: '8',
+                            builder: (context, isInView, child) {
+                              print('8-$isInView');
+                              return child ?? const SizedBox();
+                            },
+                            child: HospitalContacts(
+                              email: state.hospital.email,
+                              facebook: state.hospital.facebook,
+                              instagram: state.hospital.instagram,
+                              phone: state.hospital.phoneNumber,
+                              telegram: state.hospital.telegram,
+                              website: state.hospital.website,
+                              phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
+                            ),
+                          ),
+                          SizedBox(height: MediaQuery.of(context).padding.bottom + 42),
+                        ],
                       ),
-                    ),
-                    BlocProvider.value(value: vacanciesBloc, child: const HospitalVacancies()),
-                    BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-                      builder: (context, state) {
-                        return HospitalContacts(
-                          email: state.hospital.email,
-                          facebook: state.hospital.facebook,
-                          instagram: state.hospital.instagram,
-                          phone: state.hospital.phoneNumber,
-                          telegram: state.hospital.telegram,
-                          website: state.hospital.website,
-                          phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
-                        );
-                      },
                     ),
                   ],
+                  isInViewPortCondition: (double deltaTop, double deltaBottom, double viewPortDimension) =>
+                      deltaTop < (kToolbarHeight + 46 + 10) &&
+                      deltaBottom > (viewPortDimension - (kToolbarHeight + 46)),
                 );
               },
+            )
+            // NestedScrollView(
+            //   floatHeaderSlivers: false,
+            //   controller: _scrollController,
+            //   headerSliverBuilder: (context, isHeaderScrolled) => [
+            //     HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
+            //     SliverOverlapAbsorber(
+            //       handle: SliverOverlapAbsorberHandle(),
+            //       sliver: SliverSafeArea(
+            //         top: false,
+            //         bottom: false,
+            //         sliver: SliverPersistentHeader(
+            //           pinned: true,
+            //           delegate: TabBarHeaderDelegate(
+            //             onTabTap: (value) async {
+            //               await scrollToItem(tabs[value].key.currentContext!);
+            //             },
+            //             tabController: _tabController,
+            //             tabs: tabs.map((e) => e.title).toList(),
+            //           ),
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            //   body: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+            //     builder: (context, state) {
+            //       return ListView(
+            //         physics: const BouncingScrollPhysics(),
+            //         padding:
+            //             const EdgeInsets.symmetric(vertical: 20).copyWith(bottom: MediaQuery.of(context).padding.bottom),
+            //         children: [
+            //           AboutHospital(hospital: state.hospital),
+            //           const SizedBox(height: 16),
+            //           BlocProvider.value(
+            //             value: commentsBloc,
+            //             child: HospitalVideo(
+            //                 videoUrl: state.hospital.videoLink,
+            //                 videoDescription: state.hospital.videoDescription,
+            //                 tabController: _tabController),
+            //           ),
+            //           const SizedBox(height: 16),
+            //           HospitalServices(servicesBloc: servicesBloc),
+            //           const SizedBox(height: 16),
+            //           HospitalSpecialists(hospitalSpecialistBloc: hospitalSpecialistBloc),
+            //           const SizedBox(height: 16),
+            //           HospitalConditionsHorizontalList(facilitiesBloc: facilitiesBloc),
+            //           const SizedBox(height: 16),
+            //           HospitalCommentsHorizontalList(commentsBloc: commentsBloc, hospital: state.hospital),
+            //           const SizedBox(height: 16),
+            //           HospitalVacanciesHorizontalList(vacanciesBloc: vacanciesBloc),
+            //           const SizedBox(height: 16),
+            //           HospitalContacts(
+            //             email: state.hospital.email,
+            //             facebook: state.hospital.facebook,
+            //             instagram: state.hospital.instagram,
+            //             phone: state.hospital.phoneNumber,
+            //             telegram: state.hospital.telegram,
+            //             website: state.hospital.website,
+            //             phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
+            //           )
+            //         ],
+            //       );
+            //     },
+            //   ),
+            // ),
             ),
-          ),
-        ),
         backgroundColor: textFieldColor,
       ),
     );

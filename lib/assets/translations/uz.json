@@ -276,5 +276,6 @@
   "professions": "Professiyalar",
   "videos": "Video",
   "no_video": "Video mavjud emas",
-  "no_info": "Klinika haqida ma'lumot mavjud emas"
+  "no_info": "Klinika haqida ma'lumot mavjud emas",
+  "show_all" : "Barchasini ko'rish"
 }

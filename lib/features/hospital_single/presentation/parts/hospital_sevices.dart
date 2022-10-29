@@ -1,5 +1,4 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/services/services_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
@@ -12,7 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 class HospitalServices extends StatefulWidget {
-  const HospitalServices({Key? key}) : super(key: key);
+  final ServicesBloc servicesBloc;
+  const HospitalServices({required this.servicesBloc, Key? key}) : super(key: key);
 
   @override
   State<HospitalServices> createState() => _HospitalServicesState();
@@ -29,90 +29,71 @@ class _HospitalServicesState extends State<HospitalServices> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ServicesBloc, ServicesState>(
-      builder: (context, state) {
-        return ListView(
-          padding: state.services.isNotEmpty
-              ? const EdgeInsets.all(16)
-                  .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16)
-              : EdgeInsets.zero,
-          children: [
-            if (state.serviceCount > 20) ...[
-              Padding(
-                padding: state.services.isNotEmpty
-                    ? EdgeInsets.zero
-                    : const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                child: SearchField(
-                  controller: _textController,
-                  onChanged: (value) {
-                    context
-                        .read<ServicesBloc>()
-                        .add(ServicesEvent.searchServices(query: value));
-                  },
-                  fillColor: white,
+    return BlocProvider.value(
+      value: widget.servicesBloc,
+      child: BlocBuilder<ServicesBloc, ServicesState>(
+        builder: (context, state) {
+          return Container(
+            color: white,
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  LocaleKeys.service.tr(),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
                 ),
-              ),
-              const SizedBox(height: 16),
-            ],
-            if (state.status.isSubmissionInProgress) ...{
-              const Center(
-                child: CupertinoActivityIndicator(),
-              )
-            } else if (state.status.isSubmissionSuccess) ...{
-              if (state.services.isEmpty) ...{
-                EmptyWidget(
-                  title: state.searchQuery.isNotEmpty
-                      ? LocaleKeys.nothing.tr()
-                      : LocaleKeys.no_services.tr(),
-                  content: state.searchQuery.isNotEmpty
-                      ? LocaleKeys.result_not_found.tr()
-                      : LocaleKeys.no_services_in_this_hospital.tr(),
-                )
-              } else ...{
-                Container(
-                  decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    children: List.generate(
-                      state.services.length,
-                      (index) => ServiceItem(
-                        hightlightedText: state.searchQuery,
-                        isLast: index == state.services.length - 1,
-                        entity: state.services[index],
+                if (state.status.isSubmissionInProgress) ...{
+                  const Center(
+                    child: CupertinoActivityIndicator(),
+                  )
+                } else if (state.status.isSubmissionSuccess) ...{
+                  if (state.services.isEmpty) ...{
+                    EmptyWidget(
+                      title: state.searchQuery.isNotEmpty ? LocaleKeys.nothing.tr() : LocaleKeys.no_services.tr(),
+                      content: state.searchQuery.isNotEmpty
+                          ? LocaleKeys.result_not_found.tr()
+                          : LocaleKeys.no_services_in_this_hospital.tr(),
+                    )
+                  } else ...{
+                    Container(
+                      decoration: BoxDecoration(
+                        color: white,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ),
-                  ),
-                )
-              }
-            } else if (state.status.isSubmissionFailure) ...{
-              const Center(
-                child: Text('error'),
-              )
-            },
-            const SizedBox(height: 16),
-            if (state.fetchMore) ...{
-              if (state.paginationStatus.isSubmissionInProgress) ...{
-                const Center(
-                  child: CupertinoActivityIndicator(),
-                )
-              } else ...{
-                WButton(
-                  onTap: () {
-                    context
-                        .read<ServicesBloc>()
-                        .add(ServicesEvent.getMoreServices());
-                  },
-                  color: commentButton,
-                  text: LocaleKeys.download_more.tr(),
-                  textColor: textSecondary,
-                )
-              },
-            }
-          ],
-        );
-      },
+                      child: Column(
+                        children: List.generate(
+                          state.services.length,
+                          (index) => ServiceItem(
+                            hightlightedText: state.searchQuery,
+                            isLast: index == state.services.length - 1,
+                            entity: state.services[index],
+                          ),
+                        ),
+                      ),
+                    )
+                  }
+                } else if (state.status.isSubmissionFailure) ...{
+                  const Center(
+                    child: Text('error'),
+                  )
+                },
+                if (state.fetchMore && state.services.length > 5) ...[
+                  const SizedBox(height: 16),
+                  WButton(
+                    onTap: () {
+                      context.read<ServicesBloc>().add(ServicesEvent.getMoreServices());
+                    },
+                    color: commentButton,
+                    text: LocaleKeys.show_all.tr(),
+                    textColor: textSecondary,
+                  )
+                ]
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

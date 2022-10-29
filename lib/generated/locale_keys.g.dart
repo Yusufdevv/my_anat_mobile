@@ -1,6 +1,11 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
 abstract class  LocaleKeys {
+  static const realization_expect = 'realization_expect';
+  static const subscription_waiting = 'subscription_waiting';
+  static const location_permission_disabled = 'location_permission_disabled';
+  static const location_permission_permanent_disabled = 'location_permission_permanent_disabled';
+  static const location_services_disabled = 'location_services_disabled';
   static const enter = 'enter';
   static const has_account = 'has_account';
   static const login = 'login';
@@ -101,7 +106,6 @@ abstract class  LocaleKeys {
   static const id_purchase = 'id_purchase';
   static const to_main = 'to_main';
   static const expect = 'expect';
-  static const realization_expect = 'realization_expect';
   static const update_page = 'update_page';
   static const error = 'error';
   static const realisation_error = 'realisation_error';
@@ -275,9 +279,6 @@ abstract class  LocaleKeys {
   static const videos = 'videos';
   static const no_video = 'no_video';
   static const no_info = 'no_info';
-  static const subscription_waiting = 'subscription_waiting';
-  static const location_permission_disabled = 'location_permission_disabled';
-  static const location_permission_permanent_disabled = 'location_permission_permanent_disabled';
-  static const location_services_disabled = 'location_services_disabled';
+  static const show_all = 'show_all';
 
 }

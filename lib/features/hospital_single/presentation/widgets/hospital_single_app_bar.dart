@@ -42,382 +42,371 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
       value: widget.headerManagerBloc,
       child: BlocBuilder<HeaderManagerBloc, HeaderManagerState>(
         builder: (context, state) {
-          return SliverOverlapAbsorber(
-            handle: SliverOverlapAbsorberHandle(),
-            sliver: SliverSafeArea(
-              top: false,
-              bottom: false,
-              sliver: SliverAppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarColor: Colors.transparent,
-                  statusBarIconBrightness: state.isHeaderScrolled ? Brightness.dark : Brightness.light,
-                ),
-                title: state.isHeaderScrolled
-                    ? BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-                        builder: (context, state) {
-                          return HospitalSingleAppBarBody(
-                            shareValue: 'https://anatomica.uz/organization/${state.hospital.slug}',
-                          );
-                        },
-                      )
-                    : Container(),
-                shadowColor: textFieldColor,
-                stretch: true,
-                expandedHeight: 496,
-                titleSpacing: 0,
-                leadingWidth: 0,
-                elevation: 1,
-                pinned: true,
-                floating: true,
-                automaticallyImplyLeading: false,
-                backgroundColor: white,
-                collapsedHeight: 56,
-                flexibleSpace: FlexibleSpaceBar(
-                  stretchModes: const [
-                    StretchMode.blurBackground,
-                  ],
-                  background: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      Positioned.fill(
-                        bottom: 180,
-                        child: Stack(
-                          children: [
-                            Positioned.fill(
-                              child: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-                                builder: (context, state) {
-                                  return PageView.builder(
-                                    itemBuilder: (context, index) => GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                          fade(
-                                            page: ImageSingleScreen(
-                                              images: state.hospital.images,
-                                              index: index,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Stack(
-                                        children: [
-                                          Positioned.fill(
-                                            child: WImage(
-                                              imageUrl: state.hospital.images[index].middle,
-                                              fit: BoxFit.cover,
-                                              onErrorColor: Colors.red,
-                                              onErrorWidget: SvgPicture.asset(
-                                                AppIcons.bigImageError,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned.fill(
-                                              child: Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                colors: [
-                                                  textColor.withOpacity(0.48),
-                                                  textColor.withOpacity(0.24),
-                                                ],
-                                              ),
-                                            ),
-                                          ))
-                                        ],
+          return SliverAppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: state.isHeaderScrolled ? Brightness.dark : Brightness.light,
+            ),
+            title: state.isHeaderScrolled
+                ? BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                    builder: (context, state) {
+                      return HospitalSingleAppBarBody(
+                        shareValue: 'https://anatomica.uz/organization/${state.hospital.slug}',
+                      );
+                    },
+                  )
+                : Container(),
+            shadowColor: textFieldColor,
+            stretch: true,
+            expandedHeight: 496,
+            titleSpacing: 0,
+            leadingWidth: 0,
+            elevation: 1,
+            pinned: true,
+            floating: false,
+            automaticallyImplyLeading: false,
+            backgroundColor: white,
+            collapsedHeight: 56,
+            flexibleSpace: FlexibleSpaceBar(
+              stretchModes: const [
+                StretchMode.blurBackground,
+              ],
+              background: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Positioned.fill(
+                    bottom: 180,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                            builder: (context, state) {
+                              return PageView.builder(
+                                itemBuilder: (context, index) => GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      fade(
+                                        page: ImageSingleScreen(
+                                          images: state.hospital.images,
+                                          index: index,
+                                        ),
                                       ),
-                                    ),
-                                    itemCount: state.hospital.images.length,
-                                    controller: widget.pageController,
-                                    onPageChanged: (index) {
-                                      setState(() {
-                                        currentImage = index;
-                                      });
-                                    },
-                                  );
+                                    );
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Positioned.fill(
+                                        child: WImage(
+                                          imageUrl: state.hospital.images[index].middle,
+                                          fit: BoxFit.cover,
+                                          onErrorColor: Colors.red,
+                                          onErrorWidget: SvgPicture.asset(
+                                            AppIcons.bigImageError,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned.fill(
+                                          child: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              textColor.withOpacity(0.48),
+                                              textColor.withOpacity(0.24),
+                                            ],
+                                          ),
+                                        ),
+                                      ))
+                                    ],
+                                  ),
+                                ),
+                                itemCount: state.hospital.images.length,
+                                controller: widget.pageController,
+                                onPageChanged: (index) {
+                                  setState(() {
+                                    currentImage = index;
+                                  });
                                 },
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WScaleAnimation(
+                                onTap: () => Navigator.of(context).pop(),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: SvgPicture.asset(
+                                    AppIcons.chevronRight,
+                                    color: white,
+                                  ),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  WScaleAnimation(
-                                    onTap: () => Navigator.of(context).pop(),
+                              BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                                builder: (context, state) {
+                                  return WScaleAnimation(
+                                    onTap: () {
+                                      Share.share('https://anatomica.uz/organization/${state.hospital.slug}');
+                                    },
                                     child: Padding(
                                       padding: const EdgeInsets.all(16),
                                       child: SvgPicture.asset(
-                                        AppIcons.chevronRight,
+                                        AppIcons.share,
                                         color: white,
                                       ),
                                     ),
-                                  ),
-                                  BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-                                    builder: (context, state) {
-                                      return WScaleAnimation(
-                                        onTap: () {
-                                          Share.share('https://anatomica.uz/organization/${state.hospital.slug}');
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(16),
-                                          child: SvgPicture.asset(
-                                            AppIcons.share,
-                                            color: white,
-                                          ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    child: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                      builder: (context, state) {
+                        return Column(
+                          children: [
+                            BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+                              builder: (context, state) {
+                                return state.hospital.images.length > 1
+                                    ? ImageSliderIndicator(
+                                        itemCount: state.hospital.images.length,
+                                        currentIndex: currentImage,
+                                      )
+                                    : const SizedBox();
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            Container(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(16),
+                                ),
+                                color: white,
+                              ),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(color: divider),
+                                                borderRadius: BorderRadius.circular(6),
+                                              ),
+                                              child: WImage(
+                                                height: 40,
+                                                width: 40,
+                                                imageUrl: state.hospital.logo.middle,
+                                                borderRadius: BorderRadius.circular(6),
+                                                onErrorWidget:
+                                                    SvgPicture.asset(AppIcons.smallImageError, fit: BoxFit.cover),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 12),
+                                            Expanded(
+                                              child: Text(
+                                                state.hospital.title,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      );
-                                    },
+                                        const SizedBox(height: 16),
+                                        Row(
+                                          children: [
+                                            SvgPicture.asset(AppIcons.location),
+                                            const SizedBox(width: 6),
+                                            Expanded(
+                                              child: Text(
+                                                state.hospital.address,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context).textTheme.headline3,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        state.hospital.phoneNumber.isEmpty
+                                            ? const SizedBox()
+                                            : Container(
+                                                margin: const EdgeInsets.only(bottom: 16),
+                                                child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(AppIcons.phone),
+                                                    const SizedBox(width: 6),
+                                                    Text(
+                                                      MyFunctions.formatPhone(state.hospital.phoneNumber, false),
+                                                      style: Theme.of(context).textTheme.headline3,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              state.hospital.rating.toString(),
+                                              style: Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            ...List.generate(
+                                              state.hospital.rating.truncate(),
+                                              (index) => Padding(
+                                                padding: const EdgeInsets.only(right: 4),
+                                                child: SvgPicture.asset(AppIcons.star),
+                                              ),
+                                            ),
+                                            ...List.generate(
+                                              5 - state.hospital.rating.truncate(),
+                                              (index) => Padding(
+                                                padding: const EdgeInsets.only(right: 4),
+                                                child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: WButton(
+                                                color: primary,
+                                                onTap: () async {
+                                                  if (state.hospital.phoneNumbers.isNotEmpty &&
+                                                      !state.hospital.phoneNumbers
+                                                          .map((e) => e.phoneNumber)
+                                                          .toList()
+                                                          .contains(state.hospital.phoneNumber)) {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      isScrollControlled: true,
+                                                      backgroundColor: Colors.transparent,
+                                                      builder: (_) => PhonesBottomSheet(
+                                                        phones: state.hospital.phoneNumbers
+                                                            .map((e) => e.phoneNumber)
+                                                            .toList(),
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    if (state.hospital.phoneNumber.isNotEmpty) {
+                                                      if (await canLaunchUrlString(
+                                                          'tel:${state.hospital.phoneNumber}')) {
+                                                        await launchUrlString('tel:${state.hospital.phoneNumber}');
+                                                      } else {
+                                                        throw 'Can not open phone number';
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                padding: EdgeInsets.zero,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      AppIcons.phone,
+                                                      height: 20,
+                                                      width: 20,
+                                                      color: white,
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    Text(
+                                                      LocaleKeys.call.tr(),
+                                                      style:
+                                                          Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Expanded(
+                                              child: WButton(
+                                                color: white,
+                                                onTap: () async {
+                                                  if (Platform.isAndroid) {
+                                                    if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
+                                                      await MapLauncher.showDirections(
+                                                          mapType: MapType.google,
+                                                          destination: Coords(
+                                                              state.hospital.latitude, state.hospital.longitude));
+                                                    } else {
+                                                      if (await canLaunchUrlString(state.hospital.locationUrl)) {
+                                                        await launchUrlString(state.hospital.locationUrl);
+                                                      } else {
+                                                        throw 'Can not open Google maps';
+                                                      }
+                                                    }
+                                                  } else {
+                                                    if (await MapLauncher.isMapAvailable(MapType.apple) ?? false) {
+                                                      await MapLauncher.showDirections(
+                                                          mapType: MapType.apple,
+                                                          destination: Coords(
+                                                              state.hospital.latitude, state.hospital.longitude));
+                                                    } else {
+                                                      if (await canLaunchUrlString(state.hospital.locationUrl)) {
+                                                        await launchUrlString(state.hospital.locationUrl);
+                                                      } else {
+                                                        throw 'Can not open Google maps';
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                padding: EdgeInsets.zero,
+                                                border: Border.all(color: primary),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      AppIcons.mapRoute,
+                                                      height: 20,
+                                                      width: 20,
+                                                    ),
+                                                    const SizedBox(width: 8),
+                                                    Text(
+                                                      LocaleKeys.get.tr(),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline3!
+                                                          .copyWith(color: primary),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                  const Divider(height: 0, thickness: 1, color: textFieldColor)
                                 ],
                               ),
                             ),
                           ],
-                        ),
-                      ),
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        child: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-                          builder: (context, state) {
-                            return Column(
-                              children: [
-                                BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-                                  builder: (context, state) {
-                                    return state.hospital.images.length > 1
-                                        ? ImageSliderIndicator(
-                                            itemCount: state.hospital.images.length,
-                                            currentIndex: currentImage,
-                                          )
-                                        : const SizedBox();
-                                  },
-                                ),
-                                const SizedBox(height: 16),
-                                Container(
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(16),
-                                    ),
-                                    color: white,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                DecoratedBox(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(color: divider),
-                                                    borderRadius: BorderRadius.circular(6),
-                                                  ),
-                                                  child: WImage(
-                                                    height: 40,
-                                                    width: 40,
-                                                    imageUrl: state.hospital.logo.middle,
-                                                    borderRadius: BorderRadius.circular(6),
-                                                    onErrorWidget:
-                                                        SvgPicture.asset(AppIcons.smallImageError, fit: BoxFit.cover),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 12),
-                                                Expanded(
-                                                  child: Text(
-                                                    state.hospital.title,
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style:
-                                                        Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(height: 16),
-                                            Row(
-                                              children: [
-                                                SvgPicture.asset(AppIcons.location),
-                                                const SizedBox(width: 6),
-                                                Expanded(
-                                                  child: Text(
-                                                    state.hospital.address,
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: Theme.of(context).textTheme.headline3,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            state.hospital.phoneNumber.isEmpty
-                                                ? const SizedBox()
-                                                : Container(
-                                                    margin: const EdgeInsets.only(bottom: 16),
-                                                    child: Row(
-                                                      children: [
-                                                        SvgPicture.asset(AppIcons.phone),
-                                                        const SizedBox(width: 6),
-                                                        Text(
-                                                          MyFunctions.formatPhone(state.hospital.phoneNumber, false),
-                                                          style: Theme.of(context).textTheme.headline3,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  state.hospital.rating.toString(),
-                                                  style:
-                                                      Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                ...List.generate(
-                                                  state.hospital.rating.truncate(),
-                                                  (index) => Padding(
-                                                    padding: const EdgeInsets.only(right: 4),
-                                                    child: SvgPicture.asset(AppIcons.star),
-                                                  ),
-                                                ),
-                                                ...List.generate(
-                                                  5 - state.hospital.rating.truncate(),
-                                                  (index) => Padding(
-                                                    padding: const EdgeInsets.only(right: 4),
-                                                    child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 16),
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: WButton(
-                                                    color: primary,
-                                                    onTap: () async {
-                                                      if (state.hospital.phoneNumbers.isNotEmpty &&
-                                                          !state.hospital.phoneNumbers
-                                                              .map((e) => e.phoneNumber)
-                                                              .toList()
-                                                              .contains(state.hospital.phoneNumber)) {
-                                                        showModalBottomSheet(
-                                                          context: context,
-                                                          isScrollControlled: true,
-                                                          backgroundColor: Colors.transparent,
-                                                          builder: (_) => PhonesBottomSheet(
-                                                            phones: state.hospital.phoneNumbers
-                                                                .map((e) => e.phoneNumber)
-                                                                .toList(),
-                                                          ),
-                                                        );
-                                                      } else {
-                                                        if (state.hospital.phoneNumber.isNotEmpty) {
-                                                          if (await canLaunchUrlString(
-                                                              'tel:${state.hospital.phoneNumber}')) {
-                                                            await launchUrlString('tel:${state.hospital.phoneNumber}');
-                                                          } else {
-                                                            throw 'Can not open phone number';
-                                                          }
-                                                        }
-                                                      }
-                                                    },
-                                                    padding: EdgeInsets.zero,
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          AppIcons.phone,
-                                                          height: 20,
-                                                          width: 20,
-                                                          color: white,
-                                                        ),
-                                                        const SizedBox(width: 8),
-                                                        Text(
-                                                          LocaleKeys.call.tr(),
-                                                          style: Theme.of(context)
-                                                              .textTheme
-                                                              .headline3!
-                                                              .copyWith(color: white),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Expanded(
-                                                  child: WButton(
-                                                    color: white,
-                                                    onTap: () async {
-                                                      if (Platform.isAndroid) {
-                                                        if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
-                                                          await MapLauncher.showDirections(
-                                                              mapType: MapType.google,
-                                                              destination: Coords(
-                                                                  state.hospital.latitude, state.hospital.longitude));
-                                                        } else {
-                                                          if (await canLaunchUrlString(state.hospital.locationUrl)) {
-                                                            await launchUrlString(state.hospital.locationUrl);
-                                                          } else {
-                                                            throw 'Can not open Google maps';
-                                                          }
-                                                        }
-                                                      } else {
-                                                        if (await MapLauncher.isMapAvailable(MapType.apple) ?? false) {
-                                                          await MapLauncher.showDirections(
-                                                              mapType: MapType.apple,
-                                                              destination: Coords(
-                                                                  state.hospital.latitude, state.hospital.longitude));
-                                                        } else {
-                                                          if (await canLaunchUrlString(state.hospital.locationUrl)) {
-                                                            await launchUrlString(state.hospital.locationUrl);
-                                                          } else {
-                                                            throw 'Can not open Google maps';
-                                                          }
-                                                        }
-                                                      }
-                                                    },
-                                                    padding: EdgeInsets.zero,
-                                                    border: Border.all(color: primary),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          AppIcons.mapRoute,
-                                                          height: 20,
-                                                          width: 20,
-                                                        ),
-                                                        const SizedBox(width: 8),
-                                                        Text(
-                                                          LocaleKeys.get.tr(),
-                                                          style: Theme.of(context)
-                                                              .textTheme
-                                                              .headline3!
-                                                              .copyWith(color: primary),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Divider(height: 0, thickness: 1, color: textFieldColor)
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                        );
+                      },
+                    ),
+                  )
+                ],
               ),
             ),
           );
