@@ -132,6 +132,7 @@ class AppIcons {
   static const guestCard = 'assets/icons/profile/guest_icon.svg';
   static const download = 'assets/icons/magazine/download.svg';
   static const locationIconOutlined = 'assets/icons/map_screen/current_location_outline.svg';
+  static const rightArrow = 'assets/icons/map_screen/right_arrow.svg';
 
 //  static const refresh = 'assets/icons/magazine/refresh.svg';
 }

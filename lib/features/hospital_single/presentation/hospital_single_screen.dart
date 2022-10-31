@@ -44,15 +44,13 @@ class HospitalSingleScreen extends StatefulWidget {
   final String slug;
   final int id;
 
-  const HospitalSingleScreen({required this.id, required this.slug, Key? key})
-      : super(key: key);
+  const HospitalSingleScreen({required this.id, required this.slug, Key? key}) : super(key: key);
 
   @override
   State<HospitalSingleScreen> createState() => _HospitalSingleScreenState();
 }
 
-class _HospitalSingleScreenState extends State<HospitalSingleScreen>
-    with TickerProviderStateMixin {
+class _HospitalSingleScreenState extends State<HospitalSingleScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
@@ -68,28 +66,15 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
 
   int currentImage = 0;
   final tabs = <HospitalSingleWidgetType>[
-    HospitalSingleWidgetType(
-        title: LocaleKeys.about_clinic,
-        keyTitle: 'about_clinic',
-        key: GlobalKey()),
-    HospitalSingleWidgetType(
-        title: LocaleKeys.videos, keyTitle: 'videos', key: GlobalKey()),
-    HospitalSingleWidgetType(
-        title: LocaleKeys.service, keyTitle: 'service', key: GlobalKey()),
-    HospitalSingleWidgetType(
-        title: LocaleKeys.specialists,
-        keyTitle: 'specialists',
-        key: GlobalKey()),
-    HospitalSingleWidgetType(
-        title: LocaleKeys.facility, keyTitle: 'facility', key: GlobalKey()),
-    HospitalSingleWidgetType(
-        title: LocaleKeys.articles, keyTitle: 'articles', key: GlobalKey()),
-    HospitalSingleWidgetType(
-        title: LocaleKeys.reviews, keyTitle: 'reviews', key: GlobalKey()),
-    HospitalSingleWidgetType(
-        title: LocaleKeys.vacancy, keyTitle: 'vacancy', key: GlobalKey()),
-    HospitalSingleWidgetType(
-        title: LocaleKeys.contact, keyTitle: 'contact', key: GlobalKey()),
+    HospitalSingleWidgetType(title: LocaleKeys.about_clinic, keyTitle: 'about_clinic', key: GlobalKey()),
+    HospitalSingleWidgetType(title: LocaleKeys.videos, keyTitle: 'videos', key: GlobalKey()),
+    HospitalSingleWidgetType(title: LocaleKeys.service, keyTitle: 'service', key: GlobalKey()),
+    HospitalSingleWidgetType(title: LocaleKeys.specialists, keyTitle: 'specialists', key: GlobalKey()),
+    HospitalSingleWidgetType(title: LocaleKeys.facility, keyTitle: 'facility', key: GlobalKey()),
+    HospitalSingleWidgetType(title: LocaleKeys.articles, keyTitle: 'articles', key: GlobalKey()),
+    HospitalSingleWidgetType(title: LocaleKeys.reviews, keyTitle: 'reviews', key: GlobalKey()),
+    HospitalSingleWidgetType(title: LocaleKeys.vacancy, keyTitle: 'vacancy', key: GlobalKey()),
+    HospitalSingleWidgetType(title: LocaleKeys.contact, keyTitle: 'contact', key: GlobalKey()),
   ];
 
   @override
@@ -104,40 +89,31 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
     super.initState();
 
     controller = AutoScrollController();
-    vacanciesBloc = HospitalVacanciesBloc(GetHospitalVacancies(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-      ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
-    articlesBloc = HArticlesBloc(GetHArticlesUseCase(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    vacanciesBloc =
+        HospitalVacanciesBloc(GetHospitalVacancies(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+          ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
+    articlesBloc = HArticlesBloc(GetHArticlesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HArticlesEvent.getArticles(organizationId: widget.id));
-    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(FacilitiesEvent.getFacilities(organizationId: widget.id));
     hospitalSpecialistBloc = HospitalSpecialistBloc(
-        GetHospitalSpecialistsUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+        GetHospitalSpecialistsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HospitalSpecialistEvent.getSpecialists(organizationId: widget.id));
-    servicesBloc = ServicesBloc(GetServicesUseCase(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    servicesBloc = ServicesBloc(GetServicesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(ServicesEvent.getServices(organizationId: widget.id));
 
     commentsBloc = CommentsBloc(
-        deletePostCommentUseCase: DeletePostCommentUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        doctorCommentDeleteUseCase: DoctorCommentDeleteUseCase(
-            repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-        doctorCommentUseCase: DoctorCommentUseCase(
-            repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-        GetCommentsUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        postCommentUseCase: PostCommentUseCase(
-            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(
-            repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+        deletePostCommentUseCase: DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        doctorCommentDeleteUseCase:
+            DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+        doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+        GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
       ..add(CommentsEvent.getComments(organizationId: widget.id));
-    hospitalSingleBloc = HospitalSingleBloc(GetSingleHospitalUseCase(
-        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-      ..add(HospitalSingleEvent.getHospital(widget.slug));
+    hospitalSingleBloc =
+        HospitalSingleBloc(GetSingleHospitalUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+          ..add(HospitalSingleEvent.getHospital(widget.slug));
     _tabController = TabController(length: tabs.length, vsync: this);
     _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
@@ -146,8 +122,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
   }
 
   _scrollListener() {
-    _headerManagerBloc
-        .add(ChangeHeaderScrollPosition(headerPosition: controller.offset));
+    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: controller.offset));
   }
 
   @override
@@ -162,9 +137,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                   controller: controller,
                   throttleDuration: const Duration(milliseconds: 300),
                   slivers: [
-                    HospitalSingleAppBar(
-                        headerManagerBloc: _headerManagerBloc,
-                        pageController: _pageController),
+                    HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
                     SliverPersistentHeader(
                       pinned: true,
                       delegate: TabBarHeaderDelegate(
@@ -184,19 +157,14 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                         [
                           const SizedBox(height: 20),
                           BlocProvider.value(
-                            value: _headerManagerBloc
-                            ,
-                            child: BlocBuilder<
-                                HeaderManagerBloc,
-                                HeaderManagerState>(
+                            value: _headerManagerBloc,
+                            child: BlocBuilder<HeaderManagerBloc, HeaderManagerState>(
                               builder: (context, headerManagerState) {
                                 return InViewNotifierWidget(
                                   id: '1',
                                   builder: (context, isInView, child) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((timeStamp) {
-                                      if (isInView || !headerManagerState
-                                          .isHeaderScrolled) {
+                                    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                      if (isInView || !headerManagerState.isHeaderScrolled) {
                                         _tabController.animateTo(0);
                                       }
                                     });
@@ -213,8 +181,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                           InViewNotifierWidget(
                             id: '2',
                             builder: (context, isInView, child) {
-                              WidgetsBinding.instance
-                                  .addPostFrameCallback((timeStamp) {
+                              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                                 if (isInView) {
                                   _tabController.animateTo(1);
                                 }
@@ -226,8 +193,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                               value: commentsBloc,
                               child: HospitalVideo(
                                   videoUrl: state.hospital.videoLink,
-                                  videoDescription:
-                                  state.hospital.videoDescription,
+                                  videoDescription: state.hospital.videoDescription,
                                   tabController: _tabController),
                             ),
                           ),
@@ -235,8 +201,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                           InViewNotifierWidget(
                               id: '3',
                               builder: (context, isInView, child) {
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((timeStamp) {
+                                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                                   if (isInView) {
                                     _tabController.animateTo(2);
                                   }
@@ -244,14 +209,12 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
 
                                 return child ?? const SizedBox();
                               },
-                              child:
-                              HospitalServices(servicesBloc: servicesBloc)),
+                              child: HospitalServices(servicesBloc: servicesBloc)),
                           const SizedBox(height: 16),
                           InViewNotifierWidget(
                               id: '4',
                               builder: (context, isInView, child) {
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((timeStamp) {
+                                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                                   if (isInView) {
                                     _tabController.animateTo(3);
                                   }
@@ -259,29 +222,24 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
 
                                 return child ?? const SizedBox();
                               },
-                              child: HospitalSpecialists(
-                                  hospitalSpecialistBloc:
-                                  hospitalSpecialistBloc)),
+                              child: HospitalSpecialists(hospitalSpecialistBloc: hospitalSpecialistBloc)),
                           const SizedBox(height: 16),
                           InViewNotifierWidget(
                               id: '5',
                               builder: (context, isInView, child) {
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((timeStamp) {
+                                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                                   if (isInView) {
                                     _tabController.animateTo(4);
                                   }
                                 });
                                 return child ?? const SizedBox();
                               },
-                              child: HospitalConditionsHorizontalList(
-                                  facilitiesBloc: facilitiesBloc)),
+                              child: HospitalConditionsHorizontalList(facilitiesBloc: facilitiesBloc)),
                           const SizedBox(height: 16),
                           InViewNotifierWidget(
                               id: '6',
                               builder: (context, isInView, child) {
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((timeStamp) {
+                                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                                   if (isInView) {
                                     _tabController.animateTo(6);
                                   }
@@ -289,15 +247,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
 
                                 return child ?? const SizedBox();
                               },
-                              child: HospitalCommentsHorizontalList(
-                                  commentsBloc: commentsBloc,
-                                  hospital: state.hospital)),
+                              child:
+                                  HospitalCommentsHorizontalList(commentsBloc: commentsBloc, hospital: state.hospital)),
                           const SizedBox(height: 16),
                           InViewNotifierWidget(
                               id: '7',
                               builder: (context, isInView, child) {
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((timeStamp) {
+                                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                                   if (isInView) {
                                     _tabController.animateTo(7);
                                   }
@@ -305,14 +261,12 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
 
                                 return child ?? const SizedBox();
                               },
-                              child: HospitalVacanciesHorizontalList(
-                                  vacanciesBloc: vacanciesBloc)),
+                              child: HospitalVacanciesHorizontalList(vacanciesBloc: vacanciesBloc)),
                           const SizedBox(height: 16),
                           InViewNotifierWidget(
                             id: '8',
                             builder: (context, isInView, child) {
-                              WidgetsBinding.instance
-                                  .addPostFrameCallback((timeStamp) {
+                              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                                 if (isInView) {
                                   _tabController.animateTo(8);
                                 }
@@ -326,93 +280,84 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                               phone: state.hospital.phoneNumber,
                               telegram: state.hospital.telegram,
                               website: state.hospital.website,
-                              phoneNumbers: state.hospital.phoneNumbers
-                                  .map((e) => e.phoneNumber)
-                                  .toList(),
+                              phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
                             ),
                           ),
-                          SizedBox(
-                              height:
-                              MediaQuery
-                                  .of(context)
-                                  .padding
-                                  .bottom + 42),
+                          SizedBox(height: MediaQuery.of(context).padding.bottom + 42),
                         ],
                       ),
                     ),
                   ],
-                  isInViewPortCondition: (double deltaTop, double deltaBottom,
-                      double viewPortDimension) =>
-                  deltaTop < (0.01 * viewPortDimension) &&
-                      deltaBottom > (0.01 * viewPortDimension),
+                  isInViewPortCondition: (double deltaTop, double deltaBottom, double viewPortDimension) =>
+                      deltaTop < (0.01 * viewPortDimension) && deltaBottom > (0.01 * viewPortDimension),
                 );
               },
             )
-          // NestedScrollView(
-          //   floatHeaderSlivers: false,
-          //   controller: _scrollController,
-          //   headerSliverBuilder: (context, isHeaderScrolled) => [
-          //     HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
-          //     SliverOverlapAbsorber(
-          //       handle: SliverOverlapAbsorberHandle(),
-          //       sliver: SliverSafeArea(
-          //         top: false,
-          //         bottom: false,
-          //         sliver: SliverPersistentHeader(
-          //           pinned: true,
-          //           delegate: TabBarHeaderDelegate(
-          //             onTabTap: (value) async {
-          //               await scrollToItem(tabs[value].key.currentContext!);
-          //             },
-          //             tabController: _tabController,
-          //             tabs: tabs.map((e) => e.title).toList(),
-          //           ),
-          //         ),
-          //       ),
-          //     )
-          //   ],
-          //   body: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
-          //     builder: (context, state) {
-          //       return ListView(
-          //         physics: const BouncingScrollPhysics(),
-          //         padding:
-          //             const EdgeInsets.symmetric(vertical: 20).copyWith(bottom: MediaQuery.of(context).padding.bottom),
-          //         children: [
-          //           AboutHospital(hospital: state.hospital),
-          //           const SizedBox(height: 16),
-          //           BlocProvider.value(
-          //             value: commentsBloc,
-          //             child: HospitalVideo(
-          //                 videoUrl: state.hospital.videoLink,
-          //                 videoDescription: state.hospital.videoDescription,
-          //                 tabController: _tabController),
-          //           ),
-          //           const SizedBox(height: 16),
-          //           HospitalServices(servicesBloc: servicesBloc),
-          //           const SizedBox(height: 16),
-          //           HospitalSpecialists(hospitalSpecialistBloc: hospitalSpecialistBloc),
-          //           const SizedBox(height: 16),
-          //           HospitalConditionsHorizontalList(facilitiesBloc: facilitiesBloc),
-          //           const SizedBox(height: 16),
-          //           HospitalCommentsHorizontalList(commentsBloc: commentsBloc, hospital: state.hospital),
-          //           const SizedBox(height: 16),
-          //           HospitalVacanciesHorizontalList(vacanciesBloc: vacanciesBloc),
-          //           const SizedBox(height: 16),
-          //           HospitalContacts(
-          //             email: state.hospital.email,
-          //             facebook: state.hospital.facebook,
-          //             instagram: state.hospital.instagram,
-          //             phone: state.hospital.phoneNumber,
-          //             telegram: state.hospital.telegram,
-          //             website: state.hospital.website,
-          //             phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
-          //           )
-          //         ],
-          //       );
-          //     },
-          //   ),
-          // ),
-        ),
+            // NestedScrollView(
+            //   floatHeaderSlivers: false,
+            //   controller: _scrollController,
+            //   headerSliverBuilder: (context, isHeaderScrolled) => [
+            //     HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
+            //     SliverOverlapAbsorber(
+            //       handle: SliverOverlapAbsorberHandle(),
+            //       sliver: SliverSafeArea(
+            //         top: false,
+            //         bottom: false,
+            //         sliver: SliverPersistentHeader(
+            //           pinned: true,
+            //           delegate: TabBarHeaderDelegate(
+            //             onTabTap: (value) async {
+            //               await scrollToItem(tabs[value].key.currentContext!);
+            //             },
+            //             tabController: _tabController,
+            //             tabs: tabs.map((e) => e.title).toList(),
+            //           ),
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            //   body: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
+            //     builder: (context, state) {
+            //       return ListView(
+            //         physics: const BouncingScrollPhysics(),
+            //         padding:
+            //             const EdgeInsets.symmetric(vertical: 20).copyWith(bottom: MediaQuery.of(context).padding.bottom),
+            //         children: [
+            //           AboutHospital(hospital: state.hospital),
+            //           const SizedBox(height: 16),
+            //           BlocProvider.value(
+            //             value: commentsBloc,
+            //             child: HospitalVideo(
+            //                 videoUrl: state.hospital.videoLink,
+            //                 videoDescription: state.hospital.videoDescription,
+            //                 tabController: _tabController),
+            //           ),
+            //           const SizedBox(height: 16),
+            //           HospitalServices(servicesBloc: servicesBloc),
+            //           const SizedBox(height: 16),
+            //           HospitalSpecialists(hospitalSpecialistBloc: hospitalSpecialistBloc),
+            //           const SizedBox(height: 16),
+            //           HospitalConditionsHorizontalList(facilitiesBloc: facilitiesBloc),
+            //           const SizedBox(height: 16),
+            //           HospitalCommentsHorizontalList(commentsBloc: commentsBloc, hospital: state.hospital),
+            //           const SizedBox(height: 16),
+            //           HospitalVacanciesHorizontalList(vacanciesBloc: vacanciesBloc),
+            //           const SizedBox(height: 16),
+            //           HospitalContacts(
+            //             email: state.hospital.email,
+            //             facebook: state.hospital.facebook,
+            //             instagram: state.hospital.instagram,
+            //             phone: state.hospital.phoneNumber,
+            //             telegram: state.hospital.telegram,
+            //             website: state.hospital.website,
+            //             phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
+            //           )
+            //         ],
+            //       );
+            //     },
+            //   ),
+            // ),
+            ),
         backgroundColor: textFieldColor,
       ),
     );

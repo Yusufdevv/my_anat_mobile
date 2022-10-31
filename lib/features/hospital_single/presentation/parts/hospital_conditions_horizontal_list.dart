@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/facilities/facilities_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/condition_item.dart';
+import 'package:anatomica/features/hospital_single/presentation/widgets/show_all_button.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +11,7 @@ import 'package:formz/formz.dart';
 
 class HospitalConditionsHorizontalList extends StatelessWidget {
   final FacilitiesBloc facilitiesBloc;
+
   const HospitalConditionsHorizontalList({
     required this.facilitiesBloc,
     Key? key,
@@ -41,16 +43,26 @@ class HospitalConditionsHorizontalList extends StatelessWidget {
                     if (state.status.isSubmissionInProgress) {
                       return const Center(child: CupertinoActivityIndicator());
                     } else if (state.status.isSubmissionSuccess) {
+                      print(state.comforts.length);
                       return ListView.separated(
                         physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: state.comforts.take(5).length,
-                        itemBuilder: (context, index) => SizedBox(
-                          width: (MediaQuery.of(context).size.shortestSide / 2) - 45,
-                          child: ConditionItem(
-                            entity: state.comforts[index],
-                          ),
-                        ),
+                        itemCount: state.comforts.length > 5 ? state.comforts.take(6).length : state.comforts.length,
+                        itemBuilder: (context, index) {
+                          if (index == 5) {
+                            return ShowAllButton(
+                              onTap: () {},
+                              width: (MediaQuery.of(context).size.shortestSide / 2) - 45,
+                              title: 'Все статьи',
+                            );
+                          }
+                          return SizedBox(
+                            width: (MediaQuery.of(context).size.shortestSide / 2) - 45,
+                            child: ConditionItem(
+                              entity: state.comforts[index],
+                            ),
+                          );
+                        },
                         scrollDirection: Axis.horizontal,
                         separatorBuilder: (context, index) => const SizedBox(width: 8),
                       );
