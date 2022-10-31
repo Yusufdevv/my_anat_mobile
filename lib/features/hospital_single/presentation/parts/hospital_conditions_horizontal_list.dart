@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/facilities/facilities_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/condition_item.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/show_all_button.dart';
+import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,6 +28,7 @@ class HospitalConditionsHorizontalList extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12),
             color: white,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -37,40 +39,43 @@ class HospitalConditionsHorizontalList extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                  height: 102,
-                  child: Builder(builder: (context) {
-                    if (state.status.isSubmissionInProgress) {
-                      return const Center(child: CupertinoActivityIndicator());
-                    } else if (state.status.isSubmissionSuccess) {
-                      print(state.comforts.length);
-                      return ListView.separated(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: state.comforts.length > 5 ? state.comforts.take(6).length : state.comforts.length,
-                        itemBuilder: (context, index) {
-                          if (index == 5) {
-                            return ShowAllButton(
-                              onTap: () {},
-                              width: (MediaQuery.of(context).size.shortestSide / 2) - 45,
-                              title: 'Все статьи',
-                            );
-                          }
-                          return SizedBox(
+                if (state.status.isSubmissionInProgress) ...[
+                  const Center(child: CupertinoActivityIndicator())
+                ] else if (state.status.isSubmissionSuccess) ...[
+                  if (state.comforts.isNotEmpty) ...{
+                    ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: state.comforts.length > 5 ? state.comforts.take(6).length : state.comforts.length,
+                      itemBuilder: (context, index) {
+                        if (index == 5) {
+                          return ShowAllButton(
+                            onTap: () {},
                             width: (MediaQuery.of(context).size.shortestSide / 2) - 45,
-                            child: ConditionItem(
-                              entity: state.comforts[index],
-                            ),
+                            title: 'Все удобства',
                           );
-                        },
-                        scrollDirection: Axis.horizontal,
-                        separatorBuilder: (context, index) => const SizedBox(width: 8),
-                      );
-                    } else {
-                      return SizedBox();
-                    }
-                  }),
-                )
+                        }
+                        return SizedBox(
+                          width: (MediaQuery.of(context).size.shortestSide / 2) - 45,
+                          child: ConditionItem(
+                            entity: state.comforts[index],
+                          ),
+                        );
+                      },
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (context, index) => const SizedBox(width: 8),
+                    )
+                  } else ...{
+                    Center(
+                      child: EmptyWidget(
+                        hasMargin: false,
+                        hasPadding: false,
+                        title: LocaleKeys.no_conditions.tr(),
+                        content: LocaleKeys.no_conditions_in_this_hospital.tr(),
+                      ),
+                    )
+                  }
+                ],
               ],
             ),
           );

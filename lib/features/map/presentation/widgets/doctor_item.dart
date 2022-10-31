@@ -10,9 +10,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 class DoctorItem extends StatelessWidget {
   final HospitalDoctorsEntity entity;
   final bool showPosition;
+  final bool showShadow;
   const DoctorItem({
     required this.entity,
     this.showPosition = false,
+    this.showShadow = true,
     Key? key,
   }) : super(key: key);
 
@@ -29,13 +31,15 @@ class DoctorItem extends StatelessWidget {
       },
       child: DecoratedBox(
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: darkerGreen.withOpacity(0.09),
-              offset: const Offset(0, 8),
-              blurRadius: 24,
-            )
-          ],
+          boxShadow: showShadow
+              ? [
+                  BoxShadow(
+                    color: darkerGreen.withOpacity(0.09),
+                    offset: const Offset(0, 8),
+                    blurRadius: 24,
+                  )
+                ]
+              : [],
         ),
         child: Stack(
           children: [
@@ -74,10 +78,7 @@ class DoctorItem extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           showPosition ? entity.position : entity.specialization.title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(fontSize: 14),
+                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                         ),
                       ],
                     ),
@@ -109,10 +110,7 @@ class DoctorItem extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         (entity.rating > 5 ? 5.0 : entity.rating).toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1!
-                            .copyWith(color: darkGreen, fontSize: 14),
+                        style: Theme.of(context).textTheme.headline1!.copyWith(color: darkGreen, fontSize: 14),
                       ),
                     ],
                   ),

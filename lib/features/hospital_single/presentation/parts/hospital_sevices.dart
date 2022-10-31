@@ -49,11 +49,16 @@ class _HospitalServicesState extends State<HospitalServices> {
                   )
                 } else if (state.status.isSubmissionSuccess) ...{
                   if (state.services.isEmpty) ...{
-                    EmptyWidget(
-                      title: state.searchQuery.isNotEmpty ? LocaleKeys.nothing.tr() : LocaleKeys.no_services.tr(),
-                      content: state.searchQuery.isNotEmpty
-                          ? LocaleKeys.result_not_found.tr()
-                          : LocaleKeys.no_services_in_this_hospital.tr(),
+                    const SizedBox(height: 16),
+                    Center(
+                      child: EmptyWidget(
+                        hasPadding: false,
+                        hasMargin: false,
+                        title: state.searchQuery.isNotEmpty ? LocaleKeys.nothing.tr() : LocaleKeys.no_services.tr(),
+                        content: state.searchQuery.isNotEmpty
+                            ? LocaleKeys.result_not_found.tr()
+                            : LocaleKeys.no_services_in_this_hospital.tr(),
+                      ),
                     )
                   } else ...{
                     Container(

@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/vacancies/hospital_vacancies_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/widgets/show_all_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_vacancy_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -46,15 +47,24 @@ class HospitalVacanciesHorizontalList extends StatelessWidget {
                     return ListView.separated(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemBuilder: (context, index) => SizedBox(
-                        width: MediaQuery.of(context).size.shortestSide - 32,
-                        child: HospitalVacancyItem(
-                          showShadow: false,
-                          entity: state.vacancies[index],
-                        ),
-                      ),
+                      itemBuilder: (context, index) {
+                        if (index == 5) {
+                          return ShowAllButton(
+                            onTap: () {},
+                            width: MediaQuery.of(context).size.shortestSide - 32,
+                            title: 'Все вакансии',
+                          );
+                        }
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.shortestSide - 32,
+                          child: HospitalVacancyItem(
+                            showShadow: false,
+                            entity: state.vacancies[index],
+                          ),
+                        );
+                      },
                       separatorBuilder: (context, index) => const SizedBox(width: 8),
-                      itemCount: state.vacancies.length,
+                      itemCount: state.vacancies.length > 5 ? state.vacancies.take(6).length : state.vacancies.length,
                     );
                   } else {
                     return const SizedBox();

@@ -10,18 +10,22 @@ class EmptyWidget extends StatelessWidget {
   final VoidCallback? onButtonTap;
   final String? title;
   final String? content;
+  final bool hasMargin;
+  final bool hasPadding;
   const EmptyWidget({
     this.onButtonTap,
     this.title,
     this.content,
+    this.hasMargin = true,
+    this.hasPadding = true,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16).copyWith(bottom: 16 + MediaQuery.of(context).padding.bottom),
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+      margin: hasMargin ? const EdgeInsets.all(16).copyWith(bottom: 16 + MediaQuery.of(context).padding.bottom) : null,
+      padding: hasPadding ? const EdgeInsets.symmetric(vertical: 24, horizontal: 16) : null,
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(12),

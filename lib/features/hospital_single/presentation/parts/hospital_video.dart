@@ -105,7 +105,8 @@ class _HospitalVideoState extends State<HospitalVideo> {
                   ],
                 ),
               ),
-            },
+            } else
+              ...{},
           ],
         ),
       );
@@ -122,7 +123,10 @@ class _HospitalVideoState extends State<HospitalVideo> {
                 style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
               ),
             ),
+            const SizedBox(height: 16),
             EmptyWidget(
+              hasMargin: false,
+              hasPadding: false,
               title: LocaleKeys.no_video.tr(),
               content: LocaleKeys.no_video.tr(),
             ),
