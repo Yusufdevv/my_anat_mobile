@@ -52,7 +52,6 @@ class HospitalSingleScreen extends StatefulWidget {
 
 class _HospitalSingleScreenState extends State<HospitalSingleScreen> with TickerProviderStateMixin {
   late TabController _tabController;
-  late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
   late PageController _pageController;
   late HospitalSingleBloc hospitalSingleBloc;
@@ -79,8 +78,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
 
   @override
   void dispose() {
-    _scrollController.removeListener(_scrollListener);
-    _scrollController.dispose();
+    controller.removeListener(_scrollListener);
+    controller.dispose();
     super.dispose();
   }
 
@@ -115,7 +114,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
         HospitalSingleBloc(GetSingleHospitalUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
           ..add(HospitalSingleEvent.getHospital(widget.slug));
     _tabController = TabController(length: tabs.length, vsync: this);
-    _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
     _pageController = PageController();
     controller.addListener(_scrollListener);
@@ -141,19 +139,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                     SliverPersistentHeader(
                       pinned: true,
                       delegate: TabBarHeaderDelegate(
-                        onTabTap: (value) async {
-                          controller.scrollToIndex(
-                            value,
-                            preferPosition: AutoScrollPosition.begin,
-                            duration: const Duration(milliseconds: 200),
-                          );
-                        },
+                        controller: controller,
                         tabController: _tabController,
                         tabs: tabs.map((e) => e.title).toList(),
                       ),
                     ),
                     SliverList(
-                      delegate: SliverChildListDelegate(
+                      delegate: SliverChildListDelegate.fixed(
                         [
                           const SizedBox(height: 20),
                           BlocProvider.value(
@@ -177,7 +169,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                               },
                             ),
                           ),
-                          const SizedBox(height: 16),
                           InViewNotifierWidget(
                             id: '2',
                             builder: (context, isInView, child) {
@@ -197,7 +188,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                   tabController: _tabController),
                             ),
                           ),
-                          const SizedBox(height: 16),
                           InViewNotifierWidget(
                               id: '3',
                               builder: (context, isInView, child) {
@@ -210,7 +200,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 return child ?? const SizedBox();
                               },
                               child: HospitalServices(servicesBloc: servicesBloc)),
-                          const SizedBox(height: 16),
                           InViewNotifierWidget(
                               id: '4',
                               builder: (context, isInView, child) {
@@ -223,7 +212,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 return child ?? const SizedBox();
                               },
                               child: HospitalSpecialists(hospitalSpecialistBloc: hospitalSpecialistBloc)),
-                          const SizedBox(height: 16),
                           InViewNotifierWidget(
                               id: '5',
                               builder: (context, isInView, child) {
@@ -235,7 +223,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 return child ?? const SizedBox();
                               },
                               child: HospitalConditionsHorizontalList(facilitiesBloc: facilitiesBloc)),
-                          const SizedBox(height: 16),
                           InViewNotifierWidget(
                               id: '6',
                               builder: (context, isInView, child) {
@@ -249,7 +236,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                               },
                               child:
                                   HospitalCommentsHorizontalList(commentsBloc: commentsBloc, hospital: state.hospital)),
-                          const SizedBox(height: 16),
                           InViewNotifierWidget(
                               id: '7',
                               builder: (context, isInView, child) {
@@ -262,7 +248,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 return child ?? const SizedBox();
                               },
                               child: HospitalVacanciesHorizontalList(vacanciesBloc: vacanciesBloc)),
-                          const SizedBox(height: 16),
                           InViewNotifierWidget(
                             id: '8',
                             builder: (context, isInView, child) {
@@ -283,7 +268,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                               phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
                             ),
                           ),
-                          SizedBox(height: MediaQuery.of(context).padding.bottom + 42),
                         ],
                       ),
                     ),

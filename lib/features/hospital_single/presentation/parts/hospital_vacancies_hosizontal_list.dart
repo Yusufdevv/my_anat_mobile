@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/vacancies/hospital_vacancies_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/show_all_button.dart';
+import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_vacancy_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -35,42 +36,56 @@ class HospitalVacanciesHorizontalList extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            SizedBox(
-              height: 160,
-              child: BlocBuilder<HospitalVacanciesBloc, HospitalVacanciesState>(
-                builder: (context, state) {
-                  if (state.status.isSubmissionInProgress) {
-                    return const Center(
+            BlocBuilder<HospitalVacanciesBloc, HospitalVacanciesState>(
+              builder: (context, state) {
+                if (state.status.isSubmissionInProgress) {
+                  return const SizedBox(
+                    height: 160,
+                    child: Center(
                       child: CupertinoActivityIndicator(),
-                    );
-                  } else if (state.status.isSubmissionSuccess) {
-                    return ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemBuilder: (context, index) {
-                        if (index == 5) {
-                          return ShowAllButton(
-                            onTap: () {},
+                    ),
+                  );
+                } else if (state.status.isSubmissionSuccess) {
+                  if (state.vacancies.isNotEmpty) {
+                    return SizedBox(
+                      height: 160,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        itemBuilder: (context, index) {
+                          if (index == 5) {
+                            return ShowAllButton(
+                              onTap: () {},
+                              width: MediaQuery.of(context).size.shortestSide - 32,
+                              title: 'Все вакансии',
+                            );
+                          }
+                          return SizedBox(
                             width: MediaQuery.of(context).size.shortestSide - 32,
-                            title: 'Все вакансии',
+                            child: HospitalVacancyItem(
+                              showShadow: false,
+                              entity: state.vacancies[index],
+                            ),
                           );
-                        }
-                        return SizedBox(
-                          width: MediaQuery.of(context).size.shortestSide - 32,
-                          child: HospitalVacancyItem(
-                            showShadow: false,
-                            entity: state.vacancies[index],
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) => const SizedBox(width: 8),
-                      itemCount: state.vacancies.length > 5 ? state.vacancies.take(6).length : state.vacancies.length,
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(width: 8),
+                        itemCount: state.vacancies.length > 5 ? state.vacancies.take(6).length : state.vacancies.length,
+                      ),
                     );
                   } else {
-                    return const SizedBox();
+                    return Center(
+                      child: EmptyWidget(
+                        hasPadding: false,
+                        hasMargin: false,
+                        title: LocaleKeys.no_vacancies.tr(),
+                        content: LocaleKeys.no_vacancies_in_this_hospital.tr(),
+                      ),
+                    );
                   }
-                },
-              ),
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
           ],
         ),
