@@ -38,13 +38,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
         padding: const EdgeInsets.symmetric(horizontal: 7),
         unselectedLabelColor: textColor,
         indicatorColor: primary,
-        onTap: (index) {
-          controller?.scrollToIndex(
-            index,
-            preferPosition: AutoScrollPosition.begin,
-            duration: const Duration(milliseconds: 200),
-          );
-        },
+        onTap: onTabTap,
         indicator: const CustomTabIndicator(color: primary, radius: 3, horizontalPadding: 9, height: 3),
         tabs: tabs.map((e) => Tab(text: e.tr())).toList(),
       ),

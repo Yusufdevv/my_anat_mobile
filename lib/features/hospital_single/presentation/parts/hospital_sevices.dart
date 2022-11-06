@@ -34,6 +34,7 @@ class _HospitalServicesState extends State<HospitalServices> {
       child: BlocBuilder<ServicesBloc, ServicesState>(
         builder: (context, state) {
           return Container(
+            margin: const EdgeInsets.only(bottom: 16),
             color: white,
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             child: Column(

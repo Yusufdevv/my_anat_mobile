@@ -11,11 +11,13 @@ import 'package:anatomica/features/markdown_reader/presentation/bloc/reader_cont
 import 'package:anatomica/features/markdown_reader/presentation/widgets/reader_controller.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/w_app_bar_with_buttons.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class JournalMarkdownPageReader extends StatefulWidget {
   final String slug;
@@ -82,15 +84,7 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                 ],
               ),
             ),
-            body: BlocConsumer<JournalPagesBloc, JournalPagesState>(
-              listener: (context, state) {
-                var pages = state.pages;
-                if (widget.isPreview) {
-                  pages = state.pages.where((element) => element.preview).toList();
-                }
-                context.read<ReaderControllerBloc>().add(SetWebPageData(data: pages.first.content));
-              },
-              listenWhen: (state1, state2) => state2.getJournalPagesStatus.isSubmissionSuccess,
+            body: BlocBuilder<JournalPagesBloc, JournalPagesState>(
               builder: (context, state) {
                 if (state.getJournalPagesStatus.isSubmissionInProgress) {
                   return const Center(
@@ -112,7 +106,7 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                           },
                           child: PageView.builder(
                             onPageChanged: (index) {
-                              context.read<ReaderControllerBloc>().add(SetWebPageData(data: pages[index].content));
+                              context.read<ReaderControllerBloc>().add(SetWebPage());
                             },
                             itemBuilder: (context, index) {
                               if (index == pages.length) {
@@ -122,6 +116,11 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                                 );
                               }
                               return JournalMarkdownPage(
+                                onTap: () {
+                                  setState(() {
+                                    showController = false;
+                                  });
+                                },
                                 data: pages[index].content,
                               );
                             },
@@ -159,9 +158,11 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
 
 class JournalMarkdownPage extends StatefulWidget {
   final String data;
+  final VoidCallback onTap;
 
   const JournalMarkdownPage({
     required this.data,
+    required this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -170,38 +171,39 @@ class JournalMarkdownPage extends StatefulWidget {
 }
 
 class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
-  late WebViewController _controller;
+  //late WebViewController _controller;
+  late InAppWebViewController _controller;
+  late InAppWebViewGroupOptions options;
 
   @override
   void initState() {
+    options = InAppWebViewGroupOptions(
+        crossPlatform: InAppWebViewOptions(verticalScrollBarEnabled: true, supportZoom: false));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     log(widget.data);
-    return BlocListener<ReaderControllerBloc, ReaderControllerState>(
+    return BlocConsumer<ReaderControllerBloc, ReaderControllerState>(
       listener: (context, state) {
-        _controller.loadHtmlString(state.changedWebPage);
+        _controller.evaluateJavascript(source: state.jsFunction);
       },
-      child: WebView(
-        onWebViewCreated: (controller) {
-          controller.loadHtmlString(widget.data);
-        },
-        javascriptMode: JavascriptMode.unrestricted,
-        initialUrl: '',
+      builder: (context, state) => GestureDetector(
+        onTap: widget.onTap,
+        child: InAppWebView(
+          onWebViewCreated: (controller) {
+            _controller = controller;
+          },
+          initialData: InAppWebViewInitialData(data: widget.data, mimeType: 'text/html'),
+          gestureRecognizers: {
+            Factory<OneSequenceGestureRecognizer>(
+              () => VerticalDragGestureRecognizer(),
+            ),
+          },
+          initialOptions: options,
+        ),
       ),
-      //     SingleChildScrollView(
-      //   child: Html(
-      //     onImageError: (e, __) => print('image error' + e.toString()),
-      //     data: widget.data,
-      //     style: {
-      //       'h1': Style(
-      //         fontSize: FontSize(25),
-      //       )
-      //     },
-      //   ),
-      // ),
     );
   }
 }

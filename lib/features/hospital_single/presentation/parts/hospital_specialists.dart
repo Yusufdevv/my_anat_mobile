@@ -24,6 +24,7 @@ class HospitalSpecialists extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 12),
             color: white,
+            margin: const EdgeInsets.only(bottom: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

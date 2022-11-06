@@ -9,13 +9,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class HospitalArticleItem extends StatelessWidget {
   final JournalArticleEntity entity;
+  final bool showShadow;
   const HospitalArticleItem({
+    this.showShadow = true,
     required this.entity,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(entity.title);
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () async {
@@ -42,13 +45,15 @@ class HospitalArticleItem extends StatelessWidget {
           border: Border.all(
             color: textFieldColor,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: darkerGreen.withOpacity(0.09),
-              offset: const Offset(0, 8),
-              blurRadius: 24,
-            )
-          ],
+          boxShadow: showShadow
+              ? [
+                  BoxShadow(
+                    color: darkerGreen.withOpacity(0.09),
+                    offset: const Offset(0, 8),
+                    blurRadius: 24,
+                  )
+                ]
+              : [],
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +61,11 @@ class HospitalArticleItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                entity.image.middle,errorBuilder: (a,b,c)=>const SizedBox(width: 82,height: 100,),
+                entity.image.middle,
+                errorBuilder: (a, b, c) => const SizedBox(
+                  width: 82,
+                  height: 100,
+                ),
                 height: 100,
                 width: 82,
                 fit: BoxFit.cover,

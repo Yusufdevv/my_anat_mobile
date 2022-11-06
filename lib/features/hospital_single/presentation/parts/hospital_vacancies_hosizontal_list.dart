@@ -24,6 +24,7 @@ class HospitalVacanciesHorizontalList extends StatelessWidget {
       value: vacanciesBloc,
       child: Container(
         color: white,
+        margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

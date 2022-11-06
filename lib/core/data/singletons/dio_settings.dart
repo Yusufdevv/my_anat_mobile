@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 
 class DioSettings {
   BaseOptions _dioBaseOptions = BaseOptions(
-    baseUrl: 'https://anatomica.uz/api/v1',
+    baseUrl: 'https://panel.anatomica.uz/api/v1',
     connectTimeout: 35000,
     receiveTimeout: 33000,
     followRedirects: false,
@@ -13,7 +13,7 @@ class DioSettings {
 
   void setBaseOptions({String? lang}) {
     _dioBaseOptions = BaseOptions(
-      baseUrl: 'https://anatomica.uz/api/v1',
+      baseUrl: 'https://panel.anatomica.uz/api/v1',
       connectTimeout: 35000,
       receiveTimeout: 33000,
       headers: <String, dynamic>{'Accept-Language': lang},

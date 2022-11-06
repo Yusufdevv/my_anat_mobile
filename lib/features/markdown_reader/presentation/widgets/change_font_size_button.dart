@@ -5,10 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ChangeFontSizeButton extends StatelessWidget {
   final String icon;
+  final Color? iconColor;
   final VoidCallback onTap;
   const ChangeFontSizeButton({
     required this.onTap,
     required this.icon,
+    this.iconColor,
     Key? key,
   }) : super(key: key);
 
@@ -23,7 +25,10 @@ class ChangeFontSizeButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
               border: Border.all(color: divider),
             ),
-            child: SvgPicture.asset(icon),
+            child: SvgPicture.asset(
+              icon,
+              color: iconColor,
+            ),
           ),
         ),
       );

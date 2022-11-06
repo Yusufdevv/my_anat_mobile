@@ -47,6 +47,7 @@ class _HospitalVideoState extends State<HospitalVideo> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         color: white,
+        margin: const EdgeInsets.only(bottom: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

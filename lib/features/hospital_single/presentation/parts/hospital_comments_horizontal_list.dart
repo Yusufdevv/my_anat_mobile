@@ -9,10 +9,13 @@ import 'package:anatomica/features/hospital_single/presentation/bloc/comments/co
 import 'package:anatomica/features/hospital_single/presentation/widgets/show_all_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/comment_item.dart';
+import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 
 class HospitalCommentsHorizontalList extends StatelessWidget {
   final HospitalSingleEntity hospital;
@@ -33,6 +36,7 @@ class HospitalCommentsHorizontalList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 12),
             color: white,
+            margin: const EdgeInsets.only(bottom: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -101,41 +105,59 @@ class HospitalCommentsHorizontalList extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 182,
-                  child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      if (index == 5) {
-                        return ShowAllButton(
-                            title: 'Все отзывы', width: MediaQuery.of(context).size.shortestSide - 32, onTap: () {});
-                      }
-                      return SizedBox(
-                        width: MediaQuery.of(context).size.shortestSide - 32,
-                        child: CommentItem(
-                          hasShadow: false,
-                          isMainScreen: true,
-                          onTapDelete: () {
-                            commentsBloc.add(
-                              CommentsEvent.deleteHospitalComment(
-                                id: commentState.comments[index].id,
-                                onSuccess: () {},
-                                onError: () {},
-                              ),
-                            );
-                          },
-                          entity: commentState.comments[index],
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => const SizedBox(width: 8),
-                    itemCount: commentState.comments.length > 5
-                        ? commentState.comments.take(6).length
-                        : commentState.comments.length,
-                  ),
-                )
+                if (commentState.status.isSubmissionInProgress) ...{
+                  const SizedBox(
+                    height: 182,
+                    child: Center(
+                      child: CupertinoActivityIndicator(),
+                    ),
+                  )
+                } else if (commentState.status.isSubmissionSuccess) ...{
+                  if (commentState.comments.isEmpty) ...{
+                    const EmptyWidget(
+                      hasMargin: false,
+                      hasPadding: false,
+                    )
+                  } else ...{
+                    SizedBox(
+                      height: 182,
+                      child: ListView.separated(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          if (index == 5) {
+                            return ShowAllButton(
+                                title: 'Все отзывы',
+                                width: MediaQuery.of(context).size.shortestSide - 32,
+                                onTap: () {});
+                          }
+                          return SizedBox(
+                            width: MediaQuery.of(context).size.shortestSide - 32,
+                            child: CommentItem(
+                              hasShadow: false,
+                              isMainScreen: true,
+                              onTapDelete: () {
+                                commentsBloc.add(
+                                  CommentsEvent.deleteHospitalComment(
+                                    id: commentState.comments[index].id,
+                                    onSuccess: () {},
+                                    onError: () {},
+                                  ),
+                                );
+                              },
+                              entity: commentState.comments[index],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(width: 8),
+                        itemCount: commentState.comments.length > 5
+                            ? commentState.comments.take(6).length
+                            : commentState.comments.length,
+                      ),
+                    )
+                  }
+                }
               ],
             ),
           );

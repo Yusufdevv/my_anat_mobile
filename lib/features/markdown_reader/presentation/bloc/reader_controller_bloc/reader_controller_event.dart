@@ -7,6 +7,7 @@ class SelectColor extends ReaderControllerEvent {
   final Color color;
   final Color textColor;
   final String colorName;
+
   SelectColor({
     required this.textColor,
     required this.color,
@@ -14,18 +15,8 @@ class SelectColor extends ReaderControllerEvent {
   });
 }
 
-class SelectFontFamily extends ReaderControllerEvent {
-  final String fontFamily;
-  SelectFontFamily({required this.fontFamily});
-}
+class SetWebPage extends ReaderControllerEvent {}
 
 class UpgradeFontSize extends ReaderControllerEvent {}
 
 class DowngradeFontSize extends ReaderControllerEvent {}
-
-class SetWebPageData extends ReaderControllerEvent {
-  final String data;
-  final String? colorName;
-  final double? fontSizePercentage;
-  SetWebPageData({required this.data, this.fontSizePercentage, this.colorName});
-}
