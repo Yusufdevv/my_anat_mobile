@@ -28,21 +28,16 @@ import 'package:anatomica/features/hospital_single/presentation/parts/hospital_c
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_conditions_horizontal_list.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_contacts.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_sevices.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_single_horizontal_list.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_specialists.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_vacancies_hosizontal_list.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_video.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/hospital_single_app_bar.dart';
-import 'package:anatomica/features/hospital_single/presentation/widgets/show_all_button.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
-import 'package:anatomica/features/map/presentation/widgets/article_item.dart';
-import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -50,13 +45,15 @@ class HospitalSingleScreen extends StatefulWidget {
   final String slug;
   final int id;
 
-  const HospitalSingleScreen({required this.id, required this.slug, Key? key}) : super(key: key);
+  const HospitalSingleScreen({required this.id, required this.slug, Key? key})
+      : super(key: key);
 
   @override
   State<HospitalSingleScreen> createState() => _HospitalSingleScreenState();
 }
 
-class _HospitalSingleScreenState extends State<HospitalSingleScreen> with TickerProviderStateMixin {
+class _HospitalSingleScreenState extends State<HospitalSingleScreen>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late HeaderManagerBloc _headerManagerBloc;
   late PageController _pageController;
@@ -71,15 +68,28 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
 
   int currentImage = 0;
   final tabs = <HospitalSingleWidgetType>[
-    HospitalSingleWidgetType(title: LocaleKeys.about_clinic, keyTitle: 'about_clinic', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.videos, keyTitle: 'videos', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.service, keyTitle: 'service', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.specialists, keyTitle: 'specialists', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.facility, keyTitle: 'facility', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.articles, keyTitle: 'articles', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.reviews, keyTitle: 'reviews', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.vacancy, keyTitle: 'vacancy', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.contact, keyTitle: 'contact', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.about_clinic,
+        keyTitle: 'about_clinic',
+        key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.videos, keyTitle: 'videos', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.service, keyTitle: 'service', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.specialists,
+        keyTitle: 'specialists',
+        key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.facility, keyTitle: 'facility', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.articles, keyTitle: 'articles', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.reviews, keyTitle: 'reviews', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.vacancy, keyTitle: 'vacancy', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.contact, keyTitle: 'contact', key: GlobalKey()),
   ];
 
   @override
@@ -94,31 +104,40 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
     super.initState();
 
     controller = AutoScrollController();
-    vacanciesBloc =
-        HospitalVacanciesBloc(GetHospitalVacancies(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-          ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
-    articlesBloc = HArticlesBloc(GetHArticlesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    vacanciesBloc = HospitalVacanciesBloc(GetHospitalVacancies(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+      ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
+    articlesBloc = HArticlesBloc(GetHArticlesUseCase(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HArticlesEvent.getArticles(organizationId: widget.id));
-    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(FacilitiesEvent.getFacilities(organizationId: widget.id));
     hospitalSpecialistBloc = HospitalSpecialistBloc(
-        GetHospitalSpecialistsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+        GetHospitalSpecialistsUseCase(
+            repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(HospitalSpecialistEvent.getSpecialists(organizationId: widget.id));
-    servicesBloc = ServicesBloc(GetServicesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    servicesBloc = ServicesBloc(GetServicesUseCase(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
       ..add(ServicesEvent.getServices(organizationId: widget.id));
 
     commentsBloc = CommentsBloc(
-        deletePostCommentUseCase: DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        doctorCommentDeleteUseCase:
-            DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-        doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-        GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+        deletePostCommentUseCase: DeletePostCommentUseCase(
+            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        doctorCommentDeleteUseCase: DoctorCommentDeleteUseCase(
+            repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+        doctorCommentUseCase: DoctorCommentUseCase(
+            repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+        GetCommentsUseCase(
+            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        postCommentUseCase: PostCommentUseCase(
+            repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(
+            repository: serviceLocator<DoctorSingleRepositoryImpl>()))
       ..add(CommentsEvent.getComments(organizationId: widget.id));
-    hospitalSingleBloc =
-        HospitalSingleBloc(GetSingleHospitalUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-          ..add(HospitalSingleEvent.getHospital(widget.slug));
+    hospitalSingleBloc = HospitalSingleBloc(GetSingleHospitalUseCase(
+        repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+      ..add(HospitalSingleEvent.getHospital(widget.slug));
     _tabController = TabController(length: tabs.length, vsync: this);
     _headerManagerBloc = HeaderManagerBloc();
     _pageController = PageController();
@@ -126,7 +145,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: controller.offset));
+    _headerManagerBloc
+        .add(ChangeHeaderScrollPosition(headerPosition: controller.offset));
   }
 
   @override
@@ -141,7 +161,9 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                 controller: controller,
                 //throttleDuration: const Duration(milliseconds: 300),
                 slivers: [
-                  HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
+                  HospitalSingleAppBar(
+                      headerManagerBloc: _headerManagerBloc,
+                      pageController: _pageController),
                   SliverPersistentHeader(
                     pinned: true,
                     delegate: TabBarHeaderDelegate(
@@ -164,13 +186,16 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                         const SizedBox(height: 20),
                         BlocProvider.value(
                           value: _headerManagerBloc,
-                          child: BlocBuilder<HeaderManagerBloc, HeaderManagerState>(
+                          child: BlocBuilder<HeaderManagerBloc,
+                              HeaderManagerState>(
                             builder: (context, headerManagerState) {
                               return InViewNotifierWidget(
                                 id: '1',
                                 builder: (context, isInView, child) {
-                                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                    if (isInView || !headerManagerState.isHeaderScrolled) {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((timeStamp) {
+                                    if (isInView ||
+                                        !headerManagerState.isHeaderScrolled) {
                                       _tabController.animateTo(0);
                                     }
                                   });
@@ -191,7 +216,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                         InViewNotifierWidget(
                           id: '2',
                           builder: (context, isInView, child) {
-                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((timeStamp) {
                               if (isInView) {
                                 _tabController.animateTo(1);
                               }
@@ -207,7 +233,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                               index: 1,
                               child: HospitalVideo(
                                   videoUrl: state.hospital.videoLink,
-                                  videoDescription: state.hospital.videoDescription,
+                                  videoDescription:
+                                      state.hospital.videoDescription,
                                   tabController: _tabController),
                             ),
                           ),
@@ -215,7 +242,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                         InViewNotifierWidget(
                             id: '3',
                             builder: (context, isInView, child) {
-                              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
                                 if (isInView) {
                                   _tabController.animateTo(2);
                                 }
@@ -227,11 +255,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 controller: controller,
                                 key: const ValueKey(2),
                                 index: 2,
-                                child: HospitalServices(servicesBloc: servicesBloc))),
+                                child: HospitalServices(
+                                    servicesBloc: servicesBloc))),
                         InViewNotifierWidget(
                             id: '4',
                             builder: (context, isInView, child) {
-                              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
                                 if (isInView) {
                                   _tabController.animateTo(3);
                                 }
@@ -243,11 +273,14 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 controller: controller,
                                 key: const ValueKey(3),
                                 index: 3,
-                                child: HospitalSpecialists(hospitalSpecialistBloc: hospitalSpecialistBloc))),
+                                child: HospitalSpecialists(
+                                    hospitalSpecialistBloc:
+                                        hospitalSpecialistBloc))),
                         InViewNotifierWidget(
                             id: '5',
                             builder: (context, isInView, child) {
-                              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
                                 if (isInView) {
                                   _tabController.animateTo(4);
                                 }
@@ -258,11 +291,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 controller: controller,
                                 key: const ValueKey(4),
                                 index: 4,
-                                child: HospitalConditionsHorizontalList(facilitiesBloc: facilitiesBloc))),
+                                child: HospitalConditionsHorizontalList(
+                                    facilitiesBloc: facilitiesBloc))),
                         InViewNotifierWidget(
                             id: '6',
                             builder: (context, isInView, child) {
-                              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
                                 if (isInView) {
                                   _tabController.animateTo(5);
                                 }
@@ -274,11 +309,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 controller: controller,
                                 key: const ValueKey(5),
                                 index: 5,
-                                child: HospitalArticlesHorizontalList(bloc: articlesBloc))),
+                                child: HospitalArticlesHorizontalList(
+                                    bloc: articlesBloc))),
                         InViewNotifierWidget(
                             id: '7',
                             builder: (context, isInView, child) {
-                              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
                                 if (isInView) {
                                   _tabController.animateTo(6);
                                 }
@@ -291,11 +328,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 key: const ValueKey(6),
                                 index: 6,
                                 child: HospitalCommentsHorizontalList(
-                                    commentsBloc: commentsBloc, hospital: state.hospital))),
+                                    commentsBloc: commentsBloc,
+                                    hospital: state.hospital))),
                         InViewNotifierWidget(
                             id: '8',
                             builder: (context, isInView, child) {
-                              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
                                 if (isInView) {
                                   _tabController.animateTo(7);
                                 }
@@ -307,11 +346,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                 controller: controller,
                                 key: const ValueKey(7),
                                 index: 7,
-                                child: HospitalVacanciesHorizontalList(vacanciesBloc: vacanciesBloc))),
+                                child: HospitalVacanciesHorizontalList(
+                                    vacanciesBloc: vacanciesBloc))),
                         InViewNotifierWidget(
                           id: '9',
                           builder: (context, isInView, child) {
-                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((timeStamp) {
                               if (isInView) {
                                 _tabController.animateTo(8);
                               }
@@ -329,7 +370,9 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                               phone: state.hospital.phoneNumber,
                               telegram: state.hospital.telegram,
                               website: state.hospital.website,
-                              phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
+                              phoneNumbers: state.hospital.phoneNumbers
+                                  .map((e) => e.phoneNumber)
+                                  .toList(),
                             ),
                           ),
                         ),
@@ -337,95 +380,15 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                     ),
                   ),
                 ],
-                isInViewPortCondition: (double deltaTop, double deltaBottom, double viewPortDimension) =>
-                    deltaTop < (0.01 * viewPortDimension) && deltaBottom > (0.01 * viewPortDimension),
+                isInViewPortCondition: (double deltaTop, double deltaBottom,
+                        double viewPortDimension) =>
+                    deltaTop < (0.01 * viewPortDimension) &&
+                    deltaBottom > (0.01 * viewPortDimension),
               );
             },
           ),
         ),
         backgroundColor: textFieldColor,
-      ),
-    );
-  }
-}
-
-class HospitalArticlesHorizontalList extends StatelessWidget {
-  final HArticlesBloc bloc;
-
-  const HospitalArticlesHorizontalList({required this.bloc, Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: white,
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.only(top: 12, bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16, bottom: 16),
-            child: Text(
-              LocaleKeys.articles.tr(),
-              style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
-            ),
-          ),
-          BlocProvider.value(
-            value: bloc,
-            child: BlocBuilder<HArticlesBloc, HArticlesState>(
-              builder: (context, state) {
-                if (state.status.isSubmissionInProgress) {
-                  return const SizedBox(
-                    height: 98,
-                    child: Center(
-                      child: CupertinoActivityIndicator(),
-                    ),
-                  );
-                } else if (state.status.isSubmissionSuccess) {
-                  if (state.articles.isEmpty) {
-                    return Center(
-                      child: EmptyWidget(
-                        hasMargin: false,
-                        hasPadding: false,
-                        title: LocaleKeys.no_articles.tr(),
-                        content: LocaleKeys.no_articles.tr(),
-                      ),
-                    );
-                  } else {
-                    return SizedBox(
-                      height: 98,
-                      child: ListView.separated(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: state.articles.length > 5 ? state.articles.take(6).length : state.articles.length,
-                        itemBuilder: (context, index) {
-                          print(state.articles.take(5).map((e) => e.title).toList());
-                          if (index == 5) {
-                            return ShowAllButton(
-                                title: 'Все статьи',
-                                width: MediaQuery.of(context).size.shortestSide - 32,
-                                onTap: () {});
-                          }
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.shortestSide - 32,
-                            child: HospitalArticleItem(
-                              showShadow: false,
-                              entity: state.articles.take(5).toList()[index],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) => const SizedBox(width: 8),
-                      ),
-                    );
-                  }
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ),
-        ],
       ),
     );
   }

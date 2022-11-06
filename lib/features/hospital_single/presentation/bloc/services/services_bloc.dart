@@ -16,7 +16,8 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress,
       ));
-      final result = await getServices(ServiceParameters(id: event.organizationId));
+      final result =
+          await getServices(ServiceParameters(id: event.organizationId));
       if (result.isRight) {
         emit(
           state.copyWith(
@@ -36,12 +37,10 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
     });
     on<_GetMoreServices>((event, emit) async {
       emit(
-        state.copyWith(
-          paginationStatus: FormzStatus.submissionInProgress,
-        ),
+        state.copyWith(paginationStatus: FormzStatus.submissionInProgress),
       );
-      final result =
-          await getServices(ServiceParameters(id: state.hospitalId, next: state.next, query: state.searchQuery));
+      final result = await getServices(ServiceParameters(
+          id: state.hospitalId, next: state.next, query: state.searchQuery));
       if (result.isRight) {
         emit(
           state.copyWith(
@@ -52,16 +51,15 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
           ),
         );
       } else {
-        emit(state.copyWith(
-          paginationStatus: FormzStatus.submissionSuccess,
-        ));
+        emit(state.copyWith(paginationStatus: FormzStatus.submissionSuccess));
       }
     });
     on<_SearchServices>((event, emit) async {
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress,
       ));
-      final result = await getServices(ServiceParameters(id: state.hospitalId, query: event.query));
+      final result = await getServices(
+          ServiceParameters(id: state.hospitalId, query: event.query));
       if (result.isRight) {
         emit(
           state.copyWith(
