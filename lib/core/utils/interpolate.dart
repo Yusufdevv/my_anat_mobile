@@ -57,12 +57,12 @@ class Interpolate {
     return 0;
   }
 
-  static double _interpolateLine(List<double> x, List<double> y, double val) {
+  static double _interpolateLine(List<double> x, List<double> y, double value) {
     final x0 = x[0];
     final x1 = x[1];
     final y0 = y[0];
     final y1 = y[1];
-    final _val = y0 + (val - x0) * ((y1 - y0) / (x1 - x0));
-    return _val;
+    final val = y0 + (value - x0) * ((y1 - y0) / (x1 - x0));
+    return val;
   }
 }

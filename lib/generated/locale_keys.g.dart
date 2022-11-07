@@ -280,5 +280,12 @@ abstract class  LocaleKeys {
   static const no_video = 'no_video';
   static const no_info = 'no_info';
   static const show_all = 'show_all';
+  static const onboarding_1 = 'onboarding_1';
+  static const onboarding_2 = 'onboarding_2';
+  static const onboarding_3 = 'onboarding_3';
+  static const onboarding_1_content = 'onboarding_1_content';
+  static const onboarding_2_content = 'onboarding_2_content';
+  static const onboarding_3_content = 'onboarding_3_content';
+  static const onboarding_4_content = 'onboarding_4_content';
 
 }

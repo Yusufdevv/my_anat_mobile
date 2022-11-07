@@ -1,0 +1,1 @@
+enum DotSliderAnimation { sizeTransition, dotMovement }

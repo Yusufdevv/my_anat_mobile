@@ -33,6 +33,7 @@ import 'package:anatomica/features/journal/presentation/bloc/download/download_b
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/onboarding/presentation/pages/on_boarding_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_crashlytics/firebase_crashlytics.dart' as fire;
@@ -44,8 +45,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
   // FlutterError.onError =
   //     fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -56,25 +56,17 @@ Future<void> main() async {
         Locale('ru'),
         Locale('uz'),
       ],
-      fallbackLocale: Locale(
-          StorageRepository.getString('device_language', defValue: 'uz')),
-      startLocale: Locale(
-          StorageRepository.getString('device_language', defValue: 'uz')),
+      fallbackLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
+      startLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
       saveLocale: true,
       child: const MyApp()));
-  // runZonedGuarded(
-  //     () => , (error, stack) {
-  //   print('error from zone: $error');
-  //   fire.FirebaseCrashlytics.instance.recordError(error, stack);
-  // });
 }
 
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
 
@@ -178,8 +170,16 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
-              navigator.pushAndRemoveUntil(
-                  fade(page: const HomeScreen()), (route) => false);
+              if (!StorageRepository.getBool('onboarding', defValue: false)) {
+                navigator.pushAndRemoveUntil(
+                    fade(
+                      page: const OnBoardingScreen(),
+                    ),
+                    (route) => false);
+              } else {
+                navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
+              }
+
               // switch (state.status) {
               //   case AuthenticationStatus.unauthenticated:
               //     navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);

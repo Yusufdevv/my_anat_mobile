@@ -293,7 +293,14 @@ class CodegenLoader extends AssetLoader{
   "videos": "Видео",
   "no_video": "Видео недоступно",
   "no_info": "Информации о клинике нет.",
-  "show_all": "Показать все"
+  "show_all": "Показать все",
+  "onboarding_1": "Функция “Карты”",
+  "onboarding_2": "Журнал",
+  "onboarding_3": "Вакансии",
+  "onboarding_1_content": "Возможность отслеживать на карте ближайшие клиники, врачи.",
+  "onboarding_2_content": "Приобретайте электронные версии выпусков ANATOMICA, читайте и сохраняйте в удобном для вас формате!",
+  "onboarding_3_content": "Если ваша организация находится в поисках специалистов, опубликуйте объявление в разделе \"Вакансии\"",
+  "onboarding_4_content": "Оформите годовую подписку и воспользуйтесь расширенными функциями приложения."
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -574,7 +581,14 @@ static const Map<String,dynamic> uz = {
   "videos": "Video",
   "no_video": "Video mavjud emas",
   "no_info": "Klinika haqida ma'lumot mavjud emas",
-  "show_all": "Barchasini ko'rish"
+  "show_all": "Barchasini ko'rish",
+  "onboarding_1": "“Xaritalar” funksiyasi",
+  "onboarding_2": "Jurnal",
+  "onboarding_3": "Vakansiyalar",
+  "onboarding_1_content": "Xaritada eng yaqin klinikalarni, shifokorlarni kuzatish imkoniyati.",
+  "onboarding_2_content": "ANATOMICA nashrlarining elektron versiyalarini sotib oling, o'qing va o'zingiz uchun qulay formatda saqlang!",
+  "onboarding_3_content": "Agar tashkilotingiz mutaxassislarni qidirayotgan bo'lsa, “Vakansiyalar“ bo'limiga e'lon qo'ying",
+  "onboarding_4_content": "Yillik obuna uchun ro'yxatdan o'ting va ilovaning ilg'or xususiyatlaridan bahramand bo'ling."
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }
