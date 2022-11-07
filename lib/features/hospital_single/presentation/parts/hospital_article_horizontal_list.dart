@@ -1,8 +1,11 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/h_articles/h_articles_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/all_hospital_items_screen.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_articles.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/show_all_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/article_item.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,9 +67,21 @@ class HospitalArticlesHorizontalList extends StatelessWidget {
                           print(state.articles.take(5).map((e) => e.title).toList());
                           if (index == 5) {
                             return ShowAllButton(
-                                title: 'Все статьи',
-                                width: MediaQuery.of(context).size.shortestSide - 32,
-                                onTap: () {});
+                              title: 'Все статьи',
+                              width: MediaQuery.of(context).size.shortestSide - 32,
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  fade(
+                                    page: AllHospitalItemsScreen(
+                                      appbarTitle: LocaleKeys.articles.tr(),
+                                      child: HospitalArticles(
+                                        bloc: bloc,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
                           }
                           return SizedBox(
                             width: MediaQuery.of(context).size.shortestSide - 32,

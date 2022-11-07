@@ -1,8 +1,11 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/vacancies/hospital_vacancies_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/all_hospital_items_screen.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_vacancies.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/show_all_button.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_vacancy_item.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -56,7 +59,18 @@ class HospitalVacanciesHorizontalList extends StatelessWidget {
                         itemBuilder: (context, index) {
                           if (index == 5) {
                             return ShowAllButton(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  fade(
+                                    page: AllHospitalItemsScreen(
+                                      appbarTitle: LocaleKeys.vacancy.tr(),
+                                      child: HospitalVacancies(
+                                        hospitalVacanciesBloc: vacanciesBloc,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                               width: MediaQuery.of(context).size.shortestSide - 32,
                               title: 'Все вакансии',
                             );

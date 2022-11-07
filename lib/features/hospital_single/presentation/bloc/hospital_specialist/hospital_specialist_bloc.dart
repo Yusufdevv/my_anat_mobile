@@ -34,8 +34,6 @@ class HospitalSpecialistBloc extends Bloc<HospitalSpecialistEvent, HospitalSpeci
       }
     });
     on<_GetMoreSpecialists>((event, emit) async {
-      emit(state.copyWith(paginationStatus: FormzStatus.submissionInProgress));
-
       final result = await getSpecialists(TypeParameter(id: state.organizationId, next: state.next));
       if (result.isRight) {
         emit(
@@ -46,8 +44,6 @@ class HospitalSpecialistBloc extends Bloc<HospitalSpecialistEvent, HospitalSpeci
             specialists: [...state.specialists, ...result.right.results],
           ),
         );
-      } else {
-        emit(state.copyWith(paginationStatus: FormzStatus.submissionFailure));
       }
     });
   }

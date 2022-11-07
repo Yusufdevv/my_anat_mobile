@@ -150,15 +150,13 @@ class CommentItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Text(
-                entity.comment,
-                maxLines: isMainScreen ? 2 : null,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Text(
+              entity.comment,
+              maxLines: isMainScreen ? 2 : null,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           )
         ],
