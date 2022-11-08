@@ -1,3 +1,4 @@
+import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/features/profile/domain/usecases/edit_profile.dart';
 import 'package:anatomica/features/profile/domain/usecases/upload_img.dart';
 import 'package:bloc/bloc.dart';
@@ -8,9 +9,7 @@ import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'edit_profile_bloc.freezed.dart';
-
 part 'edit_profile_event.dart';
-
 part 'edit_profile_state.dart';
 
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
@@ -50,35 +49,32 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           map.putIfAbsent('img', () => state.imageId);
         }
         if (state.birthDate.isNotEmpty) {
-          map.addAll({
-            "birth_day":state.birthDate
-
-          });
+          map.addAll({"birth_day": state.birthDate});
         }
         print(map);
-        final result =
-            await _editProfileUseCase.call(EditProfileParams(data: map));
+        final result = await _editProfileUseCase.call(EditProfileParams(data: map));
         if (result.isRight) {
           emit(state.copyWith(status: FormzStatus.submissionSuccess));
           event.onSuccess();
         } else {
           emit(state.copyWith(status: FormzStatus.submissionFailure));
-          event.onError(result.left.toString());
+          if (result.left is ServerFailure) {
+            event.onError((result.left as ServerFailure).errorMessage);
+          } else {
+            event.onError(result.left.toString());
+          }
         }
       }
     });
     on<_ChangeImage>((event, emit) async {
       var formData = FormData();
 
-      formData.files
-          .add(MapEntry('img', await MultipartFile.fromFile(event.image)));
+      formData.files.add(MapEntry('img', await MultipartFile.fromFile(event.image)));
 
       final result = await _uploadUseCase(formData);
       if (result.isRight) {
         emit(state.copyWith(
-            status: FormzStatus.submissionSuccess,
-            imageId: result.right.id,
-            imageUrl: result.right.img));
+            status: FormzStatus.submissionSuccess, imageId: result.right.id, imageUrl: result.right.img));
       } else {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
       }
@@ -90,8 +86,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       emit(state.copyWith(email: event.text));
     });
     on<_ChangePhoneNumber>((event, emit) {
-      emit(
-          state.copyWith(phoneNumber: '+998${event.text.replaceAll(' ', '')}'));
+      emit(state.copyWith(phoneNumber: '+998${event.text.replaceAll(' ', '')}'));
     });
     on<_ChangeName>((event, emit) {
       emit(state.copyWith(firstName: event.text));

@@ -206,12 +206,12 @@ class DoctorSingleAppBar extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        if (doctor.organization.isNotEmpty) {
+                                        if (doctor.organization.id != 0) {
                                           Navigator.of(context).push(
                                             fade(
                                               page: HospitalSingleScreen(
-                                                id: doctor.organization.first.id,
-                                                slug: doctor.organization.first.slug,
+                                                id: doctor.organization.id,
+                                                slug: doctor.organization.slug,
                                               ),
                                             ),
                                           );
@@ -234,7 +234,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                     Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                               ),
                                             ),
-                                            if (doctor.organization.isNotEmpty) ...[
+                                            if (doctor.organization.id != 0) ...[
                                               const SizedBox(width: 4),
                                               SvgPicture.asset(AppIcons.externalLink)
                                             ]
@@ -298,17 +298,16 @@ class DoctorSingleAppBar extends StatelessWidget {
                                               //   await launchUrlString(doctor.organization.locationUrl,
                                               //       mode: LaunchMode.externalApplication);
                                               // }
-                                              if (doctor.organization.isNotEmpty) {
+                                              if (doctor.organization.id != 0) {
                                                 if (Platform.isAndroid) {
                                                   if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
                                                     await MapLauncher.showDirections(
                                                         mapType: MapType.google,
-                                                        destination: Coords(doctor.organization.first.latitude,
-                                                            doctor.organization.first.longitude));
+                                                        destination: Coords(doctor.organization.latitude,
+                                                            doctor.organization.longitude));
                                                   } else {
-                                                    if (await canLaunchUrlString(
-                                                        doctor.organization.first.locationUrl)) {
-                                                      await launchUrlString(doctor.organization.first.locationUrl);
+                                                    if (await canLaunchUrlString(doctor.organization.locationUrl)) {
+                                                      await launchUrlString(doctor.organization.locationUrl);
                                                     } else {
                                                       throw 'Can not open Google maps';
                                                     }
@@ -317,12 +316,11 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                   if (await MapLauncher.isMapAvailable(MapType.apple) ?? false) {
                                                     await MapLauncher.showDirections(
                                                         mapType: MapType.apple,
-                                                        destination: Coords(doctor.organization.first.latitude,
-                                                            doctor.organization.first.longitude));
+                                                        destination: Coords(doctor.organization.latitude,
+                                                            doctor.organization.longitude));
                                                   } else {
-                                                    if (await canLaunchUrlString(
-                                                        doctor.organization.first.locationUrl)) {
-                                                      await launchUrlString(doctor.organization.first.locationUrl);
+                                                    if (await canLaunchUrlString(doctor.organization.locationUrl)) {
+                                                      await launchUrlString(doctor.organization.locationUrl);
                                                     } else {
                                                       throw 'Can not open Google maps';
                                                     }

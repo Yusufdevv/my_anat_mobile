@@ -28,10 +28,7 @@ OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
                   .fromJson(e as Map<String, dynamic>?))
               .toList() ??
           [],
-      logo: json['logo'] == null
-          ? const ImageEntity()
-          : const ImageConverter()
-              .fromJson(json['logo'] as Map<String, dynamic>?),
+      logo: json['logo'] as String? ?? '',
       locationUrl: json['location_url'] as String? ?? '',
       images: (json['images'] as List<dynamic>?)
               ?.map((e) =>
@@ -48,7 +45,7 @@ Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
       'id': instance.id,
       'title': instance.title,
       'slug': instance.slug,
-      'logo': const ImageConverter().toJson(instance.logo),
+      'logo': instance.logo,
       'images': instance.images.map(const ImageConverter().toJson).toList(),
       'address': instance.address,
       'phone_number': instance.phoneNumber,

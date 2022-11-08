@@ -33,8 +33,7 @@ CandidateOrganizationModel _$CandidateOrganizationModelFromJson(
     CandidateOrganizationModel(
       id: json['id'] as int? ?? 0,
       title: json['title'] as String? ?? '',
-      logo: const LogoEntityConverter()
-          .fromJson(json['logo'] as Map<String, dynamic>?),
+      logo: json['logo'] as String? ?? '',
       slug: json['slug'] as String? ?? '',
       address: json['address'] as String? ?? '',
       rating: (json['rating'] as num?)?.toDouble() ?? 0,
@@ -65,7 +64,7 @@ Map<String, dynamic> _$CandidateOrganizationModelToJson(
       'id': instance.id,
       'title': instance.title,
       'slug': instance.slug,
-      'logo': const LogoEntityConverter().toJson(instance.logo),
+      'logo': instance.logo,
       'images': instance.images,
       'address': instance.address,
       'phone_numbers': instance.phoneNumbers,

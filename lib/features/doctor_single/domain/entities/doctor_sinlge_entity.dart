@@ -39,7 +39,7 @@ class DoctorSingleEntity extends Equatable {
   final ImageEntity img;
   final int commentCount;
   @OrganizationConverter()
-  final List<OrganizationEntity> organization;
+  final OrganizationEntity organization;
   const DoctorSingleEntity(
       {this.id = 0,
       this.fullName = '',
@@ -62,7 +62,7 @@ class DoctorSingleEntity extends Equatable {
       this.moderationStatus = '',
       this.img = const ImageEntity(),
       this.commentCount = 0,
-      this.organization = const []});
+      this.organization = const OrganizationEntity()});
 
   @override
   List<Object?> get props => [

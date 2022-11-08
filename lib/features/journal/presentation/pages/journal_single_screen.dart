@@ -98,8 +98,8 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
-                      child: BlocBuilder<DownloadBloc, DownloadState>(
-                        builder: (context, downloadState) {
+                      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                        builder: (context, authState) {
                           return JournalSingleBigItem(
                             onTap: () {
                               Navigator.of(context).push(
@@ -130,30 +130,47 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                                   slug: widget.journal.slug,
                                 )));
                               } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (ctx) => BuyDialog(
-                                    onPaymentTap: () {
-                                      Navigator.of(context, rootNavigator: true).push(
-                                        fade(
-                                          page: PaymentScreen(
-                                            price: state.journalSingle.price,
-                                            title: state.journalSingle.redaction,
-                                            imageUrl: state.journalSingle.image.middle,
-                                            isJournal: true,
-                                            isRegistered: context.read<AuthenticationBloc>().state.status ==
-                                                AuthenticationStatus.authenticated,
-                                            subtitle: state.journalSingle.redaction,
-                                            id: state.journalSingle.id,
+                                if (authState.status == AuthenticationStatus.unauthenticated) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (ctx) => BuyDialog(
+                                      onPaymentTap: () {
+                                        Navigator.of(context, rootNavigator: true).push(
+                                          fade(
+                                            page: PaymentScreen(
+                                              price: state.journalSingle.price,
+                                              title: state.journalSingle.redaction,
+                                              imageUrl: state.journalSingle.image.middle,
+                                              isJournal: true,
+                                              isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                                  AuthenticationStatus.authenticated,
+                                              subtitle: state.journalSingle.redaction,
+                                              id: state.journalSingle.id,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    onRegistrationTap: () {
-                                      Navigator.of(context).push(fade(page: const RegisterScreen()));
-                                    },
-                                  ),
-                                );
+                                        );
+                                      },
+                                      onRegistrationTap: () {
+                                        Navigator.of(context).push(fade(page: const RegisterScreen()));
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.of(context, rootNavigator: true).push(
+                                    fade(
+                                      page: PaymentScreen(
+                                        price: state.journalSingle.price,
+                                        title: state.journalSingle.redaction,
+                                        imageUrl: state.journalSingle.image.middle,
+                                        isJournal: true,
+                                        isRegistered: context.read<AuthenticationBloc>().state.status ==
+                                            AuthenticationStatus.authenticated,
+                                        subtitle: state.journalSingle.redaction,
+                                        id: state.journalSingle.id,
+                                      ),
+                                    ),
+                                  );
+                                }
                               }
                             },
                             journalEntity: widget.journal,

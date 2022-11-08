@@ -67,7 +67,7 @@ class CandidateItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     HighlightedText(
-                      allText: candidateListEntity.specialization.title,
+                      allText: candidateListEntity.position,
                       textStyle: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
                       overflow: TextOverflow.ellipsis,
                       highlightedText: searchText,

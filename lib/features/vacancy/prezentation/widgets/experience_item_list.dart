@@ -35,7 +35,7 @@ class ExperienceItemList extends StatelessWidget {
                   (index) => ExperienceItem(
                     title: state.workEntity[index].organization.title,
                     subTitle: state.workEntity[index].position,
-                    image: state.workEntity[index].organization.logo.middle,
+                    image: state.workEntity[index].organization.logo,
                     isLast: index == state.workEntity.length - 1,
                   ),
                 ),

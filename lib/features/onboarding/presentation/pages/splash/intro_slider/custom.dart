@@ -2,9 +2,8 @@ import 'dart:ui';
 
 import 'package:anatomica/core/utils/interpolate.dart';
 import 'package:anatomica/features/onboarding/domain/entities/splash_entity.dart';
+import 'package:anatomica/features/onboarding/presentation/pages/splash/intro_slider/image.dart';
 import 'package:flutter/material.dart';
-
-import 'image.dart';
 
 class CustomBuilderAnimation extends StatefulWidget {
   final int index;
@@ -93,9 +92,7 @@ class _CustomBuilderAnimationState extends State<CustomBuilderAnimation> {
       if (index > 0) value = (1 - (value.abs() * 0.2)).clamp(0.0, 1.0);
     }
     final deviceHeight = MediaQuery.of(context).size.height;
-    double width = deviceHeight > 700 ? 320 : 250;
-
-    // ignore: missing_return
+    final deviceWidth = MediaQuery.of(context).size.width;
     double? rotate(value) {
       switch (index) {
         case 0:
@@ -118,15 +115,17 @@ class _CustomBuilderAnimationState extends State<CustomBuilderAnimation> {
       return null;
     }
 
+    print(deviceHeight);
+
     return Center(
       child: Container(
         alignment: Alignment(0, MediaQuery.of(context).size.height < 700 ? -0.20 : -0.10),
         child: Transform.rotate(
           angle: rotate(value) ?? 0,
           child: SizedBox(
-            height: MediaQuery.of(context).size.height < 700
-                ? Curves.linear.transform(value) * width * 1.06
-                : Curves.linear.transform(value) * width * 1.3,
+            height: deviceHeight < 700
+                ? Curves.linear.transform(value) * deviceWidth * 0.8
+                : Curves.linear.transform(value) * deviceWidth,
             child: index == widget.currentPage
                 ? Column(
                     children: <Widget>[

@@ -4,6 +4,7 @@ import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/user_entity.dart';
+import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/phone_text_field.dart';
@@ -150,7 +151,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           );
                           Navigator.pop(context);
                         },
-                        onError: (message) {}));
+                        onError: (message) {
+                          context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                        }));
                   },
                 ),
                 body: ListView(

@@ -33,6 +33,14 @@ class VacancyItem extends StatelessWidget {
         margin: margin ?? const EdgeInsets.fromLTRB(16, 0, 16, 0),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
+          color: white,
+          boxShadow: [
+            BoxShadow(
+              color: darkerGreen.withOpacity(0.09),
+              offset: const Offset(0, 8),
+              blurRadius: 24,
+            ),
+          ],
           borderRadius: BorderRadius.circular(12),
           border: Border.all(width: 1, color: lilyWhite),
         ),

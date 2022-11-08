@@ -17,13 +17,7 @@ class OnBoardingScreen extends StatelessWidget {
     return IntroSlider(
       isShowDotIndicator: true,
       isShowDoneBtn: true,
-      onDonePress: () {
-        // Navigator.of(context)
-        //     .pushAndRemoveUntil<void>(
-        //   NewsScreen.route(),
-        //   (route) => false,
-        // );
-      },
+      onDonePress: () {},
       renderDoneBtn: Container(
         padding: const EdgeInsets.all(15),
         height: 54,

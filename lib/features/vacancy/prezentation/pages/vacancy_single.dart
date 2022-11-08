@@ -76,8 +76,7 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                   return [
                     VacancySingleAppBar(
                       vacancy: state.vacancyListEntity,
-                      shareValue:
-                          'https://anatomica.uz/vacancy/vacancy/${state.vacancyListEntity.slug}/detail/',
+                      shareValue: 'https://anatomica.uz/vacancy/vacancy/${state.vacancyListEntity.slug}/detail/',
                     ),
                     VacancySingleAppBarHeader(vacancyEntity: state.vacancyListEntity),
                   ];
@@ -231,45 +230,45 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                   children: [
                                     VacancyTitleText(title: LocaleKeys.information_work.tr()),
                                     Html(data: state.vacancyListEntity.description),
-                                    Text(
-                                      '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt).tr()}',
-                                      style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    state.vacancyListEntity.organization.phoneNumbers.isEmpty
-                                        ? const SizedBox()
-                                        : WButton(
-                                            onTap: () {
-                                              showPhonesBottomSheet(
-                                                  context,
-                                                  state.vacancyListEntity.organization.phoneNumbers
-                                                      .map((e) => e.phoneNumber)
-                                                      .toList());
-                                            },
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                SvgPicture.asset(AppIcons.phone, color: white),
-                                                const SizedBox(width: 8),
-                                                Text(
-                                                  LocaleKeys.show_number.tr(),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline2!
-                                                      .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
-                                                )
-                                              ],
-                                            ),
-                                          )
                                   ],
                                 ),
                               ),
+                              const SizedBox(height: 12),
+                              Text(
+                                '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt).tr()}',
+                                style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                              ),
+                              const SizedBox(height: 16),
+                              state.vacancyListEntity.organization.phoneNumbers.isEmpty
+                                  ? const SizedBox()
+                                  : WButton(
+                                      onTap: () {
+                                        showPhonesBottomSheet(
+                                            context,
+                                            state.vacancyListEntity.organization.phoneNumbers
+                                                .map((e) => e.phoneNumber)
+                                                .toList());
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(AppIcons.phone, color: white),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            LocaleKeys.show_number.tr(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2!
+                                                .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                               const SizedBox(height: 20),
                               VacancyTitleText(
                                   title: '${state.relatedVacancyList.length} ${LocaleKeys.similar_vacancy.tr()}'),
-                              const SizedBox(height: 16),
                               Paginator(
-                                padding: const EdgeInsets.only(top: 20),
+                                padding: const EdgeInsets.only(top: 18),
                                 paginatorStatus: state.paginatorStatus,
                                 errorWidget: const Text('Fail'),
                                 itemBuilder: (context, index) {

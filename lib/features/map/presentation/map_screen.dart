@@ -171,6 +171,20 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                     },
                   ),
                 ),
+                Positioned(
+                  right: 0,
+                  left: 0,
+                  top: 0,
+                  child: Container(
+                    height: MediaQuery.of(context).padding.top + 84,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [white.withOpacity(0.65), white.withOpacity(0)],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter),
+                    ),
+                  ),
+                ),
                 BlocConsumer<MapOrganizationBloc, MapOrganizationState>(
                   listener: (context, state) {
                     _searchFieldController.text = state.searchText;
@@ -407,6 +421,14 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                         ),
                       )
                     ],
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  left: 0,
+                  top: 0,
+                  child: Container(
+                    height: MediaQuery.of(context).padding.top + 84,
                   ),
                 )
               ],

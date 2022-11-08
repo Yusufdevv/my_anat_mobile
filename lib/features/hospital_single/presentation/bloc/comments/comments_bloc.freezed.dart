@@ -870,12 +870,12 @@ class _$_PostComment implements _PostComment {
         (other.runtimeType == runtimeType &&
             other is _$_PostComment &&
             (identical(other.comment, comment) || other.comment == comment) &&
-            (identical(other.onSuccess, onSuccess) ||
-                other.onSuccess == onSuccess));
+            const DeepCollectionEquality().equals(other.onSuccess, onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, comment, onSuccess);
+  int get hashCode => Object.hash(
+      runtimeType, comment, const DeepCollectionEquality().hash(onSuccess));
 
   @JsonKey(ignore: true)
   @override

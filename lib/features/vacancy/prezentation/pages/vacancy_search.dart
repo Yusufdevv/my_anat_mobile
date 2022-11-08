@@ -11,6 +11,7 @@ import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_search_bloc/vacancy_search_bloc.dart';
+import 'package:anatomica/features/vacancy/prezentation/pages/candidate_single.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy_single.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/search_empty.dart';
@@ -192,8 +193,10 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                         searchText: controller.text,
                         candidateListEntity: state.candidateList[index],
                         onTap: () {
-                          Navigator.of(context)
-                              .push(fade(page: VacancySingleScreen(slug: state.vacancyList[index].slug)));
+                          Navigator.of(context).push(fade(
+                              page: SingleCandidateScreen(
+                            id: state.candidateList[index].id,
+                          )));
                         },
                       );
                     },

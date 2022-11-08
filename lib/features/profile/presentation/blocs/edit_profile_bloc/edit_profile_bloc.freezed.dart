@@ -1168,12 +1168,12 @@ class _$_SaveData implements _SaveData {
         (other.runtimeType == runtimeType &&
             other is _$_SaveData &&
             (identical(other.onError, onError) || other.onError == onError) &&
-            (identical(other.onSuccess, onSuccess) ||
-                other.onSuccess == onSuccess));
+            const DeepCollectionEquality().equals(other.onSuccess, onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, onError, onSuccess);
+  int get hashCode => Object.hash(
+      runtimeType, onError, const DeepCollectionEquality().hash(onSuccess));
 
   @JsonKey(ignore: true)
   @override

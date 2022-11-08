@@ -159,12 +159,12 @@ class _$_SendCode implements _SendCode {
         (other.runtimeType == runtimeType &&
             other is _$_SendCode &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.onSuccess, onSuccess) ||
-                other.onSuccess == onSuccess));
+            const DeepCollectionEquality().equals(other.onSuccess, onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, phone, onSuccess);
+  int get hashCode => Object.hash(
+      runtimeType, phone, const DeepCollectionEquality().hash(onSuccess));
 
   @JsonKey(ignore: true)
   @override
@@ -324,12 +324,12 @@ class _$_ResendCode implements _ResendCode {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ResendCode &&
-            (identical(other.onSuccess, onSuccess) ||
-                other.onSuccess == onSuccess));
+            const DeepCollectionEquality().equals(other.onSuccess, onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, onSuccess);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(onSuccess));
 
   @JsonKey(ignore: true)
   @override
@@ -692,14 +692,14 @@ class _$_SendRestore implements _SendRestore {
             other is _$_SendRestore &&
             (identical(other.isJournal, isJournal) ||
                 other.isJournal == isJournal) &&
-            (identical(other.onSuccess, onSuccess) ||
-                other.onSuccess == onSuccess) &&
+            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
             (identical(other.signature, signature) ||
                 other.signature == signature));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isJournal, onSuccess, signature);
+  int get hashCode => Object.hash(runtimeType, isJournal,
+      const DeepCollectionEquality().hash(onSuccess), signature);
 
   @JsonKey(ignore: true)
   @override

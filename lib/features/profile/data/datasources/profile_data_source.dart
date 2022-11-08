@@ -78,6 +78,15 @@ class ProfileDatasourceImpl extends ProfileDatasource {
       print(response.statusCode);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
+        if (response.data is Map) {
+          throw ServerException(
+              errorMessage: ((response.data as Map)['email'] is List)
+                  ? ((response.data as Map)['email'] as List).isNotEmpty
+                      ? ((response.data as Map)['email'] as List).first.toString()
+                      : (response.data as Map)['email'].toString()
+                  : response.data.toString(),
+              statusCode: response.statusCode ?? 0);
+        }
         throw ServerException(errorMessage: response.data.toString(), statusCode: response.statusCode ?? 0);
       }
     } on ServerException {

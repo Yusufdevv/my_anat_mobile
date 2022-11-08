@@ -2,12 +2,7 @@ import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/data/models/type_model.dart';
-import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
-import 'package:anatomica/features/auth/domain/entities/phone_number_entity.dart';
-import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
-import 'package:anatomica/features/auth/domain/entities/type_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_work.dart';
-import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -52,8 +47,8 @@ class CandidateOrganization extends Equatable {
   final String title;
   @JsonKey(defaultValue: '')
   final String slug;
-  @LogoEntityConverter()
-  final LogoEntity logo;
+  @JsonKey(defaultValue: '')
+  final String logo;
   @JsonKey(defaultValue: [])
   final List<ImageModel> images;
   @JsonKey(defaultValue: '')
@@ -84,30 +79,16 @@ class CandidateOrganization extends Equatable {
       required this.locationUrl,
       required this.images,
       required this.workAllDay});
-
-  List<Object?> get props => [
-        id,
-        title,
-        logo,
-        slug,
-        address,
-        rating,
-        specialization,
-        phoneNumbers,
-        types,
-        locationUrl,
-        images,
-        workAllDay
-      ];
+  @override
+  List<Object?> get props =>
+      [id, title, logo, slug, address, rating, specialization, phoneNumbers, types, locationUrl, images, workAllDay];
 }
 
-class CandidateOrganizationConverter
-    implements JsonConverter<CandidateOrganization, Map<String, dynamic>?> {
+class CandidateOrganizationConverter implements JsonConverter<CandidateOrganization, Map<String, dynamic>?> {
   const CandidateOrganizationConverter();
 
   @override
-  CandidateOrganization fromJson(Map<String, dynamic>? json) =>
-      CandidateOrganizationModel.fromJson(json ?? {});
+  CandidateOrganization fromJson(Map<String, dynamic>? json) => CandidateOrganizationModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(CandidateOrganization object) => {};

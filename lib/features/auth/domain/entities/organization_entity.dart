@@ -15,8 +15,8 @@ class OrganizationEntity extends Equatable {
   final String title;
   @JsonKey(defaultValue: '')
   final String slug;
-  @ImageConverter()
-  final ImageEntity logo;
+  @JsonKey(defaultValue: '')
+  final String logo;
   @JsonKey(defaultValue: [])
   @ImageConverter()
   final List<ImageEntity> images;
@@ -53,7 +53,7 @@ class OrganizationEntity extends Equatable {
     this.slug = '',
     this.images = const [],
     this.locationUrl = '',
-    this.logo = const ImageEntity(),
+    this.logo = '',
     this.phoneNumbers = const [],
     this.types = const [],
   });

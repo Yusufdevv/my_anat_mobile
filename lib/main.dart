@@ -171,11 +171,7 @@ class _MyAppState extends State<MyApp> {
           return BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               if (!StorageRepository.getBool('onboarding', defValue: false)) {
-                navigator.pushAndRemoveUntil(
-                    fade(
-                      page: const OnBoardingScreen(),
-                    ),
-                    (route) => false);
+                navigator.pushAndRemoveUntil(fade(page: const OnBoardingScreen()), (route) => false);
               } else {
                 navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
               }

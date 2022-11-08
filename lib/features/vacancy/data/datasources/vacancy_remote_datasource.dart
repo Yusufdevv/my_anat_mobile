@@ -472,6 +472,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        print('response.data: ${response.data}');
         return GenericPagination.fromJson(
             response.data, (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
       }
