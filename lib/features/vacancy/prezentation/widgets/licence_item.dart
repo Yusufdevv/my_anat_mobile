@@ -37,6 +37,19 @@ class LicenceItem extends StatelessWidget {
               Container(
                 height: 58,
                 width: 58,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 4),
+                      blurRadius: 10,
+                      color: chipShadowColor.withOpacity(0.12),
+                    ),
+                  ],
+                ),
+                child: SvgPicture.asset(AppIcons.certificate),
               ),
               const SizedBox(width: 12),
               Expanded(

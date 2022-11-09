@@ -6,9 +6,11 @@ import 'dart:ui' as ui;
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
+import 'package:anatomica/features/doctor_single/domain/entities/doctor_sinlge_entity.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/data/models/map_hospital.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_bottom_sheet.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,34 @@ import 'package:jiffy/jiffy.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 abstract class MyFunctions {
+  static double getDoctorImageBottomPadding(
+      {DoctorSingleEntity? doctor,
+      double initialHeight = 178,
+      double decrementAmount = 26,
+      CandidateSingleEntity? candidate}) {
+    double height = initialHeight;
+    if (candidate != null) {
+      if (candidate.address.isEmpty) {
+        height = height - decrementAmount;
+      }
+      if (candidate.phoneNumber.isEmpty) {
+        height = height - decrementAmount;
+      }
+    } else if (doctor != null) {
+      if (doctor.address.isEmpty) {
+        height = height - decrementAmount;
+      }
+      if (doctor.phoneNumber.isEmpty) {
+        height = height - decrementAmount;
+      }
+      if (doctor.organization.title.isEmpty) {
+        height = height - decrementAmount;
+      }
+    }
+
+    return height;
+  }
+
   static const clusterId = MapObjectId('big_cluster_id');
 
   static String safeDateFormat(String date, String pattern) {

@@ -65,7 +65,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     children: [
                       Positioned.fill(
-                        bottom: 178,
+                        bottom: MyFunctions.getDoctorImageBottomPadding(doctor: doctor),
                         child: Stack(
                           children: [
                             Positioned.fill(
@@ -179,69 +179,76 @@ class DoctorSingleAppBar extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                                 child: Column(
                                   children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(AppIcons.location),
-                                        const SizedBox(width: 6),
-                                        Expanded(
-                                          child: Text(
-                                            doctor.address,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
+                                    if (doctor.address.isNotEmpty) ...[
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(AppIcons.location),
+                                          const SizedBox(width: 6),
+                                          Expanded(
+                                            child: Text(
+                                              doctor.address,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                    ],
+                                    if (doctor.phoneNumber.isNotEmpty) ...[
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(AppIcons.phone),
+                                          const SizedBox(width: 6),
+                                          Text(
+                                            MyFunctions.formatPhone(doctor.phoneNumber, false),
                                             style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(AppIcons.phone),
-                                        const SizedBox(width: 6),
-                                        Text(
-                                          MyFunctions.formatPhone(doctor.phoneNumber, false),
-                                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
-                                        ),
-                                      ],
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        if (doctor.organization.id != 0) {
-                                          Navigator.of(context).push(
-                                            fade(
-                                              page: HospitalSingleScreen(
-                                                id: doctor.organization.id,
-                                                slug: doctor.organization.slug,
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                    ],
+                                    if (doctor.organization.id != 0) ...{
+                                      GestureDetector(
+                                        onTap: () {
+                                          if (doctor.organization.id != 0) {
+                                            Navigator.of(context).push(
+                                              fade(
+                                                page: HospitalSingleScreen(
+                                                  id: doctor.organization.id,
+                                                  slug: doctor.organization.slug,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 10, bottom: 16),
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(AppIcons.building),
-                                            const SizedBox(width: 6),
-                                            ConstrainedBox(
-                                              constraints:
-                                                  BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 74),
-                                              child: Text(
-                                                doctor.work,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style:
-                                                    Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                            );
+                                          }
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 10, bottom: 16),
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(AppIcons.building),
+                                              const SizedBox(width: 6),
+                                              ConstrainedBox(
+                                                constraints:
+                                                    BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 74),
+                                                child: Text(
+                                                  doctor.work,
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style:
+                                                      Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                                ),
                                               ),
-                                            ),
-                                            if (doctor.organization.id != 0) ...[
-                                              const SizedBox(width: 4),
-                                              SvgPicture.asset(AppIcons.externalLink)
-                                            ]
-                                          ],
+                                              if (doctor.organization.id != 0) ...[
+                                                const SizedBox(width: 4),
+                                                SvgPicture.asset(AppIcons.externalLink)
+                                              ]
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                    },
                                     Row(
                                       children: [
                                         Text(

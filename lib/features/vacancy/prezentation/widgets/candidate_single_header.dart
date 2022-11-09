@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
@@ -82,7 +83,8 @@ class CandidateSingleHeader extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     children: [
                       Positioned.fill(
-                        bottom: 160,
+                        bottom: MyFunctions.getDoctorImageBottomPadding(
+                            candidate: candidate, initialHeight: 160, decrementAmount: 30),
                         child: Stack(
                           children: [
                             Positioned.fill(
@@ -186,32 +188,36 @@ class CandidateSingleHeader extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                                 child: Column(
                                   children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(AppIcons.location),
-                                        const SizedBox(width: 6),
-                                        Expanded(
-                                          child: Text(
-                                            candidate.address,
-                                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
+                                    if (candidate.address.isNotEmpty) ...[
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(AppIcons.location),
+                                          const SizedBox(width: 6),
+                                          Expanded(
+                                            child: Text(
+                                              candidate.address,
+                                              style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(AppIcons.phone),
-                                        const SizedBox(width: 6),
-                                        Text(
-                                          candidate.phoneNumber,
-                                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 16),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                    ],
+                                    if (candidate.phoneNumber.isNotEmpty) ...[
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(AppIcons.phone),
+                                          const SizedBox(width: 6),
+                                          Text(
+                                            candidate.phoneNumber,
+                                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 16),
+                                    ],
                                     Row(
                                       children: [
                                         Text(
