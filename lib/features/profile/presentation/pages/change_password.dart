@@ -47,14 +47,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     final mediaQuery = MediaQuery.of(context);
     return BlocProvider(
       create: (context) => ChangePasswordBloc(
-          changePasswordUseCase: ChangePasswordUseCase(repository: serviceLocator<ProfileRepositoryImpl>())),
+          changePasswordUseCase: ChangePasswordUseCase(
+              repository: serviceLocator<ProfileRepositoryImpl>())),
       child: BlocBuilder<ChangePasswordBloc, ChangePasswordState>(
         builder: (context, state) {
           return CustomScreen(
             child: Scaffold(
-              appBar: WAppBar(title: LocaleKeys.safety.tr(), hasUnderline: true),
+              appBar:
+                  WAppBar(title: LocaleKeys.safety.tr(), hasUnderline: true),
               bottomNavigationBar: WButton(
-                margin: EdgeInsets.fromLTRB(16, 0, 16, 12 + mediaQuery.padding.bottom),
+                margin: EdgeInsets.fromLTRB(
+                    16, 0, 16, 12 + mediaQuery.padding.bottom),
                 text: LocaleKeys.next.tr(),
                 isLoading: state.changePasswordStatus.isSubmissionInProgress,
                 onTap: () {
@@ -63,10 +66,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             newPassword: newPasswordController.text,
                             currentPassword: oldPasswordController.text,
                             onSuccess: () {
+                              context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                  message: LocaleKeys.change_password_success,
+                                  isSuccess: true));
                               Navigator.of(context).pop();
                             },
-                            newPasswordConfirmed: confirmNewPasswordController.text,
-                            onFailure: (message) => context.read<ShowPopUpBloc>().add(ShowPopUp(message: message))),
+                            newPasswordConfirmed:
+                                confirmNewPasswordController.text,
+                            onFailure: (message) => context
+                                .read<ShowPopUpBloc>()
+                                .add(ShowPopUp(message: message))),
                       );
                 },
               ),
@@ -74,14 +83,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          LocaleKeys.create_password.tr(),
-                          style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 14),
-                        ),
-                      ],
+                    Text(
+                      LocaleKeys.create_password.tr(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1!
+                          .copyWith(fontSize: 14),
                     ),
                     const SizedBox(height: 16),
                     PasswordTextField(

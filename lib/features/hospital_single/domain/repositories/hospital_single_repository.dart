@@ -3,6 +3,7 @@ import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/comfort_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/comment_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_service_entity.dart';
+import 'package:anatomica/features/hospital_single/domain/entities/hospital_service_single.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_single_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/post_comment_entity.dart';
 import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
@@ -30,4 +31,5 @@ abstract class HospitalSingleRepository {
   Future<Either<Failure, void>> postComment({required int organizationId, required PostCommentEntity comment});
 
   Future<Either<Failure, Either>> deleteComment({required int id});
+  Future<Either<Failure, HospitalServiceSingleEntity>> getServiceSingle({required int id});
 }

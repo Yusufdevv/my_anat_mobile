@@ -123,7 +123,7 @@
   "successfully_sent": "muvaffaqiyatli yuborildi",
   "your_review_successfully": "Izohingiz ko‘rib chiqish uchun muvaffaqiyatli topshirildi va muvaffaqiyatli moderatsiyadan so‘ng tez orada chiqariladi",
   "clear": "Aniq",
-  "create_password": "Yangi parol yarating\nva unutmaslikka harakat qiling",
+  "create_password": "Yangi parol yarating va unutmaslikka harakat qiling",
   "old_password": "Eski parol",
   "write_old_password": "Eski parolni kiriting",
   "password_confirm": "Parolni tasdiqlash",
@@ -284,5 +284,6 @@
   "onboarding_1_content": "Xaritada eng yaqin klinikalarni, shifokorlarni kuzatish imkoniyati.",
   "onboarding_2_content": "ANATOMICA nashrlarining elektron versiyalarini sotib oling, o'qing va o'zingiz uchun qulay formatda saqlang!",
   "onboarding_3_content": "Agar tashkilotingiz mutaxassislarni qidirayotgan bo'lsa, “Vakansiyalar“ bo'limiga e'lon qo'ying",
-  "onboarding_4_content": "Yillik obuna uchun ro'yxatdan o'ting va ilovaning ilg'or xususiyatlaridan bahramand bo'ling."
+  "onboarding_4_content": "Yillik obuna uchun ro'yxatdan o'ting va ilovaning ilg'or xususiyatlaridan bahramand bo'ling.",
+  "change_password_success" : "Parol muvaffaqiyatli o'zgartirildi"
 }

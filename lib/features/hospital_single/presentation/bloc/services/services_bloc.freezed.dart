@@ -21,6 +21,7 @@ mixin _$ServicesEvent {
     required TResult Function(int organizationId) getServices,
     required TResult Function() getMoreServices,
     required TResult Function(String query) searchServices,
+    required TResult Function(int serviceId) getSingleService,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$ServicesEvent {
     TResult? Function(int organizationId)? getServices,
     TResult? Function()? getMoreServices,
     TResult? Function(String query)? searchServices,
+    TResult? Function(int serviceId)? getSingleService,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$ServicesEvent {
     TResult Function(int organizationId)? getServices,
     TResult Function()? getMoreServices,
     TResult Function(String query)? searchServices,
+    TResult Function(int serviceId)? getSingleService,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$ServicesEvent {
     required TResult Function(_GetServices value) getServices,
     required TResult Function(_GetMoreServices value) getMoreServices,
     required TResult Function(_SearchServices value) searchServices,
+    required TResult Function(_GetSingleService value) getSingleService,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$ServicesEvent {
     TResult? Function(_GetServices value)? getServices,
     TResult? Function(_GetMoreServices value)? getMoreServices,
     TResult? Function(_SearchServices value)? searchServices,
+    TResult? Function(_GetSingleService value)? getSingleService,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$ServicesEvent {
     TResult Function(_GetServices value)? getServices,
     TResult Function(_GetMoreServices value)? getMoreServices,
     TResult Function(_SearchServices value)? searchServices,
+    TResult Function(_GetSingleService value)? getSingleService,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -148,6 +154,7 @@ class _$_GetServices implements _GetServices {
     required TResult Function(int organizationId) getServices,
     required TResult Function() getMoreServices,
     required TResult Function(String query) searchServices,
+    required TResult Function(int serviceId) getSingleService,
   }) {
     return getServices(organizationId);
   }
@@ -158,6 +165,7 @@ class _$_GetServices implements _GetServices {
     TResult? Function(int organizationId)? getServices,
     TResult? Function()? getMoreServices,
     TResult? Function(String query)? searchServices,
+    TResult? Function(int serviceId)? getSingleService,
   }) {
     return getServices?.call(organizationId);
   }
@@ -168,6 +176,7 @@ class _$_GetServices implements _GetServices {
     TResult Function(int organizationId)? getServices,
     TResult Function()? getMoreServices,
     TResult Function(String query)? searchServices,
+    TResult Function(int serviceId)? getSingleService,
     required TResult orElse(),
   }) {
     if (getServices != null) {
@@ -182,6 +191,7 @@ class _$_GetServices implements _GetServices {
     required TResult Function(_GetServices value) getServices,
     required TResult Function(_GetMoreServices value) getMoreServices,
     required TResult Function(_SearchServices value) searchServices,
+    required TResult Function(_GetSingleService value) getSingleService,
   }) {
     return getServices(this);
   }
@@ -192,6 +202,7 @@ class _$_GetServices implements _GetServices {
     TResult? Function(_GetServices value)? getServices,
     TResult? Function(_GetMoreServices value)? getMoreServices,
     TResult? Function(_SearchServices value)? searchServices,
+    TResult? Function(_GetSingleService value)? getSingleService,
   }) {
     return getServices?.call(this);
   }
@@ -202,6 +213,7 @@ class _$_GetServices implements _GetServices {
     TResult Function(_GetServices value)? getServices,
     TResult Function(_GetMoreServices value)? getMoreServices,
     TResult Function(_SearchServices value)? searchServices,
+    TResult Function(_GetSingleService value)? getSingleService,
     required TResult orElse(),
   }) {
     if (getServices != null) {
@@ -261,6 +273,7 @@ class _$_GetMoreServices implements _GetMoreServices {
     required TResult Function(int organizationId) getServices,
     required TResult Function() getMoreServices,
     required TResult Function(String query) searchServices,
+    required TResult Function(int serviceId) getSingleService,
   }) {
     return getMoreServices();
   }
@@ -271,6 +284,7 @@ class _$_GetMoreServices implements _GetMoreServices {
     TResult? Function(int organizationId)? getServices,
     TResult? Function()? getMoreServices,
     TResult? Function(String query)? searchServices,
+    TResult? Function(int serviceId)? getSingleService,
   }) {
     return getMoreServices?.call();
   }
@@ -281,6 +295,7 @@ class _$_GetMoreServices implements _GetMoreServices {
     TResult Function(int organizationId)? getServices,
     TResult Function()? getMoreServices,
     TResult Function(String query)? searchServices,
+    TResult Function(int serviceId)? getSingleService,
     required TResult orElse(),
   }) {
     if (getMoreServices != null) {
@@ -295,6 +310,7 @@ class _$_GetMoreServices implements _GetMoreServices {
     required TResult Function(_GetServices value) getServices,
     required TResult Function(_GetMoreServices value) getMoreServices,
     required TResult Function(_SearchServices value) searchServices,
+    required TResult Function(_GetSingleService value) getSingleService,
   }) {
     return getMoreServices(this);
   }
@@ -305,6 +321,7 @@ class _$_GetMoreServices implements _GetMoreServices {
     TResult? Function(_GetServices value)? getServices,
     TResult? Function(_GetMoreServices value)? getMoreServices,
     TResult? Function(_SearchServices value)? searchServices,
+    TResult? Function(_GetSingleService value)? getSingleService,
   }) {
     return getMoreServices?.call(this);
   }
@@ -315,6 +332,7 @@ class _$_GetMoreServices implements _GetMoreServices {
     TResult Function(_GetServices value)? getServices,
     TResult Function(_GetMoreServices value)? getMoreServices,
     TResult Function(_SearchServices value)? searchServices,
+    TResult Function(_GetSingleService value)? getSingleService,
     required TResult orElse(),
   }) {
     if (getMoreServices != null) {
@@ -395,6 +413,7 @@ class _$_SearchServices implements _SearchServices {
     required TResult Function(int organizationId) getServices,
     required TResult Function() getMoreServices,
     required TResult Function(String query) searchServices,
+    required TResult Function(int serviceId) getSingleService,
   }) {
     return searchServices(query);
   }
@@ -405,6 +424,7 @@ class _$_SearchServices implements _SearchServices {
     TResult? Function(int organizationId)? getServices,
     TResult? Function()? getMoreServices,
     TResult? Function(String query)? searchServices,
+    TResult? Function(int serviceId)? getSingleService,
   }) {
     return searchServices?.call(query);
   }
@@ -415,6 +435,7 @@ class _$_SearchServices implements _SearchServices {
     TResult Function(int organizationId)? getServices,
     TResult Function()? getMoreServices,
     TResult Function(String query)? searchServices,
+    TResult Function(int serviceId)? getSingleService,
     required TResult orElse(),
   }) {
     if (searchServices != null) {
@@ -429,6 +450,7 @@ class _$_SearchServices implements _SearchServices {
     required TResult Function(_GetServices value) getServices,
     required TResult Function(_GetMoreServices value) getMoreServices,
     required TResult Function(_SearchServices value) searchServices,
+    required TResult Function(_GetSingleService value) getSingleService,
   }) {
     return searchServices(this);
   }
@@ -439,6 +461,7 @@ class _$_SearchServices implements _SearchServices {
     TResult? Function(_GetServices value)? getServices,
     TResult? Function(_GetMoreServices value)? getMoreServices,
     TResult? Function(_SearchServices value)? searchServices,
+    TResult? Function(_GetSingleService value)? getSingleService,
   }) {
     return searchServices?.call(this);
   }
@@ -449,6 +472,7 @@ class _$_SearchServices implements _SearchServices {
     TResult Function(_GetServices value)? getServices,
     TResult Function(_GetMoreServices value)? getMoreServices,
     TResult Function(_SearchServices value)? searchServices,
+    TResult Function(_GetSingleService value)? getSingleService,
     required TResult orElse(),
   }) {
     if (searchServices != null) {
@@ -468,6 +492,153 @@ abstract class _SearchServices implements ServicesEvent {
 }
 
 /// @nodoc
+abstract class _$$_GetSingleServiceCopyWith<$Res> {
+  factory _$$_GetSingleServiceCopyWith(
+          _$_GetSingleService value, $Res Function(_$_GetSingleService) then) =
+      __$$_GetSingleServiceCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int serviceId});
+}
+
+/// @nodoc
+class __$$_GetSingleServiceCopyWithImpl<$Res>
+    extends _$ServicesEventCopyWithImpl<$Res, _$_GetSingleService>
+    implements _$$_GetSingleServiceCopyWith<$Res> {
+  __$$_GetSingleServiceCopyWithImpl(
+      _$_GetSingleService _value, $Res Function(_$_GetSingleService) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? serviceId = null,
+  }) {
+    return _then(_$_GetSingleService(
+      serviceId: null == serviceId
+          ? _value.serviceId
+          : serviceId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GetSingleService implements _GetSingleService {
+  _$_GetSingleService({required this.serviceId});
+
+  @override
+  final int serviceId;
+
+  @override
+  String toString() {
+    return 'ServicesEvent.getSingleService(serviceId: $serviceId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_GetSingleService &&
+            (identical(other.serviceId, serviceId) ||
+                other.serviceId == serviceId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, serviceId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetSingleServiceCopyWith<_$_GetSingleService> get copyWith =>
+      __$$_GetSingleServiceCopyWithImpl<_$_GetSingleService>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int organizationId) getServices,
+    required TResult Function() getMoreServices,
+    required TResult Function(String query) searchServices,
+    required TResult Function(int serviceId) getSingleService,
+  }) {
+    return getSingleService(serviceId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int organizationId)? getServices,
+    TResult? Function()? getMoreServices,
+    TResult? Function(String query)? searchServices,
+    TResult? Function(int serviceId)? getSingleService,
+  }) {
+    return getSingleService?.call(serviceId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int organizationId)? getServices,
+    TResult Function()? getMoreServices,
+    TResult Function(String query)? searchServices,
+    TResult Function(int serviceId)? getSingleService,
+    required TResult orElse(),
+  }) {
+    if (getSingleService != null) {
+      return getSingleService(serviceId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetServices value) getServices,
+    required TResult Function(_GetMoreServices value) getMoreServices,
+    required TResult Function(_SearchServices value) searchServices,
+    required TResult Function(_GetSingleService value) getSingleService,
+  }) {
+    return getSingleService(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetServices value)? getServices,
+    TResult? Function(_GetMoreServices value)? getMoreServices,
+    TResult? Function(_SearchServices value)? searchServices,
+    TResult? Function(_GetSingleService value)? getSingleService,
+  }) {
+    return getSingleService?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetServices value)? getServices,
+    TResult Function(_GetMoreServices value)? getMoreServices,
+    TResult Function(_SearchServices value)? searchServices,
+    TResult Function(_GetSingleService value)? getSingleService,
+    required TResult orElse(),
+  }) {
+    if (getSingleService != null) {
+      return getSingleService(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetSingleService implements ServicesEvent {
+  factory _GetSingleService({required final int serviceId}) =
+      _$_GetSingleService;
+
+  int get serviceId;
+  @JsonKey(ignore: true)
+  _$$_GetSingleServiceCopyWith<_$_GetSingleService> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ServicesState {
   FormzStatus get status => throw _privateConstructorUsedError;
   FormzStatus get paginationStatus => throw _privateConstructorUsedError;
@@ -478,6 +649,9 @@ mixin _$ServicesState {
   int get hospitalId => throw _privateConstructorUsedError;
   String get searchQuery => throw _privateConstructorUsedError;
   int get serviceCount => throw _privateConstructorUsedError;
+  FormzStatus get getSingleServiceStatus => throw _privateConstructorUsedError;
+  HospitalServiceSingleEntity get serviceSingle =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ServicesStateCopyWith<ServicesState> get copyWith =>
@@ -498,7 +672,9 @@ abstract class $ServicesStateCopyWith<$Res> {
       bool fetchMore,
       int hospitalId,
       String searchQuery,
-      int serviceCount});
+      int serviceCount,
+      FormzStatus getSingleServiceStatus,
+      HospitalServiceSingleEntity serviceSingle});
 }
 
 /// @nodoc
@@ -522,6 +698,8 @@ class _$ServicesStateCopyWithImpl<$Res, $Val extends ServicesState>
     Object? hospitalId = null,
     Object? searchQuery = null,
     Object? serviceCount = null,
+    Object? getSingleServiceStatus = null,
+    Object? serviceSingle = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -556,6 +734,14 @@ class _$ServicesStateCopyWithImpl<$Res, $Val extends ServicesState>
           ? _value.serviceCount
           : serviceCount // ignore: cast_nullable_to_non_nullable
               as int,
+      getSingleServiceStatus: null == getSingleServiceStatus
+          ? _value.getSingleServiceStatus
+          : getSingleServiceStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      serviceSingle: null == serviceSingle
+          ? _value.serviceSingle
+          : serviceSingle // ignore: cast_nullable_to_non_nullable
+              as HospitalServiceSingleEntity,
     ) as $Val);
   }
 }
@@ -576,7 +762,9 @@ abstract class _$$_ServicesStateCopyWith<$Res>
       bool fetchMore,
       int hospitalId,
       String searchQuery,
-      int serviceCount});
+      int serviceCount,
+      FormzStatus getSingleServiceStatus,
+      HospitalServiceSingleEntity serviceSingle});
 }
 
 /// @nodoc
@@ -598,6 +786,8 @@ class __$$_ServicesStateCopyWithImpl<$Res>
     Object? hospitalId = null,
     Object? searchQuery = null,
     Object? serviceCount = null,
+    Object? getSingleServiceStatus = null,
+    Object? serviceSingle = null,
   }) {
     return _then(_$_ServicesState(
       status: null == status
@@ -632,6 +822,14 @@ class __$$_ServicesStateCopyWithImpl<$Res>
           ? _value.serviceCount
           : serviceCount // ignore: cast_nullable_to_non_nullable
               as int,
+      getSingleServiceStatus: null == getSingleServiceStatus
+          ? _value.getSingleServiceStatus
+          : getSingleServiceStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      serviceSingle: null == serviceSingle
+          ? _value.serviceSingle
+          : serviceSingle // ignore: cast_nullable_to_non_nullable
+              as HospitalServiceSingleEntity,
     ));
   }
 }
@@ -647,7 +845,9 @@ class _$_ServicesState implements _ServicesState {
       this.fetchMore = false,
       this.hospitalId = 0,
       this.searchQuery = '',
-      this.serviceCount = 0})
+      this.serviceCount = 0,
+      this.getSingleServiceStatus = FormzStatus.pure,
+      this.serviceSingle = const HospitalServiceSingleEntity()})
       : _services = services;
 
   @override
@@ -678,10 +878,16 @@ class _$_ServicesState implements _ServicesState {
   @override
   @JsonKey()
   final int serviceCount;
+  @override
+  @JsonKey()
+  final FormzStatus getSingleServiceStatus;
+  @override
+  @JsonKey()
+  final HospitalServiceSingleEntity serviceSingle;
 
   @override
   String toString() {
-    return 'ServicesState(status: $status, paginationStatus: $paginationStatus, services: $services, next: $next, fetchMore: $fetchMore, hospitalId: $hospitalId, searchQuery: $searchQuery, serviceCount: $serviceCount)';
+    return 'ServicesState(status: $status, paginationStatus: $paginationStatus, services: $services, next: $next, fetchMore: $fetchMore, hospitalId: $hospitalId, searchQuery: $searchQuery, serviceCount: $serviceCount, getSingleServiceStatus: $getSingleServiceStatus, serviceSingle: $serviceSingle)';
   }
 
   @override
@@ -701,7 +907,11 @@ class _$_ServicesState implements _ServicesState {
             (identical(other.searchQuery, searchQuery) ||
                 other.searchQuery == searchQuery) &&
             (identical(other.serviceCount, serviceCount) ||
-                other.serviceCount == serviceCount));
+                other.serviceCount == serviceCount) &&
+            (identical(other.getSingleServiceStatus, getSingleServiceStatus) ||
+                other.getSingleServiceStatus == getSingleServiceStatus) &&
+            (identical(other.serviceSingle, serviceSingle) ||
+                other.serviceSingle == serviceSingle));
   }
 
   @override
@@ -714,7 +924,9 @@ class _$_ServicesState implements _ServicesState {
       fetchMore,
       hospitalId,
       searchQuery,
-      serviceCount);
+      serviceCount,
+      getSingleServiceStatus,
+      serviceSingle);
 
   @JsonKey(ignore: true)
   @override
@@ -732,7 +944,9 @@ abstract class _ServicesState implements ServicesState {
       final bool fetchMore,
       final int hospitalId,
       final String searchQuery,
-      final int serviceCount}) = _$_ServicesState;
+      final int serviceCount,
+      final FormzStatus getSingleServiceStatus,
+      final HospitalServiceSingleEntity serviceSingle}) = _$_ServicesState;
 
   @override
   FormzStatus get status;
@@ -750,6 +964,10 @@ abstract class _ServicesState implements ServicesState {
   String get searchQuery;
   @override
   int get serviceCount;
+  @override
+  FormzStatus get getSingleServiceStatus;
+  @override
+  HospitalServiceSingleEntity get serviceSingle;
   @override
   @JsonKey(ignore: true)
   _$$_ServicesStateCopyWith<_$_ServicesState> get copyWith =>

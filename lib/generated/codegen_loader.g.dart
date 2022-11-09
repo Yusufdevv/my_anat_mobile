@@ -139,7 +139,7 @@ class CodegenLoader extends AssetLoader{
   "successfully_sent": "Успешно отправлено",
   "your_review_successfully": "Ваш отзыв был успешно передан в проверку и вскоре будет опубликован после модерации",
   "clear": "Понятно",
-  "create_password": "Придумайте новый пароль\n и постарайтесь не забыть",
+  "create_password": "Придумайте новый пароль и постарайтесь не забыть",
   "old_password": "Старый пароль",
   "write_old_password": "Введите старый пароль",
   "password_confirm": "Подтверждение пароля",
@@ -300,7 +300,8 @@ class CodegenLoader extends AssetLoader{
   "onboarding_1_content": "Возможность отслеживать на карте ближайшие клиники, врачи.",
   "onboarding_2_content": "Приобретайте электронные версии выпусков ANATOMICA, читайте и сохраняйте в удобном для вас формате!",
   "onboarding_3_content": "Если ваша организация находится в поисках специалистов, опубликуйте объявление в разделе \"Вакансии\"",
-  "onboarding_4_content": "Оформите годовую подписку и воспользуйтесь расширенными функциями приложения."
+  "onboarding_4_content": "Оформите годовую подписку и воспользуйтесь расширенными функциями приложения.",
+  "change_password_success": "Пароль успешно изменен"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -427,7 +428,7 @@ static const Map<String,dynamic> uz = {
   "successfully_sent": "muvaffaqiyatli yuborildi",
   "your_review_successfully": "Izohingiz ko‘rib chiqish uchun muvaffaqiyatli topshirildi va muvaffaqiyatli moderatsiyadan so‘ng tez orada chiqariladi",
   "clear": "Aniq",
-  "create_password": "Yangi parol yarating\nva unutmaslikka harakat qiling",
+  "create_password": "Yangi parol yarating va unutmaslikka harakat qiling",
   "old_password": "Eski parol",
   "write_old_password": "Eski parolni kiriting",
   "password_confirm": "Parolni tasdiqlash",
@@ -588,7 +589,8 @@ static const Map<String,dynamic> uz = {
   "onboarding_1_content": "Xaritada eng yaqin klinikalarni, shifokorlarni kuzatish imkoniyati.",
   "onboarding_2_content": "ANATOMICA nashrlarining elektron versiyalarini sotib oling, o'qing va o'zingiz uchun qulay formatda saqlang!",
   "onboarding_3_content": "Agar tashkilotingiz mutaxassislarni qidirayotgan bo'lsa, “Vakansiyalar“ bo'limiga e'lon qo'ying",
-  "onboarding_4_content": "Yillik obuna uchun ro'yxatdan o'ting va ilovaning ilg'or xususiyatlaridan bahramand bo'ling."
+  "onboarding_4_content": "Yillik obuna uchun ro'yxatdan o'ting va ilovaning ilg'or xususiyatlaridan bahramand bo'ling.",
+  "change_password_success": "Parol muvaffaqiyatli o'zgartirildi"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

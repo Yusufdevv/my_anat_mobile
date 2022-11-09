@@ -13,29 +13,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-class HospitalServices extends StatefulWidget {
+class HospitalServices extends StatelessWidget {
   final ServicesBloc servicesBloc;
 
   const HospitalServices({required this.servicesBloc, Key? key})
       : super(key: key);
 
   @override
-  State<HospitalServices> createState() => _HospitalServicesState();
-}
-
-class _HospitalServicesState extends State<HospitalServices> {
-  late TextEditingController _textController;
-
-  @override
-  void initState() {
-    _textController = TextEditingController();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: widget.servicesBloc,
+      value: servicesBloc,
       child: BlocBuilder<ServicesBloc, ServicesState>(
         builder: (context, state) {
           return Container(
@@ -94,7 +81,7 @@ class _HospitalServicesState extends State<HospitalServices> {
                                     page: AllHospitalItemsScreen(
                                       appbarTitle: 'Услуги',
                                       child: AllHospitalServices(
-                                        servicesBloc: widget.servicesBloc,
+                                        servicesBloc: servicesBloc,
                                       ),
                                     ),
                                   ),

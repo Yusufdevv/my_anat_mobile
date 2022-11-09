@@ -51,6 +51,8 @@ const grey = _fiord;
 const paper = _bianca;
 const night = _nightRider;
 const dark = _dark;
+const successBackground = _honeydew2;
+const success = _honeydew;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -103,3 +105,5 @@ const _fiord = Color(0xff4A4F61);
 const _bianca = Color(0xffF7F1E5);
 const _nightRider = Color(0xff2E2C2C);
 const _dark = Color(0xff010101);
+const _honeydew = Color(0xff4CFF4C);
+const _honeydew2 = Color(0xffE5FFE5);

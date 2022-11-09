@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/profile/presentation/blocs/profile_bloc/profile_bloc.dart';
@@ -20,20 +21,21 @@ class SafetyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    return BlocProvider.value(
-      value: profileBloc,
+    return CustomScreen(
       child: Scaffold(
         appBar: WAppBar(
           title: LocaleKeys.safety.tr(),
           hasUnderline: true,
         ),
         body: Padding(
-          padding: EdgeInsets.fromLTRB(16, 20, 16, 20 + mediaQuery.padding.bottom),
+          padding:
+              EdgeInsets.fromLTRB(16, 20, 16, 20 + mediaQuery.padding.bottom),
           child: Column(
             children: [
               ProfileItem(
                 onTap: () {
-                  Navigator.of(context, rootNavigator: true).push(fade(page: const ChangePasswordScreen()));
+                  Navigator.of(context, rootNavigator: true)
+                      .push(fade(page: const ChangePasswordScreen()));
                 },
                 title: LocaleKeys.edit_password_acc.tr(),
                 icon: AppIcons.key,
@@ -48,9 +50,10 @@ class SafetyScreen extends StatelessWidget {
                       profileBloc.add(
                         DeleteAccount(
                           onSuccess: () {
-                            context
-                                .read<AuthenticationBloc>()
-                                .add(AuthenticationStatusChanged(status: AuthenticationStatus.unauthenticated));
+                            context.read<AuthenticationBloc>().add(
+                                AuthenticationStatusChanged(
+                                    status:
+                                        AuthenticationStatus.unauthenticated));
                             Navigator.of(context).pop();
                           },
                         ),

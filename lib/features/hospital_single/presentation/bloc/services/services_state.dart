@@ -11,5 +11,7 @@ class ServicesState with _$ServicesState {
     @Default(0) int hospitalId,
     @Default('') String searchQuery,
     @Default(0) int serviceCount,
+    @Default(FormzStatus.pure) FormzStatus getSingleServiceStatus,
+    @Default(HospitalServiceSingleEntity()) HospitalServiceSingleEntity serviceSingle,
   }) = _ServicesState;
 }

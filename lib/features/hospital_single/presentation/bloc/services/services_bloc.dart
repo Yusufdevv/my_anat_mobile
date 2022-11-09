@@ -1,5 +1,7 @@
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_service_entity.dart';
+import 'package:anatomica/features/hospital_single/domain/entities/hospital_service_single.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_services.dart';
+import 'package:anatomica/features/hospital_single/domain/usecases/get_single_service_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:formz/formz.dart';
@@ -11,7 +13,11 @@ part 'services_state.dart';
 
 class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
   final GetServicesUseCase getServices;
-  ServicesBloc(this.getServices) : super(ServicesState()) {
+  final GetSingleServiceUseCase _getSingleServiceUseCase;
+  ServicesBloc(this.getServices,
+      {required GetSingleServiceUseCase getSingleServiceUseCase})
+      : _getSingleServiceUseCase = getSingleServiceUseCase,
+        super(ServicesState()) {
     on<_GetServices>((event, emit) async {
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress,
@@ -76,5 +82,18 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         ));
       }
     }, transformer: restartable());
+    on<_GetSingleService>((event, emit) async {
+      emit(state.copyWith(
+          getSingleServiceStatus: FormzStatus.submissionInProgress));
+      final result = await _getSingleServiceUseCase.call(event.serviceId);
+      if (result.isRight) {
+        emit(state.copyWith(
+            getSingleServiceStatus: FormzStatus.submissionSuccess,
+            serviceSingle: result.right));
+      } else {
+        emit(state.copyWith(
+            getSingleServiceStatus: FormzStatus.submissionFailure));
+      }
+    });
   }
 }
