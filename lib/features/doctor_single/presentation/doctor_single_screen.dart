@@ -29,6 +29,7 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
@@ -111,64 +112,67 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
               ..add(CommentsEvent.getDoctorComments(doctorId: widget.id))),
       ],
       child: WKeyboardDismisser(
-        child: Scaffold(
-          body: CustomScreen(
-            child: BlocBuilder<DoctorSingleBloc, DoctorSingleState>(
-              builder: (context, state) {
-                if (state.getDoctorSingleStatus.isSubmissionInProgress) {
-                  return const Center(
-                    child: CupertinoActivityIndicator(),
-                  );
-                } else if (state.getDoctorSingleStatus.isSubmissionSuccess) {
-                  return NestedScrollView(
-                    controller: _scrollController,
-                    floatHeaderSlivers: false,
-                    headerSliverBuilder: (context, isHeaderScrolled) => [
-                      DoctorSingleAppBar(headerManagerBloc: _headerManagerBloc, doctor: state.doctorSingle),
-                      SliverOverlapAbsorber(
-                        handle: SliverOverlapAbsorberHandle(),
-                        sliver: SliverSafeArea(
-                          top: false,
-                          bottom: false,
-                          sliver: SliverPersistentHeader(
-                            pinned: true,
-                            delegate: TabBarHeaderDelegate(
-                              tabController: _tabController,
-                              tabs: tabs,
+        child: AnnotatedRegion(
+          value: const SystemUiOverlayStyle(systemNavigationBarColor: white),
+          child: Scaffold(
+            body: CustomScreen(
+              child: BlocBuilder<DoctorSingleBloc, DoctorSingleState>(
+                builder: (context, state) {
+                  if (state.getDoctorSingleStatus.isSubmissionInProgress) {
+                    return const Center(
+                      child: CupertinoActivityIndicator(),
+                    );
+                  } else if (state.getDoctorSingleStatus.isSubmissionSuccess) {
+                    return NestedScrollView(
+                      controller: _scrollController,
+                      floatHeaderSlivers: false,
+                      headerSliverBuilder: (context, isHeaderScrolled) => [
+                        DoctorSingleAppBar(headerManagerBloc: _headerManagerBloc, doctor: state.doctorSingle),
+                        SliverOverlapAbsorber(
+                          handle: SliverOverlapAbsorberHandle(),
+                          sliver: SliverSafeArea(
+                            top: false,
+                            bottom: false,
+                            sliver: SliverPersistentHeader(
+                              pinned: true,
+                              delegate: TabBarHeaderDelegate(
+                                tabController: _tabController,
+                                tabs: tabs,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                    body: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        AboutDoctor(
-                          controller: _tabController,
-                          showBio: state.doctorSingle.showInProfileBio,
-                          description: state.doctorSingle.bio,
-                        ),
-                        DoctorArticles(doctorId: widget.id),
-                        DoctorInterviews(doctorId: widget.id),
-                        DoctorComments(
-                          rating: state.doctorSingle.rating,
-                          doctor: widget.id,
-                        ),
-                        DoctorContacts(
-                          doctorSingle: state.doctorSingle,
-                        ),
+                        )
                       ],
-                    ),
-                  );
-                } else if (state.getDoctorSingleStatus.isSubmissionFailure) {
-                  return const Center(child: Text('error'));
-                } else {
-                  return const SizedBox();
-                }
-              },
+                      body: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          AboutDoctor(
+                            controller: _tabController,
+                            showBio: state.doctorSingle.showInProfileBio,
+                            description: state.doctorSingle.bio,
+                          ),
+                          DoctorArticles(doctorId: widget.id),
+                          DoctorInterviews(doctorId: widget.id),
+                          DoctorComments(
+                            rating: state.doctorSingle.rating,
+                            doctor: widget.id,
+                          ),
+                          DoctorContacts(
+                            doctorSingle: state.doctorSingle,
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if (state.getDoctorSingleStatus.isSubmissionFailure) {
+                    return const Center(child: Text('error'));
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
             ),
+            backgroundColor: textFieldColor,
           ),
-          backgroundColor: textFieldColor,
         ),
       ),
     );

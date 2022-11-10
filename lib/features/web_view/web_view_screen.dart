@@ -25,6 +25,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.url);
     print(
         'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : '&'}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}');
     return AnnotatedRegion(
@@ -62,19 +63,19 @@ class _WebViewScreenState extends State<WebViewScreen> {
             child: InAppWebView(
               onWebViewCreated: (controller) async {
                 _controller = controller;
-                // if (await canLaunchUrlString(
-                //     'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : '&'}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}')) {
+                // if (await canLaunchUrlString(widget.url ??
+                //     'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : ''}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}')) {
                 //   print('can launch');
-                // controller.loadUrl(
-                //     urlRequest: URLRequest(
-                //         url: Uri.parse(
-                //             'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'tok   en=${StorageRepository.getString("token")}&' : '&'}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}')));
+                //   controller.loadUrl(
+                //       urlRequest: URLRequest(
+                //           url: Uri.parse(widget.url ??
+                //               'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : ''}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}')));
                 // } else {
                 //   print('cannot launch');
                 // }
               },
               initialUrlRequest: URLRequest(
-                  url: Uri.parse(
+                  url: Uri.parse(widget.url ??
                       'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : ''}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}')),
             ),
           ),

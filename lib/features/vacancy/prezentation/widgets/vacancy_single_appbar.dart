@@ -14,9 +14,7 @@ class VacancySingleAppBar extends StatelessWidget {
   final String shareValue;
   final VacancyListEntity vacancy;
 
-  const VacancySingleAppBar(
-      {required this.shareValue, required this.vacancy, Key? key})
-      : super(key: key);
+  const VacancySingleAppBar({required this.shareValue, required this.vacancy, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +31,7 @@ class VacancySingleAppBar extends StatelessWidget {
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: primary,
         statusBarIconBrightness: Brightness.light,
+        systemNavigationBarColor: white,
       ),
       expandedHeight: 60,
       title: const SizedBox(),
@@ -44,12 +43,7 @@ class VacancySingleAppBar extends StatelessWidget {
           height: 60,
           decoration: BoxDecoration(
             color: primary,
-            boxShadow: [
-              BoxShadow(
-                  color: woodSmoke.withOpacity(0.12),
-                  offset: const Offset(0, 8),
-                  blurRadius: 24)
-            ],
+            boxShadow: [BoxShadow(color: woodSmoke.withOpacity(0.12), offset: const Offset(0, 8), blurRadius: 24)],
           ),
           child: Column(
             children: [
@@ -62,8 +56,7 @@ class VacancySingleAppBar extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
-                              .copyWith(
-                                  fontSize: 20, fontWeight: FontWeight.w600)),
+                              .copyWith(fontSize: 20, fontWeight: FontWeight.w600)),
                     ],
                   ),
                   Row(

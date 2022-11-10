@@ -73,6 +73,7 @@ class CandidateSingleHeader extends StatelessWidget {
                 automaticallyImplyLeading: false,
                 backgroundColor: white,
                 systemOverlayStyle: SystemUiOverlayStyle(
+                  systemNavigationBarColor: white,
                   statusBarColor: headerManageState.isScrolled ? darkGreen : Colors.transparent,
                   statusBarIconBrightness: headerManageState.isScrolled ? Brightness.light : Brightness.dark,
                 ),
