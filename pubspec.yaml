@@ -3,7 +3,7 @@ description: Anatomica mobile application
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.1+3
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -28,6 +28,7 @@ dependencies:
   permission_handler: ^10.0.0
   pin_code_fields: ^7.4.0
   keyboard_dismisser: ^3.0.0
+
   buttons_tabbar: ^1.3.6
   tab_indicator_styler: ^2.0.0
   flutter_sticky_header: ^0.6.4

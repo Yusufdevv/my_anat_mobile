@@ -19,7 +19,8 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStateMixin {
+class _RegisterScreenState extends State<RegisterScreen>
+    with TickerProviderStateMixin {
   late PageController pageController;
   late TabController tabController;
   int currentPage = 0;
@@ -54,21 +55,23 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
               elevation: 0,
               pinned: true,
               floating: true,
+              centerTitle: false,
               collapsedHeight: 80 + MediaQuery.of(context).padding.top,
               toolbarHeight: 80 + MediaQuery.of(context).padding.top,
               automaticallyImplyLeading: false,
               backgroundColor: darkGreen,
               title: Padding(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                padding:
+                    EdgeInsets.only(top: MediaQuery.of(context).padding.top),
                 child: Column(
                   children: [
                     WScaleAnimation(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 16, bottom: 16, left: 16),
-                        child: SvgPicture.asset(AppIcons.chevronLeft),
-                      ),
-                    ),
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              right: 16, bottom: 16, left: 16),
+                          child: SvgPicture.asset(AppIcons.chevronLeft),
+                        )),
                     Padding(
                       padding: const EdgeInsets.only(left: 16),
                       child: SvgPicture.asset(AppIcons.logo),
@@ -88,12 +91,13 @@ class _RegisterScreenState extends State<RegisterScreen> with TickerProviderStat
                           style: Theme.of(context)
                               .textTheme
                               .headline2!
-                              .copyWith(fontSize: 28, fontWeight: FontWeight.w700)),
+                              .copyWith(
+                                  fontSize: 28, fontWeight: FontWeight.w700)),
                       const SizedBox(height: 8),
                       Text(
                         _getSubtitle(currentPage),
-                        style:
-                            Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                            fontSize: 14, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
