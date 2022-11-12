@@ -45,7 +45,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
   // FlutterError.onError =
   //     fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -56,8 +57,10 @@ Future<void> main() async {
         Locale('ru'),
         Locale('uz'),
       ],
-      fallbackLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
-      startLocale: Locale(StorageRepository.getString('device_language', defValue: 'uz')),
+      fallbackLocale: Locale(
+          StorageRepository.getString('device_language', defValue: 'uz')),
+      startLocale: Locale(
+          StorageRepository.getString('device_language', defValue: 'uz')),
       saveLocale: true,
       child: const MyApp()));
 }
@@ -66,7 +69,8 @@ class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
@@ -171,9 +175,11 @@ class _MyAppState extends State<MyApp> {
           return BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               if (!StorageRepository.getBool('onboarding', defValue: false)) {
-                navigator.pushAndRemoveUntil(fade(page: const OnBoardingScreen()), (route) => false);
+                navigator.pushAndRemoveUntil(
+                    fade(page: const OnBoardingScreen()), (route) => false);
               } else {
-                navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
+                navigator.pushAndRemoveUntil(
+                    fade(page: const HomeScreen()), (route) => false);
               }
 
               // switch (state.status) {

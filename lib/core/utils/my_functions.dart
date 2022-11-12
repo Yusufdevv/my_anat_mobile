@@ -9,6 +9,7 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/doctor_single/domain/entities/doctor_sinlge_entity.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/data/models/map_hospital.dart';
+import 'package:anatomica/features/map/presentation/widgets/doctor_single_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_bottom_sheet.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -79,22 +80,30 @@ abstract class MyFunctions {
     final pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
     final Paint paint = Paint()..color = Colors.red;
-    canvas.drawImage(await getImageInfo(context, image).then((value) => value.image), const Offset(0, 3), paint);
+    canvas.drawImage(
+        await getImageInfo(context, image).then((value) => value.image),
+        const Offset(0, 3),
+        paint);
     TextPainter painter = TextPainter(textDirection: ui.TextDirection.ltr);
     painter.text = TextSpan(
       text: placeCount.toString(),
       style: const TextStyle(fontSize: 25.0, color: Colors.white),
     );
     painter.layout();
-    painter.paint(canvas, Offset((width * 0.5) - painter.width * 0.5, (height * 0.5) - painter.height * 0.5));
+    painter.paint(
+        canvas,
+        Offset((width * 0.5) - painter.width * 0.5,
+            (height * 0.5) - painter.height * 0.5));
     final img = await pictureRecorder.endRecording().toImage(width, height);
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
     return data?.buffer.asUint8List() ?? Uint8List(0);
   }
 
-  static Future<ImageInfo> getImageInfo(BuildContext context, String image) async {
+  static Future<ImageInfo> getImageInfo(
+      BuildContext context, String image) async {
     AssetImage assetImage = AssetImage(image);
-    ImageStream stream = assetImage.resolve(createLocalImageConfiguration(context));
+    ImageStream stream =
+        assetImage.resolve(createLocalImageConfiguration(context));
     Completer<ImageInfo> completer = Completer();
     stream.addListener(ImageStreamListener((ImageInfo imageInfo, _) {
       return completer.complete(imageInfo);
@@ -102,8 +111,8 @@ abstract class MyFunctions {
     return completer.future;
   }
 
-  static void addHospitals(List<MapHospitalModel> points, BuildContext context, List<MapObject<dynamic>> mapObjects,
-      YandexMapController controller) {
+  static void addHospitals(List<MapHospitalModel> points, BuildContext context,
+      List<MapObject<dynamic>> mapObjects, YandexMapController controller) {
     final placeMarks = points
         .map(
           (e) => PlacemarkMapObject(
@@ -112,7 +121,10 @@ abstract class MyFunctions {
               point: Point(latitude: e.latitude, longitude: e.longitude),
               onTap: (object, point) {
                 controller.moveCamera(CameraUpdate.newCameraPosition(
-                    CameraPosition(target: Point(latitude: e.latitude, longitude: e.longitude), zoom: 15)));
+                    CameraPosition(
+                        target:
+                            Point(latitude: e.latitude, longitude: e.longitude),
+                        zoom: 15)));
                 showModalBottomSheet(
                   barrierColor: Colors.transparent,
                   context: context,
@@ -127,7 +139,8 @@ abstract class MyFunctions {
                     phone: e.phoneNumber,
                     address: e.address,
                     images: e.images.map((e) => e.middle).toList(),
-                    location: Point(latitude: e.latitude, longitude: e.longitude),
+                    location:
+                        Point(latitude: e.latitude, longitude: e.longitude),
                     rating: e.rating,
                   ),
                 );
@@ -175,38 +188,49 @@ abstract class MyFunctions {
     mapObjects.add(clusterItem);
   }
 
-  static void addDoctors(List<MapDoctorModel> points, BuildContext context, List<MapObject<dynamic>> mapObjects,
-      YandexMapController controller) {
+  static void addDoctors(List<MapDoctorModel> points, BuildContext context,
+      List<MapObject<dynamic>> mapObjects, YandexMapController controller) {
     final placeMarks = points
         .map(
           (e) => PlacemarkMapObject(
               opacity: 1,
               mapId: MapObjectId(e.hospital.longitude.toString()),
-              point: Point(latitude: e.hospital.latitude, longitude: e.hospital.longitude),
+              point: Point(
+                  latitude: e.hospital.latitude,
+                  longitude: e.hospital.longitude),
               onTap: (object, point) {
-                controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
-                    target: Point(latitude: e.hospital.latitude, longitude: e.hospital.longitude), zoom: 15)));
+                controller.moveCamera(CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                        target: Point(
+                            latitude: e.hospital.latitude,
+                            longitude: e.hospital.longitude),
+                        zoom: 15)));
                 showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   useRootNavigator: true,
                   backgroundColor: Colors.transparent,
                   barrierColor: Colors.transparent,
-                  builder: (context) => HospitalSingleBottomSheet(
+                  builder: (context) => DoctorSingleBottomSheet(
                     id: e.doctor.id,
                     isHospital: false,
+                    specialization: e.doctor.specialization,
                     slug: '',
+                    hospital: e.hospital.title,
                     title: e.doctor.fullName,
                     phone: e.hospital.phoneNumber,
                     address: e.doctor.address,
                     images: [e.doctor.image.middle],
-                    location: Point(latitude: e.hospital.latitude, longitude: e.hospital.longitude),
+                    location: Point(
+                        latitude: e.hospital.latitude,
+                        longitude: e.hospital.longitude),
                     rating: e.doctor.rating,
                   ),
                 );
               },
-              icon: PlacemarkIcon.single(
-                  PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark), scale: 3))),
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                  image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark),
+                  scale: 3))),
         )
         .toList();
     final clusterItem = ClusterizedPlacemarkCollection(
@@ -242,21 +266,25 @@ abstract class MyFunctions {
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      throw const ParsingException(errorMessage: LocaleKeys.location_services_disabled);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.location_services_disabled);
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
+        throw const ParsingException(
+            errorMessage: LocaleKeys.location_permission_disabled);
       }
     }
     if (permission == LocationPermission.deniedForever) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
+        throw const ParsingException(
+            errorMessage: LocaleKeys.location_permission_disabled);
       } else if (permission == LocationPermission.deniedForever) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_permanent_disabled);
+        throw const ParsingException(
+            errorMessage: LocaleKeys.location_permission_permanent_disabled);
       }
     }
     return await Geolocator.getCurrentPosition();
@@ -303,7 +331,8 @@ abstract class MyFunctions {
   static String getPublishedDate(String date) {
     if (Jiffy(date).isSame(DateTime.now(), Units.DAY)) {
       return '${LocaleKeys.today.tr()}, ${Jiffy(date).format('HH:mm')}';
-    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 || Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
+    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 ||
+        Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
       return '${LocaleKeys.yesterday.tr()}, ${Jiffy(date).format('HH:mm')}';
     } else {
       return '${Jiffy(date).date} ${getMonth(Jiffy(date).month)}, ${Jiffy(date).year}';
