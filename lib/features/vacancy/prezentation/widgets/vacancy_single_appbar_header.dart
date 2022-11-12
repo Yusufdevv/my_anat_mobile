@@ -1,13 +1,16 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/sliver_tab_bardelegate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class VacancySingleAppBarHeader extends StatelessWidget {
   final VacancyListEntity vacancyEntity;
 
-  const VacancySingleAppBarHeader({required this.vacancyEntity, Key? key}) : super(key: key);
+  const VacancySingleAppBarHeader({required this.vacancyEntity, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +47,10 @@ class VacancySingleAppBarHeader extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       vacancyEntity.organization.title,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
-                            fontWeight: FontWeight.w400,fontSize: 16
-                          ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline2!
+                          .copyWith(fontWeight: FontWeight.w400, fontSize: 16),
                     )
                   ],
                 ),
@@ -63,6 +67,10 @@ class VacancySingleAppBarHeader extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: vacancyEntity.organization.logo.middle,
                     fit: BoxFit.cover,
+                    errorWidget: (_, __, ___) => SvgPicture.asset(
+                      AppIcons.smallImageError,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               )

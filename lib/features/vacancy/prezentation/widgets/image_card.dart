@@ -28,20 +28,12 @@ class ImageCard extends StatelessWidget {
       height: height ?? 44,
       width: width ?? 44,
       decoration: BoxDecoration(
+        color: white,
         borderRadius: BorderRadius.circular(radius ?? 8),
         border: Border.all(width: 1, color: aqua),
-        boxShadow: [
-          hasShadow
-              ? BoxShadow(
-                  color: chipShadowColor.withOpacity(0.12),
-                  offset: const Offset(0, 4),
-                  blurRadius: 10,
-                )
-              : const BoxShadow(),
-        ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(radius ?? 8),
         child: CachedNetworkImage(
           imageUrl: imageUrl,
           fit: BoxFit.cover,
