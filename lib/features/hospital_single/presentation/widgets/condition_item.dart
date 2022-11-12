@@ -10,7 +10,6 @@ class ConditionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(entity.name);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -19,21 +18,22 @@ class ConditionItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SvgPicture.network(
             entity.icon.file.url,
+            color: primary,
+            width: 24,
+            height: 24,
           ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                entity.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
-              ),
-            ),
+          Text(
+            entity.name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style:
+                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
           )
         ],
       ),

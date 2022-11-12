@@ -27,7 +27,10 @@ class AboutHospital extends StatelessWidget {
         children: [
           Text(
             LocaleKeys.about_clinic.tr(),
-            style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
+            style: Theme.of(context)
+                .textTheme
+                .headline4!
+                .copyWith(color: textColor),
           ),
           if (hospital.description.isEmpty && hospital.images.isEmpty) ...{
             EmptyWidget(
@@ -40,7 +43,8 @@ class AboutHospital extends StatelessWidget {
             Html(data: hospital.description),
             GridView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(top: hospital.description.isNotEmpty ? 16 : 0),
+              padding: EdgeInsets.only(
+                  top: hospital.description.isNotEmpty ? 16 : 0),
               shrinkWrap: true,
               itemCount: hospital.images.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -59,6 +63,7 @@ class AboutHospital extends StatelessWidget {
                 },
                 child: WImage(
                   imageUrl: hospital.images[index].middle,
+                  fit: BoxFit.cover,
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
