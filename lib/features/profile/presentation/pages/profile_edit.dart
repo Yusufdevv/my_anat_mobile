@@ -70,7 +70,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       text: widget.userEntity.fullName,
     );
     print(widget.userEntity.birthDay);
-    date = Jiffy(widget.userEntity.birthDay).dateTime;
+    date = Jiffy(widget.userEntity.birthDay.isNotEmpty
+            ? widget.userEntity.birthDay
+            : DateTime(2000))
+        .dateTime;
     phoneController = TextEditingController(
         text: MyFunctions.formatPhoneForInput(widget.userEntity.phoneNumber));
     emailController = TextEditingController(text: widget.userEntity.email);
@@ -133,27 +136,27 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   text: LocaleKeys.save.tr(),
                   isLoading: state.status.isSubmissionInProgress,
                   onTap: () {
-                    editBloc.add(EditProfileEvent.saveData(
-                        onSuccess: () {
-                          widget.profileBloc.add(
-                            UpdateProfileEvent(
-                              profileEntity: _localUser.copyWith(
-                                birthDate: date.toString(),
-                                fullName: nameController.text,
-                                phoneNumber:
-                                    '+998${phoneController.text.replaceAll(' ', '')}',
-                                email: emailController.text,
-                                img: state.imageUrl.isNotEmpty
-                                    ? ImageEntity(middle: state.imageUrl)
-                                    : _localUser.img,
-                              ),
-                            ),
-                          );
-                          Navigator.pop(context);
-                        },
-                        onError: (message) {
-                          context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
-                        }));
+                    editBloc.add(EditProfileEvent.saveData(onSuccess: () {
+                      widget.profileBloc.add(
+                        UpdateProfileEvent(
+                          profileEntity: _localUser.copyWith(
+                            birthDate: date.toString(),
+                            fullName: nameController.text,
+                            phoneNumber:
+                                '+998${phoneController.text.replaceAll(' ', '')}',
+                            email: emailController.text,
+                            img: state.imageUrl.isNotEmpty
+                                ? ImageEntity(middle: state.imageUrl)
+                                : _localUser.img,
+                          ),
+                        ),
+                      );
+                      Navigator.pop(context);
+                    }, onError: (message) {
+                      context
+                          .read<ShowPopUpBloc>()
+                          .add(ShowPopUp(message: message));
+                    }));
                   },
                 ),
                 body: ListView(
