@@ -1,4 +1,5 @@
 import 'package:anatomica/features/auth/data/models/image_model.dart';
+import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
@@ -56,13 +57,6 @@ class OrganizationModel extends OrganizationEntity {
   });
 
   factory OrganizationModel.fromJson(Map<String, dynamic> json) => _$OrganizationModelFromJson(json);
-}
-
-@JsonSerializable()
-class PhoneNumberModel extends PhoneNumberEntity {
-  const PhoneNumberModel({required super.phoneNumber});
-
-  factory PhoneNumberModel.fromJson(Map<String, dynamic> json) => _$PhoneNumberModelFromJson(json);
 }
 
 @JsonSerializable()

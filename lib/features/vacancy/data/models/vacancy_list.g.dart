@@ -83,10 +83,11 @@ OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String? ?? '',
       id: json['id'] as int? ?? 0,
       phoneNumber: json['phone_number'] as String? ?? '',
-      phoneNumbers: (json['phone_numbers'] as List<dynamic>?)
-              ?.map((e) => PhoneNumberModel.fromJson(e as Map<String, dynamic>))
+      phoneNumbers: (json['phoneNumbers'] as List<dynamic>?)
+              ?.map((e) => const PhoneNumberConverter()
+                  .fromJson(e as Map<String, dynamic>?))
               .toList() ??
-          [],
+          const [],
       slug: json['slug'] as String? ?? '',
       address: json['address'] as String? ?? '',
       images: (json['images'] as List<dynamic>?)
@@ -119,21 +120,13 @@ Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
       'images': instance.images,
       'address': instance.address,
       'phone_number': instance.phoneNumber,
-      'phone_numbers': instance.phoneNumbers,
+      'phoneNumbers': instance.phoneNumbers
+          .map(const PhoneNumberConverter().toJson)
+          .toList(),
       'rating': instance.rating,
       'specialization': instance.speciazilation,
       'types': instance.types,
       'location_url': instance.locationUrl,
-    };
-
-PhoneNumberModel _$PhoneNumberModelFromJson(Map<String, dynamic> json) =>
-    PhoneNumberModel(
-      phoneNumber: json['phone_number'] as String? ?? '',
-    );
-
-Map<String, dynamic> _$PhoneNumberModelToJson(PhoneNumberModel instance) =>
-    <String, dynamic>{
-      'phone_number': instance.phoneNumber,
     };
 
 TypesModel _$TypesModelFromJson(Map<String, dynamic> json) => TypesModel(

@@ -24,6 +24,7 @@ class OrganizationModel extends OrganizationEntity {
     required super.slug,
     required super.latitude,
     required super.longitude,
+    required super.name,
   });
   factory OrganizationModel.fromJson(Map<String, dynamic> json) => _$OrganizationModelFromJson(json);
   Map<String, dynamic> toJson() => _$OrganizationModelToJson(this);

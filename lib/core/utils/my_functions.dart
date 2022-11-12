@@ -30,8 +30,8 @@ abstract class MyFunctions {
       if (candidate.address.isEmpty) {
         height = height - decrementAmount;
       }
-      if (candidate.phoneNumber.isEmpty) {
-        height = height - decrementAmount;
+      if (candidate.phoneNumbers.isEmpty) {
+        height = height - decrementAmount - 40;
       }
     } else if (doctor != null) {
       if (doctor.address.isEmpty) {
@@ -40,7 +40,7 @@ abstract class MyFunctions {
       if (doctor.phoneNumber.isEmpty) {
         height = height - decrementAmount;
       }
-      if (doctor.organization.title.isEmpty) {
+      if (doctor.organization.name.isEmpty) {
         height = height - decrementAmount;
       }
     }

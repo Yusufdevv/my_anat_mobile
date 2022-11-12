@@ -1,5 +1,7 @@
 import 'package:anatomica/features/auth/data/models/image_model.dart';
+import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
+import 'package:anatomica/features/auth/domain/entities/phone_number_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:equatable/equatable.dart';
@@ -182,8 +184,8 @@ class OrganizationEntity extends Equatable {
   final String address;
   @JsonKey(name: 'phone_number', defaultValue: '')
   final String phoneNumber;
-  @JsonKey(name: 'phone_numbers', defaultValue: [])
-  final List<PhoneNumberModel> phoneNumbers;
+  @PhoneNumberConverter()
+  final List<PhoneNumberEntity> phoneNumbers;
   @JsonKey(name: 'rating', defaultValue: 0)
   final double rating;
   @JsonKey(name: 'specialization', defaultValue: [])
@@ -221,16 +223,6 @@ class OrganizationEntityConverter extends JsonConverter<OrganizationEntity, Map<
 
   @override
   Map<String, dynamic> toJson(OrganizationEntity object) => {};
-}
-
-class PhoneNumberEntity extends Equatable {
-  @JsonKey(name: 'phone_number', defaultValue: '')
-  final String phoneNumber;
-
-  const PhoneNumberEntity({required this.phoneNumber});
-
-  @override
-  List<Object?> get props => [phoneNumber];
 }
 
 class TypesEntity extends Equatable {

@@ -1,6 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/features/journal/presentation/pages/journal_screen.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class PaymentFailure extends StatelessWidget {
   final bool isSubscription;
   final bool isRegistered;
-  const PaymentFailure({required this.isSubscription, required this.isRegistered, Key? key}) : super(key: key);
+  final String title;
+  const PaymentFailure({required this.isSubscription, required this.isRegistered, required this.title, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,7 @@ class PaymentFailure extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                LocaleKeys.realisation_error.tr(),
+                LocaleKeys.realisation_error.tr(args: [title]),
                 style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
                 textAlign: TextAlign.center,
               ),
@@ -71,7 +75,13 @@ class PaymentFailure extends StatelessWidget {
                   border: Border.all(color: primary),
                   color: unFollowButton,
                   margin: const EdgeInsets.only(top: 12),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      fade(page: const MagazineScreen()),
+                      (route) => route.isFirst,
+                    );
+                  },
                   child: Text(
                     LocaleKeys.to_main.tr(),
                     style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),

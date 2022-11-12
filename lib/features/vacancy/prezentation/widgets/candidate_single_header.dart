@@ -5,6 +5,7 @@ import 'package:anatomica/features/common/presentation/widgets/rating_container.
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
+import 'package:anatomica/features/map/presentation/widgets/phones_bottom_sheet.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -206,13 +207,13 @@ class CandidateSingleHeader extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 10),
                                     ],
-                                    if (candidate.phoneNumber.isNotEmpty) ...[
+                                    if (candidate.phoneNumbers.isNotEmpty) ...[
                                       Row(
                                         children: [
                                           SvgPicture.asset(AppIcons.phone),
                                           const SizedBox(width: 6),
                                           Text(
-                                            candidate.phoneNumber,
+                                            MyFunctions.formatPhone(candidate.phoneNumbers.first.phoneNumber, false),
                                             style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                           ),
                                         ],
@@ -232,26 +233,34 @@ class CandidateSingleHeader extends StatelessWidget {
                                       ],
                                     ),
                                     const SizedBox(height: 16),
-                                    WButton(
-                                      color: primary,
-                                      onTap: () async {
-                                        if (await canLaunchUrlString('tel:${candidate.phoneNumber}')) {
-                                          await launchUrlString('tel:${candidate.phoneNumber}');
-                                        }
-                                      },
-                                      padding: EdgeInsets.zero,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(AppIcons.phone, height: 20, width: 20, color: white),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            LocaleKeys.call.tr(),
-                                            style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
-                                          )
-                                        ],
-                                      ),
-                                    )
+                                    if (candidate.phoneNumbers.isNotEmpty) ...{
+                                      WButton(
+                                        color: primary,
+                                        onTap: () async {
+                                          if (candidate.phoneNumbers.length > 1) {
+                                            showPhonesBottomSheet(
+                                                context, candidate.phoneNumbers.map((e) => e.phoneNumber).toList());
+                                          } else {
+                                            if (await canLaunchUrlString(
+                                                'tel:${candidate.phoneNumbers.first.phoneNumber}')) {
+                                              await launchUrlString('tel:${candidate.phoneNumbers.first.phoneNumber}');
+                                            }
+                                          }
+                                        },
+                                        padding: EdgeInsets.zero,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(AppIcons.phone, height: 20, width: 20, color: white),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              LocaleKeys.call.tr(),
+                                              style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    }
                                   ],
                                 ),
                               ),

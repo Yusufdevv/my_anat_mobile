@@ -9,6 +9,7 @@ class ReaderControllerState extends Equatable {
   final String changedWebPage;
   final String changedDataAsWebPage;
   final String jsFunction;
+  final int journalIndex;
   const ReaderControllerState({
     this.selectedColor = white,
     this.selectedTextColor = textColor,
@@ -18,6 +19,7 @@ class ReaderControllerState extends Equatable {
     this.colorName = '',
     this.changedDataAsWebPage = '',
     this.jsFunction = '',
+    this.journalIndex = 0,
   });
   ReaderControllerState copyWith({
     Color? selectedColor,
@@ -28,6 +30,7 @@ class ReaderControllerState extends Equatable {
     String? changedDataAsWebPage,
     String? jsFunction,
     int? fontSizePercentage,
+    int? journalIndex,
   }) =>
       ReaderControllerState(
         selectedColor: selectedColor ?? this.selectedColor,
@@ -38,6 +41,7 @@ class ReaderControllerState extends Equatable {
         selectedFontFamily: selectedFontFamily ?? this.selectedFontFamily,
         fontSizePercentage: fontSizePercentage ?? this.fontSizePercentage,
         jsFunction: jsFunction ?? this.jsFunction,
+        journalIndex: journalIndex ?? this.journalIndex,
       );
 
   @override
@@ -50,5 +54,6 @@ class ReaderControllerState extends Equatable {
         colorName,
         changedDataAsWebPage,
         jsFunction,
+        journalIndex,
       ];
 }

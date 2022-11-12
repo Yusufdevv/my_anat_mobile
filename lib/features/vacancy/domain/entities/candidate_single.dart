@@ -1,5 +1,7 @@
+import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/auth/domain/entities/phone_number_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/entities/district.dart';
@@ -31,8 +33,8 @@ class CandidateSingleEntity extends Equatable {
   final String address;
   @SpecializationConverter()
   final SpecializationEntity specialization;
-  @JsonKey(defaultValue: '')
-  final String phoneNumber;
+  @PhoneNumberConverter()
+  final List<PhoneNumberEntity> phoneNumbers;
   @JsonKey(defaultValue: '')
   final String email;
   @JsonKey(defaultValue: 0)
@@ -62,7 +64,7 @@ class CandidateSingleEntity extends Equatable {
     required this.image,
     required this.rating,
     required this.address,
-    required this.phoneNumber,
+    this.phoneNumbers = const [],
     required this.specialization,
     required this.telegram,
     required this.instagram,
@@ -88,7 +90,7 @@ class CandidateSingleEntity extends Equatable {
         image,
         rating,
         address,
-        phoneNumber,
+        phoneNumbers,
         specialization,
         telegram,
         instagram,

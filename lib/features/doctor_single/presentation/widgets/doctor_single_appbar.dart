@@ -233,7 +233,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                 constraints:
                                                     BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 74),
                                                 child: Text(
-                                                  doctor.work,
+                                                  doctor.organization.name,
                                                   maxLines: 1,
                                                   overflow: TextOverflow.ellipsis,
                                                   style:

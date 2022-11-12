@@ -10,8 +10,7 @@ class ReaderControllerBloc extends Bloc<ReaderControllerEvent, ReaderControllerS
   ReaderControllerBloc() : super(const ReaderControllerState()) {
     String colorFunction = '';
     on<SetWebPage>((event, emit) {
-      emit(state.copyWith(jsFunction: 'setSize(${state.fontSizePercentage})'));
-      emit(state.copyWith(jsFunction: colorFunction));
+      emit(state.copyWith(jsFunction: 'setSize(${state.fontSizePercentage})', journalIndex: event.index));
     });
     on<SelectColor>((event, emit) {
       colorFunction = event.colorName;

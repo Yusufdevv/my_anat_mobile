@@ -38,12 +38,14 @@ OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
       slug: json['slug'] as String? ?? '',
       latitude: (json['latitude'] as num?)?.toDouble() ?? 0,
       longitude: (json['longitude'] as num?)?.toDouble() ?? 0,
+      name: json['name'] as String? ?? '',
     );
 
 Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
+      'name': instance.name,
       'slug': instance.slug,
       'logo': instance.logo,
       'images': instance.images.map(const ImageConverter().toJson).toList(),

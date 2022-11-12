@@ -3,13 +3,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'journal_page_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class JournalPageModel extends JournalPageEntity {
   const JournalPageModel({
     required super.journal,
     required super.preview,
     required super.page,
     required super.content,
+    required super.imgContent,
   });
   factory JournalPageModel.fromJson(Map<String, dynamic> json) => _$JournalPageModelFromJson(json);
 }

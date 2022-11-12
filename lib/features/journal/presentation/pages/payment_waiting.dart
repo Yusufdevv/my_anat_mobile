@@ -7,6 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:formz/formz.dart';
 
 class PaymentWaiting extends StatelessWidget {
   final bool isRegistered;
@@ -66,22 +67,27 @@ class PaymentWaiting extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: WButton(
-        margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
-        onTap: () {
-          context.read<PaymentBloc>().add(CheckPaymentStatus());
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              AppIcons.refresh,
-              color: white,
+      bottomNavigationBar: BlocBuilder<PaymentBloc, PaymentState>(
+        builder: (context, state) {
+          return WButton(
+            isLoading: state.checkPaymentStatus.isSubmissionInProgress,
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
+            onTap: () {
+              context.read<PaymentBloc>().add(CheckPaymentStatus());
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  AppIcons.refresh,
+                  color: white,
+                ),
+                const SizedBox(width: 8),
+                Text(LocaleKeys.update_page.tr())
+              ],
             ),
-            const SizedBox(width: 8),
-            Text(LocaleKeys.update_page.tr())
-          ],
-        ),
+          );
+        },
       ),
     );
   }

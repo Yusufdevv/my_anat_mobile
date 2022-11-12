@@ -15,7 +15,10 @@ class SelectColor extends ReaderControllerEvent {
   });
 }
 
-class SetWebPage extends ReaderControllerEvent {}
+class SetWebPage extends ReaderControllerEvent {
+  final int index;
+  SetWebPage({required this.index});
+}
 
 class UpgradeFontSize extends ReaderControllerEvent {}
 

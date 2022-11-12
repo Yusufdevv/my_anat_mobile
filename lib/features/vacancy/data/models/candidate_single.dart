@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
@@ -18,7 +19,7 @@ class CandidateSingleModel extends CandidateSingleEntity {
       required super.image,
       required super.rating,
       required super.address,
-      required super.phoneNumber,
+      required super.phoneNumbers,
       required super.specialization,
       required super.telegram,
       required super.instagram,
@@ -34,8 +35,7 @@ class CandidateSingleModel extends CandidateSingleEntity {
       required super.showInProfileBio,
       required super.work});
 
-  factory CandidateSingleModel.fromJson(Map<String, dynamic> json) =>
-      _$CandidateSingleModelFromJson(json);
+  factory CandidateSingleModel.fromJson(Map<String, dynamic> json) => _$CandidateSingleModelFromJson(json);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)

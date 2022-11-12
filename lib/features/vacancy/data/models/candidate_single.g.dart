@@ -18,7 +18,11 @@ CandidateSingleModel _$CandidateSingleModelFromJson(
       image: json['image'] as String? ?? '',
       rating: (json['rating'] as num?)?.toDouble() ?? 0,
       address: json['address'] as String? ?? '',
-      phoneNumber: json['phone_number'] as String? ?? '',
+      phoneNumbers: (json['phone_numbers'] as List<dynamic>?)
+              ?.map((e) => const PhoneNumberConverter()
+                  .fromJson(e as Map<String, dynamic>?))
+              .toList() ??
+          const [],
       specialization: const SpecializationConverter()
           .fromJson(json['specialization'] as Map<String, dynamic>?),
       telegram: json['telegram'] as String? ?? '',
@@ -55,7 +59,9 @@ Map<String, dynamic> _$CandidateSingleModelToJson(
       'address': instance.address,
       'specialization':
           const SpecializationConverter().toJson(instance.specialization),
-      'phone_number': instance.phoneNumber,
+      'phone_numbers': instance.phoneNumbers
+          .map(const PhoneNumberConverter().toJson)
+          .toList(),
       'email': instance.email,
       'rating': instance.rating,
       'open_to_work': instance.openToWork,

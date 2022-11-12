@@ -43,7 +43,7 @@ class WAppBarWithButtons extends StatelessWidget implements PreferredSizeWidget 
                     bottom: Radius.circular(16),
                   ),
                 ),
-                padding: const EdgeInsets.all(18),
+                padding: const EdgeInsets.all(18).copyWith(right: 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

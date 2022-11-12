@@ -3,7 +3,6 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/markdown_reader/domain/entities/named_color_entity.dart';
 import 'package:anatomica/features/markdown_reader/presentation/bloc/reader_controller_bloc/reader_controller_bloc.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/change_font_size_button.dart';
-import 'package:anatomica/features/markdown_reader/presentation/widgets/color_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,15 +39,16 @@ class _ReaderControllerState extends State<ReaderController> {
           return DefaultTabController(
             length: 2,
             child: Container(
+              margin: const EdgeInsets.all(20),
               width: 300,
               //  constraints: BoxConstraints(maxHeight: (MediaQuery.of(context).size.height / 2) - 86),
               decoration: BoxDecoration(
                 color: !(state.selectedColor.red > 200) ? textColor : white,
                 boxShadow: [
                   BoxShadow(
-                    offset: const Offset(0, 4),
-                    blurRadius: 20,
-                    color: grey.withOpacity(0.08),
+                    offset: const Offset(0, 8),
+                    blurRadius: 19,
+                    color: chipShadowColor.withOpacity(0.19),
                   ),
                 ],
                 borderRadius: BorderRadius.circular(12),
@@ -120,23 +120,23 @@ class _ReaderControllerState extends State<ReaderController> {
                       //   ],
                       // ),
                       // const SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 9).copyWith(bottom: 16),
-                        child: Row(
-                          children: List.generate(
-                            colors.length,
-                            (index) => ColorSelector(
-                              color: colors[index].color,
-                              onTap: (color, textColor) {
-                                context.read<ReaderControllerBloc>().add(
-                                    SelectColor(textColor: textColor, color: color, colorName: colors[index].name));
-                              },
-                              groupValue: state.selectedColor,
-                              value: colors[index].color,
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 9).copyWith(bottom: 16),
+                      //   child: Row(
+                      //     children: List.generate(
+                      //       colors.length,
+                      //       (index) => ColorSelector(
+                      //         color: colors[index].color,
+                      //         onTap: (color, textColor) {
+                      //           context.read<ReaderControllerBloc>().add(
+                      //               SelectColor(textColor: textColor, color: color, colorName: colors[index].name));
+                      //         },
+                      //         groupValue: state.selectedColor,
+                      //         value: colors[index].color,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(12, 0, 12, 16),
                         child: Row(

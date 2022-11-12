@@ -10,6 +10,7 @@ class PaymentResultScreen extends StatelessWidget {
   final bool isSubscription;
   final String title;
   final bool isRegistered;
+
   const PaymentResultScreen({
     required this.bloc,
     required this.isRegistered,
@@ -24,10 +25,16 @@ class PaymentResultScreen extends StatelessWidget {
       value: bloc,
       child: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {
-          if (state.status == '') {
-            return PaymentFailure(isRegistered: isRegistered, isSubscription: isSubscription);
-          } else if (state.status == '') {
-            return PaymentSuccess(isRegistered: isRegistered, isSubscription: isSubscription);
+          if (state.status == 'waiting') {
+            return PaymentWaiting(
+              title: title,
+              isRegistered: isRegistered,
+              isSubscription: isSubscription,
+            );
+          } else if (state.status == 'confirmed') {
+            return PaymentSuccess(title: title, isRegistered: isRegistered, isSubscription: isSubscription);
+          } else if (state.status.isNotEmpty) {
+            return PaymentFailure(title: title, isRegistered: isRegistered, isSubscription: isSubscription);
           } else {
             return PaymentWaiting(
               title: title,

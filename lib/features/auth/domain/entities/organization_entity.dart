@@ -14,6 +14,8 @@ class OrganizationEntity extends Equatable {
   @JsonKey(defaultValue: '')
   final String title;
   @JsonKey(defaultValue: '')
+  final String name;
+  @JsonKey(defaultValue: '')
   final String slug;
   @JsonKey(defaultValue: '')
   final String logo;
@@ -54,6 +56,7 @@ class OrganizationEntity extends Equatable {
     this.images = const [],
     this.locationUrl = '',
     this.logo = '',
+    this.name = '',
     this.phoneNumbers = const [],
     this.types = const [],
   });
@@ -71,5 +74,6 @@ class OrganizationEntity extends Equatable {
         specialization,
         types,
         locationUrl,
+        name
       ];
 }
