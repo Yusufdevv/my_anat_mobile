@@ -38,6 +38,8 @@ class HospitalVacancyItem extends StatelessWidget {
             Text(
               entity.title,
               style: Theme.of(context).textTheme.headline1,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4),
             Text(

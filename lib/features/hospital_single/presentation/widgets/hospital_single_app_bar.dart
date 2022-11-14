@@ -8,6 +8,7 @@ import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_single/hospital_single_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/image_single_screen.dart';
+import 'package:anatomica/features/hospital_single/presentation/widgets/big_image_error_widget.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:anatomica/features/map/presentation/widgets/image_slider_indicator.dart';
@@ -81,6 +82,9 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                         Positioned.fill(
                           child: BlocBuilder<HospitalSingleBloc, HospitalSingleState>(
                             builder: (context, state) {
+                              if (state.hospital.images.isEmpty) {
+                                return const BigImageErrorWidget();
+                              }
                               return PageView.builder(
                                 itemBuilder: (context, index) => GestureDetector(
                                   onTap: () {
@@ -100,10 +104,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                           imageUrl: state.hospital.images[index].middle,
                                           fit: BoxFit.cover,
                                           onErrorColor: Colors.red,
-                                          onErrorWidget: SvgPicture.asset(
-                                            AppIcons.bigImageError,
-                                            fit: BoxFit.cover,
-                                          ),
+                                          onErrorWidget: const BigImageErrorWidget(),
                                         ),
                                       ),
                                       Positioned.fill(

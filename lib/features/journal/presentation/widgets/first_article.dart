@@ -56,6 +56,7 @@ class FirstArticle extends StatelessWidget {
                             page: WebViewScreen(
                               sendToken: false,
                               shareValue: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
+                              url: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
                               page: 'PremiumArticleSinglePage',
                               slug: state.firstArticle.slug,
                             ),
@@ -67,6 +68,7 @@ class FirstArticle extends StatelessWidget {
                             page: WebViewScreen(
                               sendToken: false,
                               shareValue: 'https://anatomica.uz/article/${state.firstArticle.slug}',
+                              url: 'https://anatomica.uz/article/${state.firstArticle.slug}',
                               page: 'ArticleSinglePage',
                               slug: state.firstArticle.slug,
                             ),

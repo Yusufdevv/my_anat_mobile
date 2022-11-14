@@ -59,14 +59,19 @@ class MagazineSmallItem extends StatelessWidget {
                       ),
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Text(
-                      MyFunctions.getFormatCostFromInt(journalEntity.price),
-                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                ),
+                if (!(journalEntity.isBought || !journalEntity.isPremium)) ...{
+                  Row(
+                    children: [
+                      Text(
+                        MyFunctions.getFormatCostFromInt(journalEntity.price),
+                        style:
+                            Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                } else ...{
+                  const SizedBox(height: 16)
+                }
               ],
             ),
             WButton(

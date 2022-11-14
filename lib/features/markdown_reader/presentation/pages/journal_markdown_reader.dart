@@ -74,11 +74,14 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                     .headline4!
                     .copyWith(color: controllerState.selectedTextColor, fontSize: 15),
               ),
-              leading: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 12, 16),
-                child: SvgPicture.asset(
-                  AppIcons.chevronLeft,
-                  color: textSecondary,
+              leading: WScaleAnimation(
+                onTap: () => Navigator.of(context).pop(),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
+                  child: SvgPicture.asset(
+                    AppIcons.chevronLeft,
+                    color: textSecondary,
+                  ),
                 ),
               ),
               actions: [
