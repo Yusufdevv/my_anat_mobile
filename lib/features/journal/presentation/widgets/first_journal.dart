@@ -1,7 +1,6 @@
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/register_bottom_sheet.dart';
-import 'package:anatomica/features/journal/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/buy_subscription.dart';
 import 'package:anatomica/features/journal/presentation/pages/journal_single_screen.dart';
@@ -29,9 +28,9 @@ class FirstJournal extends StatelessWidget {
               onLeftButtonTap: () async {
                 Navigator.of(context, rootNavigator: true).push(fade(
                     page: JournalSingleScreen(
-                        bloc: context.read<JournalBloc>(),
-                        journal: state.journals.first,
-                        downloadBloc: context.read<DownloadBloc>())));
+                  bloc: context.read<JournalBloc>(),
+                  journal: state.journals.first,
+                )));
               },
               onRightButtonTap: () {
                 if (context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated) {

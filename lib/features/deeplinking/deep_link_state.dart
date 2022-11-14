@@ -21,11 +21,13 @@ class DoctorLinkTriggered extends DeepLinkState {
 
 class OrganizationLinkTriggered extends DeepLinkState {
   final String? organizationSlug;
+  final int? organizationId;
   OrganizationLinkTriggered({
     required this.organizationSlug,
+    required this.organizationId,
   });
   @override
-  List<Object?> get props => [organizationSlug];
+  List<Object?> get props => [organizationSlug, organizationId];
 }
 
 class JournalLinkTriggered extends DeepLinkState {
@@ -33,4 +35,9 @@ class JournalLinkTriggered extends DeepLinkState {
   JournalLinkTriggered({required this.journalSlug});
   @override
   List<Object?> get props => [journalSlug];
+}
+
+class OnlineJournalLinkTriggered extends DeepLinkState {
+  @override
+  List<Object?> get props => [];
 }

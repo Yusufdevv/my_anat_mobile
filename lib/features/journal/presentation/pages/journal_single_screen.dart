@@ -6,7 +6,6 @@ import 'package:anatomica/features/auth/presentation/pages/register.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
-import 'package:anatomica/features/journal/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_screen.dart';
 import 'package:anatomica/features/journal/presentation/widgets/article_item.dart';
@@ -26,11 +25,9 @@ import 'package:share_plus/share_plus.dart';
 
 class JournalSingleScreen extends StatefulWidget {
   final JournalBloc bloc;
-  final DownloadBloc downloadBloc;
   final JournalEntity journal;
 
-  const JournalSingleScreen({required this.bloc, required this.journal, required this.downloadBloc, Key? key})
-      : super(key: key);
+  const JournalSingleScreen({required this.bloc, required this.journal, Key? key}) : super(key: key);
 
   @override
   State<JournalSingleScreen> createState() => _JournalSingleScreenState();
@@ -45,9 +42,6 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
           value: widget.bloc
             ..add(GetJournalSingleArticles(id: widget.journal.id))
             ..add(GetJournalSingle(slug: widget.journal.slug)),
-        ),
-        BlocProvider.value(
-          value: widget.downloadBloc..add(CheckWhetherFileAlreadyDownloaded(id: widget.journal.id)),
         ),
       ],
       child: Scaffold(
@@ -105,7 +99,7 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                               Navigator.of(context).push(
                                 fade(
                                   page: JournalMarkdownPageReader(
-                                    title: widget.journal.redaction,
+                                    title: state.journalSingle.redaction,
                                     slug: widget.journal.slug,
                                   ),
                                 ),
@@ -115,19 +109,19 @@ class _JournalSingleScreenState extends State<JournalSingleScreen> {
                               Navigator.of(context).push(
                                 fade(
                                   page: JournalMarkdownPageReader(
-                                    title: widget.journal.redaction,
-                                    slug: widget.journal.slug,
+                                    title: state.journalSingle.redaction,
+                                    slug: state.journalSingle.slug,
                                     isPreview: true,
                                   ),
                                 ),
                               );
                             },
                             onRightButtonTap: () {
-                              if (widget.journal.isBought || !widget.journal.isPremium) {
+                              if (widget.journal.isBought || !state.journalSingle.isPremium) {
                                 Navigator.of(context).push(fade(
                                     page: JournalMarkdownPageReader(
-                                  title: widget.journal.redaction,
-                                  slug: widget.journal.slug,
+                                  title: state.journalSingle.redaction,
+                                  slug: state.journalSingle.slug,
                                 )));
                               } else {
                                 if (authState.status == AuthenticationStatus.unauthenticated) {

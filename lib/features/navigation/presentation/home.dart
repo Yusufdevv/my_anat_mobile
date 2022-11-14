@@ -87,12 +87,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: BlocListener<DeepLinkBloc, DeepLinkState>(
           listener: (context, state) {
             if (state is DoctorLinkTriggered) {
+              print('doctorLinktriggered');
               if (state.doctorId != null) {
                 Navigator.of(context).push(fade(page: DoctorSingleScreen(id: state.doctorId!)));
               }
             } else if (state is OrganizationLinkTriggered) {
-              if (state.organizationSlug != null) {
-                Navigator.of(context).push(fade(page: HospitalSingleScreen(id: 0, slug: state.organizationSlug!)));
+              if (state.organizationSlug != null && state.organizationId != null) {
+                Navigator.of(context)
+                    .push(fade(page: HospitalSingleScreen(id: state.organizationId!, slug: state.organizationSlug!)));
+              }
+            } else if (state is OnlineJournalLinkTriggered) {
+              if (mounted) {
+                _controller.animateTo(1);
               }
             }
           },

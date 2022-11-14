@@ -2,7 +2,6 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
-import 'package:anatomica/features/journal/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/journal_single_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -25,7 +24,6 @@ class MagazineSmallItem extends StatelessWidget {
         Navigator.of(context, rootNavigator: true).push(
           fade(
             page: JournalSingleScreen(
-              downloadBloc: context.read<DownloadBloc>(),
               journal: journalEntity,
               bloc: context.read<JournalBloc>(),
             ),
@@ -77,7 +75,6 @@ class MagazineSmallItem extends StatelessWidget {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: JournalSingleScreen(
-                      downloadBloc: context.read<DownloadBloc>(),
                       journal: journalEntity,
                       bloc: context.read<JournalBloc>(),
                     ),
