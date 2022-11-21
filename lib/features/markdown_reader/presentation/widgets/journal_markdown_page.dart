@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class JournalMarkdownPage extends StatefulWidget {
   final String data;
@@ -39,12 +38,14 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ReaderControllerBloc, ReaderControllerState>(
+    return BlocListener<ReaderControllerBloc, ReaderControllerState>(
       listener: (context, state) {
         webViewController.runJavascript(state.jsFunction);
-        // _controller.evaluateJavascript(source: state.jsFunction);
       },
-      builder: (context, state) => GestureDetector(
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        // onHorizontalDragUpdate: (details){
+        // },
         onTap: widget.onTap,
         child: WebView(
           initialUrl: '',
@@ -54,12 +55,12 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
             webViewController.loadHtmlString(widget.data);
           },
           navigationDelegate: (NavigationRequest request) {
-            if (request.url.startsWith('https://google.com/')) {
-              print('allowing navigation to $request');
+            if (request.url.contains('about:blank') ||
+                request.url.contains(RegExp(
+                    r'(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'))) {
               return NavigationDecision.navigate;
             } else {
-              print('Opening Default Browser');
-              launchUrlString(request.url); // to open browser
+              launchUrlString(request.url);
               return NavigationDecision.prevent;
             }
           },
