@@ -57,6 +57,9 @@ class AppIcons {
   static const refresh = 'assets/icons/auth/refresh.svg';
   static const errorIcon = 'assets/icons/auth/error_icon.svg';
   static const errorClose = 'assets/icons/auth/error_close.svg';
+  static const tableOfContents = 'assets/icons/magazine/table_of_contents.svg';
+  static const journalPreview = 'assets/icons/magazine/journal_preview.svg';
+  static const journalSettings = 'assets/icons/magazine/journal_settings.svg';
 
   //vacancy
   static const arrowRight = 'assets/icons/vacancy/arror_right.svg';
@@ -69,8 +72,7 @@ class AppIcons {
   static const briefCase = 'assets/icons/vacancy/briefcase.svg';
   static const cancelButton = 'assets/icons/vacancy/cancel_button.svg';
   static const cashBanknote = 'assets/icons/vacancy/cash_banknote.svg';
-  static const vacancySingleStar =
-      'assets/icons/vacancy/vacancy_single_star.svg';
+  static const vacancySingleStar = 'assets/icons/vacancy/vacancy_single_star.svg';
   static const vacancyShare = 'assets/icons/vacancy/share.svg';
   static const vacancyShone = 'assets/icons/vacancy/phone.svg';
   static const chevronLeft = 'assets/icons/vacancy/chevron_left.svg';
@@ -85,8 +87,7 @@ class AppIcons {
   static const telegram = 'assets/icons/vacancy/telegram.svg';
   static const leftArrow = 'assets/icons/vacancy/arrow_left.svg';
   static const externalLink = 'assets/icons/magazine/external_link.svg';
-  static const bottomSheetCancel =
-      'assets/icons/vacancy/bottomsheet_cancel.svg';
+  static const bottomSheetCancel = 'assets/icons/vacancy/bottomsheet_cancel.svg';
 
   //profile
   static const scope = 'assets/icons/profile/scope.svg';
@@ -108,16 +109,14 @@ class AppIcons {
   static const medicalDoctor = 'assets/icons/profile/medical_doctor.svg';
   static const icHospital = 'assets/icons/profile/ic_hospital.svg';
   static const editImage = 'assets/icons/profile/edit.svg';
-  static const changePasswordLock =
-      'assets/icons/profile/change_password_lock.svg';
+  static const changePasswordLock = 'assets/icons/profile/change_password_lock.svg';
 
   static const paymentMethodCheck = 'assets/icons/magazine/payment_check.svg';
   //magazine
   static const magazineFilter = 'assets/icons/magazine/filter.svg';
   static const magazineSearch = 'assets/icons/magazine/search.svg';
   static const diamond = 'assets/icons/magazine/diamond.svg';
-  static const premiumBottomSheetClose =
-      'assets/icons/magazine/premium_bottom_sheet_close.svg';
+  static const premiumBottomSheetClose = 'assets/icons/magazine/premium_bottom_sheet_close.svg';
   static const fontSizeUp = 'assets/icons/magazine/font_size_up.svg';
   static const fontSizeDown = 'assets/icons/magazine/font_size_down.svg';
   static const readerCheck = 'assets/icons/magazine/reader_check.svg';
@@ -136,8 +135,7 @@ class AppIcons {
   static const defaultImg = 'assets/icons/profile/default_img.svg';
   static const guestCard = 'assets/icons/profile/guest_icon.svg';
   static const download = 'assets/icons/magazine/download.svg';
-  static const locationIconOutlined =
-      'assets/icons/map_screen/current_location_outline.svg';
+  static const locationIconOutlined = 'assets/icons/map_screen/current_location_outline.svg';
   static const rightArrow = 'assets/icons/map_screen/right_arrow.svg';
 
 //  static const refresh = 'assets/icons/magazine/refresh.svg';

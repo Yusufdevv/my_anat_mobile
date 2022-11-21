@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
@@ -9,13 +7,11 @@ import 'package:anatomica/features/markdown_reader/data/repositories/journal_pag
 import 'package:anatomica/features/markdown_reader/domain/usecases/get_journal_pages_usecase.dart';
 import 'package:anatomica/features/markdown_reader/presentation/bloc/journal_pages_bloc/journal_pages_bloc.dart';
 import 'package:anatomica/features/markdown_reader/presentation/bloc/reader_controller_bloc/reader_controller_bloc.dart';
-import 'package:anatomica/features/markdown_reader/presentation/widgets/reader_controller.dart';
+import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_markdown_page.dart';
+import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_menu.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -211,8 +207,12 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                         top: 0,
                         right: 0,
                         child: AnimatedCrossFade(
-                          firstChild: const ReaderController(),
-                          secondChild: const SizedBox(width: 300),
+                          firstChild: JournalMenu(
+                            onContentTap: () {},
+                            onPreviewTap: () {},
+                            onSettingsTap: () {},
+                          ),
+                          secondChild: const SizedBox(width: 217),
                           duration: const Duration(milliseconds: 200),
                           crossFadeState: showController ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                         ),
@@ -230,58 +230,6 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class JournalMarkdownPage extends StatefulWidget {
-  final String data;
-  final VoidCallback onTap;
-
-  const JournalMarkdownPage({
-    required this.data,
-    required this.onTap,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<JournalMarkdownPage> createState() => _JournalMarkdownPageState();
-}
-
-class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
-  //late WebViewController _controller;
-  late InAppWebViewController _controller;
-  late InAppWebViewGroupOptions options;
-
-  @override
-  void initState() {
-    options = InAppWebViewGroupOptions(
-        crossPlatform: InAppWebViewOptions(verticalScrollBarEnabled: true, supportZoom: false));
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    log(widget.data);
-    return BlocConsumer<ReaderControllerBloc, ReaderControllerState>(
-      listener: (context, state) {
-        _controller.evaluateJavascript(source: state.jsFunction);
-      },
-      builder: (context, state) => GestureDetector(
-        onTap: widget.onTap,
-        child: InAppWebView(
-          onWebViewCreated: (controller) {
-            _controller = controller;
-          },
-          initialData: InAppWebViewInitialData(data: widget.data, mimeType: 'text/html'),
-          gestureRecognizers: {
-            Factory<OneSequenceGestureRecognizer>(
-              () => VerticalDragGestureRecognizer(),
-            ),
-          },
-          initialOptions: options,
-        ),
       ),
     );
   }
