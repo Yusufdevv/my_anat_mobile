@@ -81,25 +81,25 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                 ),
               ),
               actions: [
-                WScaleAnimation(
-                  onTap: () {
-                    setState(() {
-                      showContents = !showContents;
-                      showController = false;
-                    });
-                    _itemScrollController.jumpTo(index: controllerState.journalIndex, alignment: 0.3);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6).copyWith(left: 20),
-                    child: SvgPicture.asset(
-                      AppIcons.listIcon,
-                      width: 22,
-                      height: 22,
-                      color: textSecondary,
-                      fit: BoxFit.none,
-                    ),
-                  ),
-                ),
+                // WScaleAnimation(
+                //   onTap: () {
+                //     setState(() {
+                //       showContents = !showContents;
+                //       showController = false;
+                //     });
+                //     _itemScrollController.jumpTo(index: controllerState.journalIndex, alignment: 0.3);
+                //   },
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6).copyWith(left: 20),
+                //     child: SvgPicture.asset(
+                //       AppIcons.listIcon,
+                //       width: 22,
+                //       height: 22,
+                //       color: textSecondary,
+                //       fit: BoxFit.none,
+                //     ),
+                //   ),
+                // ),
                 WScaleAnimation(
                   onTap: () {
                     setState(() {
@@ -109,10 +109,9 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6).copyWith(right: 20),
                     child: SvgPicture.asset(
-                      AppIcons.setting,
+                      AppIcons.journalMenu,
                       width: 22,
                       height: 22,
-                      color: textSecondary,
                       fit: BoxFit.none,
                     ),
                   ),

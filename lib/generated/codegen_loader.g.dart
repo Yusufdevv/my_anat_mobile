@@ -127,7 +127,7 @@ class CodegenLoader extends AssetLoader{
   "buy_magazine": "Покупка журнала",
   "sing_up_to_full": "Зарегистрируйтесь, чтобы использовать все возможности приложения",
   "preview": "Предпросмотр",
-  "buy": "Купить за {}",
+  "buy": "Купить",
   "subscribe": "Оформить подписку",
   "about_doctor": "О враче",
   "interview": "Интервью",
@@ -301,7 +301,8 @@ class CodegenLoader extends AssetLoader{
   "onboarding_2_content": "Приобретайте электронные версии выпусков ANATOMICA, читайте и сохраняйте в удобном для вас формате!",
   "onboarding_3_content": "Если ваша организация находится в поисках специалистов, опубликуйте объявление в разделе \"Вакансии\"",
   "onboarding_4_content": "Оформите годовую подписку и воспользуйтесь расширенными функциями приложения.",
-  "change_password_success": "Пароль успешно изменен"
+  "change_password_success": "Пароль успешно изменен",
+  "website": "Сайт"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -416,7 +417,7 @@ static const Map<String,dynamic> uz = {
   "buy_magazine": "Jurnal sotib olish",
   "sing_up_to_full": "Ilovadan to'liq foydalanish uchun ro'yxatdan o'ting",
   "preview": "Oldindan ko'rish",
-  "buy": "{} ga sotib olish",
+  "buy": "Sotib olish",
   "subscribe": "Obuna boʻling",
   "about_doctor": "Shifokor haqida",
   "interview": "Intervyu",
@@ -590,7 +591,8 @@ static const Map<String,dynamic> uz = {
   "onboarding_2_content": "ANATOMICA nashrlarining elektron versiyalarini sotib oling, o'qing va o'zingiz uchun qulay formatda saqlang!",
   "onboarding_3_content": "Agar tashkilotingiz mutaxassislarni qidirayotgan bo'lsa, “Vakansiyalar“ bo'limiga e'lon qo'ying",
   "onboarding_4_content": "Yillik obuna uchun ro'yxatdan o'ting va ilovaning ilg'or xususiyatlaridan bahramand bo'ling.",
-  "change_password_success": "Parol muvaffaqiyatli o'zgartirildi"
+  "change_password_success": "Parol muvaffaqiyatli o'zgartirildi",
+  "website": "Sayt"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

@@ -18,6 +18,7 @@ import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subsc
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
+import 'package:anatomica/features/markdown_reader/presentation/pages/journal_markdown_reader.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -37,6 +38,7 @@ class PaymentScreen extends StatefulWidget {
   final int id;
   final bool isJournal;
   final bool isRegistered;
+  final String slug;
 
   const PaymentScreen(
       {required this.price,
@@ -46,6 +48,7 @@ class PaymentScreen extends StatefulWidget {
       required this.isRegistered,
       required this.subtitle,
       required this.id,
+      required this.slug,
       Key? key})
       : super(key: key);
 
@@ -135,7 +138,12 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  JournalArticleItem(title: widget.title, price: widget.price, imageUrl: widget.imageUrl),
+                  JournalArticleItem(
+                    title: widget.title,
+                    price: widget.price,
+                    imageUrl: widget.imageUrl,
+                    slug: widget.slug,
+                  ),
                   if (!widget.isRegistered) ...[
                     const Divider(
                       height: 0,
@@ -309,14 +317,17 @@ class JournalArticleItem extends StatelessWidget {
     required this.price,
     required this.title,
     required this.imageUrl,
+    required this.slug,
     Key? key,
   }) : super(key: key);
   final String imageUrl;
   final String title;
+  final String slug;
   final int price;
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      height: 161,
       padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16, bottom: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,6 +363,25 @@ class JournalArticleItem extends StatelessWidget {
                   MyFunctions.getFormatCostFromInt(price),
                   style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20),
                 ),
+                const Spacer(),
+                WButton(
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true).push(
+                      fade(
+                        page: JournalMarkdownPageReader(
+                          title: title,
+                          slug: slug,
+                          isPreview: true,
+                        ),
+                      ),
+                    );
+                  },
+                  height: 40,
+                  text: 'Читать фрагмент',
+                  textColor: primary,
+                  color: unFollowButton.withOpacity(0.1),
+                  border: Border.all(color: primary),
+                )
               ],
             ),
           ),

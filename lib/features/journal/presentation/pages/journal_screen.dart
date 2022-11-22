@@ -1,11 +1,8 @@
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
-import 'package:anatomica/features/journal/presentation/pages/all_articles.dart';
 import 'package:anatomica/features/journal/presentation/pages/all_journals_screen.dart';
 import 'package:anatomica/features/journal/presentation/widgets/activate_premium.dart';
-import 'package:anatomica/features/journal/presentation/widgets/article_item.dart';
-import 'package:anatomica/features/journal/presentation/widgets/first_article.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_big_item.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journals_list.dart';
 import 'package:anatomica/features/journal/presentation/widgets/magazine_appbar.dart';
@@ -17,7 +14,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 
 class MagazineScreen extends StatelessWidget {
   const MagazineScreen({Key? key}) : super(key: key);
@@ -70,44 +66,49 @@ class MagazineScreen extends StatelessWidget {
                       if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{
                         ActivatePremium(images: state.journals.map((e) => e.image).toList()),
                       },
-                      if (state.journalArticleStatus == PaginatorStatus.PAGINATOR_SUCCESS &&
-                          state.journalArticles.isNotEmpty) ...[
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: TitleWithSuffixAction(
-                              title: LocaleKeys.articles.tr(),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  fade(page: AllArticlesScreen(bloc: context.read<JournalBloc>())),
-                                );
-                              },
-                            ),
-                          ),
+                      SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).padding.bottom + 12,
                         ),
-                        if (state.getFirstArticleStatus.isSubmissionSuccess) ...{
-                          FirstArticle(state: state),
-                        },
-                        SliverPadding(
-                          padding: EdgeInsets.only(
-                            top: 6,
-                            left: 16,
-                            right: 16,
-                            bottom: MediaQuery.of(context).padding.bottom,
-                          ),
-                          sliver: SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                return ArticleItem(
-                                  margin: const EdgeInsets.only(bottom: 12),
-                                  magazineItemEntity: state.journalArticles.skip(1).take(4).toList()[index],
-                                );
-                              },
-                              childCount: state.journalArticles.skip(1).take(4).length, // 1000 list items
-                            ),
-                          ),
-                        ),
-                      ],
+                      )
+                      // if (state.journalArticleStatus == PaginatorStatus.PAGINATOR_SUCCESS &&
+                      //     state.journalArticles.isNotEmpty) ...[
+                      //   SliverToBoxAdapter(
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.only(left: 16),
+                      //       child: TitleWithSuffixAction(
+                      //         title: LocaleKeys.articles.tr(),
+                      //         onTap: () {
+                      //           Navigator.of(context).push(
+                      //             fade(page: AllArticlesScreen(bloc: context.read<JournalBloc>())),
+                      //           );
+                      //         },
+                      //       ),
+                      //     ),
+                      //   ),
+                      //   if (state.getFirstArticleStatus.isSubmissionSuccess) ...{
+                      //     FirstArticle(state: state),
+                      //   },
+                      //   SliverPadding(
+                      //     padding: EdgeInsets.only(
+                      //       top: 6,
+                      //       left: 16,
+                      //       right: 16,
+                      //       bottom: MediaQuery.of(context).padding.bottom,
+                      //     ),
+                      //     sliver: SliverList(
+                      //       delegate: SliverChildBuilderDelegate(
+                      //         (BuildContext context, int index) {
+                      //           return ArticleItem(
+                      //             margin: const EdgeInsets.only(bottom: 12),
+                      //             magazineItemEntity: state.journalArticles.skip(1).take(4).toList()[index],
+                      //           );
+                      //         },
+                      //         childCount: state.journalArticles.skip(1).take(4).length, // 1000 list items
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ],
                     ],
                   ),
                 );

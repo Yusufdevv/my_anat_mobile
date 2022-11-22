@@ -3,15 +3,11 @@ import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/highlighted_text.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
-import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
-import 'package:anatomica/features/journal/presentation/pages/journal_single_screen.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchedModelsItem extends StatelessWidget {
   final TextEditingController controller;
@@ -52,16 +48,7 @@ class SearchedModelsItem extends StatelessWidget {
           WButton(
             width: 164,
             margin: const EdgeInsets.only(top: 12),
-            onTap: () {
-              Navigator.of(context, rootNavigator: true).push(
-                fade(
-                  page: JournalSingleScreen(
-                    journal: magazineItemEntity,
-                    bloc: context.read<JournalBloc>(),
-                  ),
-                ),
-              );
-            },
+            onTap: () {},
             child: Text(
               LocaleKeys.journal_more.tr(),
               style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),

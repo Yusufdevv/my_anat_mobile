@@ -38,7 +38,6 @@ class JournalMenu extends StatelessWidget {
             icon: AppIcons.tableOfContents,
             title: 'Содержание',
           ),
-          const Divider(height: 0, thickness: 1, color: textFieldColor),
           JournalMenuItem(
             onTap: onPreviewTap,
             icon: AppIcons.journalPreview,
@@ -46,6 +45,7 @@ class JournalMenu extends StatelessWidget {
           ),
           const Divider(height: 0, thickness: 1, color: textFieldColor),
           JournalMenuItem(
+            isLast: true,
             onTap: onSettingsTap,
             icon: AppIcons.journalSettings,
             title: 'Настройки',

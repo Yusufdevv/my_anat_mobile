@@ -14,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'navigator.dart';
 
-enum NavItemEnum { map, magazine, vacancies, account }
+enum NavItemEnum { map, magazine, vacancies, website, account }
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     NavItemEnum.map: GlobalKey<NavigatorState>(),
     NavItemEnum.vacancies: GlobalKey<NavigatorState>(),
     NavItemEnum.magazine: GlobalKey<NavigatorState>(),
+    NavItemEnum.website: GlobalKey<NavigatorState>(),
     NavItemEnum.account: GlobalKey<NavigatorState>(),
   };
 
@@ -52,8 +53,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       icon: AppIcons.vacancies,
     ),
     NavBar(
-      title: LocaleKeys.account,
+      title: LocaleKeys.website,
       id: 3,
+      icon: AppIcons.webSite,
+    ),
+    NavBar(
+      title: LocaleKeys.account,
+      id: 4,
       icon: AppIcons.profile,
     ),
   ];
@@ -62,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _controller = TabController(length: 4, vsync: this);
+    _controller = TabController(length: 5, vsync: this);
     _controller.addListener(onTabChange);
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: SystemUiOverlay.values);

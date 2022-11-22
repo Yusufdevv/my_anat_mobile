@@ -288,5 +288,6 @@ abstract class  LocaleKeys {
   static const onboarding_3_content = 'onboarding_3_content';
   static const onboarding_4_content = 'onboarding_4_content';
   static const change_password_success = 'change_password_success';
+  static const website = 'website';
 
 }

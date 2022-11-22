@@ -111,7 +111,7 @@
   "buy_magazine": "Jurnal sotib olish",
   "sing_up_to_full": "Ilovadan to'liq foydalanish uchun ro'yxatdan o'ting",
   "preview": "Oldindan ko'rish",
-  "buy": "{} ga sotib olish",
+  "buy": "Sotib olish",
   "subscribe": "Obuna boʻling",
   "about_doctor": "Shifokor haqida",
   "interview": "Intervyu",
@@ -285,5 +285,6 @@
   "onboarding_2_content": "ANATOMICA nashrlarining elektron versiyalarini sotib oling, o'qing va o'zingiz uchun qulay formatda saqlang!",
   "onboarding_3_content": "Agar tashkilotingiz mutaxassislarni qidirayotgan bo'lsa, “Vakansiyalar“ bo'limiga e'lon qo'ying",
   "onboarding_4_content": "Yillik obuna uchun ro'yxatdan o'ting va ilovaning ilg'or xususiyatlaridan bahramand bo'ling.",
-  "change_password_success": "Parol muvaffaqiyatli o'zgartirildi"
+  "change_password_success": "Parol muvaffaqiyatli o'zgartirildi",
+  "website" : "Sayt"
 }

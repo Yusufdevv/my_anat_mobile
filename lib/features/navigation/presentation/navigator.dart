@@ -33,6 +33,10 @@ class _TabNavigatorState extends State<TabNavigator> with AutomaticKeepAliveClie
         return {
           TabNavigatorRoutes.root: (context) => const VacancyScreen(),
         };
+      case NavItemEnum.website:
+        return {
+          TabNavigatorRoutes.root: (context) => Container(),
+        };
       case NavItemEnum.account:
         return {
           TabNavigatorRoutes.root: (context) => const ProfileScreen(),

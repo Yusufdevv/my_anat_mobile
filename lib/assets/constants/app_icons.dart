@@ -60,6 +60,8 @@ class AppIcons {
   static const tableOfContents = 'assets/icons/magazine/table_of_contents.svg';
   static const journalPreview = 'assets/icons/magazine/journal_preview.svg';
   static const journalSettings = 'assets/icons/magazine/journal_settings.svg';
+  static const journalMenu = 'assets/icons/magazine/journal_menu.svg';
+  static const webSite = 'assets/icons/global/website.svg';
 
   //vacancy
   static const arrowRight = 'assets/icons/vacancy/arror_right.svg';
