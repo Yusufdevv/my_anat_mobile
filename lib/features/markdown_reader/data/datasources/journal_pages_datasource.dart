@@ -39,7 +39,7 @@ class JournalPagesDatasourceImpl extends JournalPagesDatasource {
   @override
   Future<GenericPagination<JournalOutlineModel>> getPagesTableOfContents({required String slug, String? next}) async {
     try {
-      final response = await _dio.get(next ?? '/journal/$slug/pages/',
+      final response = await _dio.get(next ?? '/journal/$slug/outline/',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}

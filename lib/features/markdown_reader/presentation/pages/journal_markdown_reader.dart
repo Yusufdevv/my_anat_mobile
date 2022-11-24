@@ -10,6 +10,7 @@ import 'package:anatomica/features/markdown_reader/presentation/bloc/journal_pag
 import 'package:anatomica/features/markdown_reader/presentation/bloc/reader_controller_bloc/reader_controller_bloc.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_markdown_page.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_menu.dart';
+import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_table_of_contents.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,25 +91,6 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                 ),
               ),
               actions: [
-                // WScaleAnimation(
-                //   onTap: () {
-                //     setState(() {
-                //       showContents = !showContents;
-                //       showController = false;
-                //     });
-                //     _itemScrollController.jumpTo(index: controllerState.journalIndex, alignment: 0.3);
-                //   },
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6).copyWith(left: 20),
-                //     child: SvgPicture.asset(
-                //       AppIcons.listIcon,
-                //       width: 22,
-                //       height: 22,
-                //       color: textSecondary,
-                //       fit: BoxFit.none,
-                //     ),
-                //   ),
-                // ),
                 WScaleAnimation(
                   onTap: () {
                     setState(() {
@@ -146,91 +128,92 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                     children: [
                       Positioned.fill(
                         bottom: MediaQuery.of(context).padding.bottom,
-                        child: AnimatedCrossFade(
-                          firstChild: Center(
-                            child: SizedBox(
-                              height: 220,
-                              child: ScrollablePositionedList.separated(
-                                itemScrollController: _itemScrollController,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) =>
-                                    GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      showContents = !showContents;
-                                    });
-                                    _pageController.animateToPage(index,
-                                        duration:
-                                            const Duration(milliseconds: 100),
-                                        curve: Curves.linear);
-                                  },
-                                  child: WImage(
-                                    height: 220,
-                                    width: 160,
-                                    fit: BoxFit.cover,
-                                    imageUrl: state.pages
-                                        .map((e) => e.imgContent)
-                                        .toList()[index],
-                                  ),
-                                ),
-                                itemCount: state.pages.length,
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(width: 12),
-                              ),
-                            ),
-                          ),
-                          secondChild: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                showController = false;
-                              });
-                            },
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  maxHeight: MediaQuery.of(context)
-                                          .size
-                                          .height -
-                                      (MediaQuery.of(context).padding.bottom +
-                                          MediaQuery.of(context).padding.top +
-                                          kToolbarHeight)),
-                              child: PageView.builder(
-                                controller: _pageController,
-                                onPageChanged: (index) {
-                                  context
-                                      .read<ReaderControllerBloc>()
-                                      .add(SetWebPage(index: index));
-                                },
-                                itemBuilder: (context, index) {
-                                  if (index == pages.length) {
-                                    context
-                                        .read<JournalPagesBloc>()
-                                        .add(GetMoreJournalPages());
-                                    return const Center(
-                                      child: CupertinoActivityIndicator(),
-                                    );
-                                  }
-                                  return JournalMarkdownPage(
-                                    onTap: () {
-                                      setState(() {
-                                        showController = false;
-                                      });
-                                    },
-                                    data: pages[index].content,
-                                  );
-                                },
-                                itemCount: state.fetchMore
-                                    ? pages.length + 1
-                                    : pages.length,
-                              ),
-                            ),
-                          ),
-                          duration: const Duration(milliseconds: 150),
-                          crossFadeState: showContents
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
-                        ),
+                        child: JournalTableOfContents(),
+                        // child: AnimatedCrossFade(
+                        //   firstChild: Center(
+                        //     child: SizedBox(
+                        //       height: 220,
+                        //       child: ScrollablePositionedList.separated(
+                        //         itemScrollController: _itemScrollController,
+                        //         padding:
+                        //             const EdgeInsets.symmetric(horizontal: 16),
+                        //         scrollDirection: Axis.horizontal,
+                        //         itemBuilder: (context, index) =>
+                        //             GestureDetector(
+                        //           onTap: () {
+                        //             setState(() {
+                        //               showContents = !showContents;
+                        //             });
+                        //             _pageController.animateToPage(index,
+                        //                 duration:
+                        //                     const Duration(milliseconds: 100),
+                        //                 curve: Curves.linear);
+                        //           },
+                        //           child: WImage(
+                        //             height: 220,
+                        //             width: 160,
+                        //             fit: BoxFit.cover,
+                        //             imageUrl: state.pages
+                        //                 .map((e) => e.imgContent)
+                        //                 .toList()[index],
+                        //           ),
+                        //         ),
+                        //         itemCount: state.pages.length,
+                        //         separatorBuilder: (context, index) =>
+                        //             const SizedBox(width: 12),
+                        //       ),
+                        //     ),
+                        //   ),
+                        //   secondChild: GestureDetector(
+                        //     onTap: () {
+                        //       setState(() {
+                        //         showController = false;
+                        //       });
+                        //     },
+                        //     child: ConstrainedBox(
+                        //       constraints: BoxConstraints(
+                        //           maxHeight: MediaQuery.of(context)
+                        //                   .size
+                        //                   .height -
+                        //               (MediaQuery.of(context).padding.bottom +
+                        //                   MediaQuery.of(context).padding.top +
+                        //                   kToolbarHeight)),
+                        //       child: PageView.builder(
+                        //         controller: _pageController,
+                        //         onPageChanged: (index) {
+                        //           context
+                        //               .read<ReaderControllerBloc>()
+                        //               .add(SetWebPage(index: index));
+                        //         },
+                        //         itemBuilder: (context, index) {
+                        //           if (index == pages.length) {
+                        //             context
+                        //                 .read<JournalPagesBloc>()
+                        //                 .add(GetMoreJournalPages());
+                        //             return const Center(
+                        //               child: CupertinoActivityIndicator(),
+                        //             );
+                        //           }
+                        //           return JournalMarkdownPage(
+                        //             onTap: () {
+                        //               setState(() {
+                        //                 showController = false;
+                        //               });
+                        //             },
+                        //             data: pages[index].content,
+                        //           );
+                        //         },
+                        //         itemCount: state.fetchMore
+                        //             ? pages.length + 1
+                        //             : pages.length,
+                        //       ),
+                        //     ),
+                        //   ),
+                        //   duration: const Duration(milliseconds: 150),
+                        //   crossFadeState: showContents
+                        //       ? CrossFadeState.showFirst
+                        //       : CrossFadeState.showSecond,
+                        // ),
                       ),
                       Positioned(
                         top: 0,
