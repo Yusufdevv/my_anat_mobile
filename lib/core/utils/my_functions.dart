@@ -71,6 +71,23 @@ abstract class MyFunctions {
     }
   }
 
+  static String getReadingTime(int seconds) {
+    final minutes = seconds ~/ 60;
+    final hours = seconds ~/ 3600;
+    final second = seconds % 60;
+    final StringBuffer buffer = StringBuffer();
+    if (hours > 0) {
+      buffer.write('$hours ч ');
+    }
+    if (minutes > 0) {
+      buffer.write('$minutes мин. ');
+    }
+    if (second > 0) {
+      buffer.write('$second сек.');
+    }
+    return buffer.toString();
+  }
+
   static Future<Uint8List> getBytesFromCanvas(
       {required int width,
       required int height,

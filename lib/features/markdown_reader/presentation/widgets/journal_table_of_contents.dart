@@ -10,7 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class JournalTableOfContents extends StatelessWidget {
-  const JournalTableOfContents({Key? key}) : super(key: key);
+  final ValueChanged<int> onTap;
+  const JournalTableOfContents({required this.onTap, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +24,14 @@ class JournalTableOfContents extends StatelessWidget {
           paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
               state.getJournalContentsStatus),
           itemBuilder: (context, index) => JournalContentItem(
+                onTap: onTap,
                 content: state.contents[index],
               ),
           itemCount: state.contents.length,
           fetchMoreFunction: () {
-            context.read<JournalPagesBloc>().add(GetMoreJournalTableOfContents());
+            context
+                .read<JournalPagesBloc>()
+                .add(GetMoreJournalTableOfContents());
           },
           hasMoreToFetch: state.contentsFetchMore,
           errorWidget: const Text('error'));
@@ -36,9 +41,11 @@ class JournalTableOfContents extends StatelessWidget {
 
 class JournalContentItem extends StatelessWidget {
   final JournalOutlineEntity content;
+  final ValueChanged<int> onTap;
 
   const JournalContentItem({
     required this.content,
+    required this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -46,7 +53,7 @@ class JournalContentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () async {},
+      onTap: () => onTap(content.page),
       child: SizedBox(
         height: 78,
         child: Row(
@@ -86,7 +93,7 @@ class JournalContentItem extends StatelessWidget {
                       SvgPicture.asset(AppIcons.book),
                       const SizedBox(width: 4),
                       Text(
-                        content.readTime.toString(),
+                        MyFunctions.getReadingTime(content.readTime),
                         style: Theme.of(context).textTheme.headline3!.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,

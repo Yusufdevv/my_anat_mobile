@@ -11,9 +11,16 @@ class WebViewScreen extends StatefulWidget {
   final String? url;
   final String shareValue;
   final bool sendToken;
+  final bool showAppBar;
 
   const WebViewScreen(
-      {required this.page, this.url, this.shareValue = '', this.slug = '', this.sendToken = true, Key? key})
+      {required this.page,
+      this.url,
+      this.shareValue = '',
+      this.slug = '',
+      this.sendToken = true,
+      this.showAppBar = true,
+      Key? key})
       : super(key: key);
 
   @override
@@ -42,24 +49,27 @@ class _WebViewScreenState extends State<WebViewScreen> {
           // }
         },
         child: Scaffold(
-          appBar: AppBar(
-            titleSpacing: 0,
-            leadingWidth: 0,
-            elevation: 1,
-            shadowColor: textSecondary,
-            title: HospitalSingleAppBarBody(
-              shareValue: widget.shareValue,
-              // onPop: () async {
-              //   // if (await _controller.canGoBack()) {
-              //   //   await _controller.goBack();
-              //   // } else {
-              //     Navigator.of(context).pop();
-              //   //}
-              // },
-            ),
-          ),
+          appBar: widget.showAppBar
+              ? AppBar(
+                  titleSpacing: 0,
+                  leadingWidth: 0,
+                  elevation: 1,
+                  shadowColor: textSecondary,
+                  title: HospitalSingleAppBarBody(
+                    shareValue: widget.shareValue,
+                    // onPop: () async {
+                    //   // if (await _controller.canGoBack()) {
+                    //   //   await _controller.goBack();
+                    //   // } else {
+                    //     Navigator.of(context).pop();
+                    //   //}
+                    // },
+                  ),
+                )
+              : null,
           body: Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+            padding:
+                EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
             child: InAppWebView(
               onWebViewCreated: (controller) async {
                 _controller = controller;
