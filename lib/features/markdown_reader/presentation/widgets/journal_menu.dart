@@ -17,6 +17,7 @@ class JournalMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 185,
       margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       decoration: BoxDecoration(
         boxShadow: [
@@ -38,6 +39,7 @@ class JournalMenu extends StatelessWidget {
             icon: AppIcons.tableOfContents,
             title: 'Содержание',
           ),
+          const Divider(height: 0, thickness: 1, color: textFieldColor),
           JournalMenuItem(
             onTap: onPreviewTap,
             icon: AppIcons.journalPreview,
@@ -45,7 +47,6 @@ class JournalMenu extends StatelessWidget {
           ),
           const Divider(height: 0, thickness: 1, color: textFieldColor),
           JournalMenuItem(
-            isLast: true,
             onTap: onSettingsTap,
             icon: AppIcons.journalSettings,
             title: 'Настройки',
