@@ -11,6 +11,7 @@ import 'package:flutter_html/flutter_html.dart';
 
 class AboutHospital extends StatelessWidget {
   final HospitalSingleEntity hospital;
+
   const AboutHospital({
     required this.hospital,
     Key? key,
@@ -20,55 +21,75 @@ class AboutHospital extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       color: white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            LocaleKeys.about_clinic.tr(),
-            style: Theme.of(context)
-                .textTheme
-                .headline4!
-                .copyWith(color: textColor),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16)
+                .copyWith(bottom: 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  LocaleKeys.about_clinic.tr(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4!
+                      .copyWith(color: textColor),
+                ),
+                if (hospital.description.isEmpty &&
+                    hospital.images.isEmpty) ...{
+                  EmptyWidget(
+                    hasPadding: true,
+                    hasMargin: false,
+                    title: LocaleKeys.no_info.tr(),
+                    content: LocaleKeys.no_info.tr(),
+                  )
+                } else ...[
+                  Html(data: hospital.description),
+                ]
+              ],
+            ),
           ),
-          if (hospital.description.isEmpty && hospital.images.isEmpty) ...{
-            EmptyWidget(
-              hasPadding: true,
-              hasMargin: false,
-              title: LocaleKeys.no_info.tr(),
-              content: LocaleKeys.no_info.tr(),
-            )
-          } else ...[
-            Html(data: hospital.description),
-            GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(
-                  top: hospital.description.isNotEmpty ? 16 : 0),
-              shrinkWrap: true,
-              itemCount: hospital.images.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                mainAxisExtent: 88,
-              ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, bottom: 16, top: 20),
+            child: Text(
+              LocaleKeys.photos.tr(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(color: textColor),
+            ),
+          ),
+          SizedBox(
+            height: 140,
+            child: ListView.separated(
+              separatorBuilder: (context, index) => const SizedBox(width: 8),
+              scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(fade(
+                  Navigator.of(context).push(
+                    fade(
                       page: ImageSingleScreen(
-                    images: hospital.images,
-                    index: index,
-                  )));
+                        images: hospital.images,
+                        index: index,
+                      ),
+                    ),
+                  );
                 },
                 child: WImage(
                   imageUrl: hospital.images[index].middle,
                   fit: BoxFit.cover,
-                  borderRadius: BorderRadius.circular(12),
+                  width: MediaQuery.of(context).size.shortestSide / 2,
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
-            )
-          ]
+              itemCount: hospital.images.length,
+              padding: const EdgeInsets.symmetric(horizontal: 16)
+                  .copyWith(bottom: 20),
+            ),
+          ),
         ],
       ),
     );

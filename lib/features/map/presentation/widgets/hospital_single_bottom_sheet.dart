@@ -90,7 +90,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                             child: WImage(
                               borderRadius: BorderRadius.circular(8),
                               imageUrl: images[index],
-                              width: MediaQuery.of(context).size.shortestSide - 100,
+                              fit: BoxFit.cover,
+                               width: MediaQuery.of(context).size.shortestSide /2,
                               onErrorWidget: Container(
                                 width: MediaQuery.of(context).size.width - 24,
                                 alignment: Alignment.center,

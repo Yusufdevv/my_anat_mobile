@@ -4,6 +4,7 @@ import 'package:anatomica/features/auth/domain/entities/authentication_status.da
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/highlighted_text.dart';
 import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
+import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/web_view/web_view_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -22,6 +23,7 @@ class ArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
+
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () async {

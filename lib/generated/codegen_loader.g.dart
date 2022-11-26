@@ -302,7 +302,8 @@ class CodegenLoader extends AssetLoader{
   "onboarding_3_content": "Если ваша организация находится в поисках специалистов, опубликуйте объявление в разделе \"Вакансии\"",
   "onboarding_4_content": "Оформите годовую подписку и воспользуйтесь расширенными функциями приложения.",
   "change_password_success": "Пароль успешно изменен",
-  "website": "Сайт"
+  "website": "Сайт",
+  "photos": "Фотографии"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -592,7 +593,8 @@ static const Map<String,dynamic> uz = {
   "onboarding_3_content": "Agar tashkilotingiz mutaxassislarni qidirayotgan bo'lsa, “Vakansiyalar“ bo'limiga e'lon qo'ying",
   "onboarding_4_content": "Yillik obuna uchun ro'yxatdan o'ting va ilovaning ilg'or xususiyatlaridan bahramand bo'ling.",
   "change_password_success": "Parol muvaffaqiyatli o'zgartirildi",
-  "website": "Sayt"
+  "website": "Sayt",
+  "photos": "Rasmlar"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

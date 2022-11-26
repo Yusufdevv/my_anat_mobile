@@ -1,4 +1,4 @@
-import 'package:anatomica/assets/colors/colors.dart';
+ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/deeplinking/deep_link_bloc.dart';
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           controller: _controller,
                           indicatorPadding: EdgeInsets.zero,
                           padding: EdgeInsets.zero,
-                          indicator: const CustomTabIndicator(radius: 3, color: primary),
+                          indicator: const CustomTabIndicator(radius: 3, color: primary, horizontalPadding: 35),
                           labelPadding: EdgeInsets.zero,
                           tabs: List.generate(
                             lables.length,
