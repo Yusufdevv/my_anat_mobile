@@ -27,6 +27,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
   final Point location;
   final double rating;
   final bool isHospital;
+  final String logo;
 
   const HospitalSingleBottomSheet(
       {required this.title,
@@ -38,6 +39,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
       required this.phone,
       required this.location,
       required this.id,
+      required this.logo,
       Key? key})
       : super(key: key);
 
@@ -69,7 +71,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
                               if (isHospital) {
-                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(
                                   fade(
                                     page: HospitalSingleScreen(
                                       slug: slug,
@@ -78,7 +81,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(
                                   fade(
                                     page: DoctorSingleScreen(
                                       id: id,
@@ -91,7 +95,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                               imageUrl: images[index],
                               fit: BoxFit.cover,
-                               width: MediaQuery.of(context).size.shortestSide /2,
+                              width:
+                                  MediaQuery.of(context).size.shortestSide / 2,
                               onErrorWidget: Container(
                                 width: MediaQuery.of(context).size.width - 24,
                                 alignment: Alignment.center,
@@ -105,22 +110,49 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                             ),
                           ),
                           itemCount: images.length,
-                          separatorBuilder: (context, index) => const SizedBox(width: 8),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 8),
                         ),
                       ),
                     ),
               const SizedBox(height: 16),
               Padding(
-                padding: EdgeInsets.fromLTRB(8, 0, 8, MediaQuery.of(context).padding.bottom + 8),
+                padding: EdgeInsets.fromLTRB(
+                    8, 0, 8, MediaQuery.of(context).padding.bottom + 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                    Row(
+                      children: [
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: divider),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: WImage(
+                            height: 40,
+                            width: 40,
+                            imageUrl: logo,
+                            borderRadius: BorderRadius.circular(6),
+                            onErrorWidget: SvgPicture.asset(
+                                AppIcons.smallImageError,
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(fontSize: 20),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -153,7 +185,10 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                       children: [
                         Text(
                           rating.toString(),
-                          style: Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(color: darkGreen),
                         ),
                         const SizedBox(width: 8),
                         ...List.generate(
@@ -167,7 +202,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           5 - rating.toInt(),
                           (index) => Padding(
                             padding: const EdgeInsets.only(right: 4),
-                            child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
+                            child: SvgPicture.asset(AppIcons.star,
+                                color: inactiveStar),
                           ),
                         ),
                       ],
@@ -179,7 +215,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           child: WButton(
                             onTap: () {
                               if (isHospital) {
-                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(
                                   fade(
                                     page: HospitalSingleScreen(
                                       slug: slug,
@@ -188,7 +225,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(
                                   fade(
                                     page: DoctorSingleScreen(
                                       id: id,
@@ -208,22 +246,34 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           onTap: () async {
                             Navigator.of(context).pop();
                             if (Platform.isAndroid) {
-                              if (await map_launcher.MapLauncher.isMapAvailable(map_launcher.MapType.google) ?? false) {
+                              if (await map_launcher.MapLauncher.isMapAvailable(
+                                      map_launcher.MapType.google) ??
+                                  false) {
                                 await map_launcher.MapLauncher.showDirections(
                                     mapType: map_launcher.MapType.google,
-                                    destination: map_launcher.Coords(location.latitude, location.longitude));
+                                    destination: map_launcher.Coords(
+                                        location.latitude, location.longitude));
                               } else {
-                                var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
-                                await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
+                                var uri = Uri.parse(
+                                    'geo:${location.latitude},${location.longitude}');
+                                await canLaunchUrl(uri)
+                                    ? await launchUrl(uri)
+                                    : throw 'can not open this location';
                               }
                             } else {
-                              if (await map_launcher.MapLauncher.isMapAvailable(map_launcher.MapType.apple) ?? false) {
+                              if (await map_launcher.MapLauncher.isMapAvailable(
+                                      map_launcher.MapType.apple) ??
+                                  false) {
                                 await map_launcher.MapLauncher.showDirections(
                                     mapType: map_launcher.MapType.apple,
-                                    destination: map_launcher.Coords(location.latitude, location.longitude));
+                                    destination: map_launcher.Coords(
+                                        location.latitude, location.longitude));
                               } else {
-                                var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
-                                await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
+                                var uri = Uri.parse(
+                                    'geo:${location.latitude},${location.longitude}');
+                                await canLaunchUrl(uri)
+                                    ? await launchUrl(uri)
+                                    : throw 'can not open this location';
                               }
                             }
                             // var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
@@ -239,7 +289,9 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           color: white,
                           onTap: () async {
                             var uri = Uri.parse('tel:${phone}');
-                            await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open phone';
+                            await canLaunchUrl(uri)
+                                ? await launchUrl(uri)
+                                : throw 'can not open phone';
                           },
                           border: Border.all(color: primary),
                           padding: const EdgeInsets.all(8),

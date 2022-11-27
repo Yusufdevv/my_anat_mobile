@@ -58,6 +58,7 @@ class HospitalItem extends StatelessWidget {
                                 child: WImage(
                                   imageUrl: entity.images[index].middle,
                                   fit: BoxFit.cover,
+                                  width: MediaQuery.of(context).size.shortestSide / 2,
                                   onErrorWidget: SvgPicture.asset(
                                     AppIcons.bigImageError,
                                     fit: BoxFit.cover,
@@ -82,11 +83,31 @@ class HospitalItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          entity.title,
-                          style: Theme.of(context).textTheme.headline1,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        Row(
+                          children: [DecoratedBox(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: divider),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: WImage(
+                              height: 32,
+                              width: 32,
+                              imageUrl: entity.logo.middle,
+                              borderRadius: BorderRadius.circular(6),
+                              onErrorWidget:
+                              SvgPicture.asset(AppIcons.smallImageError, fit: BoxFit.cover),
+                            ),
+                          ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                entity.title,
+                                style: Theme.of(context).textTheme.headline1,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 4),
                         Text(

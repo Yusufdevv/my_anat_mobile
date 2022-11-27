@@ -2,14 +2,18 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class ImageSingleScreen extends StatefulWidget {
   final List<ImageEntity> images;
   final int index;
 
-  const ImageSingleScreen({required this.images, this.index = 0, Key? key}) : super(key: key);
+  const ImageSingleScreen({required this.images, this.index = 0, Key? key})
+      : super(key: key);
 
   @override
   State<ImageSingleScreen> createState() => _ImageSingleScreenState();
@@ -42,17 +46,18 @@ class _ImageSingleScreenState extends State<ImageSingleScreen> {
       backgroundColor: dark,
       extendBodyBehindAppBar: true,
       body: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height / 3),
-          child: PageView.builder(
-            physics: const BouncingScrollPhysics(),
-            controller: pageController,
-            itemCount: widget.images.length,
-            itemBuilder: (context, index) => WImage(
-              imageUrl: widget.images[index].middle,
-              fit: BoxFit.fitHeight,
+        child: PhotoViewGallery.builder(
+          scrollPhysics: const BouncingScrollPhysics(),
+          // controller: pageController,
+          itemCount: widget.images.length,
+          builder: (context, index) => PhotoViewGalleryPageOptions(
+            imageProvider: NetworkImage(
+              widget.images[index].middle,
             ),
+            gestureDetectorBehavior: HitTestBehavior.opaque,
           ),
+          loadingBuilder: (_, __) => const CupertinoActivityIndicator(),
+          pageController: pageController,
         ),
       ),
     );

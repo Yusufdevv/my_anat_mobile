@@ -15,8 +15,9 @@ HospitalModel _$HospitalModelFromJson(Map<String, dynamic> json) =>
           [],
       title: json['title'] as String? ?? '',
       logo: json['logo'] == null
-          ? null
-          : AssetModel.fromJson(json['logo'] as Map<String, dynamic>),
+          ? const ImageEntity()
+          : const ImageConverter()
+              .fromJson(json['logo'] as Map<String, dynamic>?),
       types: (json['types'] as List<dynamic>?)
               ?.map((e) => TitlerModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -38,6 +39,7 @@ HospitalModel _$HospitalModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$HospitalModelToJson(HospitalModel instance) =>
     <String, dynamic>{
+      'logo': const ImageConverter().toJson(instance.logo),
       'id': instance.id,
       'title': instance.title,
       'slug': instance.slug,
@@ -45,7 +47,6 @@ Map<String, dynamic> _$HospitalModelToJson(HospitalModel instance) =>
       'phone_number': instance.phoneNumber,
       'rating': instance.rating,
       'location_url': instance.locationUrl,
-      'logo': instance.logo,
       'phone_numbers': instance.phoneNumbers,
       'images': instance.imagesList,
       'specialization': instance.specialization,

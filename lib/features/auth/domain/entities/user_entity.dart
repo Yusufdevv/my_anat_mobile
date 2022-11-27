@@ -1,8 +1,8 @@
 import 'package:anatomica/features/auth/data/models/doctor_model.dart';
-import 'package:anatomica/features/auth/data/models/organization_model.dart';
+import 'package:anatomica/features/auth/data/models/user_organization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
-import 'package:anatomica/features/auth/domain/entities/organization_entity.dart';
+import 'package:anatomica/features/auth/domain/entities/user_organization_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class UserEntity extends Equatable {
@@ -19,8 +19,8 @@ class UserEntity extends Equatable {
   final String birthDay;
   @DoctorConverter()
   final DoctorEntity doctor;
-  @OrganizationConverter()
-  final List<OrganizationEntity> organizations;
+  @UserOrganizationConverter()
+  final List<UserOrganizationEntity> organizations;
 
   const UserEntity({
     this.id = 0,
@@ -49,7 +49,7 @@ class UserEntity extends Equatable {
           bool? isOrganization,
           bool? isSubscribed,
           DoctorEntity? doctor,
-          List<OrganizationEntity>? organizations}) =>
+          List<UserOrganizationEntity>? organizations}) =>
       UserEntity(
         birthDay: birthDate ?? birthDay,
         id: id ?? this.id,

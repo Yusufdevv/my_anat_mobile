@@ -30,6 +30,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         "password": password,
       });
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+
         await StorageRepository.putString('token', response.data['token']);
       } else if (response.statusCode != null && response.statusCode! >= 400 && response.statusCode! < 500) {
         if (response.data is Map) {
@@ -60,6 +61,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       final response = await _dio.get('/user/profile/',
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        print(response.data);
         return UserModel.fromJson(response.data);
       } else {
         await StorageRepository.deleteString('token');

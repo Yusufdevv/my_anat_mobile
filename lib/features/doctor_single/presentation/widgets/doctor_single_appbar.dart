@@ -80,6 +80,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                     ),
                                   ),
                                   Positioned.fill(
+                                    top: 200,
                                     child: DecoratedBox(
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(

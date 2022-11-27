@@ -1,3 +1,4 @@
+import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/common/data/models/logo.dart';
 import 'package:anatomica/features/common/data/models/phone_number.dart';
 import 'package:anatomica/features/common/data/models/titler.dart';
@@ -22,10 +23,6 @@ class HospitalModel extends HospitalEntity {
   final double rating;
   @JsonKey(name: 'location_url', defaultValue: '')
   final String locationUrl;
-  @JsonKey(
-    name: 'logo',
-  )
-  final AssetModel? logo;
   @JsonKey(name: 'phone_numbers', defaultValue: [])
   final List<PhoneNumberModel> phoneNumbers;
   @JsonKey(name: 'images', defaultValue: [])
@@ -39,7 +36,7 @@ class HospitalModel extends HospitalEntity {
       {required this.id,
       required this.imagesList,
       required this.title,
-      required this.logo,
+      required super.logo,
       required this.types,
       required this.slug,
       required this.address,

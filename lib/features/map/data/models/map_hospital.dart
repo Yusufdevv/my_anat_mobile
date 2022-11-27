@@ -1,3 +1,5 @@
+import 'package:anatomica/features/auth/data/models/image_model.dart';
+import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/common/data/models/logo.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -9,6 +11,8 @@ class MapHospitalModel {
   final int id;
   @JsonKey(name: 'slug', defaultValue: '')
   final String slug;
+  @ImageConverter()
+  final ImageEntity logo;
   @JsonKey(name: 'title', defaultValue: '')
   final String title;
   @JsonKey(name: 'images', defaultValue: [])
@@ -42,6 +46,8 @@ class MapHospitalModel {
       required this.slug,
       required this.phoneNumber,
       required this.workFrom,
+      this.logo = const ImageEntity(),
       required this.workTo});
-  factory MapHospitalModel.fromJson(Map<String, dynamic> json) => _$MapHospitalModelFromJson(json);
+  factory MapHospitalModel.fromJson(Map<String, dynamic> json) =>
+      _$MapHospitalModelFromJson(json);
 }

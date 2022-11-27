@@ -8,7 +8,7 @@ part of 'user_model.dart';
 
 UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       organizations: (json['organizations'] as List<dynamic>?)
-              ?.map((e) => const OrganizationConverter()
+              ?.map((e) => const UserOrganizationConverter()
                   .fromJson(e as Map<String, dynamic>?))
               .toList() ??
           const [],
@@ -44,6 +44,6 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'birth_day': instance.birthDay,
       'doctor': const DoctorConverter().toJson(instance.doctor),
       'organizations': instance.organizations
-          .map(const OrganizationConverter().toJson)
+          .map(const UserOrganizationConverter().toJson)
           .toList(),
     };

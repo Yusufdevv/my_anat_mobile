@@ -107,19 +107,19 @@ class HospitalServices extends StatelessWidget {
                     child: Text('error'),
                   )
                 },
-                if (state.fetchMore && state.services.length > 5) ...[
-                  const SizedBox(height: 16),
-                  WButton(
-                    onTap: () {
-                      context
-                          .read<ServicesBloc>()
-                          .add(ServicesEvent.getMoreServices());
-                    },
-                    color: commentButton,
-                    text: LocaleKeys.show_all.tr(),
-                    textColor: textSecondary,
-                  )
-                ]
+                // if (state.fetchMore && state.services.length > 5) ...[
+                //   const SizedBox(height: 16),
+                //   WButton(
+                //     onTap: () {
+                //       context
+                //           .read<ServicesBloc>()
+                //           .add(ServicesEvent.getMoreServices());
+                //     },
+                //     color: commentButton,
+                //     text: LocaleKeys.show_all.tr(),
+                //     textColor: textSecondary,
+                //   )
+                // ]
               ],
             ),
           );

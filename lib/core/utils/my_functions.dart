@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
@@ -93,25 +94,53 @@ abstract class MyFunctions {
       required int height,
       required int placeCount,
       required BuildContext context,
-      required String image}) async {
+      Offset? offset,
+      required String image,
+      bool shouldAddText = true}) async {
     final pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
     final Paint paint = Paint()..color = Colors.red;
     canvas.drawImage(
         await getImageInfo(context, image).then((value) => value.image),
-        const Offset(0, 3),
+        offset ?? const Offset(0, 3),
         paint);
-    TextPainter painter = TextPainter(textDirection: ui.TextDirection.ltr);
-    painter.text = TextSpan(
-      text: placeCount.toString(),
-      style: const TextStyle(fontSize: 25.0, color: Colors.white),
-    );
-    painter.layout();
-    painter.paint(
+
+    if (shouldAddText) {
+      TextPainter painter = TextPainter(textDirection: ui.TextDirection.ltr);
+      painter.text = TextSpan(
+        text: placeCount.toString(),
+        style: const TextStyle(fontSize: 100.0, color: Colors.white),
+      );
+      painter.layout();
+      painter.paint(
         canvas,
-        Offset((width * 0.5) - painter.width * 0.5,
-            (height * 0.5) - painter.height * 0.5));
+        Offset((width * 0.47) - painter.width * 0.2,
+            (height * 0.1) - painter.height * 0.1),
+      );
+    }
+
     final img = await pictureRecorder.endRecording().toImage(width, height);
+    final data = await img.toByteData(format: ui.ImageByteFormat.png);
+    return data?.buffer.asUint8List() ?? Uint8List(0);
+  }
+
+  static Future<Uint8List> myLocationCanvas({
+    required double radius,
+    required BuildContext context,
+  }) async {
+    final pictureRecorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(pictureRecorder);
+    final Paint paint = Paint()..color = primary.withOpacity(0.12);
+    final Paint paint2 = Paint();
+    paint2.style = PaintingStyle.stroke;
+    paint2.color = primary;
+    paint2.strokeWidth = 10;
+    canvas.drawCircle(Offset(radius + 10, radius + 10), radius, paint);
+    canvas.drawCircle(Offset(radius + 10, radius + 10), radius, paint2);
+
+    final img = await pictureRecorder
+        .endRecording()
+        .toImage((2 * radius + 20).toInt(), (2 * radius + 20).toInt());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
     return data?.buffer.asUint8List() ?? Uint8List(0);
   }
@@ -128,46 +157,75 @@ abstract class MyFunctions {
     return completer.future;
   }
 
-  static void addHospitals(List<MapHospitalModel> points, BuildContext context,
-      List<MapObject<dynamic>> mapObjects, YandexMapController controller) {
+  static Future<void> addHospitals(
+      List<MapHospitalModel> points,
+      BuildContext context,
+      List<MapObject<dynamic>> mapObjects,
+      YandexMapController controller,
+      Point point,
+      double accuracy) async {
+    // final myIconData = await myLocationCanvas(
+    //   radius: accuracy,
+    //   context: context,
+    // );
+    print('accuracy: $accuracy');
+    final iconData = await getBytesFromCanvas(
+        placeCount: 0,
+        image: AppImages.placeMarkIcon,
+        width: 170,
+        //offset: const Offset(0, -30),
+        height: 410,
+        context: context,
+        shouldAddText: false);
     final placeMarks = points
         .map(
           (e) => PlacemarkMapObject(
-              opacity: 1,
-              mapId: MapObjectId(e.latitude.toString()),
-              point: Point(latitude: e.latitude, longitude: e.longitude),
-              onTap: (object, point) {
-                controller.moveCamera(CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                        target:
-                            Point(latitude: e.latitude, longitude: e.longitude),
-                        zoom: 15)));
-                showModalBottomSheet(
-                  barrierColor: Colors.transparent,
-                  context: context,
-                  isScrollControlled: true,
-                  useRootNavigator: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => HospitalSingleBottomSheet(
-                    id: e.id,
-                    isHospital: true,
-                    slug: e.slug,
-                    title: e.title,
-                    phone: e.phoneNumber,
-                    address: e.address,
-                    images: e.images.map((e) => e.middle).toList(),
-                    location:
-                        Point(latitude: e.latitude, longitude: e.longitude),
-                    rating: e.rating,
-                  ),
-                );
-              },
-              icon: PlacemarkIcon.single(PlacemarkIconStyle(
-                scale: 3,
-                image: BitmapDescriptor.fromAssetImage(AppImages.placeMarkIcon),
-              ))),
+            opacity: 1,
+            mapId: MapObjectId(e.latitude.toString()),
+            point: Point(latitude: e.latitude, longitude: e.longitude),
+            onTap: (object, point) {
+              controller.moveCamera(CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                      target:
+                          Point(latitude: e.latitude, longitude: e.longitude),
+                      zoom: 15)));
+              showModalBottomSheet(
+                barrierColor: Colors.transparent,
+                context: context,
+                isScrollControlled: true,
+                useRootNavigator: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) => HospitalSingleBottomSheet(
+                  id: e.id,
+                  isHospital: true,
+                  slug: e.slug,
+                  title: e.title,
+                  phone: e.phoneNumber,
+                  logo: e.logo.middle,
+                  address: e.address,
+                  images: e.images.map((e) => e.middle).toList(),
+                  location: Point(latitude: e.latitude, longitude: e.longitude),
+                  rating: e.rating,
+                ),
+              );
+            },
+            icon: PlacemarkIcon.single(
+              PlacemarkIconStyle(
+                scale: 0.6,
+                image: BitmapDescriptor.fromBytes(iconData),
+              ),
+            ),
+          ),
         )
         .toList();
+    // final myPoint = PlacemarkMapObject(
+    //     opacity: 1,
+    //     mapId: MapObjectId('my-point'),
+    //     point: point,
+    //     icon: PlacemarkIcon.single(PlacemarkIconStyle(
+    //       // scale: 0.6,
+    //       image: BitmapDescriptor.fromBytes(myIconData),
+    //     )));
     final clusterItem = ClusterizedPlacemarkCollection(
       mapId: clusterId,
       placemarks: placeMarks,
@@ -189,12 +247,13 @@ abstract class MyFunctions {
               image: BitmapDescriptor.fromBytes(
                 await getBytesFromCanvas(
                     image: AppImages.hospitalCluster,
-                    width: 48,
-                    height: 50,
+                    width: 170,
+                    height: 410,
                     placeCount: cluster.placemarks.length,
-                    context: context),
+                    context: context,
+                    shouldAddText: true),
               ),
-              scale: 3,
+              scale: 0.6,
             ),
           ),
         ),
@@ -205,8 +264,25 @@ abstract class MyFunctions {
     mapObjects.add(clusterItem);
   }
 
-  static void addDoctors(List<MapDoctorModel> points, BuildContext context,
-      List<MapObject<dynamic>> mapObjects, YandexMapController controller) {
+  static void addDoctors(
+      List<MapDoctorModel> points,
+      BuildContext context,
+      List<MapObject<dynamic>> mapObjects,
+      YandexMapController controller,
+      Point point,
+      double accuracy) async {
+    // final myIconData = await myLocationCanvas(
+    //   radius: 100,
+    //   context: context,
+    // );
+    final iconData = await getBytesFromCanvas(
+        placeCount: 0,
+        image: AppImages.doctorMark,
+        width: 170,
+        //offset: const Offset(0, -30),
+        height: 410,
+        context: context,
+        shouldAddText: false);
     final placeMarks = points
         .map(
           (e) => PlacemarkMapObject(
@@ -231,7 +307,7 @@ abstract class MyFunctions {
                   builder: (context) => DoctorSingleBottomSheet(
                     id: e.doctor.id,
                     isHospital: false,
-                    specialization: e.doctor.specialization,
+                    specialization: e.doctor.position,
                     slug: '',
                     hospital: e.hospital.title,
                     title: e.doctor.fullName,
@@ -246,10 +322,17 @@ abstract class MyFunctions {
                 );
               },
               icon: PlacemarkIcon.single(PlacemarkIconStyle(
-                  image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark),
-                  scale: 3))),
+                  image: BitmapDescriptor.fromBytes(iconData), scale: 0.6))),
         )
         .toList();
+    // final myPoint = PlacemarkMapObject(
+    //     opacity: 1,
+    //     mapId: MapObjectId('my-point2'),
+    //     point: point,
+    //     icon: PlacemarkIcon.single(PlacemarkIconStyle(
+    //       // scale: 0.6,
+    //       image: BitmapDescriptor.fromBytes(myIconData),
+    //     )));
     final clusterItem = ClusterizedPlacemarkCollection(
       mapId: clusterId,
       placemarks: placeMarks,
@@ -262,13 +345,13 @@ abstract class MyFunctions {
             PlacemarkIconStyle(
               image: BitmapDescriptor.fromBytes(
                 await getBytesFromCanvas(
-                    width: 48,
-                    height: 50,
+                    width: 170,
+                    height: 410,
                     placeCount: cluster.placemarks.length,
                     context: context,
                     image: AppImages.doctorCluster),
               ),
-              scale: 3,
+              scale: 0.6,
             ),
           ),
         ),

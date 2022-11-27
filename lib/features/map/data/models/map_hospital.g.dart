@@ -22,6 +22,10 @@ MapHospitalModel _$MapHospitalModelFromJson(Map<String, dynamic> json) =>
       slug: json['slug'] as String? ?? '',
       phoneNumber: json['phone_number'] as String? ?? '',
       workFrom: json['work_from'] as String? ?? '',
+      logo: json['logo'] == null
+          ? const ImageEntity()
+          : const ImageConverter()
+              .fromJson(json['logo'] as Map<String, dynamic>?),
       workTo: json['work_to'] as String? ?? '',
     );
 
@@ -29,6 +33,7 @@ Map<String, dynamic> _$MapHospitalModelToJson(MapHospitalModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'slug': instance.slug,
+      'logo': const ImageConverter().toJson(instance.logo),
       'title': instance.title,
       'images': instance.images,
       'work_from': instance.workFrom,
