@@ -290,5 +290,7 @@ abstract class  LocaleKeys {
   static const change_password_success = 'change_password_success';
   static const website = 'website';
   static const photos = 'photos';
+  static const all_conditions = 'all_conditions';
+  static const free = 'free';
 
 }

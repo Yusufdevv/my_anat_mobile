@@ -59,7 +59,7 @@ class MagazineSmallItem extends StatelessWidget {
                 ),
               } else ...{
                 Text(
-                  'Купленный',
+                  LocaleKeys.free.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headline3!

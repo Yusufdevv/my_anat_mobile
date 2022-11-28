@@ -62,7 +62,7 @@ class HospitalConditionsHorizontalList extends StatelessWidget {
                               );
                             },
                             width: (MediaQuery.of(context).size.shortestSide / 2) - 45,
-                            title: 'Все удобства',
+                            title: LocaleKeys.all_conditions.tr(),
                           );
                         }
                         return SizedBox(

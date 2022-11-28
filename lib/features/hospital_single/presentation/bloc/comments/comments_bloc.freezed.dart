@@ -1687,6 +1687,8 @@ mixin _$CommentsState {
   int get hospitalCommentCount => throw _privateConstructorUsedError;
   dynamic get postCommentStatus => throw _privateConstructorUsedError;
   dynamic get sendDoctorCommentStatus => throw _privateConstructorUsedError;
+  bool get isDoctorCommented => throw _privateConstructorUsedError;
+  bool get isOrganizationCommented => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CommentsStateCopyWith<CommentsState> get copyWith =>
@@ -1713,7 +1715,9 @@ abstract class $CommentsStateCopyWith<$Res> {
       int doctorCommentCount,
       int hospitalCommentCount,
       dynamic postCommentStatus,
-      dynamic sendDoctorCommentStatus});
+      dynamic sendDoctorCommentStatus,
+      bool isDoctorCommented,
+      bool isOrganizationCommented});
 }
 
 /// @nodoc
@@ -1743,6 +1747,8 @@ class _$CommentsStateCopyWithImpl<$Res, $Val extends CommentsState>
     Object? hospitalCommentCount = null,
     Object? postCommentStatus = null,
     Object? sendDoctorCommentStatus = null,
+    Object? isDoctorCommented = null,
+    Object? isOrganizationCommented = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -1801,6 +1807,14 @@ class _$CommentsStateCopyWithImpl<$Res, $Val extends CommentsState>
           ? _value.sendDoctorCommentStatus
           : sendDoctorCommentStatus // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      isDoctorCommented: null == isDoctorCommented
+          ? _value.isDoctorCommented
+          : isDoctorCommented // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOrganizationCommented: null == isOrganizationCommented
+          ? _value.isOrganizationCommented
+          : isOrganizationCommented // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -1827,7 +1841,9 @@ abstract class _$$_CommentsStateCopyWith<$Res>
       int doctorCommentCount,
       int hospitalCommentCount,
       dynamic postCommentStatus,
-      dynamic sendDoctorCommentStatus});
+      dynamic sendDoctorCommentStatus,
+      bool isDoctorCommented,
+      bool isOrganizationCommented});
 }
 
 /// @nodoc
@@ -1855,6 +1871,8 @@ class __$$_CommentsStateCopyWithImpl<$Res>
     Object? hospitalCommentCount = null,
     Object? postCommentStatus = null,
     Object? sendDoctorCommentStatus = null,
+    Object? isDoctorCommented = null,
+    Object? isOrganizationCommented = null,
   }) {
     return _then(_$_CommentsState(
       status: null == status
@@ -1911,6 +1929,14 @@ class __$$_CommentsStateCopyWithImpl<$Res>
       sendDoctorCommentStatus: null == sendDoctorCommentStatus
           ? _value.sendDoctorCommentStatus
           : sendDoctorCommentStatus,
+      isDoctorCommented: null == isDoctorCommented
+          ? _value.isDoctorCommented
+          : isDoctorCommented // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOrganizationCommented: null == isOrganizationCommented
+          ? _value.isOrganizationCommented
+          : isOrganizationCommented // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1932,7 +1958,9 @@ class _$_CommentsState implements _CommentsState {
       this.doctorCommentCount = 0,
       this.hospitalCommentCount = 0,
       this.postCommentStatus = FormzStatus.pure,
-      this.sendDoctorCommentStatus = FormzStatus.pure})
+      this.sendDoctorCommentStatus = FormzStatus.pure,
+      this.isDoctorCommented = false,
+      this.isOrganizationCommented = false})
       : _comments = comments,
         _doctorComments = doctorComments;
 
@@ -1986,10 +2014,16 @@ class _$_CommentsState implements _CommentsState {
   @override
   @JsonKey()
   final dynamic sendDoctorCommentStatus;
+  @override
+  @JsonKey()
+  final bool isDoctorCommented;
+  @override
+  @JsonKey()
+  final bool isOrganizationCommented;
 
   @override
   String toString() {
-    return 'CommentsState(status: $status, comments: $comments, next: $next, fetchMore: $fetchMore, organizationId: $organizationId, doctorCommentStatus: $doctorCommentStatus, doctorComments: $doctorComments, doctorCommentNext: $doctorCommentNext, doctorCommentFetchMore: $doctorCommentFetchMore, doctorId: $doctorId, doctorCommentCount: $doctorCommentCount, hospitalCommentCount: $hospitalCommentCount, postCommentStatus: $postCommentStatus, sendDoctorCommentStatus: $sendDoctorCommentStatus)';
+    return 'CommentsState(status: $status, comments: $comments, next: $next, fetchMore: $fetchMore, organizationId: $organizationId, doctorCommentStatus: $doctorCommentStatus, doctorComments: $doctorComments, doctorCommentNext: $doctorCommentNext, doctorCommentFetchMore: $doctorCommentFetchMore, doctorId: $doctorId, doctorCommentCount: $doctorCommentCount, hospitalCommentCount: $hospitalCommentCount, postCommentStatus: $postCommentStatus, sendDoctorCommentStatus: $sendDoctorCommentStatus, isDoctorCommented: $isDoctorCommented, isOrganizationCommented: $isOrganizationCommented)';
   }
 
   @override
@@ -2021,7 +2055,12 @@ class _$_CommentsState implements _CommentsState {
             const DeepCollectionEquality()
                 .equals(other.postCommentStatus, postCommentStatus) &&
             const DeepCollectionEquality().equals(
-                other.sendDoctorCommentStatus, sendDoctorCommentStatus));
+                other.sendDoctorCommentStatus, sendDoctorCommentStatus) &&
+            (identical(other.isDoctorCommented, isDoctorCommented) ||
+                other.isDoctorCommented == isDoctorCommented) &&
+            (identical(
+                    other.isOrganizationCommented, isOrganizationCommented) ||
+                other.isOrganizationCommented == isOrganizationCommented));
   }
 
   @override
@@ -2040,7 +2079,9 @@ class _$_CommentsState implements _CommentsState {
       doctorCommentCount,
       hospitalCommentCount,
       const DeepCollectionEquality().hash(postCommentStatus),
-      const DeepCollectionEquality().hash(sendDoctorCommentStatus));
+      const DeepCollectionEquality().hash(sendDoctorCommentStatus),
+      isDoctorCommented,
+      isOrganizationCommented);
 
   @JsonKey(ignore: true)
   @override
@@ -2064,7 +2105,9 @@ abstract class _CommentsState implements CommentsState {
       final int doctorCommentCount,
       final int hospitalCommentCount,
       final dynamic postCommentStatus,
-      final dynamic sendDoctorCommentStatus}) = _$_CommentsState;
+      final dynamic sendDoctorCommentStatus,
+      final bool isDoctorCommented,
+      final bool isOrganizationCommented}) = _$_CommentsState;
 
   @override
   FormzStatus get status;
@@ -2094,6 +2137,10 @@ abstract class _CommentsState implements CommentsState {
   dynamic get postCommentStatus;
   @override
   dynamic get sendDoctorCommentStatus;
+  @override
+  bool get isDoctorCommented;
+  @override
+  bool get isOrganizationCommented;
   @override
   @JsonKey(ignore: true)
   _$$_CommentsStateCopyWith<_$_CommentsState> get copyWith =>

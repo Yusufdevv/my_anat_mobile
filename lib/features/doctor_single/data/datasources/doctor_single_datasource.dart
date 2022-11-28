@@ -103,6 +103,7 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
 
   @override
   Future<GenericPagination<CommentModel>> getDoctorComments({required int id, String? next}) async {
+    print('Token ${StorageRepository.getString('token')}');
     try {
       final response = await _dio.get(next ?? '/doctor/comment/',
           queryParameters: {'doctor_id': id},

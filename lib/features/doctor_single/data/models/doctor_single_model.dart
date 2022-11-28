@@ -1,5 +1,6 @@
 import 'package:anatomica/features/auth/data/models/district_model.dart';
 import 'package:anatomica/features/auth/data/models/organization_model.dart';
+import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/region_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/district_entity.dart';
@@ -38,6 +39,7 @@ class DoctorSingleModel extends DoctorSingleEntity {
     required super.licence,
     required super.commentCount,
     required super.organization,
+    required super.phoneNumbers,
   });
   factory DoctorSingleModel.fromJson(Map<String, dynamic> json) => _$DoctorSingleModelFromJson(json);
 }

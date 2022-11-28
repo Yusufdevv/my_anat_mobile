@@ -200,7 +200,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
     if (paymentProvider.isNotEmpty) {
       try {
         final response = await _dio.post('/payments/subscribe/',
-            data: {'month_count': numOfMoths, 'payment_provider': paymentProvider},
+            data: {'month_count': numOfMoths, 'payment_provider': paymentProvider, 'subscribe_type': "journal"},
             options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
           return PaymentResponseModel.fromJson(response.data);

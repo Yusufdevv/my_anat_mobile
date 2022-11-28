@@ -17,5 +17,7 @@ class CommentsState with _$CommentsState {
     @Default(0) int hospitalCommentCount,
     @Default(FormzStatus.pure) postCommentStatus,
     @Default(FormzStatus.pure) sendDoctorCommentStatus,
+    @Default(false) bool isDoctorCommented,
+    @Default(false) bool isOrganizationCommented,
   }) = _CommentsState;
 }

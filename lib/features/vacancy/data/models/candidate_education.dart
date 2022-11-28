@@ -7,12 +7,12 @@ part 'candidate_education.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class CandidateEducationModel extends CandidateEducationEntity {
   const CandidateEducationModel({
-    required super.university,
+    required super.place,
     required super.id,
     required super.endDate,
     required super.startDate,
     required super.degree,
-    required super.faculty,
+    required super.course,
   });
 
   factory CandidateEducationModel.fromJson(Map<String, dynamic> json) =>

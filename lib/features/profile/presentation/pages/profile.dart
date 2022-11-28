@@ -136,7 +136,7 @@ class ProfileScreen extends StatelessWidget {
                             status: state.getProfileStatus,
                           ),
                           const SizedBox(height: 16),
-                          if (state.profileEntity.isDoctor) ...{
+                          if (state.profileEntity.doctor.id != 0) ...{
                             ProfileItem(
                                 title: LocaleKeys.doctor_office,
                                 icon: AppIcons.scope,
@@ -151,7 +151,7 @@ class ProfileScreen extends StatelessWidget {
                                   );
                                 }),
                           },
-                          if (state.profileEntity.isOrganization) ...{
+                          if (state.profileEntity.organizations.isNotEmpty) ...{
                             ProfileItem(
                               title: LocaleKeys.organization_office,
                               image: AppImages.organization,
@@ -228,8 +228,8 @@ class ProfileScreen extends StatelessWidget {
                               },
                               color: snow),
                           const SizedBox(height: 24),
-                          if (state.profileEntity.isDoctor ||
-                              state.profileEntity.isOrganization) ...{
+                          if (state.profileEntity.doctor.id != 0 ||
+                              state.profileEntity.organizations.isNotEmpty) ...{
                             const SizedBox()
                           } else ...{
                             Column(

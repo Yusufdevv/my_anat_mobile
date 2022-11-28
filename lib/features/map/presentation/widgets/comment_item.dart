@@ -15,12 +15,14 @@ class CommentItem extends StatelessWidget {
   final bool isMainScreen;
   final VoidCallback? onTapDelete;
   final bool hasShadow;
+  final bool isOrganization;
 
   const CommentItem({
     required this.entity,
     this.isMainScreen = false,
     this.onTapDelete,
     this.hasShadow = true,
+    this.isOrganization = true,
     Key? key,
   }) : super(key: key);
 
@@ -84,7 +86,7 @@ class CommentItem extends StatelessWidget {
                       children: [
                         Text.rich(
                           TextSpan(
-                            text: entity.userFullName,
+                            text: isOrganization ? entity.userFullName : entity.fullName,
                             children: [
                               if (entity.isOwn) ...{
                                 TextSpan(

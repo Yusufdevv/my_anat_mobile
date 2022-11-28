@@ -69,7 +69,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               : null,
           body: Padding(
             padding:
-                EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+                EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom, top: MediaQuery.of(context).padding.top),
             child: InAppWebView(
               onWebViewCreated: (controller) async {
                 _controller = controller;

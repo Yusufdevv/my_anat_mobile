@@ -43,7 +43,10 @@ class HospitalCommentsHorizontalList extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
                   LocaleKeys.reviews.tr(),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4!
+                      .copyWith(color: textColor),
                 ),
               ),
               const SizedBox(height: 16),
@@ -70,25 +73,34 @@ class HospitalCommentsHorizontalList extends StatelessWidget {
                           const SizedBox(height: 6),
                           Text(
                             '${hospital.commentCount} ${LocaleKeys.review.tr()}',
-                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3!
+                                .copyWith(color: textColor, fontSize: 13),
                           ),
                         ],
                       ),
                     ),
-                    if (commentState.comments.where((element) => element.isOwn).isEmpty) ...{
+                    if (commentState.comments
+                            .where((element) => element.isOwn)
+                            .isEmpty ||
+                        !commentState.isOrganizationCommented) ...{
                       Expanded(
-                        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                        child: BlocBuilder<AuthenticationBloc,
+                            AuthenticationState>(
                           builder: (context, state) {
                             return WButton(
                               onTap: () {
-                                if (state.status == AuthenticationStatus.authenticated) {
+                                if (state.status ==
+                                    AuthenticationStatus.authenticated) {
                                   showModalBottomSheet(
                                     backgroundColor: Colors.transparent,
                                     context: context,
                                     isScrollControlled: true,
                                     builder: (_) => CommentBottomSheet(
                                       parentContext: context,
-                                      commentsBloc: context.read<CommentsBloc>(),
+                                      commentsBloc:
+                                          context.read<CommentsBloc>(),
                                     ),
                                   );
                                 } else {
@@ -128,7 +140,8 @@ class HospitalCommentsHorizontalList extends StatelessWidget {
                         if (index == 5) {
                           return ShowAllButton(
                               title: 'Все отзывы',
-                              width: MediaQuery.of(context).size.shortestSide - 32,
+                              width:
+                                  MediaQuery.of(context).size.shortestSide - 32,
                               onTap: () {
                                 Navigator.of(context).push(fade(
                                     page: AllHospitalItemsScreen(
@@ -148,18 +161,19 @@ class HospitalCommentsHorizontalList extends StatelessWidget {
                             isMainScreen: true,
                             onTapDelete: () {
                               context.read<CommentsBloc>().add(
-                                CommentsEvent.deleteHospitalComment(
-                                  id: commentState.comments[index].id,
-                                  onSuccess: () {},
-                                  onError: () {},
-                                ),
-                              );
+                                    CommentsEvent.deleteHospitalComment(
+                                      id: commentState.comments[index].id,
+                                      onSuccess: () {},
+                                      onError: () {},
+                                    ),
+                                  );
                             },
                             entity: commentState.comments[index],
                           ),
                         );
                       },
-                      separatorBuilder: (context, index) => const SizedBox(width: 8),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 8),
                       itemCount: commentState.comments.length > 5
                           ? commentState.comments.take(6).length
                           : commentState.comments.length,

@@ -287,5 +287,7 @@
   "onboarding_4_content": "Yillik obuna uchun ro'yxatdan o'ting va ilovaning ilg'or xususiyatlaridan bahramand bo'ling.",
   "change_password_success": "Parol muvaffaqiyatli o'zgartirildi",
   "website": "Sayt",
-  "photos": "Rasmlar"
+  "photos": "Rasmlar",
+  "all_conditions" : "Barcha qulayliklar",
+  "free" : "Tekin"
 }

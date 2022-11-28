@@ -52,6 +52,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
           status: FormzStatus.submissionSuccess,
           comments: result.right.results,
           next: result.right.next,
+          isOrganizationCommented: result.right.results.where((element) => element.isOwn).isNotEmpty,
           fetchMore: result.right.next != null,
           hospitalCommentCount: result.right.count,
         ));
@@ -64,8 +65,10 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     on<_GetMoreComments>((event, emit) async {
       final result = await getComments(TypeParameter(id: state.organizationId));
       if (result.isRight) {
+        final results = [...state.comments, ...result.right.results];
         emit(state.copyWith(
-          comments: [...state.comments, ...result.right.results],
+          comments: results,
+          isOrganizationCommented: results.where((element) => element.isOwn).isNotEmpty,
           next: result.right.next,
           fetchMore: result.right.next != null,
         ));
@@ -76,11 +79,14 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         doctorCommentStatus: FormzStatus.submissionInProgress,
         doctorId: event.doctorId,
       ));
-      final result = await _getDoctorCommentsUseCase(TypeParameter(id: event.doctorId));
+      final result =
+          await _getDoctorCommentsUseCase(TypeParameter(id: event.doctorId));
       if (result.isRight) {
         emit(state.copyWith(
           doctorCommentStatus: FormzStatus.submissionSuccess,
           doctorComments: result.right.results,
+          isDoctorCommented:
+              result.right.results.where((element) => element.isOwn).isNotEmpty,
           doctorCommentNext: result.right.next,
           doctorCommentFetchMore: result.right.next != null,
           doctorCommentCount: result.right.count,
@@ -94,8 +100,11 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     on<_GetMoreDoctorComments>((event, emit) async {
       final result = await getComments(TypeParameter(id: state.organizationId));
       if (result.isRight) {
+        final results = [...state.doctorComments, ...result.right.results];
         emit(state.copyWith(
-          doctorComments: [...state.doctorComments, ...result.right.results],
+          doctorComments: results,
+          isDoctorCommented:
+              results.where((element) => element.isOwn).isNotEmpty,
           doctorCommentNext: result.right.next,
           doctorCommentFetchMore: result.right.next != null,
         ));
@@ -103,28 +112,32 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     });
     on<_PostComment>((event, emit) async {
       emit(state.copyWith(postCommentStatus: FormzStatus.submissionInProgress));
-      final result = await _postCommentUseCase
-          .call(PostCommentParams(comment: event.comment, organizationId: state.organizationId));
+      final result = await _postCommentUseCase.call(PostCommentParams(
+          comment: event.comment, organizationId: state.organizationId));
       if (result.isRight) {
-        emit(state.copyWith(postCommentStatus: FormzStatus.submissionSuccess));
+        emit(state.copyWith(postCommentStatus: FormzStatus.submissionSuccess, isOrganizationCommented: true));
         event.onSuccess();
       } else {
         emit(state.copyWith(postCommentStatus: FormzStatus.submissionFailure));
       }
     });
     on<_SendDoctorComment>((event, emit) async {
-      emit(state.copyWith(sendDoctorCommentStatus: FormzStatus.submissionInProgress));
+      emit(state.copyWith(
+          sendDoctorCommentStatus: FormzStatus.submissionInProgress));
       final result = await _doctorCommentUseCase.call(DoctorCommentParams(
         comment: event.comment,
         doctor: event.doctor,
         rating: event.rating,
       ));
       if (result.isRight) {
-        emit(state.copyWith(doctorCommentStatus: FormzStatus.submissionSuccess));
+        emit(state.copyWith(
+            doctorCommentStatus: FormzStatus.submissionSuccess,
+            isDoctorCommented: true));
         event.onSuccess();
       } else {
         event.onError((result.left as ServerFailure).errorMessage);
-        emit(state.copyWith(doctorCommentStatus: FormzStatus.submissionFailure));
+        emit(
+            state.copyWith(doctorCommentStatus: FormzStatus.submissionFailure));
       }
     });
     on<_DeleteDoctorComment>((event, emit) async {

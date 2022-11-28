@@ -9,22 +9,20 @@ part of 'candidate_education.dart';
 CandidateEducationModel _$CandidateEducationModelFromJson(
         Map<String, dynamic> json) =>
     CandidateEducationModel(
-      university: const UniversityConverter()
-          .fromJson(json['university'] as Map<String, dynamic>?),
+      place: json['place'] as String,
       id: json['id'] as int? ?? 0,
       endDate: json['end_date'] as String? ?? '',
       startDate: json['start_date'] as String? ?? '',
       degree: json['degree'] as String? ?? '',
-      faculty: const FacultyEntityConverter()
-          .fromJson(json['faculty'] as Map<String, dynamic>?),
+      course: json['course'] as String,
     );
 
 Map<String, dynamic> _$CandidateEducationModelToJson(
         CandidateEducationModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'university': const UniversityConverter().toJson(instance.university),
-      'faculty': const FacultyEntityConverter().toJson(instance.faculty),
+      'place': instance.place,
+      'course': instance.course,
       'degree': instance.degree,
       'start_date': instance.startDate,
       'end_date': instance.endDate,

@@ -83,7 +83,7 @@ OrganizationModel _$OrganizationModelFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String? ?? '',
       id: json['id'] as int? ?? 0,
       phoneNumber: json['phone_number'] as String? ?? '',
-      phoneNumbers: (json['phoneNumbers'] as List<dynamic>?)
+      phoneNumbers: (json['phone_numbers'] as List<dynamic>?)
               ?.map((e) => const PhoneNumberConverter()
                   .fromJson(e as Map<String, dynamic>?))
               .toList() ??
@@ -120,7 +120,7 @@ Map<String, dynamic> _$OrganizationModelToJson(OrganizationModel instance) =>
       'images': instance.images,
       'address': instance.address,
       'phone_number': instance.phoneNumber,
-      'phoneNumbers': instance.phoneNumbers
+      'phone_numbers': instance.phoneNumbers
           .map(const PhoneNumberConverter().toJson)
           .toList(),
       'rating': instance.rating,

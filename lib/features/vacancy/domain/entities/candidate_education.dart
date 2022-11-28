@@ -7,9 +7,9 @@ class CandidateEducationEntity extends Equatable {
   @JsonKey(defaultValue: 0)
   final int id;
   @UniversityConverter()
-  final University university;
+  final String place;
   @FacultyEntityConverter()
-  final FacultyEntity faculty;
+  final String course;
   @JsonKey(defaultValue: '')
   final String degree;
   @JsonKey(defaultValue: '')
@@ -18,16 +18,16 @@ class CandidateEducationEntity extends Equatable {
   final String endDate;
 
   const CandidateEducationEntity({
-    required this.university,
+    required this.place,
     required this.id,
     required this.endDate,
     required this.startDate,
     required this.degree,
-    required this.faculty,
+    required this.course,
   });
 
   @override
-  List<Object?> get props => [university, id, endDate, startDate, degree, faculty];
+  List<Object?> get props => [place, id, endDate, startDate, degree, course];
 }
 
 class University extends Equatable {

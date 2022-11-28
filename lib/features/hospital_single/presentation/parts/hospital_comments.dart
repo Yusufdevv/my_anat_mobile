@@ -66,7 +66,7 @@ class HospitalComments extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (state.comments.where((element) => element.isOwn).isEmpty) ...{
+                    if (state.comments.where((element) => element.isOwn).isEmpty || !state.isOrganizationCommented) ...{
                       Expanded(
                         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                           builder: (context, state) {

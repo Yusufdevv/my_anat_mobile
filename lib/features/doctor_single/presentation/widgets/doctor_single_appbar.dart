@@ -197,13 +197,13 @@ class DoctorSingleAppBar extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 10),
                                     ],
-                                    if (doctor.phoneNumber.isNotEmpty) ...[
+                                    if (doctor.phoneNumbers.isNotEmpty) ...[
                                       Row(
                                         children: [
                                           SvgPicture.asset(AppIcons.phone),
                                           const SizedBox(width: 6),
                                           Text(
-                                            MyFunctions.formatPhone(doctor.phoneNumber, false),
+                                            MyFunctions.formatPhone(doctor.phoneNumbers.first.phoneNumber, false),
                                             style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
                                           ),
                                         ],
@@ -270,34 +270,37 @@ class DoctorSingleAppBar extends StatelessWidget {
                                     const SizedBox(height: 16),
                                     Row(
                                       children: [
-                                        Expanded(
-                                          child: WButton(
-                                            color: primary,
-                                            onTap: () async {
-                                              if (await canLaunchUrlString('tel:${doctor.phoneNumber}')) {
-                                                await launchUrlString('tel:${doctor.phoneNumber}');
-                                              }
-                                            },
-                                            padding: EdgeInsets.zero,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                SvgPicture.asset(
-                                                  AppIcons.phone,
-                                                  height: 20,
-                                                  width: 20,
-                                                  color: white,
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Text(
-                                                  LocaleKeys.call.tr(),
-                                                  style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
-                                                )
-                                              ],
+                                        if (doctor.phoneNumbers.isNotEmpty) ...{
+                                          Expanded(
+                                            child: WButton(
+                                              color: primary,
+                                              onTap: () async {
+                                                if (await canLaunchUrlString('tel:${doctor.phoneNumbers.first.phoneNumber}')) {
+                                                  await launchUrlString('tel:${doctor.phoneNumbers.first.phoneNumber}');
+                                                }
+                                              },
+                                              padding: EdgeInsets.zero,
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    AppIcons.phone,
+                                                    height: 20,
+                                                    width: 20,
+                                                    color: white,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  Text(
+                                                    LocaleKeys.call.tr(),
+                                                    style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        const SizedBox(width: 8),
+                                          const SizedBox(width: 8),
+                                        },
+
                                         Expanded(
                                           child: WButton(
                                             color: white,

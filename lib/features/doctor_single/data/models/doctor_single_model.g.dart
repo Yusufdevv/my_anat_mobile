@@ -51,6 +51,11 @@ DoctorSingleModel _$DoctorSingleModelFromJson(Map<String, dynamic> json) =>
           ? const OrganizationEntity()
           : const OrganizationConverter()
               .fromJson(json['organization'] as Map<String, dynamic>?),
+      phoneNumbers: (json['phone_numbers'] as List<dynamic>?)
+              ?.map((e) => const PhoneNumberConverter()
+                  .fromJson(e as Map<String, dynamic>?))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$DoctorSingleModelToJson(DoctorSingleModel instance) =>
@@ -79,4 +84,7 @@ Map<String, dynamic> _$DoctorSingleModelToJson(DoctorSingleModel instance) =>
       'comment_count': instance.commentCount,
       'organization':
           const OrganizationConverter().toJson(instance.organization),
+      'phone_numbers': instance.phoneNumbers
+          .map(const PhoneNumberConverter().toJson)
+          .toList(),
     };

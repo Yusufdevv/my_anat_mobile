@@ -41,7 +41,15 @@ class AboutDoctor extends StatelessWidget {
             ),
             if (state.doctorComments.isNotEmpty) ...[
               ...List.generate(state.doctorComments.take(3).length,
-                  (index) => CommentItem(entity: state.doctorComments.take(3).toList()[index])),
+                  (index) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        CommentItem(entity: state.doctorComments.take(3).toList()[index],isMainScreen: true, isOrganization: false,),
+                        const SizedBox(height: 16,)
+                      ],
+                    ),
+                  )),
               WButton(
                 onTap: () {
                   controller.animateTo(3);

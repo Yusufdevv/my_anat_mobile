@@ -172,7 +172,7 @@ abstract class MyFunctions {
         mapId: MapObjectId('my-point'),
         point: point,
         icon: PlacemarkIcon.single(PlacemarkIconStyle(
-          // scale: 0.6,
+           scale: 0.6,
           image: BitmapDescriptor.fromBytes(myIconData),
         )));
     return myPoint;
@@ -329,7 +329,7 @@ abstract class MyFunctions {
                 );
               },
               icon: PlacemarkIcon.single(PlacemarkIconStyle(
-                  image: BitmapDescriptor.fromBytes(iconData), scale: 0.6))),
+                  image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark), scale: 0.6))),
         )
         .toList();
      final myPoint = await getMyPoint(point, context);

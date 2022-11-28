@@ -39,7 +39,7 @@ class CategoryModel extends CategoryEntity {
   factory CategoryModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class OrganizationModel extends OrganizationEntity {
   const OrganizationModel({
     required super.title,

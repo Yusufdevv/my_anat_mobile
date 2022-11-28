@@ -1,10 +1,12 @@
 import 'package:anatomica/features/auth/data/models/district_model.dart';
 import 'package:anatomica/features/auth/data/models/organization_model.dart';
+import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/region_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/district_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/organization_entity.dart';
+import 'package:anatomica/features/auth/domain/entities/phone_number_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/region_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
@@ -40,6 +42,8 @@ class DoctorSingleEntity extends Equatable {
   final int commentCount;
   @OrganizationConverter()
   final OrganizationEntity organization;
+  @PhoneNumberConverter()
+  final List<PhoneNumberEntity> phoneNumbers;
   const DoctorSingleEntity(
       {this.id = 0,
       this.fullName = '',
@@ -62,6 +66,7 @@ class DoctorSingleEntity extends Equatable {
       this.moderationStatus = '',
       this.img = const ImageEntity(),
       this.commentCount = 0,
+        this.phoneNumbers= const [],
       this.organization = const OrganizationEntity()});
 
   @override
@@ -87,5 +92,6 @@ class DoctorSingleEntity extends Equatable {
         moderationStatus,
         img,
         organization,
+    phoneNumbers,
       ];
 }

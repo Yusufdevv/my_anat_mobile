@@ -70,33 +70,39 @@ class DoctorComments extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                      builder: (context, authState) {
-                        return WButton(
-                          onTap: () {
-                            if (authState.status ==
-                                AuthenticationStatus.authenticated) {
-                              showModalBottomSheet(
-                                backgroundColor: Colors.transparent,
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (_) => CommentBottomSheet(
-                                  parentContext: context,
-                                  isDoctor: true,
-                                  commentsBloc: context.read<CommentsBloc>(),
-                                  doctor: doctor,
-                                ),
-                              );
-                            } else {
-                              showRegisterBottomSheet(context);
-                            }
-                          },
-                          text: LocaleKeys.add_reviews.tr(),
-                        );
-                      },
-                    ),
-                  )
+                  if (state.doctorComments
+                          .where((element) => element.isOwn)
+                          .isEmpty ||
+                      !state.isDoctorCommented) ...{
+                    Expanded(
+                      child:
+                          BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                        builder: (context, authState) {
+                          return WButton(
+                            onTap: () {
+                              if (authState.status ==
+                                  AuthenticationStatus.authenticated) {
+                                showModalBottomSheet(
+                                  backgroundColor: Colors.transparent,
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (_) => CommentBottomSheet(
+                                    parentContext: context,
+                                    isDoctor: true,
+                                    commentsBloc: context.read<CommentsBloc>(),
+                                    doctor: doctor,
+                                  ),
+                                );
+                              } else {
+                                showRegisterBottomSheet(context);
+                              }
+                            },
+                            text: LocaleKeys.add_reviews.tr(),
+                          );
+                        },
+                      ),
+                    )
+                  }
                 ],
               ),
             ),
@@ -107,6 +113,7 @@ class DoctorComments extends StatelessWidget {
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 16),
                 itemBuilder: (context, index) => CommentItem(
+                  isOrganization: false,
                   onTapDelete: () {
                     print('del');
                     context

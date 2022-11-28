@@ -3,6 +3,7 @@ import 'package:anatomica/features/vacancy/domain/entities/candidate_education.d
 import 'package:anatomica/features/vacancy/prezentation/widgets/image_card.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_text.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 
 class EducationItem extends StatelessWidget {
   final CandidateEducationEntity entity;
@@ -30,16 +31,16 @@ class EducationItem extends StatelessWidget {
         children: [
           Row(
             children: [
-              ImageCard(imageUrl: entity.university.logo.middle, height: 58, width: 58),
+              ImageCard(imageUrl: entity.place, height: 58, width: 58),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    VacancyTitleText(title: entity.university.title),
+                    VacancyTitleText(title: entity.place),
                     const SizedBox(height: 4),
                     Text(
-                      entity.faculty.title,
+                      entity.course,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
@@ -57,7 +58,7 @@ class EducationItem extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            '${entity.startDate} ${entity.endDate}',
+            '${Jiffy(entity.startDate).year} - ${Jiffy(entity.endDate).year}',
             style: Theme.of(context).textTheme.bodyText1!.copyWith(color: darkGreen),
           ),
         ],

@@ -70,7 +70,7 @@ class JournalBigItem extends StatelessWidget {
               children: [
                 if (journalEntity.isBought || !journalEntity.isPremium) ...{
                   Text(
-                    'Купленный',
+                    LocaleKeys.free.tr(),
                     style: Theme.of(context)
                         .textTheme
                         .headline3!
