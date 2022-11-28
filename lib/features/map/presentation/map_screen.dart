@@ -158,10 +158,14 @@ class _MapScreenState extends State<MapScreen>
                                     .read<ShowPopUpBloc>()
                                     .add(ShowPopUp(message: message));
                               },
-                              onSuccess: (position) {
+                              onSuccess: (position) async{
                                 myPoint = Point(
                                     latitude: position.latitude,
                                     longitude: position.longitude);
+                                final myPlaceMark = await MyFunctions.getMyPoint(myPoint, context);
+                                setState((){
+                                  _mapObjects.add(myPlaceMark);
+                                });
                                 accuracy = position.accuracy;
                                 _mapController.moveCamera(
                                   CameraUpdate.newCameraPosition(
@@ -322,11 +326,14 @@ class _MapScreenState extends State<MapScreen>
                               onCurrentLocationTap: () async {
                                 context.read<MapOrganizationBloc>().add(
                                       MapOrganizationEvent.getCurrentLocation(
-                                        onSuccess: (position) {
+                                        onSuccess: (position) async {
                                           myPoint = Point(
                                               latitude: position.latitude,
                                               longitude: position.longitude);
-
+                                          final myPlaceMark = await MyFunctions.getMyPoint(myPoint, context);
+                                          setState((){
+                                            _mapObjects.add(myPlaceMark);
+                                          });
                                           accuracy = position.accuracy;
                                           _mapController.moveCamera(
                                             CameraUpdate.newCameraPosition(

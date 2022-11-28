@@ -20,4 +20,5 @@ class AppImages {
   static const onbooarding2 = 'assets/images/onboarding_2.png';
   static const onbooarding3 = 'assets/images/onboarding_3.png';
   static const onbooarding4 = 'assets/images/onboarding_4.png';
+  static const myPlacemark = 'assets/icons/map_screen/my_placemark.png';
 }

@@ -52,7 +52,7 @@ class AboutHospital extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
+          if (hospital.images.isNotEmpty) ...[Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 16, top: 20),
             child: Text(
               LocaleKeys.photos.tr(),
@@ -62,34 +62,35 @@ class AboutHospital extends StatelessWidget {
                   .copyWith(color: textColor),
             ),
           ),
-          SizedBox(
-            height: 140,
-            child: ListView.separated(
-              separatorBuilder: (context, index) => const SizedBox(width: 8),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    fade(
-                      page: ImageSingleScreen(
-                        images: hospital.images,
-                        index: index,
+            SizedBox(
+              height: 140,
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(width: 8),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      fade(
+                        page: ImageSingleScreen(
+                          images: hospital.images,
+                          index: index,
+                        ),
                       ),
-                    ),
-                  );
-                },
-                child: WImage(
-                  imageUrl: hospital.images[index].middle,
-                  fit: BoxFit.cover,
-                  width: MediaQuery.of(context).size.shortestSide / 2,
-                  borderRadius: BorderRadius.circular(8),
+                    );
+                  },
+                  child: WImage(
+                    imageUrl: hospital.images[index].middle,
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.shortestSide / 2,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
+                itemCount: hospital.images.length,
+                padding: const EdgeInsets.symmetric(horizontal: 16)
+                    .copyWith(bottom: 20),
               ),
-              itemCount: hospital.images.length,
-              padding: const EdgeInsets.symmetric(horizontal: 16)
-                  .copyWith(bottom: 20),
-            ),
-          ),
+            ),]
+
         ],
       ),
     );

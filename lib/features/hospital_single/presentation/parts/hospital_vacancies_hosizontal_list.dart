@@ -16,94 +16,88 @@ import 'package:formz/formz.dart';
 class HospitalVacanciesHorizontalList extends StatelessWidget {
   const HospitalVacanciesHorizontalList({
     Key? key,
-    required this.vacanciesBloc,
   }) : super(key: key);
-
-  final HospitalVacanciesBloc vacanciesBloc;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: vacanciesBloc,
-      child: Container(
-        color: white,
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Text(
-                LocaleKeys.vacancy.tr(),
-                style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
-              ),
+    return Container(
+      color: white,
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Text(
+              LocaleKeys.vacancy.tr(),
+              style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
             ),
-            const SizedBox(height: 16),
-            BlocBuilder<HospitalVacanciesBloc, HospitalVacanciesState>(
-              builder: (context, state) {
-                if (state.status.isSubmissionInProgress) {
-                  return const SizedBox(
+          ),
+          const SizedBox(height: 16),
+          BlocBuilder<HospitalVacanciesBloc, HospitalVacanciesState>(
+            builder: (context, state) {
+              if (state.status.isSubmissionInProgress) {
+                return const SizedBox(
+                  height: 160,
+                  child: Center(
+                    child: CupertinoActivityIndicator(),
+                  ),
+                );
+              } else if (state.status.isSubmissionSuccess) {
+                if (state.vacancies.isNotEmpty) {
+                  return SizedBox(
                     height: 160,
-                    child: Center(
-                      child: CupertinoActivityIndicator(),
-                    ),
-                  );
-                } else if (state.status.isSubmissionSuccess) {
-                  if (state.vacancies.isNotEmpty) {
-                    return SizedBox(
-                      height: 160,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        itemBuilder: (context, index) {
-                          if (index == 5) {
-                            return ShowAllButton(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  fade(
-                                    page: AllHospitalItemsScreen(
-                                      appbarTitle: LocaleKeys.vacancy.tr(),
-                                      child: HospitalVacancies(
-                                        hospitalVacanciesBloc: vacanciesBloc,
-                                      ),
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemBuilder: (context, index) {
+                        if (index == 5) {
+                          return ShowAllButton(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                fade(
+                                  page: AllHospitalItemsScreen(
+                                    appbarTitle: LocaleKeys.vacancy.tr(),
+                                    child: HospitalVacancies(
+                                      hospitalVacanciesBloc: context.read<HospitalVacanciesBloc>(),
                                     ),
                                   ),
-                                );
-                              },
-                              width: MediaQuery.of(context).size.shortestSide - 32,
-                              title: 'Все вакансии',
-                            );
-                          }
-                          return SizedBox(
+                                ),
+                              );
+                            },
                             width: MediaQuery.of(context).size.shortestSide - 32,
-                            child: HospitalVacancyItem(
-                              showShadow: false,
-                              entity: state.vacancies[index],
-                            ),
+                            title: 'Все вакансии',
                           );
-                        },
-                        separatorBuilder: (context, index) => const SizedBox(width: 8),
-                        itemCount: state.vacancies.length > 5 ? state.vacancies.take(6).length : state.vacancies.length,
-                      ),
-                    );
-                  } else {
-                    return Center(
-                      child: EmptyWidget(
-                        hasPadding: false,
-                        hasMargin: false,
-                        title: LocaleKeys.no_vacancies.tr(),
-                        content: LocaleKeys.no_vacancies_in_this_hospital.tr(),
-                      ),
-                    );
-                  }
+                        }
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.shortestSide - 32,
+                          child: HospitalVacancyItem(
+                            showShadow: false,
+                            entity: state.vacancies[index],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(width: 8),
+                      itemCount: state.vacancies.length > 5 ? state.vacancies.take(6).length : state.vacancies.length,
+                    ),
+                  );
                 } else {
-                  return const SizedBox();
+                  return Center(
+                    child: EmptyWidget(
+                      hasPadding: false,
+                      hasMargin: false,
+                      title: LocaleKeys.no_vacancies.tr(),
+                      content: LocaleKeys.no_vacancies_in_this_hospital.tr(),
+                    ),
+                  );
                 }
-              },
-            ),
-          ],
-        ),
+              } else {
+                return const SizedBox();
+              }
+            },
+          ),
+        ],
       ),
     );
   }

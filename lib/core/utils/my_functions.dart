@@ -157,6 +157,27 @@ abstract class MyFunctions {
     return completer.future;
   }
 
+  static Future<MapObject<dynamic>> getMyPoint(
+      Point point, BuildContext context) async {
+    final myIconData = await getBytesFromCanvas(
+        placeCount: 0,
+        image: AppImages.myPlacemark,
+        width: 170,
+        //offset: const Offset(0, -30),
+        height: 410,
+        context: context,
+        shouldAddText: false);
+    final myPoint = PlacemarkMapObject(
+        opacity: 1,
+        mapId: MapObjectId('my-point'),
+        point: point,
+        icon: PlacemarkIcon.single(PlacemarkIconStyle(
+          // scale: 0.6,
+          image: BitmapDescriptor.fromBytes(myIconData),
+        )));
+    return myPoint;
+  }
+
   static Future<void> addHospitals(
       List<MapHospitalModel> points,
       BuildContext context,
@@ -164,10 +185,7 @@ abstract class MyFunctions {
       YandexMapController controller,
       Point point,
       double accuracy) async {
-    // final myIconData = await myLocationCanvas(
-    //   radius: accuracy,
-    //   context: context,
-    // );
+
     print('accuracy: $accuracy');
     final iconData = await getBytesFromCanvas(
         placeCount: 0,
@@ -218,14 +236,7 @@ abstract class MyFunctions {
           ),
         )
         .toList();
-    // final myPoint = PlacemarkMapObject(
-    //     opacity: 1,
-    //     mapId: MapObjectId('my-point'),
-    //     point: point,
-    //     icon: PlacemarkIcon.single(PlacemarkIconStyle(
-    //       // scale: 0.6,
-    //       image: BitmapDescriptor.fromBytes(myIconData),
-    //     )));
+    final myPoint = await getMyPoint(point, context);
     final clusterItem = ClusterizedPlacemarkCollection(
       mapId: clusterId,
       placemarks: placeMarks,
@@ -261,7 +272,7 @@ abstract class MyFunctions {
     );
 
     mapObjects.clear();
-    mapObjects.add(clusterItem);
+    mapObjects.addAll([clusterItem, myPoint]);
   }
 
   static void addDoctors(
@@ -271,10 +282,6 @@ abstract class MyFunctions {
       YandexMapController controller,
       Point point,
       double accuracy) async {
-    // final myIconData = await myLocationCanvas(
-    //   radius: 100,
-    //   context: context,
-    // );
     final iconData = await getBytesFromCanvas(
         placeCount: 0,
         image: AppImages.doctorMark,
@@ -325,14 +332,7 @@ abstract class MyFunctions {
                   image: BitmapDescriptor.fromBytes(iconData), scale: 0.6))),
         )
         .toList();
-    // final myPoint = PlacemarkMapObject(
-    //     opacity: 1,
-    //     mapId: MapObjectId('my-point2'),
-    //     point: point,
-    //     icon: PlacemarkIcon.single(PlacemarkIconStyle(
-    //       // scale: 0.6,
-    //       image: BitmapDescriptor.fromBytes(myIconData),
-    //     )));
+     final myPoint = await getMyPoint(point, context);
     final clusterItem = ClusterizedPlacemarkCollection(
       mapId: clusterId,
       placemarks: placeMarks,
@@ -358,7 +358,7 @@ abstract class MyFunctions {
       ),
     );
     mapObjects.clear();
-    mapObjects.add(clusterItem);
+    mapObjects.addAll([clusterItem, myPoint]);
   }
 
   static Future<Position> determinePosition() async {

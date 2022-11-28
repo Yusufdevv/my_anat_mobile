@@ -21,110 +21,107 @@ class HospitalServices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: servicesBloc,
-      child: BlocBuilder<ServicesBloc, ServicesState>(
-        builder: (context, state) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 16),
-            color: white,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  LocaleKeys.service.tr(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4!
-                      .copyWith(color: textColor),
-                ),
-                if (state.status.isSubmissionInProgress) ...{
-                  const Center(
-                    child: CupertinoActivityIndicator(),
+    return BlocBuilder<ServicesBloc, ServicesState>(
+      builder: (context, state) {
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          color: white,
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                LocaleKeys.service.tr(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .copyWith(color: textColor),
+              ),
+              if (state.status.isSubmissionInProgress) ...{
+                const Center(
+                  child: CupertinoActivityIndicator(),
+                )
+              } else if (state.status.isSubmissionSuccess) ...{
+                if (state.services.isEmpty) ...{
+                  const SizedBox(height: 16),
+                  Center(
+                    child: EmptyWidget(
+                      hasPadding: false,
+                      hasMargin: false,
+                      title: state.searchQuery.isNotEmpty
+                          ? LocaleKeys.nothing.tr()
+                          : LocaleKeys.no_services.tr(),
+                      content: state.searchQuery.isNotEmpty
+                          ? LocaleKeys.result_not_found.tr()
+                          : LocaleKeys.no_services_in_this_hospital.tr(),
+                    ),
                   )
-                } else if (state.status.isSubmissionSuccess) ...{
-                  if (state.services.isEmpty) ...{
-                    const SizedBox(height: 16),
-                    Center(
-                      child: EmptyWidget(
-                        hasPadding: false,
-                        hasMargin: false,
-                        title: state.searchQuery.isNotEmpty
-                            ? LocaleKeys.nothing.tr()
-                            : LocaleKeys.no_services.tr(),
-                        content: state.searchQuery.isNotEmpty
-                            ? LocaleKeys.result_not_found.tr()
-                            : LocaleKeys.no_services_in_this_hospital.tr(),
-                      ),
-                    )
-                  } else ...{
-                    Container(
-                      decoration: BoxDecoration(
-                        color: white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        children: List.generate(
-                          state.services.length > 5
-                              ? state.services.take(6).length
-                              : state.services.length,
-                          (index) {
-                            if (index == 5) {
-                              return WButton(
-                                text: LocaleKeys.show_all.tr(),
-                                textColor: textSecondary,
-                                color: commentButton,
-                                margin: const EdgeInsets.only(top: 16),
-                                onTap: () => Navigator.of(context).push(
-                                  fade(
-                                    page: AllHospitalItemsScreen(
-                                      appbarTitle: 'Услуги',
-                                      child: AllHospitalServices(
-                                        servicesBloc: servicesBloc,
-                                      ),
+                } else ...{
+                  Container(
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: List.generate(
+                        state.services.length > 5
+                            ? state.services.take(6).length
+                            : state.services.length,
+                        (index) {
+                          if (index == 5) {
+                            return WButton(
+                              text: LocaleKeys.show_all.tr(),
+                              textColor: textSecondary,
+                              color: commentButton,
+                              margin: const EdgeInsets.only(top: 16),
+                              onTap: () => Navigator.of(context).push(
+                                fade(
+                                  page: AllHospitalItemsScreen(
+                                    appbarTitle: 'Услуги',
+                                    child: AllHospitalServices(
+                                      servicesBloc: servicesBloc,
                                     ),
                                   ),
                                 ),
-                              );
-                            }
-                            return ServiceItem(
-                              hightlightedText: state.searchQuery,
-                              isLast: index ==
-                                  (state.services.length > 5
-                                          ? state.services.take(5).length
-                                          : state.services.length) -
-                                      1,
-                              entity: state.services[index],
+                              ),
                             );
-                          },
-                        ),
+                          }
+                          return ServiceItem(
+                            hightlightedText: state.searchQuery,
+                            isLast: index ==
+                                (state.services.length > 5
+                                        ? state.services.take(5).length
+                                        : state.services.length) -
+                                    1,
+                            entity: state.services[index],
+                          );
+                        },
                       ),
-                    )
-                  }
-                } else if (state.status.isSubmissionFailure) ...{
-                  const Center(
-                    child: Text('error'),
+                    ),
                   )
-                },
-                // if (state.fetchMore && state.services.length > 5) ...[
-                //   const SizedBox(height: 16),
-                //   WButton(
-                //     onTap: () {
-                //       context
-                //           .read<ServicesBloc>()
-                //           .add(ServicesEvent.getMoreServices());
-                //     },
-                //     color: commentButton,
-                //     text: LocaleKeys.show_all.tr(),
-                //     textColor: textSecondary,
-                //   )
-                // ]
-              ],
-            ),
-          );
-        },
-      ),
+                }
+              } else if (state.status.isSubmissionFailure) ...{
+                const Center(
+                  child: Text('error'),
+                )
+              },
+              // if (state.fetchMore && state.services.length > 5) ...[
+              //   const SizedBox(height: 16),
+              //   WButton(
+              //     onTap: () {
+              //       context
+              //           .read<ServicesBloc>()
+              //           .add(ServicesEvent.getMoreServices());
+              //     },
+              //     color: commentButton,
+              //     text: LocaleKeys.show_all.tr(),
+              //     textColor: textSecondary,
+              //   )
+              // ]
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -52,5 +52,5 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => 46;
 
   @override
-  bool shouldRebuild(covariant TabBarHeaderDelegate oldDelegate) => oldDelegate.tabController != tabController;
+  bool shouldRebuild(covariant TabBarHeaderDelegate oldDelegate) => oldDelegate.tabController != tabController || tabs != oldDelegate.tabs;
 }

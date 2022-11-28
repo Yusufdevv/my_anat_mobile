@@ -14,93 +14,89 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 class HospitalSpecialists extends StatelessWidget {
-  final HospitalSpecialistBloc hospitalSpecialistBloc;
-  const HospitalSpecialists({required this.hospitalSpecialistBloc, Key? key}) : super(key: key);
+  const HospitalSpecialists({ Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: hospitalSpecialistBloc,
-      child: BlocBuilder<HospitalSpecialistBloc, HospitalSpecialistState>(
-        builder: (context, state) {
-          return Container(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            color: white,
-            margin: const EdgeInsets.only(bottom: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Text(
-                    LocaleKeys.specialists.tr(),
-                    style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
-                  ),
+    return BlocBuilder<HospitalSpecialistBloc, HospitalSpecialistState>(
+      builder: (context, state) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          color: white,
+          margin: const EdgeInsets.only(bottom: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: Text(
+                  LocaleKeys.specialists.tr(),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
                 ),
-                const SizedBox(height: 16),
-                if (state.status.isSubmissionInProgress) ...{
-                  const SizedBox(
+              ),
+              const SizedBox(height: 16),
+              if (state.status.isSubmissionInProgress) ...{
+                const SizedBox(
+                  height: 116,
+                  child: Center(
+                    child: CupertinoActivityIndicator(),
+                  ),
+                )
+              } else if (state.status.isSubmissionSuccess) ...{
+                if (state.specialists.isNotEmpty) ...{
+                  SizedBox(
                     height: 116,
-                    child: Center(
-                      child: CupertinoActivityIndicator(),
-                    ),
-                  )
-                } else if (state.status.isSubmissionSuccess) ...{
-                  if (state.specialists.isNotEmpty) ...{
-                    SizedBox(
-                      height: 116,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          if (index == 5) {
-                            return ShowAllButton(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  fade(
-                                    page: AllHospitalItemsScreen(
-                                      appbarTitle: LocaleKeys.specialists.tr(),
-                                      child: AllHospitalSpecialists(
-                                        hospitalSpecialistBloc: hospitalSpecialistBloc,
-                                      ),
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        if (index == 5) {
+                          return ShowAllButton(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                fade(
+                                  page: AllHospitalItemsScreen(
+                                    appbarTitle: LocaleKeys.specialists.tr(),
+                                    child: AllHospitalSpecialists(
+                                      hospitalSpecialistBloc: context.read<HospitalSpecialistBloc>(),
                                     ),
                                   ),
-                                );
-                              },
-                              width: MediaQuery.of(context).size.shortestSide - 58,
-                              title: 'Все специалисты',
-                            );
-                          }
-                          return SizedBox(
+                                ),
+                              );
+                            },
                             width: MediaQuery.of(context).size.shortestSide - 58,
-                            child: DoctorItem(
-                              showShadow: false,
-                              showPosition: true,
-                              entity: state.specialists[index],
-                            ),
+                            title: 'Все специалисты',
                           );
-                        },
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        separatorBuilder: (context, index) => const SizedBox(width: 8),
-                        itemCount:
-                            state.specialists.length > 5 ? state.specialists.take(6).length : state.specialists.length,
-                      ),
+                        }
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.shortestSide - 58,
+                          child: DoctorItem(
+                            showShadow: false,
+                            showPosition: true,
+                            entity: state.specialists[index],
+                          ),
+                        );
+                      },
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      separatorBuilder: (context, index) => const SizedBox(width: 8),
+                      itemCount:
+                          state.specialists.length > 5 ? state.specialists.take(6).length : state.specialists.length,
                     ),
-                  } else ...{
-                    Center(
-                      child: EmptyWidget(
-                        hasMargin: false,
-                        hasPadding: false,
-                        title: LocaleKeys.no_specialists.tr(),
-                        content: LocaleKeys.no_specialists_in_this_hospital.tr(),
-                      ),
-                    )
-                  }
-                },
-              ],
-            ),
-          );
-        },
-      ),
+                  ),
+                } else ...{
+                  Center(
+                    child: EmptyWidget(
+                      hasMargin: false,
+                      hasPadding: false,
+                      title: LocaleKeys.no_specialists.tr(),
+                      content: LocaleKeys.no_specialists_in_this_hospital.tr(),
+                    ),
+                  )
+                }
+              },
+            ],
+          ),
+        );
+      },
     );
   }
 }
