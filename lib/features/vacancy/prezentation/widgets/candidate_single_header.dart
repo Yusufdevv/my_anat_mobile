@@ -18,7 +18,10 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class CandidateSingleHeader extends StatelessWidget {
-  const CandidateSingleHeader({Key? key, required HeaderManagerBloc headerManagerBloc, required this.candidate})
+  const CandidateSingleHeader(
+      {Key? key,
+      required HeaderManagerBloc headerManagerBloc,
+      required this.candidate})
       : _headerManagerBloc = headerManagerBloc,
         super(key: key);
 
@@ -34,12 +37,12 @@ class CandidateSingleHeader extends StatelessWidget {
           return SliverOverlapAbsorber(
             handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
             sliver: SliverSafeArea(
-              top: false,
               bottom: false,
               sliver: SliverAppBar(
                 title: headerManageState.isScrolled
                     ? Container(
-                        padding: EdgeInsets.fromLTRB(16, MediaQuery.of(context).padding.top + 16, 16, 30),
+                        padding: EdgeInsets.fromLTRB(16,
+                            MediaQuery.of(context).padding.top + 16, 16, 30),
                         width: double.infinity,
                         color: darkGreen,
                         child: Column(
@@ -50,14 +53,18 @@ class CandidateSingleHeader extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2!
-                                  .copyWith(fontWeight: FontWeight.w600, fontSize: 20),
+                                  .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20),
                             ),
                             const SizedBox(height: 4),
                             Text(candidate.position.title,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
-                                    .copyWith(fontWeight: FontWeight.w400, fontSize: 16))
+                                    .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16))
                           ],
                         ),
                       )
@@ -75,8 +82,12 @@ class CandidateSingleHeader extends StatelessWidget {
                 backgroundColor: white,
                 systemOverlayStyle: SystemUiOverlayStyle(
                   systemNavigationBarColor: white,
-                  statusBarColor: headerManageState.isScrolled ? darkGreen : Colors.transparent,
-                  statusBarIconBrightness: headerManageState.isScrolled ? Brightness.light : Brightness.dark,
+                  statusBarColor: headerManageState.isScrolled
+                      ? darkGreen
+                      : Colors.transparent,
+                  statusBarIconBrightness: headerManageState.isScrolled
+                      ? Brightness.light
+                      : Brightness.dark,
                 ),
                 collapsedHeight: 60 + MediaQuery.of(context).padding.top,
                 flexibleSpace: FlexibleSpaceBar(
@@ -86,7 +97,9 @@ class CandidateSingleHeader extends StatelessWidget {
                     children: [
                       Positioned.fill(
                         bottom: MyFunctions.getDoctorImageBottomPadding(
-                            candidate: candidate, initialHeight: 160, decrementAmount: 30),
+                            candidate: candidate,
+                            initialHeight: 160,
+                            decrementAmount: 30),
                         child: Stack(
                           children: [
                             Positioned.fill(
@@ -97,7 +110,9 @@ class CandidateSingleHeader extends StatelessWidget {
                                       height: 277,
                                       imageUrl: candidate.img.middle,
                                       fit: BoxFit.cover,
-                                      errorWidget: (_, __, ___) => SvgPicture.asset(AppIcons.bigImageError),
+                                      errorWidget: (_, __, ___) =>
+                                          SvgPicture.asset(
+                                              AppIcons.bigImageError),
                                     ),
                                   ),
                                   Positioned.fill(
@@ -126,11 +141,15 @@ class CandidateSingleHeader extends StatelessWidget {
                                 children: [
                                   Text(
                                     candidate.fullName,
-                                    style: Theme.of(context).textTheme.headline1!.copyWith(color: white, fontSize: 22),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .copyWith(color: white, fontSize: 22),
                                   ),
                                   const SizedBox(height: 16),
                                   Container(
-                                    padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(12, 6, 12, 8),
                                     decoration: BoxDecoration(
                                       color: white.withOpacity(0.12),
                                       borderRadius: BorderRadius.circular(10),
@@ -138,16 +157,21 @@ class CandidateSingleHeader extends StatelessWidget {
                                     ),
                                     child: Text(
                                       candidate.position.title,
-                                      style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline3!
+                                          .copyWith(color: white),
                                     ),
                                   )
                                 ],
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).padding.top),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   WScaleAnimation(
                                     onTap: () => Navigator.of(context).pop(),
@@ -161,11 +185,13 @@ class CandidateSingleHeader extends StatelessWidget {
                                   ),
                                   WScaleAnimation(
                                     onTap: () {
-                                      Share.share('https://anatomica.uz/doctor/${candidate.id}/detail/');
+                                      Share.share(
+                                          'https://anatomica.uz/doctor/${candidate.id}/detail/');
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(16),
-                                      child: SvgPicture.asset(AppIcons.share, color: white),
+                                      child: SvgPicture.asset(AppIcons.share,
+                                          color: white),
                                     ),
                                   ),
                                 ],
@@ -187,7 +213,8 @@ class CandidateSingleHeader extends StatelessWidget {
                           child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 16),
                                 child: Column(
                                   children: [
                                     if (candidate.address.isNotEmpty) ...[
@@ -198,7 +225,10 @@ class CandidateSingleHeader extends StatelessWidget {
                                           Expanded(
                                             child: Text(
                                               candidate.address,
-                                              style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3!
+                                                  .copyWith(color: textColor),
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 1,
                                             ),
@@ -213,8 +243,14 @@ class CandidateSingleHeader extends StatelessWidget {
                                           SvgPicture.asset(AppIcons.phone),
                                           const SizedBox(width: 6),
                                           Text(
-                                            MyFunctions.formatPhone(candidate.phoneNumbers.first.phoneNumber, false),
-                                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                                            MyFunctions.formatPhone(
+                                                candidate.phoneNumbers.first
+                                                    .phoneNumber,
+                                                false),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3!
+                                                .copyWith(color: textColor),
                                           ),
                                         ],
                                       ),
@@ -224,7 +260,10 @@ class CandidateSingleHeader extends StatelessWidget {
                                       children: [
                                         Text(
                                           candidate.rating.toString(),
-                                          style: Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline3!
+                                              .copyWith(color: darkGreen),
                                         ),
                                         const SizedBox(width: 8),
                                         RatingStars(
@@ -237,25 +276,37 @@ class CandidateSingleHeader extends StatelessWidget {
                                       WButton(
                                         color: primary,
                                         onTap: () async {
-                                          if (candidate.phoneNumbers.length > 1) {
+                                          if (candidate.phoneNumbers.length >
+                                              1) {
                                             showPhonesBottomSheet(
-                                                context, candidate.phoneNumbers.map((e) => e.phoneNumber).toList());
+                                                context,
+                                                candidate.phoneNumbers
+                                                    .map((e) => e.phoneNumber)
+                                                    .toList());
                                           } else {
                                             if (await canLaunchUrlString(
                                                 'tel:${candidate.phoneNumbers.first.phoneNumber}')) {
-                                              await launchUrlString('tel:${candidate.phoneNumbers.first.phoneNumber}');
+                                              await launchUrlString(
+                                                  'tel:${candidate.phoneNumbers.first.phoneNumber}');
                                             }
                                           }
                                         },
                                         padding: EdgeInsets.zero,
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            SvgPicture.asset(AppIcons.phone, height: 20, width: 20, color: white),
+                                            SvgPicture.asset(AppIcons.phone,
+                                                height: 20,
+                                                width: 20,
+                                                color: white),
                                             const SizedBox(width: 8),
                                             Text(
                                               LocaleKeys.call.tr(),
-                                              style: Theme.of(context).textTheme.headline3!.copyWith(color: white),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3!
+                                                  .copyWith(color: white),
                                             )
                                           ],
                                         ),
@@ -264,7 +315,10 @@ class CandidateSingleHeader extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const Divider(height: 0, thickness: 1, color: textFieldColor)
+                              const Divider(
+                                  height: 0,
+                                  thickness: 1,
+                                  color: textFieldColor)
                             ],
                           ),
                         ),
