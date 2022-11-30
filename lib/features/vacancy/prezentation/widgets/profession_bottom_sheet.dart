@@ -1,3 +1,5 @@
+import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
@@ -12,7 +14,10 @@ import 'package:formz/formz.dart';
 class ProfessionBottomSheet extends StatefulWidget {
   final VacancyBloc vacancyBloc;
   final List<int> selectedList;
-  const ProfessionBottomSheet({required this.vacancyBloc, required this.selectedList, Key? key}) : super(key: key);
+
+  const ProfessionBottomSheet(
+      {required this.vacancyBloc, required this.selectedList, Key? key})
+      : super(key: key);
 
   @override
   State<ProfessionBottomSheet> createState() => _ProfessionBottomSheetState();
@@ -20,6 +25,7 @@ class ProfessionBottomSheet extends StatefulWidget {
 
 class _ProfessionBottomSheetState extends State<ProfessionBottomSheet> {
   List<int> selectedList = [];
+
   @override
   void initState() {
     selectedList.addAll(widget.selectedList);
@@ -31,41 +37,36 @@ class _ProfessionBottomSheetState extends State<ProfessionBottomSheet> {
     return BlocProvider.value(
       value: widget.vacancyBloc,
       child: ScrolledBottomSheet(
-        title: LocaleKeys.professions.tr(),
-        hasHeader: true,
-        stackedWButton: WButton(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          text: LocaleKeys.save.tr(),
-          onTap: () {
-            widget.vacancyBloc.add(
-              SelectCategoryEvent(id: selectedList),
-            );
-            widget.vacancyBloc.add(
-              GetVacancyListEvent(
-                onSuccess: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            );
-          },
-        ),
-        children: [
-          BlocBuilder<VacancyBloc, VacancyState>(
+          title: LocaleKeys.professions.tr(),
+          hasHeader: true,
+          stackedWButton: WButton(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            text: LocaleKeys.save.tr(),
+            onTap: () {
+              widget.vacancyBloc.add(
+                SelectCategoryEvent(id: selectedList),
+              );
+              widget.vacancyBloc.add(
+                GetVacancyListEvent(
+                  onSuccess: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              );
+            },
+          ),
+          child: BlocBuilder<VacancyBloc, VacancyState>(
             builder: (context, state) {
-              if (state.categoryStatus.isPure) {
-                context.read<VacancyBloc>().add(GetCategoryListEvent());
-              } else if (state.categoryStatus.isSubmissionInProgress) {
-                return const Center(child: CupertinoActivityIndicator());
-              } else if (state.categoryStatus.isSubmissionSuccess) {
-                return Column(
-                  children: [
-                    const SizedBox(height: 16),
-                    ...List.generate(
-                      state.categoryList.length,
-                      (index) => CheckBoxTitle(
-                        isChecked: selectedList.contains(state.categoryList[index].id),
+              return Paginator(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                  paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
+                      state.categoryStatus),
+                  itemBuilder: (context, index) => CheckBoxTitle(
+                        isChecked:
+                            selectedList.contains(state.categoryList[index].id),
                         onTap: () {
-                          if (selectedList.contains(state.categoryList[index].id)) {
+                          if (selectedList
+                              .contains(state.categoryList[index].id)) {
                             setState(() {
                               selectedList.remove(state.categoryList[index].id);
                             });
@@ -78,18 +79,14 @@ class _ProfessionBottomSheetState extends State<ProfessionBottomSheet> {
                         isLast: index == state.categoryList.length - 1,
                         title: state.categoryList[index].title,
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                );
-              } else if (state.filterStatus.isSubmissionFailure) {
-                return const Center(child: Text('Fail'));
-              }
-              return const Center(child: CupertinoActivityIndicator());
+                  itemCount: state.categoryList.length,
+                  fetchMoreFunction: () {
+                    context.read<VacancyBloc>().add(GetMoreCategoryListEvent());
+                  },
+                  hasMoreToFetch: state.fetchMoreCategories,
+                  errorWidget: const Text('error'));
             },
-          ),
-        ],
-      ),
+          )),
     );
   }
 }
@@ -104,6 +101,11 @@ void showProfessionBottomSheet(
     isScrollControlled: true,
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
-    builder: (context) => ProfessionBottomSheet(vacancyBloc: vacancyBloc, selectedList: selectedList),
+    constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height -
+            MediaQuery.of(context).padding.top -
+            kToolbarHeight),
+    builder: (context) => ProfessionBottomSheet(
+        vacancyBloc: vacancyBloc, selectedList: selectedList),
   );
 }

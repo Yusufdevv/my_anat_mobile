@@ -132,7 +132,7 @@ class VacancyRepositoryImpl extends VacancyRepository {
   @override
   Future<Either<Failure, GenericPagination<CategoryListModel>>> getCategoryList({String? next}) async {
     try {
-      final result = await dataSource.getCategoryList();
+      final result = await dataSource.getCategoryList(next: next);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(errorMessage: error.errorMessage, statusCode: 141));

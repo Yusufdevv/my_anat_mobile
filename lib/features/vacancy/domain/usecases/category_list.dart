@@ -15,7 +15,7 @@ class CategoryListUseCase
   @override
   Future<Either<Failure, GenericPagination<CategoryListModel>>> call(
           CategoryListParams params) async =>
-      await repository.getCategoryList();
+      await repository.getCategoryList(next: params.next);
 }
 
 class CategoryListParams extends Equatable {

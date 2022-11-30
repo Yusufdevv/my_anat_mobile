@@ -99,6 +99,7 @@ void showSalaryBottomSheet(
   showModalBottomSheet(
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
+    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height /2),
     isScrollControlled: true,
     context: context,
     builder: (context) => SalaryBottomSheet(list: list, vacancyBloc: vacancyBloc),

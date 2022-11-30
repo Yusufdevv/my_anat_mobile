@@ -296,5 +296,6 @@ abstract class  LocaleKeys {
   static const privacy_1 = 'privacy_1';
   static const privacy_2 = 'privacy_2';
   static const privacy_3 = 'privacy_3';
+  static const back_to_top = 'back_to_top';
 
 }

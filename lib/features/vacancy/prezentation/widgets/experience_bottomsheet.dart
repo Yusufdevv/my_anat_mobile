@@ -98,7 +98,7 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
 void showExperienceBottomSheet(BuildContext context, VacancyBloc vacancyBloc, List<String> list) {
   showModalBottomSheet(
     context: context,
-    isScrollControlled: true,
+    isScrollControlled: true,constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height /2),
     useRootNavigator: true,
     backgroundColor: Colors.transparent,
     builder: (context) => ExperienceBottomSheet(vacancyBloc: vacancyBloc, list: list),

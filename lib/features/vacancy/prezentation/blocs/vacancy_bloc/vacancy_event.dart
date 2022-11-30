@@ -43,6 +43,7 @@ class GetCandidateListEvent extends VacancyEvent {
 class GetMoreCandidateList extends VacancyEvent {}
 
 class GetCategoryListEvent extends VacancyEvent {}
+class GetMoreCategoryListEvent extends VacancyEvent {}
 
 class GetVacancyFilterEvent extends VacancyEvent {}
 

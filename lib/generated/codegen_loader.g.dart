@@ -309,7 +309,8 @@ class CodegenLoader extends AssetLoader{
   "free": "Бесплатны",
   "privacy_1": "Регистрируясь, вы соглашаетесь с",
   "privacy_2": " Условиями использования и Политикой конфиденциальности ",
-  "privacy_3": "вы подтверждаете свое согласие"
+  "privacy_3": "вы подтверждаете свое согласие",
+  "back_to_top": "Обратно наверх"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -606,7 +607,8 @@ static const Map<String,dynamic> uz = {
   "free": "Tekin",
   "privacy_1": "Ro‘yxatdan o‘tish orqali siz",
   "privacy_2": " Foydalanish shartlari va Maxfiylik siyosati ",
-  "privacy_3": "rozilik bildirasiz"
+  "privacy_3": "rozilik bildirasiz",
+  "back_to_top": "Tepaga qaytish"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

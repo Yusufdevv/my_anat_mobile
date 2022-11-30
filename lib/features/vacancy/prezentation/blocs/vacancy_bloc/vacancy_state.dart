@@ -29,6 +29,8 @@ class VacancyState extends Equatable {
   final List<String>? experienceKey;
   final List<int> districtList;
   final List<int> selectCategoryId;
+  final bool fetchMoreCategories;
+  final String? nextCategories;
 
   const VacancyState({
     required this.organizationNext,
@@ -55,6 +57,8 @@ class VacancyState extends Equatable {
     required this.categoryStatus,
     required this.filterStatus,
     required this.vacancyFilterList,
+    required this.fetchMoreCategories,
+    required this.nextCategories,
     this.salaryKey,
     this.experienceKey,
     this.districtList = const [],
@@ -78,8 +82,10 @@ class VacancyState extends Equatable {
     PaginatorStatus? paginatorStatusOrganization,
     List<VacancyListEntity>? organizationVacancyList,
     String? candidateNext,
+    String? nextCategories,
     PaginatorStatus? candidatePaginatorStatus,
     bool? fetchMoreCandidate,
+    bool? fetchMoreCategories,
     List<CandidateListEntity>? candidateList,
     FormzStatus? organizationStatus,
     List<CategoryListEntity>? categoryList,
@@ -97,19 +103,26 @@ class VacancyState extends Equatable {
         next: next,
         count: count ?? this.count,
         vacancyList: vacancyList ?? this.vacancyList,
-        topOrganizationStatus: topOrganizationStatus ?? this.topOrganizationStatus,
-        topOrganizationEntity: topOrganizationEntity ?? this.topOrganizationEntity,
+        topOrganizationStatus:
+            topOrganizationStatus ?? this.topOrganizationStatus,
+        topOrganizationEntity:
+            topOrganizationEntity ?? this.topOrganizationEntity,
         vacancyOptionStatus: vacancyOptionStatus ?? this.vacancyOptionStatus,
         vacancyOptionList: vacancyOptionList ?? this.vacancyOptionList,
-        organizationVacancyStatus: organizationVacancyStatus ?? this.organizationVacancyStatus,
-        fetchMoreOrganization: fetchMoreOrganization ?? this.fetchMoreOrganization,
-        paginatorStatusOrganization: paginatorStatusOrganization ?? this.paginatorStatusOrganization,
-        organizationVacancyList: organizationVacancyList ?? this.organizationVacancyList,
+        organizationVacancyStatus:
+            organizationVacancyStatus ?? this.organizationVacancyStatus,
+        fetchMoreOrganization:
+            fetchMoreOrganization ?? this.fetchMoreOrganization,
+        paginatorStatusOrganization:
+            paginatorStatusOrganization ?? this.paginatorStatusOrganization,
+        organizationVacancyList:
+            organizationVacancyList ?? this.organizationVacancyList,
         organizationCount: organizationCount ?? this.organizationCount,
         organizationNext: organizationNext ?? this.organizationNext,
         candidateNext: candidateNext,
         candidateList: candidateList ?? this.candidateList,
-        candidatePaginatorStatus: candidatePaginatorStatus ?? this.candidatePaginatorStatus,
+        candidatePaginatorStatus:
+            candidatePaginatorStatus ?? this.candidatePaginatorStatus,
         fetchMoreCandidate: fetchMoreCandidate ?? this.fetchMoreCandidate,
         organizationStatus: organizationStatus ?? this.organizationStatus,
         categoryList: categoryList ?? this.categoryList,
@@ -120,6 +133,8 @@ class VacancyState extends Equatable {
         experienceKey: experienceKey ?? this.experienceKey,
         districtList: districtList ?? this.districtList,
         selectCategoryId: selectCategoryId ?? this.selectCategoryId,
+        fetchMoreCategories: fetchMoreCategories ?? this.fetchMoreCategories,
+        nextCategories: nextCategories ?? this.nextCategories,
       );
 
   @override
@@ -151,5 +166,7 @@ class VacancyState extends Equatable {
         experienceKey,
         districtList,
         selectCategoryId,
+        nextCategories,
+        fetchMoreCategories,
       ];
 }

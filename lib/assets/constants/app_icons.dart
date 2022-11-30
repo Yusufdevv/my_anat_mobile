@@ -11,6 +11,7 @@ class AppIcons {
   static const bigImageError = 'assets/icons/global/big_image_error.svg';
   static const smallImageError = 'assets/icons/global/small_image_error.svg';
   static const book = 'assets/icons/magazine/book.svg';
+  static const arrowUp = 'assets/icons/magazine/arrow_up.svg';
 
   // MapScreen
   static const listIcon = 'assets/icons/map_screen/list_icon.svg';

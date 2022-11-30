@@ -450,7 +450,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   Future<GenericPagination<CategoryListModel>> getCategoryList(
       {String? next}) async {
     try {
-      final response = await dio.get('/vacancy/vacancy/specization/list/',
+      final response = await dio.get(next ?? '/vacancy/vacancy/specization/list/',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {
@@ -458,6 +458,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
                           'Token ${StorageRepository.getString('token')}'
                     }
                   : {}));
+      print('next from datasource: $next');
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data,
             (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
