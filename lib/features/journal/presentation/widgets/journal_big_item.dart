@@ -27,38 +27,19 @@ class JournalBigItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 492,
-                  decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: CachedNetworkImage(
-                      width: double.infinity,
-                      imageUrl: journalEntity.image.middle,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: black.withOpacity(0.4),
-                    ),
-                    child: Text(
-                      MyFunctions.getPublishedDate(journalEntity.publishDate),
-                      style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ),
-              ],
+          children: [ Container(
+            height: 492,
+            decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImage(
+                width: double.infinity,
+                imageUrl: journalEntity.image.middle,
+                fit: BoxFit.cover,
+              ),
             ),
+          ),
+
             const SizedBox(height: 12),
             Text(journalEntity.redaction,
                 style: Theme.of(context).textTheme.headline1!.copyWith(

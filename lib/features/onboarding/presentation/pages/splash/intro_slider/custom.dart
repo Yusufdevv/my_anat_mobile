@@ -123,9 +123,8 @@ class _CustomBuilderAnimationState extends State<CustomBuilderAnimation> {
         child: Transform.rotate(
           angle: rotate(value) ?? 0,
           child: SizedBox(
-            height: deviceHeight < 700
-                ? Curves.linear.transform(value) * deviceWidth * 0.8
-                : Curves.linear.transform(value) * deviceWidth,
+            height: Curves.linear.transform(value) * deviceHeight * 0.47,
+            width: Curves.linear.transform(value) * deviceWidth * 0.47,
             child: index == widget.currentPage
                 ? Column(
                     children: <Widget>[

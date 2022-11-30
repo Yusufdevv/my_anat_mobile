@@ -38,14 +38,6 @@ class _TabNavigatorState extends State<TabNavigator>
         return {
           TabNavigatorRoutes.root: (context) => const VacancyScreen(),
         };
-      case NavItemEnum.website:
-        return {
-          TabNavigatorRoutes.root: (context) => const WebViewScreen(
-                page: '',
-                url: 'https://anatomica.uz/',
-            showAppBar: false,
-              ),
-        };
       case NavItemEnum.account:
         return {
           TabNavigatorRoutes.root: (context) => const ProfileScreen(),

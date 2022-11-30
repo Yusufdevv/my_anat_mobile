@@ -14,6 +14,10 @@ class EditProfileEvent with _$EditProfileEvent {
 
   factory EditProfileEvent.changeImage(String image) = _ChangeImage;
 
+  factory EditProfileEvent.editPhone({required String phone}) = _EditPhone;
+
+  factory EditProfileEvent.editEmail({required String email}) = _EditEmail;
+
   factory EditProfileEvent.saveData({required ValueChanged<String> onError, required VoidCallback onSuccess}) =
       _SaveData;
 }

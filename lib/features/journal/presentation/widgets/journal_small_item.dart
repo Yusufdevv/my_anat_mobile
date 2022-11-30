@@ -59,7 +59,7 @@ class MagazineSmallItem extends StatelessWidget {
                 ),
               } else ...{
                 Text(
-                  LocaleKeys.free.tr(),
+                  !journalEntity.isPremium ? LocaleKeys.free.tr() : journalEntity.isBought ? LocaleKeys.bought.tr(): '',
                   style: Theme.of(context)
                       .textTheme
                       .headline3!
@@ -73,6 +73,9 @@ class MagazineSmallItem extends StatelessWidget {
               return WButton(
                 margin: const EdgeInsets.only(top: 12),
                 onTap: () {
+                  print('journalEntity.isBought:${journalEntity.isBought}');
+                  print('journalEntity.isPremium:${journalEntity.isPremium}');
+                  print('state.status:${state.status}');
                   if (journalEntity.isBought || !journalEntity.isPremium) {
                     Navigator.of(context, rootNavigator: true).push(
                       fade(
@@ -83,7 +86,7 @@ class MagazineSmallItem extends StatelessWidget {
                       ),
                     );
                   } else {
-                    if (state.status == AuthenticationStatus.authenticated) {
+                    if (state.status == AuthenticationStatus.unauthenticated) {
                       showDialog(
                         context: context,
                         builder: (ctx) => BuyDialog(

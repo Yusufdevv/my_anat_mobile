@@ -289,5 +289,9 @@
   "website": "Sayt",
   "photos": "Rasmlar",
   "all_conditions" : "Barcha qulayliklar",
-  "free" : "Tekin"
+  "bought" : "Sotib olingan",
+  "free" : "Tekin",
+  "privacy_1" : "Ro‘yxatdan o‘tish orqali siz",
+  "privacy_2" : " Foydalanish shartlari va Maxfiylik siyosati ",
+  "privacy_3" : "rozilik bildirasiz"
 }

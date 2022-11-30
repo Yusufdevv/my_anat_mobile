@@ -16,6 +16,8 @@ abstract class ProfileRepository {
   Future<Either<Failure, void>> deleteAccount();
 
   Future<Either<Failure, void>> editProfile(Map<String, dynamic> data);
+  Future<Either<Failure, String>> sendCodeToPhone({required String phone});
+  Future<Either<Failure, String>> sendCodeToEmail({required String email});
 
   Future<Either<Failure, void>> changePassword({required String currentPassword, required String newPassword});
 

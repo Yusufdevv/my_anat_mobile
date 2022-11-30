@@ -14,6 +14,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/profile/data/repositories/profile_impl.dart';
 import 'package:anatomica/features/profile/domain/usecases/edit_profile.dart';
+import 'package:anatomica/features/profile/domain/usecases/send_code_to_email_usecase.dart';
+import 'package:anatomica/features/profile/domain/usecases/send_code_to_phone_usecase.dart';
 import 'package:anatomica/features/profile/domain/usecases/upload_img.dart';
 import 'package:anatomica/features/profile/presentation/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:anatomica/features/profile/presentation/blocs/profile_bloc/profile_bloc.dart';
@@ -78,9 +80,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         text: MyFunctions.formatPhoneForInput(widget.userEntity.phoneNumber));
     emailController = TextEditingController(text: widget.userEntity.email);
     editBloc = EditProfileBloc(
-        EditProfileUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
-        UploadImageUseCase(
-            profileRepository: serviceLocator<ProfileRepositoryImpl>()));
+      EditProfileUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
+      UploadImageUseCase(
+        profileRepository: serviceLocator<ProfileRepositoryImpl>(),
+      ),
+      SendCodeToEmailUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
+      SendCodeToPhoneUseCase(repository: serviceLocator<ProfileRepositoryImpl>())
+    );
     _localUser = widget.userEntity;
   }
 
@@ -136,6 +142,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   text: LocaleKeys.save.tr(),
                   isLoading: state.status.isSubmissionInProgress,
                   onTap: () {
+                    if (phoneController.text.replaceAll(' ', '') !=
+                        widget.userEntity.phoneNumber.replaceAll('+998', '')) {}
                     editBloc.add(EditProfileEvent.saveData(onSuccess: () {
                       widget.profileBloc.add(
                         UpdateProfileEvent(

@@ -24,6 +24,8 @@ mixin _$EditProfileEvent {
     required TResult Function(String text) changeEmail,
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -37,6 +39,8 @@ mixin _$EditProfileEvent {
     TResult? Function(String text)? changeEmail,
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) =>
@@ -49,6 +53,8 @@ mixin _$EditProfileEvent {
     TResult Function(String text)? changeEmail,
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -62,6 +68,8 @@ mixin _$EditProfileEvent {
     required TResult Function(_ChangeEmail value) changeEmail,
     required TResult Function(_ChangeDate value) changeDate,
     required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
     required TResult Function(_SaveData value) saveData,
   }) =>
       throw _privateConstructorUsedError;
@@ -73,6 +81,8 @@ mixin _$EditProfileEvent {
     TResult? Function(_ChangeEmail value)? changeEmail,
     TResult? Function(_ChangeDate value)? changeDate,
     TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
     TResult? Function(_SaveData value)? saveData,
   }) =>
       throw _privateConstructorUsedError;
@@ -84,6 +94,8 @@ mixin _$EditProfileEvent {
     TResult Function(_ChangeEmail value)? changeEmail,
     TResult Function(_ChangeDate value)? changeDate,
     TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) =>
@@ -178,6 +190,8 @@ class _$_ChangeName implements _ChangeName {
     required TResult Function(String text) changeEmail,
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -194,6 +208,8 @@ class _$_ChangeName implements _ChangeName {
     TResult? Function(String text)? changeEmail,
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -209,6 +225,8 @@ class _$_ChangeName implements _ChangeName {
     TResult Function(String text)? changeEmail,
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -228,6 +246,8 @@ class _$_ChangeName implements _ChangeName {
     required TResult Function(_ChangeEmail value) changeEmail,
     required TResult Function(_ChangeDate value) changeDate,
     required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeName(this);
@@ -242,6 +262,8 @@ class _$_ChangeName implements _ChangeName {
     TResult? Function(_ChangeEmail value)? changeEmail,
     TResult? Function(_ChangeDate value)? changeDate,
     TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeName?.call(this);
@@ -256,6 +278,8 @@ class _$_ChangeName implements _ChangeName {
     TResult Function(_ChangeEmail value)? changeEmail,
     TResult Function(_ChangeDate value)? changeDate,
     TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -345,6 +369,8 @@ class _$_ChangeSurname implements _ChangeSurname {
     required TResult Function(String text) changeEmail,
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -361,6 +387,8 @@ class _$_ChangeSurname implements _ChangeSurname {
     TResult? Function(String text)? changeEmail,
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -376,6 +404,8 @@ class _$_ChangeSurname implements _ChangeSurname {
     TResult Function(String text)? changeEmail,
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -395,6 +425,8 @@ class _$_ChangeSurname implements _ChangeSurname {
     required TResult Function(_ChangeEmail value) changeEmail,
     required TResult Function(_ChangeDate value) changeDate,
     required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeSurname(this);
@@ -409,6 +441,8 @@ class _$_ChangeSurname implements _ChangeSurname {
     TResult? Function(_ChangeEmail value)? changeEmail,
     TResult? Function(_ChangeDate value)? changeDate,
     TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeSurname?.call(this);
@@ -423,6 +457,8 @@ class _$_ChangeSurname implements _ChangeSurname {
     TResult Function(_ChangeEmail value)? changeEmail,
     TResult Function(_ChangeDate value)? changeDate,
     TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -513,6 +549,8 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     required TResult Function(String text) changeEmail,
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -529,6 +567,8 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     TResult? Function(String text)? changeEmail,
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -544,6 +584,8 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     TResult Function(String text)? changeEmail,
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -563,6 +605,8 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     required TResult Function(_ChangeEmail value) changeEmail,
     required TResult Function(_ChangeDate value) changeDate,
     required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changePhoneNumber(this);
@@ -577,6 +621,8 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     TResult? Function(_ChangeEmail value)? changeEmail,
     TResult? Function(_ChangeDate value)? changeDate,
     TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changePhoneNumber?.call(this);
@@ -591,6 +637,8 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     TResult Function(_ChangeEmail value)? changeEmail,
     TResult Function(_ChangeDate value)? changeDate,
     TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -680,6 +728,8 @@ class _$_ChangeEmail implements _ChangeEmail {
     required TResult Function(String text) changeEmail,
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -696,6 +746,8 @@ class _$_ChangeEmail implements _ChangeEmail {
     TResult? Function(String text)? changeEmail,
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -711,6 +763,8 @@ class _$_ChangeEmail implements _ChangeEmail {
     TResult Function(String text)? changeEmail,
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -730,6 +784,8 @@ class _$_ChangeEmail implements _ChangeEmail {
     required TResult Function(_ChangeEmail value) changeEmail,
     required TResult Function(_ChangeDate value) changeDate,
     required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeEmail(this);
@@ -744,6 +800,8 @@ class _$_ChangeEmail implements _ChangeEmail {
     TResult? Function(_ChangeEmail value)? changeEmail,
     TResult? Function(_ChangeDate value)? changeDate,
     TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeEmail?.call(this);
@@ -758,6 +816,8 @@ class _$_ChangeEmail implements _ChangeEmail {
     TResult Function(_ChangeEmail value)? changeEmail,
     TResult Function(_ChangeDate value)? changeDate,
     TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -847,6 +907,8 @@ class _$_ChangeDate implements _ChangeDate {
     required TResult Function(String text) changeEmail,
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -863,6 +925,8 @@ class _$_ChangeDate implements _ChangeDate {
     TResult? Function(String text)? changeEmail,
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -878,6 +942,8 @@ class _$_ChangeDate implements _ChangeDate {
     TResult Function(String text)? changeEmail,
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -897,6 +963,8 @@ class _$_ChangeDate implements _ChangeDate {
     required TResult Function(_ChangeEmail value) changeEmail,
     required TResult Function(_ChangeDate value) changeDate,
     required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeDate(this);
@@ -911,6 +979,8 @@ class _$_ChangeDate implements _ChangeDate {
     TResult? Function(_ChangeEmail value)? changeEmail,
     TResult? Function(_ChangeDate value)? changeDate,
     TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeDate?.call(this);
@@ -925,6 +995,8 @@ class _$_ChangeDate implements _ChangeDate {
     TResult Function(_ChangeEmail value)? changeEmail,
     TResult Function(_ChangeDate value)? changeDate,
     TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -1014,6 +1086,8 @@ class _$_ChangeImage implements _ChangeImage {
     required TResult Function(String text) changeEmail,
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -1030,6 +1104,8 @@ class _$_ChangeImage implements _ChangeImage {
     TResult? Function(String text)? changeEmail,
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -1045,6 +1121,8 @@ class _$_ChangeImage implements _ChangeImage {
     TResult Function(String text)? changeEmail,
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -1064,6 +1142,8 @@ class _$_ChangeImage implements _ChangeImage {
     required TResult Function(_ChangeEmail value) changeEmail,
     required TResult Function(_ChangeDate value) changeDate,
     required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeImage(this);
@@ -1078,6 +1158,8 @@ class _$_ChangeImage implements _ChangeImage {
     TResult? Function(_ChangeEmail value)? changeEmail,
     TResult? Function(_ChangeDate value)? changeDate,
     TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeImage?.call(this);
@@ -1092,6 +1174,8 @@ class _$_ChangeImage implements _ChangeImage {
     TResult Function(_ChangeEmail value)? changeEmail,
     TResult Function(_ChangeDate value)? changeDate,
     TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -1108,6 +1192,364 @@ abstract class _ChangeImage implements EditProfileEvent {
   String get image;
   @JsonKey(ignore: true)
   _$$_ChangeImageCopyWith<_$_ChangeImage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EditPhoneCopyWith<$Res> {
+  factory _$$_EditPhoneCopyWith(
+          _$_EditPhone value, $Res Function(_$_EditPhone) then) =
+      __$$_EditPhoneCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String phone});
+}
+
+/// @nodoc
+class __$$_EditPhoneCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_EditPhone>
+    implements _$$_EditPhoneCopyWith<$Res> {
+  __$$_EditPhoneCopyWithImpl(
+      _$_EditPhone _value, $Res Function(_$_EditPhone) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? phone = null,
+  }) {
+    return _then(_$_EditPhone(
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EditPhone implements _EditPhone {
+  _$_EditPhone({required this.phone});
+
+  @override
+  final String phone;
+
+  @override
+  String toString() {
+    return 'EditProfileEvent.editPhone(phone: $phone)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EditPhone &&
+            (identical(other.phone, phone) || other.phone == phone));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, phone);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EditPhoneCopyWith<_$_EditPhone> get copyWith =>
+      __$$_EditPhoneCopyWithImpl<_$_EditPhone>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) changeName,
+    required TResult Function(String text) changeSurname,
+    required TResult Function(String text) changePhoneNumber,
+    required TResult Function(String text) changeEmail,
+    required TResult Function(String text) changeDate,
+    required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
+    required TResult Function(
+            ValueChanged<String> onError, VoidCallback onSuccess)
+        saveData,
+  }) {
+    return editPhone(phone);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+        saveData,
+  }) {
+    return editPhone?.call(phone);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? changeName,
+    TResult Function(String text)? changeSurname,
+    TResult Function(String text)? changePhoneNumber,
+    TResult Function(String text)? changeEmail,
+    TResult Function(String text)? changeDate,
+    TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
+    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+        saveData,
+    required TResult orElse(),
+  }) {
+    if (editPhone != null) {
+      return editPhone(phone);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ChangeName value) changeName,
+    required TResult Function(_ChangeSurname value) changeSurname,
+    required TResult Function(_ChangePhoneNumber value) changePhoneNumber,
+    required TResult Function(_ChangeEmail value) changeEmail,
+    required TResult Function(_ChangeDate value) changeDate,
+    required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_SaveData value) saveData,
+  }) {
+    return editPhone(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_SaveData value)? saveData,
+  }) {
+    return editPhone?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ChangeName value)? changeName,
+    TResult Function(_ChangeSurname value)? changeSurname,
+    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult Function(_ChangeEmail value)? changeEmail,
+    TResult Function(_ChangeDate value)? changeDate,
+    TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_SaveData value)? saveData,
+    required TResult orElse(),
+  }) {
+    if (editPhone != null) {
+      return editPhone(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EditPhone implements EditProfileEvent {
+  factory _EditPhone({required final String phone}) = _$_EditPhone;
+
+  String get phone;
+  @JsonKey(ignore: true)
+  _$$_EditPhoneCopyWith<_$_EditPhone> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EditEmailCopyWith<$Res> {
+  factory _$$_EditEmailCopyWith(
+          _$_EditEmail value, $Res Function(_$_EditEmail) then) =
+      __$$_EditEmailCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String email});
+}
+
+/// @nodoc
+class __$$_EditEmailCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_EditEmail>
+    implements _$$_EditEmailCopyWith<$Res> {
+  __$$_EditEmailCopyWithImpl(
+      _$_EditEmail _value, $Res Function(_$_EditEmail) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+  }) {
+    return _then(_$_EditEmail(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EditEmail implements _EditEmail {
+  _$_EditEmail({required this.email});
+
+  @override
+  final String email;
+
+  @override
+  String toString() {
+    return 'EditProfileEvent.editEmail(email: $email)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EditEmail &&
+            (identical(other.email, email) || other.email == email));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, email);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EditEmailCopyWith<_$_EditEmail> get copyWith =>
+      __$$_EditEmailCopyWithImpl<_$_EditEmail>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) changeName,
+    required TResult Function(String text) changeSurname,
+    required TResult Function(String text) changePhoneNumber,
+    required TResult Function(String text) changeEmail,
+    required TResult Function(String text) changeDate,
+    required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
+    required TResult Function(
+            ValueChanged<String> onError, VoidCallback onSuccess)
+        saveData,
+  }) {
+    return editEmail(email);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+        saveData,
+  }) {
+    return editEmail?.call(email);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? changeName,
+    TResult Function(String text)? changeSurname,
+    TResult Function(String text)? changePhoneNumber,
+    TResult Function(String text)? changeEmail,
+    TResult Function(String text)? changeDate,
+    TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
+    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+        saveData,
+    required TResult orElse(),
+  }) {
+    if (editEmail != null) {
+      return editEmail(email);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ChangeName value) changeName,
+    required TResult Function(_ChangeSurname value) changeSurname,
+    required TResult Function(_ChangePhoneNumber value) changePhoneNumber,
+    required TResult Function(_ChangeEmail value) changeEmail,
+    required TResult Function(_ChangeDate value) changeDate,
+    required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_SaveData value) saveData,
+  }) {
+    return editEmail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_SaveData value)? saveData,
+  }) {
+    return editEmail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ChangeName value)? changeName,
+    TResult Function(_ChangeSurname value)? changeSurname,
+    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult Function(_ChangeEmail value)? changeEmail,
+    TResult Function(_ChangeDate value)? changeDate,
+    TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_SaveData value)? saveData,
+    required TResult orElse(),
+  }) {
+    if (editEmail != null) {
+      return editEmail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EditEmail implements EditProfileEvent {
+  factory _EditEmail({required final String email}) = _$_EditEmail;
+
+  String get email;
+  @JsonKey(ignore: true)
+  _$$_EditEmailCopyWith<_$_EditEmail> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1190,6 +1632,8 @@ class _$_SaveData implements _SaveData {
     required TResult Function(String text) changeEmail,
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
+    required TResult Function(String phone) editPhone,
+    required TResult Function(String email) editEmail,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -1206,6 +1650,8 @@ class _$_SaveData implements _SaveData {
     TResult? Function(String text)? changeEmail,
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
+    TResult? Function(String phone)? editPhone,
+    TResult? Function(String email)? editEmail,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -1221,6 +1667,8 @@ class _$_SaveData implements _SaveData {
     TResult Function(String text)? changeEmail,
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
+    TResult Function(String phone)? editPhone,
+    TResult Function(String email)? editEmail,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -1240,6 +1688,8 @@ class _$_SaveData implements _SaveData {
     required TResult Function(_ChangeEmail value) changeEmail,
     required TResult Function(_ChangeDate value) changeDate,
     required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
     required TResult Function(_SaveData value) saveData,
   }) {
     return saveData(this);
@@ -1254,6 +1704,8 @@ class _$_SaveData implements _SaveData {
     TResult? Function(_ChangeEmail value)? changeEmail,
     TResult? Function(_ChangeDate value)? changeDate,
     TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return saveData?.call(this);
@@ -1268,6 +1720,8 @@ class _$_SaveData implements _SaveData {
     TResult Function(_ChangeEmail value)? changeEmail,
     TResult Function(_ChangeDate value)? changeDate,
     TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {

@@ -129,4 +129,32 @@ class ProfileRepositoryImpl extends ProfileRepository {
       return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> sendCodeToEmail({required String email}) async{
+    try {
+      final result = await profileDatasource.sendCodeToEmail(email: email);
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> sendCodeToPhone({required String phone}) async {
+    try {
+      final result = await profileDatasource.sendCodeToPhone(phoneNumber: phone);
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
 }

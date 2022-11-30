@@ -35,6 +35,7 @@ class IntroSlider extends StatefulWidget {
   final double? sizeDot;
   final Size? size;
   final ScrollbarBehavior? verticalScrollbarBehavior;
+
   const IntroSlider({
     super.key,
     required this.product,
@@ -64,7 +65,8 @@ class IntroSlider extends StatefulWidget {
   State<IntroSlider> createState() => _IntroSliderState();
 }
 
-class _IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
+class _IntroSliderState extends State<IntroSlider>
+    with SingleTickerProviderStateMixin {
   bool isShowDotIndicator = true;
   double sizeDot = 8.0;
   late PageController _pageController;
@@ -148,7 +150,8 @@ class _IntroSliderState extends State<IntroSlider> with SingleTickerProviderStat
                           },
                           physics: const BouncingScrollPhysics(),
                           controller: _pageController,
-                          itemBuilder: (context, index) => CustomBuilderAnimation(
+                          itemBuilder: (context, index) =>
+                              CustomBuilderAnimation(
                             index: index,
                             products: widget.product,
                             pageController: _pageController,
@@ -163,7 +166,7 @@ class _IntroSliderState extends State<IntroSlider> with SingleTickerProviderStat
             ],
           ),
           Positioned(
-            top: 44,
+            top: MediaQuery.of(context).padding.top,
             left: 24,
             right: 24,
             child: SafeArea(
@@ -176,55 +179,55 @@ class _IntroSliderState extends State<IntroSlider> with SingleTickerProviderStat
             ),
           ),
           Positioned(
-            bottom: 50,
+            bottom: MediaQuery.of(context).padding.bottom + 16,
             left: 24.0,
             right: 24.0,
-            child: Stack(
-              clipBehavior: Clip.none,
+            child: Column(
               children: [
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  top: -100,
-                  child: Column(
-                    children: [
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
-                        child: _currentPage == 3
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    AppIcons.diamond,
-                                    color: primary,
-                                    height: 24,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Premium',
-                                    style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20),
-                                  )
-                                ],
-                              )
-                            : Text(
-                                widget.product[_currentPage].label,
-                                key: UniqueKey(),
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20, color: textColor),
-                              ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        widget.product[_currentPage].subLabel,
-                        key: UniqueKey(),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 14, color: textColor),
-                      ),
-                    ],
-                  ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: _currentPage == 3
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              AppIcons.diamond,
+                              color: primary,
+                              height: 24,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Premium',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline4!
+                                  .copyWith(fontSize: 20),
+                            )
+                          ],
+                        )
+                      : Text(
+                          widget.product[_currentPage].label,
+                          key: UniqueKey(),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(fontSize: 20, color: textColor),
+                        ),
                 ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  widget.product[_currentPage].subLabel,
+                  key: UniqueKey(),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(fontSize: 14, color: textColor),
+                ),
+                const SizedBox(height: 20),
                 Row(
                   children: <Widget>[
                     Flexible(
@@ -242,14 +245,18 @@ class _IntroSliderState extends State<IntroSlider> with SingleTickerProviderStat
                                     behavior: HitTestBehavior.opaque,
                                     onTap: () {
                                       _pageController.previousPage(
-                                          duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+                                          duration:
+                                              const Duration(milliseconds: 200),
+                                          curve: Curves.easeIn);
                                     },
                                     child: Container(
                                       height: 40,
                                       width: 40,
                                       alignment: Alignment.center,
-                                      decoration:
-                                          BoxDecoration(color: unFollowButton.withOpacity(0.1), shape: BoxShape.circle),
+                                      decoration: BoxDecoration(
+                                          color:
+                                              unFollowButton.withOpacity(0.1),
+                                          shape: BoxShape.circle),
                                       child: SvgPicture.asset(
                                         AppIcons.arrowLeft,
                                         color: primary,
@@ -265,15 +272,19 @@ class _IntroSliderState extends State<IntroSlider> with SingleTickerProviderStat
                           onTap: () async {
                             if (_currentPage < 3) {
                               _pageController.nextPage(
-                                  duration: const Duration(milliseconds: 200), curve: Curves.linear);
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.linear);
                             } else {
-                              await StorageRepository.putBool(key: 'onboarding', value: true);
-                              Navigator.of(context).pushReplacement(fade(page: const HomeScreen()));
+                              await StorageRepository.putBool(
+                                  key: 'onboarding', value: true);
+                              Navigator.of(context).pushReplacement(
+                                  fade(page: const HomeScreen()));
                             }
                           },
                           child: Container(
                             alignment: Alignment.center,
-                            width: widget.widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
+                            width: widget.widthDoneBtn ??
+                                MediaQuery.of(context).size.width / 4,
                             height: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
@@ -309,26 +320,30 @@ class _IntroSliderState extends State<IntroSlider> with SingleTickerProviderStat
   }
 
   Widget buildDoneButton() {
-    return GestureDetector(onTap: () => widget.onDonePress, child: widget.renderDoneBtn);
+    return GestureDetector(
+        onTap: () => widget.onDonePress, child: widget.renderDoneBtn);
   }
 
   Widget buildNextButton() {
     return GestureDetector(
       onTap: () {
-        _pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+        _pageController.nextPage(
+            duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
       },
       child: widget.renderNextBtn,
     );
   }
 
   void jumpToPage(int index) {
-    _pageController.animateToPage(index, duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+    _pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
   }
 }
 
 class MyBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
   }
 }

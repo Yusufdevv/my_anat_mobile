@@ -10,6 +10,7 @@ class EditProfileState extends Equatable {
   final String phoneNumber;
   final String imageUrl;
   final String birthDate;
+  final String signature;
 
   const EditProfileState({
     required this.status,
@@ -21,6 +22,7 @@ class EditProfileState extends Equatable {
     required this.phoneNumber,
     required this.imageUrl,
     required this.birthDate,
+    required this.signature,
   });
 
   EditProfileState copyWith({
@@ -33,6 +35,7 @@ class EditProfileState extends Equatable {
     String? phoneNumber,
     String? imageUrl,
     String? birthDate,
+    String? signature,
   }) =>
       EditProfileState(
         userName: userName ?? this.userName,
@@ -44,6 +47,7 @@ class EditProfileState extends Equatable {
         phoneNumber: phoneNumber ?? this.phoneNumber,
         imageUrl: imageUrl ?? this.imageUrl,
         birthDate: birthDate ?? this.birthDate,
+        signature: signature ?? this.signature,
       );
 
   @override
@@ -56,6 +60,6 @@ class EditProfileState extends Equatable {
         userName,
         phoneNumber,
         imageUrl,
-        birthDate,
+        birthDate,signature,
       ];
 }

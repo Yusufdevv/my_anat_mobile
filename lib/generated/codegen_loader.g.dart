@@ -305,7 +305,11 @@ class CodegenLoader extends AssetLoader{
   "website": "Сайт",
   "photos": "Фотографии",
   "all_conditions": "Все удобства",
-  "free": "Купленный"
+  "bought": "Купленный",
+  "free": "Бесплатны",
+  "privacy_1": "Регистрируясь, вы соглашаетесь с",
+  "privacy_2": " Условиями использования и Политикой конфиденциальности ",
+  "privacy_3": "вы подтверждаете свое согласие"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -598,7 +602,11 @@ static const Map<String,dynamic> uz = {
   "website": "Sayt",
   "photos": "Rasmlar",
   "all_conditions": "Barcha qulayliklar",
-  "free": "Tekin"
+  "bought": "Sotib olingan",
+  "free": "Tekin",
+  "privacy_1": "Ro‘yxatdan o‘tish orqali siz",
+  "privacy_2": " Foydalanish shartlari va Maxfiylik siyosati ",
+  "privacy_3": "rozilik bildirasiz"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

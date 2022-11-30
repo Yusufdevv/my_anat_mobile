@@ -291,6 +291,10 @@ abstract class  LocaleKeys {
   static const website = 'website';
   static const photos = 'photos';
   static const all_conditions = 'all_conditions';
+  static const bought = 'bought';
   static const free = 'free';
+  static const privacy_1 = 'privacy_1';
+  static const privacy_2 = 'privacy_2';
+  static const privacy_3 = 'privacy_3';
 
 }

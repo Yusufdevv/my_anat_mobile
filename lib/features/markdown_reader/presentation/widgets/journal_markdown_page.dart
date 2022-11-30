@@ -60,7 +60,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
                     r'(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'))) {
               return NavigationDecision.navigate;
             } else {
-              launchUrlString(request.url);
+              launchUrlString(request.url, mode: LaunchMode.externalApplication);
               return NavigationDecision.prevent;
             }
           },
