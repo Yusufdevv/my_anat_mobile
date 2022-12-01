@@ -20,6 +20,7 @@ class JournalPagesBloc extends Bloc<JournalPagesEvent, JournalPagesState> {
     on<GetJournalPages>((event, emit) async {
       emit(state.copyWith(getJournalPagesStatus: FormzStatus.submissionInProgress, slug: event.slug));
       final result = await _getJournalPagesUseCase.call(JournalPagesParams(slug: event.slug));
+
       if (result.isRight) {
         emit(
           state.copyWith(

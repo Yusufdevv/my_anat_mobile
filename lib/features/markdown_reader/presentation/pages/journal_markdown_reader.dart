@@ -36,7 +36,8 @@ class JournalMarkdownPageReader extends StatefulWidget {
       _JournalMarkdownPageReaderState();
 }
 
-class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
+class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
+    with TickerProviderStateMixin {
   bool showController = false;
   bool showContents = false;
   bool showTableOfContents = false;
@@ -44,9 +45,11 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
   late PageController _pageController;
   late ItemScrollController _itemScrollController;
 
+
   @override
   void initState() {
     super.initState();
+
     _pageController = PageController();
     _itemScrollController = ItemScrollController();
   }
@@ -87,7 +90,10 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
               ),
               leading: WScaleAnimation(
                 onTap: () {
-                  if (showController || showSettings || showContents || showTableOfContents) {
+                  if (showController ||
+                      showSettings ||
+                      showContents ||
+                      showTableOfContents) {
                     setState(() {
                       showContents = false;
                       showTableOfContents = false;
@@ -97,7 +103,6 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                   } else {
                     Navigator.of(context).pop();
                   }
-
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
@@ -226,13 +231,22 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                                         child: CupertinoActivityIndicator(),
                                       );
                                     }
-                                    return JournalMarkdownPage(
-                                      onTap: () {
-                                        setState(() {
-                                          showController = false;
-                                        });
+                                    return BlocBuilder<ReaderControllerBloc,
+                                        ReaderControllerState>(
+
+                                      builder: (context, state) {
+print('isRussian is ${state.isRussian}');
+                                        return JournalMarkdownPage(
+                                          onTap: () {
+                                            setState(() {
+                                              showController = false;
+                                            });
+                                          },
+                                          data: state.isRussian
+                                              ? pages[index].contentRu
+                                              : pages[index].contentUz,
+                                        );
                                       },
-                                      data: pages[index].content,
                                     );
                                   },
                                   itemCount: state.fetchMore
@@ -252,7 +266,9 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> {
                         top: 0,
                         right: 0,
                         child: AnimatedCrossFade(
-                          secondChild: const ReaderController(),
+                          secondChild: const ReaderController(
+
+                          ),
                           duration: const Duration(milliseconds: 150),
                           crossFadeState: showSettings
                               ? CrossFadeState.showSecond
