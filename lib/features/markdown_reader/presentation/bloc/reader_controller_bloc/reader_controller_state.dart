@@ -10,8 +10,11 @@ class ReaderControllerState extends Equatable {
   final String changedDataAsWebPage;
   final String jsFunction;
   final int journalIndex;
+  final bool isRussian;
+
   const ReaderControllerState({
     this.selectedColor = white,
+    this.isRussian = true,
     this.selectedTextColor = textColor,
     this.selectedFontFamily = 'Averta CY',
     this.fontSizePercentage = 16,
@@ -21,8 +24,10 @@ class ReaderControllerState extends Equatable {
     this.jsFunction = '',
     this.journalIndex = 0,
   });
+
   ReaderControllerState copyWith({
     Color? selectedColor,
+    bool? isRussian,
     Color? selectedTextColor,
     String? selectedFontFamily,
     String? changedWebPage,
@@ -33,6 +38,7 @@ class ReaderControllerState extends Equatable {
     int? journalIndex,
   }) =>
       ReaderControllerState(
+        isRussian: isRussian ?? this.isRussian,
         selectedColor: selectedColor ?? this.selectedColor,
         changedDataAsWebPage: changedDataAsWebPage ?? this.changedDataAsWebPage,
         colorName: colorName ?? this.colorName,
@@ -47,6 +53,7 @@ class ReaderControllerState extends Equatable {
   @override
   List<Object?> get props => [
         selectedColor,
+        isRussian,
         selectedTextColor,
         selectedFontFamily,
         fontSizePercentage,

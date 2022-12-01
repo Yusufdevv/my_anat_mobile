@@ -9,7 +9,8 @@ class JournalPageModel extends JournalPageEntity {
     required super.journal,
     required super.preview,
     required super.page,
-    required super.content,
+    required super.contentUz,
+    required super.contentRu,
     required super.imgContent,
   });
   factory JournalPageModel.fromJson(Map<String, dynamic> json) => _$JournalPageModelFromJson(json);

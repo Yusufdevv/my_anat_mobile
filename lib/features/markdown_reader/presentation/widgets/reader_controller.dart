@@ -3,11 +3,15 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/markdown_reader/domain/entities/named_color_entity.dart';
 import 'package:anatomica/features/markdown_reader/presentation/bloc/reader_controller_bloc/reader_controller_bloc.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/change_font_size_button.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ReaderController extends StatefulWidget {
+
   const ReaderController({
+
     Key? key,
   }) : super(key: key);
 
@@ -55,44 +59,47 @@ class _ReaderControllerState extends State<ReaderController> {
               ),
               child: Column(
                 children: [
-                  // Container(
-                  //   height: 40,
-                  //   margin: const EdgeInsets.all(8),
-                  //   decoration: BoxDecoration(
-                  //     color: grey.withOpacity(0.1),
-                  //     borderRadius: BorderRadius.circular(8),
-                  //   ),
-                  //   child: TabBar(
-                  //     physics: const NeverScrollableScrollPhysics(),
-                  //     padding: const EdgeInsets.all(4),
-                  //     indicatorColor: white,
-                  //     indicator: BoxDecoration(
-                  //       color: white,
-                  //       boxShadow: [
-                  //         BoxShadow(
-                  //           offset: const Offset(0, 4),
-                  //           blurRadius: 20,
-                  //           color: grey.withOpacity(0.04),
-                  //         ),
-                  //       ],
-                  //       borderRadius: BorderRadius.circular(6),
-                  //     ),
-                  //     indicatorPadding: EdgeInsets.zero,
-                  //     indicatorWeight: 0,
-                  //     labelStyle: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 12, color: textColor),
-                  //     labelColor: textColor,
-                  //     unselectedLabelColor: state.selectedTextColor,
-                  //     onTap: (index) {},
-                  //     tabs: [
-                  //       Tab(
-                  //         text: LocaleKeys.rus.tr(),
-                  //       ),
-                  //       Tab(
-                  //         text: LocaleKeys.uzb.tr(),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  Container(
+                    height: 40,
+                    margin: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: grey.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TabBar(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.all(4),
+                      indicatorColor: white,
+                      indicator: BoxDecoration(
+                        color: white,
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 4),
+                            blurRadius: 20,
+                            color: grey.withOpacity(0.04),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      indicatorPadding: EdgeInsets.zero,
+                      indicatorWeight: 0,
+                      labelStyle: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 12, color: textColor),
+                      labelColor: textColor,
+                      unselectedLabelColor: state.selectedTextColor,
+                      onTap: (index) {
+                        print(index.toString()+'isIndex');
+                      context.read<ReaderControllerBloc>().add(ChangeReaderLanguage(isRussian: index==0));
+                      },
+                      tabs: [
+                        Tab(
+                          text: LocaleKeys.rus.tr(),
+                        ),
+                        Tab(
+                          text: LocaleKeys.uzb.tr(),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   Column(
                     mainAxisSize: MainAxisSize.min,
