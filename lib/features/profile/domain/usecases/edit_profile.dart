@@ -10,7 +10,6 @@ class EditProfileUseCase extends UseCase<void, EditProfileParams> {
 
   @override
   Future<Either<Failure, void>> call(params) async {
-    print('call edit profile usecase');
     return await repository.editProfile(params.data);
   }
 }

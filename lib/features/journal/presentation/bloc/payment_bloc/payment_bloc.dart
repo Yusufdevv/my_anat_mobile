@@ -70,7 +70,6 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       }
     });
     on<OrderCreateJournal>((event, emit) async {
-      print('come to journal order create');
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateJournalUseCase.call(OrderCreateParams(
         id: event.journalId,

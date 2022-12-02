@@ -85,7 +85,6 @@ class DeleteCommentDialog extends StatelessWidget {
                   Expanded(
                     child: WButton(
                       onTap: () {
-                        print('delete dialog');
                         onTapDelete!();
                         Navigator.of(context).pop();
                       },

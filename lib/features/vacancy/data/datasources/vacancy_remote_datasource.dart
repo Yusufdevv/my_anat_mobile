@@ -90,7 +90,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
             vacancyParamsEntity.category!.isNotEmpty) {
           var value = '';
           for (var i = 0; i < vacancyParamsEntity.category!.length; i++) {
-            print(value);
             value +=
                 '${vacancyParamsEntity.category![i]}${i == vacancyParamsEntity.category!.length - 1 ? '' : ','}';
           }
@@ -311,7 +310,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       if (categoryId != null && categoryId.isNotEmpty) {
         var value = '';
         for (var i = 0; i < categoryId.length; i++) {
-          print(value);
           value += '${categoryId[i]}${i == categoryId.length - 1 ? '' : ','}';
         }
         query.putIfAbsent('specialization', () => value);
@@ -319,7 +317,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       if (params?.experience != null) {
         var value = '';
         for (final param in params!.experience!) {
-          print(value);
           value += '$param,';
         }
         query.putIfAbsent('experience', () => value);
@@ -331,7 +328,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
         }
         query.putIfAbsent('district', () => value);
       }
-      print('query: $query');
       final response = await dio.get(next ?? '/doctor/open-to-work/',
           queryParameters: query,
           options: Options(
@@ -341,7 +337,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
                           'Token ${StorageRepository.getString('token')}'
                     }
                   : {}));
-      print(response.realUri);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data,
             (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
@@ -458,7 +453,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
                           'Token ${StorageRepository.getString('token')}'
                     }
                   : {}));
-      print('next from datasource: $next');
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data,
             (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
@@ -516,8 +510,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
                   }
                 : {},
           ));
-      print(response.data);
-      print(response.realUri);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data,
             (p0) => CertificateModel.fromJson(p0 as Map<String, dynamic>));
@@ -578,7 +570,6 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
                     }
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        print('response.data: ${response.data}');
         return GenericPagination.fromJson(response.data,
             (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
       }

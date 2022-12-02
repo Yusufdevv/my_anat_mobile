@@ -34,7 +34,6 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     });
     on<CheckWhetherFileAlreadyDownloaded>((event, emit) async {
       final rawBooks = await DbHelper.instance.query('downloaded_journals', 'id', event.id);
-      print(rawBooks);
       if (rawBooks.isNotEmpty) {
         emit(state.copyWith(isFileAlreadyDownloaded: true, fileUrl: rawBooks.first['path']));
       } else {

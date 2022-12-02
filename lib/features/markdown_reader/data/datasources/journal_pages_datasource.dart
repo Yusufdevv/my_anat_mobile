@@ -23,10 +23,6 @@ class JournalPagesDatasourceImpl extends JournalPagesDatasource {
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
-      print('pages141');
-
-      print(response.realUri);
-      print(response.statusCode);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination<JournalPageModel>.fromJson(
             response.data, (p0) => JournalPageModel.fromJson(p0 as Map<String, dynamic>));

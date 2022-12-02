@@ -57,8 +57,6 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
                           'Token ${StorageRepository.getString('token')}'
                     }
                   : {}));
-      print(response.data);
-      print(response.realUri);
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
@@ -90,8 +88,6 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
                           'Token ${StorageRepository.getString('token')}'
                     }
                   : {}));
-      print(response.data);
-      print(response.realUri);
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
@@ -124,8 +120,6 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
                           'Token ${StorageRepository.getString('token')}'
                     }
                   : {}));
-      print(response.data);
-      print(response.realUri);
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {

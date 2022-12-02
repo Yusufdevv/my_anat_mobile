@@ -64,7 +64,6 @@ class PaymentDatasourceImpl extends PaymentDatasource {
           options:
               Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString('token')}'} : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        print(response.data);
         return PaymentResponseModel.fromJson(response.data);
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -97,9 +96,6 @@ class PaymentDatasourceImpl extends PaymentDatasource {
         "provider": paymentProvider,
         "redirect_url": "/"
       };
-      print(isRegistered);
-      print(phoneNumber);
-      print(phoneNumber);
       if (!isRegistered) {
         if (phoneNumber.isNotEmpty && phoneNumber.length >= 13) {
           data.putIfAbsent('phone_number', () => phoneNumber);
@@ -114,7 +110,6 @@ class PaymentDatasourceImpl extends PaymentDatasource {
           options:
               Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString('token')}'} : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        print(response.data);
         return PaymentResponseModel.fromJson(response.data);
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());

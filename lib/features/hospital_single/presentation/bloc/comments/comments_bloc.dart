@@ -149,11 +149,9 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(state.copyWith(doctorComments: comment));
       } else {
         event.onError();
-        print('error');
       }
     });
     on<_DeleteHospitalComment>((event, emit) async {
-      print('event');
       final List<CommentEntity> comment = [...state.comments];
       final result = await _deletePostCommentUseCase.call(event.id);
       if (result.isRight) {
@@ -162,7 +160,6 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         emit(state.copyWith(comments: comment));
       } else {
         event.onError();
-        print('event fail');
       }
     });
   }

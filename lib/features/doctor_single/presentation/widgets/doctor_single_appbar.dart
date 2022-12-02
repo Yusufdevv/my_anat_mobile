@@ -20,6 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class DoctorSingleAppBar extends StatelessWidget {
@@ -275,8 +276,9 @@ class DoctorSingleAppBar extends StatelessWidget {
                                             child: WButton(
                                               color: primary,
                                               onTap: () async {
-                                                if (await canLaunchUrlString('tel:${doctor.phoneNumbers.first.phoneNumber}')) {
-                                                  await launchUrlString('tel:${doctor.phoneNumbers.first.phoneNumber}');
+                                                if (await canLaunchUrl(Uri(scheme: 'tel', path: doctor.phoneNumbers.first.phoneNumber))) {
+                                                  await launchUrl(Uri(scheme: 'tel', path: doctor.phoneNumbers.first.phoneNumber));
+                                                } else {
                                                 }
                                               },
                                               padding: EdgeInsets.zero,

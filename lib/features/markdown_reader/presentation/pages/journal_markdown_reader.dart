@@ -235,7 +235,6 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                                         ReaderControllerState>(
 
                                       builder: (context, state) {
-print('isRussian is ${state.isRussian}');
                                         return JournalMarkdownPage(
                                           onTap: () {
                                             setState(() {

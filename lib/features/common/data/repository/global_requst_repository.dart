@@ -26,9 +26,6 @@ class GlobalRequestRepository {
                           "Token ${StorageRepository.getString('token', defValue: '')}"
                     }
                   : {}));
-      print(result.realUri);
-      print(result.data);
-      print(result.statusCode);
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         return Right(fromJson(result.data));
       } else {
@@ -59,10 +56,6 @@ class GlobalRequestRepository {
                           "Token ${StorageRepository.getString('token', defValue: '')}"
                     }
                   : {}));
-
-      print(result.realUri);
-      print(result.data);
-      print(result.statusCode);
       List<S> list = [];
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {
@@ -78,7 +71,6 @@ class GlobalRequestRepository {
 
       return Right(list);
     } catch (e) {
-      print(e.toString());
       return Left(ServerFailure(statusCode: 141, errorMessage: ''));
     }
   }
@@ -103,9 +95,6 @@ class GlobalRequestRepository {
                           "Token ${StorageRepository.getString('token', defValue: '')}"
                     }
                   : {}));
-      print(result.realUri);
-      print(result.data);
-      print(result.statusCode);
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {
           return Right(fromJson(result.data[responseDataKey]));
@@ -144,9 +133,6 @@ class GlobalRequestRepository {
                           "Token ${StorageRepository.getString('token', defValue: '')}"
                     }
                   : {}));
-      print(result.realUri);
-      print(result.data);
-      print(result.statusCode);
       List<S> list = [];
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {

@@ -102,7 +102,6 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       final result = await vacancyListUseCase.call(
           VacancyListParams(vacancyParamsEntity: event.vacancyParamsEntity));
       if (result.isRight) {
-        print('right');
         emit(
           state.copyWith(
             next: result.right.next,
@@ -113,7 +112,6 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         );
         event.onSuccess();
       } else {
-        print('left');
         emit(state.copyWith(paginatorStatus: PaginatorStatus.PAGINATOR_ERROR));
       }
     });
@@ -262,7 +260,6 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
       }
     });
     on<GetMoreCategoryListEvent>((event, emit) async {
-      print('state.newxCategories: ${state.nextCategories}');
       final result = await categoryListUseCase.call(CategoryListParams(
           next: state.nextCategories != null && state.nextCategories!.isNotEmpty
               ? state.nextCategories

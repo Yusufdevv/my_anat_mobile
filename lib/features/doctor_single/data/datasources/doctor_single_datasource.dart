@@ -58,8 +58,6 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
-      print(response.data);
-      print(response.realUri);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => JournalArticleModel.fromJson(p0 as Map<String, dynamic>));
@@ -84,8 +82,6 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
-      print(response.data);
-      print(response.realUri);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => DoctorInterviewModel.fromJson(p0 as Map<String, dynamic>));
@@ -103,7 +99,6 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
 
   @override
   Future<GenericPagination<CommentModel>> getDoctorComments({required int id, String? next}) async {
-    print('Token ${StorageRepository.getString('token')}');
     try {
       final response = await _dio.get(next ?? '/doctor/comment/',
           queryParameters: {'doctor_id': id},
@@ -111,8 +106,6 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
-      print(response.data);
-      print(response.realUri);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) => CommentModel.fromJson(p0 as Map<String, dynamic>));
       } else {
@@ -141,9 +134,6 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
-      print('/doctor/comment/create/');
-      print(response.statusCode);
-      print(response.data);
 
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return DoctorCommentModel.fromJson(response.data);
@@ -170,8 +160,6 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
                 ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                 : {}),
       );
-      print(response.statusCode);
-      print(response.data);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return '';
       } else {

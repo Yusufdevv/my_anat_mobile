@@ -34,7 +34,6 @@ class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
   Widget build(BuildContext context) {
     return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       builder: (context, state) {
-        print(state.submitCodeStatus);
         return Padding(
           padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
           child: Column(

@@ -115,8 +115,6 @@ class _CustomBuilderAnimationState extends State<CustomBuilderAnimation> {
       return null;
     }
 
-    print(deviceHeight);
-
     return Center(
       child: Container(
         alignment: Alignment(0, MediaQuery.of(context).size.height < 700 ? -0.20 : -0.10),

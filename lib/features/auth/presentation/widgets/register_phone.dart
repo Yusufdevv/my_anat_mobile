@@ -149,7 +149,6 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                           );
                     }
                   } else {
-                    print(phoneController.text);
                     context.read<LoginSignUpBloc>().add(
                           SubmitPhone(
                             phone: '+998${phoneController.text.replaceAll(RegExp(r' '), '')}',
@@ -186,7 +185,6 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                           );
                     }
                   } else {
-                    print(phoneController.text);
                     context.read<LoginSignUpBloc>().add(
                           SubmitEmail(
                             email: emailController.text,

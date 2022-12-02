@@ -60,7 +60,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         if (state.birthDate.isNotEmpty) {
           map.addAll({"birth_day": state.birthDate});
         }
-        print(map);
         final result =
             await _editProfileUseCase.call(EditProfileParams(data: map));
         if (result.isRight) {

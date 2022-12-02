@@ -26,18 +26,20 @@ class SuggestionItem extends StatelessWidget {
             children: [
               SvgPicture.asset(AppIcons.search),
               const SizedBox(width: 8),
-              HighlightedText(
-                allText: title,
-                highlightedText: searchText,
-                highlightColor: yellowHighlightedText,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: textColor),
-                textStyleHighlight: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: white),
+              Expanded(
+                child: HighlightedText(
+                  allText: title,
+                  highlightedText: searchText,
+                  highlightColor: yellowHighlightedText,
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: textColor),
+                  textStyleHighlight: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: white),
+                ),
               ),
             ],
           ),

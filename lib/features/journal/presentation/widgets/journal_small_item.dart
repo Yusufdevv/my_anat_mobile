@@ -73,9 +73,6 @@ class MagazineSmallItem extends StatelessWidget {
               return WButton(
                 margin: const EdgeInsets.only(top: 12),
                 onTap: () {
-                  print('journalEntity.isBought:${journalEntity.isBought}');
-                  print('journalEntity.isPremium:${journalEntity.isPremium}');
-                  print('state.status:${state.status}');
                   if (journalEntity.isBought || !journalEntity.isPremium) {
                     Navigator.of(context, rootNavigator: true).push(
                       fade(

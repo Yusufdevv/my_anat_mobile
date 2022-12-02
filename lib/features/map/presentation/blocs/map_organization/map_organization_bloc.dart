@@ -33,9 +33,7 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
               long: event.longitude ?? state.long,
               radius: event.radius?.floor() ?? state.radius));
       if (result.isRight) {
-        print('${state.hospitals.length}isLenght141');
         emit(state.copyWith(hospitals: result.right, status: FormzStatus.submissionSuccess));
-        print('${state.hospitals.length}isLenght141');
       } else {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
       }

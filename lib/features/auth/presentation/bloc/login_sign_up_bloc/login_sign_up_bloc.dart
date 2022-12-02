@@ -57,7 +57,6 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         _submitChangedEmailUseCase = submitChangedEmailUseCase,
         _submitChangedPhoneUseCase = submitChangedPhoneUseCase,
         super(const LoginSignUpState.empty()) {
-    print('create bloc');
     on<Login>((event, emit) async {
       emit(state.copyWith(loginStatus: FormzStatus.submissionInProgress));
       final loginResult = await _loginUseCase.call(LoginParams(password: event.password, username: event.username));
@@ -75,7 +74,6 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
       }
     });
     on<CheckUsername>((event, emit) async {
-      print('come to check username');
       emit(state.copyWith(checkUsernameStatus: FormzStatus.submissionInProgress));
       final result = await _checkUsernameUseCase.call(UsernameParams(username: event.username));
       if (result.isRight) {
@@ -101,7 +99,6 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         add(SubmitNameUsername(
             username: event.username, fullName: event.fullName, onError: event.onError, onSuccess: event.onSuccess));
       } else {
-        print('create state error: ${result.left}');
       }
     });
     on<SubmitNameUsername>((event, emit) async {

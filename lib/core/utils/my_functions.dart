@@ -56,7 +56,6 @@ abstract class MyFunctions {
     try {
       return Jiffy(date).format(pattern);
     } catch (e) {
-      print('$e date parse error');
       return date;
     }
   }
@@ -186,7 +185,6 @@ abstract class MyFunctions {
       Point point,
       double accuracy) async {
 
-    print('accuracy: $accuracy');
     final iconData = await getBytesFromCanvas(
         placeCount: 0,
         image: AppImages.placeMarkIcon,

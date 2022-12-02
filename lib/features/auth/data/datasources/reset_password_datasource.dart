@@ -22,7 +22,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
     try {
       final response = await _dio.post('/auth/restore/new-state/', data: {});
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        print(response.data);
         return response.data['state_id'];
       } else {
         if (response.data is Map) {
@@ -51,7 +50,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
       final response = await _dio.post('/auth/restore/resend-code/', data: {
         "state_id": stateId,
       });
-      print(response.data);
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         if (response.data is Map) {
@@ -70,7 +68,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -102,7 +99,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -134,7 +130,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -166,7 +161,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -188,7 +182,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
         });
 
         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-          print(response.data);
           await StorageRepository.putString('token', response.data['token']);
         } else {
           if (response.data is Map) {
@@ -207,7 +200,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
       } on DioError {
         throw DioException();
       } on Exception catch (e) {
-        print(e.toString());
         throw ParsingException(errorMessage: e.toString());
       }
     }
@@ -240,7 +232,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }
@@ -268,7 +259,6 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
     } on DioError {
       throw DioException();
     } on Exception catch (e) {
-      print(e.toString());
       throw ParsingException(errorMessage: e.toString());
     }
   }

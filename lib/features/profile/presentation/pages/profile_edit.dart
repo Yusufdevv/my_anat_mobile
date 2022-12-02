@@ -71,7 +71,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     nameController = TextEditingController(
       text: widget.userEntity.fullName,
     );
-    print(widget.userEntity.birthDay);
     date = Jiffy(widget.userEntity.birthDay.isNotEmpty
             ? widget.userEntity.birthDay
             : DateTime(2000))

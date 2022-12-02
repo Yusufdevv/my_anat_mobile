@@ -53,7 +53,6 @@ class LikeUnlikeDatasourceImpl extends LikeUnlikeDatasource {
     try {
       final response = await _dio.post('/doctor/$id/like/',
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
-      print('like data ${response.data}');
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());

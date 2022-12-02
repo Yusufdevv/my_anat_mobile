@@ -51,7 +51,6 @@ class CandidateSingleBloc extends Bloc<CandidateSingleEvent, CandidateSingleStat
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       final result = await candidateSingleUseCase.call(CandidateSingleParams(id: event.id));
       if (result.isRight) {
-        print('right ${state.candidate.position}');
         emit(state.copyWith(status: FormzStatus.submissionSuccess, candidate: result.right));
       } else {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
@@ -85,14 +84,12 @@ class CandidateSingleBloc extends Bloc<CandidateSingleEvent, CandidateSingleStat
       emit(state.copyWith(workStatus: FormzStatus.submissionInProgress));
       final response = await candidateWorkUseCase.call(event.id);
       if (response.isRight) {
-        print('right');
         emit(
           state.copyWith(
               workStatus: FormzStatus.submissionSuccess,
               workEntity: response.right.results.cast<CandidateWorkEntity>()),
         );
       } else {
-        print('left');
         emit(state.copyWith(workStatus: FormzStatus.submissionFailure));
       }
     });

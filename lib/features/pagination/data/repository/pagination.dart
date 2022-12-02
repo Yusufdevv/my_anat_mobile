@@ -30,10 +30,6 @@ class PaginationRepository {
                 : {}),
         queryParameters: queryParams,
       );
-      print(queryParams);
-      print(result.realUri);
-      print(result.data);
-      print(result.statusCode);
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         final data = GenericPagination<T>.fromJson((result.data!), (data) => fromJson((data as Map<String, dynamic>)));
 
@@ -42,7 +38,6 @@ class PaginationRepository {
         return Left(ServerFailure(statusCode: result.statusCode ?? 0, errorMessage: result.statusMessage ?? ''));
       }
     } catch (e) {
-      print(e.toString() + 'error read here ');
       return Left(ServerFailure(errorMessage: '', statusCode: 0));
     }
   }
@@ -71,11 +66,6 @@ class PaginationDatasource {
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"}
                   : {}));
-
-      print(queryParams);
-      print(result.realUri);
-      print(result.data);
-      print(result.statusCode);
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         final data = GenericPagination<T>.fromJson((result.data!), (data) => fromJson((data as Map<String, dynamic>)));
 

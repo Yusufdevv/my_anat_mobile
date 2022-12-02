@@ -1,0 +1,919 @@
+%!Adobe-FontList 1.23
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:BebasNeueBold
+FamilyName:Bebas Neue
+StyleName:Bold
+FullName:Bebas Neue Bold
+MenuName:Bebas Neue Bold
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\BebasNeue Bold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:101772
+FileModTime:1389690976
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Bebas Neue Bold
+NameArray:0,Win,1,Bebas Neue Bold
+NameArray:0,Win,16,Bebas Neue
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:BebasNeue-Thin
+FamilyName:Bebas Neue
+StyleName:Thin
+FullName:Bebas Neue Thin
+MenuName:Bebas Neue Thin
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\BebasNeue Thin.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:46596
+FileModTime:1389688089
+WeightClass:200
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Bebas Neue Thin
+NameArray:0,Win,1,Bebas Neue Thin
+NameArray:0,Win,16,Bebas Neue
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Brusher-Regular
+FamilyName:Brusher
+StyleName:Regular
+FullName:Brusher
+MenuName:Brusher
+StyleBits:0
+FamilyNameNative:Brusher
+StyleNameNative:Regular
+FullNameNative:Brusher Regular
+WritingScript:Cyrillic
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Brusher.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:38120
+FileModTime:1466498052
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Brusher
+NameArray:0,Win,1,Brusher
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:DrukCyr-Bold
+FamilyName:Druk Cyr
+StyleName:Bold
+FullName:DrukCyr-Bold
+MenuName:Druk Cyr
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\DrukCyr-Bold.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:117844
+FileModTime:1591254991
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,18,Druk Cyr Bold
+NameArray:0,Mac,4,DrukCyr-Bold
+NameArray:0,Win,1,Druk Cyr
+NameArray:0,Win,16,Druk Cyr
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Montserrat-Black
+FamilyName:Montserrat
+StyleName:Black
+FullName:Montserrat Black
+MenuName:Montserrat Black
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MONTSERRAT-BLACK.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:275192
+FileModTime:1649424270
+WeightClass:900
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Montserrat Black
+NameArray:0,Win,1,Montserrat Black
+NameArray:0,Win,16,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Montserrat-Bold
+FamilyName:Montserrat
+StyleName:Bold
+FullName:Montserrat Bold
+MenuName:Montserrat
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MONTSERRAT-BOLD.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:261588
+FileModTime:1555498968
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Montserrat Bold
+NameArray:0,Win,1,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Montserrat-ExtraBold
+FamilyName:Montserrat
+StyleName:ExtraBold
+FullName:Montserrat ExtraBold
+MenuName:Montserrat ExtraBold
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MONTSERRAT-EXTRABOLD.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:262108
+FileModTime:1649424273
+WeightClass:800
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Montserrat ExtraBold
+NameArray:0,Win,1,Montserrat ExtraBold
+NameArray:0,Win,16,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Montserrat-Light
+FamilyName:Montserrat
+StyleName:Light
+FullName:Montserrat Light
+MenuName:Montserrat Light
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MONTSERRAT-LIGHT.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:259416
+FileModTime:1649424285
+WeightClass:300
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Montserrat Light
+NameArray:0,Win,1,Montserrat Light
+NameArray:0,Win,16,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Montserrat-LightItalic
+FamilyName:Montserrat
+StyleName:Light Italic
+FullName:Montserrat Light Italic
+MenuName:Montserrat Light
+StyleBits:1
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MONTSERRAT-LIGHTITALIC.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:263712
+FileModTime:1649424287
+WeightClass:300
+WidthClass:5
+AngleClass:1
+NameArray:0,Mac,4,Montserrat Light Italic
+NameArray:0,Win,1,Montserrat Light
+NameArray:0,Win,16,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Montserrat-Medium
+FamilyName:Montserrat
+StyleName:Medium
+FullName:Montserrat Medium
+MenuName:Montserrat Medium
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MONTSERRAT-MEDIUM.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:260236
+FileModTime:1649424282
+WeightClass:500
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Montserrat Medium
+NameArray:0,Win,1,Montserrat Medium
+NameArray:0,Win,16,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Montserrat-Regular
+FamilyName:Montserrat
+StyleName:Regular
+FullName:Montserrat Regular
+MenuName:Montserrat
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MONTSERRAT-REGULAR.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:263192
+FileModTime:1555498840
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Montserrat Regular
+NameArray:0,Win,1,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Montserrat-SemiBoldItalic
+FamilyName:Montserrat
+StyleName:SemiBold Italic
+FullName:Montserrat SemiBold Italic
+MenuName:Montserrat SemiBold
+StyleBits:1
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MONTSERRAT-SEMIBOLDITALIC.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:266336
+FileModTime:1555499000
+WeightClass:600
+WidthClass:5
+AngleClass:1
+NameArray:0,Mac,4,Montserrat SemiBold Italic
+NameArray:0,Win,1,Montserrat SemiBold
+NameArray:0,Win,16,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Montserrat-Thin
+FamilyName:Montserrat
+StyleName:Thin
+FullName:Montserrat Thin
+MenuName:Montserrat Thin
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MONTSERRAT-THIN.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:258748
+FileModTime:1555498918
+WeightClass:250
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Montserrat Thin
+NameArray:0,Win,1,Montserrat Thin
+NameArray:0,Win,16,Montserrat
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MinionPro-Regular
+FamilyName:Minion Pro
+StyleName:Regular
+FullName:Minion Pro
+MenuName:Minion Pro
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\MinionPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:217280
+FileModTime:1329290120
+WeightClass:400
+WidthClass:5
+AngleClass:0
+DesignSize:110
+NameArray:0,Mac,4,Minion Pro
+NameArray:0,Win,1,Minion Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:GillSansNova-CnMedium
+FamilyName:Gill Sans Nova
+StyleName:Condensed Medium
+FullName:Gill Sans Nova Cn Medium
+MenuName:Gill Sans Nova Cn Medium
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Monotype  - Gill Sans Nova Cn Medium.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:178880
+FileModTime:1565643713
+WeightClass:500
+WidthClass:3
+AngleClass:0
+NameArray:0,Mac,4,Gill Sans Nova Cn Medium
+NameArray:0,Win,1,Gill Sans Nova Cn Medium
+NameArray:0,Win,16,Gill Sans Nova
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Mont-Light
+FamilyName:Mont
+StyleName:Light
+FullName:Mont Light
+MenuName:Mont Light
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mont-Light.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:145024
+FileModTime:1649332550
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mont Light
+NameArray:0,Win,1,Mont Light
+NameArray:0,Win,16,Mont
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Mont-LightItalic
+FamilyName:Mont
+StyleName:Light Italic
+FullName:Mont Light Italic
+MenuName:Mont Light Italic
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mont-LightItalic.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:153404
+FileModTime:1649332550
+WeightClass:400
+WidthClass:5
+AngleClass:1
+NameArray:0,Mac,4,Mont Light Italic
+NameArray:0,Win,1,Mont Light Italic
+NameArray:0,Win,16,Mont
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Monterchi-BoldItalic
+FamilyName:Monterchi
+StyleName:Bold Italic
+FullName:Monterchi Bold Italic
+MenuName:Monterchi
+StyleBits:3
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Monterchi Bold Italic.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:202812
+FileModTime:1561410000
+WeightClass:700
+WidthClass:5
+AngleClass:1
+NameArray:0,Mac,18,Monterchi Bold Italic
+NameArray:0,Mac,4,Monterchi Bold Italic
+NameArray:0,Win,1,Monterchi
+NameArray:0,Win,16,Monterchi
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Monterchi-Bold
+FamilyName:Monterchi
+StyleName:Bold
+FullName:Monterchi Bold
+MenuName:Monterchi
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Monterchi Bold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:203708
+FileModTime:1561410000
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,18,Monterchi Bold
+NameArray:0,Mac,4,Monterchi Bold
+NameArray:0,Win,1,Monterchi
+NameArray:0,Win,16,Monterchi
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Monterchi-BookItalic
+FamilyName:Monterchi
+StyleName:Book Italic
+FullName:Monterchi Book Italic
+MenuName:Monterchi Book
+StyleBits:1
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Monterchi Book Italic.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:204308
+FileModTime:1561410000
+WeightClass:350
+WidthClass:5
+AngleClass:1
+NameArray:0,Mac,18,Monterchi Book Italic
+NameArray:0,Mac,4,Monterchi Book Italic
+NameArray:0,Win,1,Monterchi Book
+NameArray:0,Win,16,Monterchi
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Monterchi-Book
+FamilyName:Monterchi
+StyleName:Book
+FullName:Monterchi Book
+MenuName:Monterchi Book
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Monterchi Book.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:204300
+FileModTime:1561410000
+WeightClass:350
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,18,Monterchi Book
+NameArray:0,Mac,4,Monterchi Book
+NameArray:0,Win,1,Monterchi Book
+NameArray:0,Win,16,Monterchi
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Monterchi-ExtraBold
+FamilyName:Monterchi
+StyleName:ExtraBold
+FullName:Monterchi ExtraBold
+MenuName:Monterchi ExtraBold
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Monterchi Extrabold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:200924
+FileModTime:1561410000
+WeightClass:800
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,18,Monterchi ExtraBold
+NameArray:0,Mac,4,Monterchi ExtraBold
+NameArray:0,Win,1,Monterchi ExtraBold
+NameArray:0,Win,16,Monterchi
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Monterchi-Light
+FamilyName:Monterchi
+StyleName:Light
+FullName:Monterchi Light
+MenuName:Monterchi Light
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Monterchi Light.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:204736
+FileModTime:1561410000
+WeightClass:300
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,18,Monterchi Light
+NameArray:0,Mac,4,Monterchi Light
+NameArray:0,Win,1,Monterchi Light
+NameArray:0,Win,16,Monterchi
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Monterchi-Thin
+FamilyName:Monterchi
+StyleName:Thin
+FullName:Monterchi Thin
+MenuName:Monterchi Thin
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Monterchi Thin.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:199740
+FileModTime:1561410000
+WeightClass:250
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,18,Monterchi Thin
+NameArray:0,Mac,4,Monterchi Thin
+NameArray:0,Win,1,Monterchi Thin
+NameArray:0,Win,16,Monterchi
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-Black
+FamilyName:Mozer
+StyleName:Black
+FullName:Mozer Black
+MenuName:Mozer Black
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-Black.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:147252
+FileModTime:1560748866
+WeightClass:900
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Black
+NameArray:0,Win,1,Mozer Black
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-Bold
+FamilyName:Mozer
+StyleName:Bold
+FullName:Mozer Bold
+MenuName:Mozer Bold
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-Bold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:147724
+FileModTime:1560748866
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Bold
+NameArray:0,Win,1,Mozer Bold
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-BoldItalic
+FamilyName:Mozer
+StyleName:Bold Italic
+FullName:Mozer Bold Italic
+MenuName:Mozer Bold Italic
+StyleBits:3
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-BoldItalic.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:153952
+FileModTime:1560748865
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Bold Italic
+NameArray:0,Win,1,Mozer Bold Italic
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-Book
+FamilyName:Mozer
+StyleName:Book
+FullName:Mozer Book
+MenuName:Mozer Book
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-Book.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:136980
+FileModTime:1560748862
+WeightClass:300
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Book
+NameArray:0,Win,1,Mozer Book
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-BookItalic
+FamilyName:Mozer
+StyleName:Book Italic
+FullName:Mozer Book Italic
+MenuName:Mozer Book Italic
+StyleBits:1
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-BookItalic.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:143068
+FileModTime:1560748863
+WeightClass:300
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Book Italic
+NameArray:0,Win,1,Mozer Book Italic
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-Heavy
+FamilyName:Mozer
+StyleName:Heavy
+FullName:Mozer Heavy
+MenuName:Mozer Heavy
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-Heavy.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:148380
+FileModTime:1560748866
+WeightClass:800
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Heavy
+NameArray:0,Win,1,Mozer Heavy
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-HeavyItalic
+FamilyName:Mozer
+StyleName:Heavy Italic
+FullName:Mozer Heavy Italic
+MenuName:Mozer Heavy Italic
+StyleBits:3
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-HeavyItalic.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:153252
+FileModTime:1560748866
+WeightClass:800
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Heavy Italic
+NameArray:0,Win,1,Mozer Heavy Italic
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-Light
+FamilyName:Mozer
+StyleName:Light
+FullName:Mozer Light
+MenuName:Mozer Light
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-Light.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:136044
+FileModTime:1560748862
+WeightClass:265
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Light
+NameArray:0,Win,1,Mozer Light
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-Regular
+FamilyName:Mozer
+StyleName:Regular
+FullName:Mozer Regular
+MenuName:Mozer Regular
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:146268
+FileModTime:1560748864
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Regular
+NameArray:0,Win,1,Mozer Regular
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Mozer-Thin
+FamilyName:Mozer
+StyleName:Thin
+FullName:Mozer Thin
+MenuName:Mozer Thin
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Mozer-Thin.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:132500
+FileModTime:1560748861
+WeightClass:250
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Mozer Thin
+NameArray:0,Win,1,Mozer Thin
+NameArray:0,Win,16,Mozer
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Ponzu-Black
+FamilyName:Ponzu
+StyleName:Black
+FullName:Ponzu-Black
+MenuName:Ponzu Black
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Ponzu-Black.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:94236
+FileModTime:1592298937
+WeightClass:900
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Ponzu-Black
+NameArray:0,Win,1,Ponzu Black
+NameArray:0,Win,16,Ponzu
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Ponzu-ExtraLight
+FamilyName:Ponzu
+StyleName:Extra Light
+FullName:Ponzu-ExtraLight
+MenuName:Ponzu ExtLt
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:E:\ANATOMICA\11_ANATOMICA_(3_2022)\11_ANATOMICA_(3_2022) Folder\Document fonts\Ponzu-ExtraLight.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:109824
+FileModTime:1592298937
+WeightClass:300
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Ponzu-ExtraLight
+NameArray:0,Win,1,Ponzu ExtLt
+NameArray:0,Win,16,Ponzu
+%EndFont
+

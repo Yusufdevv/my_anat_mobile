@@ -115,16 +115,13 @@ class DoctorComments extends StatelessWidget {
                 itemBuilder: (context, index) => CommentItem(
                   isOrganization: false,
                   onTapDelete: () {
-                    print('del');
                     context
                         .read<CommentsBloc>()
                         .add(CommentsEvent.deleteDoctorComment(
                             id: state.doctorComments[index].id,
                             onError: () {
-                              print('ui error');
                             },
                             onSuccess: () {
-                              print('success deleted');
                             }));
                   },
                   entity: state.doctorComments[index],

@@ -74,7 +74,6 @@ class _CustomBuilderAnimationState extends State<CustomBuilderAnimation> {
     index == widget.currentpage ? _width = mainSize : _width = secondSize;
     // ignore: missing_return
     double? rotate(value) {
-      //if (currentpage == 0) print(value);
       switch (index) {
         case 0:
           return lerpDouble(0, -0.1, rotated);

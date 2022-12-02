@@ -8,9 +8,6 @@ class VerifyRestoreCode extends UseCase<String, VerifyParam> {
 
   @override
   Future<Either<Failure, String>> call(VerifyParam param) {
-    print(param.phone);
-    print(param.signature);
-    print(param.code);
     return repo.postAndSingle(errorFieldKey: 'code',
         endpoint: '/confirmation/code/verify/',
         fromJson: (data) {

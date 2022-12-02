@@ -16,7 +16,6 @@ class ExperienceItemList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CandidateSingleBloc, CandidateSingleState>(
       builder: (context, state) {
-        print('experience status: ${state.workStatus}');
         if (state.workStatus.isPure) {
           context.read<CandidateSingleBloc>().add(CandidateWorkEvent(id: candidateId));
         } else if (state.workStatus.isSubmissionInProgress) {

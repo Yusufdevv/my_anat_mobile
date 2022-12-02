@@ -171,7 +171,6 @@ class ProfileScreen extends StatelessWidget {
                               title: LocaleKeys.setting,
                               icon: AppIcons.setting,
                               onTap: () {
-                                print(StorageRepository.getString('token'));
                                 Navigator.of(context).push(
                                   fade(
                                     page: const SettingScreen(),

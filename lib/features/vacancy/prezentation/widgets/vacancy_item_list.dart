@@ -26,7 +26,6 @@ class VacancyItemList extends StatelessWidget {
           paginatorStatus: state.paginatorStatus,
           errorWidget: const Text('Fail'),
           itemBuilder: (context, index) {
-            print('title: ${state.vacancyList[index].organization.title}');
             return VacancyItem(
               vacancyEntity: state.vacancyList[index],
               onTap: () {

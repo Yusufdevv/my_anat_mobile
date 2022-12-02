@@ -103,7 +103,6 @@ class _RegisterFeedState extends State<RegisterFeed> {
                           },
                         onEnter: (_) {},
                         onExit: (_) {
-                          print('hello');
                         },
                         style: Theme.of(context)
                             .textTheme

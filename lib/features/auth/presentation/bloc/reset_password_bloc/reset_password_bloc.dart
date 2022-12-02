@@ -57,7 +57,6 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         emit(state.copyWith(stateId: result.right));
         event.onSuccess();
       } else {
-        print('create state error: ${result.left}');
       }
     });
     on<SubmitPhone>((event, emit) async {

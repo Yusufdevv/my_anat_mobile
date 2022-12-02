@@ -311,8 +311,8 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                   } else {
                                                     if (state.hospital.phoneNumber.isNotEmpty) {
                                                       if (await canLaunchUrlString(
-                                                          'tel:${state.hospital.phoneNumber}')) {
-                                                        await launchUrlString('tel:${state.hospital.phoneNumber}');
+                                                          'tel://${state.hospital.phoneNumber}')) {
+                                                        await launchUrlString('tel://${state.hospital.phoneNumber}');
                                                       } else {
                                                         throw 'Can not open phone number';
                                                       }

@@ -17,6 +17,8 @@
         <string>qqmap</string>
         <string>here-location</string>
         <string>tomtomgo</string>
+        <string>sms</string>
+        <string>call</string>
     </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

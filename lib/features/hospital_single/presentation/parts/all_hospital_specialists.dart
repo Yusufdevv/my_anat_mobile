@@ -19,7 +19,6 @@ class AllHospitalSpecialists extends StatelessWidget {
             paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
             errorWidget: const Text('error'),
             fetchMoreFunction: () {
-              print('call fetch more');
               context.read<HospitalSpecialistBloc>().add(HospitalSpecialistEvent.getMoreSpecialists());
             },
             hasMoreToFetch: state.fetchMore,

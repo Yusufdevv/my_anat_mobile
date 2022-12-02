@@ -33,7 +33,6 @@ class _RegisterVerifyState extends State<RegisterVerify> {
 
   @override
   Widget build(BuildContext context) {
-    print(DateTime.now());
     return BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
       builder: (context, state) {
         return Padding(

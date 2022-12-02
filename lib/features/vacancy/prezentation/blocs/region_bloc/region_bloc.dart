@@ -41,7 +41,6 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
     on<GetMoreRegion>((event, emit) async {
       final response = await regionUseCase.call(RegionParams(next: state.nextRegion));
       if (response.isRight) {
-        print('get more region list');
         final result = response.right;
         emit(state.copyWith(
           nextRegion: result.next,
@@ -74,7 +73,6 @@ class RegionBloc extends Bloc<RegionEvent, RegionState> {
       }
     });
     on<GetMoreDistrict>((event, emit) async {
-      print('get more district');
       final response = await districtUseCase.call(DistrictParams(next: state.nextDistrict));
       if (response.isRight) {
         final result = response.right;

@@ -23,26 +23,28 @@ class _DoctorContactsState extends State<DoctorContacts> {
   List<ContactEntity> socials = [];
 
   launchDefault(String url) async {
-    await canLaunchUrl(Uri.parse(url))
-        ? await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)
-        : throw 'can not open url';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    } else {
+      throw 'can not open url';
+    }
   }
 
   @override
   void initState() {
-    if (widget.doctorSingle.phoneNumber.isNotEmpty) {
-      contacts.add(ContactEntity(
+    if (widget.doctorSingle.phoneNumbers.isNotEmpty) {
+      contacts.addAll(List.generate(widget.doctorSingle.phoneNumbers.length, (index) => ContactEntity(
           icon: AppIcons.boldPhone,
-          content: MyFunctions.formatPhone(widget.doctorSingle.phoneNumber, false),
+          content: MyFunctions.formatPhone(widget.doctorSingle.phoneNumbers[index].phoneNumber, false),
           onTap: () {
-            launchDefault('tel:${widget.doctorSingle.phoneNumber}');
-          }));
+            launchDefault('tel:${widget.doctorSingle.phoneNumbers[index].phoneNumber.replaceAll('+', '')}');
+          },),),);
     }
     if (widget.doctorSingle.email.isNotEmpty) {
       contacts.add(ContactEntity(
           icon: AppIcons.mail,
           content: widget.doctorSingle.email,
-          onTap: () {
+          onTap:  () {
             launchDefault('mailto:${widget.doctorSingle.email}');
           }));
     }
@@ -76,18 +78,22 @@ class _DoctorContactsState extends State<DoctorContacts> {
         const SizedBox(
           height: 20,
         ),
-        WButton(
-          onTap: () async {
-            if (widget.doctorSingle.phoneNumber.isNotEmpty) {
-              if (await canLaunchUrlString('tel:${widget.doctorSingle.phoneNumber}')) {
-                await launchUrlString('tel:${widget.doctorSingle.phoneNumber}');
-              } else {
-                throw 'Can not open phone number';
+        if (widget.doctorSingle.phoneNumbers.isNotEmpty) ...{
+          WButton(
+            onTap: () async {
+              if (widget.doctorSingle.phoneNumbers.isNotEmpty) {
+                print(widget.doctorSingle.phoneNumbers.first.phoneNumber);
+                if (await canLaunchUrlString('tel:${widget.doctorSingle.phoneNumbers.first.phoneNumber}')) {
+                  await launchUrlString('tel:${widget.doctorSingle.phoneNumbers.first.phoneNumber}');
+                } else {
+                  throw 'Can not open phone number';
+                }
               }
-            }
-          },
-          text: LocaleKeys.call.tr(),
-        )
+            },
+            text: LocaleKeys.call.tr(),
+          )
+        }
+
       ],
     );
   }

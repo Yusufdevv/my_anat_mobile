@@ -87,7 +87,6 @@ class _ReaderControllerState extends State<ReaderController> {
                       labelColor: textColor,
                       unselectedLabelColor: state.selectedTextColor,
                       onTap: (index) {
-                        print(index.toString()+'isIndex');
                       context.read<ReaderControllerBloc>().add(ChangeReaderLanguage(isRussian: index==0));
                       },
                       tabs: [

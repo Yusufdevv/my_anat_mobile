@@ -61,7 +61,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       final response = await _dio.get('/user/profile/',
           options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        print(response.data);
         return UserModel.fromJson(response.data);
       } else {
         await StorageRepository.deleteString('token');
@@ -90,9 +89,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     if (username.isNotEmpty) {
       try {
         final response = await _dio.get('/auth/check/username/$username');
-        print(response.realUri);
-        //print(response.headers);
-        print(response.data);
         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
           return true;
         } else if (response.statusCode != null && response.statusCode! >= 400 && response.statusCode! < 500) {
@@ -149,7 +145,6 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           "full_name": fullName,
           "login": username,
         });
-        print(response.data);
         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
           return response.data['state_id'] as String;
         } else {

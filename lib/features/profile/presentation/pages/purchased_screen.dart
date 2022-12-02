@@ -185,7 +185,6 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                                                   );
                                                 });
                                             if (item == null) {
-                                              print('null verify dialog');
                                               restoreBloc.add(RestoreEvent.clear());
                                             }
                                           },
@@ -194,7 +193,6 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                                     });
 
                                 if (item == null) {
-                                  print('null send dialog');
                                   restoreBloc.add(RestoreEvent.clear());
                                 }
                                 setState(() {});

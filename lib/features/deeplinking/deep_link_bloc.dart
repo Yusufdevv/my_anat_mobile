@@ -20,35 +20,26 @@ class DeepLinkBloc extends Bloc<DeepLinkEvent, DeepLinkState> {
   Sink<String> get stateSink => _stateController.sink;
 
   DeepLinkBloc() : super(DeepLinkInitState()) {
-    print('call deeplink bloc');
     startUri().then(_onRedirected);
     dlStream.receiveBroadcastStream().listen((d) => _onRedirected(d));
     on<DeepLinkChanged>((event, emit) {
-      print('deep link: ${event.uri}');
       String? parsedSlug;
       if (event.uri.contains('https://anatomica.uz/')) {
         parsedSlug = event.uri.replaceAll('https://anatomica.uz/', '');
-        print('parsedSlug: $parsedSlug');
         final List<String> pathParams = parsedSlug.split('/');
         final firstParam = pathParams.first;
         final lastParam = pathParams.last;
         if (firstParam == 'doctor') {
-          print('doctor');
-          print(lastParam);
           final doctorId = int.tryParse(lastParam);
           if (doctorId != null) {
             emit(DoctorLinkTriggered(doctorId: doctorId));
           }
         } else if (firstParam == 'organization') {
-          print('organization');
-          print(lastParam);
-          print(pathParams);
           final id = int.tryParse(lastParam);
           if (id != null) {
             emit(OrganizationLinkTriggered(organizationId: id, organizationSlug: pathParams[1]));
           }
         } else if (firstParam == 'journal') {
-          print('journal');
           emit(JournalLinkTriggered(journalSlug: lastParam));
         }
       } else if (event.uri.contains('app://org.uicgroup.anatomica/')) {
@@ -65,7 +56,6 @@ class DeepLinkBloc extends Bloc<DeepLinkEvent, DeepLinkState> {
   Future<String> startUri() async {
     try {
       final link = await platform.invokeMethod('initialLink');
-      print('this is link: $link');
       add(DeepLinkChanged(uri: 'this is the initial link $link'));
       return link;
     } on PlatformException catch (e) {

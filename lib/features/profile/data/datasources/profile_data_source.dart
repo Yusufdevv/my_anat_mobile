@@ -100,9 +100,6 @@ class ProfileDatasourceImpl extends ProfileDatasource {
           options: Options(headers: {
             'Authorization': 'Token ${StorageRepository.getString('token')}'
           }));
-      print(response.data);
-      print(response.realUri);
-      print(response.statusCode);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         if (response.data is Map) {
@@ -191,7 +188,6 @@ class ProfileDatasourceImpl extends ProfileDatasource {
           options: Options(headers: {
             'Authorization': 'Token ${StorageRepository.getString('token')}'
           }));
-      print(response.data);
       if (!(response.statusCode! >= 200 && response.statusCode! < 300)) {
         throw ServerException(
             errorMessage: response.data.toString(),
@@ -235,8 +231,6 @@ class ProfileDatasourceImpl extends ProfileDatasource {
           options: (Options(headers: {
             'Authorization': 'Token ${StorageRepository.getString('token')}'
           })));
-      print(response.data);
-      print(response.realUri);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data,

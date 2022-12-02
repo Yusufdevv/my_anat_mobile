@@ -65,8 +65,6 @@ class FilterBottomSheet extends StatelessWidget {
                     ),
                   );
                 } else {
-                  print(state.experienceKey);
-                  print(state.districtList);
                   vacancyBloc.add(
                     GetCandidateListEvent(
                         params: CandidateListParams(

@@ -100,22 +100,18 @@ class HospitalComments extends StatelessWidget {
                   paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
                   errorWidget: const Text('error'),
                   fetchMoreFunction: () {
-                    print('call fetch more');
                     context.read<CommentsBloc>().add(CommentsEvent.getMoreComments());
                   },
                   hasMoreToFetch: state.fetchMore,
                   itemBuilder: (context, index) {
                     return CommentItem(
                       onTapDelete: () {
-                        print('del');
                         commentsBloc.add(
                           CommentsEvent.deleteHospitalComment(
                             id: state.comments[index].id,
                             onSuccess: () {
-                              print('success deleted');
                             },
                             onError: () {
-                              print('error');
                             },
                           ),
                         );

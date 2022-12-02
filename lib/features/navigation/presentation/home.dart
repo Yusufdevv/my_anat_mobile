@@ -87,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: BlocListener<DeepLinkBloc, DeepLinkState>(
           listener: (context, state) {
             if (state is DoctorLinkTriggered) {
-              print('doctorLinktriggered');
               if (state.doctorId != null) {
                 Navigator.of(context).push(fade(page: DoctorSingleScreen(id: state.doctorId!)));
               }
