@@ -12,6 +12,7 @@ import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_
 import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_menu.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_table_of_contents.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/reader_controller.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +45,6 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
   bool showSettings = false;
   late PageController _pageController;
   late ItemScrollController _itemScrollController;
-
 
   @override
   void initState() {
@@ -175,8 +175,16 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16),
                                   scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) =>
-                                      GestureDetector(
+                                  itemBuilder: (context, index) {
+                                    if (index == state.pages.length){
+                                      if (state.fetchMore){
+                                        context.read<JournalPagesBloc>().add(GetMoreJournalPages());
+                                        return const Center(child: CupertinoActivityIndicator(),);
+                                      } else{
+                                        return const SizedBox();
+                                      }
+                                    }
+                                    return GestureDetector(
                                     onTap: () {
                                       setState(() {
                                         showContents = !showContents;
@@ -194,8 +202,9 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                                           .map((e) => e.imgContent)
                                           .toList()[index],
                                     ),
-                                  ),
-                                  itemCount: state.pages.length,
+                                  );
+                                  },
+                                  itemCount: state.pages.length + 1,
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(width: 12),
                                 ),
@@ -233,7 +242,6 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                                     }
                                     return BlocBuilder<ReaderControllerBloc,
                                         ReaderControllerState>(
-
                                       builder: (context, state) {
                                         return JournalMarkdownPage(
                                           onTap: () {
@@ -265,9 +273,7 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                         top: 0,
                         right: 0,
                         child: AnimatedCrossFade(
-                          secondChild: const ReaderController(
-
-                          ),
+                          secondChild: const ReaderController(),
                           duration: const Duration(milliseconds: 150),
                           crossFadeState: showSettings
                               ? CrossFadeState.showSecond

@@ -40,7 +40,7 @@ class JournalPagesState extends Equatable {
         getJournalPagesStatus:
             getJournalPagesStatus ?? this.getJournalPagesStatus,
         fetchMore: fetchMore ?? this.fetchMore,
-        next: next,
+        next: next ?? this.next,
         contents: contents ?? this.contents,
         getJournalContentsStatus:
         getJournalContentsStatus ?? this.getJournalContentsStatus,

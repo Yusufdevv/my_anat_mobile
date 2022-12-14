@@ -35,12 +35,12 @@ class JournalPagesBloc extends Bloc<JournalPagesEvent, JournalPagesState> {
       }
     });
     on<GetMoreJournalPages>((event, emit) async {
-      final result = await _getJournalPagesUseCase.call(JournalPagesParams(slug: state.slug, next: state.next));
+      final result = await _getJournalPagesUseCase.call(JournalPagesParams(slug: state.slug, next: state.next != null && state.next!.isNotEmpty ? state.next : ''));
       if (result.isRight) {
         emit(
           state.copyWith(
             pages: [...state.pages, ...result.right.results],
-            next: result.right.next,
+            next: result.right.next ?? '',
             fetchMore: result.right.next != null,
           ),
         );
