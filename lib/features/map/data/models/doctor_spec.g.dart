@@ -21,6 +21,8 @@ DoctorSpecModel _$DoctorSpecModelFromJson(Map<String, dynamic> json) =>
           ? const ImageEntity()
           : const ImageConverter()
               .fromJson(json['image'] as Map<String, dynamic>?),
+      longitude: (json['longitude'] as num?)?.toDouble() ?? 0,
+      latitude: (json['latitude'] as num?)?.toDouble() ?? 0,
     );
 
 Map<String, dynamic> _$DoctorSpecModelToJson(DoctorSpecModel instance) =>
@@ -35,4 +37,6 @@ Map<String, dynamic> _$DoctorSpecModelToJson(DoctorSpecModel instance) =>
       'work_experience': instance.workExperience,
       'address': instance.address,
       'is_favourite': instance.isFavourite,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
     };

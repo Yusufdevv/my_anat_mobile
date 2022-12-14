@@ -27,5 +27,8 @@ class MapParameter extends Equatable {
     lat,long,radius,
   ];
 
-
+  @override
+  String toString() {
+    return 'MapParameter(lat: $lat, long: $long, radius: $radius)';
+  }
 }

@@ -10,10 +10,8 @@ part 'map_doctor.g.dart';
 class MapDoctorModel {
   @DoctorSpecConverter()
   final DoctorSpecModel doctor;
-  @JsonKey(name: 'organization')
-  final MapHospitalModel hospital;
 
-  MapDoctorModel({required this.hospital, required this.doctor});
+  MapDoctorModel({required this.doctor});
 
   factory MapDoctorModel.fromJson(Map<String, dynamic> json) =>
       _$MapDoctorModelFromJson(json);

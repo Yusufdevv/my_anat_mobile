@@ -292,16 +292,16 @@ abstract class MyFunctions {
         .map(
           (e) => PlacemarkMapObject(
               opacity: 1,
-              mapId: MapObjectId(e.hospital.longitude.toString()),
+              mapId: MapObjectId(e.doctor.longitude.toString()),
               point: Point(
-                  latitude: e.hospital.latitude,
-                  longitude: e.hospital.longitude),
+                  latitude: e.doctor.latitude,
+                  longitude: e.doctor.longitude),
               onTap: (object, point) {
                 controller.moveCamera(CameraUpdate.newCameraPosition(
                     CameraPosition(
                         target: Point(
-                            latitude: e.hospital.latitude,
-                            longitude: e.hospital.longitude),
+                            latitude: e.doctor.latitude,
+                            longitude: e.doctor.longitude),
                         zoom: 15)));
                 showModalBottomSheet(
                   context: context,
@@ -314,14 +314,14 @@ abstract class MyFunctions {
                     isHospital: false,
                     specialization: e.doctor.position,
                     slug: '',
-                    hospital: e.hospital.title,
+                    hospital: e.doctor.fullName,
                     title: e.doctor.fullName,
-                    phone: e.hospital.phoneNumber,
+                      phone: 'e.hospital.phoneNumber',
                     address: e.doctor.address,
                     images: [e.doctor.image.middle],
                     location: Point(
-                        latitude: e.hospital.latitude,
-                        longitude: e.hospital.longitude),
+                        latitude: e.doctor.latitude,
+                        longitude: e.doctor.longitude),
                     rating: e.doctor.rating,
                   ),
                 );

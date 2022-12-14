@@ -12,6 +12,8 @@ class DoctorSpecEntity {
   final int workExperience;
   final String address;
   final bool isFavourite;
+  final double latitude;
+  final double longitude;
 
   const DoctorSpecEntity(
       {this.isFavourite = false,
@@ -23,5 +25,7 @@ class DoctorSpecEntity {
       this.phoneNumber = '',
       this.workExperience = 0,
       this.address = '',
+      this.latitude = 0,
+      this.longitude = 0,
       this.image = const ImageEntity()});
 }

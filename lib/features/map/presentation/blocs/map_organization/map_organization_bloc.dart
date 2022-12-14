@@ -16,7 +16,9 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'map_organization_bloc.freezed.dart';
+
 part 'map_organization_event.dart';
+
 part 'map_organization_state.dart';
 
 class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationState> {
@@ -43,10 +45,13 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
       final result = await getDoctors(state.searchText,
           param: MapParameter(lat: state.lat, long: state.long, radius: state.radius));
       if (result.isRight) {
+        print('doctor length: ${result.right.length}');
         emit(state.copyWith(
           doctors: result.right,
         ));
-      } else {}
+      } else {
+        print('doctor left:');
+      }
     });
     on<_ChangeSearchText>((event, emit) {
       emit(state.copyWith(searchText: event.text));

@@ -17,6 +17,8 @@ class DoctorSpecModel extends DoctorSpecEntity {
     required super.address,
     required super.workExperience,
     required super.image,
+    required super.longitude,
+    required super.latitude,
   });
 
   factory DoctorSpecModel.fromJson(Map<String, dynamic> json) => _$DoctorSpecModelFromJson(json);
@@ -24,6 +26,7 @@ class DoctorSpecModel extends DoctorSpecEntity {
 
 class DoctorSpecConverter implements JsonConverter<DoctorSpecEntity, Map<String, dynamic>?> {
   const DoctorSpecConverter();
+
   @override
   DoctorSpecEntity fromJson(Map<String, dynamic>? json) => DoctorSpecModel.fromJson(json ?? {});
 
