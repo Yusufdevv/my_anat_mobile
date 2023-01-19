@@ -56,12 +56,14 @@ class DoctorComments extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RatingStars(
-                          rate: rating.round().toDouble(),
+                          rate: rating,
                           inactiveStarColor: primary.withOpacity(0.5),
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          '${state.doctorComments.length} ${LocaleKeys.review.tr()}',
+                          state.doctorComments.isEmpty
+                              ? LocaleKeys.no_review.tr()
+                              : '${state.doctorComments.length} ${LocaleKeys.review.tr()}',
                           style: Theme.of(context)
                               .textTheme
                               .headline3!
@@ -115,14 +117,11 @@ class DoctorComments extends StatelessWidget {
                 itemBuilder: (context, index) => CommentItem(
                   isOrganization: false,
                   onTapDelete: () {
-                    context
-                        .read<CommentsBloc>()
-                        .add(CommentsEvent.deleteDoctorComment(
+                    context.read<CommentsBloc>().add(
+                        CommentsEvent.deleteDoctorComment(
                             id: state.doctorComments[index].id,
-                            onError: () {
-                            },
-                            onSuccess: () {
-                            }));
+                            onError: () {},
+                            onSuccess: () {}));
                   },
                   entity: state.doctorComments[index],
                 ),

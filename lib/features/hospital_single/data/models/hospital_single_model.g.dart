@@ -65,6 +65,10 @@ HospitalSingleModel _$HospitalSingleModelFromJson(Map<String, dynamic> json) =>
       workFrom: json['work_from'] as String? ?? '',
       workTo: json['work_to'] as String? ?? '',
       videoLink: json['video_link'] as String? ?? '',
+      videos: (json['videos'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       videoDescription: json['video_description'] as String? ?? '',
     );
 
@@ -106,4 +110,5 @@ Map<String, dynamic> _$HospitalSingleModelToJson(
       'work_all_day': instance.workAllDay,
       'video_link': instance.videoLink,
       'video_description': instance.videoDescription,
+      'videos': instance.videos,
     };

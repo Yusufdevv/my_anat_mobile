@@ -4,6 +4,7 @@ import 'package:anatomica/features/journal/data/models/payment_response_model.da
 import 'package:anatomica/features/journal/data/models/prices_model.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 abstract class PaymentDatasource {
   Future<PaymentResponseModel> orderCreateArticle({
@@ -205,7 +206,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
                 statusCode: response.statusCode!,
                 errorMessage: ((response.data as Map).values.isNotEmpty
                         ? (response.data as Map).values.first
-                        : LocaleKeys.phone_number_error)
+                        : LocaleKeys.phone_number_error.tr())
                     .toString());
           } else {
             if (response.data is Map) {

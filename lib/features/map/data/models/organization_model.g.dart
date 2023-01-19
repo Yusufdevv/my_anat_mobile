@@ -35,6 +35,10 @@ HospitalModel _$HospitalModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => TitlerModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      longitude: (json['longitude'] as num?)?.toDouble() ?? -1,
+      latitude: (json['latitude'] as num?)?.toDouble() ?? -1,
+      inn: json['inn'] as String? ?? '',
+      workAllDay: json['workAllDay'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$HospitalModelToJson(HospitalModel instance) =>
@@ -51,4 +55,8 @@ Map<String, dynamic> _$HospitalModelToJson(HospitalModel instance) =>
       'images': instance.imagesList,
       'specialization': instance.specialization,
       'types': instance.types,
+      'inn': instance.inn,
+      'workAllDay': instance.workAllDay,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
     };

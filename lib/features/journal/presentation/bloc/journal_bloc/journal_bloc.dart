@@ -39,6 +39,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
       emit(state.copyWith(status: PaginatorStatus.PAGINATOR_LOADING));
       final results = await _getJournalUseCase.call(null);
       if (results.isRight) {
+        print('next => ${results.right.next}');
         emit(
           state.copyWith(
             journals: results.right.results,
@@ -47,6 +48,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
             next: results.right.next,
           ),
         );
+        print('next after => ${state.next}');
       } else {
         emit(state.copyWith(status: PaginatorStatus.PAGINATOR_ERROR));
       }
@@ -54,6 +56,8 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     on<GetMoreJournals>((event, emit) async {
       final results = await _getJournalUseCase.call(state.next);
       if (results.isRight) {
+        print('next more => ${state.next}');
+        print('${state.journals.length}  :  ${results.right.results.length}');
         emit(
           state.copyWith(
             journals: [...state.journals, ...results.right.results],

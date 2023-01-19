@@ -22,11 +22,12 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   final SendCodeToEmailUseCase _sendCodeToEmailUseCase;
   final SendCodeToPhoneUseCase _sendCodeToPhoneUseCase;
 
+
   EditProfileBloc(
     this._editProfileUseCase,
     this._uploadUseCase,
-      this._sendCodeToEmailUseCase,
-      this._sendCodeToPhoneUseCase,
+    this._sendCodeToEmailUseCase,
+    this._sendCodeToPhoneUseCase,
   ) : super(const EditProfileState(
           status: FormzStatus.pure,
           firstName: '',
@@ -75,10 +76,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         }
       }
     });
-    on<_EditEmail>((event, emit) {
-
-
-    });
+    on<_EditEmail>((event, emit) {});
     on<_ChangeImage>((event, emit) async {
       var formData = FormData();
 
@@ -101,9 +99,12 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     on<_ChangeEmail>((event, emit) {
       emit(state.copyWith(email: event.text));
     });
-    on<_ChangePhoneNumber>((event, emit) {
-      emit(
-          state.copyWith(phoneNumber: '+998${event.text.replaceAll(' ', '')}'));
+    on<_ChangePhoneNumber>((event, emit) async {
+      final result = await _sendCodeToPhoneUseCase.call(event.text);
+      if (result.isRight) {
+        emit(state.copyWith(
+            phoneNumber: '+998${event.text.replaceAll(' ', '')}'));
+      }
     });
     on<_ChangeName>((event, emit) {
       emit(state.copyWith(firstName: event.text));

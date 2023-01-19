@@ -16,6 +16,7 @@ abstract class  LocaleKeys {
   static const no_account = 'no_account';
   static const za_register = 'za_register';
   static const incorrect = 'incorrect';
+  static const understand = 'understand';
   static const offline_mode = 'offline_mode';
   static const offline = 'offline';
   static const retry = 'retry';
@@ -114,6 +115,8 @@ abstract class  LocaleKeys {
   static const sing_up_to_full = 'sing_up_to_full';
   static const preview = 'preview';
   static const buy = 'buy';
+  static const content = 'content';
+  static const settings = 'settings';
   static const subscribe = 'subscribe';
   static const about_doctor = 'about_doctor';
   static const interview = 'interview';
@@ -293,6 +296,7 @@ abstract class  LocaleKeys {
   static const all_conditions = 'all_conditions';
   static const bought = 'bought';
   static const free = 'free';
+  static const no_review = 'no_review';
   static const privacy_1 = 'privacy_1';
   static const privacy_2 = 'privacy_2';
   static const privacy_3 = 'privacy_3';

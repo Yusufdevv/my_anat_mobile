@@ -215,7 +215,7 @@ class CommentSuccessBottomSheet extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pop();
             },
-            text: LocaleKeys.clear.tr(),
+            text: LocaleKeys.understand.tr(),
           )
         ],
       ),

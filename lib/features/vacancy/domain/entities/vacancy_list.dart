@@ -137,6 +137,7 @@ class WorkType extends Equatable {
   List<Object?> get props => [name, label];
 }
 
+
 class WorkTypeConverter extends JsonConverter<WorkType, Map<String, dynamic>?> {
   const WorkTypeConverter();
 

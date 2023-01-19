@@ -14,6 +14,7 @@ class JournalRepositoryImpl extends JournalRepository {
   JournalRepositoryImpl({required this.datasource});
   @override
   Future<Either<Failure, GenericPagination<JournalEntity>>> getJournals({String? next}) async {
+    print('next repo impl => $next');
     try {
       final result = await datasource.getJournals(next: next);
       return Right(result);

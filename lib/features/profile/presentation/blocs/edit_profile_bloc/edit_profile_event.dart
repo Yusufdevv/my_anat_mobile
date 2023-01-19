@@ -14,6 +14,8 @@ class EditProfileEvent with _$EditProfileEvent {
 
   factory EditProfileEvent.changeImage(String image) = _ChangeImage;
 
+  factory EditProfileEvent.verifyOTPCode(String code) = _VerifyOTPCode;
+
   factory EditProfileEvent.editPhone({required String phone}) = _EditPhone;
 
   factory EditProfileEvent.editEmail({required String email}) = _EditEmail;

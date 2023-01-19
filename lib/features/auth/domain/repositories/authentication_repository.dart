@@ -1,4 +1,5 @@
-import 'package:anatomica/core/exceptions/failures.dart';
+
+  import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/domain/entities/user_entity.dart';

@@ -108,7 +108,7 @@ class _VacancyScreenState extends State<VacancyScreen> with TickerProviderStateM
                     return SliverPersistentHeader(
                       pinned: false,
                       delegate: SliverTabBarDelegate(
-                        height: state.organizationVacancyList.isEmpty ? 126 : 280,
+                        height: state.organizationVacancyList.isEmpty ? 128 : 280,
                         color: Colors.white,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

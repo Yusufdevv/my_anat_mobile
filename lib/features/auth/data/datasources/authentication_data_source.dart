@@ -3,6 +3,7 @@ import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/auth/data/models/user_model.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 abstract class AuthenticationDataSource {
   Future<void> login({required String username, required String password});
@@ -295,7 +296,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                 statusCode: response.statusCode!,
                 errorMessage: ((response.data as Map).values.isNotEmpty
                         ? (response.data as Map).values.first
-                        : LocaleKeys.phone_number_error)
+                        : LocaleKeys.phone_number_error.tr())
                     .toString());
           } else {
             if (response.data is Map) {
@@ -316,7 +317,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: LocaleKeys.phone_number_cannot_be_empty);
+      throw  ParsingException(errorMessage: LocaleKeys.phone_number_cannot_be_empty.tr());
     }
   }
 
@@ -400,7 +401,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
                 statusCode: response.statusCode!,
                 errorMessage: ((response.data as Map).values.isNotEmpty
                         ? (response.data as Map).values.first
-                        : LocaleKeys.phone_number_error)
+                        : LocaleKeys.phone_number_error.tr())
                     .toString());
           } else {
             throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -414,7 +415,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
         throw ParsingException(errorMessage: e.toString());
       }
     } else {
-      throw const ParsingException(errorMessage: LocaleKeys.phone_number_cannot_be_empty);
+      throw ParsingException(errorMessage: LocaleKeys.phone_number_cannot_be_empty.tr());
     }
   }
 }

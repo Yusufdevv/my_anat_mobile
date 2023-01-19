@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class RatingStars extends StatelessWidget {
@@ -10,6 +11,8 @@ class RatingStars extends StatelessWidget {
   final Color activeStarColor;
   final Color inactiveStarColor;
   final ValueChanged<double>? onChanged;
+  final bool readOnly;
+
   const RatingStars({
     required this.rate,
     this.activeStarColor = primary,
@@ -17,54 +20,28 @@ class RatingStars extends StatelessWidget {
     this.starSpacing = 4,
     this.starSize = 16,
     this.onChanged,
+    this.readOnly = true,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ...List.generate(
-          rate.toInt() <= 5 ? rate.toInt() : 5,
-          (index) => Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  if (onChanged != null) {
-                    onChanged!(index + 1);
-                  }
-                },
-                child: SvgPicture.asset(
-                  AppIcons.star,
-                  height: starSize,
-                  color: activeStarColor,
-                ),
-              ),
-              SizedBox(width: starSpacing),
-            ],
-          ),
-        ),
-        ...List.generate(
-          (5 - rate.toInt()) > 0 ? (5 - rate.toInt()) : 0,
-          (index) => Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  if (onChanged != null) {
-                    onChanged!(rate.toInt() + index + 1);
-                  }
-                },
-                child: SvgPicture.asset(
-                  AppIcons.star,
-                  height: starSize,
-                  color: inactiveStarColor,
-                ),
-              ),
-              SizedBox(width: starSpacing),
-            ],
-          ),
-        )
-      ],
+    return RatingBar.builder(
+      initialRating: rate,
+      unratedColor: inactiveStarColor,
+      itemSize: starSize,
+      direction: Axis.horizontal,
+      allowHalfRating: true,
+      itemCount: 5,
+      itemPadding: EdgeInsets.only(right: starSpacing),
+      itemBuilder: (context, _) => SvgPicture.asset(
+        AppIcons.star,
+        height: starSize,
+        color: activeStarColor,
+      ),
+      glow: false,
+      ignoreGestures: readOnly,
+      onRatingUpdate: (rating) => onChanged,
     );
   }
 }

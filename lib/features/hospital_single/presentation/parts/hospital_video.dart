@@ -12,11 +12,13 @@ class HospitalVideo extends StatefulWidget {
   final String videoDescription;
   final String videoUrl;
   final TabController tabController;
+  final List<String> videos;
 
   const HospitalVideo({
     required this.videoUrl,
     required this.videoDescription,
     required this.tabController,
+    required this.videos,
     Key? key,
   }) : super(key: key);
 
@@ -26,24 +28,42 @@ class HospitalVideo extends StatefulWidget {
 
 class _HospitalVideoState extends State<HospitalVideo> {
   late YoutubePlayerController controller;
+  late List<YoutubePlayerController> controllers;
   late YoutubePlayer player;
 
   @override
   void initState() {
     super.initState();
-    controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoUrl) ?? '',
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-        disableDragSeek: true,
-        hideControls: true,
-      ),
-    );
+    controllers = [];
+    if (widget.videos.length > 1) {
+      for (int i = 0; i < widget.videos.length; i++) {
+        controllers = List.generate(widget.videos.length, (index) => YoutubePlayerController(
+          initialVideoId: YoutubePlayer.convertUrlToId(widget.videos[index]) ??
+              '',
+          flags: const YoutubePlayerFlags(
+            autoPlay: false,
+            disableDragSeek: true,
+            hideControls: true,
+          ),
+        ));
+      }
+    } else {
+      controller = YoutubePlayerController(
+        initialVideoId: YoutubePlayer.convertUrlToId(
+                widget.videos.isEmpty ? widget.videoUrl : widget.videos[0]) ??
+            '',
+        flags: const YoutubePlayerFlags(
+          autoPlay: false,
+          disableDragSeek: true,
+          hideControls: true,
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.videoUrl.isNotEmpty) {
+    if (widget.videoUrl.isNotEmpty || widget.videos.isNotEmpty) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         color: white,
@@ -53,8 +73,70 @@ class _HospitalVideoState extends State<HospitalVideo> {
           children: [
             Text(
               LocaleKeys.videos.tr(),
-              style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(color: textColor),
             ),
+            for (int i = 0; i < widget.videos.length; i++)
+              if (widget.videos.isNotEmpty && controllers.isNotEmpty) ...{
+                Container(
+                  padding: const EdgeInsets.only(top: 20),
+                  color: white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (widget.videos.isNotEmpty&& controllers.isNotEmpty) ...{
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: SizedBox(
+                                height: 140,
+                                width: double.maxFinite,
+                                child: YoutubePlayerBuilder(
+                                  player: YoutubePlayer(
+                                    controller: controllers[i],
+                                  ),
+                                  builder: (context, player) => player,
+                                ),
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: GestureDetector(
+                                onTap: () async {
+                                  if (await canLaunchUrlString(
+                                      widget.videos[i])) {
+                                    await launchUrlString(widget.videos[i],
+                                        mode: LaunchMode.externalApplication);
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: textColor.withOpacity(0.47),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                      height: 36,
+                                      width: 36,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: white.withOpacity(0.4)),
+                                      child:
+                                          SvgPicture.asset(AppIcons.playIcon)),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      },
+                    ],
+                  ),
+                ),
+              } else
+                ...{},
             if (widget.videoUrl.isNotEmpty) ...{
               Container(
                 padding: const EdgeInsets.only(top: 20),
@@ -82,7 +164,8 @@ class _HospitalVideoState extends State<HospitalVideo> {
                             child: GestureDetector(
                               onTap: () async {
                                 if (await canLaunchUrlString(widget.videoUrl)) {
-                                  await launchUrlString(widget.videoUrl, mode: LaunchMode.externalApplication);
+                                  await launchUrlString(widget.videoUrl,
+                                      mode: LaunchMode.externalApplication);
                                 }
                               },
                               child: Container(
@@ -95,7 +178,9 @@ class _HospitalVideoState extends State<HospitalVideo> {
                                     height: 36,
                                     width: 36,
                                     alignment: Alignment.center,
-                                    decoration: BoxDecoration(shape: BoxShape.circle, color: white.withOpacity(0.4)),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: white.withOpacity(0.4)),
                                     child: SvgPicture.asset(AppIcons.playIcon)),
                               ),
                             ),
@@ -121,7 +206,10 @@ class _HospitalVideoState extends State<HospitalVideo> {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Видео',
-                style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .copyWith(color: textColor),
               ),
             ),
             const SizedBox(height: 16),

@@ -69,7 +69,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
   late HArticlesBloc articlesBloc;
   late HospitalVacanciesBloc vacanciesBloc;
   late AutoScrollController controller;
-  bool hasVideos = true;
   bool hasServices = true;
   bool hasSpecialists = true;
   bool hasFacility = true;
@@ -164,6 +163,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
 
   @override
   Widget build(BuildContext context) {
+
     return WKeyboardDismisser(
       child: DefaultTabController(
         length: tabs.length,
@@ -247,8 +247,10 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                 ],
                 child: BlocConsumer<HospitalSingleBloc, HospitalSingleState>(
                   listener: (context, state) {
+
                     if (state.status.isSubmissionSuccess &&
-                        state.hospital.videoLink.isEmpty) {
+                        state.hospital.videoLink.isEmpty &&
+                        state.hospital.videos.isEmpty) {
                       setState(() {
                         tabs.removeWhere(
                             (element) => element.keyTitle == 'videos');
@@ -280,7 +282,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                   duration: const Duration(milliseconds: 200),
                                 );
                               },
-                              tabController: DefaultTabController.of(context) ?? _tabController,
+                              tabController: DefaultTabController.of(context) ??
+                                  _tabController,
                               tabs: tabs.map((e) => e.title).toList(),
                             ),
                           ),
@@ -297,11 +300,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                         id: '1',
                                         builder: (context, isInView, child) {
                                           WidgetsBinding.instance
-                                              .addPostFrameCallback((timeStamp) {
+                                              .addPostFrameCallback(
+                                                  (timeStamp) {
                                             if (isInView ||
                                                 !headerManagerState
                                                     .isHeaderScrolled) {
-                                              DefaultTabController.of(context)?.animateTo(0);
+                                              DefaultTabController.of(context)
+                                                  ?.animateTo(0);
                                             }
                                           });
                                           return child ?? const SizedBox();
@@ -325,24 +330,27 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                       WidgetsBinding.instance
                                           .addPostFrameCallback((timeStamp) {
                                         if (isInView) {
-                                          DefaultTabController.of(context)?.animateTo(
-                                              tabs.indexWhere((element) =>
-                                                  element.keyTitle == 'videos'));
+                                          DefaultTabController.of(context)
+                                              ?.animateTo(tabs.indexWhere(
+                                                  (element) =>
+                                                      element.keyTitle ==
+                                                      'videos'));
                                         }
                                       });
-
                                       return child ?? const SizedBox();
                                     },
                                     child: AutoScrollTag(
                                       controller: controller,
                                       key: const ValueKey(1),
                                       index: tabs.indexWhere((element) =>
-                                      element.keyTitle == 'videos'),
+                                          element.keyTitle == 'videos'),
                                       child: HospitalVideo(
-                                          videoUrl: state.hospital.videoLink,
-                                          videoDescription:
-                                              state.hospital.videoDescription,
-                                          tabController: _tabController),
+                                        videoUrl: state.hospital.videoLink,
+                                        videos: state.hospital.videos,
+                                        videoDescription:
+                                            state.hospital.videoDescription,
+                                        tabController: _tabController,
+                                      ),
                                     ),
                                   ),
                                 },
@@ -353,10 +361,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((timeStamp) {
                                           if (isInView) {
-                                            DefaultTabController.of(context)?.animateTo(
-                                                tabs.indexWhere((element) =>
-                                                    element.keyTitle ==
-                                                    'service'));
+                                            DefaultTabController.of(context)
+                                                ?.animateTo(tabs.indexWhere(
+                                                    (element) =>
+                                                        element.keyTitle ==
+                                                        'service'));
                                           }
                                         });
 
@@ -366,7 +375,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           controller: controller,
                                           key: const ValueKey(2),
                                           index: tabs.indexWhere((element) =>
-                                          element.keyTitle == 'service'),
+                                              element.keyTitle == 'service'),
                                           child: HospitalServices(
                                               servicesBloc: servicesBloc))),
                                 },
@@ -378,10 +387,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                             .addPostFrameCallback(
                                           (timeStamp) {
                                             if (isInView) {
-                                              DefaultTabController.of(context)?.animateTo(
-                                                  tabs.indexWhere((element) =>
-                                                      element.keyTitle ==
-                                                      'specialists'));
+                                              DefaultTabController.of(context)
+                                                  ?.animateTo(tabs.indexWhere(
+                                                      (element) =>
+                                                          element.keyTitle ==
+                                                          'specialists'));
                                             }
                                           },
                                         );
@@ -391,7 +401,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           controller: controller,
                                           key: const ValueKey(3),
                                           index: tabs.indexWhere((element) =>
-                                          element.keyTitle == 'specialists'),
+                                              element.keyTitle ==
+                                              'specialists'),
                                           child: const HospitalSpecialists())),
                                 },
                                 if (hasFacility) ...{
@@ -401,10 +412,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((timeStamp) {
                                           if (isInView) {
-                                            DefaultTabController.of(context)?.animateTo(
-                                                tabs.indexWhere((element) =>
-                                                    element.keyTitle ==
-                                                    'facility'));
+                                            DefaultTabController.of(context)
+                                                ?.animateTo(tabs.indexWhere(
+                                                    (element) =>
+                                                        element.keyTitle ==
+                                                        'facility'));
                                           }
                                         });
                                         return child ?? const SizedBox();
@@ -413,8 +425,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           controller: controller,
                                           key: const ValueKey(4),
                                           index: tabs.indexWhere((element) =>
-                                          element.keyTitle ==
-                                              'facility'),
+                                              element.keyTitle == 'facility'),
                                           child:
                                               const HospitalConditionsHorizontalList()))
                                 },
@@ -425,10 +436,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((timeStamp) {
                                           if (isInView) {
-                                            DefaultTabController.of(context)?.animateTo(
-                                                tabs.indexWhere((element) =>
-                                                    element.keyTitle ==
-                                                    'articles'));
+                                            DefaultTabController.of(context)
+                                                ?.animateTo(tabs.indexWhere(
+                                                    (element) =>
+                                                        element.keyTitle ==
+                                                        'articles'));
                                           }
                                         });
 
@@ -438,9 +450,9 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           controller: controller,
                                           key: const ValueKey(5),
                                           index: tabs.indexWhere((element) =>
-                                          element.keyTitle == 'articles'),
+                                              element.keyTitle == 'articles'),
                                           child:
-                                              const HospitalArticlesHorizontalList()))
+                                               HospitalArticlesHorizontalList(hospitalId: widget.id)))
                                 },
                                 InViewNotifierWidget(
                                     id: '7',
@@ -448,9 +460,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                       WidgetsBinding.instance
                                           .addPostFrameCallback((timeStamp) {
                                         if (isInView) {
-                                          DefaultTabController.of(context)?.animateTo(
-                                              tabs.indexWhere((element) =>
-                                                  element.keyTitle == 'reviews'));
+                                          DefaultTabController.of(context)
+                                              ?.animateTo(tabs.indexWhere(
+                                                  (element) =>
+                                                      element.keyTitle ==
+                                                      'reviews'));
                                         }
                                       });
 
@@ -460,7 +474,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                         controller: controller,
                                         key: const ValueKey(6),
                                         index: tabs.indexWhere((element) =>
-                                        element.keyTitle == 'reviews'),
+                                            element.keyTitle == 'reviews'),
                                         child: HospitalCommentsHorizontalList(
                                             hospital: state.hospital))),
                                 InViewNotifierWidget(
@@ -469,9 +483,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                       WidgetsBinding.instance
                                           .addPostFrameCallback((timeStamp) {
                                         if (isInView) {
-                                          DefaultTabController.of(context)?.animateTo(
-                                              tabs.indexWhere((element) =>
-                                                  element.keyTitle == 'vacancy'));
+                                          DefaultTabController.of(context)
+                                              ?.animateTo(tabs.indexWhere(
+                                                  (element) =>
+                                                      element.keyTitle ==
+                                                      'vacancy'));
                                         }
                                       });
                                       return child ?? const SizedBox();
@@ -480,7 +496,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                         controller: controller,
                                         key: const ValueKey(7),
                                         index: tabs.indexWhere((element) =>
-                                        element.keyTitle == 'vacancy'),
+                                            element.keyTitle == 'vacancy'),
                                         child:
                                             const HospitalVacanciesHorizontalList())),
                                 InViewNotifierWidget(
@@ -489,9 +505,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                     WidgetsBinding.instance
                                         .addPostFrameCallback((timeStamp) {
                                       if (isInView) {
-                                        DefaultTabController.of(context)?.animateTo(tabs.indexWhere(
-                                            (element) =>
-                                                element.keyTitle == 'contact'));
+                                        DefaultTabController.of(context)
+                                            ?.animateTo(tabs.indexWhere(
+                                                (element) =>
+                                                    element.keyTitle ==
+                                                    'contact'));
                                       }
                                     });
                                     return child ?? const SizedBox();
@@ -500,7 +518,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                     controller: controller,
                                     key: const ValueKey(8),
                                     index: tabs.indexWhere((element) =>
-                                    element.keyTitle == 'contact'),
+                                        element.keyTitle == 'contact'),
                                     child: HospitalContacts(
                                       email: state.hospital.email,
                                       facebook: state.hospital.facebook,

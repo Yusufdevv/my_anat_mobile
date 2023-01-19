@@ -6,17 +6,29 @@ class HospitalEntity {
   @ImageConverter()
   final ImageEntity logo;
   final String title;
-  final String addres;
+  final String address;
   final List<AssetModel> images;
   final double rating;
+  final String inn;
+  final String phoneNumber;
+  final String locationUrl;
+  final bool workAllDay;
+  final double latitude;
+  final double longitude;
   final int id;
-  HospitalEntity({
-    required this.rating,
-    required this.title,
-    required this.images,
-    required this.addres,
-    required this.slug,
-    required this.id,
-    this.logo = const ImageEntity()
-  });
+
+  HospitalEntity(
+      {required this.rating,
+      required this.title,
+      required this.images,
+      required this.address,
+      required this.slug,
+      required this.id,
+      this.longitude = -1,
+      this.latitude = -1,
+      this.inn = '',
+      this.locationUrl = '',
+      this.workAllDay = false,
+        this.phoneNumber = '',
+      this.logo = const ImageEntity()});
 }

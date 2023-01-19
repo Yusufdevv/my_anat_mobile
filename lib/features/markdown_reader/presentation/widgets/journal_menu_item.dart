@@ -19,14 +19,16 @@ class JournalMenuItem extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(12, 12, 36, 12),
+        padding: const EdgeInsets.all(12),
         child: Row(
           children: [
             SvgPicture.asset(icon),
-            const SizedBox(width: 6),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),maxLines: 1,overflow: TextOverflow.ellipsis,
+              ),
             )
           ],
         ),

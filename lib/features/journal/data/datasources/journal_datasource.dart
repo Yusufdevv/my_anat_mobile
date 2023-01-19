@@ -30,6 +30,7 @@ class JournalDatasourceImpl extends JournalDatasource {
 
   @override
   Future<GenericPagination<JournalModel>> getJournals({String? next}) async {
+    print('next datasource => $next');
     try {
       final response = await _dio.get(
         next ?? '/journal/',

@@ -79,7 +79,7 @@ class PhoneTextField extends StatelessWidget {
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               fillColor: textFieldColor,
               filled: true,
-              prefixIconConstraints: const BoxConstraints(maxWidth: 77),
+              prefixIconConstraints: const BoxConstraints(maxWidth: 80),
               prefixIcon: Row(
                 children: [
                   Padding(

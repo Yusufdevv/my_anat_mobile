@@ -96,10 +96,8 @@ class CandidateSingleHeader extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     children: [
                       Positioned.fill(
-                        bottom: MyFunctions.getDoctorImageBottomPadding(
-                            candidate: candidate,
-                            initialHeight: 160,
-                            decrementAmount: 30),
+                        // Edit
+                        bottom: 0,
                         child: Stack(
                           children: [
                             Positioned.fill(
