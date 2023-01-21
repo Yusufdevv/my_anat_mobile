@@ -16,12 +16,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class HospitalList extends StatefulWidget {
   final TabController controller;
   final bool getFocus;
+  final Point myLocation;
 
-  const HospitalList({required this.controller, this.getFocus = false, Key? key}) : super(key: key);
+  const HospitalList({required this.controller,required this.myLocation, this.getFocus = false, Key? key}) : super(key: key);
 
   @override
   State<HospitalList> createState() => _HospitalListState();
@@ -141,7 +143,7 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 150),
                           child: state.crossFadeState == CrossFadeState.showFirst
-                              ? const ResultList()
+                              ? ResultList(myPoint: widget.myLocation)
                               : SuggestionListScreen(
                                   isDoctor: false,
                                   searchText: controller.text,

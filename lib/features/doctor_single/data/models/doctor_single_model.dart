@@ -26,7 +26,7 @@ class DoctorSingleModel extends DoctorSingleEntity {
     required super.fullName,
     required super.workExperience,
     required super.address,
-    required super.specialization,
+    required super.specializations,
     required super.region,
     required super.district,
     required super.img,

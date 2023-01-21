@@ -22,33 +22,7 @@ import 'package:jiffy/jiffy.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 abstract class MyFunctions {
-  static double getDoctorImageBottomPadding(
-      {DoctorSingleEntity? doctor,
-      double initialHeight = 178,
-      double decrementAmount = 26,
-      CandidateSingleEntity? candidate}) {
-    double height = initialHeight;
-    if (candidate != null) {
-      if (candidate.address.isEmpty) {
-        height = height - decrementAmount;
-      }
-      if (candidate.phoneNumbers.isEmpty) {
-        height = height - decrementAmount - 40;
-      }
-    } else if (doctor != null) {
-      if (doctor.address.isEmpty) {
-        height = height - decrementAmount;
-      }
-      if (doctor.phoneNumber.isEmpty) {
-        height = height - decrementAmount;
-      }
-      if (doctor.organization.name.isEmpty) {
-        height = height - decrementAmount;
-      }
-    }
 
-    return height;
-  }
 
   static const clusterId = MapObjectId('big_cluster_id');
 
@@ -171,7 +145,7 @@ abstract class MyFunctions {
         mapId: MapObjectId('my-point'),
         point: point,
         icon: PlacemarkIcon.single(PlacemarkIconStyle(
-           scale: 0.6,
+          scale: 0.6,
           image: BitmapDescriptor.fromBytes(myIconData),
         )));
     return myPoint;
@@ -184,7 +158,6 @@ abstract class MyFunctions {
       YandexMapController controller,
       Point point,
       double accuracy) async {
-
     final iconData = await getBytesFromCanvas(
         placeCount: 0,
         image: AppImages.placeMarkIcon,
@@ -294,8 +267,7 @@ abstract class MyFunctions {
               opacity: 1,
               mapId: MapObjectId(e.doctor.longitude.toString()),
               point: Point(
-                  latitude: e.doctor.latitude,
-                  longitude: e.doctor.longitude),
+                  latitude: e.doctor.latitude, longitude: e.doctor.longitude),
               onTap: (object, point) {
                 controller.moveCamera(CameraUpdate.newCameraPosition(
                     CameraPosition(
@@ -316,7 +288,7 @@ abstract class MyFunctions {
                     slug: '',
                     hospital: e.doctor.fullName,
                     title: e.doctor.fullName,
-                      phone: 'e.hospital.phoneNumber',
+                    phone: 'e.hospital.phoneNumber',
                     address: e.doctor.address,
                     images: [e.doctor.image.middle],
                     location: Point(
@@ -327,10 +299,11 @@ abstract class MyFunctions {
                 );
               },
               icon: PlacemarkIcon.single(PlacemarkIconStyle(
-                  image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark), scale: 0.6))),
+                  image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark),
+                  scale: 0.6))),
         )
         .toList();
-     final myPoint = await getMyPoint(point, context);
+    final myPoint = await getMyPoint(point, context);
     final clusterItem = ClusterizedPlacemarkCollection(
       mapId: clusterId,
       placemarks: placeMarks,

@@ -12,10 +12,10 @@ HospitalDoctorsModel _$HospitalDoctorsModelFromJson(
       fullName: json['full_name'] as String? ?? '',
       id: json['id'] as int? ?? 0,
       phoneNumber: json['phone_number'] as String? ?? '',
-      specialization: json['specialization'] == null
-          ? const TitlerModel(id: 0, title: '')
-          : TitlerModel.fromJson(
-              json['specialization'] as Map<String, dynamic>),
+      specializations: (json['specializations'] as List<dynamic>?)
+              ?.map((e) => TitlerModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       isFavourite: json['is_favourite'] as bool? ?? false,
       image: json['image'] == null
           ? const ImageEntity()
@@ -32,7 +32,7 @@ Map<String, dynamic> _$HospitalDoctorsModelToJson(
     <String, dynamic>{
       'full_name': instance.fullName,
       'id': instance.id,
-      'specialization': instance.specialization,
+      'specializations': instance.specializations,
       'rating': instance.rating,
       'image': const ImageConverter().toJson(instance.image),
       'position': instance.position,

@@ -21,6 +21,8 @@ import 'package:anatomica/features/auth/domain/usecases/submit_phone_usecase.dar
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
+import 'package:anatomica/features/common/domain/repositories/connectivity_repository.dart';
+import 'package:anatomica/features/common/presentation/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/deeplinking/deep_link_bloc.dart';
 import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
@@ -34,7 +36,9 @@ import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journa
 import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/onboarding/presentation/pages/on_boarding_screen.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_crashlytics/firebase_crashlytics.dart' as fire;
 import 'package:flutter/material.dart';
@@ -85,117 +89,133 @@ class _MyAppState extends State<MyApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
 
   NavigatorState get navigator => _navigatorKey.currentState!;
+  late ConnectivityRepository connectivityRepository;
+  late ConnectivityBloc connectivityBloc;
+
+  @override
+  void initState() {
+    connectivityRepository = ConnectivityRepository();
+    connectivityBloc = ConnectivityBloc(connectivityRepository)
+      ..add(const ConnectivityEvent.setup());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => AuthenticationBloc(
-            statusUseCase: GetAuthenticationStatusUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            getUserDataUseCase: GetUserDataUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => ShowPopUpBloc(),
-        ),
-        BlocProvider(
-          create: (context) => DownloadBloc(),
-        ),
-        BlocProvider(create: (context) => DeepLinkBloc()),
-        BlocProvider(
-          create: (context) => JournalBloc(
-            getJournalSingleUseCase: GetJournalSingleUseCase(
-              repository: serviceLocator<JournalRepositoryImpl>(),
-            ),
-            getJournalUseCase: GetJournalUseCase(
-              repository: serviceLocator<JournalRepositoryImpl>(),
-            ),
-            getJournalArticlesUseCase: GetJournalArticlesUseCase(
-              repository: serviceLocator<JournalRepositoryImpl>(),
-            ),
-            getJournalArticleSingleUseCase: GetJournalArticleSingleUseCase(
-              repository: serviceLocator<JournalRepositoryImpl>(),
-            ),
-            getJournalSingleArticlesUseCase: GetJournalSingleArticlesUseCase(
-              repository: serviceLocator<JournalRepositoryImpl>(),
+    return MultiRepositoryProvider(
+      providers: [RepositoryProvider.value(value: connectivityRepository)],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthenticationBloc(
+              statusUseCase: GetAuthenticationStatusUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              getUserDataUseCase: GetUserDataUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
             ),
           ),
-        ),
-        BlocProvider(
-          create: (_) => LoginSignUpBloc(
-            loginUseCase: LoginUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            checkUsernameUseCase: CheckUsernameUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            confirmUseCase: ConfirmUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            createNewStateUseCase: CreateNewStateUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            submitEmailUseCase: SubmitEmailUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            submitNameUsernameUseCase: SubmitNameUserNameUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            submitPasswordUseCase: SubmitPasswordUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            submitPhoneUseCase: SubmitPhoneUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            resendCodeUseCase: ResendCodeUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            submitChangedEmailUseCase: SubmitChangedEmailUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
-            ),
-            submitChangedPhoneUseCase: SubmitChangedPhoneUseCase(
-              repository: serviceLocator<AuthenticationRepositoryImpl>(),
+          BlocProvider.value(
+            value: connectivityBloc,
+          ),
+          BlocProvider(
+            create: (context) => ShowPopUpBloc(),
+          ),
+          BlocProvider(
+            create: (context) => DownloadBloc(),
+          ),
+          BlocProvider(create: (context) => DeepLinkBloc()),
+          BlocProvider(
+            create: (context) => JournalBloc(
+              getJournalSingleUseCase: GetJournalSingleUseCase(
+                repository: serviceLocator<JournalRepositoryImpl>(),
+              ),
+              getJournalUseCase: GetJournalUseCase(
+                repository: serviceLocator<JournalRepositoryImpl>(),
+              ),
+              getJournalArticlesUseCase: GetJournalArticlesUseCase(
+                repository: serviceLocator<JournalRepositoryImpl>(),
+              ),
+              getJournalArticleSingleUseCase: GetJournalArticleSingleUseCase(
+                repository: serviceLocator<JournalRepositoryImpl>(),
+              ),
+              getJournalSingleArticlesUseCase: GetJournalSingleArticlesUseCase(
+                repository: serviceLocator<JournalRepositoryImpl>(),
+              ),
             ),
           ),
-        ),
-      ],
-      child: MaterialApp(
-        supportedLocales: context.supportedLocales,
-        localizationsDelegates: context.localizationDelegates,
-        locale: context.locale,
-        navigatorKey: _navigatorKey,
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.theme(),
-        builder: (context, child) {
-          return BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (context, state) {
-              if (!StorageRepository.getBool('onboarding', defValue: false)) {
-                navigator.pushAndRemoveUntil(
-                    fade(page: const OnBoardingScreen()), (route) => false);
-              } else {
-                navigator.pushAndRemoveUntil(
-                    fade(page: const HomeScreen()), (route) => false);
-              }
+          BlocProvider(
+            create: (_) => LoginSignUpBloc(
+              loginUseCase: LoginUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              checkUsernameUseCase: CheckUsernameUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              confirmUseCase: ConfirmUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              createNewStateUseCase: CreateNewStateUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              submitEmailUseCase: SubmitEmailUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              submitNameUsernameUseCase: SubmitNameUserNameUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              submitPasswordUseCase: SubmitPasswordUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              submitPhoneUseCase: SubmitPhoneUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              resendCodeUseCase: ResendCodeUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              submitChangedEmailUseCase: SubmitChangedEmailUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+              submitChangedPhoneUseCase: SubmitChangedPhoneUseCase(
+                repository: serviceLocator<AuthenticationRepositoryImpl>(),
+              ),
+            ),
+          ),
+        ],
+        child: MaterialApp(
+          supportedLocales: context.supportedLocales,
+          localizationsDelegates: context.localizationDelegates,
+          locale: context.locale,
+          navigatorKey: _navigatorKey,
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme(),
+          builder: (context, child) {
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                if (!StorageRepository.getBool('onboarding', defValue: false)) {
+                  navigator.pushAndRemoveUntil(
+                      fade(page: const OnBoardingScreen()), (route) => false);
+                } else {
+                  navigator.pushAndRemoveUntil(
+                      fade(page: const HomeScreen()), (route) => false);
+                }
 
-              // switch (state.status) {
-              //   case AuthenticationStatus.unauthenticated:
-              //     navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
-              //     break;
-              //   case AuthenticationStatus.authenticated:
-              //     navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
-              //     break;
-              // }
-            },
-            child: child,
-          );
-        },
-        onGenerateRoute: (_) => MaterialPageRoute(
-          builder: (_) => const SplashScreen(),
+                // switch (state.status) {
+                //   case AuthenticationStatus.unauthenticated:
+                //     navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
+                //     break;
+                //   case AuthenticationStatus.authenticated:
+                //     navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
+                //     break;
+                // }
+              },
+              child: child,
+            );
+          },
+          onGenerateRoute: (_) => MaterialPageRoute(
+            builder: (_) => const SplashScreen(),
+          ),
         ),
       ),
     );

@@ -91,7 +91,7 @@ class JournalBigItem extends StatelessWidget {
                         ),
                       );
                     } else {
-                      if (state.status == AuthenticationStatus.authenticated) {
+                      if (state.status == AuthenticationStatus.unauthenticated) {
                         showDialog(
                           context: context,
                           builder: (ctx) => BuyDialog(

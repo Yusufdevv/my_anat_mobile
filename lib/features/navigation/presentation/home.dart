@@ -1,6 +1,8 @@
  import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/common/presentation/bloc/connectivity_bloc/connectivity_bloc.dart';
+import 'package:anatomica/features/common/presentation/widgets/connectivity_bottom_sheet.dart';
 import 'package:anatomica/features/deeplinking/deep_link_bloc.dart';
 import 'package:anatomica/features/doctor_single/presentation/doctor_single_screen.dart';
 import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
@@ -84,7 +86,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) => HomeTabControllerProvider(
         controller: _controller,
-        child: BlocListener<DeepLinkBloc, DeepLinkState>(
+        child: BlocListener<ConnectivityBloc, ConnectivityState>(
+          listenWhen: (state1, state2) {
+            return state1.connected != state2.connected;
+          },
+          listener: (context, state) {
+            if (state.connected == false) {
+              showConnectionBottomSheet(context);
+            }
+          },
+  child: BlocListener<DeepLinkBloc, DeepLinkState>(
           listener: (context, state) {
             if (state is DoctorLinkTriggered) {
               if (state.doctorId != null) {
@@ -126,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   color: Colors.transparent,
                   child: Container(
                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-                    height: 60 + MediaQuery.of(context).padding.bottom,
+                    height: 64 + MediaQuery.of(context).padding.bottom,
                     decoration: BoxDecoration(
                       color: white,
                       border: Border.all(color: textFieldColor),
@@ -183,6 +194,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ),
         ),
+),
       );
 }
 

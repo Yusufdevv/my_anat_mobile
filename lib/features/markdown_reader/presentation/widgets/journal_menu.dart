@@ -1,6 +1,8 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_menu_item.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class JournalMenu extends StatelessWidget {
@@ -37,19 +39,19 @@ class JournalMenu extends StatelessWidget {
           JournalMenuItem(
             onTap: onContentTap,
             icon: AppIcons.tableOfContents,
-            title: 'Содержание',
+            title: LocaleKeys.content.tr(),
           ),
           const Divider(height: 0, thickness: 1, color: textFieldColor),
           JournalMenuItem(
             onTap: onPreviewTap,
             icon: AppIcons.journalPreview,
-            title: 'Предпросмотр',
+            title: LocaleKeys.preview.tr(),
           ),
           const Divider(height: 0, thickness: 1, color: textFieldColor),
           JournalMenuItem(
             onTap: onSettingsTap,
             icon: AppIcons.journalSettings,
-            title: 'Настройки',
+            title: LocaleKeys.settings.tr(),
           ),
         ],
       ),

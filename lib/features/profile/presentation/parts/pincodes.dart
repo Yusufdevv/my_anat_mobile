@@ -9,12 +9,12 @@ class RestorePinCode extends StatelessWidget {
   final TextEditingController? textEditingController;
   final StreamController<ErrorAnimationType>? errorAnimationController;
 
-  const RestorePinCode({this.textEditingController, this.errorAnimationController, Key? key})
+  const RestorePinCode(
+      {this.textEditingController, this.errorAnimationController, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) => SizedBox(
-
         child: PinCodeTextField(
           onChanged: (value) {},
           controller: textEditingController,

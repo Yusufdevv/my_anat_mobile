@@ -51,6 +51,8 @@ class HospitalSingleEntity extends Equatable {
   final bool workAllDay;
   final String videoLink;
   final String videoDescription;
+  final List<String> videos;
+
   const HospitalSingleEntity({
     this.id = 0,
     this.title = '',
@@ -82,6 +84,7 @@ class HospitalSingleEntity extends Equatable {
     this.videoDescription = '',
     this.videoLink = '',
     this.workAllDay = false,
+    this.videos = const [],
   });
 
   @override
@@ -114,5 +117,6 @@ class HospitalSingleEntity extends Equatable {
         facebook,
         telegram,
         workAllDay,
+        videos,
       ];
 }

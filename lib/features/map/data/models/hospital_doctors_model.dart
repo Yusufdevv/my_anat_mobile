@@ -13,7 +13,7 @@ class HospitalDoctorsModel extends HospitalDoctorsEntity {
     required super.fullName,
     required super.id,
     required super.phoneNumber,
-    required super.specialization,
+    required super.specializations,
     required super.isFavourite,
     required super.image,
     required super.position,

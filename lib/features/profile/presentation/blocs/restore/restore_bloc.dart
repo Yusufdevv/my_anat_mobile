@@ -21,7 +21,7 @@ class RestoreBloc extends Bloc<RestoreEvent, RestoreState> {
   RestoreBloc({required this.sendRestore, required this.verifyRestore, required this.restore}) : super(RestoreState()) {
     on<_SendCode>((event, emit) async {
       emit(state.copyWith(sendCodeStatus: FormzStatus.submissionInProgress));
-      final result = await sendRestore(event.phone);
+      final result = await sendRestore.call(event.phone);
       if (result.isRight) {
         emit(
             state.copyWith(signature: result.right, phone: event.phone, sendCodeStatus: FormzStatus.submissionSuccess));
@@ -34,7 +34,7 @@ class RestoreBloc extends Bloc<RestoreEvent, RestoreState> {
       emit(state.copyWith(verifyStatus: FormzStatus.submissionInProgress));
       final result = await verifyRestore(VerifyParam(code: event.code, signature: state.signature, phone: state.phone));
       if (result.isRight) {
-        emit(state.copyWith(verifyStatus: FormzStatus.submissionFailure, signature: result.right));
+        emit(state.copyWith(verifyStatus: FormzStatus.submissionSuccess, signature: result.right));
         event.onSuccess(result.right);
       } else {
         emit(state.copyWith(

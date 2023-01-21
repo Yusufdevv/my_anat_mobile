@@ -48,7 +48,7 @@ class _DoctorsListState extends State<DoctorsList> {
                     MyFunctions.formzStatusToPaginatorStatus(state.status),
                 itemBuilder: (c, index) {
                   return DoctorItem(
-                    showPosition: true,
+                    showPosition: false,
                     entity: state.doctors[index],
                   );
                 },

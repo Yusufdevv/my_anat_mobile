@@ -9,9 +9,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class ResultList extends StatelessWidget {
-  const ResultList({Key? key}) : super(key: key);
+  final Point myPoint;
+  const ResultList({required this.myPoint, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,7 @@ class ResultList extends StatelessWidget {
                 itemBuilder: (c, index) {
                   return HospitalItem(
                     entity: state.hospitals[index],
+                    myPoint: myPoint,
                   );
                 },
                 itemCount: state.hospitals.length,

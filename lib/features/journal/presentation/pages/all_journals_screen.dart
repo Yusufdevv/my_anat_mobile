@@ -12,7 +12,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AllJournalsScreen extends StatelessWidget {
   final JournalBloc bloc;
+
   const AllJournalsScreen({required this.bloc, Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -39,36 +41,42 @@ class AllJournalsScreen extends StatelessWidget {
               ),
               Text(
                 LocaleKeys.all_journals.tr(),
-                style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20, color: textColor),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontSize: 20, color: textColor),
               ),
               const SizedBox(
                 width: 56,
               )
             ],
           ),
-          systemOverlayStyle:
-              const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark),
+          systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark),
         ),
         body: BlocBuilder<JournalBloc, JournalState>(
           builder: (context, state) {
             return GridView.builder(
               physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+              padding: const EdgeInsets.all(16)
+                  .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisExtent: 364,
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 16,
               ),
-              itemCount: (state.journals.length + 1) % 2 == 0 ? state.journals.length + 1 : state.journals.length,
+              itemCount: state.journals.length,
               itemBuilder: (context, index) {
-                if (index == state.journals.length) {
+                if (index == state.journals.length - 1) {
                   if (state.fetchMore) {
-                    context.read<JournalBloc>().add(GetMoreJournalArticles());
+                    context.read<JournalBloc>().add(GetMoreJournals());
                   }
                   return const SizedBox.shrink();
                 } else {
-                  return MagazineSmallItem(journalEntity: state.journals[index]);
+                  return MagazineSmallItem(
+                      journalEntity: state.journals[index]);
                 }
               },
             );

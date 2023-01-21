@@ -31,21 +31,42 @@ class HospitalModel extends HospitalEntity {
   final List<TitlerModel> specialization;
   @JsonKey(name: 'types', defaultValue: [])
   final List<TitlerModel> types;
+  final String inn;
+  final bool workAllDay;
+  final double latitude;
+  final double longitude;
 
-  HospitalModel(
-      {required this.id,
-      required this.imagesList,
-      required this.title,
-      required super.logo,
-      required this.types,
-      required this.slug,
-      required this.address,
-      required this.phoneNumber,
-      required this.locationUrl,
-      required this.phoneNumbers,
-      required this.rating,
-      required this.specialization})
-      : super(title: title, addres: address, images: imagesList, rating: rating, slug: slug, id: id);
+  HospitalModel({
+    required this.id,
+    required this.imagesList,
+    required this.title,
+    required super.logo,
+    required this.types,
+    required this.slug,
+    required this.address,
+    required this.phoneNumber,
+    required this.locationUrl,
+    required this.phoneNumbers,
+    required this.rating,
+    required this.specialization,
+    this.longitude = -1,
+    this.latitude = -1,
+    this.inn = '',
+    this.workAllDay = false,
+  }) : super(
+            title: title,
+            address: address,
+            images: imagesList,
+            rating: rating,
+            slug: slug,
+            id: id,
+            longitude: longitude,
+            latitude: latitude,
+            inn: inn,
+            locationUrl: locationUrl,
+            workAllDay: workAllDay,
+            phoneNumber: phoneNumber);
 
-  factory HospitalModel.fromJson(Map<String, dynamic> json) => _$HospitalModelFromJson(json);
+  factory HospitalModel.fromJson(Map<String, dynamic> json) =>
+      _$HospitalModelFromJson(json);
 }

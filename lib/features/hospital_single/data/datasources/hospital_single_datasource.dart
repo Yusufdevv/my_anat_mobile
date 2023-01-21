@@ -178,7 +178,7 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       {required int id, String? next}) async {
     try {
       final response = await _dio.get(next ?? '/article/',
-          queryParameters: {'organization': id},
+          queryParameters: {'organizations': id},
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {

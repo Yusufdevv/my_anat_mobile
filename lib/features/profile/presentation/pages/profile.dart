@@ -28,6 +28,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -227,32 +228,38 @@ class ProfileScreen extends StatelessWidget {
                               },
                               color: snow),
                           const SizedBox(height: 24),
-                          if (state.profileEntity.doctor.id != 0 ||
-                              state.profileEntity.organizations.isNotEmpty) ...{
-                            const SizedBox()
-                          } else ...{
+                          // if (state.profileEntity.doctor.id != 0 ||
+                          //     state.profileEntity.organizations.isNotEmpty) ...{
+                          //   const SizedBox()
+                          // } else ...{
                             Column(
                               children: [
                                 OtherProfileItem(
                                   onTap: () async {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(fade(
-                                            page: const WebViewScreen(
-                                      page: 'CreateDoctorPage',
-                                    )));
+                                    // Navigator.of(context, rootNavigator: true)
+                                    //     .push(fade(
+                                    //         page: const WebViewScreen(
+                                    //   page: 'CreateDoctorPage',
+                                    // )));
+                                    await launchUrlString(
+                                        'https://anatomica.uz/mobile-auth/?token=${StorageRepository.getString("token")}mobile=true&page=CreateDoctorPage',
+                                        mode: LaunchMode.externalApplication);
                                   },
                                 ),
                                 const SizedBox(height: 12),
                                 OtherProfileItem(
                                   onTap: () async {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(
-                                      fade(
-                                        page: const WebViewScreen(
-                                          page: 'CreateOrganizationPage',
-                                        ),
-                                      ),
-                                    );
+                                    // Navigator.of(context, rootNavigator: true)
+                                    //     .push(
+                                    //   fade(
+                                    //     page: const WebViewScreen(
+                                    //       page: 'CreateOrganizationPage',
+                                    //     ),
+                                    //   ),
+                                    // );
+                                    launchUrlString(
+                                        'https://anatomica.uz/mobile-auth/?token=${StorageRepository.getString("token")}mobile=true&page=CreateOrganizationPage',
+                                        mode: LaunchMode.externalApplication);
                                   },
                                   iconBackgroundColor: steelBlue,
                                   icon: AppIcons.icHospital,
@@ -261,7 +268,7 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                               ],
                             )
-                          }
+                          // }
                         ],
                       ),
                     );

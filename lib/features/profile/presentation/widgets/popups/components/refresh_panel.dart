@@ -16,39 +16,37 @@ class _RefreshPanelState extends State<RefreshPanel> {
   bool timeComplete = false;
 
   @override
-  Widget build(BuildContext context) => Container(
-        child: Row(
-          children: [
-            Text(
-              LocaleKeys.resend_code.tr(),
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
-            ),
-            const SizedBox(
-              width: 6,
-            ),
-            if (timeComplete)
-              RefreshButton(
-                onSucces: () {
+  Widget build(BuildContext context) => Row(
+        children: [
+          Text(
+            LocaleKeys.resend_code.tr(),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
+          ),
+          const SizedBox(
+            width: 6,
+          ),
+          if (timeComplete)
+            RefreshButton(
+              onSucces: () {
+                setState(() {
+                  timeComplete = false;
+                });
+              },
+            )
+          else
+            SizedBox(
+              height: 16,
+              child: TimeCounter(
+                onComplete: () {
                   setState(() {
-                    timeComplete = false;
+                    timeComplete = true;
                   });
                 },
-              )
-            else
-              SizedBox(
-                height: 16,
-                child: TimeCounter(
-                  onComplete: () {
-                    setState(() {
-                      timeComplete = true;
-                    });
-                  },
-                ),
-              )
-          ],
-        ),
+              ),
+            )
+        ],
       );
 }
