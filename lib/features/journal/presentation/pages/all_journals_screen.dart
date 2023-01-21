@@ -67,9 +67,7 @@ class AllJournalsScreen extends StatelessWidget {
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 16,
               ),
-              itemCount: (state.journals.length + 1) % 2 == 0
-                  ? state.journals.length - 1
-                  : state.journals.length,
+              itemCount: state.journals.length,
               itemBuilder: (context, index) {
                 if (index == state.journals.length - 1) {
                   if (state.fetchMore) {

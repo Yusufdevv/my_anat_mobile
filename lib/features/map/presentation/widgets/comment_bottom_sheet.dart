@@ -96,9 +96,11 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RatingStars(
+                    readOnly: false,
                     rate: rating,
                     starSize: 32,
                     starSpacing: 12,
+                    allowHalfRating: false,
                     onChanged: (value) {
                       setState(() {
                         rating = value;

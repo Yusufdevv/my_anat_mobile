@@ -20,10 +20,11 @@ DoctorSingleModel _$DoctorSingleModelFromJson(Map<String, dynamic> json) =>
       fullName: json['full_name'] as String? ?? '',
       workExperience: json['work_experience'] as int? ?? 0,
       address: json['address'] as String? ?? '',
-      specialization: json['specialization'] == null
-          ? const SpecializationEntity()
-          : const SpecializationConverter()
-              .fromJson(json['specialization'] as Map<String, dynamic>?),
+      specializations: (json['specializations'] as List<dynamic>?)
+              ?.map((e) => const SpecializationConverter()
+                  .fromJson(e as Map<String, dynamic>?))
+              .toList() ??
+          const [],
       region: json['region'] == null
           ? const RegionEntity()
           : const RegionConverter()
@@ -68,8 +69,9 @@ Map<String, dynamic> _$DoctorSingleModelToJson(DoctorSingleModel instance) =>
       'region': const RegionConverter().toJson(instance.region),
       'district': const DistrictConverter().toJson(instance.district),
       'address': instance.address,
-      'specialization':
-          const SpecializationConverter().toJson(instance.specialization),
+      'specializations': instance.specializations
+          .map(const SpecializationConverter().toJson)
+          .toList(),
       'phone_number': instance.phoneNumber,
       'email': instance.email,
       'rating': instance.rating,

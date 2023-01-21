@@ -111,7 +111,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
   @override
   void initState() {
     super.initState();
-
+    print('org id => ${widget.id}');
     controller = AutoScrollController();
     vacanciesBloc = HospitalVacanciesBloc(GetHospitalVacancies(
         repository: serviceLocator<HospitalSingleRepositoryImpl>()))

@@ -61,7 +61,7 @@ class JournalState extends Equatable {
     JournalSingleEntity? journalSingle,
   }) =>
       JournalState(
-        next: next,
+        next: next ?? this.next,
         journals: journals ?? this.journals,
         status: status ?? this.status,
         fetchMore: fetchMore ?? this.fetchMore,

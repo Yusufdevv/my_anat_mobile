@@ -29,13 +29,18 @@ class HospitalItem extends StatefulWidget {
 }
 
 class _HospitalItemState extends State<HospitalItem> {
-  double distance = -1;
-
   @override
   void initState() {
-    distance = sqrt(pow((widget.myPoint.latitude - widget.entity.latitude), 2) +
-        pow((widget.myPoint.longitude - widget.entity.longitude), 2));
     super.initState();
+  }
+
+  double calculateDistance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
   }
 
   @override
@@ -146,8 +151,7 @@ class _HospitalItemState extends State<HospitalItem> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(
-                              flex: 9,
+                            Expanded(
                               child: Text(
                                 widget.entity.address,
                                 style: Theme.of(context)
@@ -158,47 +162,65 @@ class _HospitalItemState extends State<HospitalItem> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            Flexible(
-                              flex: 2,
-                              child: Row(
-                                children: [
-                                  Visibility(
-                                    visible: distance >= 0 &&
-                                        widget.entity.longitude > 0 &&
-                                        widget.entity.latitude > 0 &&
-                                        widget.myPoint.latitude > 0 &&
-                                        widget.myPoint.longitude > 0,
-                                    child: Container(
-                                      height: 4,
-                                      width: 4,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 4, vertical: 6.5),
-                                      alignment: Alignment.center,
-                                      decoration: const BoxDecoration(
-                                          color: textSecondary,
-                                          shape: BoxShape.circle),
-                                    ),
+                            Row(
+                              children: [
+                                Visibility(
+                                  visible: calculateDistance(
+                                              widget.myPoint.latitude,
+                                              widget.myPoint.longitude,
+                                              widget.entity.latitude,
+                                              widget.entity.longitude) >=
+                                          0 &&
+                                      widget.entity.longitude > 0 &&
+                                      widget.entity.latitude > 0 &&
+                                      widget.myPoint.latitude > 0 &&
+                                      widget.myPoint.longitude > 0,
+                                  child: Container(
+                                    height: 4,
+                                    width: 4,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 4, vertical: 6.5),
+                                    alignment: Alignment.center,
+                                    decoration: const BoxDecoration(
+                                        color: textSecondary,
+                                        shape: BoxShape.circle),
                                   ),
-                                  Visibility(
-                                    visible: distance >= 0 &&
-                                        widget.entity.longitude > 0 &&
-                                        widget.entity.latitude > 0 &&
-                                        widget.myPoint.latitude > 0 &&
-                                        widget.myPoint.longitude > 0,
-                                    child: Text(
-                                      distance < 1 && distance > 0
-                                          ? '${(distance * 1000).toStringAsFixed(1)} m'
-                                          : '${distance.toStringAsFixed(1)} km',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(color: primary),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                ),
+                                Visibility(
+                                  visible: calculateDistance(
+                                              widget.myPoint.latitude,
+                                              widget.myPoint.longitude,
+                                              widget.entity.latitude,
+                                              widget.entity.longitude) >=
+                                          0 &&
+                                      widget.entity.longitude > 0 &&
+                                      widget.entity.latitude > 0 &&
+                                      widget.myPoint.latitude > 0 &&
+                                      widget.myPoint.longitude > 0,
+                                  child: Text(
+                                    calculateDistance(
+                                                    widget.myPoint.latitude,
+                                                    widget.myPoint.longitude,
+                                                    widget.entity.latitude,
+                                                    widget.entity.longitude) <
+                                                1 &&
+                                            calculateDistance(
+                                                    widget.myPoint.latitude,
+                                                    widget.myPoint.longitude,
+                                                    widget.entity.latitude,
+                                                    widget.entity.longitude) >
+                                                0
+                                        ? '${(calculateDistance(widget.myPoint.latitude, widget.myPoint.longitude, widget.entity.latitude, widget.entity.longitude) * 1000).toStringAsFixed(1)} m'
+                                        : '${calculateDistance(widget.myPoint.latitude, widget.myPoint.longitude, widget.entity.latitude, widget.entity.longitude).toStringAsFixed(1)} km',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(color: primary),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),

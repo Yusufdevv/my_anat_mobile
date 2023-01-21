@@ -7,12 +7,12 @@ class SendRestoreCode extends UseCase<String, String> {
   final GlobalRequestRepository repo = GlobalRequestRepository();
 
   @override
-  Future<Either<Failure, String>> call(String phone) {
+  Future<Either<Failure, String>> call(String params) {
     return repo.postAndSingle(
         endpoint: '/confirmation/code/send/',
         fromJson: (data) {
           return data['signature'];
         },
-        data: {"phone": phone, "type": "phone", "email": ""});
+        data: {"phone": params, "type": "phone", "email": ""});
   }
 }

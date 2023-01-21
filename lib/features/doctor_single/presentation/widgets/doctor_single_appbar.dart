@@ -122,8 +122,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 16),
-                                  if (doctor
-                                      .specialization.title.isNotEmpty) ...{
+                                  if (doctor.position.title.isNotEmpty) ...{
                                     Container(
                                       padding: const EdgeInsets.fromLTRB(
                                           12, 6, 12, 8),
@@ -132,10 +131,10 @@ class DoctorSingleAppBar extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(color: primary),
                                       ),
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 16),
+                                      margin: const EdgeInsets.only(
+                                          left: 16, right: 16, bottom: 20),
                                       child: Text(
-                                        doctor.specialization.title,
+                                        doctor.position.title,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline3!
@@ -160,17 +159,25 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Visibility(
-                                                visible:
-                                                    doctor.position.title != '',
-                                                child: Text(
-                                                  doctor.position.title,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline3!
-                                                      .copyWith(color: primary),
+                                                visible: doctor
+                                                    .specializations.isNotEmpty,
+                                                child: Wrap(
+                                                  children: [
+                                                    for (int i = 0;
+                                                        i <
+                                                            doctor
+                                                                .specializations
+                                                                .length;
+                                                        i++)
+                                                      Text(
+                                                        '${doctor.specializations[i].title} ',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline3!
+                                                            .copyWith(
+                                                                color: primary),
+                                                      ),
+                                                  ],
                                                 ),
                                               ),
                                               const SizedBox(height: 16),

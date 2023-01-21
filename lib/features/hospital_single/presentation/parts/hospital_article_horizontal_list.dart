@@ -41,9 +41,6 @@ class HospitalArticlesHorizontalList extends StatelessWidget {
           ),
           BlocBuilder<HArticlesBloc, HArticlesState>(
             builder: (context, state) {
-              final List<JournalArticleEntity> hospitalArticles = state.articles.where((element) => element.id == hospitalId).toList();
-              print('state articles => $hospitalArticles');
-              print('hospital articles => ${state.articles}');
               if (state.status.isSubmissionInProgress) {
                 return const SizedBox(
                   height: 98,

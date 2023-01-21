@@ -12,6 +12,7 @@ class RatingStars extends StatelessWidget {
   final Color inactiveStarColor;
   final ValueChanged<double>? onChanged;
   final bool readOnly;
+  final bool allowHalfRating;
 
   const RatingStars({
     required this.rate,
@@ -21,6 +22,7 @@ class RatingStars extends StatelessWidget {
     this.starSize = 16,
     this.onChanged,
     this.readOnly = true,
+    this.allowHalfRating = true,
     Key? key,
   }) : super(key: key);
 
@@ -31,7 +33,7 @@ class RatingStars extends StatelessWidget {
       unratedColor: inactiveStarColor,
       itemSize: starSize,
       direction: Axis.horizontal,
-      allowHalfRating: true,
+      allowHalfRating: allowHalfRating,
       itemCount: 5,
       itemPadding: EdgeInsets.only(right: starSpacing),
       itemBuilder: (context, _) => SvgPicture.asset(

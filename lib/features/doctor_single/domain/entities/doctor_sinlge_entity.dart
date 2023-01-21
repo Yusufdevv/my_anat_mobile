@@ -25,7 +25,7 @@ class DoctorSingleEntity extends Equatable {
   final DistrictEntity district;
   final String address;
   @SpecializationConverter()
-  final SpecializationEntity specialization;
+  final List<SpecializationEntity> specializations;
   final String phoneNumber;
   final String email;
   final double rating;
@@ -53,7 +53,7 @@ class DoctorSingleEntity extends Equatable {
       this.region = const RegionEntity(),
       this.district = const DistrictEntity(),
       this.address = '',
-      this.specialization = const SpecializationEntity(),
+      this.specializations = const [],
       this.phoneNumber = '',
       this.email = '',
       this.rating = 0,
@@ -79,7 +79,7 @@ class DoctorSingleEntity extends Equatable {
         region,
         district,
         address,
-        specialization,
+        specializations,
         phoneNumber,
         email,
         rating,

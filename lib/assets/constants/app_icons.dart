@@ -9,6 +9,7 @@ class AppIcons {
   static const purchased = 'assets/icons/global/purchased.svg';
   static const registerUserIcon = 'assets/icons/global/register_user_icon.svg';
   static const bigImageError = 'assets/icons/global/big_image_error.svg';
+  static const noInternet = 'assets/icons/global/no_internet.svg';
   static const smallImageError = 'assets/icons/global/small_image_error.svg';
   static const book = 'assets/icons/magazine/book.svg';
   static const arrowUp = 'assets/icons/magazine/arrow_up.svg';

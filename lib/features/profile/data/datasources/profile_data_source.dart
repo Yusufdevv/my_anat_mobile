@@ -101,6 +101,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
             'Authorization': 'Token ${StorageRepository.getString('token')}'
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        print('status => ${response.statusCode}');
       } else {
         if (response.data is Map) {
           throw ServerException(
