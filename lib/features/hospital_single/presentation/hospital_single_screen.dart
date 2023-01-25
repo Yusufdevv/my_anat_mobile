@@ -111,7 +111,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
   @override
   void initState() {
     super.initState();
-    print('org id => ${widget.id}');
     controller = AutoScrollController();
     vacanciesBloc = HospitalVacanciesBloc(GetHospitalVacancies(
         repository: serviceLocator<HospitalSingleRepositoryImpl>()))
@@ -163,7 +162,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
 
   @override
   Widget build(BuildContext context) {
-
     return WKeyboardDismisser(
       child: DefaultTabController(
         length: tabs.length,
@@ -247,7 +245,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                 ],
                 child: BlocConsumer<HospitalSingleBloc, HospitalSingleState>(
                   listener: (context, state) {
-
                     if (state.status.isSubmissionSuccess &&
                         state.hospital.videoLink.isEmpty &&
                         state.hospital.videos.isEmpty) {
@@ -451,8 +448,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           key: const ValueKey(5),
                                           index: tabs.indexWhere((element) =>
                                               element.keyTitle == 'articles'),
-                                          child:
-                                               HospitalArticlesHorizontalList(hospitalId: widget.id)))
+                                          child: HospitalArticlesHorizontalList(
+                                              hospitalId: widget.id)))
                                 },
                                 InViewNotifierWidget(
                                     id: '7',

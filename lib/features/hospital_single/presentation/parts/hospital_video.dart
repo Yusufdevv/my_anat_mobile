@@ -27,7 +27,6 @@ class HospitalVideo extends StatefulWidget {
 }
 
 class _HospitalVideoState extends State<HospitalVideo> {
-  late YoutubePlayerController controller;
   late List<YoutubePlayerController> controllers;
   late YoutubePlayer player;
 
@@ -35,29 +34,19 @@ class _HospitalVideoState extends State<HospitalVideo> {
   void initState() {
     super.initState();
     controllers = [];
-    if (widget.videos.length > 1) {
-      for (int i = 0; i < widget.videos.length; i++) {
-        controllers = List.generate(widget.videos.length, (index) => YoutubePlayerController(
-          initialVideoId: YoutubePlayer.convertUrlToId(widget.videos[index]) ??
-              '',
-          flags: const YoutubePlayerFlags(
-            autoPlay: false,
-            disableDragSeek: true,
-            hideControls: true,
-          ),
-        ));
-      }
-    } else {
-      controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(
-                widget.videos.isEmpty ? widget.videoUrl : widget.videos[0]) ??
-            '',
-        flags: const YoutubePlayerFlags(
-          autoPlay: false,
-          disableDragSeek: true,
-          hideControls: true,
-        ),
-      );
+
+    for (int i = 0; i < widget.videos.length; i++) {
+      controllers = List.generate(
+          widget.videos.length,
+          (index) => YoutubePlayerController(
+                initialVideoId:
+                    YoutubePlayer.convertUrlToId(widget.videos[index]) ?? '',
+                flags: const YoutubePlayerFlags(
+                  autoPlay: false,
+                  disableDragSeek: true,
+                  hideControls: true,
+                ),
+              ));
     }
   }
 
@@ -86,7 +75,8 @@ class _HospitalVideoState extends State<HospitalVideo> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (widget.videos.isNotEmpty&& controllers.isNotEmpty) ...{
+                      if (widget.videos.isNotEmpty &&
+                          controllers.isNotEmpty) ...{
                         Stack(
                           children: [
                             ClipRRect(
@@ -154,7 +144,7 @@ class _HospitalVideoState extends State<HospitalVideo> {
                               width: double.maxFinite,
                               child: YoutubePlayerBuilder(
                                 player: YoutubePlayer(
-                                  controller: controller,
+                                  controller: controllers[0],
                                 ),
                                 builder: (context, player) => player,
                               ),
@@ -205,7 +195,7 @@ class _HospitalVideoState extends State<HospitalVideo> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Видео',
+                LocaleKeys.videos.tr(),
                 style: Theme.of(context)
                     .textTheme
                     .headline4!
