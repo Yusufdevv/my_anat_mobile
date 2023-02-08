@@ -7,7 +7,6 @@ import 'package:anatomica/features/auth/domain/entities/district_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/organization_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/region_entity.dart';
-import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:anatomica/features/doctor_single/domain/entities/doctor_sinlge_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

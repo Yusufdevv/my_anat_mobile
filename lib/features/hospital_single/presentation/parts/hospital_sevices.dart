@@ -34,7 +34,7 @@ class HospitalServices extends StatelessWidget {
                 LocaleKeys.service.tr(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline4!
+                    .headlineMedium!
                     .copyWith(color: textColor),
               ),
               if (state.status.isSubmissionInProgress) ...{

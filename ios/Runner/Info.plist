@@ -69,6 +69,10 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>Flutter requires access to microphone.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Flutter requires access to camera.</string>
 	<key>CFBundleLocalizations</key>
     <array>
     	<string>ru</string>

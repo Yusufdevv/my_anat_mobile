@@ -108,8 +108,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             repository: serviceLocator<ProfileRepositoryImpl>()));
   }
 
-
-
   Future<dynamic> _showPickerIos(BuildContext context) async {
     showCupertinoModalPopup(
       context: context,
@@ -203,7 +201,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
-                                                                .headline4!
+                                                                .headlineMedium!
                                                                 .copyWith(
                                                                     color:
                                                                         black,
@@ -233,7 +231,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                             .tr(),
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .bodyText1!
+                                                            .bodyLarge!
                                                             .copyWith(
                                                                 color:
                                                                     textSecondary),
@@ -275,7 +273,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                           style: Theme.of(
                                                                   context)
                                                               .textTheme
-                                                              .bodyText1!
+                                                              .bodyLarge!
                                                               .copyWith(
                                                                   color: black),
                                                         ),
@@ -285,7 +283,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                             .tr(),
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .bodyText1!
+                                                            .bodyLarge!
                                                             .copyWith(
                                                                 color: black),
                                                       ),
@@ -332,14 +330,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                         textStyle:
                                                             Theme.of(context)
                                                                 .textTheme
-                                                                .headline3!
+                                                                .displaySmall!
                                                                 .copyWith(
                                                                     fontSize:
                                                                         18),
                                                         hintStyle:
                                                             Theme.of(context)
                                                                 .textTheme
-                                                                .bodyText2!
+                                                                .bodyMedium!
                                                                 .copyWith(
                                                                     fontSize:
                                                                         4),
@@ -370,10 +368,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                                         onSuccess:
                                                                             (signature) async {
                                                                           if (phoneController.text.replaceAll(' ', '') !=
-                                                                              widget.userEntity.phoneNumber.replaceAll('+998', '')) {
+                                                                              widget.userEntity.phoneNumber.replaceAll('+998',
+                                                                                  '')) {
                                                                             editBloc.add(EditProfileEvent.changePhoneNumber('+998${phoneController.text.replaceAll(' ', '')}'));
                                                                           } else if (nameController.text !=
-                                                                              widget.userEntity.fullName) {
+                                                                              widget
+                                                                                  .userEntity.fullName) {
                                                                             editBloc.add(EditProfileEvent.changeName(nameController.text));
                                                                           } else if (emailController.text !=
                                                                               widget.userEntity.email) {
@@ -391,7 +391,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                                                   UpdateProfileEvent(
                                                                                     profileEntity: _localUser.copyWith(
                                                                                       birthDate: '${date.year}-${date.month}-${date.day}',
-                                                                                      fullName: nameController.text ,
+                                                                                      fullName: nameController.text,
                                                                                       phoneNumber: '+998${phoneController.text.replaceAll(' ', '')}',
                                                                                       email: emailController.text,
                                                                                       img: state.imageUrl.isNotEmpty ? ImageEntity(middle: state.imageUrl) : _localUser.img,
@@ -557,7 +557,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 LocaleKeys.birthday.tr(),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline1!
+                                    .displayLarge!
                                     .copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
@@ -598,7 +598,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       Jiffy(date).format('dd.MM.yyyy'),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline1!
+                                          .displayLarge!
                                           .copyWith(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,

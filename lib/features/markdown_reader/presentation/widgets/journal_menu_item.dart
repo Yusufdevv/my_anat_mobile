@@ -27,7 +27,12 @@ class JournalMenuItem extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),maxLines: 1,overflow: TextOverflow.ellipsis,
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(color: textColor),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             )
           ],

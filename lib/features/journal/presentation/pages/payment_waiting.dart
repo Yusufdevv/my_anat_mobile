@@ -14,7 +14,11 @@ class PaymentWaiting extends StatelessWidget {
   final bool isSubscription;
   final String title;
 
-  const PaymentWaiting({required this.isRegistered, required this.title, this.isSubscription = false, Key? key})
+  const PaymentWaiting(
+      {required this.isRegistered,
+      required this.title,
+      this.isSubscription = false,
+      Key? key})
       : super(key: key);
 
   @override
@@ -45,7 +49,10 @@ class PaymentWaiting extends StatelessWidget {
               : isRegistered
                   ? LocaleKeys.buy_magazine.tr()
                   : LocaleKeys.only_pay.tr(),
-          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
+          style: Theme.of(context)
+              .textTheme
+              .displaySmall!
+              .copyWith(color: textColor, fontSize: 20),
         ),
       ),
       body: Center(
@@ -56,12 +63,20 @@ class PaymentWaiting extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               LocaleKeys.expect.tr(),
-              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
             Text(
-              isSubscription ? LocaleKeys.subscription_waiting.tr() : LocaleKeys.realization_expect.tr(args: [title]),
-              style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+              isSubscription
+                  ? LocaleKeys.subscription_waiting.tr()
+                  : LocaleKeys.realization_expect.tr(args: [title]),
+              style: Theme.of(context)
+                  .textTheme
+                  .displaySmall!
+                  .copyWith(fontWeight: FontWeight.w400),
               textAlign: TextAlign.center,
             ),
           ],
@@ -71,7 +86,10 @@ class PaymentWaiting extends StatelessWidget {
         builder: (context, state) {
           return WButton(
             isLoading: state.checkPaymentStatus.isSubmissionInProgress,
-            margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
+            margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom + 16,
+                left: 16,
+                right: 16),
             onTap: () {
               context.read<PaymentBloc>().add(CheckPaymentStatus());
             },

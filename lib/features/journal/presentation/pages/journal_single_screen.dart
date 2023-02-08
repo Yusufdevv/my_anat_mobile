@@ -155,7 +155,7 @@
 //                           padding: const EdgeInsets.only(left: 16, bottom: 12, top: 20),
 //                           child: Text(
 //                             LocaleKeys.article_issue.tr(),
-//                             style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
+//                             style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 18),
 //                           ),
 //                         ),
 //                       ),

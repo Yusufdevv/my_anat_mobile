@@ -4,7 +4,6 @@ import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 
 part 'hospital_vacancies_bloc.freezed.dart';
 part 'hospital_vacancies_event.dart';

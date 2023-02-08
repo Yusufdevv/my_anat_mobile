@@ -20,7 +20,11 @@ class HospitalCommentList extends StatelessWidget {
   final String description;
   final List<ImageEntity> images;
 
-  const HospitalCommentList({required this.onTapAll, required this.images, Key? key, required this.description})
+  const HospitalCommentList(
+      {required this.onTapAll,
+      required this.images,
+      Key? key,
+      required this.description})
       : super(key: key);
 
   @override
@@ -36,17 +40,20 @@ class HospitalCommentList extends StatelessWidget {
                   if (hospitalSingleState.status.isSubmissionSuccess) ...{
                     if (description.isNotEmpty || images.isNotEmpty) ...{
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 20),
                         color: white,
                         child: Column(
                           children: [
                             Html(data: description),
                             GridView.builder(
                               physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.only(top: description.isNotEmpty ? 16 : 0),
+                              padding: EdgeInsets.only(
+                                  top: description.isNotEmpty ? 16 : 0),
                               shrinkWrap: true,
                               itemCount: images.length,
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 16,
                                 mainAxisSpacing: 16,
@@ -84,7 +91,10 @@ class HospitalCommentList extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(16, 32, 0, 12),
                       child: Text(
                         LocaleKeys.reviews.tr(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(fontSize: 20),
                       ),
                     ),
                     Column(
@@ -98,7 +108,8 @@ class HospitalCommentList extends StatelessWidget {
                     if (state.comments.length > 3) ...{
                       WButton(
                         onTap: onTapAll,
-                        margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                        margin: const EdgeInsets.all(16).copyWith(
+                            bottom: MediaQuery.of(context).padding.bottom + 16),
                         color: commentButton,
                         text: LocaleKeys.all_reviews.tr(),
                         textColor: textSecondary,

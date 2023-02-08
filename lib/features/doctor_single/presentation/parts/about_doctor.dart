@@ -17,7 +17,11 @@ class AboutDoctor extends StatelessWidget {
   final TabController controller;
   final String description;
   final bool showBio;
-  const AboutDoctor({required this.controller, required this.description, required this.showBio, Key? key})
+  const AboutDoctor(
+      {required this.controller,
+      required this.description,
+      required this.showBio,
+      Key? key})
       : super(key: key);
 
   @override
@@ -30,31 +34,45 @@ class AboutDoctor extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               color: white,
-              child: showBio ? Html(data: description) : Text(LocaleKeys.doctor_do_not_want_show_bio.tr()),
+              child: showBio
+                  ? Html(data: description)
+                  : Text(LocaleKeys.doctor_do_not_want_show_bio.tr()),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 32, 0, 12),
               child: Text(
                 LocaleKeys.reviews.tr(),
-                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge!
+                    .copyWith(fontSize: 20),
               ),
             ),
             if (state.doctorComments.isNotEmpty) ...[
-              ...List.generate(state.doctorComments.take(3).length,
+              ...List.generate(
+                  state.doctorComments.take(3).length,
                   (index) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: [
-                        CommentItem(entity: state.doctorComments.take(3).toList()[index],isMainScreen: true, isOrganization: false,),
-                        const SizedBox(height: 16,)
-                      ],
-                    ),
-                  )),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          children: [
+                            CommentItem(
+                              entity:
+                                  state.doctorComments.take(3).toList()[index],
+                              isMainScreen: true,
+                              isOrganization: false,
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            )
+                          ],
+                        ),
+                      )),
               WButton(
                 onTap: () {
                   controller.animateTo(3);
                 },
-                margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom),
+                margin: const EdgeInsets.all(16)
+                    .copyWith(bottom: MediaQuery.of(context).padding.bottom),
                 color: commentButton,
                 text: LocaleKeys.all_reviews.tr(),
                 textColor: textSecondary,

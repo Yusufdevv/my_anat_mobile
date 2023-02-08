@@ -1,6 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/profile/data/models/purchased_article.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PurchasedArticleCard extends StatelessWidget {
@@ -43,20 +42,27 @@ class PurchasedArticleCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16), color: white),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         entity.title,
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                            fontWeight: FontWeight.w700, fontSize: 14),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(
+                                fontWeight: FontWeight.w700, fontSize: 14),
                       ),
                       const SizedBox(
                         height: 4,
                       ),
                       Text(
                         entity.title,
-                        style: Theme.of(context).textTheme.headline4!.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 12),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                                fontWeight: FontWeight.w600, fontSize: 12),
                       ),
                     ],
                   ),

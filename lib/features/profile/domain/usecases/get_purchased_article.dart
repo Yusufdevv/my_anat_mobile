@@ -11,8 +11,8 @@ class GetPurchasedArticleUS
 
   @override
   Future<Either<Failure, GenericPagination<PurchasedArticleModel>>> call(
-      String? next) {
+      String? params) {
     return repo.fetchMore(
-        url: '/article/purchased/', fromJson: PurchasedArticleModel.fromJson, next: next);
+        url: '/article/purchased/', fromJson: PurchasedArticleModel.fromJson, next: params);
   }
 }

@@ -45,8 +45,13 @@ class CommentAboutHospital extends StatelessWidget {
                     width: 36,
                     alignment: Alignment.center,
                     child: Text(
-                      entity.userFullName.isNotEmpty ? entity.userFullName[0] : '',
-                      style: Theme.of(context).textTheme.headline1!.copyWith(color: textSecondary, fontSize: 15),
+                      entity.userFullName.isNotEmpty
+                          ? entity.userFullName[0]
+                          : '',
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayLarge!
+                          .copyWith(color: textSecondary, fontSize: 15),
                     ),
                   ),
                 ),
@@ -57,7 +62,10 @@ class CommentAboutHospital extends StatelessWidget {
                 children: [
                   Text(
                     entity.userFullName,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 15),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(fontSize: 15),
                   ),
                   const SizedBox(height: 2),
                   Row(
@@ -70,7 +78,10 @@ class CommentAboutHospital extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         entity.rating.toString(),
-                        style: Theme.of(context).textTheme.headline3!.copyWith(color: darkGreen),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(color: darkGreen),
                       ),
                     ],
                   ),
@@ -81,7 +92,8 @@ class CommentAboutHospital extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             entity.comment,
-            style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 13),
+            style:
+                Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 13),
           )
         ],
       ),

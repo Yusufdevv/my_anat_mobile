@@ -8,7 +8,8 @@ class FilterItem extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
 
-  const FilterItem({this.title = '', required this.onTap, Key? key}) : super(key: key);
+  const FilterItem({this.title = '', required this.onTap, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class FilterItem extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.headline1!.copyWith(),
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(),
             ),
             const Spacer(),
             SvgPicture.asset(AppIcons.arrowRight, color: textSecondary),

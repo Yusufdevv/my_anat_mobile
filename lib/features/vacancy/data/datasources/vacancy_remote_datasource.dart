@@ -4,6 +4,7 @@ import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
+import 'package:anatomica/features/vacancy/data/models/cadidate_education_files_model.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_education.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_list.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_single.dart';
@@ -19,6 +20,7 @@ import 'package:anatomica/features/vacancy/data/models/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/data/models/vacancy_option.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_education.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_education_files_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_work.dart';
 import 'package:anatomica/features/vacancy/domain/entities/certificate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_option.dart';
@@ -63,6 +65,9 @@ abstract class VacancyRemoteDataSource {
 
   Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation(
       {required int id});
+
+  Future<GenericPagination<CandidateEducationFilesEntity>>
+      getCandidateEducationFiles({required int id});
 
   Future<GenericPagination<CertificateEntity>> getCandidateCertificate(
       {required int id});
@@ -445,7 +450,8 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   Future<GenericPagination<CategoryListModel>> getCategoryList(
       {String? next}) async {
     try {
-      final response = await dio.get(next ?? '/vacancy/vacancy/specization/list/',
+      final response = await dio.get(
+          next ?? '/vacancy/vacancy/specization/list/',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {
@@ -527,10 +533,10 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation(
+  Future<GenericPagination<CandidateEducationModel>> getCandidateEducation(
       {required int id}) async {
     try {
-      final response = await dio.get('/doctor/$id/education/',
+      final response = await dio.get('/doctor/$id/education/files/',
           options: Options(
             headers: StorageRepository.getString('token').isNotEmpty
                 ? {
@@ -544,6 +550,37 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
             response.data,
             (p0) =>
                 CandidateEducationModel.fromJson(p0 as Map<String, dynamic>));
+      }
+      throw ServerException(
+          statusCode: response.statusCode ?? 0,
+          errorMessage: response.statusMessage ?? '');
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<GenericPagination<CandidateEducationFilesModel>>
+      getCandidateEducationFiles({required int id}) async {
+    try {
+      final response = await dio.get('/doctor/$id/education/',
+          options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {
+                    'Authorization':
+                        'Token ${StorageRepository.getString('token')}'
+                  }
+                : {},
+          ));
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(
+            response.data,
+            (p0) => CandidateEducationFilesModel.fromJson(
+                p0 as Map<String, dynamic>));
       }
       throw ServerException(
           statusCode: response.statusCode ?? 0,

@@ -87,7 +87,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       LocaleKeys.create_password.tr(),
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
+                          .titleMedium!
                           .copyWith(fontSize: 14),
                     ),
                     const SizedBox(height: 16),

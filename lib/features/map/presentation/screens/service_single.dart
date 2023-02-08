@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:formz/formz.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ServiceSingleScreen extends StatelessWidget {
@@ -48,6 +47,19 @@ class ServiceSingleScreen extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Html(
                         data: state.serviceSingle.content,
+                        style: {
+                          "h1": Style(fontSize: FontSize.larger),
+                          "p": Style(fontSize: FontSize.medium),
+                          // "p > a": Style(
+                          //   textDecoration: TextDecoration.none,
+                          // ),
+                          // "#footer": Style(
+                          //   display: Display.block,
+                          //   whiteSpace: WhiteSpace.pre,
+                          //   backgroundColor: Theme.of(context).primaryColor,
+                          //   fontWeight: FontWeight.bold,
+                          // ),
+                        },
                       ),
                     ),
                   ),

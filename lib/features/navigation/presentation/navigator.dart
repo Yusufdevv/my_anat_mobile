@@ -2,7 +2,6 @@ import 'package:anatomica/features/journal/presentation/pages/journal_screen.dar
 import 'package:anatomica/features/map/presentation/map_screen.dart';
 import 'package:anatomica/features/profile/presentation/pages/profile.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy.dart';
-import 'package:anatomica/features/web_view/web_view_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'home.dart';

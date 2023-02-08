@@ -9,7 +9,12 @@ class VacancyItemTextWidget extends StatelessWidget {
   final double? width;
 
   const VacancyItemTextWidget(
-      {required this.title, required this.icon, this.textStyle, this.height, this.width, Key? key})
+      {required this.title,
+      required this.icon,
+      this.textStyle,
+      this.height,
+      this.width,
+      Key? key})
       : super(key: key);
 
   @override
@@ -22,7 +27,7 @@ class VacancyItemTextWidget extends StatelessWidget {
           child: Text(
             title,
             style: textStyle ??
-                Theme.of(context).textTheme.headline1!.copyWith(
+                Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
                     ),

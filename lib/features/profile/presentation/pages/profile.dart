@@ -56,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(width: 12),
                 Text(
                   LocaleKeys.account.tr(),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontWeight: FontWeight.w600,
                         fontSize: 22,
                       ),
@@ -232,34 +232,31 @@ class ProfileScreen extends StatelessWidget {
                           //     state.profileEntity.organizations.isNotEmpty) ...{
                           //   const SizedBox()
                           // } else ...{
-                            Column(
+                          Offstage(
+                            offstage: state.profileEntity.isDoctor ||
+                                state.profileEntity.isOrganization,
+                            child: Column(
                               children: [
                                 OtherProfileItem(
                                   onTap: () async {
-                                    // Navigator.of(context, rootNavigator: true)
-                                    //     .push(fade(
-                                    //         page: const WebViewScreen(
-                                    //   page: 'CreateDoctorPage',
-                                    // )));
-                                    await launchUrlString(
-                                        'https://anatomica.uz/mobile-auth/?token=${StorageRepository.getString("token")}mobile=true&page=CreateDoctorPage',
-                                        mode: LaunchMode.externalApplication);
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(fade(
+                                            page: const WebViewScreen(
+                                      page: 'CreateDoctorPage',
+                                    )));
                                   },
                                 ),
                                 const SizedBox(height: 12),
                                 OtherProfileItem(
                                   onTap: () async {
-                                    // Navigator.of(context, rootNavigator: true)
-                                    //     .push(
-                                    //   fade(
-                                    //     page: const WebViewScreen(
-                                    //       page: 'CreateOrganizationPage',
-                                    //     ),
-                                    //   ),
-                                    // );
-                                    launchUrlString(
-                                        'https://anatomica.uz/mobile-auth/?token=${StorageRepository.getString("token")}mobile=true&page=CreateOrganizationPage',
-                                        mode: LaunchMode.externalApplication);
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(
+                                      fade(
+                                        page: const WebViewScreen(
+                                          page: 'CreateOrganizationPage',
+                                        ),
+                                      ),
+                                    );
                                   },
                                   iconBackgroundColor: steelBlue,
                                   icon: AppIcons.icHospital,
@@ -267,7 +264,8 @@ class ProfileScreen extends StatelessWidget {
                                   title: LocaleKeys.get_organization.tr(),
                                 ),
                               ],
-                            )
+                            ),
+                          )
                           // }
                         ],
                       ),

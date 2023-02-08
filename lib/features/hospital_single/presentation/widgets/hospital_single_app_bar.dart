@@ -244,7 +244,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                 overflow: TextOverflow.ellipsis,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .headline1!
+                                                    .displayLarge!
                                                     .copyWith(fontSize: 20),
                                               ),
                                             )
@@ -266,7 +266,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                       TextOverflow.ellipsis,
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .headline3,
+                                                      .displaySmall,
                                                 ),
                                               ),
                                             ],
@@ -292,7 +292,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                           false),
                                                       style: Theme.of(context)
                                                           .textTheme
-                                                          .headline3,
+                                                          .displaySmall,
                                                     ),
                                                   ],
                                                 ),
@@ -303,7 +303,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                               state.hospital.rating.toString(),
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline3!
+                                                  .displaySmall!
                                                   .copyWith(color: darkGreen),
                                             ),
                                             const SizedBox(width: 8),
@@ -394,7 +394,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                       LocaleKeys.call.tr(),
                                                       style: Theme.of(context)
                                                           .textTheme
-                                                          .headline3!
+                                                          .displaySmall!
                                                           .copyWith(
                                                               color: white),
                                                     )
@@ -482,7 +482,7 @@ class _HospitalSingleAppBarState extends State<HospitalSingleAppBar> {
                                                         LocaleKeys.get.tr(),
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .headline3!
+                                                            .displaySmall!
                                                             .copyWith(
                                                                 color: primary),
                                                       )

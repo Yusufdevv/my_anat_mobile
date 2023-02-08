@@ -39,7 +39,7 @@ class GridPaginator extends StatelessWidget {
       return errorWidget;
     } else if (paginatorStatus == PaginatorStatus.PAGINATOR_SUCCESS) {
       return itemCount == 0
-          ? emptyWidget ?? SizedBox()
+          ? emptyWidget ?? const SizedBox()
           : GridView.builder(
               gridDelegate: gridDelegate,
               scrollDirection: scrollDirection,

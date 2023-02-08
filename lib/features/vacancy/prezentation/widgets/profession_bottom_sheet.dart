@@ -6,10 +6,8 @@ import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacan
 import 'package:anatomica/features/vacancy/prezentation/widgets/checkbox_title.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 
 class ProfessionBottomSheet extends StatefulWidget {
   final VacancyBloc vacancyBloc;

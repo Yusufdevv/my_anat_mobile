@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -35,9 +34,9 @@ class RestorePinCode extends StatelessWidget {
           cursorColor: white,
           keyboardType: TextInputType.number,
           textStyle:
-              Theme.of(context).textTheme.headline3!.copyWith(fontSize: 18),
+              Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 18),
           hintStyle:
-              Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 4),
+              Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 4),
           appContext: context,
           showCursor: true,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

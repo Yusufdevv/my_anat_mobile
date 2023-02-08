@@ -25,6 +25,15 @@ import 'package:anatomica/features/hospital_single/domain/usecases/post_comment_
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
+import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_certificate.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_education.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_single.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_work.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/related_candidate.dart';
+import 'package:anatomica/features/vacancy/prezentation/blocs/candidate_single/candidate_single_bloc.dart';
+import 'package:anatomica/features/vacancy/prezentation/blocs/candidate_single/candidate_single_bloc.dart';
+import 'package:anatomica/features/vacancy/prezentation/widgets/licence_item_list.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,10 +56,12 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
   late TabController _tabController;
   late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
+  late CandidateSingleBloc _candidateSingleBloc;
   int currentImage = 0;
   final tabs = [
     LocaleKeys.about_doctor.tr(),
     LocaleKeys.articles.tr(),
+    LocaleKeys.license_certificate.tr(),
     LocaleKeys.interview.tr(),
     LocaleKeys.reviews.tr(),
     LocaleKeys.contact.tr(),
@@ -60,6 +71,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
   void dispose() {
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
+    _candidateSingleBloc.close();
     super.dispose();
   }
 
@@ -70,6 +82,18 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
     _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
     _scrollController.addListener(_scrollListener);
+    _candidateSingleBloc = CandidateSingleBloc(
+        relatedCandidateListUseCase: RelatedCandidateListUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateWorkUseCase: CandidateWorkUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateCertificateUseCase: CandidateCertificateUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateEducationUseCase: CandidateEducationUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateSingleUseCase: CandidateSingleUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()));
+    _candidateSingleBloc.add(GetRelatedCandidateListEvent(id: widget.id));
   }
 
   _scrollListener() {
@@ -88,6 +112,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
             ),
           )..add(GetDoctorSingle(id: widget.id)),
         ),
+        BlocProvider(create: (context) => _candidateSingleBloc),
         BlocProvider(
           create: (context) => DoctorArticlesBloc(
             getDoctorArticlesUseCase: GetDoctorArticlesUseCase(
@@ -159,6 +184,11 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
                             description: state.doctorSingle.bio,
                           ),
                           DoctorArticles(doctorId: widget.id),
+                          ListView(
+                              padding: const EdgeInsets.all(16),
+                              children: [
+                                LicenceItemList(candidateId: widget.id)
+                              ]),
                           DoctorInterviews(doctorId: widget.id),
                           DoctorComments(
                             rating: state.doctorSingle.rating,

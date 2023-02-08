@@ -12,7 +12,8 @@ import 'package:flutter/material.dart';
 class LanguageBottomSheet extends StatefulWidget {
   final Locale currentLocale;
 
-  const LanguageBottomSheet({required this.currentLocale, Key? key}) : super(key: key);
+  const LanguageBottomSheet({required this.currentLocale, Key? key})
+      : super(key: key);
 
   @override
   State<LanguageBottomSheet> createState() => _LanguageBottomSheetState();
@@ -39,7 +40,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
       children: [
         Text(
           LocaleKeys.language_app.tr(),
-          style: Theme.of(context).textTheme.headline1!.copyWith(
+          style: Theme.of(context).textTheme.displayLarge!.copyWith(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),

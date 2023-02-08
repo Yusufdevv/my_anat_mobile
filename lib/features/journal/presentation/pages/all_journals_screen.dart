@@ -43,7 +43,7 @@ class AllJournalsScreen extends StatelessWidget {
                 LocaleKeys.all_journals.tr(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline3!
+                    .displaySmall!
                     .copyWith(fontSize: 20, color: textColor),
               ),
               const SizedBox(

@@ -26,7 +26,7 @@ class InfoContainer extends StatelessWidget {
               text: TextSpan(children: [
                 TextSpan(
                   text: LocaleKeys.symbol_login.tr(),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
@@ -34,7 +34,7 @@ class InfoContainer extends StatelessWidget {
                 TextSpan(
                     text: ' (A-z, '
                         '0-9, ., _)',
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                         ))

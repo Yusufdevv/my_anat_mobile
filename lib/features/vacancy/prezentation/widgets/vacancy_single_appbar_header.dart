@@ -14,7 +14,6 @@ class VacancySingleAppBarHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return SliverPersistentHeader(
       pinned: true,
       delegate: SliverTabBarDelegate(
@@ -39,7 +38,7 @@ class VacancySingleAppBarHeader extends StatelessWidget {
                       vacancyEntity.title,
                       style: Theme.of(context)
                           .textTheme
-                          .headline2!
+                          .displayMedium!
                           .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -49,7 +48,7 @@ class VacancySingleAppBarHeader extends StatelessWidget {
                       vacancyEntity.organization.title,
                       style: Theme.of(context)
                           .textTheme
-                          .headline2!
+                          .displayMedium!
                           .copyWith(fontWeight: FontWeight.w400, fontSize: 16),
                     )
                   ],

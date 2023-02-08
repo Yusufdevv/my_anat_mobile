@@ -12,11 +12,11 @@ class GetDoctorsUseCase
 
   @override
   Future<Either<Failure, GenericPagination<HospitalDoctorsModel>>> call(
-      SearchParam param) {
+      SearchParam params) {
     return repo.fetchMore<HospitalDoctorsModel>(
         url: '/doctor/',
-        next: param.next,
+        next: params.next,
         fromJson: HospitalDoctorsModel.fromJson,
-        query: param.search != null ? {"search": param.search} : {});
+        query: params.search != null ? {"search": params.search} : {});
   }
 }

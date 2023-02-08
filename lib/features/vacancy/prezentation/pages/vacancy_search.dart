@@ -19,7 +19,6 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item.dar
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
@@ -30,7 +29,8 @@ class VacancySearchScreen extends StatefulWidget {
   State<VacancySearchScreen> createState() => _VacancySearchScreenState();
 }
 
-class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerProviderStateMixin {
+class _VacancySearchScreenState extends State<VacancySearchScreen>
+    with TickerProviderStateMixin {
   late TabController tabController;
   late TextEditingController controller;
   late VacancySearchBloc vacancySearchBloc;
@@ -42,8 +42,10 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
     controller = TextEditingController();
     _focusNode = FocusNode()..requestFocus();
     vacancySearchBloc = VacancySearchBloc(
-      candidateListUseCase: CandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-      vacancyListUseCase: VacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+      candidateListUseCase: CandidateListUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
+      vacancyListUseCase: VacancyListUseCase(
+          repository: serviceLocator<VacancyRepositoryImpl>()),
       likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
         repository: serviceLocator<LikeUnlikeRepositoryImpl>(),
       ),
@@ -75,7 +77,8 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
             preferredSize: const Size.fromHeight(148),
             child: Container(
               alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.fromLTRB(16, 8 + mediaQuery.padding.top, 16, 12),
+              padding:
+                  EdgeInsets.fromLTRB(16, 8 + mediaQuery.padding.top, 16, 12),
               decoration: BoxDecoration(
                 color: white,
                 boxShadow: [
@@ -97,14 +100,18 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                           controller: controller,
                           onChanged: (value) {
                             if (tabController.index == 0) {
-                              vacancySearchBloc.add(GetVacancySearchEvent(search: value));
+                              vacancySearchBloc
+                                  .add(GetVacancySearchEvent(search: value));
                             } else {
-                              vacancySearchBloc.add(GetCandidateSearchEvent(search: value));
+                              vacancySearchBloc
+                                  .add(GetCandidateSearchEvent(search: value));
                             }
                           },
                           onClear: () {
-                            vacancySearchBloc.add(GetVacancySearchEvent(search: ''));
-                            vacancySearchBloc.add(GetCandidateSearchEvent(search: ''));
+                            vacancySearchBloc
+                                .add(GetVacancySearchEvent(search: ''));
+                            vacancySearchBloc
+                                .add(GetCandidateSearchEvent(search: ''));
                           },
                         ),
                       ),
@@ -115,7 +122,10 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                         },
                         child: Text(
                           LocaleKeys.cancel.tr(),
-                          style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],
@@ -132,15 +142,18 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                       controller: tabController,
                       padding: EdgeInsets.zero,
                       indicatorPadding: EdgeInsets.zero,
-                      indicator: BoxDecoration(color: white, borderRadius: BorderRadius.circular(6), boxShadow: [
-                        BoxShadow(
-                          offset: const Offset(0, 8),
-                          blurRadius: 24,
-                          color: chipShadowColor.withOpacity(0.19),
-                        ),
-                      ]),
+                      indicator: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(6),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 8),
+                              blurRadius: 24,
+                              color: chipShadowColor.withOpacity(0.19),
+                            ),
+                          ]),
                       labelPadding: EdgeInsets.zero,
-                      labelStyle: Theme.of(context).textTheme.headline3,
+                      labelStyle: Theme.of(context).textTheme.displaySmall,
                       labelColor: textColor,
                       onTap: (index) {},
                       unselectedLabelColor: textSecondary,
@@ -160,7 +173,8 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
               BlocBuilder<VacancySearchBloc, VacancySearchState>(
                 builder: (context, state) {
                   return Paginator(
-                    padding: EdgeInsets.only(bottom: 50 + mediaQuery.padding.bottom, top: 20),
+                    padding: EdgeInsets.only(
+                        bottom: 50 + mediaQuery.padding.bottom, top: 20),
                     paginatorStatus: state.vacancyPaginatorStatus,
                     errorWidget: const Text('Fail'),
                     emptyWidget: const SearchEmpty(),
@@ -169,12 +183,14 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                         searchText: controller.text,
                         vacancyEntity: state.vacancyList[index],
                         onTap: () {
-                          Navigator.of(context)
-                              .push(fade(page: VacancySingleScreen(slug: state.vacancyList[index].slug)));
+                          Navigator.of(context).push(fade(
+                              page: VacancySingleScreen(
+                                  slug: state.vacancyList[index].slug)));
                         },
                       );
                     },
-                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 12),
                     hasMoreToFetch: state.fetchMoreVacancy,
                     fetchMoreFunction: () {},
                     itemCount: state.vacancyList.length,
@@ -184,7 +200,8 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
               BlocBuilder<VacancySearchBloc, VacancySearchState>(
                 builder: (context, state) {
                   return Paginator(
-                    padding: EdgeInsets.only(bottom: 50 + mediaQuery.padding.bottom, top: 20),
+                    padding: EdgeInsets.only(
+                        bottom: 50 + mediaQuery.padding.bottom, top: 20),
                     paginatorStatus: state.candidatePaginatorStatus,
                     errorWidget: const Text('Fail'),
                     emptyWidget: const SearchEmpty(),
@@ -200,7 +217,8 @@ class _VacancySearchScreenState extends State<VacancySearchScreen> with TickerPr
                         },
                       );
                     },
-                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 12),
                     hasMoreToFetch: state.fetchMoreCandidate,
                     fetchMoreFunction: () {},
                     itemCount: state.candidateList.length,

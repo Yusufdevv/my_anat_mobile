@@ -19,7 +19,9 @@ class MagazineSmallItem extends StatelessWidget {
   final JournalEntity journalEntity;
   final EdgeInsets margin;
 
-  const MagazineSmallItem({required this.journalEntity, this.margin = EdgeInsets.zero, Key? key}) : super(key: key);
+  const MagazineSmallItem(
+      {required this.journalEntity, this.margin = EdgeInsets.zero, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,9 @@ class MagazineSmallItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(
+                    border: Border.all(color: divider),
+                    borderRadius: BorderRadius.circular(8)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
@@ -46,7 +50,7 @@ class MagazineSmallItem extends StatelessWidget {
               Text(
                 journalEntity.redaction,
                 maxLines: 1,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),
@@ -55,15 +59,22 @@ class MagazineSmallItem extends StatelessWidget {
               if (!(journalEntity.isBought || !journalEntity.isPremium)) ...{
                 Text(
                   MyFunctions.getFormatCostFromInt(journalEntity.price),
-                  style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(fontSize: 13, fontWeight: FontWeight.w700),
                 ),
               } else ...{
                 Text(
-                  !journalEntity.isPremium ? LocaleKeys.free.tr() : journalEntity.isBought ? LocaleKeys.bought.tr(): '',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: primary),
+                  !journalEntity.isPremium
+                      ? LocaleKeys.free.tr()
+                      : journalEntity.isBought
+                          ? LocaleKeys.bought.tr()
+                          : '',
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: primary),
                 ),
               }
             ],
@@ -104,7 +115,8 @@ class MagazineSmallItem extends StatelessWidget {
                             );
                           },
                           onRegistrationTap: () {
-                            Navigator.of(context).push(fade(page: const RegisterScreen()));
+                            Navigator.of(context)
+                                .push(fade(page: const RegisterScreen()));
                           },
                         ),
                       );
@@ -127,8 +139,13 @@ class MagazineSmallItem extends StatelessWidget {
                   }
                 },
                 child: Text(
-                  journalEntity.isBought || !journalEntity.isPremium ? LocaleKeys.read.tr() : LocaleKeys.buy.tr(),
-                  style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                  journalEntity.isBought || !journalEntity.isPremium
+                      ? LocaleKeys.read.tr()
+                      : LocaleKeys.buy.tr(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium!
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
               );
             },

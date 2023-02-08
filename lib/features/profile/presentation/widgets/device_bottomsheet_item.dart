@@ -4,7 +4,8 @@ class DeviceBottomSheetItem extends StatelessWidget {
   final String title;
   final String subTitle;
 
-  const DeviceBottomSheetItem({this.title = '', this.subTitle = '', Key? key}) : super(key: key);
+  const DeviceBottomSheetItem({this.title = '', this.subTitle = '', Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +16,15 @@ class DeviceBottomSheetItem extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+            style:
+                Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14),
           ),
           const SizedBox(height: 4),
           Text(
             subTitle,
             style: Theme.of(context)
                 .textTheme
-                .headline1!
+                .displayLarge!
                 .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
           )
         ],

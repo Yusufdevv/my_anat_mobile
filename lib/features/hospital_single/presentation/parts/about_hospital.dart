@@ -35,7 +35,7 @@ class AboutHospital extends StatelessWidget {
                   LocaleKeys.about_clinic.tr(),
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headlineMedium!
                       .copyWith(color: textColor),
                 ),
                 if (hospital.description.isEmpty &&
@@ -52,16 +52,17 @@ class AboutHospital extends StatelessWidget {
               ],
             ),
           ),
-          if (hospital.images.isNotEmpty) ...[Padding(
-            padding: const EdgeInsets.only(left: 16, bottom: 16, top: 20),
-            child: Text(
-              LocaleKeys.photos.tr(),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4!
-                  .copyWith(color: textColor),
+          if (hospital.images.isNotEmpty) ...[
+            Padding(
+              padding: const EdgeInsets.only(left: 16, bottom: 16, top: 20),
+              child: Text(
+                LocaleKeys.photos.tr(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium!
+                    .copyWith(color: textColor),
+              ),
             ),
-          ),
             SizedBox(
               height: 140,
               child: ListView.separated(
@@ -89,8 +90,8 @@ class AboutHospital extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16)
                     .copyWith(bottom: 20),
               ),
-            ),]
-
+            ),
+          ]
         ],
       ),
     );

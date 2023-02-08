@@ -8,7 +8,7 @@ abstract class ImageEvent extends Equatable {
 class GetImageEvent extends ImageEvent {
   final bool isFromGallery;
 
-  GetImageEvent({required this.isFromGallery});
+  const GetImageEvent({required this.isFromGallery});
 
   @override
   List<Object?> get props => [];
@@ -17,7 +17,7 @@ class GetImageEvent extends ImageEvent {
 class RemoveImageEvent extends ImageEvent {
   final int index;
 
-  RemoveImageEvent({required this.index});
+  const RemoveImageEvent({required this.index});
 
   @override
   List<Object?> get props => [];

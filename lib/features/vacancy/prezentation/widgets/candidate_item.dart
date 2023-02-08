@@ -48,7 +48,8 @@ class CandidateItem extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: candidateListEntity.image.middle,
                   fit: BoxFit.cover,
-                  errorWidget: (_, __, ___) => SvgPicture.asset(AppIcons.smallImageError),
+                  errorWidget: (_, __, ___) =>
+                      SvgPicture.asset(AppIcons.smallImageError),
                 ),
               ),
             ),
@@ -62,25 +63,34 @@ class CandidateItem extends StatelessWidget {
                     Text(
                       candidateListEntity.fullName,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline1,
+                      style: Theme.of(context).textTheme.displayLarge,
                       maxLines: 1,
                     ),
                     const SizedBox(height: 4),
                     HighlightedText(
                       allText: candidateListEntity.position,
-                      textStyle: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(fontSize: 14),
                       overflow: TextOverflow.ellipsis,
                       highlightedText: searchText,
-                      textStyleHighlight: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14, color: white),
+                      textStyleHighlight: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(fontSize: 14, color: white),
                       highlightColor: tongerineYellow,
                       maxLines: 1,
                     ),
                     const Spacer(),
                     VacancyItemTextWidget(
-                        title: '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
+                        title:
+                            '${candidateListEntity.workExperience} ${LocaleKeys.year.tr()}',
                         icon: AppIcons.briefCase),
                     const SizedBox(height: 4),
-                    VacancyItemTextWidget(title: candidateListEntity.address, icon: AppIcons.mapPin),
+                    VacancyItemTextWidget(
+                        title: candidateListEntity.address,
+                        icon: AppIcons.mapPin),
                   ],
                 ),
               ),

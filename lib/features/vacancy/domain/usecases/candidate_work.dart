@@ -11,6 +11,6 @@ class CandidateWorkUseCase extends UseCase<GenericPagination<CandidateWorkEntity
   CandidateWorkUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, GenericPagination<CandidateWorkEntity>>> call(int id) async =>
-      await repository.getCandidateWork(id: id);
+  Future<Either<Failure, GenericPagination<CandidateWorkEntity>>> call(int params) async =>
+      await repository.getCandidateWork(id: params);
 }

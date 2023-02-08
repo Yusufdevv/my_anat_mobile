@@ -55,19 +55,23 @@ class VacancyItem extends StatelessWidget {
                     children: [
                       HighlightedText(
                         allText: vacancyEntity.title,
-                        textStyle: Theme.of(context).textTheme.headline1!.copyWith(),
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(),
                         highlightedText: searchText,
                         overflow: TextOverflow.ellipsis,
-                        textStyleHighlight: Theme.of(context).textTheme.headline1!.copyWith(
-                              color: white,
-                            ),
+                        textStyleHighlight:
+                            Theme.of(context).textTheme.displayLarge!.copyWith(
+                                  color: white,
+                                ),
                         maxLines: 2,
                         highlightColor: tongerineYellow,
                       ),
                       const SizedBox(height: 4),
                       Text(
                         vacancyEntity.organization.title,
-                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),
@@ -82,10 +86,12 @@ class VacancyItem extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             VacancyItemTextWidget(
-                title: '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} ${LocaleKeys.year.tr()}',
+                title:
+                    '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} ${LocaleKeys.year.tr()}',
                 icon: AppIcons.briefCase),
             const SizedBox(height: 4),
-            VacancyItemTextWidget(title: vacancyEntity.address, icon: AppIcons.mapPin),
+            VacancyItemTextWidget(
+                title: vacancyEntity.address, icon: AppIcons.mapPin),
             const SizedBox(height: 4),
             VacancyItemTextWidget(
                 title:
@@ -94,10 +100,11 @@ class VacancyItem extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Text(LocaleKeys.published.tr(), style: Theme.of(context).textTheme.subtitle2),
+                Text(LocaleKeys.published.tr(),
+                    style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(width: 4),
                 Text(MyFunctions.getPublishedDate(vacancyEntity.publishedAt),
-                    style: Theme.of(context).textTheme.subtitle2),
+                    style: Theme.of(context).textTheme.titleSmall),
                 const Spacer(),
                 FavouriteButtonVacancy(vacancy: vacancyEntity),
               ],

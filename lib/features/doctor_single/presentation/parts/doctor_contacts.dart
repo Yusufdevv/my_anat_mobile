@@ -82,7 +82,6 @@ class _DoctorContactsState extends State<DoctorContacts> {
           WButton(
             onTap: () async {
               if (widget.doctorSingle.phoneNumbers.isNotEmpty) {
-                print(widget.doctorSingle.phoneNumbers.first.phoneNumber);
                 if (await canLaunchUrlString('tel:${widget.doctorSingle.phoneNumbers.first.phoneNumber}')) {
                   await launchUrlString('tel:${widget.doctorSingle.phoneNumbers.first.phoneNumber}');
                 } else {

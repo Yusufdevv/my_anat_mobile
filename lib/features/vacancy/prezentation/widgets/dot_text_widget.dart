@@ -5,7 +5,8 @@ class DotTextWidget extends StatelessWidget {
   final int length;
   final String title;
 
-  const DotTextWidget({this.length = 0, this.title = '', Key? key}) : super(key: key);
+  const DotTextWidget({this.length = 0, this.title = '', Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class DotTextWidget extends StatelessWidget {
               ),
               TextSpan(
                 text: title[index],
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
                     ),

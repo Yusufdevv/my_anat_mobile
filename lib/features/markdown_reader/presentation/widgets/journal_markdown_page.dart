@@ -57,7 +57,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
             behavior: HitTestBehavior.translucent,
             onTap: widget.onTap,
             child: WebView(
-              initialUrl: '',
+              initialUrl: widget.data,
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (controller) {
                 webViewController = controller;
@@ -95,8 +95,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
               gestureNavigationEnabled: true,
               debuggingEnabled: true,
               gestureRecognizers: {
-                Factory<OneSequenceGestureRecognizer>(
-                    () => verticalRecognizer),
+                Factory<OneSequenceGestureRecognizer>(() => verticalRecognizer),
               },
             ),
             // child: InAppWebView(
@@ -146,7 +145,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
                         LocaleKeys.back_to_top.tr(),
                         style: Theme.of(context)
                             .textTheme
-                            .headline1!
+                            .displayLarge!
                             .copyWith(fontSize: 15),
                       ),
                       SvgPicture.asset(AppIcons.arrowUp)

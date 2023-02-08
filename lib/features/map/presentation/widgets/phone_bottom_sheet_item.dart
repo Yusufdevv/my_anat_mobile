@@ -4,7 +4,6 @@ import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/map/presentation/widgets/contact_item.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PhoneBottomSheetItem extends StatelessWidget {
   final String phone;
@@ -15,11 +14,6 @@ class PhoneBottomSheetItem extends StatelessWidget {
     this.onTap,
     Key? key,
   }) : super(key: key);
-  Future<void> _launchUrl(String uri) async {
-    if (!await launchUrl(Uri.parse(uri))) {
-      throw 'Could not launch $uri';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

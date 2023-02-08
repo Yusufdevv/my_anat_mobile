@@ -4,7 +4,6 @@ import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_title_te
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
@@ -41,7 +40,7 @@ class ExperienceItemList extends StatelessWidget {
               ],
             );
           } else {
-            return SizedBox();
+            return const SizedBox();
           }
         } else if (state.workStatus.isSubmissionFailure) {
           return const Center(child: Text('Fail'));

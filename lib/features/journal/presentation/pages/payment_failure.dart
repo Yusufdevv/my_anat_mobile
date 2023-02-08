@@ -12,7 +12,11 @@ class PaymentFailure extends StatelessWidget {
   final bool isSubscription;
   final bool isRegistered;
   final String title;
-  const PaymentFailure({required this.isSubscription, required this.isRegistered, required this.title, Key? key})
+  const PaymentFailure(
+      {required this.isSubscription,
+      required this.isRegistered,
+      required this.title,
+      Key? key})
       : super(key: key);
 
   @override
@@ -43,7 +47,10 @@ class PaymentFailure extends StatelessWidget {
                 : isRegistered
                     ? LocaleKeys.buy_magazine.tr()
                     : LocaleKeys.only_pay.tr(),
-            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall!
+                .copyWith(color: textColor, fontSize: 20),
           ),
         ),
         body: Center(
@@ -54,19 +61,28 @@ class PaymentFailure extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 LocaleKeys.error.tr(),
-                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge!
+                    .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
               Text(
                 LocaleKeys.realisation_error.tr(args: [title]),
-                style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(fontWeight: FontWeight.w400),
                 textAlign: TextAlign.center,
               ),
             ],
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom, left: 16, right: 16),
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).padding.bottom,
+              left: 16,
+              right: 16),
           child: Row(
             children: [
               Expanded(
@@ -84,7 +100,10 @@ class PaymentFailure extends StatelessWidget {
                   },
                   child: Text(
                     LocaleKeys.to_main.tr(),
-                    style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(fontSize: 14),
                   ),
                 ),
               ),
@@ -96,7 +115,10 @@ class PaymentFailure extends StatelessWidget {
                   onTap: () {},
                   child: Text(
                     LocaleKeys.to_retry.tr(),
-                    style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),

@@ -2,9 +2,7 @@ import 'package:anatomica/features/auth/data/models/image_model.dart';
 import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/data/models/type_model.dart';
-import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_work.dart';
-import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'candidate_work.g.dart';
 

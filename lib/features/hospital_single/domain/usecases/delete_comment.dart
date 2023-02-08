@@ -9,5 +9,5 @@ class DeletePostCommentUseCase extends UseCase<Either, int> {
   DeletePostCommentUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, Either>> call(int id) async => repository.deleteComment(id: id);
+  Future<Either<Failure, Either>> call(int params) async => repository.deleteComment(id: params);
 }

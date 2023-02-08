@@ -1,6 +1,4 @@
 import 'package:anatomica/features/auth/data/models/doctor_model.dart';
-import 'package:anatomica/features/auth/data/models/image_model.dart';
-import 'package:anatomica/features/auth/data/models/organization_model.dart';
 import 'package:anatomica/features/auth/data/models/user_organization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';

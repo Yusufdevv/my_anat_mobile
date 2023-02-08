@@ -42,10 +42,8 @@ class VacancySingleBloc extends Bloc<VacancySingleEvent, VacancySingleState> {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       final result = await vacancySingleUseCase.call(VacancySingleParams(slug: event.slug));
       if (result.isRight) {
-        print('right');
         emit(state.copyWith(status: FormzStatus.submissionSuccess, vacancyListEntity: result.right));
       } else {
-        print('left');
         emit(state.copyWith(status: FormzStatus.submissionFailure));
       }
     });

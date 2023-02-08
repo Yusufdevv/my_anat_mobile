@@ -9,9 +9,12 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals.dart';
+import 'package:anatomica/features/map/domain/usecases/get_map_hospitals_with_distance.dart';
+import 'package:anatomica/features/map/domain/usecases/get_service_usecase.dart';
 import 'package:anatomica/features/map/domain/usecases/get_specialization.dart';
 import 'package:anatomica/features/map/domain/usecases/get_types_usecase.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
+import 'package:anatomica/features/map/presentation/blocs/org_map_v2_bloc/org_map_v2_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/specialization/specialization_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_controller_buttons.dart';
@@ -37,6 +40,7 @@ class _MapScreenState extends State<MapScreen>
   late TextEditingController _searchFieldController;
   final List<MapObject<dynamic>> _mapObjects = [];
   late MapOrganizationBloc mapOrganizationBloc;
+  late OrgMapV2Bloc orgMapV2Bloc;
   late SpecializationBloc specBloc;
 
   double latitude = 0;
@@ -58,6 +62,13 @@ class _MapScreenState extends State<MapScreen>
       getTypesUseCase:
           GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
     );
+    orgMapV2Bloc = OrgMapV2Bloc(
+        useCase: GetMapHospitalsWithDistanceUseCase(
+            mapRepository: serviceLocator<MapRepositoryImpl>()),
+        typesUseCase:
+            GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
+        serviceUsecase: GetServicesV2UseCase(
+            repository: serviceLocator<MapRepositoryImpl>()));
     _controller = TabController(length: 2, vsync: this);
     _searchFieldController = TextEditingController();
     myPoint = const Point(latitude: 0, longitude: 0);
@@ -75,12 +86,9 @@ class _MapScreenState extends State<MapScreen>
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(
-          value: mapOrganizationBloc,
-        ),
-        BlocProvider.value(
-          value: specBloc,
-        ),
+        BlocProvider.value(value: mapOrganizationBloc),
+        BlocProvider.value(value: specBloc),
+        BlocProvider.value(value: orgMapV2Bloc),
       ],
       child: CustomScreen(
         child: Scaffold(
@@ -285,7 +293,8 @@ class _MapScreenState extends State<MapScreen>
                                   ),
                                 ]),
                             labelPadding: EdgeInsets.zero,
-                            labelStyle: Theme.of(context).textTheme.headline3,
+                            labelStyle:
+                                Theme.of(context).textTheme.displaySmall,
                             labelColor: textColor,
                             onTap: (index) {
                               if (index == 0) {
@@ -443,7 +452,7 @@ class _MapScreenState extends State<MapScreen>
                                             LocaleKeys.list.tr(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline1!
+                                                .displayLarge!
                                                 .copyWith(
                                                     fontSize: 14,
                                                     fontWeight:
@@ -489,7 +498,7 @@ class _MapScreenState extends State<MapScreen>
                                                     LocaleKeys.search.tr(),
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .headline1!
+                                                        .displayLarge!
                                                         .copyWith(
                                                             color: state
                                                                     .searchText
@@ -497,13 +506,12 @@ class _MapScreenState extends State<MapScreen>
                                                                 ? textColor
                                                                 : textSecondary,
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .w600,
+                                                                FontWeight.w600,
                                                             fontSize: 14),
                                                   ),
                                                 ),
-                                                if (state.searchText
-                                                    .isNotEmpty) ...{
+                                                if (state
+                                                    .searchText.isNotEmpty) ...{
                                                   GestureDetector(
                                                     onTap: () {},
                                                     child: SvgPicture.asset(

@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';

@@ -16,13 +16,16 @@ class RegisterPhone extends StatefulWidget {
   final TabController tabController;
   final PageController pageController;
 
-  const RegisterPhone({required this.pageController, required this.tabController, Key? key}) : super(key: key);
+  const RegisterPhone(
+      {required this.pageController, required this.tabController, Key? key})
+      : super(key: key);
 
   @override
   State<RegisterPhone> createState() => _RegisterPhoneState();
 }
 
-class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveClientMixin {
+class _RegisterPhoneState extends State<RegisterPhone>
+    with AutomaticKeepAliveClientMixin {
   late TextEditingController phoneController;
   late TextEditingController emailController;
 
@@ -64,10 +67,12 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                   indicatorPadding: EdgeInsets.zero,
                   indicatorSize: TabBarIndicatorSize.tab,
                   onTap: (index) {
-                    context.read<LoginSignUpBloc>().add(ChangeConfirmationType(type: index == 0 ? 'phone' : 'email'));
+                    context.read<LoginSignUpBloc>().add(ChangeConfirmationType(
+                        type: index == 0 ? 'phone' : 'email'));
                   },
-                  unselectedLabelStyle: Theme.of(context).textTheme.headline3,
-                  labelStyle: Theme.of(context).textTheme.headline3,
+                  unselectedLabelStyle:
+                      Theme.of(context).textTheme.displaySmall,
+                  labelStyle: Theme.of(context).textTheme.displaySmall,
                   unselectedLabelColor: textSecondary,
                   labelColor: textColor,
                   tabs: [
@@ -98,7 +103,8 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                       child: PhoneTextField(
                         title: LocaleKeys.phone_number.tr(),
                         controller: phoneController,
-                        hasError: state.confirmationType == 'phone' && state.submitPhoneEmailStatus.isSubmissionFailure,
+                        hasError: state.confirmationType == 'phone' &&
+                            state.submitPhoneEmailStatus.isSubmissionFailure,
                       ),
                     ),
                   ),
@@ -110,7 +116,8 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                         maxLines: 1,
                         title: LocaleKeys.mail.tr(),
                         controller: emailController,
-                        hasError: state.confirmationType == 'email' && state.submitPhoneEmailStatus.isSubmissionFailure,
+                        hasError: state.confirmationType == 'email' &&
+                            state.submitPhoneEmailStatus.isSubmissionFailure,
                         onChanged: (value) {},
                         prefix: Padding(
                           padding: const EdgeInsets.only(left: 12, right: 8),
@@ -124,26 +131,32 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
               ),
             ),
             WButton(
-              margin: EdgeInsets.fromLTRB(16, 16, 16, 16 + MediaQuery.of(context).padding.bottom),
+              margin: EdgeInsets.fromLTRB(
+                  16, 16, 16, 16 + MediaQuery.of(context).padding.bottom),
               isLoading: state.submitPhoneEmailStatus.isSubmissionInProgress,
               onTap: () {
                 if (state.confirmationType == 'phone') {
                   if (state.phoneEmail.isNotEmpty) {
-                    if (state.phoneEmail.replaceAll(RegExp(r'\(?\)?-? ?'), '') ==
+                    if (state.phoneEmail
+                            .replaceAll(RegExp(r'\(?\)?-? ?'), '') ==
                         '+998${phoneController.text.replaceAll(RegExp(r' '), '')}') {
-                      widget.pageController.nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                      widget.pageController.nextPage(
+                          duration: const Duration(milliseconds: 150),
+                          curve: Curves.linear);
                     } else {
                       context.read<LoginSignUpBloc>().add(
                             SubmitChangedPhone(
-                              phone: '+998${phoneController.text.replaceAll(RegExp(r' '), '')}',
+                              phone:
+                                  '+998${phoneController.text.replaceAll(RegExp(r' '), '')}',
                               onError: (message) {
-                                context
-                                    .read<ShowPopUpBloc>()
-                                    .add(ShowPopUp(message: message.replaceAll(RegExp(r'\{?\[?\]?\.?}?'), '')));
+                                context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                    message: message.replaceAll(
+                                        RegExp(r'\{?\[?\]?\.?}?'), '')));
                               },
                               onSuccess: () {
-                                widget.pageController
-                                    .nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                                widget.pageController.nextPage(
+                                    duration: const Duration(milliseconds: 150),
+                                    curve: Curves.linear);
                               },
                             ),
                           );
@@ -151,15 +164,17 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                   } else {
                     context.read<LoginSignUpBloc>().add(
                           SubmitPhone(
-                            phone: '+998${phoneController.text.replaceAll(RegExp(r' '), '')}',
+                            phone:
+                                '+998${phoneController.text.replaceAll(RegExp(r' '), '')}',
                             onError: (message) {
-                              context
-                                  .read<ShowPopUpBloc>()
-                                  .add(ShowPopUp(message: message.replaceAll(RegExp(r'\{?\[?\]?\.?}?'), '')));
+                              context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                  message: message.replaceAll(
+                                      RegExp(r'\{?\[?\]?\.?}?'), '')));
                             },
                             onSuccess: () {
-                              widget.pageController
-                                  .nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                              widget.pageController.nextPage(
+                                  duration: const Duration(milliseconds: 150),
+                                  curve: Curves.linear);
                             },
                           ),
                         );
@@ -167,19 +182,22 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                 } else if (state.confirmationType == 'email') {
                   if (state.phoneEmail.isNotEmpty) {
                     if (state.phoneEmail == emailController.text) {
-                      widget.pageController.nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                      widget.pageController.nextPage(
+                          duration: const Duration(milliseconds: 150),
+                          curve: Curves.linear);
                     } else {
                       context.read<LoginSignUpBloc>().add(
                             SubmitChangedEmail(
                               email: emailController.text,
                               onError: (message) {
-                                context
-                                    .read<ShowPopUpBloc>()
-                                    .add(ShowPopUp(message: message.replaceAll(RegExp(r'\{?\[?\]?\.?}?'), '')));
+                                context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                    message: message.replaceAll(
+                                        RegExp(r'\{?\[?\]?\.?}?'), '')));
                               },
                               onSuccess: () {
-                                widget.pageController
-                                    .nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                                widget.pageController.nextPage(
+                                    duration: const Duration(milliseconds: 150),
+                                    curve: Curves.linear);
                               },
                             ),
                           );
@@ -189,13 +207,14 @@ class _RegisterPhoneState extends State<RegisterPhone> with AutomaticKeepAliveCl
                           SubmitEmail(
                             email: emailController.text,
                             onError: (message) {
-                              context
-                                  .read<ShowPopUpBloc>()
-                                  .add(ShowPopUp(message: message.replaceAll(RegExp(r'\{?\[?\]?\.?}?'), '')));
+                              context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                  message: message.replaceAll(
+                                      RegExp(r'\{?\[?\]?\.?}?'), '')));
                             },
                             onSuccess: () {
-                              widget.pageController
-                                  .nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                              widget.pageController.nextPage(
+                                  duration: const Duration(milliseconds: 150),
+                                  curve: Curves.linear);
                             },
                           ),
                         );

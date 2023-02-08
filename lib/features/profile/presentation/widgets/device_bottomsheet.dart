@@ -10,7 +10,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class DeviceBottomSheet extends StatelessWidget {
   DeviceBottomSheet({Key? key}) : super(key: key);
-  final List<String> titleList = ['IP адресс:', 'Локация:', 'Дата входа в аккаунт', 'Последняя сессия:'];
+  final List<String> titleList = [
+    'IP адресс:',
+    'Локация:',
+    'Дата входа в аккаунт',
+    'Последняя сессия:'
+  ];
   final List<String> subTitle = [
     '912385141',
     'Tashkent, Uzbekistan',
@@ -22,7 +27,8 @@ class DeviceBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return WBottomSheet(
-      contentPadding: EdgeInsets.fromLTRB(16, 34, 16, 12 + mediaQuery.padding.bottom),
+      contentPadding:
+          EdgeInsets.fromLTRB(16, 34, 16, 12 + mediaQuery.padding.bottom),
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +41,8 @@ class DeviceBottomSheet extends StatelessWidget {
                 color: whiteIce,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: SvgPicture.asset(AppIcons.deviceLaptop, height: 40, width: 40),
+              child: SvgPicture.asset(AppIcons.deviceLaptop,
+                  height: 40, width: 40),
             ),
           ],
         ),
@@ -45,7 +52,10 @@ class DeviceBottomSheet extends StatelessWidget {
           children: [
             Text(
               'Macbook Pro',
-              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -55,7 +65,7 @@ class DeviceBottomSheet extends StatelessWidget {
           children: [
             Text(
               'Web Application v.2.3',
-              style: Theme.of(context).textTheme.subtitle2!.copyWith(
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     fontSize: 14,
                   ),
             ),

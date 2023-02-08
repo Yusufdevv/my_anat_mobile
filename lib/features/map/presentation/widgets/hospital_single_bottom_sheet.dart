@@ -148,7 +148,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline1!
+                                .displayLarge!
                                 .copyWith(fontSize: 20),
                           ),
                         ),
@@ -164,7 +164,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                             address,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.headline3,
+                            style: Theme.of(context).textTheme.displaySmall,
                           ),
                         ),
                       ],
@@ -176,7 +176,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         const SizedBox(width: 6),
                         Text(
                           MyFunctions.formatPhone(phone, false),
-                          style: Theme.of(context).textTheme.headline3,
+                          style: Theme.of(context).textTheme.displaySmall,
                         ),
                       ],
                     ),
@@ -187,7 +187,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           rating.toString(),
                           style: Theme.of(context)
                               .textTheme
-                              .headline3!
+                              .displaySmall!
                               .copyWith(color: darkGreen),
                         ),
                         const SizedBox(width: 8),
@@ -288,7 +288,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           width: 40,
                           color: white,
                           onTap: () async {
-                            var uri = Uri.parse('tel:${phone}');
+                            var uri = Uri.parse('tel:$phone');
                             await canLaunchUrl(uri)
                                 ? await launchUrl(uri)
                                 : throw 'can not open phone';

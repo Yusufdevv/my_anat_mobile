@@ -1,5 +1,4 @@
 import 'package:anatomica/features/vacancy/data/models/choices.dart';
-import 'package:anatomica/features/vacancy/domain/entities/choices.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 

@@ -9,7 +9,10 @@ import 'package:flutter/material.dart';
 class ActiveDevicesScreen extends StatelessWidget {
   ActiveDevicesScreen({Key? key}) : super(key: key);
   List<String> titleList = ['Macbook Pro', 'Iphone 14 Pro max'];
-  List<String> subTitle = ['Web Application v.2.3', 'Anatomica App v.2.1 (iOS)'];
+  List<String> subTitle = [
+    'Web Application v.2.3',
+    'Anatomica App v.2.1 (iOS)'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -21,21 +24,30 @@ class ActiveDevicesScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Нынышнее устройство', style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 14)),
+            Text('Нынышнее устройство',
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(fontSize: 14)),
             DeviceItem(onTap: () {
               showDeviceBottomSheet(context);
             }),
             const SizedBox(height: 4),
             const WDivider(),
             const SizedBox(height: 16),
-            Text('Другие сессии', style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 14)),
+            Text('Другие сессии',
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(fontSize: 14)),
             const SizedBox(height: 8),
             ...List.generate(
               2,
               (index) => DeviceItem(
                 color: whiteIce,
                 iconColor: primary,
-                icon: index == 0 ? AppIcons.deviceLaptop : AppIcons.mobileDevice,
+                icon:
+                    index == 0 ? AppIcons.deviceLaptop : AppIcons.mobileDevice,
                 onTap: () {},
               ),
             )

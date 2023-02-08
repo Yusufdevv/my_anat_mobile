@@ -8,9 +8,9 @@ class RegionItem extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  const RegionItem({this.title = 'Андижанская область', required this.onTap, Key? key}) : super
-      (key:
-    key);
+  const RegionItem(
+      {this.title = 'Андижанская область', required this.onTap, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +22,7 @@ class RegionItem extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(),
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(),
               ),
               const Spacer(),
               SvgPicture.asset(AppIcons.arrowRight)

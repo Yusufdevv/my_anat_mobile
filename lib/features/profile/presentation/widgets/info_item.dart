@@ -4,7 +4,8 @@ class InfoItem extends StatelessWidget {
   final String title;
   final String subTitle;
 
-  const InfoItem({required this.title, required this.subTitle, Key? key}) : super(key: key);
+  const InfoItem({required this.title, required this.subTitle, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +16,16 @@ class InfoItem extends StatelessWidget {
           title,
           style: Theme.of(context)
               .textTheme
-              .headline3!
+              .displaySmall!
               .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
         ),
         const SizedBox(height: 4),
         Text(
           subTitle,
-          style: Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w600),
+          style: Theme.of(context)
+              .textTheme
+              .displayLarge!
+              .copyWith(fontWeight: FontWeight.w600),
         )
       ],
     );

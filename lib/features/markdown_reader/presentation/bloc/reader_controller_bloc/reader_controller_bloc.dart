@@ -10,14 +10,12 @@ part 'reader_controller_state.dart';
 class ReaderControllerBloc
     extends Bloc<ReaderControllerEvent, ReaderControllerState> {
   ReaderControllerBloc() : super(const ReaderControllerState()) {
-    String colorFunction = '';
     on<SetWebPage>((event, emit) {
       emit(state.copyWith(
           jsFunction: 'setSize(${state.fontSizePercentage})',
           journalIndex: event.index));
     });
     on<SelectColor>((event, emit) {
-      colorFunction = event.colorName;
       emit(state.copyWith(
           selectedColor: event.color,
           selectedTextColor: event.textColor,

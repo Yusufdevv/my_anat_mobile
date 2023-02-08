@@ -68,7 +68,10 @@ class _PinCodeBodyState extends State<PinCodeBody> {
           children: [
             Text(
               LocaleKeys.write_code.tr(),
-              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
             ),
             if (widget.hasError) ...[
               const SizedBox(width: 16),
@@ -78,7 +81,10 @@ class _PinCodeBodyState extends State<PinCodeBody> {
                   textAlign: TextAlign.right,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(color: red),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(color: red),
                 ),
               )
             ],
@@ -94,7 +100,10 @@ class _PinCodeBodyState extends State<PinCodeBody> {
           autoDismissKeyboard: true,
           autoDisposeControllers: false,
           autoFocus: true,
-          textStyle: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 26),
+          textStyle: Theme.of(context)
+              .textTheme
+              .displaySmall!
+              .copyWith(color: textColor, fontSize: 26),
           length: 6,
           animationType: AnimationType.scale,
           showCursor: true,
@@ -111,7 +120,8 @@ class _PinCodeBodyState extends State<PinCodeBody> {
             selectedFillColor: textFieldColor,
             fieldHeight: 56,
             fieldWidth: 47,
-            fieldOuterPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+            fieldOuterPadding:
+                const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
           ),
           animationDuration: const Duration(milliseconds: 200),
           enableActiveFill: true,
@@ -122,11 +132,15 @@ class _PinCodeBodyState extends State<PinCodeBody> {
         if (secondsLeft > 0) ...{
           Row(
             children: [
-              Text(LocaleKeys.again.tr(), style: Theme.of(context).textTheme.headline3),
+              Text(LocaleKeys.again.tr(),
+                  style: Theme.of(context).textTheme.displaySmall),
               const SizedBox(width: 6),
               Text(
                 _printDuration(secondsLeft),
-                style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(color: textColor),
               ),
             ],
           ),
@@ -158,7 +172,10 @@ class _PinCodeBodyState extends State<PinCodeBody> {
                   SvgPicture.asset(AppIcons.refresh),
                   const SizedBox(width: 4),
                   Text(LocaleKeys.send_again.tr(),
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: primary))
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(color: primary))
                 ],
               ),
             ),

@@ -10,7 +10,8 @@ class DeviceItem extends StatelessWidget {
   final Color? color;
   final VoidCallback onTap;
 
-  const DeviceItem({required this.onTap, this.icon, this.iconColor, this.color, Key? key})
+  const DeviceItem(
+      {required this.onTap, this.icon, this.iconColor, this.color, Key? key})
       : super(key: key);
 
   @override
@@ -42,7 +43,7 @@ class DeviceItem extends StatelessWidget {
               children: [
                 Text(
                   'Samsung Galaxy A8 2018',
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -52,7 +53,7 @@ class DeviceItem extends StatelessWidget {
                   'Anatomica App v.2.1 (Android)',
                   style: Theme.of(context)
                       .textTheme
-                      .headline3!
+                      .displaySmall!
                       .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
                 )
               ],

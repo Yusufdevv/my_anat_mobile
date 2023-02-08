@@ -4,7 +4,6 @@ import 'package:anatomica/features/hospital_single/domain/usecases/get_comforts.
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 
 part 'facilities_bloc.freezed.dart';
 part 'facilities_event.dart';

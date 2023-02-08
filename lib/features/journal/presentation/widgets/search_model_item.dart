@@ -7,20 +7,23 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class SearchedModelsItem extends StatelessWidget {
   final TextEditingController controller;
   final JournalEntity magazineItemEntity;
 
-  const SearchedModelsItem({required this.controller, required this.magazineItemEntity, Key? key}) : super(key: key);
+  const SearchedModelsItem(
+      {required this.controller, required this.magazineItemEntity, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(
+                border: Border.all(color: divider),
+                borderRadius: BorderRadius.circular(8)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImage(
@@ -33,9 +36,14 @@ class SearchedModelsItem extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           HighlightedText(
-            textStyleHighlight:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
-            textStyle: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
+            textStyleHighlight: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
+            textStyle: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
             allText: magazineItemEntity.redaction,
             highlightedText: controller.text,
             highlightColor: yellowHighlightedText,
@@ -43,7 +51,10 @@ class SearchedModelsItem extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             MyFunctions.getFormatCostFromInt(magazineItemEntity.price),
-            style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall!
+                .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
           ),
           WButton(
             width: 164,
@@ -51,7 +62,10 @@ class SearchedModelsItem extends StatelessWidget {
             onTap: () {},
             child: Text(
               LocaleKeys.journal_more.tr(),
-              style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayMedium!
+                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
         ],

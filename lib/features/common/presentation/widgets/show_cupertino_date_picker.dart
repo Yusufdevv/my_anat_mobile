@@ -65,7 +65,7 @@ class _CupertinoDatePickerWidgetState extends State<CupertinoDatePickerWidget> {
               confirm: null,
               showTitle: false,
               itemTextStyle:
-                  Theme.of(context).textTheme.headline4 ?? const TextStyle(color: Color(0xFF000046), fontSize: 16.0),
+                  Theme.of(context).textTheme.headlineMedium ?? const TextStyle(color: Color(0xFF000046), fontSize: 16.0),
             ),
             maxDateTime: DateTime.now(),
             locale: DateTimePickerLocale.uz,

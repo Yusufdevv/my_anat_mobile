@@ -53,7 +53,10 @@ class DefaultTextField extends StatelessWidget {
         if (title.isNotEmpty) ...[
           Text(
             title,
-            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall!
+                .copyWith(color: textColor),
           ),
           const SizedBox(height: 8),
         ],
@@ -62,7 +65,11 @@ class DefaultTextField extends StatelessWidget {
           child: TextField(
             controller: controller,
             onChanged: onChanged,
-            style: style ?? Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+            style: style ??
+                Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(color: textColor),
             inputFormatters: inputFormatters,
             obscureText: isObscure,
             keyboardType: keyboardType,
@@ -74,20 +81,24 @@ class DefaultTextField extends StatelessWidget {
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: hasError ? red : textFieldColor),
+                    borderSide:
+                        BorderSide(color: hasError ? red : textFieldColor),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(color: hasError ? red : primary),
                   ),
                   hintText: hintText,
-                  hintStyle: hintStyle ?? Theme.of(context).textTheme.headline3,
+                  hintStyle:
+                      hintStyle ?? Theme.of(context).textTheme.displaySmall,
                   contentPadding: contentPadding,
                   suffixIcon: suffix,
-                  suffixIconConstraints: BoxConstraints(maxWidth: suffixMaxWidth),
+                  suffixIconConstraints:
+                      BoxConstraints(maxWidth: suffixMaxWidth),
                   fillColor: textFieldColor,
                   filled: true,
-                  prefixIconConstraints: BoxConstraints(maxWidth: prefixMaxWidth),
+                  prefixIconConstraints:
+                      BoxConstraints(maxWidth: prefixMaxWidth),
                   prefixIcon: prefix,
                 ),
           ),

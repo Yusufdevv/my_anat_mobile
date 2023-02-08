@@ -24,8 +24,13 @@ class EmptyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: hasMargin ? const EdgeInsets.all(16).copyWith(bottom: 16 + MediaQuery.of(context).padding.bottom) : null,
-      padding: hasPadding ? const EdgeInsets.symmetric(vertical: 24, horizontal: 16) : null,
+      margin: hasMargin
+          ? const EdgeInsets.all(16)
+              .copyWith(bottom: 16 + MediaQuery.of(context).padding.bottom)
+          : null,
+      padding: hasPadding
+          ? const EdgeInsets.symmetric(vertical: 24, horizontal: 16)
+          : null,
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(12),
@@ -38,12 +43,18 @@ class EmptyWidget extends StatelessWidget {
           Text(
             title ?? LocaleKeys.no_reviews.tr(),
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 20),
           ),
           const SizedBox(height: 8),
           Text(
             content ?? LocaleKeys.write_reviews.tr(),
-            style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall!
+                .copyWith(fontWeight: FontWeight.w400),
             textAlign: TextAlign.center,
           ),
           if (onButtonTap != null) ...[

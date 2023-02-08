@@ -1,5 +1,4 @@
 import 'package:anatomica/features/vacancy/data/models/district.dart';
-import 'package:anatomica/features/vacancy/data/models/region.dart';
 import 'package:anatomica/features/vacancy/domain/entities/region.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';

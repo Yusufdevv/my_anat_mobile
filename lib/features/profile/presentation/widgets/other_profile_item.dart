@@ -14,7 +14,12 @@ class OtherProfileItem extends StatelessWidget {
   final VoidCallback onTap;
 
   const OtherProfileItem(
-      {this.icon, this.title, this.backgroundColor, this.iconBackgroundColor, required this.onTap, Key? key})
+      {this.icon,
+      this.title,
+      this.backgroundColor,
+      this.iconBackgroundColor,
+      required this.onTap,
+      Key? key})
       : super(key: key);
 
   @override
@@ -43,7 +48,7 @@ class OtherProfileItem extends StatelessWidget {
             const SizedBox(width: 12),
             Text(
               title ?? LocaleKeys.get_doctor.tr(),
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),

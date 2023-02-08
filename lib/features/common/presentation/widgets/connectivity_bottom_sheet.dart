@@ -3,7 +3,6 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:app_settings/app_settings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -56,8 +55,10 @@ class ConnectionBottomSheet extends StatelessWidget {
                       child: Text(
                         'Офлайн режим',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                           color: black, fontSize: 20),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(color: black, fontSize: 20),
                       ),
                     ),
                   ],
@@ -69,8 +70,10 @@ class ConnectionBottomSheet extends StatelessWidget {
                       child: Text(
                         'Нет связи с интернетом. Проверьте подключение к интернету и попробуйте еще раз.',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: textSecondary),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: textSecondary),
                         maxLines: 3,
                       ),
                     ),
@@ -80,7 +83,6 @@ class ConnectionBottomSheet extends StatelessWidget {
                 WButton(
                   onTap: () {
                     AppSettings.openWIFISettings();
-
                   },
                   height: 40,
                   text: 'Повторить',

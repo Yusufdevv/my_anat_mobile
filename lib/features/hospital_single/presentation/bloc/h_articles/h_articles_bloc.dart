@@ -3,7 +3,6 @@ import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 
 part 'h_articles_bloc.freezed.dart';
 part 'h_articles_event.dart';
@@ -16,7 +15,6 @@ class HArticlesBloc extends Bloc<HArticlesEvent, HArticlesState> {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       final result = await getArticles.call(TypeParameter(id: event.organizationId));
       if (result.isRight) {
-        print('results => ${result.right.results}');
         emit(
           state.copyWith(
             status: FormzStatus.submissionSuccess,

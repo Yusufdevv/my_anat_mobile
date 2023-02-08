@@ -4,7 +4,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class WAppBarWithButtons extends StatelessWidget implements PreferredSizeWidget {
+class WAppBarWithButtons extends StatelessWidget
+    implements PreferredSizeWidget {
   const WAppBarWithButtons({
     required this.title,
     Key? key,
@@ -72,7 +73,10 @@ class WAppBarWithButtons extends StatelessWidget implements PreferredSizeWidget 
                 onTap: onTitleTap,
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(color: titleColor),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(color: titleColor),
                   textAlign: TextAlign.center,
                   maxLines: 1,
                 ),

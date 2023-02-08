@@ -8,13 +8,13 @@ class GetSuggestionsUseCase extends UseCase<List<SuggestionModel>, SuggestionPar
   final GlobalRequestRepository repo = GlobalRequestRepository();
 
   @override
-  Future<Either<Failure, List<SuggestionModel>>> call(SuggestionParam param) {
+  Future<Either<Failure, List<SuggestionModel>>> call(SuggestionParam params) {
     return repo.getList(
-        endpoint: param.isDoctor ? '/doctor/search/suggest/' : '/organization/search/suggest/',
+        endpoint: params.isDoctor ? '/doctor/search/suggest/' : '/organization/search/suggest/',
         fromJson: SuggestionModel.fromJson,
         sendToken: false,
         query: {
-          'search': param.search,
+          'search': params.search,
         });
   }
 }

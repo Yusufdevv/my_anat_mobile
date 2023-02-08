@@ -10,12 +10,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 class HospitalVacancyItem extends StatelessWidget {
   final VacancyListEntity entity;
   final bool showShadow;
-  const HospitalVacancyItem({this.showShadow = true, Key? key, required this.entity}) : super(key: key);
+  const HospitalVacancyItem(
+      {this.showShadow = true, Key? key, required this.entity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(fade(page: VacancySingleScreen(slug: entity.slug))),
+      onTap: () => Navigator.of(context)
+          .push(fade(page: VacancySingleScreen(slug: entity.slug))),
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
         decoration: BoxDecoration(
@@ -37,14 +40,17 @@ class HospitalVacancyItem extends StatelessWidget {
           children: [
             Text(
               entity.title,
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayLarge,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4),
             Text(
               '${MyFunctions.getFormatCostFromInt(entity.salaryFrom, false)} - ${MyFunctions.getFormatCostFromInt(entity.salaryTo)}',
-              style: Theme.of(context).textTheme.headline1!.copyWith(color: primary, fontSize: 18),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(color: primary, fontSize: 18),
             ),
             const SizedBox(height: 12),
             const Divider(
@@ -63,7 +69,10 @@ class HospitalVacancyItem extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   '${entity.experienceFrom} - ${entity.experienceTo} лет',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(color: textColor, fontSize: 13),
                 )
               ],
             ),
@@ -78,7 +87,10 @@ class HospitalVacancyItem extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   entity.address,
-                  style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(color: textColor, fontSize: 13),
                 )
               ],
             ),

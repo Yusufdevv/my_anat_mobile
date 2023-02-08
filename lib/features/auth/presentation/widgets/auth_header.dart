@@ -18,7 +18,8 @@ class AuthHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, top: MediaQuery.of(context).padding.top + 20),
+      padding: EdgeInsets.only(
+          left: 16, right: 16, top: MediaQuery.of(context).padding.top + 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,11 +35,17 @@ class AuthHeader extends StatelessWidget {
           SvgPicture.asset(AppIcons.logo),
           const SizedBox(height: 24),
           Text(title,
-              style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 28, fontWeight: FontWeight.w700)),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayMedium!
+                  .copyWith(fontSize: 28, fontWeight: FontWeight.w700)),
           const SizedBox(height: 8),
           Text(
             subTitle,
-            style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+            style: Theme.of(context)
+                .textTheme
+                .displayMedium!
+                .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
           ),
           const SizedBox(height: 24),
         ],

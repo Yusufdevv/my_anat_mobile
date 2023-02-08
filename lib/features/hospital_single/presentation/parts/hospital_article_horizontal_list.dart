@@ -3,7 +3,6 @@ import 'package:anatomica/features/hospital_single/presentation/bloc/h_articles/
 import 'package:anatomica/features/hospital_single/presentation/parts/all_hospital_items_screen.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/hospital_articles.dart';
 import 'package:anatomica/features/hospital_single/presentation/widgets/show_all_button.dart';
-import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
 import 'package:anatomica/features/map/presentation/widgets/article_item.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -35,7 +34,7 @@ class HospitalArticlesHorizontalList extends StatelessWidget {
               LocaleKeys.articles.tr(),
               style: Theme.of(context)
                   .textTheme
-                  .headline4!
+                  .headlineMedium!
                   .copyWith(color: textColor),
             ),
           ),
@@ -92,8 +91,7 @@ class HospitalArticlesHorizontalList extends StatelessWidget {
                           width: MediaQuery.of(context).size.shortestSide - 32,
                           child: HospitalArticleItem(
                             showShadow: false,
-                            entity: state.articles[index]
-                                ,
+                            entity: state.articles[index],
                           ),
                         );
                       },

@@ -4,7 +4,6 @@ import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 
 part 'map_doctor_bloc.freezed.dart';
 part 'map_doctor_event.dart';

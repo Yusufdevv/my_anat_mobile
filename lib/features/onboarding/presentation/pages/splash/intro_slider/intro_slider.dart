@@ -200,7 +200,7 @@ class _IntroSliderState extends State<IntroSlider>
                               'Premium',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline4!
+                                  .headlineMedium!
                                   .copyWith(fontSize: 20),
                             )
                           ],
@@ -211,7 +211,7 @@ class _IntroSliderState extends State<IntroSlider>
                           textAlign: TextAlign.center,
                           style: Theme.of(context)
                               .textTheme
-                              .headline3!
+                              .displaySmall!
                               .copyWith(fontSize: 20, color: textColor),
                         ),
                 ),
@@ -224,7 +224,7 @@ class _IntroSliderState extends State<IntroSlider>
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .headline5!
+                      .headlineSmall!
                       .copyWith(fontSize: 14, color: textColor),
                 ),
                 const SizedBox(height: 20),

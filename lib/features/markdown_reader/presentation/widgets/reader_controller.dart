@@ -9,9 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ReaderController extends StatefulWidget {
-
   const ReaderController({
-
     Key? key,
   }) : super(key: key);
 
@@ -38,7 +36,8 @@ class _ReaderControllerState extends State<ReaderController> {
   final List<String> fontFamily = ['Averta CY', 'IBM Plex Serif'];
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
+  Widget build(BuildContext context) =>
+      BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
         builder: (context, state) {
           return DefaultTabController(
             length: 2,
@@ -83,11 +82,16 @@ class _ReaderControllerState extends State<ReaderController> {
                       ),
                       indicatorPadding: EdgeInsets.zero,
                       indicatorWeight: 0,
-                      labelStyle: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 12, color: textColor),
+                      labelStyle: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontSize: 12, color: textColor),
                       labelColor: textColor,
                       unselectedLabelColor: state.selectedTextColor,
                       onTap: (index) {
-                      context.read<ReaderControllerBloc>().add(ChangeReaderLanguage(isRussian: index==0));
+                        context
+                            .read<ReaderControllerBloc>()
+                            .add(ChangeReaderLanguage(isRussian: index == 0));
                       },
                       tabs: [
                         Tab(
@@ -150,7 +154,9 @@ class _ReaderControllerState extends State<ReaderController> {
                             ChangeFontSizeButton(
                               iconColor: state.selectedTextColor,
                               onTap: () {
-                                context.read<ReaderControllerBloc>().add(DowngradeFontSize());
+                                context
+                                    .read<ReaderControllerBloc>()
+                                    .add(DowngradeFontSize());
                               },
                               icon: AppIcons.fontSizeDown,
                             ),
@@ -169,7 +175,9 @@ class _ReaderControllerState extends State<ReaderController> {
                             ),
                             ChangeFontSizeButton(
                               onTap: () {
-                                context.read<ReaderControllerBloc>().add(UpgradeFontSize());
+                                context
+                                    .read<ReaderControllerBloc>()
+                                    .add(UpgradeFontSize());
                               },
                               iconColor: state.selectedTextColor,
                               icon: AppIcons.fontSizeUp,

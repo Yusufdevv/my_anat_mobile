@@ -577,12 +577,11 @@ class _$_ConnectivityState implements _ConnectivityState {
             other is _$_ConnectivityState &&
             (identical(other.connected, connected) ||
                 other.connected == connected) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, connected, const DeepCollectionEquality().hash(status));
+  int get hashCode => Object.hash(runtimeType, connected, status);
 
   @JsonKey(ignore: true)
   @override

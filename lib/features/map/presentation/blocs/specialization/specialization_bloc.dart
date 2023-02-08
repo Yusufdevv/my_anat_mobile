@@ -3,7 +3,6 @@ import 'package:anatomica/features/map/domain/usecases/get_specialization.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 
 part 'specialization_bloc.freezed.dart';
 part 'specialization_event.dart';

@@ -31,13 +31,14 @@ class AboutCandidate extends StatelessWidget {
     return BlocBuilder<CandidateSingleBloc, CandidateSingleState>(
       builder: (context, state) {
         if (!showBio && isRelatedEmpty && state.workEntity.isEmpty) {
-          return EmptyWidget(
+          return const EmptyWidget(
             title: 'Mal`umot mavjud emas',
             content: 'Nomzod haqida mal`umot mavjud emas',
           );
         } else {
           return ListView(
-            padding: EdgeInsets.fromLTRB(0, 16, 0, 16 + mediaQuery.padding.bottom),
+            padding:
+                EdgeInsets.fromLTRB(0, 16, 0, 16 + mediaQuery.padding.bottom),
             children: [
               if (showBio) ...[
                 Container(
@@ -50,7 +51,8 @@ class AboutCandidate extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      VacancyTitleText(title: LocaleKeys.about_me.tr(), fontSize: 18),
+                      VacancyTitleText(
+                          title: LocaleKeys.about_me.tr(), fontSize: 18),
                       //   const SizedBox(height: 8),
                       Transform.translate(
                         offset: const Offset(-6, -6),
@@ -70,7 +72,10 @@ class AboutCandidate extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(16, 24, 0, 16),
                   child: Text(
                     LocaleKeys.candidates.tr(),
-                    style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(fontSize: 18, fontWeight: FontWeight.w700),
                   ),
                 ),
                 RelatedCandidateList(id: candidateId),

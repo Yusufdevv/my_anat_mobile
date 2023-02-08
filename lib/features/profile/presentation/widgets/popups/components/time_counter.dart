@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TimeCounter extends StatefulWidget {
@@ -56,7 +55,7 @@ class _TimeCounterState extends State<TimeCounter> {
           printTime(duration.data as int),
           style: Theme.of(context)
               .textTheme
-              .bodyText1!
+              .bodyLarge!
               .copyWith(fontWeight: FontWeight.w600),
         ),
       );

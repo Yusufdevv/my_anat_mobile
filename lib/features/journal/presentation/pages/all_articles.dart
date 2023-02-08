@@ -40,23 +40,30 @@ class AllArticlesScreen extends StatelessWidget {
               ),
               Text(
                 LocaleKeys.all_articles.tr(),
-                style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20, color: textColor),
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(fontSize: 20, color: textColor),
               ),
               const SizedBox(
                 width: 56,
               )
             ],
           ),
-          systemOverlayStyle:
-              const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark),
+          systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark),
         ),
         body: BlocBuilder<JournalBloc, JournalState>(
           builder: (context, state) {
             return Paginator(
-                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                padding: const EdgeInsets.all(16).copyWith(
+                    bottom: MediaQuery.of(context).padding.bottom + 16),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
                 paginatorStatus: state.journalArticleStatus,
-                itemBuilder: (context, index) => ArticleItem(magazineItemEntity: state.journalArticles[index]),
+                itemBuilder: (context, index) => ArticleItem(
+                    magazineItemEntity: state.journalArticles[index]),
                 itemCount: state.journalArticles.length,
                 fetchMoreFunction: () {
                   context.read<JournalBloc>().add(GetMoreJournalArticles());

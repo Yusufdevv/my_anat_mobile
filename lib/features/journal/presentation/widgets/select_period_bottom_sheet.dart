@@ -17,11 +17,13 @@ class SelectPeriodBottomSheet extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<SelectPeriodBottomSheet> createState() => _SelectPeriodBottomSheetState();
+  State<SelectPeriodBottomSheet> createState() =>
+      _SelectPeriodBottomSheetState();
 }
 
 class _SelectPeriodBottomSheetState extends State<SelectPeriodBottomSheet> {
-  PeriodEntity selectedPeriod = const PeriodEntity(title: LocaleKeys.days_30, period: 1);
+  PeriodEntity selectedPeriod =
+      const PeriodEntity(title: LocaleKeys.days_30, period: 1);
 
   List<PeriodEntity> periods = const [
     PeriodEntity(title: LocaleKeys.days_30, period: 1),
@@ -55,7 +57,10 @@ class _SelectPeriodBottomSheetState extends State<SelectPeriodBottomSheet> {
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
                   LocaleKeys.period.tr(),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayLarge!
+                      .copyWith(fontSize: 20),
                 ),
               ),
               WScaleAnimation(

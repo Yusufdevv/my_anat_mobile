@@ -10,18 +10,26 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class SuggestionPage extends StatefulWidget {
   final double statusBarHeight;
   final String? text;
+  final Point myPoint;
 
-  const SuggestionPage({required this.statusBarHeight, this.text, Key? key}) : super(key: key);
+  const SuggestionPage(
+      {required this.statusBarHeight,
+      required this.myPoint,
+      this.text,
+      Key? key})
+      : super(key: key);
 
   @override
   State<SuggestionPage> createState() => _SuggestionPageState();
 }
 
-class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStateMixin {
+class _SuggestionPageState extends State<SuggestionPage>
+    with TickerProviderStateMixin {
   late TabController _controller;
   late TextEditingController controller;
   late SuggestionBloc doctorSuggestion;
@@ -35,7 +43,8 @@ class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStat
     doctorSuggestion = SuggestionBloc(useCase)
       ..add(SuggestionEvent.changePage(1))
       ..add(SuggestionEvent.getSuggestions(widget.text ?? ''));
-    hospitalSuggestion = SuggestionBloc(useCase)..add(SuggestionEvent.getSuggestions(widget.text ?? ''));
+    hospitalSuggestion = SuggestionBloc(useCase)
+      ..add(SuggestionEvent.getSuggestions(widget.text ?? ''));
     controller = TextEditingController(text: widget.text ?? '');
     _controller = TabController(length: 2, vsync: this);
     super.initState();
@@ -51,7 +60,8 @@ class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStat
             children: [
               Container(
                 alignment: Alignment.centerRight,
-                margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 48),
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top + 48),
                 child: GestureDetector(
                   onTap: () => Navigator.of(context).pop(),
                   child: Padding(
@@ -77,7 +87,7 @@ class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStat
                     borderRadius: BorderRadius.circular(6),
                   ),
                   labelPadding: EdgeInsets.zero,
-                  labelStyle: Theme.of(context).textTheme.headline3,
+                  labelStyle: Theme.of(context).textTheme.displaySmall,
                   labelColor: textColor,
                   onTap: (index) {},
                   unselectedLabelColor: textSecondary,
@@ -104,9 +114,11 @@ class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStat
                         value: hospitalSuggestion,
                         child: SuggestionListScreen(
                           isDoctor: true,
+                          myPoint: widget.myPoint,
                           searchText: controller.text,
                           onTapItem: (text) {
-                            context.read<MapOrganizationBloc>().add(MapOrganizationEvent.changeSearchText(text));
+                            context.read<MapOrganizationBloc>().add(
+                                MapOrganizationEvent.changeSearchText(text));
                             Navigator.pop(context);
                           },
                         ),
@@ -115,9 +127,11 @@ class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStat
                         value: doctorSuggestion,
                         child: SuggestionListScreen(
                           isDoctor: true,
+                          myPoint: widget.myPoint,
                           searchText: controller.text,
                           onTapItem: (text) {
-                            context.read<MapOrganizationBloc>().add(MapOrganizationEvent.changeSearchText(text));
+                            context.read<MapOrganizationBloc>().add(
+                                MapOrganizationEvent.changeSearchText(text));
                             Navigator.pop(context);
                           },
                         ),
@@ -133,8 +147,13 @@ class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStat
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.fromLTRB(16, 16, 16,
-                            16 + MediaQuery.of(context).viewInsets.bottom + MediaQuery.of(context).padding.bottom),
+                        padding: EdgeInsets.fromLTRB(
+                            16,
+                            16,
+                            16,
+                            16 +
+                                MediaQuery.of(context).viewInsets.bottom +
+                                MediaQuery.of(context).padding.bottom),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: textFieldColor),
@@ -145,9 +164,11 @@ class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStat
                           controller: controller,
                           onChanged: (value) {
                             if (_controller.index == 0) {
-                              hospitalSuggestion.add(SuggestionEvent.getSuggestions(value));
+                              hospitalSuggestion
+                                  .add(SuggestionEvent.getSuggestions(value));
                             } else {
-                              doctorSuggestion.add(SuggestionEvent.getSuggestions(value));
+                              doctorSuggestion
+                                  .add(SuggestionEvent.getSuggestions(value));
                             }
                           },
                         ),

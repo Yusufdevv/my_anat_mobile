@@ -74,7 +74,7 @@ class ScrolledBottomSheet extends StatelessWidget {
                             LocaleKeys.clean.tr(),
                             style: Theme.of(context)
                                 .textTheme
-                                .headline3!
+                                .displaySmall!
                                 .copyWith(fontSize: 12, color: primary),
                           ),
                         ),
@@ -84,15 +84,15 @@ class ScrolledBottomSheet extends StatelessWidget {
                 },
                 if (isSubScreen)
                   WScaleAnimation(
-                    child: SvgPicture.asset(AppIcons.leftArrow),
                     onTap: onTapCancel ?? () {},
+                    child: SvgPicture.asset(AppIcons.leftArrow),
                   ),
                 if (isSubScreen) const SizedBox(width: 4),
                 Text(
                   title,
                   style: Theme.of(context)
                       .textTheme
-                      .headline1!
+                      .displayLarge!
                       .copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                 ),
                 if (hasCancelButton)
@@ -119,7 +119,7 @@ class ScrolledBottomSheet extends StatelessWidget {
                 color: white,
                 child: pinnedChild,
               )
-            : SizedBox(),
+            : const SizedBox(),
         child != null
             ? Expanded(
                 child: Container(
@@ -144,7 +144,8 @@ class ScrolledBottomSheet extends StatelessWidget {
                 ),
               ),
         stackedWButton != null
-            ? Container(color: white,
+            ? Container(
+                color: white,
                 padding: EdgeInsets.only(
                   bottom: applyBottomPadding
                       ? MediaQuery.of(context).padding.bottom + 8
@@ -154,7 +155,7 @@ class ScrolledBottomSheet extends StatelessWidget {
                 ),
                 child: stackedWButton!,
               )
-            : SizedBox()
+            : const SizedBox()
       ],
     );
   }

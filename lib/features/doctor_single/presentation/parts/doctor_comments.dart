@@ -45,7 +45,7 @@ class DoctorComments extends StatelessWidget {
                                 ? 0.0
                                 : rating)
                         .toString(),
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           color: textSecondary,
                           fontSize: 40,
                         ),
@@ -66,7 +66,7 @@ class DoctorComments extends StatelessWidget {
                               : '${state.doctorComments.length} ${LocaleKeys.review.tr()}',
                           style: Theme.of(context)
                               .textTheme
-                              .headline3!
+                              .displaySmall!
                               .copyWith(color: textColor, fontSize: 13),
                         ),
                       ],

@@ -34,7 +34,10 @@ class HospitalConditionsHorizontalList extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
                   LocaleKeys.facility.tr(),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(color: textColor),
                 ),
               ),
               const SizedBox(height: 16),
@@ -47,7 +50,9 @@ class HospitalConditionsHorizontalList extends StatelessWidget {
                     child: ListView.separated(
                       physics: const BouncingScrollPhysics(),
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: state.comforts.length > 5 ? state.comforts.take(6).length : state.comforts.length,
+                      itemCount: state.comforts.length > 5
+                          ? state.comforts.take(6).length
+                          : state.comforts.length,
                       itemBuilder: (context, index) {
                         if (index == 5) {
                           return ShowAllButton(
@@ -56,24 +61,31 @@ class HospitalConditionsHorizontalList extends StatelessWidget {
                                 fade(
                                   page: AllHospitalItemsScreen(
                                     appbarTitle: LocaleKeys.facility.tr(),
-                                    child: HospitalConditions(facilitiesBloc: context.read<FacilitiesBloc>()),
+                                    child: HospitalConditions(
+                                        facilitiesBloc:
+                                            context.read<FacilitiesBloc>()),
                                   ),
                                 ),
                               );
                             },
-                            width: (MediaQuery.of(context).size.shortestSide / 2) - 45,
+                            width:
+                                (MediaQuery.of(context).size.shortestSide / 2) -
+                                    45,
                             title: LocaleKeys.all_conditions.tr(),
                           );
                         }
                         return SizedBox(
-                          width: (MediaQuery.of(context).size.shortestSide / 2) - 45,
+                          width:
+                              (MediaQuery.of(context).size.shortestSide / 2) -
+                                  45,
                           child: ConditionItem(
                             entity: state.comforts[index],
                           ),
                         );
                       },
                       scrollDirection: Axis.horizontal,
-                      separatorBuilder: (context, index) => const SizedBox(width: 8),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 8),
                     ),
                   )
                 } else ...{

@@ -10,10 +10,11 @@ class GetMapHospitalUseCase extends UseCase<List<MapHospitalModel>, String> {
   final GlobalRequestRepository repo = GlobalRequestRepository();
 
   @override
-  Future<Either<Failure, List<MapHospitalModel>>> call(search, {MapParameter? param}) {
+  Future<Either<Failure, List<MapHospitalModel>>> call(params,
+      {MapParameter? param}) {
     var query = <String, dynamic>{};
-    if (search.isNotEmpty) {
-      query.addAll({"search": search});
+    if (params.isNotEmpty) {
+      query.addAll({"search": params});
     }
     if (param != null) {
       query.addAll({
@@ -21,10 +22,8 @@ class GetMapHospitalUseCase extends UseCase<List<MapHospitalModel>, String> {
         "lon": param.long,
         "rad": param.radius,
       });
-      if(param.spec!=-1){
-        query.addAll({
-          'specialization':param.spec
-        });
+      if (param.spec != -1) {
+        query.addAll({'specialization': param.spec});
       }
     }
     return repo.getList<MapHospitalModel>(

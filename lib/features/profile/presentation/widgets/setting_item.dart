@@ -9,7 +9,8 @@ class SettingItem extends StatelessWidget {
   final String icon;
   final VoidCallback onTap;
 
-  const SettingItem({required this.onTap, this.title = '', this.icon = '', Key? key})
+  const SettingItem(
+      {required this.onTap, this.title = '', this.icon = '', Key? key})
       : super(key: key);
 
   @override
@@ -24,7 +25,7 @@ class SettingItem extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
             ),

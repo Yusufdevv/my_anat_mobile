@@ -82,7 +82,7 @@ class JournalContentItem extends StatelessWidget {
                     content.title,
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontWeight: FontWeight.w600),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -94,10 +94,13 @@ class JournalContentItem extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         MyFunctions.getReadingTime(content.readTime),
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            color: primary),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400,
+                                color: primary),
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -108,8 +111,11 @@ class JournalContentItem extends StatelessWidget {
                       ),
                       Text(
                         content.author,
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                            fontSize: 13, fontWeight: FontWeight.w400),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                                fontSize: 13, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),

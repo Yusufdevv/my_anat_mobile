@@ -18,7 +18,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class JournalBigItem extends StatelessWidget {
   final JournalEntity journalEntity;
 
-  const JournalBigItem({required this.journalEntity, Key? key}) : super(key: key);
+  const JournalBigItem({required this.journalEntity, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +28,24 @@ class JournalBigItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [ Container(
-            height: 492,
-            decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                width: double.infinity,
-                imageUrl: journalEntity.image.middle,
-                fit: BoxFit.cover,
+          children: [
+            Container(
+              height: 492,
+              decoration: BoxDecoration(
+                  border: Border.all(color: divider),
+                  borderRadius: BorderRadius.circular(8)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: CachedNetworkImage(
+                  width: double.infinity,
+                  imageUrl: journalEntity.image.middle,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-
             const SizedBox(height: 12),
             Text(journalEntity.redaction,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     )),
@@ -52,26 +55,35 @@ class JournalBigItem extends StatelessWidget {
                 if (journalEntity.isBought || !journalEntity.isPremium) ...{
                   Text(
                     LocaleKeys.free.tr(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: primary),
+                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: primary),
                   ),
                 } else ...{
                   Text(
                     MyFunctions.getFormatCostFromInt(journalEntity.price),
-                    style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall!
+                        .copyWith(fontSize: 13, fontWeight: FontWeight.w700),
                   ),
                 },
                 const SizedBox(width: 4),
                 Text(
                   '•',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(width: 4),
                 Text(
                   LocaleKeys.e_magazine.tr(),
-                  style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -91,7 +103,8 @@ class JournalBigItem extends StatelessWidget {
                         ),
                       );
                     } else {
-                      if (state.status == AuthenticationStatus.unauthenticated) {
+                      if (state.status ==
+                          AuthenticationStatus.unauthenticated) {
                         showDialog(
                           context: context,
                           builder: (ctx) => BuyDialog(
@@ -112,7 +125,8 @@ class JournalBigItem extends StatelessWidget {
                               );
                             },
                             onRegistrationTap: () {
-                              Navigator.of(context).push(fade(page: const RegisterScreen()));
+                              Navigator.of(context)
+                                  .push(fade(page: const RegisterScreen()));
                             },
                           ),
                         );
@@ -135,8 +149,13 @@ class JournalBigItem extends StatelessWidget {
                     }
                   },
                   child: Text(
-                    journalEntity.isBought || !journalEntity.isPremium ? LocaleKeys.read.tr() : LocaleKeys.buy.tr(),
-                    style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                    journalEntity.isBought || !journalEntity.isPremium
+                        ? LocaleKeys.read.tr()
+                        : LocaleKeys.buy.tr(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 );
               },

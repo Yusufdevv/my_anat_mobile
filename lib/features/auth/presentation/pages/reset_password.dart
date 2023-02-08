@@ -55,10 +55,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         createResetPasswordNewStateUseCase: CreateResetPasswordNewStateUseCase(
           repository: serviceLocator<ResetPasswordRepositoryImpl>(),
         ),
-        submitChangedResetPasswordEmailUseCase: SubmitChangedResetPasswordEmailUseCase(
+        submitChangedResetPasswordEmailUseCase:
+            SubmitChangedResetPasswordEmailUseCase(
           repository: serviceLocator<ResetPasswordRepositoryImpl>(),
         ),
-        submitChangedResetPasswordPhoneUseCase: SubmitChangedResetPasswordPhoneUseCase(
+        submitChangedResetPasswordPhoneUseCase:
+            SubmitChangedResetPasswordPhoneUseCase(
           repository: serviceLocator<ResetPasswordRepositoryImpl>(),
         ),
         submitResetPasswordEmailUseCase: SubmitResetPasswordEmailUseCase(
@@ -92,7 +94,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       Navigator.of(context).pop();
                     },
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(16, mediaQuery.padding.top + 32, 16, 36),
+                      padding: EdgeInsets.fromLTRB(
+                          16, mediaQuery.padding.top + 32, 16, 36),
                       child: SvgPicture.asset(AppIcons.arrowLeft),
                     ),
                   ),
@@ -105,13 +108,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           _getTitle(currentPage),
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
-                              .copyWith(fontSize: 28, fontWeight: FontWeight.w700),
+                              .displayMedium!
+                              .copyWith(
+                                  fontSize: 28, fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           _getSubtitle(currentPage),
-                          style: Theme.of(context).textTheme.headline2!.copyWith(
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                               ),

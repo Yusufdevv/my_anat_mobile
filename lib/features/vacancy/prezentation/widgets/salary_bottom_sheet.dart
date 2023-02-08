@@ -32,7 +32,6 @@ class _SalaryBottomSheetState extends State<SalaryBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return BlocProvider.value(
       value: widget.vacancyBloc,
       child: ScrolledBottomSheet(

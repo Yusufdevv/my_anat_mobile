@@ -7,7 +7,7 @@ class VerifyRestoreCode extends UseCase<String, VerifyParam> {
   final GlobalRequestRepository repo = GlobalRequestRepository();
 
   @override
-  Future<Either<Failure, String>> call(VerifyParam param) {
+  Future<Either<Failure, String>> call(VerifyParam params) {
     return repo.postAndSingle(errorFieldKey: 'code',
         endpoint: '/confirmation/code/verify/',
         fromJson: (data) {
@@ -15,9 +15,9 @@ class VerifyRestoreCode extends UseCase<String, VerifyParam> {
         },
         data: {
           "type": "phone",
-          "signature": param.signature,
-          "code": param.code,
-          "phone": param.phone,
+          "signature": params.signature,
+          "code": params.code,
+          "phone": params.phone,
           "email": ""
         });
   }

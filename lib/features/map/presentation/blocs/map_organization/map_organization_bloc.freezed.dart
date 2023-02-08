@@ -24,8 +24,8 @@ mixin _$MapOrganizationEvent {
     required TResult Function(
             double? latitude, double? longitude, double? radius)
         getDoctors,
-    required TResult Function() getTypes,
-    required TResult Function() getMoreTypes,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
     required TResult Function(
@@ -41,8 +41,8 @@ mixin _$MapOrganizationEvent {
         getHospitals,
     TResult? Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult? Function()? getTypes,
-    TResult? Function()? getMoreTypes,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
     TResult? Function(String text)? changeSearchText,
     TResult? Function(int radius)? changeRadius,
     TResult? Function(
@@ -57,8 +57,8 @@ mixin _$MapOrganizationEvent {
         getHospitals,
     TResult Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
     TResult Function(
@@ -214,8 +214,8 @@ class _$_GetHospitals implements _GetHospitals {
     required TResult Function(
             double? latitude, double? longitude, double? radius)
         getDoctors,
-    required TResult Function() getTypes,
-    required TResult Function() getMoreTypes,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
     required TResult Function(
@@ -234,8 +234,8 @@ class _$_GetHospitals implements _GetHospitals {
         getHospitals,
     TResult? Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult? Function()? getTypes,
-    TResult? Function()? getMoreTypes,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
     TResult? Function(String text)? changeSearchText,
     TResult? Function(int radius)? changeRadius,
     TResult? Function(
@@ -253,8 +253,8 @@ class _$_GetHospitals implements _GetHospitals {
         getHospitals,
     TResult Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
     TResult Function(
@@ -421,8 +421,8 @@ class _$_GetDoctors implements _GetDoctors {
     required TResult Function(
             double? latitude, double? longitude, double? radius)
         getDoctors,
-    required TResult Function() getTypes,
-    required TResult Function() getMoreTypes,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
     required TResult Function(
@@ -441,8 +441,8 @@ class _$_GetDoctors implements _GetDoctors {
         getHospitals,
     TResult? Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult? Function()? getTypes,
-    TResult? Function()? getMoreTypes,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
     TResult? Function(String text)? changeSearchText,
     TResult? Function(int radius)? changeRadius,
     TResult? Function(
@@ -460,8 +460,8 @@ class _$_GetDoctors implements _GetDoctors {
         getHospitals,
     TResult Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
     TResult Function(
@@ -545,6 +545,8 @@ abstract class _$$_GetTypesCopyWith<$Res> {
   factory _$$_GetTypesCopyWith(
           _$_GetTypes value, $Res Function(_$_GetTypes) then) =
       __$$_GetTypesCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String searchText});
 }
 
 /// @nodoc
@@ -554,26 +556,51 @@ class __$$_GetTypesCopyWithImpl<$Res>
   __$$_GetTypesCopyWithImpl(
       _$_GetTypes _value, $Res Function(_$_GetTypes) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? searchText = null,
+  }) {
+    return _then(_$_GetTypes(
+      searchText: null == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_GetTypes implements _GetTypes {
-  _$_GetTypes();
+  _$_GetTypes({required this.searchText});
+
+  @override
+  final String searchText;
 
   @override
   String toString() {
-    return 'MapOrganizationEvent.getTypes()';
+    return 'MapOrganizationEvent.getTypes(searchText: $searchText)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_GetTypes);
+        (other.runtimeType == runtimeType &&
+            other is _$_GetTypes &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, searchText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetTypesCopyWith<_$_GetTypes> get copyWith =>
+      __$$_GetTypesCopyWithImpl<_$_GetTypes>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -584,8 +611,8 @@ class _$_GetTypes implements _GetTypes {
     required TResult Function(
             double? latitude, double? longitude, double? radius)
         getDoctors,
-    required TResult Function() getTypes,
-    required TResult Function() getMoreTypes,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
     required TResult Function(
@@ -594,7 +621,7 @@ class _$_GetTypes implements _GetTypes {
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
   }) {
-    return getTypes();
+    return getTypes(searchText);
   }
 
   @override
@@ -604,8 +631,8 @@ class _$_GetTypes implements _GetTypes {
         getHospitals,
     TResult? Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult? Function()? getTypes,
-    TResult? Function()? getMoreTypes,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
     TResult? Function(String text)? changeSearchText,
     TResult? Function(int radius)? changeRadius,
     TResult? Function(
@@ -613,7 +640,7 @@ class _$_GetTypes implements _GetTypes {
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
-    return getTypes?.call();
+    return getTypes?.call(searchText);
   }
 
   @override
@@ -623,8 +650,8 @@ class _$_GetTypes implements _GetTypes {
         getHospitals,
     TResult Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
     TResult Function(
@@ -634,7 +661,7 @@ class _$_GetTypes implements _GetTypes {
     required TResult orElse(),
   }) {
     if (getTypes != null) {
-      return getTypes();
+      return getTypes(searchText);
     }
     return orElse();
   }
@@ -690,7 +717,12 @@ class _$_GetTypes implements _GetTypes {
 }
 
 abstract class _GetTypes implements MapOrganizationEvent {
-  factory _GetTypes() = _$_GetTypes;
+  factory _GetTypes({required final String searchText}) = _$_GetTypes;
+
+  String get searchText;
+  @JsonKey(ignore: true)
+  _$$_GetTypesCopyWith<_$_GetTypes> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -698,6 +730,8 @@ abstract class _$$_GetMoreTypesCopyWith<$Res> {
   factory _$$_GetMoreTypesCopyWith(
           _$_GetMoreTypes value, $Res Function(_$_GetMoreTypes) then) =
       __$$_GetMoreTypesCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String searchText});
 }
 
 /// @nodoc
@@ -707,26 +741,51 @@ class __$$_GetMoreTypesCopyWithImpl<$Res>
   __$$_GetMoreTypesCopyWithImpl(
       _$_GetMoreTypes _value, $Res Function(_$_GetMoreTypes) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? searchText = null,
+  }) {
+    return _then(_$_GetMoreTypes(
+      searchText: null == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_GetMoreTypes implements _GetMoreTypes {
-  _$_GetMoreTypes();
+  _$_GetMoreTypes({required this.searchText});
+
+  @override
+  final String searchText;
 
   @override
   String toString() {
-    return 'MapOrganizationEvent.getMoreTypes()';
+    return 'MapOrganizationEvent.getMoreTypes(searchText: $searchText)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_GetMoreTypes);
+        (other.runtimeType == runtimeType &&
+            other is _$_GetMoreTypes &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, searchText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetMoreTypesCopyWith<_$_GetMoreTypes> get copyWith =>
+      __$$_GetMoreTypesCopyWithImpl<_$_GetMoreTypes>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -737,8 +796,8 @@ class _$_GetMoreTypes implements _GetMoreTypes {
     required TResult Function(
             double? latitude, double? longitude, double? radius)
         getDoctors,
-    required TResult Function() getTypes,
-    required TResult Function() getMoreTypes,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
     required TResult Function(
@@ -747,7 +806,7 @@ class _$_GetMoreTypes implements _GetMoreTypes {
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
   }) {
-    return getMoreTypes();
+    return getMoreTypes(searchText);
   }
 
   @override
@@ -757,8 +816,8 @@ class _$_GetMoreTypes implements _GetMoreTypes {
         getHospitals,
     TResult? Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult? Function()? getTypes,
-    TResult? Function()? getMoreTypes,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
     TResult? Function(String text)? changeSearchText,
     TResult? Function(int radius)? changeRadius,
     TResult? Function(
@@ -766,7 +825,7 @@ class _$_GetMoreTypes implements _GetMoreTypes {
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
-    return getMoreTypes?.call();
+    return getMoreTypes?.call(searchText);
   }
 
   @override
@@ -776,8 +835,8 @@ class _$_GetMoreTypes implements _GetMoreTypes {
         getHospitals,
     TResult Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
     TResult Function(
@@ -787,7 +846,7 @@ class _$_GetMoreTypes implements _GetMoreTypes {
     required TResult orElse(),
   }) {
     if (getMoreTypes != null) {
-      return getMoreTypes();
+      return getMoreTypes(searchText);
     }
     return orElse();
   }
@@ -843,7 +902,12 @@ class _$_GetMoreTypes implements _GetMoreTypes {
 }
 
 abstract class _GetMoreTypes implements MapOrganizationEvent {
-  factory _GetMoreTypes() = _$_GetMoreTypes;
+  factory _GetMoreTypes({required final String searchText}) = _$_GetMoreTypes;
+
+  String get searchText;
+  @JsonKey(ignore: true)
+  _$$_GetMoreTypesCopyWith<_$_GetMoreTypes> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -916,8 +980,8 @@ class _$_ChangeSearchText implements _ChangeSearchText {
     required TResult Function(
             double? latitude, double? longitude, double? radius)
         getDoctors,
-    required TResult Function() getTypes,
-    required TResult Function() getMoreTypes,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
     required TResult Function(
@@ -936,8 +1000,8 @@ class _$_ChangeSearchText implements _ChangeSearchText {
         getHospitals,
     TResult? Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult? Function()? getTypes,
-    TResult? Function()? getMoreTypes,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
     TResult? Function(String text)? changeSearchText,
     TResult? Function(int radius)? changeRadius,
     TResult? Function(
@@ -955,8 +1019,8 @@ class _$_ChangeSearchText implements _ChangeSearchText {
         getHospitals,
     TResult Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
     TResult Function(
@@ -1100,8 +1164,8 @@ class _$_ChangeRadius implements _ChangeRadius {
     required TResult Function(
             double? latitude, double? longitude, double? radius)
         getDoctors,
-    required TResult Function() getTypes,
-    required TResult Function() getMoreTypes,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
     required TResult Function(
@@ -1120,8 +1184,8 @@ class _$_ChangeRadius implements _ChangeRadius {
         getHospitals,
     TResult? Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult? Function()? getTypes,
-    TResult? Function()? getMoreTypes,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
     TResult? Function(String text)? changeSearchText,
     TResult? Function(int radius)? changeRadius,
     TResult? Function(
@@ -1139,8 +1203,8 @@ class _$_ChangeRadius implements _ChangeRadius {
         getHospitals,
     TResult Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
     TResult Function(
@@ -1294,8 +1358,8 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
     required TResult Function(
             double? latitude, double? longitude, double? radius)
         getDoctors,
-    required TResult Function() getTypes,
-    required TResult Function() getMoreTypes,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
     required TResult Function(
@@ -1314,8 +1378,8 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
         getHospitals,
     TResult? Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult? Function()? getTypes,
-    TResult? Function()? getMoreTypes,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
     TResult? Function(String text)? changeSearchText,
     TResult? Function(int radius)? changeRadius,
     TResult? Function(
@@ -1333,8 +1397,8 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
         getHospitals,
     TResult Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
     TResult Function(
@@ -1497,8 +1561,8 @@ class _$_ChangeLatLong implements _ChangeLatLong {
     required TResult Function(
             double? latitude, double? longitude, double? radius)
         getDoctors,
-    required TResult Function() getTypes,
-    required TResult Function() getMoreTypes,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
     required TResult Function(String text) changeSearchText,
     required TResult Function(int radius) changeRadius,
     required TResult Function(
@@ -1517,8 +1581,8 @@ class _$_ChangeLatLong implements _ChangeLatLong {
         getHospitals,
     TResult? Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult? Function()? getTypes,
-    TResult? Function()? getMoreTypes,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
     TResult? Function(String text)? changeSearchText,
     TResult? Function(int radius)? changeRadius,
     TResult? Function(
@@ -1536,8 +1600,8 @@ class _$_ChangeLatLong implements _ChangeLatLong {
         getHospitals,
     TResult Function(double? latitude, double? longitude, double? radius)?
         getDoctors,
-    TResult Function()? getTypes,
-    TResult Function()? getMoreTypes,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
     TResult Function(String text)? changeSearchText,
     TResult Function(int radius)? changeRadius,
     TResult Function(
@@ -1621,6 +1685,10 @@ mixin _$MapOrganizationState {
   List<MapHospitalModel> get hospitals => throw _privateConstructorUsedError;
   List<MapDoctorModel> get doctors => throw _privateConstructorUsedError;
   List<TypeEntity> get types => throw _privateConstructorUsedError;
+  int get typesCount => throw _privateConstructorUsedError;
+  String? get typesNext => throw _privateConstructorUsedError;
+  FormzStatus get typesStatus => throw _privateConstructorUsedError;
+  bool get typesFetchMore => throw _privateConstructorUsedError;
   int get radius => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
   FormzStatus get getTypesStatus => throw _privateConstructorUsedError;
@@ -1649,6 +1717,10 @@ abstract class $MapOrganizationStateCopyWith<$Res> {
       {List<MapHospitalModel> hospitals,
       List<MapDoctorModel> doctors,
       List<TypeEntity> types,
+      int typesCount,
+      String? typesNext,
+      FormzStatus typesStatus,
+      bool typesFetchMore,
       int radius,
       FormzStatus status,
       FormzStatus getTypesStatus,
@@ -1679,6 +1751,10 @@ class _$MapOrganizationStateCopyWithImpl<$Res,
     Object? hospitals = null,
     Object? doctors = null,
     Object? types = null,
+    Object? typesCount = null,
+    Object? typesNext = freezed,
+    Object? typesStatus = null,
+    Object? typesFetchMore = null,
     Object? radius = null,
     Object? status = null,
     Object? getTypesStatus = null,
@@ -1704,6 +1780,22 @@ class _$MapOrganizationStateCopyWithImpl<$Res,
           ? _value.types
           : types // ignore: cast_nullable_to_non_nullable
               as List<TypeEntity>,
+      typesCount: null == typesCount
+          ? _value.typesCount
+          : typesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      typesNext: freezed == typesNext
+          ? _value.typesNext
+          : typesNext // ignore: cast_nullable_to_non_nullable
+              as String?,
+      typesStatus: null == typesStatus
+          ? _value.typesStatus
+          : typesStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      typesFetchMore: null == typesFetchMore
+          ? _value.typesFetchMore
+          : typesFetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       radius: null == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
@@ -1764,6 +1856,10 @@ abstract class _$$_MapOrganizationStateCopyWith<$Res>
       {List<MapHospitalModel> hospitals,
       List<MapDoctorModel> doctors,
       List<TypeEntity> types,
+      int typesCount,
+      String? typesNext,
+      FormzStatus typesStatus,
+      bool typesFetchMore,
       int radius,
       FormzStatus status,
       FormzStatus getTypesStatus,
@@ -1791,6 +1887,10 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
     Object? hospitals = null,
     Object? doctors = null,
     Object? types = null,
+    Object? typesCount = null,
+    Object? typesNext = freezed,
+    Object? typesStatus = null,
+    Object? typesFetchMore = null,
     Object? radius = null,
     Object? status = null,
     Object? getTypesStatus = null,
@@ -1816,6 +1916,22 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
           ? _value._types
           : types // ignore: cast_nullable_to_non_nullable
               as List<TypeEntity>,
+      typesCount: null == typesCount
+          ? _value.typesCount
+          : typesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      typesNext: freezed == typesNext
+          ? _value.typesNext
+          : typesNext // ignore: cast_nullable_to_non_nullable
+              as String?,
+      typesStatus: null == typesStatus
+          ? _value.typesStatus
+          : typesStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      typesFetchMore: null == typesFetchMore
+          ? _value.typesFetchMore
+          : typesFetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       radius: null == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
@@ -1871,6 +1987,10 @@ class _$_MapOrganizationState implements _MapOrganizationState {
       {final List<MapHospitalModel> hospitals = const [],
       final List<MapDoctorModel> doctors = const [],
       final List<TypeEntity> types = const [],
+      this.typesCount = 0,
+      this.typesNext,
+      this.typesStatus = FormzStatus.pure,
+      this.typesFetchMore = false,
       this.radius = 0,
       this.status = FormzStatus.pure,
       this.getTypesStatus = FormzStatus.pure,
@@ -1912,6 +2032,17 @@ class _$_MapOrganizationState implements _MapOrganizationState {
 
   @override
   @JsonKey()
+  final int typesCount;
+  @override
+  final String? typesNext;
+  @override
+  @JsonKey()
+  final FormzStatus typesStatus;
+  @override
+  @JsonKey()
+  final bool typesFetchMore;
+  @override
+  @JsonKey()
   final int radius;
   @override
   @JsonKey()
@@ -1945,7 +2076,7 @@ class _$_MapOrganizationState implements _MapOrganizationState {
 
   @override
   String toString() {
-    return 'MapOrganizationState(hospitals: $hospitals, doctors: $doctors, types: $types, radius: $radius, status: $status, getTypesStatus: $getTypesStatus, getCurrentLocationStatus: $getCurrentLocationStatus, lat: $lat, long: $long, currentLat: $currentLat, currentLong: $currentLong, searchText: $searchText, next: $next, fetchMore: $fetchMore)';
+    return 'MapOrganizationState(hospitals: $hospitals, doctors: $doctors, types: $types, typesCount: $typesCount, typesNext: $typesNext, typesStatus: $typesStatus, typesFetchMore: $typesFetchMore, radius: $radius, status: $status, getTypesStatus: $getTypesStatus, getCurrentLocationStatus: $getCurrentLocationStatus, lat: $lat, long: $long, currentLat: $currentLat, currentLong: $currentLong, searchText: $searchText, next: $next, fetchMore: $fetchMore)';
   }
 
   @override
@@ -1957,6 +2088,14 @@ class _$_MapOrganizationState implements _MapOrganizationState {
                 .equals(other._hospitals, _hospitals) &&
             const DeepCollectionEquality().equals(other._doctors, _doctors) &&
             const DeepCollectionEquality().equals(other._types, _types) &&
+            (identical(other.typesCount, typesCount) ||
+                other.typesCount == typesCount) &&
+            (identical(other.typesNext, typesNext) ||
+                other.typesNext == typesNext) &&
+            (identical(other.typesStatus, typesStatus) ||
+                other.typesStatus == typesStatus) &&
+            (identical(other.typesFetchMore, typesFetchMore) ||
+                other.typesFetchMore == typesFetchMore) &&
             (identical(other.radius, radius) || other.radius == radius) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.getTypesStatus, getTypesStatus) ||
@@ -1983,6 +2122,10 @@ class _$_MapOrganizationState implements _MapOrganizationState {
       const DeepCollectionEquality().hash(_hospitals),
       const DeepCollectionEquality().hash(_doctors),
       const DeepCollectionEquality().hash(_types),
+      typesCount,
+      typesNext,
+      typesStatus,
+      typesFetchMore,
       radius,
       status,
       getTypesStatus,
@@ -2008,6 +2151,10 @@ abstract class _MapOrganizationState implements MapOrganizationState {
       {final List<MapHospitalModel> hospitals,
       final List<MapDoctorModel> doctors,
       final List<TypeEntity> types,
+      final int typesCount,
+      final String? typesNext,
+      final FormzStatus typesStatus,
+      final bool typesFetchMore,
       final int radius,
       final FormzStatus status,
       final FormzStatus getTypesStatus,
@@ -2026,6 +2173,14 @@ abstract class _MapOrganizationState implements MapOrganizationState {
   List<MapDoctorModel> get doctors;
   @override
   List<TypeEntity> get types;
+  @override
+  int get typesCount;
+  @override
+  String? get typesNext;
+  @override
+  FormzStatus get typesStatus;
+  @override
+  bool get typesFetchMore;
   @override
   int get radius;
   @override

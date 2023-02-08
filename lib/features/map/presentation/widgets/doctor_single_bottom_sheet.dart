@@ -108,7 +108,7 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme
-                              .headline1!
+                              .displayLarge!
                               .copyWith(fontSize: 20),
                         ),
                         const SizedBox(height: 4),
@@ -118,7 +118,7 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme
-                              .headline3!
+                              .displaySmall!
                               .copyWith(color: primary),
                         ),
                       ],
@@ -137,7 +137,7 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                       address,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                 ],
@@ -149,7 +149,7 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                   const SizedBox(width: 6),
                   Text(
                     MyFunctions.formatPhone(phone, false),
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                 ],
               ),
@@ -160,7 +160,7 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                   const SizedBox(width: 6),
                   Text(
                     hospital,
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                 ],
               ),
@@ -171,7 +171,7 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                     rating.toString(),
                     style: Theme.of(context)
                         .textTheme
-                        .headline3!
+                        .displaySmall!
                         .copyWith(color: darkGreen),
                   ),
                   const SizedBox(width: 8),
@@ -272,7 +272,7 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                     width: 40,
                     color: white,
                     onTap: () async {
-                      var uri = Uri.parse('tel:${phone}');
+                      var uri = Uri.parse('tel:$phone');
                       await canLaunchUrl(uri)
                           ? await launchUrl(uri)
                           : throw 'can not open phone';

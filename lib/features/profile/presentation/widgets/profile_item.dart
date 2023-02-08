@@ -50,7 +50,7 @@ class ProfileItem extends StatelessWidget {
               title.tr(),
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .displayLarge!
                   .copyWith(color: titleColor),
             ),
             const Spacer(),

@@ -48,7 +48,7 @@ class JournalSearchAppBar extends StatelessWidget
                   focusNode: _focusNode,
                   controller: _searchController,
                   onChanged: (value) {
-                    if (value.length >= 3||value.isEmpty) {
+                    if (value.length >= 3 || value.isEmpty) {
                       context
                           .read<JournalSearchBloc>()
                           .add(SearchJournals(query: value));
@@ -82,7 +82,7 @@ class JournalSearchAppBar extends StatelessWidget
                   LocaleKeys.close.tr(),
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headlineMedium!
                       .copyWith(fontSize: 12),
                 ),
               ),
@@ -114,7 +114,7 @@ class JournalSearchAppBar extends StatelessWidget
                     ),
                   ]),
               labelPadding: EdgeInsets.zero,
-              labelStyle: Theme.of(context).textTheme.headline3,
+              labelStyle: Theme.of(context).textTheme.displaySmall,
               labelColor: textColor,
               onTap: (index) {},
               unselectedLabelColor: textSecondary,

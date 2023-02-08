@@ -90,29 +90,30 @@ class _RegisterFeedState extends State<RegisterFeed> {
               Text.rich(
                 TextSpan(
                     text: LocaleKeys.privacy_1.tr(),
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyLarge,
                     children: [
                       TextSpan(
-                        text:
-        LocaleKeys.privacy_2.tr(),
+                        text: LocaleKeys.privacy_2.tr(),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
-                            if (await canLaunchUrlString('https://anatomica.uz/privacy-policy')){
-                              await launchUrlString('https://anatomica.uz/privacy-policy', mode:  LaunchMode.externalApplication);
+                            if (await canLaunchUrlString(
+                                'https://anatomica.uz/privacy-policy')) {
+                              await launchUrlString(
+                                  'https://anatomica.uz/privacy-policy',
+                                  mode: LaunchMode.externalApplication);
                             }
                           },
                         onEnter: (_) {},
-                        onExit: (_) {
-                        },
+                        onExit: (_) {},
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText1!
+                            .bodyLarge!
                             .copyWith(color: primary),
                       ),
                       TextSpan(
                           text: LocaleKeys.privacy_3.tr(),
-                          style: Theme.of(context).textTheme.bodyText1,
-                          children: []),
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          children: const []),
                     ]),
                 textAlign: TextAlign.center,
               ),
@@ -146,7 +147,7 @@ class _RegisterFeedState extends State<RegisterFeed> {
                 children: [
                   Text(
                     LocaleKeys.already_has.tr(),
-                    style: Theme.of(context).textTheme.subtitle2!.copyWith(),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(),
                   ),
                   const SizedBox(width: 4),
                   WScaleAnimation(
@@ -156,10 +157,11 @@ class _RegisterFeedState extends State<RegisterFeed> {
                     },
                     child: Text(
                       LocaleKeys.enter.tr(),
-                      style: Theme.of(context).textTheme.headline4!.copyWith(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
+                      style:
+                          Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                              ),
                     ),
                   ),
                 ],

@@ -21,7 +21,8 @@ class ActivatePremium extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage(AppImages.magazineBack), fit: BoxFit.cover),
+          image: DecorationImage(
+              image: AssetImage(AppImages.magazineBack), fit: BoxFit.cover),
         ),
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -35,12 +36,18 @@ class ActivatePremium extends StatelessWidget {
             children: [
               Text(
                 LocaleKeys.active_follow.tr(),
-                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge!
+                    .copyWith(fontSize: 20),
               ),
               const SizedBox(height: 8),
               Text(
                 LocaleKeys.get_access.tr(),
-                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge!
+                    .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
               ),
               const SizedBox(height: 16),
               Row(
@@ -52,7 +59,8 @@ class ActivatePremium extends StatelessWidget {
                         height: 34,
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         onTap: () {
-                          if (state.status == AuthenticationStatus.authenticated) {
+                          if (state.status ==
+                              AuthenticationStatus.authenticated) {
                             Navigator.of(context, rootNavigator: true).push(
                               fade(
                                 page: BuySubscription(
@@ -68,8 +76,9 @@ class ActivatePremium extends StatelessWidget {
                           LocaleKeys.more.tr(),
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
-                              .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                              .displayMedium!
+                              .copyWith(
+                                  fontSize: 13, fontWeight: FontWeight.w400),
                         ),
                       );
                     },

@@ -36,7 +36,6 @@ import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journa
 import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/onboarding/presentation/pages/on_boarding_screen.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // import 'package:firebase_core/firebase_core.dart';
@@ -44,6 +43,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,6 +55,8 @@ Future<void> main() async {
   // FlutterError.onError =
   //     fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
   HttpOverrides.global = MyHttpOverrides();
+  AndroidYandexMap.useAndroidViewSurface = false;
+
   runApp(EasyLocalization(
       path: 'lib/assets/translations',
       supportedLocales: const [

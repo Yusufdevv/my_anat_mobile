@@ -36,7 +36,7 @@ class WImage extends StatelessWidget {
           height: height,
           color: color,
           fit: fit,
-          placeholder: (context, url) => ImagePreloadShimmer(),
+          placeholder: (context, url) => const ImagePreloadShimmer(),
           errorWidget: (context, url, error) => Container(
             color: onErrorColor,
             child: onErrorWidget,

@@ -61,7 +61,8 @@ class HospitalArticleItem extends StatelessWidget {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: WebViewScreen(
-                      url: 'https://anatomica.uz/premium-article/${entity.slug}',
+                      url:
+                          'https://anatomica.uz/premium-article/${entity.slug}',
                       page: '',
                     ),
                   ),
@@ -112,7 +113,7 @@ class HospitalArticleItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           entity.title,
-                          style: Theme.of(context).textTheme.headline1,
+                          style: Theme.of(context).textTheme.displayLarge,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -125,8 +126,12 @@ class HospitalArticleItem extends StatelessWidget {
                           SvgPicture.asset(AppIcons.mapCalendar),
                           const SizedBox(width: 6),
                           Text(
-                            MyFunctions.safeDateFormat(entity.publishDate, 'dd MMMM yyyy'),
-                            style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13),
+                            MyFunctions.safeDateFormat(
+                                entity.publishDate, 'dd MMMM yyyy'),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall!
+                                .copyWith(fontSize: 13),
                           ),
                         ],
                       ),

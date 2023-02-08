@@ -74,7 +74,7 @@ class DoctorItem extends StatelessWidget {
                         const SizedBox(height: 8),
                         Text(
                           entity.fullName,
-                          style: Theme.of(context).textTheme.headline1,
+                          style: Theme.of(context).textTheme.displayLarge,
                         ),
                         const SizedBox(height: 4),
                         showPosition
@@ -82,7 +82,7 @@ class DoctorItem extends StatelessWidget {
                                 entity.position,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline4!
+                                    .headlineMedium!
                                     .copyWith(fontSize: 14),
                               )
                             : Wrap(
@@ -94,11 +94,10 @@ class DoctorItem extends StatelessWidget {
                                       '${entity.specializations[i].title} ',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline4!
+                                          .headlineMedium!
                                           .copyWith(fontSize: 14),
-
                                     ),
-                              ],
+                                ],
                               ),
                       ],
                     ),
@@ -132,7 +131,7 @@ class DoctorItem extends StatelessWidget {
                         (entity.rating > 5 ? 5.0 : entity.rating).toString(),
                         style: Theme.of(context)
                             .textTheme
-                            .headline1!
+                            .displayLarge!
                             .copyWith(color: darkGreen, fontSize: 14),
                       ),
                     ],

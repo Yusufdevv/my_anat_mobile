@@ -7,13 +7,16 @@ class PaymentScreenTabs extends StatefulWidget {
   // final MagazineItemEntity magazineItemEntity;
   final VoidCallback onTap;
 
-  const PaymentScreenTabs({/*required this.magazineItemEntity, */ required this.onTap, Key? key}) : super(key: key);
+  const PaymentScreenTabs(
+      {/*required this.magazineItemEntity, */ required this.onTap, Key? key})
+      : super(key: key);
 
   @override
   State<PaymentScreenTabs> createState() => _PaymentScreenTabsState();
 }
 
-class _PaymentScreenTabsState extends State<PaymentScreenTabs> with TickerProviderStateMixin {
+class _PaymentScreenTabsState extends State<PaymentScreenTabs>
+    with TickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -24,7 +27,6 @@ class _PaymentScreenTabsState extends State<PaymentScreenTabs> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    bool? isConnected = true;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -33,7 +35,7 @@ class _PaymentScreenTabsState extends State<PaymentScreenTabs> with TickerProvid
             alignment: Alignment.centerLeft,
             child: Text(
               LocaleKeys.phone_number.tr(),
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.displayLarge,
             ),
           ),
           const SizedBox(height: 8),

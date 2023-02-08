@@ -31,10 +31,12 @@ LogoModel _$LogoModelFromJson(Map<String, dynamic> json) => LogoModel(
       middle: json['middle'] as String? ?? '',
       origin: json['origin'] as String? ?? '',
       small: json['small'] as String? ?? '',
+      id: json['id'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$LogoModelToJson(LogoModel instance) => <String, dynamic>{
       'origin': instance.origin,
       'middle': instance.middle,
       'small': instance.small,
+      'id': instance.id,
     };

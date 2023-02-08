@@ -17,9 +17,7 @@ import 'package:anatomica/features/profile/presentation/widgets/popups/restore_p
 import 'package:anatomica/features/profile/presentation/widgets/popups/restore_verify.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -31,7 +29,8 @@ class PurchasedScreen extends StatefulWidget {
   State<PurchasedScreen> createState() => _PurchasedScreenState();
 }
 
-class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderStateMixin {
+class _PurchasedScreenState extends State<PurchasedScreen>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late PurchasedJournalBloc purchasedJournalBloc;
   late PurchasedArticleBloc purchasedArticleBloc;
@@ -39,8 +38,10 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
 
   @override
   void initState() {
-    restoreBloc =
-        RestoreBloc(sendRestore: SendRestoreCode(), verifyRestore: VerifyRestoreCode(), restore: RestoreUseCase());
+    restoreBloc = RestoreBloc(
+        sendRestore: SendRestoreCode(),
+        verifyRestore: VerifyRestoreCode(),
+        restore: RestoreUseCase());
     purchasedJournalBloc = PurchasedJournalBloc(GetPurchasedJournalUS())
       ..add(PurchasedJournalEvent.getArticle(isRefresh: false));
     purchasedArticleBloc = PurchasedArticleBloc(GetPurchasedArticleUS())
@@ -63,7 +64,8 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                 Navigator.of(context).pop();
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 child: SvgPicture.asset(
                   AppIcons.arrowLeft,
                   color: textColor,
@@ -73,7 +75,10 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
             centerTitle: true,
             title: Text(
               LocaleKeys.purchased.tr(),
-              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             titleSpacing: 0,
           ),
@@ -103,11 +108,14 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                             borderRadius: BorderRadius.circular(6),
                             color: white,
                             boxShadow: const [
-                              BoxShadow(blurRadius: 24, offset: Offset(0, 8), color: Color(0x302B8364))
+                              BoxShadow(
+                                  blurRadius: 24,
+                                  offset: Offset(0, 8),
+                                  color: Color(0x302B8364))
                             ]),
                         labelColor: textColor,
                         unselectedLabelColor: textSecondary,
-                        labelStyle: Theme.of(context).textTheme.headline3,
+                        labelStyle: Theme.of(context).textTheme.displaySmall,
                         controller: _tabController,
                         tabs: [
                           Tab(
@@ -119,14 +127,19 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                         ],
                       ),
                     ),
-                    if (state.showRestore ?? !(StorageRepository.getBool('is_purchase_restored', defValue: false))) ...[
+                    if (state.showRestore ??
+                        !(StorageRepository.getBool('is_purchase_restored',
+                            defValue: false))) ...[
                       const SizedBox(
                         height: 16,
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 16),
-                        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 12),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: primary),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 12),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: primary),
                         child: Row(
                           children: [
                             SvgPicture.asset(
@@ -143,8 +156,10 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                                 LocaleKeys.restore_things.tr(),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
-                                    .copyWith(fontWeight: FontWeight.w600, fontSize: 12),
+                                    .displayMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12),
                               ),
                             ),
                             const SizedBox(
@@ -155,16 +170,20 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                               text: LocaleKeys.restore.tr(),
                               textColor: primary,
                               color: white,
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
                               onTap: () async {
                                 var item = await showDialog<bool>(
                                     context: context,
                                     builder: (c) {
                                       return MultiBlocProvider(
                                         providers: [
-                                          BlocProvider.value(value: restoreBloc),
-                                          BlocProvider.value(value: purchasedJournalBloc),
-                                          BlocProvider.value(value: purchasedArticleBloc),
+                                          BlocProvider.value(
+                                              value: restoreBloc),
+                                          BlocProvider.value(
+                                              value: purchasedJournalBloc),
+                                          BlocProvider.value(
+                                              value: purchasedArticleBloc),
                                         ],
                                         child: RestorePhoneDialog(
                                           isJournal: _tabController.index == 1,
@@ -175,17 +194,25 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                                                 builder: (b) {
                                                   return MultiBlocProvider(
                                                     providers: [
-                                                      BlocProvider.value(value: restoreBloc),
-                                                      BlocProvider.value(value: purchasedJournalBloc),
-                                                      BlocProvider.value(value: purchasedArticleBloc),
+                                                      BlocProvider.value(
+                                                          value: restoreBloc),
+                                                      BlocProvider.value(
+                                                          value:
+                                                              purchasedJournalBloc),
+                                                      BlocProvider.value(
+                                                          value:
+                                                              purchasedArticleBloc),
                                                     ],
                                                     child: RestoreVerifyDialog(
-                                                      isJournal: _tabController.index == 1,
+                                                      isJournal: _tabController
+                                                              .index ==
+                                                          1,
                                                     ),
                                                   );
                                                 });
                                             if (item == null) {
-                                              restoreBloc.add(RestoreEvent.clear());
+                                              restoreBloc
+                                                  .add(RestoreEvent.clear());
                                             }
                                           },
                                         ),

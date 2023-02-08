@@ -21,7 +21,8 @@ class TitleWithSuffixAction extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 24),
+          style:
+              Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 24),
         ),
         const Spacer(),
         WScaleAnimation(
@@ -32,7 +33,10 @@ class TitleWithSuffixAction extends StatelessWidget {
               children: [
                 Text(
                   LocaleKeys.all.tr(),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 15),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(fontSize: 15),
                 ),
                 SvgPicture.asset(AppIcons.arrowRight)
               ],

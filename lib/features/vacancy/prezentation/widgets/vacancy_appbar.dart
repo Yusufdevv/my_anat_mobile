@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 class VacancyAppBar extends StatelessWidget {
   const VacancyAppBar({Key? key}) : super(key: key);
 
@@ -31,7 +32,7 @@ class VacancyAppBar extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             LocaleKeys.vacancy.tr(),
-            style: Theme.of(context).textTheme.headline1!.copyWith(
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 22,
                 ),

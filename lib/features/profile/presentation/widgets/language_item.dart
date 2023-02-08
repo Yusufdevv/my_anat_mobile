@@ -28,7 +28,7 @@ class LanguageItem extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               language.title,
-              style: Theme.of(context).textTheme.headline1!.copyWith(
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),

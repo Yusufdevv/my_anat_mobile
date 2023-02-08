@@ -43,7 +43,10 @@ class EducationItem extends StatelessWidget {
                       entity.course,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontWeight: FontWeight.w400),
                     )
                   ],
                 ),
@@ -54,12 +57,18 @@ class EducationItem extends StatelessWidget {
           Text(
             entity.degree,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(color: darkGreen),
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: darkGreen),
           ),
           const SizedBox(height: 8),
           Text(
             '${Jiffy(entity.startDate).year} - ${Jiffy(entity.endDate).year}',
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(color: darkGreen),
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: darkGreen),
           ),
         ],
       ),

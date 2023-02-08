@@ -24,7 +24,6 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
@@ -56,7 +55,8 @@ class PaymentScreen extends StatefulWidget {
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateMixin {
+class _PaymentScreenState extends State<PaymentScreen>
+    with TickerProviderStateMixin {
   late TabController controller;
   late TextEditingController phoneController;
   late TextEditingController emailController;
@@ -84,12 +84,16 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PaymentBloc(
-        orderCreateArticleUseCase: OrderCreateArticleUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
-        orderCreateJournalUseCase: OrderCreateJournalUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
-        checkPaymentStatusUseCase: CheckPaymentStatusUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
-        getPricesUseCase: GetPricesUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
-        payForMonthlySubscriptionUseCase:
-            PayForMonthlySubscriptionUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
+        orderCreateArticleUseCase: OrderCreateArticleUseCase(
+            repository: serviceLocator<PaymentRepositoryImpl>()),
+        orderCreateJournalUseCase: OrderCreateJournalUseCase(
+            repository: serviceLocator<PaymentRepositoryImpl>()),
+        checkPaymentStatusUseCase: CheckPaymentStatusUseCase(
+            repository: serviceLocator<PaymentRepositoryImpl>()),
+        getPricesUseCase: GetPricesUseCase(
+            repository: serviceLocator<PaymentRepositoryImpl>()),
+        payForMonthlySubscriptionUseCase: PayForMonthlySubscriptionUseCase(
+            repository: serviceLocator<PaymentRepositoryImpl>()),
       ),
       child: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {
@@ -116,7 +120,8 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                                 Navigator.pop(context);
                               },
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 13, horizontal: 16),
                                 child: SvgPicture.asset(
                                   AppIcons.chevronLeft,
                                   color: textSecondary,
@@ -126,10 +131,15 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                           ),
                         ),
                         Text(
-                          widget.isRegistered ? LocaleKeys.buy_magazine.tr() : LocaleKeys.only_pay.tr(),
-                          style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
+                          widget.isRegistered
+                              ? LocaleKeys.buy_magazine.tr()
+                              : LocaleKeys.only_pay.tr(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(color: textColor, fontSize: 20),
                         ),
-                        Spacer()
+                        const Spacer()
                       ],
                     ),
                   ],
@@ -168,7 +178,7 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                           borderRadius: BorderRadius.circular(6),
                         ),
                         labelPadding: EdgeInsets.zero,
-                        labelStyle: Theme.of(context).textTheme.headline3,
+                        labelStyle: Theme.of(context).textTheme.displaySmall,
                         labelColor: textColor,
                         onTap: (index) {
                           if (index == 0) {
@@ -219,15 +229,19 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                     child: Text(
                       LocaleKeys.select_payment_method.tr(),
-                      style: Theme.of(context).textTheme.headline1,
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
                   Expanded(
                     child: GridView(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 16, mainAxisExtent: 54),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 15,
+                              mainAxisSpacing: 16,
+                              mainAxisExtent: 54),
                       children: [
                         PaymentMethod(
                           onTap: (value) {
@@ -266,10 +280,14 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                     ),
                   ),
                   WButton(
-                    margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
+                    margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).padding.bottom + 16,
+                        left: 16,
+                        right: 16),
                     onTap: () {
                       if (currentPaymentMethod.isEmpty) {
-                        context.read<ShowPopUpBloc>().add(ShowPopUp(message: LocaleKeys.no_payment_provider));
+                        context.read<ShowPopUpBloc>().add(
+                            ShowPopUp(message: LocaleKeys.no_payment_provider));
                       } else {
                         if (widget.isJournal) {
                           context.read<PaymentBloc>().add(
@@ -277,11 +295,14 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                                   journalId: widget.id,
                                   price: widget.price,
                                   isRegistered: widget.isRegistered,
-                                  phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
+                                  phone: isPhone
+                                      ? "+998${phoneController.text.replaceAll(' ', '')}"
+                                      : '',
                                   email: !isPhone ? emailController.text : '',
                                   paymentProvider: currentPaymentMethod,
                                   onSuccess: (value) {
-                                    launchUrlString(value, mode: LaunchMode.externalApplication);
+                                    launchUrlString(value,
+                                        mode: LaunchMode.externalApplication);
                                     Navigator.of(context).push(
                                       fade(
                                         page: PaymentResultScreen(
@@ -293,7 +314,9 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
                                     );
                                   },
                                   onError: (message) {
-                                    context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                                    context
+                                        .read<ShowPopUpBloc>()
+                                        .add(ShowPopUp(message: message));
                                   },
                                 ),
                               );
@@ -328,12 +351,15 @@ class JournalArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 161,
-      padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16, bottom: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 16)
+          .copyWith(top: 16, bottom: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(
+                border: Border.all(color: divider),
+                borderRadius: BorderRadius.circular(8)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: CachedNetworkImage(
@@ -352,7 +378,7 @@ class JournalArticleItem extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                   maxLines: 2,
@@ -361,7 +387,10 @@ class JournalArticleItem extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   MyFunctions.getFormatCostFromInt(price),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 20),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(fontSize: 20),
                 ),
                 const Spacer(),
                 WButton(

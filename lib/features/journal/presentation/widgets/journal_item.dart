@@ -48,8 +48,9 @@ class MagazineItem extends StatelessWidget {
                   children: [
                     Container(
                       height: 492,
-                      decoration:
-                          BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: divider),
+                          borderRadius: BorderRadius.circular(8)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: CachedNetworkImage(
@@ -69,11 +70,13 @@ class MagazineItem extends StatelessWidget {
                           color: black.withOpacity(0.4),
                         ),
                         child: Text(
-                          MyFunctions.getPublishedDate(journalEntity.publishDate),
+                          MyFunctions.getPublishedDate(
+                              journalEntity.publishDate),
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
-                              .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                              .displayMedium!
+                              .copyWith(
+                                  fontSize: 12, fontWeight: FontWeight.w400),
                         ),
                       ),
                     ),
@@ -81,7 +84,7 @@ class MagazineItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(journalEntity.redaction,
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         )),
@@ -90,17 +93,26 @@ class MagazineItem extends StatelessWidget {
                   children: [
                     Text(
                       MyFunctions.getFormatCostFromInt(journalEntity.price),
-                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontSize: 13, fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       '•',
-                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       LocaleKeys.e_magazine.tr(),
-                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
@@ -118,7 +130,10 @@ class MagazineItem extends StatelessWidget {
                         onTap: onLeftButtonTap,
                         child: Text(
                           LocaleKeys.preview.tr(),
-                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(fontSize: 14),
                         ),
                       ),
                     ),
@@ -133,8 +148,9 @@ class MagazineItem extends StatelessWidget {
                               : LocaleKeys.buy.tr(),
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
-                              .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                              .displayMedium!
+                              .copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -151,8 +167,9 @@ class MagazineItem extends StatelessWidget {
                           LocaleKeys.journal_more.tr(),
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
-                              .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                              .displayMedium!
+                              .copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),

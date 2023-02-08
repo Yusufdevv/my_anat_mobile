@@ -6,7 +6,7 @@ class MapParameter extends Equatable {
   final int radius;
   final int spec;
 
-  MapParameter(
+  const MapParameter(
       {required this.lat,
       required this.long,
       required this.radius,

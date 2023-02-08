@@ -7,13 +7,13 @@ class RestoreUseCase extends UseCase<String, RestoreParam> {
   final GlobalRequestRepository repo = GlobalRequestRepository();
 
   @override
-  Future<Either<Failure, String>> call(RestoreParam param) {
+  Future<Either<Failure, String>> call(RestoreParam params) {
     return repo.postAndSingle(errorFieldKey: 'message',
-        endpoint: param.isArticle ? '/article/restore/' : '/journal/restore/',
+        endpoint: params.isArticle ? '/article/restore/' : '/journal/restore/',
         fromJson: (data) => '',
         data: {
-          "signature": param.signature,
-          "phone_number":param.phone
+          "signature": params.signature,
+          "phone_number":params.phone
         });
   }
 }

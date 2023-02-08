@@ -54,7 +54,6 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     on<GetMoreJournals>((event, emit) async {
       final results = await _getJournalUseCase.call(state.next);
       if (results.isRight) {
-        print('${state.journals.length}  :  ${results.right.results.length}');
         emit(
           state.copyWith(
             journals: [...state.journals, ...results.right.results],

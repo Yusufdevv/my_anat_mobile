@@ -47,7 +47,7 @@ class InterviewItem extends StatelessWidget {
               children: [
                 Text(
                   interview.title,
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -56,7 +56,10 @@ class InterviewItem extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       MyFunctions.getFormattedDuration(interview.videoDuration),
-                      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 13),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontSize: 13),
                     ),
                   ],
                 )

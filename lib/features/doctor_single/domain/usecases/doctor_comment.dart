@@ -3,7 +3,6 @@ import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/doctor_single/domain/entities/doctor_comment.dart';
 import 'package:anatomica/features/doctor_single/domain/repositories/doctor_single_repository.dart';
-import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 class DoctorCommentUseCase extends UseCase<DoctorCommentEntity, DoctorCommentParams> {

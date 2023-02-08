@@ -2,26 +2,27 @@ import 'dart:math';
 
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/features/common/presentation/widgets/highlighted_text.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
-import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
-import 'package:anatomica/features/map/domain/entities/hospital_entity.dart';
-import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
-import 'package:anatomica/features/map/domain/usecases/get_map_hospitals.dart';
-import 'package:anatomica/features/map/domain/usecases/get_types_usecase.dart';
-import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
-import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
+import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class HospitalItem extends StatefulWidget {
-  final HospitalEntity entity;
+  final OrgMapV2Model entity;
   final Point myPoint;
+  final bool isSuggestionItem;
+  final String searchText;
 
-  const HospitalItem({required this.entity, required this.myPoint, Key? key})
+  const HospitalItem(
+      {required this.entity,
+      required this.myPoint,
+      this.isSuggestionItem = false,
+      this.searchText = '',
+      Key? key})
       : super(key: key);
 
   @override
@@ -34,14 +35,14 @@ class _HospitalItemState extends State<HospitalItem> {
     super.initState();
   }
 
-  double calculateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    return 12742 * asin(sqrt(a));
-  }
+  // double calculateDistance(lat1, lon1, lat2, lon2) {
+  //   var p = 0.017453292519943295;
+  //   var c = cos;
+  //   var a = 0.5 -
+  //       c((lat2 - lat1) * p) / 2 +
+  //       c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+  //   return 12742 * asin(sqrt(a));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -138,12 +139,28 @@ class _HospitalItemState extends State<HospitalItem> {
                             ),
                             const SizedBox(width: 12),
                             Expanded(
-                              child: Text(
-                                widget.entity.title,
-                                style: Theme.of(context).textTheme.headline1,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                              child: widget.isSuggestionItem
+                                  ? HighlightedText(
+                                      allText: widget.entity.title,
+                                      highlightedText: widget.searchText,
+                                      highlightColor: tongerineYellow,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      textStyleHighlight: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium!,
+                                    )
+                                  : Text(
+                                      widget.entity.title,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                             ),
                           ],
                         ),
@@ -156,7 +173,7 @@ class _HospitalItemState extends State<HospitalItem> {
                                 widget.entity.address,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .copyWith(color: textSecondary),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -165,16 +182,7 @@ class _HospitalItemState extends State<HospitalItem> {
                             Row(
                               children: [
                                 Visibility(
-                                  visible: calculateDistance(
-                                              widget.myPoint.latitude,
-                                              widget.myPoint.longitude,
-                                              widget.entity.latitude,
-                                              widget.entity.longitude) >=
-                                          0 &&
-                                      widget.entity.longitude > 0 &&
-                                      widget.entity.latitude > 0 &&
-                                      widget.myPoint.latitude > 0 &&
-                                      widget.myPoint.longitude > 0,
+                                  visible: widget.entity.distance > 0,
                                   child: Container(
                                     height: 4,
                                     width: 4,
@@ -187,34 +195,14 @@ class _HospitalItemState extends State<HospitalItem> {
                                   ),
                                 ),
                                 Visibility(
-                                  visible: calculateDistance(
-                                              widget.myPoint.latitude,
-                                              widget.myPoint.longitude,
-                                              widget.entity.latitude,
-                                              widget.entity.longitude) >=
-                                          0 &&
-                                      widget.entity.longitude > 0 &&
-                                      widget.entity.latitude > 0 &&
-                                      widget.myPoint.latitude > 0 &&
-                                      widget.myPoint.longitude > 0,
+                                  visible: widget.entity.distance > 0,
                                   child: Text(
-                                    calculateDistance(
-                                                    widget.myPoint.latitude,
-                                                    widget.myPoint.longitude,
-                                                    widget.entity.latitude,
-                                                    widget.entity.longitude) <
-                                                1 &&
-                                            calculateDistance(
-                                                    widget.myPoint.latitude,
-                                                    widget.myPoint.longitude,
-                                                    widget.entity.latitude,
-                                                    widget.entity.longitude) >
-                                                0
-                                        ? '${(calculateDistance(widget.myPoint.latitude, widget.myPoint.longitude, widget.entity.latitude, widget.entity.longitude) * 1000).toStringAsFixed(1)} m'
-                                        : '${calculateDistance(widget.myPoint.latitude, widget.myPoint.longitude, widget.entity.latitude, widget.entity.longitude).toStringAsFixed(1)} km',
+                                    widget.entity.distance > 1
+                                        ? '${widget.entity.distance.toStringAsFixed(2)} km'
+                                        : '${(widget.entity.distance * 1000).toStringAsFixed(2)} m',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .bodyLarge!
                                         .copyWith(color: primary),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -250,7 +238,7 @@ class _HospitalItemState extends State<HospitalItem> {
                         widget.entity.rating.toString(),
                         style: Theme.of(context)
                             .textTheme
-                            .headline1!
+                            .displayLarge!
                             .copyWith(color: darkGreen, fontSize: 14),
                       ),
                       const SizedBox(width: 8),

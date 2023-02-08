@@ -42,8 +42,11 @@ class NavItemWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               maxLines: 1,
               style: currentIndex == navBar.id
-                  ? Theme.of(context).textTheme.headline4!.copyWith(fontSize: 12, color: textColor)
-                  : Theme.of(context).textTheme.subtitle2,
+                  ? Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(fontSize: 12, color: textColor)
+                  : Theme.of(context).textTheme.titleSmall,
             ),
           ),
         ],

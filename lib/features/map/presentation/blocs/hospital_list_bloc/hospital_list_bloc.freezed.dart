@@ -19,21 +19,21 @@ mixin _$HospitalListEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CrossFadeState crossFadeState) changePage,
-    required TResult Function(String search) getHospitals,
+    required TResult Function(String search, Point myPoint) getHospitals,
     required TResult Function() getMoreHospitals,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CrossFadeState crossFadeState)? changePage,
-    TResult? Function(String search)? getHospitals,
+    TResult? Function(String search, Point myPoint)? getHospitals,
     TResult? Function()? getMoreHospitals,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function(String search)? getHospitals,
+    TResult Function(String search, Point myPoint)? getHospitals,
     TResult Function()? getMoreHospitals,
     required TResult orElse(),
   }) =>
@@ -146,7 +146,7 @@ class _$_ChangePage implements _ChangePage {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CrossFadeState crossFadeState) changePage,
-    required TResult Function(String search) getHospitals,
+    required TResult Function(String search, Point myPoint) getHospitals,
     required TResult Function() getMoreHospitals,
   }) {
     return changePage(crossFadeState);
@@ -156,7 +156,7 @@ class _$_ChangePage implements _ChangePage {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CrossFadeState crossFadeState)? changePage,
-    TResult? Function(String search)? getHospitals,
+    TResult? Function(String search, Point myPoint)? getHospitals,
     TResult? Function()? getMoreHospitals,
   }) {
     return changePage?.call(crossFadeState);
@@ -166,7 +166,7 @@ class _$_ChangePage implements _ChangePage {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function(String search)? getHospitals,
+    TResult Function(String search, Point myPoint)? getHospitals,
     TResult Function()? getMoreHospitals,
     required TResult orElse(),
   }) {
@@ -226,7 +226,7 @@ abstract class _$$_GetHospitalsCopyWith<$Res> {
           _$_GetHospitals value, $Res Function(_$_GetHospitals) then) =
       __$$_GetHospitalsCopyWithImpl<$Res>;
   @useResult
-  $Res call({String search});
+  $Res call({String search, Point myPoint});
 }
 
 /// @nodoc
@@ -241,12 +241,17 @@ class __$$_GetHospitalsCopyWithImpl<$Res>
   @override
   $Res call({
     Object? search = null,
+    Object? myPoint = null,
   }) {
     return _then(_$_GetHospitals(
       search: null == search
           ? _value.search
           : search // ignore: cast_nullable_to_non_nullable
               as String,
+      myPoint: null == myPoint
+          ? _value.myPoint
+          : myPoint // ignore: cast_nullable_to_non_nullable
+              as Point,
     ));
   }
 }
@@ -254,14 +259,16 @@ class __$$_GetHospitalsCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GetHospitals implements _GetHospitals {
-  _$_GetHospitals({required this.search});
+  _$_GetHospitals({required this.search, required this.myPoint});
 
   @override
   final String search;
+  @override
+  final Point myPoint;
 
   @override
   String toString() {
-    return 'HospitalListEvent.getHospitals(search: $search)';
+    return 'HospitalListEvent.getHospitals(search: $search, myPoint: $myPoint)';
   }
 
   @override
@@ -269,11 +276,12 @@ class _$_GetHospitals implements _GetHospitals {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetHospitals &&
-            (identical(other.search, search) || other.search == search));
+            (identical(other.search, search) || other.search == search) &&
+            (identical(other.myPoint, myPoint) || other.myPoint == myPoint));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, search);
+  int get hashCode => Object.hash(runtimeType, search, myPoint);
 
   @JsonKey(ignore: true)
   @override
@@ -285,32 +293,32 @@ class _$_GetHospitals implements _GetHospitals {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CrossFadeState crossFadeState) changePage,
-    required TResult Function(String search) getHospitals,
+    required TResult Function(String search, Point myPoint) getHospitals,
     required TResult Function() getMoreHospitals,
   }) {
-    return getHospitals(search);
+    return getHospitals(search, myPoint);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CrossFadeState crossFadeState)? changePage,
-    TResult? Function(String search)? getHospitals,
+    TResult? Function(String search, Point myPoint)? getHospitals,
     TResult? Function()? getMoreHospitals,
   }) {
-    return getHospitals?.call(search);
+    return getHospitals?.call(search, myPoint);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function(String search)? getHospitals,
+    TResult Function(String search, Point myPoint)? getHospitals,
     TResult Function()? getMoreHospitals,
     required TResult orElse(),
   }) {
     if (getHospitals != null) {
-      return getHospitals(search);
+      return getHospitals(search, myPoint);
     }
     return orElse();
   }
@@ -351,9 +359,12 @@ class _$_GetHospitals implements _GetHospitals {
 }
 
 abstract class _GetHospitals implements HospitalListEvent {
-  factory _GetHospitals({required final String search}) = _$_GetHospitals;
+  factory _GetHospitals(
+      {required final String search,
+      required final Point myPoint}) = _$_GetHospitals;
 
   String get search;
+  Point get myPoint;
   @JsonKey(ignore: true)
   _$$_GetHospitalsCopyWith<_$_GetHospitals> get copyWith =>
       throw _privateConstructorUsedError;
@@ -398,7 +409,7 @@ class _$_GetMoreHospitals implements _GetMoreHospitals {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(CrossFadeState crossFadeState) changePage,
-    required TResult Function(String search) getHospitals,
+    required TResult Function(String search, Point myPoint) getHospitals,
     required TResult Function() getMoreHospitals,
   }) {
     return getMoreHospitals();
@@ -408,7 +419,7 @@ class _$_GetMoreHospitals implements _GetMoreHospitals {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(CrossFadeState crossFadeState)? changePage,
-    TResult? Function(String search)? getHospitals,
+    TResult? Function(String search, Point myPoint)? getHospitals,
     TResult? Function()? getMoreHospitals,
   }) {
     return getMoreHospitals?.call();
@@ -418,7 +429,7 @@ class _$_GetMoreHospitals implements _GetMoreHospitals {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(CrossFadeState crossFadeState)? changePage,
-    TResult Function(String search)? getHospitals,
+    TResult Function(String search, Point myPoint)? getHospitals,
     TResult Function()? getMoreHospitals,
     required TResult orElse(),
   }) {
@@ -470,8 +481,9 @@ abstract class _GetMoreHospitals implements HospitalListEvent {
 /// @nodoc
 mixin _$HospitalListState {
   CrossFadeState get crossFadeState => throw _privateConstructorUsedError;
-  List<HospitalEntity> get hospitals => throw _privateConstructorUsedError;
+  List<OrgMapV2Model> get hospitals => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
+  dynamic get count => throw _privateConstructorUsedError;
   String? get next => throw _privateConstructorUsedError;
   bool get fetchMore => throw _privateConstructorUsedError;
 
@@ -488,8 +500,9 @@ abstract class $HospitalListStateCopyWith<$Res> {
   @useResult
   $Res call(
       {CrossFadeState crossFadeState,
-      List<HospitalEntity> hospitals,
+      List<OrgMapV2Model> hospitals,
       FormzStatus status,
+      dynamic count,
       String? next,
       bool fetchMore});
 }
@@ -510,6 +523,7 @@ class _$HospitalListStateCopyWithImpl<$Res, $Val extends HospitalListState>
     Object? crossFadeState = null,
     Object? hospitals = null,
     Object? status = null,
+    Object? count = null,
     Object? next = freezed,
     Object? fetchMore = null,
   }) {
@@ -521,11 +535,15 @@ class _$HospitalListStateCopyWithImpl<$Res, $Val extends HospitalListState>
       hospitals: null == hospitals
           ? _value.hospitals
           : hospitals // ignore: cast_nullable_to_non_nullable
-              as List<HospitalEntity>,
+              as List<OrgMapV2Model>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
@@ -548,8 +566,9 @@ abstract class _$$_HospitalListStateCopyWith<$Res>
   @useResult
   $Res call(
       {CrossFadeState crossFadeState,
-      List<HospitalEntity> hospitals,
+      List<OrgMapV2Model> hospitals,
       FormzStatus status,
+      dynamic count,
       String? next,
       bool fetchMore});
 }
@@ -568,6 +587,7 @@ class __$$_HospitalListStateCopyWithImpl<$Res>
     Object? crossFadeState = null,
     Object? hospitals = null,
     Object? status = null,
+    Object? count = null,
     Object? next = freezed,
     Object? fetchMore = null,
   }) {
@@ -579,11 +599,12 @@ class __$$_HospitalListStateCopyWithImpl<$Res>
       hospitals: null == hospitals
           ? _value._hospitals
           : hospitals // ignore: cast_nullable_to_non_nullable
-              as List<HospitalEntity>,
+              as List<OrgMapV2Model>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
+      count: null == count ? _value.count : count,
       next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
@@ -601,8 +622,9 @@ class __$$_HospitalListStateCopyWithImpl<$Res>
 class _$_HospitalListState implements _HospitalListState {
   _$_HospitalListState(
       {this.crossFadeState = CrossFadeState.showFirst,
-      final List<HospitalEntity> hospitals = const [],
+      final List<OrgMapV2Model> hospitals = const [],
       this.status = FormzStatus.pure,
+      this.count = 0,
       this.next,
       this.fetchMore = false})
       : _hospitals = hospitals;
@@ -610,10 +632,10 @@ class _$_HospitalListState implements _HospitalListState {
   @override
   @JsonKey()
   final CrossFadeState crossFadeState;
-  final List<HospitalEntity> _hospitals;
+  final List<OrgMapV2Model> _hospitals;
   @override
   @JsonKey()
-  List<HospitalEntity> get hospitals {
+  List<OrgMapV2Model> get hospitals {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_hospitals);
   }
@@ -622,6 +644,9 @@ class _$_HospitalListState implements _HospitalListState {
   @JsonKey()
   final FormzStatus status;
   @override
+  @JsonKey()
+  final dynamic count;
+  @override
   final String? next;
   @override
   @JsonKey()
@@ -629,7 +654,7 @@ class _$_HospitalListState implements _HospitalListState {
 
   @override
   String toString() {
-    return 'HospitalListState(crossFadeState: $crossFadeState, hospitals: $hospitals, status: $status, next: $next, fetchMore: $fetchMore)';
+    return 'HospitalListState(crossFadeState: $crossFadeState, hospitals: $hospitals, status: $status, count: $count, next: $next, fetchMore: $fetchMore)';
   }
 
   @override
@@ -642,14 +667,21 @@ class _$_HospitalListState implements _HospitalListState {
             const DeepCollectionEquality()
                 .equals(other._hospitals, _hospitals) &&
             (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality().equals(other.count, count) &&
             (identical(other.next, next) || other.next == next) &&
             (identical(other.fetchMore, fetchMore) ||
                 other.fetchMore == fetchMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, crossFadeState,
-      const DeepCollectionEquality().hash(_hospitals), status, next, fetchMore);
+  int get hashCode => Object.hash(
+      runtimeType,
+      crossFadeState,
+      const DeepCollectionEquality().hash(_hospitals),
+      status,
+      const DeepCollectionEquality().hash(count),
+      next,
+      fetchMore);
 
   @JsonKey(ignore: true)
   @override
@@ -662,17 +694,20 @@ class _$_HospitalListState implements _HospitalListState {
 abstract class _HospitalListState implements HospitalListState {
   factory _HospitalListState(
       {final CrossFadeState crossFadeState,
-      final List<HospitalEntity> hospitals,
+      final List<OrgMapV2Model> hospitals,
       final FormzStatus status,
+      final dynamic count,
       final String? next,
       final bool fetchMore}) = _$_HospitalListState;
 
   @override
   CrossFadeState get crossFadeState;
   @override
-  List<HospitalEntity> get hospitals;
+  List<OrgMapV2Model> get hospitals;
   @override
   FormzStatus get status;
+  @override
+  dynamic get count;
   @override
   String? get next;
   @override

@@ -11,7 +11,9 @@ class BuyDialog extends StatelessWidget {
   final VoidCallback onRegistrationTap;
   final VoidCallback onPaymentTap;
 
-  const BuyDialog({required this.onPaymentTap, required this.onRegistrationTap, Key? key}) : super(key: key);
+  const BuyDialog(
+      {required this.onPaymentTap, required this.onRegistrationTap, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +23,16 @@ class BuyDialog extends StatelessWidget {
       actionsPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: const RoundedRectangleBorder(
-          side: BorderSide(color: textFieldColor), borderRadius: BorderRadius.all(Radius.circular(12.0))),
+          side: BorderSide(color: textFieldColor),
+          borderRadius: BorderRadius.all(Radius.circular(12.0))),
       title: Row(
         children: [
           Text(
             LocaleKeys.buy_magazine.tr(),
-            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
           ),
           const Spacer(),
           WScaleAnimation(
@@ -39,7 +45,10 @@ class BuyDialog extends StatelessWidget {
       ),
       content: Text(
         LocaleKeys.sing_up_to_full.tr(),
-        style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+        style: Theme.of(context)
+            .textTheme
+            .displaySmall!
+            .copyWith(fontWeight: FontWeight.w400),
       ),
       actions: [
         WButton(
@@ -54,7 +63,10 @@ class BuyDialog extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 LocaleKeys.register.tr(),
-                style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayMedium!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -74,7 +86,10 @@ class BuyDialog extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 LocaleKeys.only_pay.tr(),
-                style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium!
+                    .copyWith(fontSize: 14),
               ),
             ],
           ),

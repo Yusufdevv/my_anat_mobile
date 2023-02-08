@@ -10,6 +10,6 @@ class RelatedCandidateListUseCase extends UseCase<GenericPagination, int> {
   RelatedCandidateListUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, GenericPagination>> call(int id) async =>
-      await repository.getRelatedCandidateList(id: id);
+  Future<Either<Failure, GenericPagination>> call(int params) async =>
+      await repository.getRelatedCandidateList(id: params);
 }

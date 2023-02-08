@@ -42,7 +42,7 @@ class CategoryContainer extends StatelessWidget {
         child: Center(
           child: Text(
             title,
-            style: Theme.of(context).textTheme.headline5!.copyWith(
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                   color: isSelect ? white : darkGreen,

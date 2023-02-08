@@ -6,7 +6,8 @@ class VacancySingleTextWidget extends StatelessWidget {
   final String icon;
   final String title;
 
-  const VacancySingleTextWidget({required this.title, required this.icon, Key? key})
+  const VacancySingleTextWidget(
+      {required this.title, required this.icon, Key? key})
       : super(key: key);
 
   @override
@@ -16,11 +17,15 @@ class VacancySingleTextWidget extends StatelessWidget {
         SizedBox(
             height: 18,
             width: 18,
-            child: SvgPicture.asset(icon, color: textSecondary, fit: BoxFit.cover)),
+            child: SvgPicture.asset(icon,
+                color: textSecondary, fit: BoxFit.cover)),
         const SizedBox(width: 12),
         Expanded(
-          child:
-              Text(title, style: Theme.of(context).textTheme.bodyText1!.copyWith(color: montana)),
+          child: Text(title,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(color: montana)),
         ),
       ],
     );

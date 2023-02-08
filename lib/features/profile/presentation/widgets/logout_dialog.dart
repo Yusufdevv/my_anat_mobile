@@ -13,7 +13,13 @@ class LogOutDialog extends StatelessWidget {
   final String? subTitle;
   final VoidCallback onConfirmTap;
 
-  const LogOutDialog({this.title, this.subTitle, this.height, required this.onConfirmTap, Key? key}) : super(key: key);
+  const LogOutDialog(
+      {this.title,
+      this.subTitle,
+      this.height,
+      required this.onConfirmTap,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,7 @@ class LogOutDialog extends StatelessWidget {
             children: [
               Text(
                 title ?? LocaleKeys.sing_out.tr(),
-                style: Theme.of(context).textTheme.headline1!.copyWith(
+                style: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
               ),
@@ -40,13 +46,15 @@ class LogOutDialog extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pop();
                   },
-                  child: SvgPicture.asset(AppIcons.cancelX, color: manatee, height: 20, width: 20)),
+                  child: SvgPicture.asset(AppIcons.cancelX,
+                      color: manatee, height: 20, width: 20)),
             ],
           ),
           const SizedBox(height: 12),
           Text(
             subTitle ?? LocaleKeys.you_sure.tr(),
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+            style:
+                Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14),
           ),
           const SizedBox(height: 32),
           Row(
@@ -64,7 +72,11 @@ class LogOutDialog extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: WButton(color: red, text: LocaleKeys.yes.tr(), height: 40, onTap: onConfirmTap),
+                child: WButton(
+                    color: red,
+                    text: LocaleKeys.yes.tr(),
+                    height: 40,
+                    onTap: onConfirmTap),
               ),
             ],
           )
@@ -74,7 +86,8 @@ class LogOutDialog extends StatelessWidget {
   }
 }
 
-void showLogOutDialog(BuildContext context, {required VoidCallback onConfirmTap, String? title, String? subTitle}) {
+void showLogOutDialog(BuildContext context,
+    {required VoidCallback onConfirmTap, String? title, String? subTitle}) {
   showDialog(
     context: context,
     builder: (_) => AlertDialog(

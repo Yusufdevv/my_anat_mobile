@@ -34,7 +34,6 @@ class _ExperienceBottomSheetState extends State<ExperienceBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return BlocProvider.value(
       value: widget.vacancyBloc,
       child: ScrolledBottomSheet(

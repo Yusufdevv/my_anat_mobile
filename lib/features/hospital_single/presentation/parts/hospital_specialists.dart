@@ -14,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 class HospitalSpecialists extends StatelessWidget {
-  const HospitalSpecialists({ Key? key}) : super(key: key);
+  const HospitalSpecialists({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,10 @@ class HospitalSpecialists extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
                   LocaleKeys.specialists.tr(),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(color: textColor),
                 ),
               ),
               const SizedBox(height: 16),
@@ -57,13 +60,15 @@ class HospitalSpecialists extends StatelessWidget {
                                   page: AllHospitalItemsScreen(
                                     appbarTitle: LocaleKeys.specialists.tr(),
                                     child: AllHospitalSpecialists(
-                                      hospitalSpecialistBloc: context.read<HospitalSpecialistBloc>(),
+                                      hospitalSpecialistBloc: context
+                                          .read<HospitalSpecialistBloc>(),
                                     ),
                                   ),
                                 ),
                               );
                             },
-                            width: MediaQuery.of(context).size.shortestSide - 58,
+                            width:
+                                MediaQuery.of(context).size.shortestSide - 58,
                             title: 'Все специалисты',
                           );
                         }
@@ -77,9 +82,11 @@ class HospitalSpecialists extends StatelessWidget {
                         );
                       },
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      separatorBuilder: (context, index) => const SizedBox(width: 8),
-                      itemCount:
-                          state.specialists.length > 5 ? state.specialists.take(6).length : state.specialists.length,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 8),
+                      itemCount: state.specialists.length > 5
+                          ? state.specialists.take(6).length
+                          : state.specialists.length,
                     ),
                   ),
                 } else ...{

@@ -2,7 +2,6 @@ import 'package:anatomica/features/profile/presentation/widgets/popups/component
 import 'package:anatomica/features/profile/presentation/widgets/popups/components/time_counter.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RefreshPanel extends StatefulWidget {
@@ -22,7 +21,7 @@ class _RefreshPanelState extends State<RefreshPanel> {
             LocaleKeys.resend_code.tr(),
             style: Theme.of(context)
                 .textTheme
-                .bodyText1!
+                .bodyLarge!
                 .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
           ),
           const SizedBox(

@@ -10,10 +10,10 @@ class GetMapDoctorUseCase extends UseCase<List<MapDoctorModel>, String> {
   final GlobalRequestRepository repo = GlobalRequestRepository();
 
   @override
-  Future<Either<Failure, List<MapDoctorModel>>> call(search, {MapParameter? param}) {
+  Future<Either<Failure, List<MapDoctorModel>>> call(params, {MapParameter? param}) {
     var query = <String, dynamic>{};
-    if (search.isNotEmpty) {
-      query.addAll({"search": search});
+    if (params.isNotEmpty) {
+      query.addAll({"search": params});
     }
     if (param != null) {
       query.addAll({

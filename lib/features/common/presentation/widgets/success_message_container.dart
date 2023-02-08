@@ -32,7 +32,10 @@ class SuccessMessageContainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             alignment: Alignment.center,
-            child: SvgPicture.asset(AppIcons.check, color: white,),
+            child: SvgPicture.asset(
+              AppIcons.check,
+              color: white,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -42,7 +45,7 @@ class SuccessMessageContainer extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
-                  .headline3!
+                  .displaySmall!
                   .copyWith(color: errorTextColor),
             ),
           ),
@@ -52,7 +55,10 @@ class SuccessMessageContainer extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.all(8),
-              child: SvgPicture.asset(AppIcons.errorClose, color: textColor,),
+              child: SvgPicture.asset(
+                AppIcons.errorClose,
+                color: textColor,
+              ),
             ),
           )
         ],

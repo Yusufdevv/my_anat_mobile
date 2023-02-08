@@ -279,8 +279,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                   duration: const Duration(milliseconds: 200),
                                 );
                               },
-                              tabController: DefaultTabController.of(context) ??
-                                  _tabController,
+                              tabController: DefaultTabController.of(context),
                               tabs: tabs.map((e) => e.title).toList(),
                             ),
                           ),
@@ -303,7 +302,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                                 !headerManagerState
                                                     .isHeaderScrolled) {
                                               DefaultTabController.of(context)
-                                                  ?.animateTo(0);
+                                                  .animateTo(0);
                                             }
                                           });
                                           return child ?? const SizedBox();
@@ -328,7 +327,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           .addPostFrameCallback((timeStamp) {
                                         if (isInView) {
                                           DefaultTabController.of(context)
-                                              ?.animateTo(tabs.indexWhere(
+                                              .animateTo(tabs.indexWhere(
                                                   (element) =>
                                                       element.keyTitle ==
                                                       'videos'));
@@ -359,7 +358,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                             .addPostFrameCallback((timeStamp) {
                                           if (isInView) {
                                             DefaultTabController.of(context)
-                                                ?.animateTo(tabs.indexWhere(
+                                                .animateTo(tabs.indexWhere(
                                                     (element) =>
                                                         element.keyTitle ==
                                                         'service'));
@@ -385,7 +384,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           (timeStamp) {
                                             if (isInView) {
                                               DefaultTabController.of(context)
-                                                  ?.animateTo(tabs.indexWhere(
+                                                  .animateTo(tabs.indexWhere(
                                                       (element) =>
                                                           element.keyTitle ==
                                                           'specialists'));
@@ -410,7 +409,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                             .addPostFrameCallback((timeStamp) {
                                           if (isInView) {
                                             DefaultTabController.of(context)
-                                                ?.animateTo(tabs.indexWhere(
+                                                .animateTo(tabs.indexWhere(
                                                     (element) =>
                                                         element.keyTitle ==
                                                         'facility'));
@@ -434,7 +433,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                             .addPostFrameCallback((timeStamp) {
                                           if (isInView) {
                                             DefaultTabController.of(context)
-                                                ?.animateTo(tabs.indexWhere(
+                                                .animateTo(tabs.indexWhere(
                                                     (element) =>
                                                         element.keyTitle ==
                                                         'articles'));
@@ -458,7 +457,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           .addPostFrameCallback((timeStamp) {
                                         if (isInView) {
                                           DefaultTabController.of(context)
-                                              ?.animateTo(tabs.indexWhere(
+                                              .animateTo(tabs.indexWhere(
                                                   (element) =>
                                                       element.keyTitle ==
                                                       'reviews'));
@@ -481,7 +480,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                           .addPostFrameCallback((timeStamp) {
                                         if (isInView) {
                                           DefaultTabController.of(context)
-                                              ?.animateTo(tabs.indexWhere(
+                                              .animateTo(tabs.indexWhere(
                                                   (element) =>
                                                       element.keyTitle ==
                                                       'vacancy'));
@@ -503,7 +502,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                         .addPostFrameCallback((timeStamp) {
                                       if (isInView) {
                                         DefaultTabController.of(context)
-                                            ?.animateTo(tabs.indexWhere(
+                                            .animateTo(tabs.indexWhere(
                                                 (element) =>
                                                     element.keyTitle ==
                                                     'contact'));

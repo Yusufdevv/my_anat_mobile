@@ -77,18 +77,15 @@ class _CustomBuilderAnimationState extends State<CustomBuilderAnimation> {
       switch (index) {
         case 0:
           return lerpDouble(0, -0.1, rotated);
-          break;
         case 1:
           if (rotated < .5) {
             return interpolate.eval(rotated);
           } else {
             return interpolate2.eval(rotated);
           }
-          break;
 
         case 2:
           return interpolate3.eval(rotated);
-          break;
 
         default:
           return null;

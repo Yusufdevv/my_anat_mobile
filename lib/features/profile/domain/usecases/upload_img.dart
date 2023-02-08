@@ -11,7 +11,7 @@ class UploadImageUseCase extends UseCase<UploadedImageEntity, FormData> {
   UploadImageUseCase({required this.profileRepository});
 
   @override
-  Future<Either<Failure, UploadedImageEntity>> call(FormData formData) async {
-    return await profileRepository.uploadImg(formData);
+  Future<Either<Failure, UploadedImageEntity>> call(FormData params) async {
+    return await profileRepository.uploadImg(params);
   }
 }

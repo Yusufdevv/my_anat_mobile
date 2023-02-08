@@ -32,8 +32,10 @@ class ConditionItem extends StatelessWidget {
             entity.name,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style:
-                Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 14),
           )
         ],
       ),

@@ -9,6 +9,6 @@ class DoctorCommentDeleteUseCase extends UseCase<String, int> {
   DoctorCommentDeleteUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, String>> call(int id) async =>
-      await repository.deleteDoctorComment(id: id);
+  Future<Either<Failure, String>> call(int params) async =>
+      await repository.deleteDoctorComment(id: params);
 }

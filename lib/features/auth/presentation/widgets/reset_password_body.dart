@@ -66,7 +66,7 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody>
               Text.rich(
                 TextSpan(
                   text: LocaleKeys.recovery_from.tr(),
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.displaySmall,
                   children: [
                     WidgetSpan(
                       alignment: PlaceholderAlignment.middle,
@@ -91,7 +91,7 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody>
                                     LocaleKeys.mail_u.tr(),
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline4!
+                                        .headlineMedium!
                                         .copyWith(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
@@ -101,7 +101,7 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody>
                                     LocaleKeys.phone_number_u.tr(),
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline4!
+                                        .headlineMedium!
                                         .copyWith(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,

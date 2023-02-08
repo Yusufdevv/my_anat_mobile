@@ -42,10 +42,12 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
   @override
   initState() {
     _vacancySingleBloc = VacancySingleBloc(
-        relatedVacancyUseCase: RelatedVacancyListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        vacancySingleUseCase: VacancySingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        likeUnlikeVacancyStreamUseCase:
-            LikeUnlikeVacancyStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()));
+        relatedVacancyUseCase: RelatedVacancyListUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        vacancySingleUseCase: VacancySingleUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
+            repository: serviceLocator<LikeUnlikeRepositoryImpl>()));
     _vacancySingleBloc.add(GetRelatedVacancyList(slug: widget.slug));
     super.initState();
   }
@@ -67,7 +69,9 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
         body: BlocBuilder<VacancySingleBloc, VacancySingleState>(
           builder: (context, state) {
             if (state.status.isPure) {
-              context.read<VacancySingleBloc>().add(GetSingleVacancyEvent(slug: widget.slug));
+              context
+                  .read<VacancySingleBloc>()
+                  .add(GetSingleVacancyEvent(slug: widget.slug));
             } else if (state.status.isSubmissionInProgress) {
               return const Center(child: CupertinoActivityIndicator());
             } else if (state.status.isSubmissionSuccess) {
@@ -76,13 +80,16 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                   return [
                     VacancySingleAppBar(
                       vacancy: state.vacancyListEntity,
-                      shareValue: 'https://anatomica.uz/vacancy/vacancy/${state.vacancyListEntity.slug}/detail/',
+                      shareValue:
+                          'https://anatomica.uz/vacancy/vacancy/${state.vacancyListEntity.slug}/detail/',
                     ),
-                    VacancySingleAppBarHeader(vacancyEntity: state.vacancyListEntity),
+                    VacancySingleAppBarHeader(
+                        vacancyEntity: state.vacancyListEntity),
                   ];
                 },
                 body: ListView(
-                  padding: EdgeInsets.fromLTRB(0, 16, 0, 16 + mediaQuery.padding.bottom),
+                  padding: EdgeInsets.fromLTRB(
+                      0, 16, 0, 16 + mediaQuery.padding.bottom),
                   physics: const BouncingScrollPhysics(),
                   children: [
                     Column(
@@ -98,7 +105,9 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                       '${state.vacancyListEntity.experienceFrom} - ${state.vacancyListEntity.experienceTo} лет',
                                   icon: AppIcons.briefCase),
                               const SizedBox(height: 10),
-                              VacancySingleTextWidget(title: state.vacancyListEntity.address, icon: AppIcons.mapPin),
+                              VacancySingleTextWidget(
+                                  title: state.vacancyListEntity.address,
+                                  icon: AppIcons.mapPin),
                               const SizedBox(height: 10),
                               VacancySingleTextWidget(
                                   title:
@@ -107,7 +116,10 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                               const SizedBox(height: 24),
                               Text(
                                 LocaleKeys.about_vacancy.tr(),
-                                style: Theme.of(context).textTheme.headline1!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(
                                       fontWeight: FontWeight.w600,
                                     ),
                               ),
@@ -126,12 +138,14 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: List.generate(
-                                state.vacancyListEntity.organization.speciazilation.length,
+                                state.vacancyListEntity.organization
+                                    .speciazilation.length,
                                 (index) => CategoryContainer(
                                   isDisabled: true,
                                   margin: const EdgeInsets.only(right: 12),
                                   onTap: () {},
-                                  title: state.vacancyListEntity.organization.speciazilation[index].title,
+                                  title: state.vacancyListEntity.organization
+                                      .speciazilation[index].title,
                                 ),
                               ),
                             ),
@@ -142,17 +156,22 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              VacancyTitleText(title: LocaleKeys.employment_type.tr()),
+                              VacancyTitleText(
+                                  title: LocaleKeys.employment_type.tr()),
                               const SizedBox(height: 8),
                               Text(
                                 state.vacancyListEntity.workType.label,
-                                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
                                       fontSize: 13,
                                       color: montana,
                                     ),
                               ),
                               const SizedBox(height: 16),
-                              VacancyTitleText(title: LocaleKeys.requirement.tr()),
+                              VacancyTitleText(
+                                  title: LocaleKeys.requirement.tr()),
                               ...List.generate(
                                 state.vacancyListEntity.requirements.length,
                                 (index) => RichText(
@@ -162,7 +181,8 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                         child: Container(
                                           width: 3,
                                           height: 3,
-                                          margin: const EdgeInsets.only(right: 8),
+                                          margin:
+                                              const EdgeInsets.only(right: 8),
                                           decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: black,
@@ -171,8 +191,12 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                         alignment: PlaceholderAlignment.middle,
                                       ),
                                       TextSpan(
-                                        text: state.vacancyListEntity.requirements[index].description,
-                                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                                        text: state.vacancyListEntity
+                                            .requirements[index].description,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge!
+                                            .copyWith(
                                               fontSize: 13,
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -182,7 +206,8 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              VacancyTitleText(title: LocaleKeys.responsible.tr()),
+                              VacancyTitleText(
+                                  title: LocaleKeys.responsible.tr()),
                               ...List.generate(
                                 state.vacancyListEntity.obligations.length,
                                 (index) => RichText(
@@ -192,7 +217,8 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                         child: Container(
                                           width: 3,
                                           height: 3,
-                                          margin: const EdgeInsets.only(right: 8),
+                                          margin:
+                                              const EdgeInsets.only(right: 8),
                                           decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: black,
@@ -201,8 +227,12 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                         alignment: PlaceholderAlignment.middle,
                                       ),
                                       TextSpan(
-                                        text: state.vacancyListEntity.obligations[index].description,
-                                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                                        text: state.vacancyListEntity
+                                            .obligations[index].description,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge!
+                                            .copyWith(
                                               fontSize: 13,
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -216,7 +246,8 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
                                     color: white,
-                                    border: Border.all(width: 1, color: lilyWhite),
+                                    border:
+                                        Border.all(width: 1, color: lilyWhite),
                                     borderRadius: BorderRadius.circular(12),
                                     boxShadow: [
                                       BoxShadow(
@@ -228,45 +259,60 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    VacancyTitleText(title: LocaleKeys.information_work.tr()),
-                                    Html(data: state.vacancyListEntity.description),
+                                    VacancyTitleText(
+                                        title:
+                                            LocaleKeys.information_work.tr()),
+                                    Html(
+                                        data: state
+                                            .vacancyListEntity.description),
                                   ],
                                 ),
                               ),
                               const SizedBox(height: 12),
                               Text(
                                 '${LocaleKeys.published.tr()} ${MyFunctions.getPublishedDate(state.vacancyListEntity.publishedAt).tr()}',
-                                style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontSize: 14),
                               ),
                               const SizedBox(height: 16),
-                              state.vacancyListEntity.organization.phoneNumbers.isEmpty
+                              state.vacancyListEntity.organization.phoneNumbers
+                                      .isEmpty
                                   ? const SizedBox()
                                   : WButton(
                                       onTap: () {
                                         showPhonesBottomSheet(
                                             context,
-                                            state.vacancyListEntity.organization.phoneNumbers
+                                            state.vacancyListEntity.organization
+                                                .phoneNumbers
                                                 .map((e) => e.phoneNumber)
                                                 .toList());
                                       },
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
-                                          SvgPicture.asset(AppIcons.phone, color: white),
+                                          SvgPicture.asset(AppIcons.phone,
+                                              color: white),
                                           const SizedBox(width: 8),
                                           Text(
                                             LocaleKeys.show_number.tr(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline2!
-                                                .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                                                .displayMedium!
+                                                .copyWith(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                           )
                                         ],
                                       ),
                                     ),
                               const SizedBox(height: 20),
                               VacancyTitleText(
-                                  title: '${state.relatedVacancyList.length} ${LocaleKeys.similar_vacancy.tr()}'),
+                                  title:
+                                      '${state.relatedVacancyList.length} ${LocaleKeys.similar_vacancy.tr()}'),
                               Paginator(
                                 padding: const EdgeInsets.only(top: 18),
                                 paginatorStatus: state.paginatorStatus,
@@ -274,17 +320,25 @@ class _VacancySingleScreenState extends State<VacancySingleScreen> {
                                 itemBuilder: (context, index) {
                                   return VacancyItem(
                                     margin: EdgeInsets.zero,
-                                    vacancyEntity: state.relatedVacancyList[index],
+                                    vacancyEntity:
+                                        state.relatedVacancyList[index],
                                     onTap: () {
                                       Navigator.of(context).pushReplacement(
-                                          fade(page: VacancySingleScreen(slug: state.relatedVacancyList[index].slug)));
+                                          fade(
+                                              page: VacancySingleScreen(
+                                                  slug: state
+                                                      .relatedVacancyList[index]
+                                                      .slug)));
                                     },
                                   );
                                 },
-                                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 12),
                                 hasMoreToFetch: state.fetchMore,
                                 fetchMoreFunction: () {
-                                  context.read<VacancySingleBloc>().add(GetMoreRelatedVacancyList());
+                                  context
+                                      .read<VacancySingleBloc>()
+                                      .add(GetMoreRelatedVacancyList());
                                 },
                                 itemCount: state.relatedVacancyList.length,
                               )

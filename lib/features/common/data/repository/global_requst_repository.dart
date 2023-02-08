@@ -56,8 +56,6 @@ class GlobalRequestRepository {
                           "Token ${StorageRepository.getString('token', defValue: '')}"
                     }
                   : {}));
-      print(result.data);
-      print(result.realUri);
       List<S> list = [];
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {
@@ -73,7 +71,6 @@ class GlobalRequestRepository {
 
       return Right(list);
     } catch (e) {
-      print(e.toString());
       return Left(ServerFailure(statusCode: 141, errorMessage: ''));
     }
   }

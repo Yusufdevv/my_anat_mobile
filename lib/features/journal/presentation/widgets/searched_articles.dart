@@ -22,7 +22,8 @@ class SearchedArticles extends StatelessWidget {
     return BlocBuilder<JournalSearchBloc, JournalSearchState>(
       builder: (context, state) {
         return Paginator(
-          paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.searchArticleStatus),
+          paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
+              state.searchArticleStatus),
           itemBuilder: (context, index) => ArticleItem(
             magazineItemEntity: state.searchArticles[index],
             searchString: _searchController.text,
@@ -39,14 +40,23 @@ class SearchedArticles extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 160, width: 160, child: Image.asset(AppImages.illustrations)),
+                SizedBox(
+                    height: 160,
+                    width: 160,
+                    child: Image.asset(AppImages.illustrations)),
                 Text(
                   LocaleKeys.no_results.tr(),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayLarge!
+                      .copyWith(fontSize: 20),
                 ),
                 Text(
                   LocaleKeys.could_not_find.tr(),
-                  style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(fontWeight: FontWeight.w400),
                 ),
               ],
             ),

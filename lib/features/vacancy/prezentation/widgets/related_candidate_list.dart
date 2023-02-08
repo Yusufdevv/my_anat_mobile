@@ -1,7 +1,6 @@
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/candidate_single/candidate_single_bloc.dart';
-import 'package:anatomica/features/vacancy/prezentation/blocs/vacancy_bloc/vacancy_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/candidate_single.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/candidate_item.dart';
 import 'package:flutter/material.dart';

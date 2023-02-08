@@ -8,7 +8,8 @@ class HelpItem extends StatefulWidget {
   final String title;
   final String content;
 
-  const HelpItem({this.title = '', this.content = '', Key? key}) : super(key: key);
+  const HelpItem({this.title = '', this.content = '', Key? key})
+      : super(key: key);
 
   @override
   State<HelpItem> createState() => _HelpItemState();
@@ -40,7 +41,7 @@ class _HelpItemState extends State<HelpItem> {
                     widget.title,
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -62,9 +63,10 @@ class _HelpItemState extends State<HelpItem> {
                       const SizedBox(height: 8),
                       Text(
                         widget.content,
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                              fontWeight: FontWeight.w400,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displaySmall!.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
                       ),
                     ],
                   )

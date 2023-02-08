@@ -34,7 +34,7 @@ class ContactItem extends StatelessWidget {
                   content,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
               )
             ],

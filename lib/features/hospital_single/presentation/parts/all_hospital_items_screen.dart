@@ -36,7 +36,7 @@ class AllHospitalItemsScreen extends StatelessWidget {
           appbarTitle,
           style: Theme.of(context)
               .textTheme
-              .headline3!
+              .displaySmall!
               .copyWith(fontSize: 20, color: textColor),
         ),
       ),

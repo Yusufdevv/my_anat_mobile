@@ -1,7 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
-import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
@@ -65,12 +64,16 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               children: [
                 Text(
                   LocaleKeys.add_reviews.tr(),
-                  style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayLarge!
+                      .copyWith(fontSize: 20),
                 ),
                 WScaleAnimation(
                   onTap: () => Navigator.of(context).pop(),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     child: SvgPicture.asset(
                       AppIcons.bottomSheetCancel,
                       height: 28,
@@ -111,7 +114,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                     rating.toDouble().toString(),
                     style: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(color: primary, fontSize: 32),
                   )
                 ],
@@ -122,7 +125,8 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
               child: DefaultTextField(
                 controller: _controller,
                 maxLines: 40,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
                 onChanged: (value) {},
                 title: LocaleKeys.opinion.tr(),
                 height: 120,
@@ -134,8 +138,8 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                 if (!widget.isDoctor) {
                   if (widget.commentsBloc != null) {
                     widget.commentsBloc!.add(CommentsEvent.postComment(
-                        comment:
-                            PostCommentEntity(comment: _controller.text, rating: rating.toInt()),
+                        comment: PostCommentEntity(
+                            comment: _controller.text, rating: rating.toInt()),
                         onSuccess: () {
                           Navigator.of(context).pop();
                           showModalBottomSheet(
@@ -150,7 +154,9 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                   widget.commentsBloc!.add(CommentsEvent.sendDoctorComment(
                       onError: (message) {
                         Navigator.of(context).pop();
-                        context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                        context
+                            .read<ShowPopUpBloc>()
+                            .add(ShowPopUp(message: message));
                       },
                       doctor: widget.doctor!,
                       rating: rating,
@@ -189,7 +195,8 @@ class CommentSuccessBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+      padding: EdgeInsets.fromLTRB(
+          16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
       decoration: const BoxDecoration(
         color: white,
         borderRadius: BorderRadius.vertical(
@@ -204,12 +211,16 @@ class CommentSuccessBottomSheet extends StatelessWidget {
           const SizedBox(height: 24),
           Text(
             LocaleKeys.successfully_sent.tr(),
-            style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 20),
           ),
           const SizedBox(height: 8),
           Text(
             LocaleKeys.your_review_successfully.tr(),
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),
+            style:
+                Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),

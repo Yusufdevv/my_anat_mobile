@@ -1,6 +1,4 @@
-import 'package:anatomica/features/profile/data/models/purchased_article.dart';
 import 'package:anatomica/features/profile/data/models/purchased_journal.dart';
-import 'package:anatomica/features/profile/domain/usecases/get_purchased_article.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_purchased_journal.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';

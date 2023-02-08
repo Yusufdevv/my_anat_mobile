@@ -40,7 +40,7 @@ class DeleteCommentDialog extends StatelessWidget {
                     LocaleKeys.attention.tr(),
                     style: Theme.of(context)
                         .textTheme
-                        .headline3!
+                        .displaySmall!
                         .copyWith(color: textColor, fontSize: 20),
                   ),
                 ),
@@ -63,7 +63,10 @@ class DeleteCommentDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 LocaleKeys.note_attention.tr(),
-                style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 12),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(fontSize: 12),
               ),
             ),
             Padding(

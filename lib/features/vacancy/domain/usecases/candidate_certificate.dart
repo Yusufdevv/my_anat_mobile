@@ -5,12 +5,14 @@ import 'package:anatomica/features/pagination/data/models/generic_pagination.dar
 import 'package:anatomica/features/vacancy/domain/entities/certificate.dart';
 import 'package:anatomica/features/vacancy/domain/repositories/vacancy_repository.dart';
 
-class CandidateCertificateUseCase extends UseCase<GenericPagination<CertificateEntity>, int> {
+class CandidateCertificateUseCase
+    extends UseCase<GenericPagination<CertificateEntity>, int> {
   final VacancyRepository repository;
 
   CandidateCertificateUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, GenericPagination<CertificateEntity>>> call(int id) async =>
-      await repository.getCandidateCertificate(id: id);
+  Future<Either<Failure, GenericPagination<CertificateEntity>>> call(
+          int params) async =>
+      await repository.getCandidateCertificate(id: params);
 }

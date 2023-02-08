@@ -10,7 +10,8 @@ class LicenceItem extends StatelessWidget {
   final CertificateEntity entity;
   final bool isLast;
 
-  const LicenceItem({required this.entity, this.isLast = false, Key? key}) : super(key: key);
+  const LicenceItem({required this.entity, this.isLast = false, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,10 @@ class LicenceItem extends StatelessWidget {
                       entity.specialization.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontWeight: FontWeight.w400),
                     )
                   ],
                 ),
@@ -77,7 +81,10 @@ class LicenceItem extends StatelessWidget {
               Text(
                 MyFunctions.getPublishedDate(entity.date),
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(color: montana),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: montana),
               ),
             ],
           ),
@@ -88,7 +95,10 @@ class LicenceItem extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 entity.certificateNumber,
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(color: montana),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: montana),
               ),
             ],
           ),

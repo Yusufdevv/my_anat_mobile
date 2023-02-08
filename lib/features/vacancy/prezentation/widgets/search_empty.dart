@@ -21,7 +21,7 @@ class SearchEmpty extends StatelessWidget {
             LocaleKeys.return_results.tr(),
             style: Theme.of(context)
                 .textTheme
-                .subtitle2!
+                .titleSmall!
                 .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
             textAlign: TextAlign.center,
           )

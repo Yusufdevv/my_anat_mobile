@@ -5,7 +5,6 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/profile/presentation/blocs/restore/restore_bloc.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,7 +13,9 @@ class RestorePhoneDialog extends StatefulWidget {
   final bool isJournal;
   final VoidCallback onSucces;
 
-  const RestorePhoneDialog({required this.isJournal, required this.onSucces, Key? key}) : super(key: key);
+  const RestorePhoneDialog(
+      {required this.isJournal, required this.onSucces, Key? key})
+      : super(key: key);
 
   @override
   State<RestorePhoneDialog> createState() => _RestorePhoneDialogState();
@@ -44,7 +45,10 @@ class _RestorePhoneDialogState extends State<RestorePhoneDialog> {
                   Expanded(
                     child: Text(
                       LocaleKeys.restore_purchased_articles.tr(),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w600, fontSize: 20),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayLarge!
+                          .copyWith(fontWeight: FontWeight.w600, fontSize: 20),
                     ),
                   ),
                   const SizedBox(
@@ -67,7 +71,10 @@ class _RestorePhoneDialogState extends State<RestorePhoneDialog> {
               ),
               Text(
                 LocaleKeys.write_phone_restore.tr(),
-                style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400, fontSize: 14),
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
               ),
               const SizedBox(
                 height: 12,

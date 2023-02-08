@@ -82,7 +82,9 @@ class DoctorSingleAppBar extends StatelessWidget {
                                       fit: BoxFit.cover,
                                       height: 277,
                                       onErrorWidget: SvgPicture.asset(
-                                          AppIcons.bigImageError),
+                                        AppIcons.bigImageError,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                   Positioned.fill(
@@ -117,7 +119,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                       doctor.fullName,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline1!
+                                          .displayLarge!
                                           .copyWith(color: white, fontSize: 22),
                                     ),
                                   ),
@@ -137,7 +139,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                         doctor.position.title,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headline3!
+                                            .displaySmall!
                                             .copyWith(color: white),
                                       ),
                                     )
@@ -173,7 +175,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                         '${doctor.specializations[i].title} ',
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .headline3!
+                                                            .displaySmall!
                                                             .copyWith(
                                                                 color: primary),
                                                       ),
@@ -196,7 +198,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                             .ellipsis,
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .headline3!
+                                                            .displaySmall!
                                                             .copyWith(
                                                                 color:
                                                                     textColor),
@@ -222,7 +224,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                           false),
                                                       style: Theme.of(context)
                                                           .textTheme
-                                                          .headline3!
+                                                          .displaySmall!
                                                           .copyWith(
                                                               color: textColor),
                                                     ),
@@ -281,7 +283,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
-                                                                .headline3!
+                                                                .displaySmall!
                                                                 .copyWith(
                                                                     color:
                                                                         textColor),
@@ -312,7 +314,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                         .toString(),
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .headline3!
+                                                        .displaySmall!
                                                         .copyWith(
                                                             color: darkGreen),
                                                   ),
@@ -368,7 +370,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .headline3!
+                                                                  .displaySmall!
                                                                   .copyWith(
                                                                       color:
                                                                           white),
@@ -479,7 +481,7 @@ class DoctorSingleAppBar extends StatelessWidget {
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .headline3!
+                                                                  .displaySmall!
                                                                   .copyWith(
                                                                       color:
                                                                           primary),
@@ -518,7 +520,9 @@ class DoctorSingleAppBar extends StatelessWidget {
                                       padding: const EdgeInsets.all(16),
                                       child: SvgPicture.asset(
                                         AppIcons.chevronRight,
-                                        color: white,
+                                        color: doctor.img.middle.isNotEmpty
+                                            ? white
+                                            : textSecondary,
                                       ),
                                     ),
                                   ),

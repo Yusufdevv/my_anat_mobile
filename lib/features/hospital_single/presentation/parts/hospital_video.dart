@@ -64,7 +64,7 @@ class _HospitalVideoState extends State<HospitalVideo> {
               LocaleKeys.videos.tr(),
               style: Theme.of(context)
                   .textTheme
-                  .headline4!
+                  .headlineMedium!
                   .copyWith(color: textColor),
             ),
             for (int i = 0; i < widget.videos.length; i++)
@@ -134,7 +134,8 @@ class _HospitalVideoState extends State<HospitalVideo> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (widget.videoUrl.isNotEmpty) ...{
+                    if (widget.videoUrl.isNotEmpty &&
+                        widget.videos.isNotEmpty) ...{
                       Stack(
                         children: [
                           ClipRRect(
@@ -198,7 +199,7 @@ class _HospitalVideoState extends State<HospitalVideo> {
                 LocaleKeys.videos.tr(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline4!
+                    .headlineMedium!
                     .copyWith(color: textColor),
               ),
             ),

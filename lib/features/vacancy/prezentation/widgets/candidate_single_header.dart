@@ -52,7 +52,7 @@ class CandidateSingleHeader extends StatelessWidget {
                               candidate.fullName,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline2!
+                                  .displayMedium!
                                   .copyWith(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 20),
@@ -61,7 +61,7 @@ class CandidateSingleHeader extends StatelessWidget {
                             Text(candidate.position.title,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline2!
+                                    .displayMedium!
                                     .copyWith(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 16))
@@ -141,7 +141,7 @@ class CandidateSingleHeader extends StatelessWidget {
                                     candidate.fullName,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline1!
+                                        .displayLarge!
                                         .copyWith(color: white, fontSize: 22),
                                   ),
                                   const SizedBox(height: 16),
@@ -157,7 +157,7 @@ class CandidateSingleHeader extends StatelessWidget {
                                       candidate.position.title,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline3!
+                                          .displaySmall!
                                           .copyWith(color: white),
                                     ),
                                   )
@@ -225,7 +225,7 @@ class CandidateSingleHeader extends StatelessWidget {
                                               candidate.address,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline3!
+                                                  .displaySmall!
                                                   .copyWith(color: textColor),
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 1,
@@ -247,7 +247,7 @@ class CandidateSingleHeader extends StatelessWidget {
                                                 false),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headline3!
+                                                .displaySmall!
                                                 .copyWith(color: textColor),
                                           ),
                                         ],
@@ -260,7 +260,7 @@ class CandidateSingleHeader extends StatelessWidget {
                                           candidate.rating.toString(),
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline3!
+                                              .displaySmall!
                                               .copyWith(color: darkGreen),
                                         ),
                                         const SizedBox(width: 8),
@@ -303,7 +303,7 @@ class CandidateSingleHeader extends StatelessWidget {
                                               LocaleKeys.call.tr(),
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headline3!
+                                                  .displaySmall!
                                                   .copyWith(color: white),
                                             )
                                           ],

@@ -31,7 +31,10 @@ class HospitalVacanciesHorizontalList extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               LocaleKeys.vacancy.tr(),
-              style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium!
+                  .copyWith(color: textColor),
             ),
           ),
           const SizedBox(height: 16),
@@ -60,13 +63,15 @@ class HospitalVacanciesHorizontalList extends StatelessWidget {
                                   page: AllHospitalItemsScreen(
                                     appbarTitle: LocaleKeys.vacancy.tr(),
                                     child: HospitalVacancies(
-                                      hospitalVacanciesBloc: context.read<HospitalVacanciesBloc>(),
+                                      hospitalVacanciesBloc:
+                                          context.read<HospitalVacanciesBloc>(),
                                     ),
                                   ),
                                 ),
                               );
                             },
-                            width: MediaQuery.of(context).size.shortestSide - 32,
+                            width:
+                                MediaQuery.of(context).size.shortestSide - 32,
                             title: 'Все вакансии',
                           );
                         }
@@ -78,8 +83,11 @@ class HospitalVacanciesHorizontalList extends StatelessWidget {
                           ),
                         );
                       },
-                      separatorBuilder: (context, index) => const SizedBox(width: 8),
-                      itemCount: state.vacancies.length > 5 ? state.vacancies.take(6).length : state.vacancies.length,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 8),
+                      itemCount: state.vacancies.length > 5
+                          ? state.vacancies.take(6).length
+                          : state.vacancies.length,
                     ),
                   );
                 } else {

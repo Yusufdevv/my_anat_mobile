@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class VacancyTabBar extends StatelessWidget {
   final TabController tabController;
 
-  const VacancyTabBar({Key? key, required this.tabController}) : super(key: key);
+  const VacancyTabBar({Key? key, required this.tabController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,8 @@ class VacancyTabBar extends StatelessWidget {
                 color: const Color(0xff000000).withOpacity(0.12)),
           ],
           shape: RoundedRectangleBorder(
-              side: BorderSide(color: const Color(0xff000000).withOpacity(0.04)),
+              side:
+                  BorderSide(color: const Color(0xff000000).withOpacity(0.04)),
               borderRadius: BorderRadius.circular(7)),
           color: Colors.white,
         ),
@@ -38,17 +40,15 @@ class VacancyTabBar extends StatelessWidget {
         onTap: (s) {},
         unselectedLabelStyle: Theme.of(context)
             .textTheme
-            .headline1!
+            .displayLarge!
             .copyWith(fontSize: 13, fontWeight: FontWeight.w500),
-        labelStyle: Theme.of(context).textTheme.headline1!.copyWith(
+        labelStyle: Theme.of(context).textTheme.displayLarge!.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w600,
             ),
         unselectedLabelColor: textSecondary,
         labelColor: black,
-        tabs: const [
-
-        ],
+        tabs: const [],
       ),
     );
   }

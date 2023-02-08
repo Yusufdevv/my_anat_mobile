@@ -25,7 +25,8 @@ class PhonesBottomSheet extends StatelessWidget {
           top: Radius.circular(16),
         ),
       ),
-      padding: EdgeInsets.only(left: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
+      padding: EdgeInsets.only(
+          left: 16, bottom: MediaQuery.of(context).padding.bottom + 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -34,14 +35,18 @@ class PhonesBottomSheet extends StatelessWidget {
             children: [
               Text(
                 LocaleKeys.call.tr(),
-                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge!
+                    .copyWith(fontSize: 20),
               ),
               WScaleAnimation(
                 onTap: () {
                   Navigator.of(context).pop();
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                   child: SvgPicture.asset(
                     AppIcons.bottomSheetCancel,
                     height: 28,

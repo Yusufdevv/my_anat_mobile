@@ -60,7 +60,10 @@ class _SearchFieldState extends State<SearchField> {
             });
           }
         },
-        style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+        style: Theme.of(context)
+            .textTheme
+            .displaySmall!
+            .copyWith(color: textColor),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
           fillColor: widget.fillColor,
@@ -73,7 +76,7 @@ class _SearchFieldState extends State<SearchField> {
             ),
           ),
           hintText: LocaleKeys.search.tr(),
-          hintStyle: Theme.of(context).textTheme.headline3,
+          hintStyle: Theme.of(context).textTheme.displaySmall,
           prefixIconConstraints: const BoxConstraints(maxWidth: 40),
           suffixIcon: showClear
               ? WScaleAnimation(

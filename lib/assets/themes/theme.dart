@@ -10,16 +10,20 @@ class AppTheme {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         textTheme: const TextTheme(
-          headline1: headline1,
-          headline2: headline2,
-          headline3: headline3,
-          headline4: headline4,
-          headline5: headline5,
-          headline6: headline6,
-          bodyText1: bodyText1,
-          bodyText2: bodyText2,
-          subtitle1: subTitle1,
-          subtitle2: subTitle2,
+          displayLarge: displayLarge,
+          displayMedium: displayMedium,
+          displaySmall: displaySmall,
+          headlineMedium: headlineMedium,
+          headlineSmall: headlineSmall,
+          titleLarge: titleLarge,
+          bodyLarge: bodyLarge,
+          bodyMedium: bodyMedium,
+          titleMedium: titleMedium,
+          titleSmall: titleSmall,
+          bodySmall: bodySmall,
+          labelLarge: labelLarge,
+          labelMedium: labelMedium,
+          labelSmall: labelSmall,
         ),
         colorScheme: const ColorScheme(
           background: white,
@@ -37,55 +41,79 @@ class AppTheme {
       );
 
   // Fonts
-  static const headline1 = TextStyle(
+  static const displayLarge = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w700,
     color: textColor,
   );
-  static const headline2 = TextStyle(
+  static const displayMedium = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w700,
     color: white,
   );
-  static const headline3 = TextStyle(
+  static const displaySmall = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     color: textSecondary,
   );
-  static const headline4 = TextStyle(
+  static const headlineMedium = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: primary,
   );
-  static const headline5 = TextStyle(
+  static const headlineSmall = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: textColor,
   );
-  static const headline6 = TextStyle(
+  static const titleLarge = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: red,
   );
-  static const bodyText1 = TextStyle(
+  static const bodyLarge = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: textColor,
   );
 
-  static const bodyText2 = TextStyle(
+  static const bodyMedium = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: textColor,
   );
 
-  static const subTitle1 = TextStyle(
+  static const titleMedium = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: textColor,
   );
 
-  static const subTitle2 = TextStyle(
+  static const titleSmall = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: textSecondary,
+  );
+
+  static const bodySmall = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    color: black,
+  );
+
+  static const labelLarge = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: textColor,
+  );
+
+  static const labelMedium = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    color: textColor,
+  );
+
+  static const labelSmall = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: textSecondary,

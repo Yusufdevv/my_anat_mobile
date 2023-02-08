@@ -8,7 +8,6 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class HospitalContacts extends StatefulWidget {
   final String phone;
@@ -109,14 +108,18 @@ class _HospitalContactsState extends State<HospitalContacts> {
   Widget build(BuildContext context) {
     return Container(
       color: white,
-      margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16),
+      margin:
+          EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             LocaleKeys.contact.tr(),
-            style: Theme.of(context).textTheme.headline4!.copyWith(color: textColor),
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium!
+                .copyWith(color: textColor),
           ),
           const SizedBox(height: 16),
           if (contacts.isEmpty && socials.isEmpty) ...{

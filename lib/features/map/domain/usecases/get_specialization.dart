@@ -10,8 +10,8 @@ class GetSpecializationUseCase
   final PaginationRepository repo = PaginationRepository();
 
   @override
-  Future<Either<Failure, GenericPagination<TitlerModel>>> call(String? next) {
+  Future<Either<Failure, GenericPagination<TitlerModel>>> call(String? params) {
     return repo.fetchMore(
-        url: '/organization/specialization/', fromJson: TitlerModel.fromJson,next: next);
+        url: '/organization/specialization/', fromJson: TitlerModel.fromJson,next: params);
   }
 }

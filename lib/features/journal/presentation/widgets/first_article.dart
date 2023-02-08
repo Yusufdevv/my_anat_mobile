@@ -28,11 +28,13 @@ class FirstArticle extends StatelessWidget {
                 return GestureDetector(
                   onTap: () {
                     if (state.status == AuthenticationStatus.authenticated) {
-                      if (!state.firstArticle.isPremium || state.journalArticles.first.isBought) {
+                      if (!state.firstArticle.isPremium ||
+                          state.journalArticles.first.isBought) {
                         Navigator.of(context, rootNavigator: true).push(
                           fade(
                             page: WebViewScreen(
-                              shareValue: 'https://anatomica.uz/article/${state.firstArticle.slug}',
+                              shareValue:
+                                  'https://anatomica.uz/article/${state.firstArticle.slug}',
                               page: 'ArticleSinglePage',
                               slug: state.firstArticle.slug,
                             ),
@@ -42,7 +44,8 @@ class FirstArticle extends StatelessWidget {
                         Navigator.of(context, rootNavigator: true).push(
                           fade(
                             page: WebViewScreen(
-                              shareValue: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
+                              shareValue:
+                                  'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
                               page: 'PremiumArticleSinglePage',
                               slug: state.firstArticle.slug,
                             ),
@@ -55,8 +58,10 @@ class FirstArticle extends StatelessWidget {
                           fade(
                             page: WebViewScreen(
                               sendToken: false,
-                              shareValue: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
-                              url: 'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
+                              shareValue:
+                                  'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
+                              url:
+                                  'https://anatomica.uz/premium-article/${state.firstArticle.slug}',
                               page: 'PremiumArticleSinglePage',
                               slug: state.firstArticle.slug,
                             ),
@@ -67,8 +72,10 @@ class FirstArticle extends StatelessWidget {
                           fade(
                             page: WebViewScreen(
                               sendToken: false,
-                              shareValue: 'https://anatomica.uz/article/${state.firstArticle.slug}',
-                              url: 'https://anatomica.uz/article/${state.firstArticle.slug}',
+                              shareValue:
+                                  'https://anatomica.uz/article/${state.firstArticle.slug}',
+                              url:
+                                  'https://anatomica.uz/article/${state.firstArticle.slug}',
                               page: 'ArticleSinglePage',
                               slug: state.firstArticle.slug,
                             ),
@@ -82,8 +89,9 @@ class FirstArticle extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(top: 0, bottom: 16),
                         height: 188,
-                        decoration:
-                            BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: divider),
+                            borderRadius: BorderRadius.circular(8)),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: CachedNetworkImage(
@@ -97,7 +105,10 @@ class FirstArticle extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           state.firstArticle.title,
-                          style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(fontSize: 18),
                         ),
                       ),
                       const SizedBox(height: 4),

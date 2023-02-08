@@ -54,8 +54,9 @@ class WAppBar extends StatelessWidget implements PreferredSizeWidget {
       children: [
         Container(
           height: (height ?? 52) + MediaQuery.of(context).padding.top,
-          padding:
-              EdgeInsets.only(left: 0, top: (topMargin ?? 0) + MediaQuery.of(context).padding.top),
+          padding: EdgeInsets.only(
+              left: 0,
+              top: (topMargin ?? 0) + MediaQuery.of(context).padding.top),
           decoration: BoxDecoration(
             boxShadow: boxShadow,
             color: backgroundColor ?? Colors.white,
@@ -100,15 +101,19 @@ class WAppBar extends StatelessWidget implements PreferredSizeWidget {
                       children: [child!],
                     )
                   : Row(
-                      mainAxisAlignment:
-                          centerTitle ? MainAxisAlignment.center : MainAxisAlignment.start,
+                      mainAxisAlignment: centerTitle
+                          ? MainAxisAlignment.center
+                          : MainAxisAlignment.start,
                       children: [
                         Align(
                           alignment: Alignment.center,
                           child: Text(
                             title ?? '',
                             style: titleStyle ??
-                                Theme.of(context).textTheme.headline1!.copyWith(
+                                Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
                                     ),

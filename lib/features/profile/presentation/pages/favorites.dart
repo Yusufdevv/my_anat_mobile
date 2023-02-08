@@ -31,10 +31,12 @@ class FavoritesScreen extends StatelessWidget {
       length: 2,
       child: BlocProvider(
         create: (context) => ProfileFavouriteBloc(
-          getLikedCandidatesUseCase: GetLikedCandidatesUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
-          getLikedVacanciesUseCase: GetLikedVacanciesUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
-          likeUnlikeDoctorStreamUseCase:
-              LikeUnlikeDoctorStreamUseCase(repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
+          getLikedCandidatesUseCase: GetLikedCandidatesUseCase(
+              repository: serviceLocator<ProfileRepositoryImpl>()),
+          getLikedVacanciesUseCase: GetLikedVacanciesUseCase(
+              repository: serviceLocator<ProfileRepositoryImpl>()),
+          likeUnlikeDoctorStreamUseCase: LikeUnlikeDoctorStreamUseCase(
+              repository: serviceLocator<LikeUnlikeRepositoryImpl>()),
           likeUnlikeVacancyStreamUseCase: LikeUnlikeVacancyStreamUseCase(
             repository: serviceLocator<LikeUnlikeRepositoryImpl>(),
           ),
@@ -61,33 +63,46 @@ class FavoritesScreen extends StatelessWidget {
               return TabBarView(
                 children: [
                   Paginator(
-                    padding: EdgeInsets.only(top: 16, bottom: MediaQuery.of(context).padding.bottom),
+                    padding: EdgeInsets.only(
+                        top: 16, bottom: MediaQuery.of(context).padding.bottom),
                     itemBuilder: (context, index) => VacancyItem(
                       vacancyEntity: state.likedVacancies[index],
                       onTap: () {
-                        Navigator.of(context)
-                            .push(fade(page: VacancySingleScreen(slug: state.likedVacancies[index].slug)));
+                        Navigator.of(context).push(fade(
+                            page: VacancySingleScreen(
+                                slug: state.likedVacancies[index].slug)));
                       },
                     ),
-                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 12),
                     itemCount: state.likedVacancies.length,
                     paginatorStatus: state.vacancyStatus,
                     fetchMoreFunction: () {
-                      context.read<ProfileFavouriteBloc>().add(GetMoreLikedVacancies());
+                      context
+                          .read<ProfileFavouriteBloc>()
+                          .add(GetMoreLikedVacancies());
                     },
-                    emptyWidget: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      SvgPicture.asset(AppIcons.emptyA),
-                      const SizedBox(height: 24),
-                      Text(
-                        LocaleKeys.nothing.tr(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        LocaleKeys.did_not_add_vacancy.tr(),
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textSecondary),
-                      )
-                    ]),
+                    emptyWidget: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(AppIcons.emptyA),
+                          const SizedBox(height: 24),
+                          Text(
+                            LocaleKeys.nothing.tr(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(fontSize: 20),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            LocaleKeys.did_not_add_vacancy.tr(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(color: textSecondary),
+                          )
+                        ]),
                     hasMoreToFetch: state.vacancyFetchMore,
                     errorWidget: const Text('error'),
                   ),
@@ -96,28 +111,40 @@ class FavoritesScreen extends StatelessWidget {
                     itemBuilder: (context, index) => CandidateItem(
                       candidateListEntity: state.likedCandidates[index],
                       onTap: () {
-                        Navigator.of(context)
-                            .push(fade(page: SingleCandidateScreen(id: state.likedCandidates[index].id)));
+                        Navigator.of(context).push(fade(
+                            page: SingleCandidateScreen(
+                                id: state.likedCandidates[index].id)));
                       },
                     ),
-                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 12),
                     itemCount: state.likedCandidates.length,
                     paginatorStatus: state.candidateStatus,
-                    emptyWidget: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      SvgPicture.asset(AppIcons.emptyA),
-                      const SizedBox(height: 24),
-                      Text(
-                        LocaleKeys.nothing.tr(),
-                        style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        LocaleKeys.did_not_add_candidate.tr(),
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: textSecondary),
-                      )
-                    ]),
+                    emptyWidget: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(AppIcons.emptyA),
+                          const SizedBox(height: 24),
+                          Text(
+                            LocaleKeys.nothing.tr(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(fontSize: 20),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            LocaleKeys.did_not_add_candidate.tr(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(color: textSecondary),
+                          )
+                        ]),
                     fetchMoreFunction: () {
-                      context.read<ProfileFavouriteBloc>().add(GetMoreLikedCandidates());
+                      context
+                          .read<ProfileFavouriteBloc>()
+                          .add(GetMoreLikedCandidates());
                     },
                     hasMoreToFetch: state.candidateFetchMore,
                     errorWidget: const Text('error'),

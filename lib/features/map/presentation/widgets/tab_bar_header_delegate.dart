@@ -16,7 +16,8 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
     this.controller,
   });
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -30,7 +31,8 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       ),
       child: TabBar(
         controller: tabController,
-        labelStyle: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 15),
+        labelStyle:
+            Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 15),
         labelColor: darkGreen,
         labelPadding: const EdgeInsets.symmetric(horizontal: 9),
         physics: const BouncingScrollPhysics(),
@@ -39,7 +41,8 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
         unselectedLabelColor: textColor,
         indicatorColor: primary,
         onTap: onTabTap,
-        indicator: const CustomTabIndicator(color: primary, radius: 3, horizontalPadding: 9, height: 3),
+        indicator: const CustomTabIndicator(
+            color: primary, radius: 3, horizontalPadding: 9, height: 3),
         tabs: tabs.map((e) => Tab(text: e.tr())).toList(),
       ),
     );
@@ -52,5 +55,6 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => 46;
 
   @override
-  bool shouldRebuild(covariant TabBarHeaderDelegate oldDelegate) => oldDelegate.tabController != tabController || tabs != oldDelegate.tabs;
+  bool shouldRebuild(covariant TabBarHeaderDelegate oldDelegate) =>
+      oldDelegate.tabController != tabController || tabs != oldDelegate.tabs;
 }

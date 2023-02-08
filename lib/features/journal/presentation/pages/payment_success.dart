@@ -53,7 +53,10 @@ class PaymentSuccess extends StatelessWidget {
                   : isRegistered
                       ? LocaleKeys.buy_magazine.tr()
                       : LocaleKeys.only_pay.tr(),
-              style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 20),
+              style: Theme.of(context)
+                  .textTheme
+                  .displaySmall!
+                  .copyWith(color: textColor, fontSize: 20),
             ),
           ),
           body: Column(
@@ -63,12 +66,18 @@ class PaymentSuccess extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 LocaleKeys.success_purchase.tr(),
-                style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge!
+                    .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
               Text(
                 LocaleKeys.realization_success.tr(args: [title]),
-                style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(fontWeight: FontWeight.w400),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
@@ -78,11 +87,17 @@ class PaymentSuccess extends StatelessWidget {
                   RichText(
                     text: TextSpan(
                       text: LocaleKeys.id_purchase.tr(),
-                      style: Theme.of(context).textTheme.headline3!.copyWith(fontWeight: FontWeight.w400),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontWeight: FontWeight.w400),
                       children: [
                         TextSpan(
                           text: state.paymentId.toString(),
-                          style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 14),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(fontSize: 14),
                         ),
                       ],
                     ),
@@ -99,7 +114,10 @@ class PaymentSuccess extends StatelessWidget {
           ),
           bottomNavigationBar: WButton(
             text: LocaleKeys.to_main.tr(),
-            margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom, left: 16, right: 16),
+            margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom,
+                left: 16,
+                right: 16),
             onTap: () {
               Navigator.pushAndRemoveUntil(
                 context,

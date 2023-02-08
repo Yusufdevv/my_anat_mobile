@@ -45,7 +45,7 @@ class HospitalCommentsHorizontalList extends StatelessWidget {
                   LocaleKeys.reviews.tr(),
                   style: Theme.of(context)
                       .textTheme
-                      .headline4!
+                      .headlineMedium!
                       .copyWith(color: textColor),
                 ),
               ),
@@ -56,7 +56,7 @@ class HospitalCommentsHorizontalList extends StatelessWidget {
                   children: [
                     Text(
                       hospital.rating.toString(),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             color: textSecondary,
                             fontSize: 40,
                           ),
@@ -75,7 +75,7 @@ class HospitalCommentsHorizontalList extends StatelessWidget {
                             '${hospital.commentCount} ${LocaleKeys.review.tr()}',
                             style: Theme.of(context)
                                 .textTheme
-                                .headline3!
+                                .displaySmall!
                                 .copyWith(color: textColor, fontSize: 13),
                           ),
                         ],

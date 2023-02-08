@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';

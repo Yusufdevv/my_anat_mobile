@@ -10,7 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 class CandidateContactInfo extends StatelessWidget {
   final CandidateSingleEntity candidate;
 
-  const CandidateContactInfo({required this.candidate, Key? key}) : super(key: key);
+  const CandidateContactInfo({required this.candidate, Key? key})
+      : super(key: key);
 
   Future<void> _launchUrl(String uri) async {
     if (!await canLaunchUrl(Uri.parse(uri))) {
@@ -26,7 +27,8 @@ class CandidateContactInfo extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
+          margin:
+              EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
           decoration: BoxDecoration(
             border: Border.all(width: 1, color: lilyWhite),
             borderRadius: BorderRadius.circular(12),
@@ -46,7 +48,8 @@ class CandidateContactInfo extends StatelessWidget {
               if (candidate.instagram.isNotEmpty) ...{
                 CandidateContactItem(
                   onTap: () {
-                    _launchUrl('https://www.instagram.com/${candidate.instagram}');
+                    _launchUrl(
+                        'https://www.instagram.com/${candidate.instagram}');
                   },
                   icon: AppIcons.instagram,
                   title: candidate.instagram,
@@ -76,7 +79,12 @@ class CandidateContactItem extends StatelessWidget {
   final bool isLast;
   final VoidCallback onTap;
 
-  const CandidateContactItem({required this.onTap, this.isLast = false, this.title = '', this.icon = '', Key? key})
+  const CandidateContactItem(
+      {required this.onTap,
+      this.isLast = false,
+      this.title = '',
+      this.icon = '',
+      Key? key})
       : super(key: key);
 
   @override
@@ -89,12 +97,14 @@ class CandidateContactItem extends StatelessWidget {
             children: [
               SvgPicture.asset(icon),
               const SizedBox(width: 8),
-              Text(title, style: Theme.of(context).textTheme.headline1)
+              Text(title, style: Theme.of(context).textTheme.displayLarge)
             ],
           ),
         ),
         const SizedBox(height: 16),
-        !isLast ? const WDivider(margin: EdgeInsets.only(bottom: 16)) : const SizedBox(),
+        !isLast
+            ? const WDivider(margin: EdgeInsets.only(bottom: 16))
+            : const SizedBox(),
       ],
     );
   }

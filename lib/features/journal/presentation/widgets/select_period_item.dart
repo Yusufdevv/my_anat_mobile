@@ -42,7 +42,10 @@ class SelectPeriodItem extends StatelessWidget {
                 ),
                 Text(
                   period.title.tr(),
-                  style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(color: textColor),
                 )
               ],
             ),

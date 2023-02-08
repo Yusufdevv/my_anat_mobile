@@ -12,7 +12,6 @@ import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_
 import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_menu.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_table_of_contents.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/reader_controller.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,7 +84,7 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
               titleSpacing: 0,
               title: Text(
                 widget.title,
-                style: Theme.of(context).textTheme.headline4!.copyWith(
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     color: controllerState.selectedTextColor, fontSize: 15),
               ),
               leading: WScaleAnimation(
@@ -176,33 +175,37 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                                       horizontal: 16),
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
-                                    if (index == state.pages.length){
-                                      if (state.fetchMore){
-                                        context.read<JournalPagesBloc>().add(GetMoreJournalPages());
-                                        return const Center(child: CupertinoActivityIndicator(),);
-                                      } else{
+                                    if (index == state.pages.length) {
+                                      if (state.fetchMore) {
+                                        context
+                                            .read<JournalPagesBloc>()
+                                            .add(GetMoreJournalPages());
+                                        return const Center(
+                                          child: CupertinoActivityIndicator(),
+                                        );
+                                      } else {
                                         return const SizedBox();
                                       }
                                     }
                                     return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        showContents = !showContents;
-                                      });
-                                      _pageController.animateToPage(index,
-                                          duration:
-                                              const Duration(milliseconds: 100),
-                                          curve: Curves.linear);
-                                    },
-                                    child: WImage(
-                                      height: 220,
-                                      width: 160,
-                                      fit: BoxFit.cover,
-                                      imageUrl: state.pages
-                                          .map((e) => e.imgContent)
-                                          .toList()[index],
-                                    ),
-                                  );
+                                      onTap: () {
+                                        setState(() {
+                                          showContents = !showContents;
+                                        });
+                                        _pageController.animateToPage(index,
+                                            duration: const Duration(
+                                                milliseconds: 100),
+                                            curve: Curves.linear);
+                                      },
+                                      child: WImage(
+                                        height: 220,
+                                        width: 160,
+                                        fit: BoxFit.cover,
+                                        imageUrl: state.pages
+                                            .map((e) => e.imgContent)
+                                            .toList()[index],
+                                      ),
+                                    );
                                   },
                                   itemCount: state.pages.length + 1,
                                   separatorBuilder: (context, index) =>

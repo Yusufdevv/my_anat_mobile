@@ -7,7 +7,6 @@ import 'package:anatomica/features/profile/domain/usecases/verify_restore.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 
 part 'restore_bloc.freezed.dart';
 part 'restore_event.dart';

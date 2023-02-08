@@ -43,7 +43,7 @@ class ErrorMessageContainer extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
-                  .headline3!
+                  .displaySmall!
                   .copyWith(color: errorTextColor),
             ),
           ),

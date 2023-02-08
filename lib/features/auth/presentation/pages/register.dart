@@ -90,14 +90,17 @@ class _RegisterScreenState extends State<RegisterScreen>
                       Text(_getTitle(currentPage),
                           style: Theme.of(context)
                               .textTheme
-                              .headline2!
+                              .displayMedium!
                               .copyWith(
                                   fontSize: 28, fontWeight: FontWeight.w700)),
                       const SizedBox(height: 8),
                       Text(
                         _getSubtitle(currentPage),
-                        style: Theme.of(context).textTheme.headline2!.copyWith(
-                            fontSize: 14, fontWeight: FontWeight.w400),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(
+                                fontSize: 14, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),

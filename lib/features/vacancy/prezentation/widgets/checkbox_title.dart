@@ -33,7 +33,7 @@ class CheckBoxTitle extends StatelessWidget {
                 const SizedBox(width: 12),
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.headline1!.copyWith(),
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(),
                 )
               ],
             ),

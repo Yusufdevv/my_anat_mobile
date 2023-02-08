@@ -15,7 +15,11 @@ class TopOrganizationEntity extends Equatable {
   final int vacancyCount;
 
   const TopOrganizationEntity(
-      {required this.title, required this.vacancyCount, required this.logo, required this.slug, required this.id});
+      {required this.title,
+      required this.vacancyCount,
+      required this.logo,
+      required this.slug,
+      required this.id});
 
   @override
   List<Object?> get props => [id, logo, vacancyCount, title, slug];
@@ -28,22 +32,27 @@ class LogoEntity extends Equatable {
   final String middle;
   @JsonKey(name: 'small', defaultValue: '')
   final String small;
+  @JsonKey(name: 'id', defaultValue: 0)
+  final int id;
 
   const LogoEntity({
     this.middle = '',
     this.origin = '',
     this.small = '',
+    this.id = 0,
   });
 
   @override
-  List<Object?> get props => [origin, middle, small];
+  List<Object?> get props => [origin, middle, small, id];
 }
 
-class LogoEntityConverter extends JsonConverter<LogoEntity, Map<String, dynamic>?> {
+class LogoEntityConverter
+    extends JsonConverter<LogoEntity, Map<String, dynamic>?> {
   const LogoEntityConverter();
 
   @override
-  LogoEntity fromJson(Map<String, dynamic>? json) => LogoModel.fromJson(json ?? {});
+  LogoEntity fromJson(Map<String, dynamic>? json) =>
+      LogoModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(LogoEntity object) => {};

@@ -21,7 +21,11 @@ class HospitalComments extends StatelessWidget {
   final VoidCallback? onTapDelete;
 
   const HospitalComments(
-      {required this.overallRating, required this.commentsBloc, required this.commentCount, this.onTapDelete, Key? key})
+      {required this.overallRating,
+      required this.commentsBloc,
+      required this.commentCount,
+      this.onTapDelete,
+      Key? key})
       : super(key: key);
 
   @override
@@ -44,7 +48,7 @@ class HospitalComments extends StatelessWidget {
                   children: [
                     Text(
                       overallRating.toString(),
-                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
                             color: textSecondary,
                             fontSize: 40,
                           ),
@@ -61,25 +65,34 @@ class HospitalComments extends StatelessWidget {
                           const SizedBox(height: 6),
                           Text(
                             '${state.hospitalCommentCount} ${LocaleKeys.review.tr()}',
-                            style: Theme.of(context).textTheme.headline3!.copyWith(color: textColor, fontSize: 13),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall!
+                                .copyWith(color: textColor, fontSize: 13),
                           ),
                         ],
                       ),
                     ),
-                    if (state.comments.where((element) => element.isOwn).isEmpty || !state.isOrganizationCommented) ...{
+                    if (state.comments
+                            .where((element) => element.isOwn)
+                            .isEmpty ||
+                        !state.isOrganizationCommented) ...{
                       Expanded(
-                        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                        child: BlocBuilder<AuthenticationBloc,
+                            AuthenticationState>(
                           builder: (context, state) {
                             return WButton(
                               onTap: () {
-                                if (state.status == AuthenticationStatus.authenticated) {
+                                if (state.status ==
+                                    AuthenticationStatus.authenticated) {
                                   showModalBottomSheet(
                                     backgroundColor: Colors.transparent,
                                     context: context,
                                     isScrollControlled: true,
                                     builder: (_) => CommentBottomSheet(
                                       parentContext: context,
-                                      commentsBloc: context.read<CommentsBloc>(),
+                                      commentsBloc:
+                                          context.read<CommentsBloc>(),
                                     ),
                                   );
                                 } else {
@@ -97,10 +110,13 @@ class HospitalComments extends StatelessWidget {
               ),
               Expanded(
                 child: Paginator(
-                  paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
+                  paginatorStatus:
+                      MyFunctions.formzStatusToPaginatorStatus(state.status),
                   errorWidget: const Text('error'),
                   fetchMoreFunction: () {
-                    context.read<CommentsBloc>().add(CommentsEvent.getMoreComments());
+                    context
+                        .read<CommentsBloc>()
+                        .add(CommentsEvent.getMoreComments());
                   },
                   hasMoreToFetch: state.fetchMore,
                   itemBuilder: (context, index) {
@@ -109,18 +125,18 @@ class HospitalComments extends StatelessWidget {
                         commentsBloc.add(
                           CommentsEvent.deleteHospitalComment(
                             id: state.comments[index].id,
-                            onSuccess: () {
-                            },
-                            onError: () {
-                            },
+                            onSuccess: () {},
+                            onError: () {},
                           ),
                         );
                       },
                       entity: state.comments[index],
                     );
                   },
-                  padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-                  separatorBuilder: (context, index) => const SizedBox(height: 12),
+                  padding: const EdgeInsets.all(16).copyWith(
+                      bottom: MediaQuery.of(context).padding.bottom + 16),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 12),
                   itemCount: state.comments.length,
                 ),
               )

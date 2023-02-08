@@ -28,7 +28,8 @@ class CompanyCard extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(fade(
                     page: HospitalSingleScreen(
-                        slug: state.topOrganizationEntity.slug, id: state.topOrganizationEntity.id)));
+                        slug: state.topOrganizationEntity.slug,
+                        id: state.topOrganizationEntity.id)));
               },
               child: Row(
                 children: [
@@ -39,15 +40,19 @@ class CompanyCard extends StatelessWidget {
                     children: [
                       Text(
                         state.topOrganizationEntity.title,
-                        style: Theme.of(context).textTheme.headline1!.copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displayLarge!.copyWith(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         '${state.organizationVacancyList.length} ${LocaleKeys.vacancies.tr()}',
-                        style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 13),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .copyWith(fontSize: 13),
                       ),
                     ],
                   ),

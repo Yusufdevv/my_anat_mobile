@@ -1,60 +1,68 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
+import 'package:anatomica/features/map/presentation/blocs/org_map_v2_bloc/org_map_v2_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/suggestion/suggestion_bloc.dart';
+import 'package:anatomica/features/map/presentation/widgets/doctors_list.dart';
+import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
 import 'package:anatomica/features/map/presentation/widgets/suggestion_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class SuggestionListScreen extends StatelessWidget {
   final Function(String) onTapItem;
   final String searchText;
+  final Point myPoint;
   final bool isDoctor;
 
-  const SuggestionListScreen({required this.onTapItem, required this.isDoctor, required this.searchText, Key? key})
+  const SuggestionListScreen(
+      {required this.onTapItem,
+      required this.isDoctor,
+      required this.searchText,
+      required this.myPoint,
+      Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SuggestionBloc, SuggestionState>(
+    return BlocBuilder<HospitalListBloc, HospitalListState>(
       builder: (context, state) {
         return Align(
           alignment: Alignment.topCenter,
-          child: Container(
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            decoration: BoxDecoration(
-              color: textFieldColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        onTapItem(state.searchText);
-                      },
-                      child: SuggestionItem(
-                        title: state.searchText,
-                        searchText: state.searchText,
-                        isLast: state.list.isEmpty,
-                      ));
-                }
-                return GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    onTapItem(state.list[index - 1].title);
-                  },
-                  child: SuggestionItem(
-                    title: state.list[index - 1].title,
-                    searchText: state.searchText,
-                    isLast: index == state.list.length,
-                  ),
-                );
-              },
-              itemCount: state.list.length + 1,
-            ),
+          child: ListView.separated(
+            padding: const EdgeInsets.all(16),
+            separatorBuilder: (context, index) => const SizedBox(height: 8),
+            itemBuilder: (context, index) {
+              // if (index == 0) {
+              //   return GestureDetector(
+              //     behavior: HitTestBehavior.opaque,
+              //     onTap: () {
+              //       // onTapItem(state.searchText);
+              //     },
+              //     child: HospitalItem(
+              //       entity: state.hospitals[index],
+              //       myPoint: myPoint,
+              //       isSuggestionItem: true,
+              //       searchText: searchText,
+              //     ),
+              //   );
+              // }
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  // onTapItem('');
+                },
+                child: isDoctor
+                    ? const DoctorsList()
+                    : HospitalItem(
+                        entity: state.hospitals[index],
+                        myPoint: myPoint,
+                        isSuggestionItem: true,
+                        searchText: searchText,
+                      ),
+              );
+            },
+            itemCount: state.count,
           ),
         );
       },

@@ -2,7 +2,6 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/vacancy_item_textwidget.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,8 @@ class VacancyCard extends StatelessWidget {
   final VoidCallback onTap;
   final VacancyListEntity vacancyListEntity;
 
-  const VacancyCard({required this.onTap, required this.vacancyListEntity, Key? key})
+  const VacancyCard(
+      {required this.onTap, required this.vacancyListEntity, Key? key})
       : super(key: key);
 
   @override
@@ -35,7 +35,10 @@ class VacancyCard extends StatelessWidget {
           children: [
             Text(
               vacancyListEntity.organization.speciazilation[0].title,
-              style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 14),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 14),
             ),
             const SizedBox(height: 4),
             Text(
@@ -44,7 +47,7 @@ class VacancyCard extends StatelessWidget {
                 'UZS',
                 style: Theme.of(context)
                     .textTheme
-                    .headline4!
+                    .headlineMedium!
                     .copyWith(fontSize: 13, fontWeight: FontWeight.w400)),
             const SizedBox(height: 1),
             const WDivider(margin: EdgeInsets.symmetric(vertical: 10)),
@@ -55,7 +58,8 @@ class VacancyCard extends StatelessWidget {
                     '${LocaleKeys.year.tr()}',
                 icon: AppIcons.briefCase),
             const SizedBox(height: 8),
-            VacancyItemTextWidget(title: vacancyListEntity.address, icon: AppIcons.mapPin),
+            VacancyItemTextWidget(
+                title: vacancyListEntity.address, icon: AppIcons.mapPin),
           ],
         ),
       ),

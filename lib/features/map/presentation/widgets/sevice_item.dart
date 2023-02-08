@@ -57,11 +57,11 @@ class ServiceItem extends StatelessWidget {
                     highlightedText: hightlightedText,
                     textStyle: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 15),
                     textStyleHighlight: Theme.of(context)
                         .textTheme
-                        .headline1!
+                        .displayLarge!
                         .copyWith(fontSize: 15),
                   ),
                 )

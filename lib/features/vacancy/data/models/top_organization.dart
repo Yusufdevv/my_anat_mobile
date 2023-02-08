@@ -23,7 +23,9 @@ class LogoModel extends LogoEntity {
     required super.middle,
     required super.origin,
     required super.small,
+    required super.id,
   });
 
-  factory LogoModel.fromJson(Map<String, dynamic> json) => _$LogoModelFromJson(json);
+  factory LogoModel.fromJson(Map<String, dynamic> json) =>
+      _$LogoModelFromJson(json);
 }

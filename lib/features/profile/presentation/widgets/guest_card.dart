@@ -1,17 +1,12 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
-import 'package:anatomica/features/auth/domain/entities/user_entity.dart';
 import 'package:anatomica/features/auth/presentation/pages/login.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
-import 'package:anatomica/features/profile/presentation/blocs/profile_bloc/profile_bloc.dart';
-import 'package:anatomica/features/profile/presentation/pages/my_info.dart';
-import 'package:anatomica/features/profile/presentation/widgets/profile_image.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class GuestCard extends StatelessWidget {
@@ -23,9 +18,7 @@ class GuestCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context, rootNavigator: true).push(
           fade(
-            page: LoginScreen(
-
-            ),
+            page: const LoginScreen(),
           ),
         );
       },
@@ -58,9 +51,9 @@ class GuestCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                   LocaleKeys.not_registered_account.tr(),
+                    LocaleKeys.not_registered_account.tr(),
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.headline1,
+                    style: Theme.of(context).textTheme.displayLarge,
                     maxLines: 2,
                   ),
                 ],

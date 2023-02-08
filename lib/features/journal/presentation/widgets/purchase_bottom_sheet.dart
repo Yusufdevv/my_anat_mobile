@@ -9,7 +9,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class PurchaseBottomSheet extends StatelessWidget {
   final int amount;
   final VoidCallback onButtonTap;
-  const PurchaseBottomSheet({required this.amount, required this.onButtonTap, Key? key}) : super(key: key);
+  const PurchaseBottomSheet(
+      {required this.amount, required this.onButtonTap, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +43,23 @@ class PurchaseBottomSheet extends StatelessWidget {
                   children: [
                     TextSpan(
                         text: '${MyFunctions.getFormatCostFromInt(amount)} ',
-                        style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(fontSize: 18)),
                     TextSpan(
                         text: 'в месяц',
-                        style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 18, color: gold)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(fontSize: 18, color: gold)),
                   ],
                 ),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle1!.copyWith(fontSize: 18),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontSize: 18),
               ),
               const SizedBox(height: 32),
               WButton(

@@ -1,7 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/domain/entities/user_entity.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/profile/presentation/blocs/profile_bloc/profile_bloc.dart';
 import 'package:anatomica/features/profile/presentation/pages/my_info.dart';
@@ -67,7 +66,7 @@ class ProfileCard extends StatelessWidget {
                         ? 'User'
                         : user.fullName,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.headline1,
+                    style: Theme.of(context).textTheme.displayLarge,
                     maxLines: 2,
                   ),
                 ],

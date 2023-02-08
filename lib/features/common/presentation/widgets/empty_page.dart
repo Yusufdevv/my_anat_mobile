@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,11 +6,14 @@ class EmptyPage extends StatelessWidget {
   final String title;
   final String desc;
 
-  const EmptyPage({required this.title, this.desc = '', required this.iconPath, Key? key}) : super(key: key);
+  const EmptyPage(
+      {required this.title, this.desc = '', required this.iconPath, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => Container(
-        margin: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height) * 0.22),
+        margin: EdgeInsets.only(
+            bottom: (MediaQuery.of(context).size.height) * 0.22),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +28,10 @@ class EmptyPage extends StatelessWidget {
             ),
             Text(
               title,
-              style: Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontWeight: FontWeight.w700, fontSize: 20),
             ),
             const SizedBox(
               height: 2,
@@ -34,7 +39,10 @@ class EmptyPage extends StatelessWidget {
             if (desc.isNotEmpty) ...{
               Text(
                 desc,
-                style: Theme.of(context).textTheme.headline1!.copyWith(fontWeight: FontWeight.w400, fontSize: 14),
+                style: Theme.of(context)
+                    .textTheme
+                    .displayLarge!
+                    .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
               )
             }
           ],

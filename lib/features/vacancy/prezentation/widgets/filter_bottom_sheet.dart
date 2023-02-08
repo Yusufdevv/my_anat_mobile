@@ -28,7 +28,6 @@ class FilterBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return BlocProvider.value(
       value: vacancyBloc,
       child: BlocBuilder<VacancyBloc, VacancyState>(
