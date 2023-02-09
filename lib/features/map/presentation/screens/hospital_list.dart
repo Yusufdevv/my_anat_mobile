@@ -76,9 +76,9 @@ class _HospitalListState extends State<HospitalList>
       ));
     suggestionBloc = SuggestionBloc(GetSuggestionsUseCase());
     controller = TextEditingController();
-    _controller = widget.controller
+    _controller = TabController(length: 2, vsync: this)
       ..addListener(() {
-        // suggestionBloc.add(SuggestionEvent.changePage(_controller.index));
+        suggestionBloc.add(SuggestionEvent.changePage(_controller.index));
       });
     super.initState();
   }
@@ -87,15 +87,9 @@ class _HospitalListState extends State<HospitalList>
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(
-          value: bloc,
-        ),
-        BlocProvider.value(
-          value: doctorListBloc,
-        ),
-        BlocProvider.value(
-          value: suggestionBloc,
-        ),
+        BlocProvider.value(value: bloc),
+        BlocProvider.value(value: doctorListBloc),
+        BlocProvider.value(value: suggestionBloc),
       ],
       child: WKeyboardDismisser(
         child: Scaffold(
@@ -187,7 +181,7 @@ class _HospitalListState extends State<HospitalList>
                           duration: const Duration(milliseconds: 150),
                           child: state.crossFadeState ==
                                   CrossFadeState.showFirst
-                              ? const DoctorsList()
+                              ? DoctorsList(textEditingController: controller)
                               : SuggestionListScreen(
                                   isDoctor: true,
                                   myPoint: widget.myLocation,
@@ -292,6 +286,7 @@ class _HospitalListState extends State<HospitalList>
                                   focusNode: focusNode,
                                   controller: controller,
                                   onClear: () {
+                                    controller.clear();
                                     bloc.add(HospitalListEvent.getHospitals(
                                       search: controller.text,
                                       myPoint: widget.myLocation,
@@ -311,10 +306,16 @@ class _HospitalListState extends State<HospitalList>
                                     if (value.isNotEmpty) {
                                       bloc.add(HospitalListEvent.changePage(
                                           CrossFadeState.showSecond));
-                                      bloc.add(HospitalListEvent.getHospitals(
-                                        search: controller.text,
-                                        myPoint: widget.myLocation,
-                                      ));
+                                      if (_controller.index == 0) {
+                                        bloc.add(HospitalListEvent.getHospitals(
+                                          search: controller.text,
+                                          myPoint: widget.myLocation,
+                                        ));
+                                      } else {
+                                        doctorListBloc.add(
+                                            DoctorListEvent.getDoctors(
+                                                search: controller.text));
+                                      }
                                     } else {
                                       bloc.add(HospitalListEvent.changePage(
                                           CrossFadeState.showFirst));

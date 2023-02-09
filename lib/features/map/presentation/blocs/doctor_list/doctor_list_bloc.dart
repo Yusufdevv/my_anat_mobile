@@ -1,4 +1,3 @@
-
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_hospitals.dart';
@@ -19,7 +18,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
   DoctorListBloc(this.useCase) : super(DoctorListState()) {
     on<_GetDoctors>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await useCase(SearchParam(search: event.search));
+      final result = await useCase.call(SearchParam(search: event.search));
       if (result.isRight) {
         emit(state.copyWith(
           status: FormzStatus.submissionSuccess,
@@ -33,6 +32,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
         ));
       }
     });
+
     on<_GetMoreDoctors>((event, emit) async {
       final result = await useCase(SearchParam(
         next: state.next,

@@ -1,5 +1,6 @@
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,6 +15,8 @@ class CertificateEntity extends Equatable {
   final String certificateNumber;
   @JsonKey(defaultValue: '')
   final String date;
+  @LicenceEntityConverter()
+  final LicenceEntity file;
 
   const CertificateEntity({
     required this.id,
@@ -21,6 +24,7 @@ class CertificateEntity extends Equatable {
     required this.title,
     required this.date,
     required this.certificateNumber,
+    required this.file,
   });
 
   @override

@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DoctorsList extends StatefulWidget {
-  const DoctorsList({Key? key}) : super(key: key);
+  final TextEditingController textEditingController;
+  const DoctorsList({required this.textEditingController, Key? key})
+      : super(key: key);
 
   @override
   State<DoctorsList> createState() => _DoctorsListState();
@@ -18,16 +20,25 @@ class DoctorsList extends StatefulWidget {
 
 class _DoctorsListState extends State<DoctorsList> {
   @override
+  void initState() {
+    // widget.textEditingController.addListener(() {
+    //   context.read<DoctorListBloc>().add(DoctorListEvent.getDoctors(
+    //       search: widget.textEditingController.text));
+    // });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<DoctorListBloc, DoctorListState>(
       builder: (context, state) {
+        print('doctor length => ${state.doctors.length} next => ${state.next}');
         return Align(
           alignment: Alignment.topCenter,
           child: RefreshIndicator(
             onRefresh: () async {
-              context
-                  .read<DoctorListBloc>()
-                  .add(DoctorListEvent.getDoctors(search: ''));
+              context.read<DoctorListBloc>().add(DoctorListEvent.getDoctors(
+                  search: widget.textEditingController.text));
               return await Future.delayed(const Duration(seconds: 1));
             },
             child: Paginator(

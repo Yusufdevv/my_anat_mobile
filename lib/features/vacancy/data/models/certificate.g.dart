@@ -14,6 +14,8 @@ CertificateModel _$CertificateModelFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String? ?? '',
       date: json['date'] as String? ?? '',
       certificateNumber: json['certificate_number'] as String? ?? '',
+      file: const LicenceEntityConverter()
+          .fromJson(json['file'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$CertificateModelToJson(CertificateModel instance) =>
@@ -24,4 +26,5 @@ Map<String, dynamic> _$CertificateModelToJson(CertificateModel instance) =>
           const SpecializationConverter().toJson(instance.specialization),
       'certificate_number': instance.certificateNumber,
       'date': instance.date,
+      'file': const LicenceEntityConverter().toJson(instance.file),
     };

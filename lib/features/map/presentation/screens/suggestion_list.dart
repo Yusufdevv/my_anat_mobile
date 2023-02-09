@@ -25,47 +25,49 @@ class SuggestionListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HospitalListBloc, HospitalListState>(
-      builder: (context, state) {
-        return Align(
-          alignment: Alignment.topCenter,
-          child: ListView.separated(
-            padding: const EdgeInsets.all(16),
-            separatorBuilder: (context, index) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              // if (index == 0) {
-              //   return GestureDetector(
-              //     behavior: HitTestBehavior.opaque,
-              //     onTap: () {
-              //       // onTapItem(state.searchText);
-              //     },
-              //     child: HospitalItem(
-              //       entity: state.hospitals[index],
-              //       myPoint: myPoint,
-              //       isSuggestionItem: true,
-              //       searchText: searchText,
-              //     ),
-              //   );
-              // }
-              return GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  // onTapItem('');
-                },
-                child: isDoctor
-                    ? const DoctorsList()
-                    : HospitalItem(
+    return isDoctor
+        ? DoctorsList(
+            textEditingController: TextEditingController(text: searchText))
+        : BlocBuilder<HospitalListBloc, HospitalListState>(
+            builder: (context, state) {
+              return Align(
+                alignment: Alignment.topCenter,
+                child: ListView.separated(
+                  padding: const EdgeInsets.all(16),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 8),
+                  itemBuilder: (context, index) {
+                    // if (index == 0) {
+                    //   return GestureDetector(
+                    //     behavior: HitTestBehavior.opaque,
+                    //     onTap: () {
+                    //       // onTapItem(state.searchText);
+                    //     },
+                    //     child: HospitalItem(
+                    //       entity: state.hospitals[index],
+                    //       myPoint: myPoint,
+                    //       isSuggestionItem: true,
+                    //       searchText: searchText,
+                    //     ),
+                    //   );
+                    // }
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        // onTapItem('');
+                      },
+                      child: HospitalItem(
                         entity: state.hospitals[index],
                         myPoint: myPoint,
                         isSuggestionItem: true,
                         searchText: searchText,
                       ),
+                    );
+                  },
+                  itemCount: state.count,
+                ),
               );
             },
-            itemCount: state.count,
-          ),
-        );
-      },
-    );
+          );
   }
 }
