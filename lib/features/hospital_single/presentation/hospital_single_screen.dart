@@ -268,60 +268,252 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                           HospitalSingleAppBar(
                               headerManagerBloc: _headerManagerBloc,
                               pageController: _pageController),
-                          SliverPersistentHeader(
-                            pinned: true,
-                            delegate: TabBarHeaderDelegate(
-                              controller: controller,
-                              onTabTap: (index) {
-                                controller.scrollToIndex(
-                                  index,
-                                  preferPosition: AutoScrollPosition.begin,
-                                  duration: const Duration(milliseconds: 200),
-                                );
-                              },
-                              tabController: DefaultTabController.of(context),
-                              tabs: tabs.map((e) => e.title).toList(),
+                          if (!state.hospital.paid) ...{
+                            SliverToBoxAdapter(
+                              child: Column(
+                                children: [
+                                  AboutHospital(
+                                    hospital: state.hospital,
+                                  ),
+                                  const SizedBox.expand(),
+                                ],
+                              ),
+                            )
+                          } else ...{
+                            SliverPersistentHeader(
+                              pinned: true,
+                              delegate: TabBarHeaderDelegate(
+                                controller: controller,
+                                onTabTap: (index) {
+                                  controller.scrollToIndex(
+                                    index,
+                                    preferPosition: AutoScrollPosition.begin,
+                                    duration: const Duration(milliseconds: 200),
+                                  );
+                                },
+                                tabController: DefaultTabController.of(context),
+                                tabs: tabs.map((e) => e.title).toList(),
+                              ),
                             ),
-                          ),
-                          SliverList(
-                            delegate: SliverChildListDelegate.fixed(
-                              [
-                                const SizedBox(height: 20),
-                                BlocProvider.value(
-                                  value: _headerManagerBloc,
-                                  child: BlocBuilder<HeaderManagerBloc,
-                                      HeaderManagerState>(
-                                    builder: (context, headerManagerState) {
-                                      return InViewNotifierWidget(
-                                        id: '1',
+                            SliverList(
+                              delegate: SliverChildListDelegate.fixed(
+                                [
+                                  const SizedBox(height: 20),
+                                  BlocProvider.value(
+                                    value: _headerManagerBloc,
+                                    child: BlocBuilder<HeaderManagerBloc,
+                                        HeaderManagerState>(
+                                      builder: (context, headerManagerState) {
+                                        return InViewNotifierWidget(
+                                          id: '1',
+                                          builder: (context, isInView, child) {
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback(
+                                                    (timeStamp) {
+                                              if (isInView ||
+                                                  !headerManagerState
+                                                      .isHeaderScrolled) {
+                                                DefaultTabController.of(context)
+                                                    .animateTo(0);
+                                              }
+                                            });
+                                            return child ?? const SizedBox();
+                                          },
+                                          child: AutoScrollTag(
+                                            controller: controller,
+                                            key: const ValueKey(0),
+                                            index: 0,
+                                            child: AboutHospital(
+                                              hospital: state.hospital,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  if (hasVideo) ...{
+                                    InViewNotifierWidget(
+                                      id: '2',
+                                      builder: (context, isInView, child) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((timeStamp) {
+                                          if (isInView) {
+                                            DefaultTabController.of(context)
+                                                .animateTo(tabs.indexWhere(
+                                                    (element) =>
+                                                        element.keyTitle ==
+                                                        'videos'));
+                                          }
+                                        });
+                                        return child ?? const SizedBox();
+                                      },
+                                      child: AutoScrollTag(
+                                        controller: controller,
+                                        key: const ValueKey(1),
+                                        index: tabs.indexWhere((element) =>
+                                            element.keyTitle == 'videos'),
+                                        child: HospitalVideo(
+                                          videoUrl: state.hospital.videoLink,
+                                          videos: state.hospital.videos,
+                                          videoDescription:
+                                              state.hospital.videoDescription,
+                                          tabController: _tabController,
+                                        ),
+                                      ),
+                                    ),
+                                  },
+                                  if (hasServices) ...{
+                                    InViewNotifierWidget(
+                                        id: '3',
                                         builder: (context, isInView, child) {
                                           WidgetsBinding.instance
                                               .addPostFrameCallback(
                                                   (timeStamp) {
-                                            if (isInView ||
-                                                !headerManagerState
-                                                    .isHeaderScrolled) {
+                                            if (isInView) {
                                               DefaultTabController.of(context)
-                                                  .animateTo(0);
+                                                  .animateTo(tabs.indexWhere(
+                                                      (element) =>
+                                                          element.keyTitle ==
+                                                          'service'));
+                                            }
+                                          });
+
+                                          return child ?? const SizedBox();
+                                        },
+                                        child: AutoScrollTag(
+                                            controller: controller,
+                                            key: const ValueKey(2),
+                                            index: tabs.indexWhere((element) =>
+                                                element.keyTitle == 'service'),
+                                            child: HospitalServices(
+                                                servicesBloc: servicesBloc))),
+                                  },
+                                  if (hasSpecialists) ...{
+                                    InViewNotifierWidget(
+                                        id: '4',
+                                        builder: (context, isInView, child) {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback(
+                                            (timeStamp) {
+                                              if (isInView) {
+                                                DefaultTabController.of(context)
+                                                    .animateTo(tabs.indexWhere(
+                                                        (element) =>
+                                                            element.keyTitle ==
+                                                            'specialists'));
+                                              }
+                                            },
+                                          );
+                                          return child ?? const SizedBox();
+                                        },
+                                        child: AutoScrollTag(
+                                            controller: controller,
+                                            key: const ValueKey(3),
+                                            index: tabs.indexWhere((element) =>
+                                                element.keyTitle ==
+                                                'specialists'),
+                                            child:
+                                                const HospitalSpecialists())),
+                                  },
+                                  if (hasFacility) ...{
+                                    InViewNotifierWidget(
+                                        id: '5',
+                                        builder: (context, isInView, child) {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback(
+                                                  (timeStamp) {
+                                            if (isInView) {
+                                              DefaultTabController.of(context)
+                                                  .animateTo(tabs.indexWhere(
+                                                      (element) =>
+                                                          element.keyTitle ==
+                                                          'facility'));
                                             }
                                           });
                                           return child ?? const SizedBox();
                                         },
                                         child: AutoScrollTag(
-                                          controller: controller,
-                                          key: const ValueKey(0),
-                                          index: 0,
-                                          child: AboutHospital(
-                                            hospital: state.hospital,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                if (hasVideo) ...{
+                                            controller: controller,
+                                            key: const ValueKey(4),
+                                            index: tabs.indexWhere((element) =>
+                                                element.keyTitle == 'facility'),
+                                            child:
+                                                const HospitalConditionsHorizontalList()))
+                                  },
+                                  if (hasArticle) ...{
+                                    InViewNotifierWidget(
+                                        id: '6',
+                                        builder: (context, isInView, child) {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback(
+                                                  (timeStamp) {
+                                            if (isInView) {
+                                              DefaultTabController.of(context)
+                                                  .animateTo(tabs.indexWhere(
+                                                      (element) =>
+                                                          element.keyTitle ==
+                                                          'articles'));
+                                            }
+                                          });
+
+                                          return child ?? const SizedBox();
+                                        },
+                                        child: AutoScrollTag(
+                                            controller: controller,
+                                            key: const ValueKey(5),
+                                            index: tabs.indexWhere((element) =>
+                                                element.keyTitle == 'articles'),
+                                            child:
+                                                HospitalArticlesHorizontalList(
+                                                    hospitalId: widget.id)))
+                                  },
                                   InViewNotifierWidget(
-                                    id: '2',
+                                      id: '7',
+                                      builder: (context, isInView, child) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((timeStamp) {
+                                          if (isInView) {
+                                            DefaultTabController.of(context)
+                                                .animateTo(tabs.indexWhere(
+                                                    (element) =>
+                                                        element.keyTitle ==
+                                                        'reviews'));
+                                          }
+                                        });
+
+                                        return child ?? const SizedBox();
+                                      },
+                                      child: AutoScrollTag(
+                                          controller: controller,
+                                          key: const ValueKey(6),
+                                          index: tabs.indexWhere((element) =>
+                                              element.keyTitle == 'reviews'),
+                                          child: HospitalCommentsHorizontalList(
+                                              hospital: state.hospital))),
+                                  InViewNotifierWidget(
+                                      id: '8',
+                                      builder: (context, isInView, child) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((timeStamp) {
+                                          if (isInView) {
+                                            DefaultTabController.of(context)
+                                                .animateTo(tabs.indexWhere(
+                                                    (element) =>
+                                                        element.keyTitle ==
+                                                        'vacancy'));
+                                          }
+                                        });
+                                        return child ?? const SizedBox();
+                                      },
+                                      child: AutoScrollTag(
+                                          controller: controller,
+                                          key: const ValueKey(7),
+                                          index: tabs.indexWhere((element) =>
+                                              element.keyTitle == 'vacancy'),
+                                          child:
+                                              const HospitalVacanciesHorizontalList())),
+                                  InViewNotifierWidget(
+                                    id: '9',
                                     builder: (context, isInView, child) {
                                       WidgetsBinding.instance
                                           .addPostFrameCallback((timeStamp) {
@@ -330,207 +522,34 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                               .animateTo(tabs.indexWhere(
                                                   (element) =>
                                                       element.keyTitle ==
-                                                      'videos'));
+                                                      'contact'));
                                         }
                                       });
                                       return child ?? const SizedBox();
                                     },
                                     child: AutoScrollTag(
                                       controller: controller,
-                                      key: const ValueKey(1),
+                                      key: const ValueKey(8),
                                       index: tabs.indexWhere((element) =>
-                                          element.keyTitle == 'videos'),
-                                      child: HospitalVideo(
-                                        videoUrl: state.hospital.videoLink,
-                                        videos: state.hospital.videos,
-                                        videoDescription:
-                                            state.hospital.videoDescription,
-                                        tabController: _tabController,
+                                          element.keyTitle == 'contact'),
+                                      child: HospitalContacts(
+                                        email: state.hospital.email,
+                                        facebook: state.hospital.facebook,
+                                        instagram: state.hospital.instagram,
+                                        phone: state.hospital.phoneNumber,
+                                        telegram: state.hospital.telegram,
+                                        website: state.hospital.website,
+                                        phoneNumbers: state
+                                            .hospital.phoneNumbers
+                                            .map((e) => e.phoneNumber)
+                                            .toList(),
                                       ),
                                     ),
                                   ),
-                                },
-                                if (hasServices) ...{
-                                  InViewNotifierWidget(
-                                      id: '3',
-                                      builder: (context, isInView, child) {
-                                        WidgetsBinding.instance
-                                            .addPostFrameCallback((timeStamp) {
-                                          if (isInView) {
-                                            DefaultTabController.of(context)
-                                                .animateTo(tabs.indexWhere(
-                                                    (element) =>
-                                                        element.keyTitle ==
-                                                        'service'));
-                                          }
-                                        });
-
-                                        return child ?? const SizedBox();
-                                      },
-                                      child: AutoScrollTag(
-                                          controller: controller,
-                                          key: const ValueKey(2),
-                                          index: tabs.indexWhere((element) =>
-                                              element.keyTitle == 'service'),
-                                          child: HospitalServices(
-                                              servicesBloc: servicesBloc))),
-                                },
-                                if (hasSpecialists) ...{
-                                  InViewNotifierWidget(
-                                      id: '4',
-                                      builder: (context, isInView, child) {
-                                        WidgetsBinding.instance
-                                            .addPostFrameCallback(
-                                          (timeStamp) {
-                                            if (isInView) {
-                                              DefaultTabController.of(context)
-                                                  .animateTo(tabs.indexWhere(
-                                                      (element) =>
-                                                          element.keyTitle ==
-                                                          'specialists'));
-                                            }
-                                          },
-                                        );
-                                        return child ?? const SizedBox();
-                                      },
-                                      child: AutoScrollTag(
-                                          controller: controller,
-                                          key: const ValueKey(3),
-                                          index: tabs.indexWhere((element) =>
-                                              element.keyTitle ==
-                                              'specialists'),
-                                          child: const HospitalSpecialists())),
-                                },
-                                if (hasFacility) ...{
-                                  InViewNotifierWidget(
-                                      id: '5',
-                                      builder: (context, isInView, child) {
-                                        WidgetsBinding.instance
-                                            .addPostFrameCallback((timeStamp) {
-                                          if (isInView) {
-                                            DefaultTabController.of(context)
-                                                .animateTo(tabs.indexWhere(
-                                                    (element) =>
-                                                        element.keyTitle ==
-                                                        'facility'));
-                                          }
-                                        });
-                                        return child ?? const SizedBox();
-                                      },
-                                      child: AutoScrollTag(
-                                          controller: controller,
-                                          key: const ValueKey(4),
-                                          index: tabs.indexWhere((element) =>
-                                              element.keyTitle == 'facility'),
-                                          child:
-                                              const HospitalConditionsHorizontalList()))
-                                },
-                                if (hasArticle) ...{
-                                  InViewNotifierWidget(
-                                      id: '6',
-                                      builder: (context, isInView, child) {
-                                        WidgetsBinding.instance
-                                            .addPostFrameCallback((timeStamp) {
-                                          if (isInView) {
-                                            DefaultTabController.of(context)
-                                                .animateTo(tabs.indexWhere(
-                                                    (element) =>
-                                                        element.keyTitle ==
-                                                        'articles'));
-                                          }
-                                        });
-
-                                        return child ?? const SizedBox();
-                                      },
-                                      child: AutoScrollTag(
-                                          controller: controller,
-                                          key: const ValueKey(5),
-                                          index: tabs.indexWhere((element) =>
-                                              element.keyTitle == 'articles'),
-                                          child: HospitalArticlesHorizontalList(
-                                              hospitalId: widget.id)))
-                                },
-                                InViewNotifierWidget(
-                                    id: '7',
-                                    builder: (context, isInView, child) {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((timeStamp) {
-                                        if (isInView) {
-                                          DefaultTabController.of(context)
-                                              .animateTo(tabs.indexWhere(
-                                                  (element) =>
-                                                      element.keyTitle ==
-                                                      'reviews'));
-                                        }
-                                      });
-
-                                      return child ?? const SizedBox();
-                                    },
-                                    child: AutoScrollTag(
-                                        controller: controller,
-                                        key: const ValueKey(6),
-                                        index: tabs.indexWhere((element) =>
-                                            element.keyTitle == 'reviews'),
-                                        child: HospitalCommentsHorizontalList(
-                                            hospital: state.hospital))),
-                                InViewNotifierWidget(
-                                    id: '8',
-                                    builder: (context, isInView, child) {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((timeStamp) {
-                                        if (isInView) {
-                                          DefaultTabController.of(context)
-                                              .animateTo(tabs.indexWhere(
-                                                  (element) =>
-                                                      element.keyTitle ==
-                                                      'vacancy'));
-                                        }
-                                      });
-                                      return child ?? const SizedBox();
-                                    },
-                                    child: AutoScrollTag(
-                                        controller: controller,
-                                        key: const ValueKey(7),
-                                        index: tabs.indexWhere((element) =>
-                                            element.keyTitle == 'vacancy'),
-                                        child:
-                                            const HospitalVacanciesHorizontalList())),
-                                InViewNotifierWidget(
-                                  id: '9',
-                                  builder: (context, isInView, child) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((timeStamp) {
-                                      if (isInView) {
-                                        DefaultTabController.of(context)
-                                            .animateTo(tabs.indexWhere(
-                                                (element) =>
-                                                    element.keyTitle ==
-                                                    'contact'));
-                                      }
-                                    });
-                                    return child ?? const SizedBox();
-                                  },
-                                  child: AutoScrollTag(
-                                    controller: controller,
-                                    key: const ValueKey(8),
-                                    index: tabs.indexWhere((element) =>
-                                        element.keyTitle == 'contact'),
-                                    child: HospitalContacts(
-                                      email: state.hospital.email,
-                                      facebook: state.hospital.facebook,
-                                      instagram: state.hospital.instagram,
-                                      phone: state.hospital.phoneNumber,
-                                      telegram: state.hospital.telegram,
-                                      website: state.hospital.website,
-                                      phoneNumbers: state.hospital.phoneNumbers
-                                          .map((e) => e.phoneNumber)
-                                          .toList(),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                          }
                         ],
                         isInViewPortCondition: (double deltaTop,
                                 double deltaBottom, double viewPortDimension) =>

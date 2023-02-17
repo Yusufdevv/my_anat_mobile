@@ -12,6 +12,11 @@ DoctorSingleModel _$DoctorSingleModelFromJson(Map<String, dynamic> json) =>
       phoneNumber: json['phone_number'] as String? ?? '',
       email: json['email'] as String? ?? '',
       id: json['id'] as int? ?? 0,
+      images: (json['images'] as List<dynamic>?)
+              ?.map((e) =>
+                  const ImageConverter().fromJson(e as Map<String, dynamic>?))
+              .toList() ??
+          const [],
       moderationStatus: json['moderation_status'] as String? ?? '',
       position: json['position'] == null
           ? const PositionEntity()
@@ -83,6 +88,7 @@ Map<String, dynamic> _$DoctorSingleModelToJson(DoctorSingleModel instance) =>
       'telegram': instance.telegram,
       'moderation_status': instance.moderationStatus,
       'img': const ImageConverter().toJson(instance.img),
+      'images': instance.images.map(const ImageConverter().toJson).toList(),
       'comment_count': instance.commentCount,
       'organization':
           const OrganizationConverter().toJson(instance.organization),

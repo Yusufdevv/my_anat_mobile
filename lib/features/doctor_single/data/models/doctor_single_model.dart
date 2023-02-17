@@ -20,6 +20,7 @@ class DoctorSingleModel extends DoctorSingleEntity {
     required super.phoneNumber,
     required super.email,
     required super.id,
+    required super.images,
     required super.moderationStatus,
     required super.position,
     required super.fullName,
@@ -40,5 +41,6 @@ class DoctorSingleModel extends DoctorSingleEntity {
     required super.organization,
     required super.phoneNumbers,
   });
-  factory DoctorSingleModel.fromJson(Map<String, dynamic> json) => _$DoctorSingleModelFromJson(json);
+  factory DoctorSingleModel.fromJson(Map<String, dynamic> json) =>
+      _$DoctorSingleModelFromJson(json);
 }

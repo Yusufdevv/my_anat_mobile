@@ -45,6 +45,7 @@ class HospitalSingleModel extends HospitalSingleEntity {
     required super.workTo,
     required super.videoLink,
     required super.videos,
+    required super.paid,
     required super.videoDescription,
   });
 

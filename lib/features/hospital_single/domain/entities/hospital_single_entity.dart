@@ -49,6 +49,7 @@ class HospitalSingleEntity extends Equatable {
   final String facebook;
   final String telegram;
   final bool workAllDay;
+  final bool paid;
   final String videoLink;
   final String videoDescription;
   final List<String> videos;
@@ -58,6 +59,7 @@ class HospitalSingleEntity extends Equatable {
     this.title = '',
     this.slug = '',
     this.images = const [],
+    this.paid = false,
     this.logo = const ImageEntity(),
     this.specialization = const [],
     this.locationUrl = '',
@@ -97,6 +99,7 @@ class HospitalSingleEntity extends Equatable {
         specialization,
         locationUrl,
         phoneNumber,
+        paid,
         phoneNumbers,
         description,
         workFrom,

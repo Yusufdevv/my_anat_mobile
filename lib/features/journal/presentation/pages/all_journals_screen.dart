@@ -73,11 +73,8 @@ class AllJournalsScreen extends StatelessWidget {
                   if (state.fetchMore) {
                     context.read<JournalBloc>().add(GetMoreJournals());
                   }
-                  return const SizedBox.shrink();
-                } else {
-                  return MagazineSmallItem(
-                      journalEntity: state.journals[index]);
                 }
+                return MagazineSmallItem(journalEntity: state.journals[index]);
               },
             );
           },

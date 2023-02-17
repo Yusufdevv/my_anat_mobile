@@ -39,6 +39,8 @@ class DoctorSingleEntity extends Equatable {
   final String moderationStatus;
   @ImageConverter()
   final ImageEntity img;
+  @ImageConverter()
+  final List<ImageEntity> images;
   final int commentCount;
   @OrganizationConverter()
   final OrganizationEntity organization;
@@ -47,6 +49,7 @@ class DoctorSingleEntity extends Equatable {
   const DoctorSingleEntity(
       {this.id = 0,
       this.fullName = '',
+      this.images = const [],
       this.position = const PositionEntity(),
       this.workExperience = 0,
       this.work = '',
@@ -66,7 +69,7 @@ class DoctorSingleEntity extends Equatable {
       this.moderationStatus = '',
       this.img = const ImageEntity(),
       this.commentCount = 0,
-        this.phoneNumbers= const [],
+      this.phoneNumbers = const [],
       this.organization = const OrganizationEntity()});
 
   @override
@@ -92,6 +95,7 @@ class DoctorSingleEntity extends Equatable {
         moderationStatus,
         img,
         organization,
-    phoneNumbers,
+        phoneNumbers,
+        images,
       ];
 }

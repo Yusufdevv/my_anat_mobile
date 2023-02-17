@@ -57,6 +57,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
   late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
   late CandidateSingleBloc _candidateSingleBloc;
+  late PageController _pageController;
   int currentImage = 0;
   final tabs = [
     LocaleKeys.about_doctor.tr(),
@@ -78,6 +79,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
   @override
   void initState() {
     super.initState();
+    _pageController = PageController();
     _tabController = TabController(length: 5, vsync: this);
     _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
@@ -158,8 +160,10 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
                       floatHeaderSlivers: false,
                       headerSliverBuilder: (context, isHeaderScrolled) => [
                         DoctorSingleAppBar(
-                            headerManagerBloc: _headerManagerBloc,
-                            doctor: state.doctorSingle),
+                          headerManagerBloc: _headerManagerBloc,
+                          doctor: state.doctorSingle,
+                          pageController: _pageController,
+                        ),
                         SliverOverlapAbsorber(
                           handle: SliverOverlapAbsorberHandle(),
                           sliver: SliverSafeArea(

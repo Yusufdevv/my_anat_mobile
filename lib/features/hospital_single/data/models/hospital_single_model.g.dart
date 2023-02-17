@@ -69,6 +69,7 @@ HospitalSingleModel _$HospitalSingleModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      paid: json['paid'] as bool? ?? false,
       videoDescription: json['video_description'] as String? ?? '',
     );
 
@@ -108,6 +109,7 @@ Map<String, dynamic> _$HospitalSingleModelToJson(
       'facebook': instance.facebook,
       'telegram': instance.telegram,
       'work_all_day': instance.workAllDay,
+      'paid': instance.paid,
       'video_link': instance.videoLink,
       'video_description': instance.videoDescription,
       'videos': instance.videos,
