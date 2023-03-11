@@ -14,7 +14,7 @@ class HospitalSingleBloc extends Bloc<HospitalSingleEvent, HospitalSingleState> 
   HospitalSingleBloc(this.useCase) : super(HospitalSingleState()) {
     on<_GetHospital>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await useCase(event.slug);
+      final result = await useCase.call(event.slug);
       if (result.isRight) {
         emit(state.copyWith(status: FormzStatus.submissionSuccess, hospital: result.right));
       } else {

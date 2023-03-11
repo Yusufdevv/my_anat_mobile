@@ -1,6 +1,7 @@
- import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/connectivity_bottom_sheet.dart';
 import 'package:anatomica/features/deeplinking/deep_link_bloc.dart';
@@ -21,7 +22,8 @@ enum NavItemEnum { map, magazine, vacancies, account }
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  static Route route() => MaterialPageRoute<void>(builder: (_) => const HomeScreen());
+  static Route route() =>
+      MaterialPageRoute<void>(builder: (_) => const HomeScreen());
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -67,7 +69,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _controller = TabController(length: lables.length, vsync: this);
     _controller.addListener(onTabChange);
 
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
+        overlays: SystemUiOverlay.values);
     super.initState();
   }
 
@@ -95,98 +98,123 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               showConnectionBottomSheet(context);
             }
           },
-  child: BlocListener<DeepLinkBloc, DeepLinkState>(
-          listener: (context, state) {
-            if (state is DoctorLinkTriggered) {
-              if (state.doctorId != null) {
-                Navigator.of(context).push(fade(page: DoctorSingleScreen(id: state.doctorId!)));
+          child: BlocListener<DeepLinkBloc, DeepLinkState>(
+            listener: (context, state) {
+              if (state is DoctorLinkTriggered) {
+                if (state.doctorId != null) {
+                  Navigator.of(context).push(
+                      fade(page: DoctorSingleScreen(id: state.doctorId!)));
+                }
+              } else if (state is OrganizationLinkTriggered) {
+                if (state.organizationSlug != null &&
+                    state.organizationId != null) {
+                  Navigator.of(context).push(fade(
+                      page: HospitalSingleScreen(
+                          id: state.organizationId!,
+                          slug: state.organizationSlug!)));
+                }
+              } else if (state is OnlineJournalLinkTriggered) {
+                if (mounted) {
+                  _controller.animateTo(1);
+                }
               }
-            } else if (state is OrganizationLinkTriggered) {
-              if (state.organizationSlug != null && state.organizationId != null) {
-                Navigator.of(context)
-                    .push(fade(page: HospitalSingleScreen(id: state.organizationId!, slug: state.organizationSlug!)));
-              }
-            } else if (state is OnlineJournalLinkTriggered) {
-              if (mounted) {
-                _controller.animateTo(1);
-              }
-            }
-          },
-          child: WillPopScope(
-            onWillPop: () async {
-              final isFirstRouteInCurrentTab =
-                  !await _navigatorKeys[NavItemEnum.values[_currentIndex]]!.currentState!.maybePop();
-              if (isFirstRouteInCurrentTab) {
-                changePage(0);
-                return false;
-              }
-              return isFirstRouteInCurrentTab;
             },
-            child: AnnotatedRegion(
-              value: const SystemUiOverlayStyle(
-                  systemNavigationBarColor: Colors.transparent,
-                  systemNavigationBarContrastEnforced: false,
-                  systemNavigationBarIconBrightness: Brightness.dark,
-                  systemStatusBarContrastEnforced: false,
-                  statusBarColor: Colors.transparent,
-                  statusBarIconBrightness: Brightness.dark),
-              child: Scaffold(
-                extendBody: true,
-                resizeToAvoidBottomInset: true,
-                bottomNavigationBar: Container(
-                  color: Colors.transparent,
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-                    height: 64 + MediaQuery.of(context).padding.bottom,
-                    decoration: BoxDecoration(
-                      color: white,
-                      border: Border.all(color: textFieldColor),
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(16),
-                        topLeft: Radius.circular(16),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xff8898AA).withOpacity(0.08),
-                          blurRadius: 30,
-                          offset: const Offset(0, -4),
-                        ),
-                      ],
-                    ),
-                    child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            child: WillPopScope(
+              onWillPop: () async {
+                final isFirstRouteInCurrentTab =
+                    !await _navigatorKeys[NavItemEnum.values[_currentIndex]]!
+                        .currentState!
+                        .maybePop();
+                if (isFirstRouteInCurrentTab) {
+                  changePage(0);
+                  return false;
+                }
+                return isFirstRouteInCurrentTab;
+              },
+              child: AnnotatedRegion(
+                value: const SystemUiOverlayStyle(
+                    systemNavigationBarColor: Colors.transparent,
+                    systemNavigationBarContrastEnforced: false,
+                    systemNavigationBarIconBrightness: Brightness.dark,
+                    systemStatusBarContrastEnforced: false,
+                    statusBarColor: Colors.transparent,
+                    statusBarIconBrightness: Brightness.dark),
+                child: Scaffold(
+                  extendBody: true,
+                  resizeToAvoidBottomInset: true,
+                  bottomNavigationBar: Container(
+                    color: Colors.transparent,
+                    child: BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
                       builder: (context, state) {
-                        return TabBar(
-                          enableFeedback: true,
-                          onTap: (index) {
-                            // if (index == 3 && state.status == AuthenticationStatus.unauthenticated) {
-                            //   showRegisterBottomSheet(context);
-                            //   _controller.animateTo(_controller.previousIndex);
-                            // }
-                          },
-                          controller: _controller,
-                          indicatorPadding: EdgeInsets.zero,
-                          padding: EdgeInsets.zero,
-                          indicator: const CustomTabIndicator(radius: 3, color: primary, horizontalPadding: 35),
-                          labelPadding: EdgeInsets.zero,
-                          tabs: List.generate(
-                            lables.length,
-                            (index) => NavItemWidget(
-                              navBar: lables[index],
-                              currentIndex: _currentIndex,
-                            ),
-                          ),
+                        return AnimatedContainer(
+                          duration: const Duration(milliseconds: 250),
+                          child: state.showMainTab
+                              ? Container(
+                                  padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .padding
+                                          .bottom),
+                                  height: 64 +
+                                      MediaQuery.of(context).padding.bottom,
+                                  decoration: BoxDecoration(
+                                    color: white,
+                                    border: Border.all(color: textFieldColor),
+                                    borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(16),
+                                      topLeft: Radius.circular(16),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: const Color(0xff8898AA)
+                                            .withOpacity(0.08),
+                                        blurRadius: 30,
+                                        offset: const Offset(0, -4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: BlocBuilder<AuthenticationBloc,
+                                      AuthenticationState>(
+                                    builder: (context, state) {
+                                      return TabBar(
+                                        enableFeedback: true,
+                                        onTap: (index) {
+                                          // if (index == 3 && state.status == AuthenticationStatus.unauthenticated) {
+                                          //   showRegisterBottomSheet(context);
+                                          //   _controller.animateTo(_controller.previousIndex);
+                                          // }
+                                        },
+                                        controller: _controller,
+                                        indicatorPadding: EdgeInsets.zero,
+                                        padding: EdgeInsets.zero,
+                                        indicator: const CustomTabIndicator(
+                                            radius: 3,
+                                            color: primary,
+                                            horizontalPadding: 35),
+                                        labelPadding: EdgeInsets.zero,
+                                        tabs: List.generate(
+                                          lables.length,
+                                          (index) => NavItemWidget(
+                                            navBar: lables[index],
+                                            currentIndex: _currentIndex,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                              : const SizedBox(),
                         );
                       },
                     ),
                   ),
-                ),
-                body: TabBarView(
-                  controller: _controller,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: List.generate(
-                    NavItemEnum.values.length,
-                    (index) => _buildPageNavigator(
-                      NavItemEnum.values[index],
+                  body: TabBarView(
+                    controller: _controller,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: List.generate(
+                      NavItemEnum.values.length,
+                      (index) => _buildPageNavigator(
+                        NavItemEnum.values[index],
+                      ),
                     ),
                   ),
                 ),
@@ -194,7 +222,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ),
         ),
-),
       );
 }
 
@@ -208,7 +235,8 @@ class HomeTabControllerProvider extends InheritedWidget {
   }) : super(key: key, child: child);
 
   static HomeTabControllerProvider of(BuildContext context) {
-    final result = context.dependOnInheritedWidgetOfExactType<HomeTabControllerProvider>();
+    final result =
+        context.dependOnInheritedWidgetOfExactType<HomeTabControllerProvider>();
     assert(result != null, 'No HomeTabControllerProvider found in context');
     return result!;
   }

@@ -8,7 +8,7 @@ class DoctorSpecEntity {
   @ImageConverter()
   final ImageEntity image;
   final String position;
-  final String phoneNumber;
+  final List<List<String>> phoneNumbers;
   final int workExperience;
   final String address;
   final bool isFavourite;
@@ -22,7 +22,7 @@ class DoctorSpecEntity {
       this.id = 0,
       this.fullName = '',
       this.position = '',
-      this.phoneNumber = '',
+      this.phoneNumbers = const [],
       this.workExperience = 0,
       this.address = '',
       this.latitude = 0,

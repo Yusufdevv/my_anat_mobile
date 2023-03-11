@@ -116,6 +116,7 @@ class _HospitalListState extends State<HospitalList>
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: TabBar(
+                    key: const ValueKey('tab'),
                     controller: _controller,
                     padding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.zero,

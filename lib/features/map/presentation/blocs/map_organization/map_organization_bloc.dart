@@ -15,9 +15,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'map_organization_bloc.freezed.dart';
-
 part 'map_organization_event.dart';
-
 part 'map_organization_state.dart';
 
 class MapOrganizationBloc
@@ -30,11 +28,15 @@ class MapOrganizationBloc
       : super(MapOrganizationState()) {
     on<_GetHospitals>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await getHospitals(state.searchText,
-          param: MapParameter(
-              lat: event.latitude ?? state.lat,
-              long: event.longitude ?? state.long,
-              radius: event.radius?.floor() ?? state.radius));
+      final result = await getHospitals(
+        state.searchText,
+        param: MapParameter(
+          lat: event.latitude ?? state.lat,
+          long: event.longitude ?? state.long,
+          // todo get hospital radius
+          radius: 150,
+        ),
+      );
       if (result.isRight) {
         emit(state.copyWith(
             hospitals: result.right, status: FormzStatus.submissionSuccess));
@@ -69,8 +71,7 @@ class MapOrganizationBloc
 
     on<_GetDoctors>((event, emit) async {
       final result = await getDoctors(state.searchText,
-          param: MapParameter(
-              lat: state.lat, long: state.long, radius: state.radius));
+          param: MapParameter(lat: state.lat, long: state.long, radius: 150));
       if (result.isRight) {
         emit(state.copyWith(
           doctors: result.right,

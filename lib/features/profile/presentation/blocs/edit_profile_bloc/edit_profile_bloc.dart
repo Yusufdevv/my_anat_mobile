@@ -70,8 +70,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           emit(state.copyWith(status: FormzStatus.submissionFailure));
           if (result.left is ServerFailure) {
             event.onError((result.left as ServerFailure).errorMessage);
-          } else {
-            event.onError(result.left.toString());
+          } else  if (result.left is ParsingFailure) {
+            event.onError((result.left as ParsingFailure).errorMessage);
           }
         }
       }

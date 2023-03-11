@@ -40,10 +40,10 @@ class JournalPagesState extends Equatable {
         getJournalPagesStatus:
             getJournalPagesStatus ?? this.getJournalPagesStatus,
         fetchMore: fetchMore ?? this.fetchMore,
-        next: next ?? this.next,
+        next: next,
         contents: contents ?? this.contents,
         getJournalContentsStatus:
-        getJournalContentsStatus ?? this.getJournalContentsStatus,
+            getJournalContentsStatus ?? this.getJournalContentsStatus,
         contentsFetchMore: contentsFetchMore ?? this.contentsFetchMore,
         contentsNext: contentsNext,
         slug: slug ?? this.slug,
@@ -51,14 +51,14 @@ class JournalPagesState extends Equatable {
 
   @override
   List<Object?> get props => [
-    pages,
-    getJournalPagesStatus,
-    fetchMore,
-    slug,
-    next,
-    contents,
-    getJournalContentsStatus,
-    contentsFetchMore,
-    contentsNext,
+        pages,
+        getJournalPagesStatus,
+        fetchMore,
+        slug,
+        next,
+        contents,
+        getJournalContentsStatus,
+        contentsFetchMore,
+        contentsNext,
       ];
 }

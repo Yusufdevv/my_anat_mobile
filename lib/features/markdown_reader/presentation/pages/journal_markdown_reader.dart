@@ -146,6 +146,8 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                         .where((element) => element.preview)
                         .toList();
                   }
+                  print(
+                      'succes => ${state.getJournalPagesStatus.isSubmissionSuccess}');
                   return Stack(
                     children: [
                       Positioned.fill(
@@ -176,16 +178,14 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     if (index == state.pages.length) {
-                                      if (state.fetchMore) {
-                                        context
-                                            .read<JournalPagesBloc>()
-                                            .add(GetMoreJournalPages());
-                                        return const Center(
-                                          child: CupertinoActivityIndicator(),
-                                        );
-                                      } else {
-                                        return const SizedBox();
-                                      }
+                                      // if (state.fetchMore) {
+                                      //   context
+                                      //       .read<JournalPagesBloc>()
+                                      //       .add(GetMoreJournalPages());
+                                      //   return const Center(
+                                      //     child: CupertinoActivityIndicator(),
+                                      //   );
+                                      // }
                                     }
                                     return GestureDetector(
                                       onTap: () {
@@ -207,7 +207,9 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                                       ),
                                     );
                                   },
-                                  itemCount: state.pages.length + 1,
+                                  itemCount: state.fetchMore
+                                      ? state.pages.length + 1
+                                      : state.pages.length,
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(width: 12),
                                 ),
@@ -230,18 +232,23 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                                 child: PageView.builder(
                                   controller: _pageController,
                                   onPageChanged: (index) {
-                                    context
-                                        .read<ReaderControllerBloc>()
-                                        .add(SetWebPage(index: index));
+                                    // context
+                                    //     .read<ReaderControllerBloc>()
+                                    //     .add(SetWebPage(index: index));
                                   },
                                   itemBuilder: (context, index) {
+                                    print(
+                                        'index => $index  pages length => ${pages.length}');
                                     if (index == pages.length) {
-                                      context
-                                          .read<JournalPagesBloc>()
-                                          .add(GetMoreJournalPages());
-                                      return const Center(
-                                        child: CupertinoActivityIndicator(),
-                                      );
+                                      print('index ishladi');
+                                      if (state.fetchMore) {
+                                        context
+                                            .read<JournalPagesBloc>()
+                                            .add(GetMoreJournalPages());
+                                        return const Center(
+                                          child: CupertinoActivityIndicator(),
+                                        );
+                                      }
                                     }
                                     return BlocBuilder<ReaderControllerBloc,
                                         ReaderControllerState>(

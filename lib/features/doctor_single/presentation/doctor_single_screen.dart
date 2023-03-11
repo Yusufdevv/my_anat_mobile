@@ -32,7 +32,6 @@ import 'package:anatomica/features/vacancy/domain/usecases/candidate_single.dart
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_work.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/related_candidate.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/candidate_single/candidate_single_bloc.dart';
-import 'package:anatomica/features/vacancy/prezentation/blocs/candidate_single/candidate_single_bloc.dart';
 import 'package:anatomica/features/vacancy/prezentation/widgets/licence_item_list.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';

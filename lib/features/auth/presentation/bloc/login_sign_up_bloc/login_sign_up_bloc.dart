@@ -33,6 +33,7 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
   final ResendCodeUseCase _resendCodeUseCase;
   final SubmitChangedEmailUseCase _submitChangedEmailUseCase;
   final SubmitChangedPhoneUseCase _submitChangedPhoneUseCase;
+
   LoginSignUpBloc({
     required LoginUseCase loginUseCase,
     required CheckUsernameUseCase checkUsernameUseCase,
@@ -59,7 +60,8 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         super(const LoginSignUpState.empty()) {
     on<Login>((event, emit) async {
       emit(state.copyWith(loginStatus: FormzStatus.submissionInProgress));
-      final loginResult = await _loginUseCase.call(LoginParams(password: event.password, username: event.username));
+      final loginResult = await _loginUseCase.call(
+          LoginParams(password: event.password, username: event.username));
       if (loginResult.isRight) {
         emit(state.copyWith(loginStatus: FormzStatus.submissionSuccess));
       } else {
@@ -74,11 +76,16 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
       }
     });
     on<CheckUsername>((event, emit) async {
-      emit(state.copyWith(checkUsernameStatus: FormzStatus.submissionInProgress));
-      final result = await _checkUsernameUseCase.call(UsernameParams(username: event.username));
+      emit(state.copyWith(
+          checkUsernameStatus: FormzStatus.submissionInProgress));
+      final result = await _checkUsernameUseCase
+          .call(UsernameParams(username: event.username));
       if (result.isRight) {
         add(CreateState(
-            username: event.username, fullName: event.fullName, onError: event.onError, onSuccess: event.onSuccess));
+            username: event.username,
+            fullName: event.fullName,
+            onError: event.onError,
+            onSuccess: event.onSuccess));
       } else {
         if (result.left is DioFailure) {
           event.onError(LocaleKeys.network_error);
@@ -89,23 +96,33 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         } else {
           event.onError(result.left.toString());
         }
-        emit(state.copyWith(checkUsernameStatus: FormzStatus.submissionFailure));
+        emit(
+            state.copyWith(checkUsernameStatus: FormzStatus.submissionFailure));
       }
+    });
+    on<HideMainTabEvent>((event, emit) async {
+      emit(state.copyWith(showMainTab: event.showMainTab));
     });
     on<CreateState>((event, emit) async {
       final result = await _createNewStateUseCase.call(NoParams());
       if (result.isRight) {
         emit(state.copyWith(stateId: result.right));
         add(SubmitNameUsername(
-            username: event.username, fullName: event.fullName, onError: event.onError, onSuccess: event.onSuccess));
-      } else {
-      }
+            username: event.username,
+            fullName: event.fullName,
+            onError: event.onError,
+            onSuccess: event.onSuccess));
+      } else {}
     });
     on<SubmitNameUsername>((event, emit) async {
-      final result = await _submitNameUsernameUseCase
-          .call(NameUsernameParams(stateId: state.stateId, username: event.username, name: event.fullName));
+      final result = await _submitNameUsernameUseCase.call(NameUsernameParams(
+          stateId: state.stateId,
+          username: event.username,
+          name: event.fullName));
       if (result.isRight) {
-        emit(state.copyWith(checkUsernameStatus: FormzStatus.submissionSuccess, stateId: result.right));
+        emit(state.copyWith(
+            checkUsernameStatus: FormzStatus.submissionSuccess,
+            stateId: result.right));
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
@@ -115,15 +132,18 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
         }
-        emit(state.copyWith(checkUsernameStatus: FormzStatus.submissionFailure));
+        emit(
+            state.copyWith(checkUsernameStatus: FormzStatus.submissionFailure));
       }
     });
     on<ChangeConfirmationType>((event, emit) {
       emit(state.copyWith(confirmationType: event.type));
     });
     on<SubmitPhone>((event, emit) async {
-      emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionInProgress));
-      final result = await _submitPhoneUseCase.call(PhoneParams(stateId: state.stateId, phone: event.phone));
+      emit(state.copyWith(
+          submitPhoneEmailStatus: FormzStatus.submissionInProgress));
+      final result = await _submitPhoneUseCase
+          .call(PhoneParams(stateId: state.stateId, phone: event.phone));
       if (result.isRight) {
         emit(state.copyWith(
             submitPhoneEmailStatus: FormzStatus.submissionSuccess,
@@ -139,12 +159,15 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
         }
-        emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(
+            submitPhoneEmailStatus: FormzStatus.submissionFailure));
       }
     });
     on<SubmitEmail>((event, emit) async {
-      emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionInProgress));
-      final result = await _submitEmailUseCase.call(EmailParams(stateId: state.stateId, email: event.email));
+      emit(state.copyWith(
+          submitPhoneEmailStatus: FormzStatus.submissionInProgress));
+      final result = await _submitEmailUseCase
+          .call(EmailParams(stateId: state.stateId, email: event.email));
       if (result.isRight) {
         emit(state.copyWith(
             submitPhoneEmailStatus: FormzStatus.submissionSuccess,
@@ -160,14 +183,18 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
         }
-        emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(
+            submitPhoneEmailStatus: FormzStatus.submissionFailure));
       }
     });
     on<SubmitCode>((event, emit) async {
       emit(state.copyWith(submitCodeStatus: FormzStatus.submissionInProgress));
-      final result = await _confirmUseCase.call(ConfirmationParams(stateId: state.stateId, code: event.code));
+      final result = await _confirmUseCase
+          .call(ConfirmationParams(stateId: state.stateId, code: event.code));
       if (result.isRight) {
-        emit(state.copyWith(submitCodeStatus: FormzStatus.submissionSuccess, stateId: result.right));
+        emit(state.copyWith(
+            submitCodeStatus: FormzStatus.submissionSuccess,
+            stateId: result.right));
         event.onSuccess();
       } else {
         if (result.left is DioFailure) {
@@ -181,11 +208,16 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
       }
     });
     on<SubmitPassword>((event, emit) async {
-      emit(state.copyWith(submitPasswordStatus: FormzStatus.submissionInProgress));
-      final result = await _submitPasswordUseCase.call(
-          PasswordParams(stateId: state.stateId, password: event.password, confirmPassword: event.confirmPassword));
+      emit(state.copyWith(
+          submitPasswordStatus: FormzStatus.submissionInProgress));
+      final result = await _submitPasswordUseCase.call(PasswordParams(
+          stateId: state.stateId,
+          password: event.password,
+          confirmPassword: event.confirmPassword));
       if (result.isRight) {
-        emit(state.copyWith(submitPasswordStatus: FormzStatus.submissionSuccess, stateId: result.right));
+        emit(state.copyWith(
+            submitPasswordStatus: FormzStatus.submissionSuccess,
+            stateId: result.right));
       } else {
         if (result.left is DioFailure) {
           event.onError(LocaleKeys.network_error);
@@ -194,7 +226,8 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
         }
-        emit(state.copyWith(submitPasswordStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(
+            submitPasswordStatus: FormzStatus.submissionFailure));
       }
     });
     on<ResendCode>((event, emit) async {
@@ -204,8 +237,10 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
       emit(state.copyWith(secondsLeft: event.secondsLeft));
     });
     on<SubmitChangedEmail>((event, emit) async {
-      emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionInProgress));
-      final result = await _submitChangedEmailUseCase.call(EmailParams(stateId: state.stateId, email: event.email));
+      emit(state.copyWith(
+          submitPhoneEmailStatus: FormzStatus.submissionInProgress));
+      final result = await _submitChangedEmailUseCase
+          .call(EmailParams(stateId: state.stateId, email: event.email));
       if (result.isRight) {
         emit(state.copyWith(
           submitPhoneEmailStatus: FormzStatus.submissionSuccess,
@@ -222,12 +257,15 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
         }
-        emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(
+            submitPhoneEmailStatus: FormzStatus.submissionFailure));
       }
     });
     on<SubmitChangedPhone>((event, emit) async {
-      emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionInProgress));
-      final result = await _submitChangedPhoneUseCase.call(PhoneParams(stateId: state.stateId, phone: event.phone));
+      emit(state.copyWith(
+          submitPhoneEmailStatus: FormzStatus.submissionInProgress));
+      final result = await _submitChangedPhoneUseCase
+          .call(PhoneParams(stateId: state.stateId, phone: event.phone));
       if (result.isRight) {
         emit(state.copyWith(
           submitPhoneEmailStatus: FormzStatus.submissionSuccess,
@@ -244,7 +282,8 @@ class LoginSignUpBloc extends Bloc<LoginSignUpEvent, LoginSignUpState> {
         } else if (result.left is ServerFailure) {
           event.onError((result.left as ServerFailure).errorMessage);
         }
-        emit(state.copyWith(submitPhoneEmailStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(
+            submitPhoneEmailStatus: FormzStatus.submissionFailure));
       }
     });
   }

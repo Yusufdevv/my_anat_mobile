@@ -9,7 +9,7 @@ class DoctorSpecModel extends DoctorSpecEntity {
   DoctorSpecModel({
     required super.fullName,
     required super.id,
-    required super.phoneNumber,
+    required super.phoneNumbers,
     required super.specialization,
     required super.isFavourite,
     required super.position,
@@ -21,14 +21,17 @@ class DoctorSpecModel extends DoctorSpecEntity {
     required super.latitude,
   });
 
-  factory DoctorSpecModel.fromJson(Map<String, dynamic> json) => _$DoctorSpecModelFromJson(json);
+  factory DoctorSpecModel.fromJson(Map<String, dynamic> json) =>
+      _$DoctorSpecModelFromJson(json);
 }
 
-class DoctorSpecConverter implements JsonConverter<DoctorSpecEntity, Map<String, dynamic>?> {
+class DoctorSpecConverter
+    implements JsonConverter<DoctorSpecEntity, Map<String, dynamic>?> {
   const DoctorSpecConverter();
 
   @override
-  DoctorSpecEntity fromJson(Map<String, dynamic>? json) => DoctorSpecModel.fromJson(json ?? {});
+  DoctorSpecEntity fromJson(Map<String, dynamic>? json) =>
+      DoctorSpecModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic>? toJson(DoctorSpecEntity object) => {};

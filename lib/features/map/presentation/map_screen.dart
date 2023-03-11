@@ -3,6 +3,7 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
@@ -279,6 +280,7 @@ class _MapScreenState extends State<MapScreen>
                           ),
                           padding: const EdgeInsets.all(2),
                           child: TabBar(
+                            key: const ValueKey('tab'),
                             controller: _controller,
                             padding: EdgeInsets.zero,
                             indicatorPadding: EdgeInsets.zero,
@@ -335,206 +337,257 @@ class _MapScreenState extends State<MapScreen>
                   left: 0,
                   right: 0,
                   bottom: MediaQuery.of(context).padding.bottom - 28,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const SizedBox(),
-                            MapControllerButtons(
-                              onCurrentLocationTap: () async {
-                                context.read<MapOrganizationBloc>().add(
-                                      MapOrganizationEvent.getCurrentLocation(
-                                        onSuccess: (position) async {
-                                          myPoint = Point(
-                                              latitude: position.latitude,
-                                              longitude: position.longitude);
-                                          final myPlaceMark =
-                                              await MyFunctions.getMyPoint(
-                                                  myPoint, context);
-                                          setState(() {
-                                            _mapObjects.add(myPlaceMark);
-                                          });
-                                          accuracy = position.accuracy;
-                                          _mapController.moveCamera(
-                                            CameraUpdate.newCameraPosition(
-                                              CameraPosition(
-                                                target: Point(
-                                                    latitude: position.latitude,
-                                                    longitude:
-                                                        position.longitude),
-                                                zoom: 15,
-                                              ),
-                                            ),
-                                            animation: const MapAnimation(
-                                                duration: 0.15,
-                                                type: MapAnimationType.smooth),
-                                          );
-                                          zoomLevel = 15;
-                                        },
-                                        onError: (message) {
-                                          context
-                                              .read<ShowPopUpBloc>()
-                                              .add(ShowPopUp(message: message));
-                                        },
-                                      ),
-                                    );
-                                zoomLevel = 15;
-                              },
-                              onMinusTap: () {
-                                if (minZoomLevel < zoomLevel) {
-                                  _mapController.moveCamera(
-                                    CameraUpdate.zoomTo(zoomLevel - 1),
-                                    animation: const MapAnimation(
-                                        duration: 0.2,
-                                        type: MapAnimationType.smooth),
-                                  );
-                                  zoomLevel--;
-                                }
-                              },
-                              onPlusTap: () async {
-                                if (maxZoomLevel > zoomLevel) {
-                                  _mapController.moveCamera(
-                                    CameraUpdate.zoomTo(zoomLevel + 1),
-                                    animation: const MapAnimation(
-                                        duration: 0.2,
-                                        type: MapAnimationType.smooth),
-                                  );
-                                  zoomLevel++;
-                                }
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(16, 16, 16,
-                            MediaQuery.of(context).viewInsets.bottom + 43),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: textFieldColor),
-                          color: white,
-                        ),
-                        child: GestureDetector(
-                          child: BlocBuilder<MapOrganizationBloc,
-                              MapOrganizationState>(
-                            builder: (context, state) {
-                              return Row(
+                  child: BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
+                    builder: (context, loginState) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        child: !loginState.showMainTab
+                            ? const SizedBox()
+                            : Column(
                                 children: [
-                                  Expanded(
-                                    child: WButton(
-                                      onTap: () {
-                                        Navigator.of(context).push(fade(
-                                            page: HospitalList(
-                                          controller: _controller,
-                                          myLocation: myPoint,
-                                        )));
-                                      },
-                                      border: Border.all(color: divider),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 12),
-                                      borderRadius: 10,
-                                      color: Colors.white,
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            AppIcons.listIcon,
-                                            width: 20,
-                                            height: 20,
-                                          ),
-                                          const SizedBox(
-                                            width: 8,
-                                          ),
-                                          Text(
-                                            LocaleKeys.list.tr(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .displayLarge!
-                                                .copyWith(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                          )
-                                        ],
-                                      ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        const SizedBox(),
+                                        MapControllerButtons(
+                                          onCurrentLocationTap: () async {
+                                            context
+                                                .read<MapOrganizationBloc>()
+                                                .add(
+                                                  MapOrganizationEvent
+                                                      .getCurrentLocation(
+                                                    onSuccess:
+                                                        (position) async {
+                                                      myPoint = Point(
+                                                          latitude:
+                                                              position.latitude,
+                                                          longitude: position
+                                                              .longitude);
+                                                      final myPlaceMark =
+                                                          await MyFunctions
+                                                              .getMyPoint(
+                                                                  myPoint,
+                                                                  context);
+                                                      setState(() {
+                                                        _mapObjects
+                                                            .add(myPlaceMark);
+                                                      });
+                                                      accuracy =
+                                                          position.accuracy;
+                                                      _mapController.moveCamera(
+                                                        CameraUpdate
+                                                            .newCameraPosition(
+                                                          CameraPosition(
+                                                            target: Point(
+                                                                latitude: position
+                                                                    .latitude,
+                                                                longitude: position
+                                                                    .longitude),
+                                                            zoom: 15,
+                                                          ),
+                                                        ),
+                                                        animation:
+                                                            const MapAnimation(
+                                                                duration: 0.15,
+                                                                type:
+                                                                    MapAnimationType
+                                                                        .smooth),
+                                                      );
+                                                      zoomLevel = 15;
+                                                    },
+                                                    onError: (message) {
+                                                      context
+                                                          .read<ShowPopUpBloc>()
+                                                          .add(ShowPopUp(
+                                                              message:
+                                                                  message));
+                                                    },
+                                                  ),
+                                                );
+                                            zoomLevel = 15;
+                                          },
+                                          onMinusTap: () {
+                                            if (minZoomLevel < zoomLevel) {
+                                              _mapController.moveCamera(
+                                                CameraUpdate.zoomTo(
+                                                    zoomLevel - 1),
+                                                animation: const MapAnimation(
+                                                    duration: 0.2,
+                                                    type: MapAnimationType
+                                                        .smooth),
+                                              );
+                                              zoomLevel--;
+                                            }
+                                          },
+                                          onPlusTap: () async {
+                                            if (maxZoomLevel > zoomLevel) {
+                                              _mapController.moveCamera(
+                                                CameraUpdate.zoomTo(
+                                                    zoomLevel + 1),
+                                                animation: const MapAnimation(
+                                                    duration: 0.2,
+                                                    type: MapAnimationType
+                                                        .smooth),
+                                              );
+                                              zoomLevel++;
+                                            }
+                                          },
+                                        )
+                                      ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  Expanded(
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(
+                                        16,
+                                        16,
+                                        16,
+                                        MediaQuery.of(context)
+                                                .viewInsets
+                                                .bottom +
+                                            43),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                      border: Border.all(color: textFieldColor),
+                                      color: white,
+                                    ),
                                     child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(fade(
-                                            page: HospitalList(
-                                          getFocus: true,
-                                          controller: _controller,
-                                          myLocation: myPoint,
-                                        )));
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: lilyWhite),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                  AppIcons.search,
-                                                  width: 20,
-                                                  height: 20,
-                                                ),
-                                                const SizedBox(
-                                                  width: 6,
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    LocaleKeys.search.tr(),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .displayLarge!
-                                                        .copyWith(
-                                                            color: state
-                                                                    .searchText
-                                                                    .isNotEmpty
-                                                                ? textColor
-                                                                : textSecondary,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 14),
+                                      child: BlocBuilder<MapOrganizationBloc,
+                                          MapOrganizationState>(
+                                        builder: (context, state) {
+                                          return Row(
+                                            children: [
+                                              Expanded(
+                                                child: WButton(
+                                                  onTap: () {
+                                                    Navigator.of(context)
+                                                        .push(fade(
+                                                            page: HospitalList(
+                                                      controller: _controller,
+                                                      myLocation: myPoint,
+                                                    )));
+                                                  },
+                                                  border: Border.all(
+                                                      color: divider),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 12),
+                                                  borderRadius: 10,
+                                                  color: Colors.white,
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        AppIcons.listIcon,
+                                                        width: 20,
+                                                        height: 20,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 8,
+                                                      ),
+                                                      Text(
+                                                        LocaleKeys.list.tr(),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .displayLarge!
+                                                            .copyWith(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                      )
+                                                    ],
                                                   ),
                                                 ),
-                                                if (state
-                                                    .searchText.isNotEmpty) ...{
-                                                  GestureDetector(
-                                                    onTap: () {},
-                                                    child: SvgPicture.asset(
-                                                      AppIcons.clearRounded,
-                                                      width: 24,
-                                                      height: 24,
-                                                    ),
-                                                  )
-                                                }
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                              ),
+                                              const SizedBox(width: 12),
+                                              Expanded(
+                                                child: GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .push(fade(
+                                                              page:
+                                                                  HospitalList(
+                                                        getFocus: true,
+                                                        controller: _controller,
+                                                        myLocation: myPoint,
+                                                      )));
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          color: lilyWhite),
+                                                      child: Column(
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                AppIcons.search,
+                                                                width: 20,
+                                                                height: 20,
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 6,
+                                                              ),
+                                                              Expanded(
+                                                                child: Text(
+                                                                  LocaleKeys
+                                                                      .search
+                                                                      .tr(),
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .displayLarge!
+                                                                      .copyWith(
+                                                                          color: state.searchText.isNotEmpty
+                                                                              ? textColor
+                                                                              : textSecondary,
+                                                                          fontWeight: FontWeight
+                                                                              .w600,
+                                                                          fontSize:
+                                                                              14),
+                                                                ),
+                                                              ),
+                                                              if (state
+                                                                  .searchText
+                                                                  .isNotEmpty) ...{
+                                                                GestureDetector(
+                                                                  onTap: () {},
+                                                                  child:
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                    AppIcons
+                                                                        .clearRounded,
+                                                                    width: 24,
+                                                                    height: 24,
+                                                                  ),
+                                                                )
+                                                              }
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )),
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       ),
                                     ),
-                                  ),
+                                  )
                                 ],
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    ],
+                              ),
+                      );
+                    },
                   ),
                 ),
                 Positioned(

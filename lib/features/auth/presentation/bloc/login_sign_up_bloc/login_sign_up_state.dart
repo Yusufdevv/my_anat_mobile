@@ -10,6 +10,8 @@ class LoginSignUpState extends Equatable {
   final FormzStatus submitPasswordStatus;
   final String phoneEmail;
   final int secondsLeft;
+  final bool showMainTab;
+
   const LoginSignUpState({
     required this.loginStatus,
     required this.checkUsernameStatus,
@@ -20,7 +22,9 @@ class LoginSignUpState extends Equatable {
     required this.submitPasswordStatus,
     required this.phoneEmail,
     required this.secondsLeft,
+    this.showMainTab = true,
   });
+
   const LoginSignUpState.empty([
     this.loginStatus = FormzStatus.pure,
     this.checkUsernameStatus = FormzStatus.pure,
@@ -31,7 +35,9 @@ class LoginSignUpState extends Equatable {
     this.submitPasswordStatus = FormzStatus.pure,
     this.phoneEmail = '',
     this.secondsLeft = 0,
+    this.showMainTab = true,
   ]);
+
   LoginSignUpState copyWith({
     FormzStatus? loginStatus,
     FormzStatus? checkUsernameStatus,
@@ -42,6 +48,7 @@ class LoginSignUpState extends Equatable {
     String? confirmationType,
     String? phoneEmail,
     int? secondsLeft,
+    bool? showMainTab,
   }) =>
       LoginSignUpState(
         loginStatus: loginStatus ?? this.loginStatus,
@@ -49,10 +56,12 @@ class LoginSignUpState extends Equatable {
         stateId: stateId ?? this.stateId,
         confirmationType: confirmationType ?? this.confirmationType,
         submitCodeStatus: submitCodeStatus ?? this.submitCodeStatus,
-        submitPhoneEmailStatus: submitPhoneEmailStatus ?? this.submitPhoneEmailStatus,
+        submitPhoneEmailStatus:
+            submitPhoneEmailStatus ?? this.submitPhoneEmailStatus,
         submitPasswordStatus: submitPasswordStatus ?? this.submitPasswordStatus,
         phoneEmail: phoneEmail ?? this.phoneEmail,
         secondsLeft: secondsLeft ?? this.secondsLeft,
+        showMainTab: showMainTab ?? this.showMainTab,
       );
 
   @override
@@ -65,6 +74,7 @@ class LoginSignUpState extends Equatable {
         submitCodeStatus,
         submitPasswordStatus,
         phoneEmail,
-        secondsLeft
+        secondsLeft,
+        showMainTab,
       ];
 }

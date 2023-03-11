@@ -49,12 +49,10 @@ class HospitalSingleBottomSheet extends StatelessWidget {
       alignment: Alignment.topRight,
       children: [
         Container(
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
+          padding: const EdgeInsets.only(left: 8, top: 8),
+          decoration: BoxDecoration(
             color: white,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(16),
-            ),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -117,8 +115,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                     ),
               const SizedBox(height: 16),
               Padding(
-                padding: EdgeInsets.fromLTRB(
-                    8, 0, 8, MediaQuery.of(context).padding.bottom + 8),
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -316,7 +313,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
           child: Container(
             height: 28,
             width: 28,
-            margin: const EdgeInsets.all(16),
+            margin: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: white,
               shape: BoxShape.circle,

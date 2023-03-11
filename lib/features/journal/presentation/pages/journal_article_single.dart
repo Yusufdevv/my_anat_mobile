@@ -12,7 +12,8 @@ class JournalArticleSingle extends StatelessWidget {
   final JournalBloc bloc;
   final String slug;
 
-  const JournalArticleSingle({required this.bloc, required this.slug, Key? key}) : super(key: key);
+  const JournalArticleSingle({required this.bloc, required this.slug, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,8 @@ class JournalArticleSingle extends StatelessWidget {
           leadingWidth: 0,
           automaticallyImplyLeading: false,
           elevation: 1,
-          title: HospitalSingleAppBarBody(shareValue: 'https://anatomica.uz/article/$slug'),
+          title: HospitalSingleAppBarBody(
+              shareValue: 'https://anatomica.uz/article/$slug'),
           shadowColor: textFieldColor,
         ),
         body: BlocBuilder<JournalBloc, JournalState>(
@@ -35,13 +37,13 @@ class JournalArticleSingle extends StatelessWidget {
               );
             } else if (state.articleSingleStatus.isSubmissionSuccess) {
               return ListView(
-                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom),
+                padding: const EdgeInsets.all(16)
+                    .copyWith(bottom: MediaQuery.of(context).padding.bottom),
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: CachedNetworkImage(
-                      imageUrl: state.articleSingle.image.middle,
-                    ),
+                        imageUrl: state.articleSingle.image.middle),
                   ),
                   Html(
                     data: state.articleSingle.description,

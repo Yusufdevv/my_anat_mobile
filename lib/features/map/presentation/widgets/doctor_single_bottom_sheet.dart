@@ -51,13 +51,10 @@ class DoctorSingleBottomSheet extends StatelessWidget {
       alignment: Alignment.topRight,
       children: [
         Container(
-          padding: EdgeInsets.fromLTRB(
-              16, 16, 16, MediaQuery.of(context).padding.bottom),
-          decoration: const BoxDecoration(
+          padding: const EdgeInsets.only(left: 8, top: 8, bottom: 16),
+          decoration: BoxDecoration(
             color: white,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(16),
-            ),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -297,7 +294,7 @@ class DoctorSingleBottomSheet extends StatelessWidget {
           child: Container(
             height: 28,
             width: 28,
-            margin: const EdgeInsets.all(16),
+            margin: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: white,
               shape: BoxShape.circle,

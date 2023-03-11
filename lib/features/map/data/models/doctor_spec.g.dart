@@ -10,7 +10,11 @@ DoctorSpecModel _$DoctorSpecModelFromJson(Map<String, dynamic> json) =>
     DoctorSpecModel(
       fullName: json['full_name'] as String? ?? '',
       id: json['id'] as int? ?? 0,
-      phoneNumber: json['phone_number'] as String? ?? '',
+      phoneNumbers: (json['phone_numbers'] as List<dynamic>?)
+              ?.map(
+                  (e) => (e as List<dynamic>).map((e) => e as String).toList())
+              .toList() ??
+          const [],
       specialization: json['specialization'] as String? ?? '',
       isFavourite: json['is_favourite'] as bool? ?? false,
       position: json['position'] as String? ?? '',
@@ -33,7 +37,7 @@ Map<String, dynamic> _$DoctorSpecModelToJson(DoctorSpecModel instance) =>
       'rating': instance.rating,
       'image': const ImageConverter().toJson(instance.image),
       'position': instance.position,
-      'phone_number': instance.phoneNumber,
+      'phone_numbers': instance.phoneNumbers,
       'work_experience': instance.workExperience,
       'address': instance.address,
       'is_favourite': instance.isFavourite,

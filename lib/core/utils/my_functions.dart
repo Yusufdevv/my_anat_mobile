@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
+import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/data/models/map_hospital.dart';
@@ -14,14 +15,13 @@ import 'package:anatomica/features/map/presentation/widgets/hospital_single_bott
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 abstract class MyFunctions {
-
-
   static const clusterId = MapObjectId('big_cluster_id');
 
   static String safeDateFormat(String date, String pattern) {
@@ -157,67 +157,122 @@ abstract class MyFunctions {
       Point point,
       double accuracy) async {
     final iconData = await getBytesFromCanvas(
-        placeCount: 0,
-        image: AppImages.placeMarkIcon,
-        width: 170,
-        //offset: const Offset(0, -30),
-        height: 410,
-        context: context,
-        shouldAddText: false);
-    final placeMarks = points
-        .map(
-          (e) => PlacemarkMapObject(
-            opacity: 1,
-            mapId: MapObjectId(e.latitude.toString()),
-            point: Point(latitude: e.latitude, longitude: e.longitude),
-            onTap: (object, point) {
-              controller.moveCamera(CameraUpdate.newCameraPosition(
-                  CameraPosition(
-                      target:
-                          Point(latitude: e.latitude, longitude: e.longitude),
-                      zoom: 15)));
-              showModalBottomSheet(
-                barrierColor: Colors.transparent,
+      placeCount: 0,
+      image: AppImages.placeMarkIcon,
+      width: 170,
+      //offset: const Offset(0, -30),
+      height: 410,
+      context: context,
+      shouldAddText: false,
+    );
+    print('klinik => ${points.length}');
+    final placeMarks = points.map((e) {
+      return PlacemarkMapObject(
+        opacity: 1,
+        mapId: MapObjectId(e.latitude.toString()),
+        point: Point(
+          latitude: e.latitude,
+          longitude: e.longitude,
+        ),
+        onTap: (object, point) async {
+          // element = e;
+          print('element => ${e.title}');
+          controller.moveCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: Point(
+                  latitude: e.latitude,
+                  longitude: e.longitude,
+                ),
+                zoom: 15,
+              ),
+            ),
+          );
+
+          final result = await showModalBottomSheet(
+            barrierColor: Colors.transparent,
+            context: context,
+            // isScrollControlled: true,
+            useRootNavigator: true,
+            enableDrag: false,
+            backgroundColor: Colors.transparent,
+            builder: (context) {
+              context
+                  .read<LoginSignUpBloc>()
+                  .add(HideMainTabEvent(showMainTab: false));
+              return MediaQuery.removePadding(
                 context: context,
-                isScrollControlled: true,
-                useRootNavigator: true,
-                backgroundColor: Colors.transparent,
-                builder: (context) => HospitalSingleBottomSheet(
-                  id: e.id,
-                  isHospital: true,
-                  slug: e.slug,
-                  title: e.title,
-                  phone: e.phoneNumber,
-                  logo: e.logo.middle,
-                  address: e.address,
-                  images: e.images.map((e) => e.middle).toList(),
-                  location: Point(latitude: e.latitude, longitude: e.longitude),
-                  rating: e.rating,
+                removeBottom: true,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: PageView.builder(
+                    controller: PageController(
+                      initialPage: points.indexOf(e),
+                      viewportFraction: 0.9,
+                    ),
+                    onPageChanged: (value) {
+                      controller.moveCamera(
+                          CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                              target: Point(
+                                latitude: points[value].latitude,
+                                longitude: points[value].longitude,
+                              ),
+                              zoom: 15,
+                            ),
+                          ),
+                          animation: const MapAnimation(
+                              duration: 1, type: MapAnimationType.linear));
+                    },
+                    itemCount: points.length,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16, left: 8),
+                        child: HospitalSingleBottomSheet(
+                          id: points[index].id,
+                          isHospital: true,
+                          slug: points[index].slug,
+                          title: points[index].title,
+                          phone: points[index].phoneNumber,
+                          logo: points[index].logo.middle,
+                          address: points[index].address,
+                          images: points[index]
+                              .images
+                              .map((e) => e.middle)
+                              .toList(),
+                          location: Point(
+                            latitude: points[index].latitude,
+                            longitude: points[index].longitude,
+                          ),
+                          rating: points[index].rating,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               );
             },
-            icon: PlacemarkIcon.single(
-              PlacemarkIconStyle(
-                scale: 0.6,
-                image: BitmapDescriptor.fromBytes(iconData),
-              ),
-            ),
+          );
+          context
+              .read<LoginSignUpBloc>()
+              .add(HideMainTabEvent(showMainTab: true));
+        },
+        icon: PlacemarkIcon.single(
+          PlacemarkIconStyle(
+            scale: 0.6,
+            image: BitmapDescriptor.fromBytes(iconData),
           ),
-        )
-        .toList();
+        ),
+      );
+    }).toList();
     final myPoint = await getMyPoint(point, context);
     final clusterItem = ClusterizedPlacemarkCollection(
       mapId: clusterId,
       placemarks: placeMarks,
       radius: 25,
       minZoom: 30,
-      onClusterTap: (collection, cluster) {
-        // controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        //     target: Point(
-        //         latitude: collection.placemarks.first.point.latitude,
-        //         longitude: collection.placemarks.first.point.latitude),
-        //     zoom: 15)));
-      },
+      onClusterTap: (collection, cluster) {},
       onTap: (collection, point) {},
       onClusterAdded: (collection, cluster) async => cluster.copyWith(
         appearance: cluster.appearance.copyWith(
@@ -226,12 +281,13 @@ abstract class MyFunctions {
             PlacemarkIconStyle(
               image: BitmapDescriptor.fromBytes(
                 await getBytesFromCanvas(
-                    image: AppImages.hospitalCluster,
-                    width: 170,
-                    height: 410,
-                    placeCount: cluster.placemarks.length,
-                    context: context,
-                    shouldAddText: true),
+                  image: AppImages.hospitalCluster,
+                  width: 170,
+                  height: 410,
+                  placeCount: cluster.placemarks.length,
+                  context: context,
+                  shouldAddText: true,
+                ),
               ),
               scale: 0.6,
             ),
@@ -266,35 +322,83 @@ abstract class MyFunctions {
               mapId: MapObjectId(e.doctor.longitude.toString()),
               point: Point(
                   latitude: e.doctor.latitude, longitude: e.doctor.longitude),
-              onTap: (object, point) {
+              onTap: (object, point) async {
                 controller.moveCamera(CameraUpdate.newCameraPosition(
                     CameraPosition(
                         target: Point(
                             latitude: e.doctor.latitude,
                             longitude: e.doctor.longitude),
                         zoom: 15)));
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  useRootNavigator: true,
-                  backgroundColor: Colors.transparent,
-                  barrierColor: Colors.transparent,
-                  builder: (context) => DoctorSingleBottomSheet(
-                    id: e.doctor.id,
-                    isHospital: false,
-                    specialization: e.doctor.position,
-                    slug: '',
-                    hospital: e.doctor.fullName,
-                    title: e.doctor.fullName,
-                    phone: 'e.hospital.phoneNumber',
-                    address: e.doctor.address,
-                    images: [e.doctor.image.middle],
-                    location: Point(
-                        latitude: e.doctor.latitude,
-                        longitude: e.doctor.longitude),
-                    rating: e.doctor.rating,
-                  ),
-                );
+                final result = await showModalBottomSheet(
+                    context: context,
+                    // isScrollControlled: true,
+                    useRootNavigator: true,
+                    backgroundColor: Colors.transparent,
+                    barrierColor: Colors.transparent,
+                    builder: (context) {
+                      context
+                          .read<LoginSignUpBloc>()
+                          .add(HideMainTabEvent(showMainTab: false));
+                      return MediaQuery.removePadding(
+                        context: context,
+                        removeBottom: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 60),
+                          child: PageView.builder(
+                              controller: PageController(
+                                initialPage: points.indexOf(e),
+                                viewportFraction: 0.9,
+                              ),
+                              physics: const BouncingScrollPhysics(),
+                              onPageChanged: (value) {
+                                controller.moveCamera(
+                                    CameraUpdate.newCameraPosition(
+                                      CameraPosition(
+                                        target: Point(
+                                          latitude:
+                                              points[value].doctor.latitude,
+                                          longitude:
+                                              points[value].doctor.longitude,
+                                        ),
+                                        zoom: 15,
+                                      ),
+                                    ),
+                                    animation: const MapAnimation(
+                                        duration: 1,
+                                        type: MapAnimationType.linear));
+                              },
+                              itemCount: points.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 16, left: 8),
+                                  child: DoctorSingleBottomSheet(
+                                    id: points[index].doctor.id,
+                                    isHospital: false,
+                                    specialization:
+                                        points[index].doctor.position,
+                                    slug: '',
+                                    hospital: points[index].doctor.fullName,
+                                    title: points[index].doctor.fullName,
+                                    //  todo which phone
+                                    phone: points[index].doctor.phoneNumbers[0]
+                                        [0],
+                                    address: points[index].doctor.address,
+                                    images: [points[index].doctor.image.middle],
+                                    location: Point(
+                                        latitude: points[index].doctor.latitude,
+                                        longitude:
+                                            points[index].doctor.longitude),
+                                    rating: points[index].doctor.rating,
+                                  ),
+                                );
+                              }),
+                        ),
+                      );
+                    });
+                context
+                    .read<LoginSignUpBloc>()
+                    .add(HideMainTabEvent(showMainTab: true));
               },
               icon: PlacemarkIcon.single(PlacemarkIconStyle(
                   image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark),

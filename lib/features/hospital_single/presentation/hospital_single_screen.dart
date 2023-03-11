@@ -162,6 +162,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
 
   @override
   Widget build(BuildContext context) {
+    print('hospital slug => ${widget.slug}');
     return WKeyboardDismisser(
       child: DefaultTabController(
         length: tabs.length,

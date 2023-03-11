@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/common/presentation/widgets/rating_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
@@ -16,6 +15,7 @@ import 'package:anatomica/features/hospital_single/presentation/widgets/big_imag
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:anatomica/features/map/presentation/widgets/image_slider_indicator.dart';
+import 'package:anatomica/features/map/presentation/widgets/phones_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -25,7 +25,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class DoctorSingleAppBar extends StatefulWidget {
@@ -46,9 +45,9 @@ class DoctorSingleAppBar extends StatefulWidget {
 
 class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
   int currentImage = 0;
+
   @override
   Widget build(BuildContext context) {
-    print('images => ${widget.doctor.images} img => ${widget.doctor.img}');
     return BlocProvider.value(
       value: widget.headerManagerBloc,
       child: BlocBuilder<HeaderManagerBloc, HeaderManagerState>(
@@ -353,102 +352,217 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                               ),
                                               const SizedBox(height: 10),
                                             ],
-                                            if (widget.doctor.phoneNumbers
-                                                .isNotEmpty) ...[
-                                              Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                      AppIcons.phone),
-                                                  const SizedBox(width: 6),
-                                                  Text(
-                                                    MyFunctions.formatPhone(
-                                                        widget
-                                                            .doctor
-                                                            .phoneNumbers
-                                                            .first
-                                                            .phoneNumber,
-                                                        false),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .displaySmall!
-                                                        .copyWith(
-                                                            color: textColor),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 10),
-                                            ],
-                                            if (widget.doctor.organization.id !=
-                                                0) ...{
-                                              GestureDetector(
-                                                onTap: () {
-                                                  if (widget.doctor.organization
-                                                          .id !=
-                                                      0) {
-                                                    Navigator.of(context).push(
-                                                      fade(
-                                                        page:
-                                                            HospitalSingleScreen(
-                                                          id: widget.doctor
-                                                              .organization.id,
-                                                          slug: widget
-                                                              .doctor
-                                                              .organization
-                                                              .slug,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10, bottom: 16),
-                                                  child: Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                          AppIcons.building),
-                                                      const SizedBox(width: 6),
-                                                      ConstrainedBox(
-                                                        constraints: BoxConstraints(
-                                                            maxWidth: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width -
-                                                                74),
-                                                        child: Text(
-                                                          widget
-                                                              .doctor
-                                                              .organization
-                                                              .name,
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .displaySmall!
-                                                              .copyWith(
-                                                                  color:
-                                                                      textColor),
-                                                        ),
-                                                      ),
+                                            // if (widget.doctor.phoneNumbers
+                                            //     .isNotEmpty) ...[
+                                            //   Row(
+                                            //     children: [
+                                            //       SvgPicture.asset(
+                                            //           AppIcons.phone),
+                                            //       const SizedBox(width: 6),
+                                            //       Text(
+                                            //         MyFunctions.formatPhone(
+                                            //             widget
+                                            //                 .doctor
+                                            //                 .phoneNumbers
+                                            //                 .first
+                                            //                 .phoneNumber,
+                                            //             false),
+                                            //         style: Theme.of(context)
+                                            //             .textTheme
+                                            //             .displaySmall!
+                                            //             .copyWith(
+                                            //                 color: textColor),
+                                            //       ),
+                                            //     ],
+                                            //   ),
+                                            //   const SizedBox(height: 10),
+                                            // ],
+                                            Wrap(
+                                              children: [
+                                                if (widget.doctor.organization
+                                                        .id !=
+                                                    0) ...{
+                                                  GestureDetector(
+                                                    behavior:
+                                                        HitTestBehavior.opaque,
+                                                    onTap: () {
                                                       if (widget
                                                               .doctor
                                                               .organization
                                                               .id !=
-                                                          0) ...[
-                                                        const SizedBox(
-                                                            width: 4),
-                                                        SvgPicture.asset(
-                                                            AppIcons
-                                                                .externalLink)
-                                                      ]
-                                                    ],
+                                                          0) {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          fade(
+                                                            page:
+                                                                HospitalSingleScreen(
+                                                              id: widget
+                                                                  .doctor
+                                                                  .organization
+                                                                  .id,
+                                                              slug: widget
+                                                                  .doctor
+                                                                  .organization
+                                                                  .slug,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 10,
+                                                              bottom: 16,
+                                                              right: 12),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                              AppIcons
+                                                                  .building),
+                                                          const SizedBox(
+                                                              width: 6),
+                                                          ConstrainedBox(
+                                                            constraints: BoxConstraints(
+                                                                maxWidth: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width -
+                                                                    74),
+                                                            child: Text(
+                                                              widget
+                                                                  .doctor
+                                                                  .organization
+                                                                  .name,
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .displaySmall!
+                                                                  .copyWith(
+                                                                      color:
+                                                                          textColor),
+                                                            ),
+                                                          ),
+                                                          if (widget
+                                                                  .doctor
+                                                                  .organization
+                                                                  .id !=
+                                                              0) ...[
+                                                            const SizedBox(
+                                                                width: 4),
+                                                            SvgPicture.asset(
+                                                                AppIcons
+                                                                    .externalLink)
+                                                          ]
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                            },
+                                                },
+                                                if (widget.doctor.organizations
+                                                    .isNotEmpty) ...{
+                                                  ...List.generate(
+                                                    widget.doctor.organizations
+                                                        .length,
+                                                    (index) => GestureDetector(
+                                                      behavior: HitTestBehavior
+                                                          .opaque,
+                                                      onTap: () {
+                                                        if (widget
+                                                                .doctor
+                                                                .organizations[
+                                                                    index]
+                                                                .id !=
+                                                            0) {
+                                                          Navigator.of(context)
+                                                              .push(
+                                                            fade(
+                                                              page:
+                                                                  HospitalSingleScreen(
+                                                                id: widget
+                                                                    .doctor
+                                                                    .organizations[
+                                                                        index]
+                                                                    .id,
+                                                                slug: widget
+                                                                    .doctor
+                                                                    .organizations[
+                                                                        index]
+                                                                    .slug,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          top: 10,
+                                                          bottom: 16,
+                                                          right: 12,
+                                                        ),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            SvgPicture.asset(
+                                                                AppIcons
+                                                                    .building),
+                                                            const SizedBox(
+                                                                width: 6),
+                                                            ConstrainedBox(
+                                                              constraints: BoxConstraints(
+                                                                  maxWidth: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width -
+                                                                      74),
+                                                              child: Text(
+                                                                widget
+                                                                    .doctor
+                                                                    .organizations[
+                                                                        index]
+                                                                    .name,
+                                                                maxLines: 1,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .displaySmall!
+                                                                    .copyWith(
+                                                                        color:
+                                                                            textColor),
+                                                              ),
+                                                            ),
+                                                            if (widget
+                                                                    .doctor
+                                                                    .organizations[
+                                                                        index]
+                                                                    .id !=
+                                                                0) ...[
+                                                              const SizedBox(
+                                                                  width: 4),
+                                                              SvgPicture.asset(
+                                                                  AppIcons
+                                                                      .externalLink)
+                                                            ]
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                },
+                                              ],
+                                            ),
                                             Row(
                                               children: [
                                                 Text(
@@ -478,144 +592,147 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                             const SizedBox(height: 16),
                                             Row(
                                               children: [
-                                                if (widget.doctor.phoneNumbers
-                                                    .isNotEmpty) ...{
-                                                  Expanded(
-                                                    child: WButton(
-                                                      color: primary,
-                                                      onTap: () async {
-                                                        if (await canLaunchUrl(Uri(
-                                                            scheme: 'tel',
-                                                            path: widget
+                                                Expanded(
+                                                  child: WButton(
+                                                    color: primary,
+                                                    onTap: () async {
+                                                      if (widget
+                                                              .doctor
+                                                              .phoneNumbers
+                                                              .isNotEmpty &&
+                                                          !widget.doctor
+                                                              .phoneNumbers
+                                                              .map((e) =>
+                                                                  e.phoneNumber)
+                                                              .toList()
+                                                              .contains(widget
+                                                                  .doctor
+                                                                  .phoneNumber)) {
+                                                        showModalBottomSheet(
+                                                          context: context,
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          builder: (_) =>
+                                                              PhonesBottomSheet(
+                                                            phones: widget
                                                                 .doctor
                                                                 .phoneNumbers
-                                                                .first
-                                                                .phoneNumber))) {
-                                                          await launchUrl(Uri(
-                                                              scheme: 'tel',
-                                                              path: widget
-                                                                  .doctor
-                                                                  .phoneNumbers
-                                                                  .first
-                                                                  .phoneNumber));
-                                                        } else {}
-                                                      },
-                                                      padding: EdgeInsets.zero,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                            AppIcons.phone,
-                                                            height: 20,
-                                                            width: 20,
-                                                            color: white,
+                                                                .map((e) => e
+                                                                    .phoneNumber)
+                                                                .toList(),
                                                           ),
-                                                          const SizedBox(
-                                                              width: 8),
-                                                          Text(
-                                                            LocaleKeys.call
-                                                                .tr(),
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .displaySmall!
-                                                                .copyWith(
-                                                                    color:
-                                                                        white),
-                                                          )
-                                                        ],
-                                                      ),
+                                                        );
+                                                      } else {
+                                                        if (widget
+                                                            .doctor
+                                                            .phoneNumber
+                                                            .isNotEmpty) {
+                                                          if (await canLaunchUrlString(
+                                                              'tel://${widget.doctor.phoneNumber}')) {
+                                                            await launchUrlString(
+                                                                'tel://${widget.doctor.phoneNumber}');
+                                                          } else {
+                                                            throw 'Can not open phone number';
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    padding: EdgeInsets.zero,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          AppIcons.phone,
+                                                          height: 20,
+                                                          width: 20,
+                                                          color: white,
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 8),
+                                                        Text(
+                                                          LocaleKeys.call.tr(),
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .displaySmall!
+                                                              .copyWith(
+                                                                  color: white),
+                                                        )
+                                                      ],
                                                     ),
                                                   ),
-                                                  const SizedBox(width: 8),
-                                                },
+                                                ),
+                                                const SizedBox(width: 8),
                                                 Visibility(
-                                                  visible: widget
-                                                              .doctor
-                                                              .organization
+                                                  visible: widget.doctor
                                                               .latitude !=
                                                           0 &&
-                                                      widget.doctor.organization
-                                                              .longitude !=
+                                                      widget.doctor.longitude !=
                                                           0,
                                                   child: Expanded(
                                                     child: WButton(
                                                       color: white,
                                                       onTap: () async {
-                                                        // if (await canLaunchUrlString(doctor.organization.locationUrl)) {
-                                                        //   await launchUrlString(doctor.organization.locationUrl,
-                                                        //       mode: LaunchMode.externalApplication);
-                                                        // }
-                                                        if (widget
-                                                                .doctor
-                                                                .organization
-                                                                .id !=
-                                                            0) {
-                                                          if (Platform
-                                                              .isAndroid) {
-                                                            if (await MapLauncher
-                                                                    .isMapAvailable(
-                                                                        MapType
-                                                                            .google) ??
-                                                                false) {
-                                                              await MapLauncher.showDirections(
-                                                                  mapType: MapType
-                                                                      .google,
-                                                                  destination: Coords(
-                                                                      widget
-                                                                          .doctor
-                                                                          .organization
-                                                                          .latitude,
-                                                                      widget
-                                                                          .doctor
-                                                                          .organization
-                                                                          .longitude));
-                                                            } else {
-                                                              if (await canLaunchUrlString(widget
-                                                                  .doctor
-                                                                  .organization
-                                                                  .locationUrl)) {
-                                                                await launchUrlString(widget
-                                                                    .doctor
-                                                                    .organization
-                                                                    .locationUrl);
-                                                              } else {
-                                                                throw 'Can not open Google maps';
-                                                              }
-                                                            }
-                                                          } else {
-                                                            if (await MapLauncher
-                                                                    .isMapAvailable(
-                                                                        MapType
-                                                                            .apple) ??
-                                                                false) {
-                                                              await MapLauncher.showDirections(
-                                                                  mapType:
+                                                        if (Platform
+                                                            .isAndroid) {
+                                                          if (await MapLauncher
+                                                                  .isMapAvailable(
                                                                       MapType
-                                                                          .apple,
-                                                                  destination: Coords(
-                                                                      widget
-                                                                          .doctor
-                                                                          .organization
-                                                                          .latitude,
-                                                                      widget
-                                                                          .doctor
-                                                                          .organization
-                                                                          .longitude));
+                                                                          .google) ??
+                                                              false) {
+                                                            await MapLauncher.showDirections(
+                                                                mapType: MapType
+                                                                    .google,
+                                                                destination: Coords(
+                                                                    widget
+                                                                        .doctor
+                                                                        .latitude,
+                                                                    widget
+                                                                        .doctor
+                                                                        .longitude));
+                                                          } else {
+                                                            // TODO widget.doctoc.address o'rniga widget.doctor.locationUrl qo'yilishi kerak,
+                                                            // TODO backendda bo'lmaganligi uchun vaqtincha shunaqa qoldirib ketildi
+                                                            if (await canLaunchUrlString(
+                                                                widget.doctor
+                                                                    .address)) {
+                                                              await launchUrlString(
+                                                                  widget.doctor
+                                                                      .address);
                                                             } else {
-                                                              if (await canLaunchUrlString(widget
-                                                                  .doctor
-                                                                  .organization
-                                                                  .locationUrl)) {
-                                                                await launchUrlString(widget
-                                                                    .doctor
-                                                                    .organization
-                                                                    .locationUrl);
-                                                              } else {
-                                                                throw 'Can not open Google maps';
-                                                              }
+                                                              throw 'Can not open Google maps';
+                                                            }
+                                                          }
+                                                        } else {
+                                                          if (await MapLauncher
+                                                                  .isMapAvailable(
+                                                                      MapType
+                                                                          .apple) ??
+                                                              false) {
+                                                            await MapLauncher.showDirections(
+                                                                mapType: MapType
+                                                                    .apple,
+                                                                destination: Coords(
+                                                                    widget
+                                                                        .doctor
+                                                                        .latitude,
+                                                                    widget
+                                                                        .doctor
+                                                                        .longitude));
+                                                          } else {
+                                                            if (await canLaunchUrlString(
+                                                                widget.doctor
+                                                                    .address)) {
+                                                              await launchUrlString(
+                                                                  widget.doctor
+                                                                      .address);
+                                                            } else {
+                                                              throw 'Can not open Google maps';
                                                             }
                                                           }
                                                         }

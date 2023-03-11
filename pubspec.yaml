@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.0.15
+  flutter_cache_manager: ^3.3.0
   flutter_rating_bar: ^4.0.1
   dio: ^4.0.6
   connectivity_plus: ^3.0.2

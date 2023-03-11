@@ -44,33 +44,50 @@ class DoctorSingleEntity extends Equatable {
   final int commentCount;
   @OrganizationConverter()
   final OrganizationEntity organization;
+  @OrganizationConverter()
+  final List<OrganizationEntity> organizations;
   @PhoneNumberConverter()
   final List<PhoneNumberEntity> phoneNumbers;
-  const DoctorSingleEntity(
-      {this.id = 0,
-      this.fullName = '',
-      this.images = const [],
-      this.position = const PositionEntity(),
-      this.workExperience = 0,
-      this.work = '',
-      this.region = const RegionEntity(),
-      this.district = const DistrictEntity(),
-      this.address = '',
-      this.specializations = const [],
-      this.phoneNumber = '',
-      this.email = '',
-      this.rating = 0,
-      this.openToWork = false,
-      this.bio = '',
-      this.showInProfileBio = false,
-      this.licence = const LicenceEntity(),
-      this.instagram = '',
-      this.telegram = '',
-      this.moderationStatus = '',
-      this.img = const ImageEntity(),
-      this.commentCount = 0,
-      this.phoneNumbers = const [],
-      this.organization = const OrganizationEntity()});
+  final bool imgIsFull;
+  final double latitude;
+  final double longitude;
+  final String diplom;
+  final bool paid;
+  final String organizationName;
+
+  const DoctorSingleEntity({
+    this.id = 0,
+    this.fullName = '',
+    this.images = const [],
+    this.position = const PositionEntity(),
+    this.workExperience = 0,
+    this.work = '',
+    this.region = const RegionEntity(),
+    this.district = const DistrictEntity(),
+    this.address = '',
+    this.organizations = const [],
+    this.specializations = const [],
+    this.phoneNumber = '',
+    this.email = '',
+    this.rating = 0,
+    this.openToWork = false,
+    this.bio = '',
+    this.showInProfileBio = false,
+    this.licence = const LicenceEntity(),
+    this.instagram = '',
+    this.telegram = '',
+    this.moderationStatus = '',
+    this.img = const ImageEntity(),
+    this.commentCount = 0,
+    this.phoneNumbers = const [],
+    this.organization = const OrganizationEntity(),
+    this.imgIsFull = false,
+    this.latitude = 0,
+    this.longitude = 0,
+    this.diplom = '',
+    this.paid = false,
+    this.organizationName = '',
+  });
 
   @override
   List<Object?> get props => [
@@ -79,11 +96,18 @@ class DoctorSingleEntity extends Equatable {
         position,
         workExperience,
         work,
+        imgIsFull,
+        latitude,
+        longitude,
+        diplom,
+        paid,
+        organizationName,
         region,
         district,
         address,
         specializations,
         phoneNumber,
+        organizations,
         email,
         rating,
         openToWork,

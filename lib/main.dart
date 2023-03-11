@@ -43,6 +43,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 Future<void> main() async {
@@ -52,6 +53,7 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
+  await DefaultCacheManager().emptyCache();
   // FlutterError.onError =
   //     fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
   HttpOverrides.global = MyHttpOverrides();
