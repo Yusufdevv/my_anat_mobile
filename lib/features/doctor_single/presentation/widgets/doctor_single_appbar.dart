@@ -279,35 +279,13 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            if (widget.doctor.specializations
-                                                .isNotEmpty) ...{
-                                              Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                      AppIcons.stethoscope),
-                                                  const SizedBox(width: 6),
-                                                  Text(
-                                                    widget
-                                                        .doctor
-                                                        .specializations[0]
-                                                        .title,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .displaySmall!
-                                                        .copyWith(
-                                                            color: primary),
-                                                  ),
-                                                ],
-                                              ),
-                                            },
-                                            const SizedBox(height: 16),
                                             Visibility(
                                               visible: widget.doctor
                                                   .specializations.isNotEmpty,
                                               child: Wrap(
                                                 children: [
-                                                  SvgPicture.asset(AppIcons
-                                                      .buildingHospital),
+                                                  SvgPicture.asset(
+                                                      AppIcons.stethoscope),
                                                   const SizedBox(width: 6),
                                                   for (int i = 0;
                                                       i <
@@ -322,12 +300,37 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                                           .textTheme
                                                           .displaySmall!
                                                           .copyWith(
-                                                              color: black),
+                                                              color: primary),
                                                     ),
                                                 ],
                                               ),
                                             ),
                                             const SizedBox(height: 16),
+                                            Visibility(
+                                              visible: widget.doctor.position
+                                                  .title.isNotEmpty,
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      SvgPicture.asset(AppIcons
+                                                          .buildingHospital),
+                                                      const SizedBox(width: 6),
+                                                      Text(
+                                                        widget.doctor.position
+                                                            .title,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .displaySmall!
+                                                            .copyWith(
+                                                                color: black),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 16),
+                                                ],
+                                              ),
+                                            ),
                                             if (widget
                                                 .doctor.address.isNotEmpty) ...[
                                               Row(
@@ -352,119 +355,8 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                               ),
                                               const SizedBox(height: 10),
                                             ],
-                                            // if (widget.doctor.phoneNumbers
-                                            //     .isNotEmpty) ...[
-                                            //   Row(
-                                            //     children: [
-                                            //       SvgPicture.asset(
-                                            //           AppIcons.phone),
-                                            //       const SizedBox(width: 6),
-                                            //       Text(
-                                            //         MyFunctions.formatPhone(
-                                            //             widget
-                                            //                 .doctor
-                                            //                 .phoneNumbers
-                                            //                 .first
-                                            //                 .phoneNumber,
-                                            //             false),
-                                            //         style: Theme.of(context)
-                                            //             .textTheme
-                                            //             .displaySmall!
-                                            //             .copyWith(
-                                            //                 color: textColor),
-                                            //       ),
-                                            //     ],
-                                            //   ),
-                                            //   const SizedBox(height: 10),
-                                            // ],
                                             Wrap(
                                               children: [
-                                                if (widget.doctor.organization
-                                                        .id !=
-                                                    0) ...{
-                                                  GestureDetector(
-                                                    behavior:
-                                                        HitTestBehavior.opaque,
-                                                    onTap: () {
-                                                      if (widget
-                                                              .doctor
-                                                              .organization
-                                                              .id !=
-                                                          0) {
-                                                        Navigator.of(context)
-                                                            .push(
-                                                          fade(
-                                                            page:
-                                                                HospitalSingleScreen(
-                                                              id: widget
-                                                                  .doctor
-                                                                  .organization
-                                                                  .id,
-                                                              slug: widget
-                                                                  .doctor
-                                                                  .organization
-                                                                  .slug,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }
-                                                    },
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10,
-                                                              bottom: 16,
-                                                              right: 12),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                              AppIcons
-                                                                  .building),
-                                                          const SizedBox(
-                                                              width: 6),
-                                                          ConstrainedBox(
-                                                            constraints: BoxConstraints(
-                                                                maxWidth: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width -
-                                                                    74),
-                                                            child: Text(
-                                                              widget
-                                                                  .doctor
-                                                                  .organization
-                                                                  .name,
-                                                              maxLines: 1,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .displaySmall!
-                                                                  .copyWith(
-                                                                      color:
-                                                                          textColor),
-                                                            ),
-                                                          ),
-                                                          if (widget
-                                                                  .doctor
-                                                                  .organization
-                                                                  .id !=
-                                                              0) ...[
-                                                            const SizedBox(
-                                                                width: 4),
-                                                            SvgPicture.asset(
-                                                                AppIcons
-                                                                    .externalLink)
-                                                          ]
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                },
                                                 if (widget.doctor.organizations
                                                     .isNotEmpty) ...{
                                                   ...List.generate(

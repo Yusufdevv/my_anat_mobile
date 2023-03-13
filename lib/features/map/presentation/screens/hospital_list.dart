@@ -9,6 +9,7 @@ import 'package:anatomica/features/map/domain/usecases/get_map_hospitals_with_di
 import 'package:anatomica/features/map/domain/usecases/get_suggestions.dart';
 import 'package:anatomica/features/map/presentation/blocs/doctor_list/doctor_list_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
+import 'package:anatomica/features/map/presentation/blocs/org_map_v2_bloc/org_map_v2_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/suggestion/suggestion_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/result_list.dart';
 import 'package:anatomica/features/map/presentation/screens/suggestion_list.dart';
@@ -24,10 +25,12 @@ class HospitalList extends StatefulWidget {
   final TabController controller;
   final bool getFocus;
   final Point myLocation;
+  final OrgMapV2Bloc orgMapV2Bloc;
 
   const HospitalList(
       {required this.controller,
       required this.myLocation,
+      required this.orgMapV2Bloc,
       this.getFocus = false,
       Key? key})
       : super(key: key);
@@ -75,16 +78,30 @@ class _HospitalListState extends State<HospitalList>
         myPoint: widget.myLocation,
       ));
     suggestionBloc = SuggestionBloc(GetSuggestionsUseCase());
+
+    print('tab index ${widget.orgMapV2Bloc.state.tabIndex}');
     controller = TextEditingController();
-    _controller = TabController(length: 2, vsync: this)
+    _controller = TabController(
+        length: 2,
+        vsync: this,
+        initialIndex: widget.orgMapV2Bloc.state.tabIndex)
       ..addListener(() {
         suggestionBloc.add(SuggestionEvent.changePage(_controller.index));
+        if (_controller.indexIsChanging) {
+          widget.orgMapV2Bloc
+              .add(OrgMapV2Event.changeTab(index: _controller.index));
+        }
       });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_controller.index != widget.orgMapV2Bloc.state.tabIndex) {
+      print(
+          '${_controller.index} indexesss hospital ${widget.orgMapV2Bloc.state.tabIndex}');
+      _controller.animateTo(widget.orgMapV2Bloc.state.tabIndex);
+    }
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: bloc),
@@ -116,7 +133,6 @@ class _HospitalListState extends State<HospitalList>
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: TabBar(
-                    key: const ValueKey('tab'),
                     controller: _controller,
                     padding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.zero,

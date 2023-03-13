@@ -9,14 +9,15 @@ import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'org_map_v2_bloc.freezed.dart';
 part 'org_map_v2_event.dart';
 part 'org_map_v2_state.dart';
-part 'org_map_v2_bloc.freezed.dart';
 
 class OrgMapV2Bloc extends Bloc<OrgMapV2Event, OrgMapV2State> {
   final GetMapHospitalsWithDistanceUseCase useCase;
   final GetTypesUseCase typesUseCase;
   final GetServicesV2UseCase serviceUsecase;
+
   OrgMapV2Bloc(
       {required this.useCase,
       required this.typesUseCase,
@@ -27,7 +28,9 @@ class OrgMapV2Bloc extends Bloc<OrgMapV2Event, OrgMapV2State> {
     on<_SuggestOrg>(suggestOrg);
     on<_GetAllCategories>(getAllCategories);
     on<_GetAllServices>(getAllServices);
+    on<_ChangeTab>(changeTab);
   }
+
   suggestCategories(
       _SuggestCategories event, Emitter<OrgMapV2State> emit) async {
     emit(state.copyWith(categoryStatus: FormzStatus.submissionInProgress));
@@ -93,5 +96,12 @@ class OrgMapV2Bloc extends Bloc<OrgMapV2Event, OrgMapV2State> {
 
   getAllCategories(
       _GetAllCategories event, Emitter<OrgMapV2State> emit) async {}
+
   getAllServices(_GetAllServices event, Emitter<OrgMapV2State> emit) async {}
+
+  changeTab(_ChangeTab event, Emitter<OrgMapV2State> emit) async {
+    print('tab => ${event.index}');
+    emit(state.copyWith(tabIndex: event.index));
+    print('state tab => ${state.tabIndex}');
+  }
 }

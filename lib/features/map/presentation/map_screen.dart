@@ -70,7 +70,14 @@ class _MapScreenState extends State<MapScreen>
             GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
         serviceUsecase: GetServicesV2UseCase(
             repository: serviceLocator<MapRepositoryImpl>()));
-    _controller = TabController(length: 2, vsync: this);
+    _controller = TabController(length: 2, vsync: this)
+      ..addListener(() {
+        if (_controller.indexIsChanging) {
+          print('change tab');
+          orgMapV2Bloc.add(OrgMapV2Event.changeTab(index: _controller.index));
+        }
+        print('listener ishladi');
+      });
     _searchFieldController = TextEditingController();
     myPoint = const Point(latitude: 0, longitude: 0);
     WidgetsBinding.instance.addObserver(this);
@@ -115,7 +122,7 @@ class _MapScreenState extends State<MapScreen>
             builder: (context, mapOrganizationState) => Stack(
               children: [
                 Positioned.fill(
-                  bottom: 60,
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 48,
                   top: -24,
                   child: YandexMap(
                     rotateGesturesEnabled: false,
@@ -142,6 +149,11 @@ class _MapScreenState extends State<MapScreen>
                     },
                     mapObjects: _mapObjects,
                     onMapCreated: (controller) async {
+                      if (_controller.index != orgMapV2Bloc.state.tabIndex) {
+                        print(
+                            '${_controller.index} indexesss ${orgMapV2Bloc.state.tabIndex}');
+                        _controller.animateTo(orgMapV2Bloc.state.tabIndex);
+                      }
                       _mapController = controller;
                       maxZoomLevel = await controller.getMaxZoom();
                       minZoomLevel = await controller.getMinZoom();
@@ -280,7 +292,6 @@ class _MapScreenState extends State<MapScreen>
                           ),
                           padding: const EdgeInsets.all(2),
                           child: TabBar(
-                            key: const ValueKey('tab'),
                             controller: _controller,
                             padding: EdgeInsets.zero,
                             indicatorPadding: EdgeInsets.zero,
@@ -469,6 +480,8 @@ class _MapScreenState extends State<MapScreen>
                                                             page: HospitalList(
                                                       controller: _controller,
                                                       myLocation: myPoint,
+                                                      orgMapV2Bloc:
+                                                          orgMapV2Bloc,
                                                     )));
                                                   },
                                                   border: Border.all(
@@ -515,6 +528,8 @@ class _MapScreenState extends State<MapScreen>
                                                         getFocus: true,
                                                         controller: _controller,
                                                         myLocation: myPoint,
+                                                        orgMapV2Bloc:
+                                                            orgMapV2Bloc,
                                                       )));
                                                     },
                                                     child: Container(

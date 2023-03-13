@@ -23,6 +23,7 @@ mixin _$OrgMapV2Event {
     required TResult Function(MapV2Params params) suggestOrg,
     required TResult Function(String? searchText) getAllCategories,
     required TResult Function(String? searchText) getAllServices,
+    required TResult Function(int index) changeTab,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +33,7 @@ mixin _$OrgMapV2Event {
     TResult? Function(MapV2Params params)? suggestOrg,
     TResult? Function(String? searchText)? getAllCategories,
     TResult? Function(String? searchText)? getAllServices,
+    TResult? Function(int index)? changeTab,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +43,7 @@ mixin _$OrgMapV2Event {
     TResult Function(MapV2Params params)? suggestOrg,
     TResult Function(String? searchText)? getAllCategories,
     TResult Function(String? searchText)? getAllServices,
+    TResult Function(int index)? changeTab,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,6 +54,7 @@ mixin _$OrgMapV2Event {
     required TResult Function(_SuggestOrg value) suggestOrg,
     required TResult Function(_GetAllCategories value) getAllCategories,
     required TResult Function(_GetAllServices value) getAllServices,
+    required TResult Function(_ChangeTab value) changeTab,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,6 +64,7 @@ mixin _$OrgMapV2Event {
     TResult? Function(_SuggestOrg value)? suggestOrg,
     TResult? Function(_GetAllCategories value)? getAllCategories,
     TResult? Function(_GetAllServices value)? getAllServices,
+    TResult? Function(_ChangeTab value)? changeTab,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,6 +74,7 @@ mixin _$OrgMapV2Event {
     TResult Function(_SuggestOrg value)? suggestOrg,
     TResult Function(_GetAllCategories value)? getAllCategories,
     TResult Function(_GetAllServices value)? getAllServices,
+    TResult Function(_ChangeTab value)? changeTab,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -163,6 +169,7 @@ class _$_SuggestCategories implements _SuggestCategories {
     required TResult Function(MapV2Params params) suggestOrg,
     required TResult Function(String? searchText) getAllCategories,
     required TResult Function(String? searchText) getAllServices,
+    required TResult Function(int index) changeTab,
   }) {
     return suggestCategories(searchText);
   }
@@ -175,6 +182,7 @@ class _$_SuggestCategories implements _SuggestCategories {
     TResult? Function(MapV2Params params)? suggestOrg,
     TResult? Function(String? searchText)? getAllCategories,
     TResult? Function(String? searchText)? getAllServices,
+    TResult? Function(int index)? changeTab,
   }) {
     return suggestCategories?.call(searchText);
   }
@@ -187,6 +195,7 @@ class _$_SuggestCategories implements _SuggestCategories {
     TResult Function(MapV2Params params)? suggestOrg,
     TResult Function(String? searchText)? getAllCategories,
     TResult Function(String? searchText)? getAllServices,
+    TResult Function(int index)? changeTab,
     required TResult orElse(),
   }) {
     if (suggestCategories != null) {
@@ -203,6 +212,7 @@ class _$_SuggestCategories implements _SuggestCategories {
     required TResult Function(_SuggestOrg value) suggestOrg,
     required TResult Function(_GetAllCategories value) getAllCategories,
     required TResult Function(_GetAllServices value) getAllServices,
+    required TResult Function(_ChangeTab value) changeTab,
   }) {
     return suggestCategories(this);
   }
@@ -215,6 +225,7 @@ class _$_SuggestCategories implements _SuggestCategories {
     TResult? Function(_SuggestOrg value)? suggestOrg,
     TResult? Function(_GetAllCategories value)? getAllCategories,
     TResult? Function(_GetAllServices value)? getAllServices,
+    TResult? Function(_ChangeTab value)? changeTab,
   }) {
     return suggestCategories?.call(this);
   }
@@ -227,6 +238,7 @@ class _$_SuggestCategories implements _SuggestCategories {
     TResult Function(_SuggestOrg value)? suggestOrg,
     TResult Function(_GetAllCategories value)? getAllCategories,
     TResult Function(_GetAllServices value)? getAllServices,
+    TResult Function(_ChangeTab value)? changeTab,
     required TResult orElse(),
   }) {
     if (suggestCategories != null) {
@@ -316,6 +328,7 @@ class _$_SuggestServices implements _SuggestServices {
     required TResult Function(MapV2Params params) suggestOrg,
     required TResult Function(String? searchText) getAllCategories,
     required TResult Function(String? searchText) getAllServices,
+    required TResult Function(int index) changeTab,
   }) {
     return suggestServices(searchText);
   }
@@ -328,6 +341,7 @@ class _$_SuggestServices implements _SuggestServices {
     TResult? Function(MapV2Params params)? suggestOrg,
     TResult? Function(String? searchText)? getAllCategories,
     TResult? Function(String? searchText)? getAllServices,
+    TResult? Function(int index)? changeTab,
   }) {
     return suggestServices?.call(searchText);
   }
@@ -340,6 +354,7 @@ class _$_SuggestServices implements _SuggestServices {
     TResult Function(MapV2Params params)? suggestOrg,
     TResult Function(String? searchText)? getAllCategories,
     TResult Function(String? searchText)? getAllServices,
+    TResult Function(int index)? changeTab,
     required TResult orElse(),
   }) {
     if (suggestServices != null) {
@@ -356,6 +371,7 @@ class _$_SuggestServices implements _SuggestServices {
     required TResult Function(_SuggestOrg value) suggestOrg,
     required TResult Function(_GetAllCategories value) getAllCategories,
     required TResult Function(_GetAllServices value) getAllServices,
+    required TResult Function(_ChangeTab value) changeTab,
   }) {
     return suggestServices(this);
   }
@@ -368,6 +384,7 @@ class _$_SuggestServices implements _SuggestServices {
     TResult? Function(_SuggestOrg value)? suggestOrg,
     TResult? Function(_GetAllCategories value)? getAllCategories,
     TResult? Function(_GetAllServices value)? getAllServices,
+    TResult? Function(_ChangeTab value)? changeTab,
   }) {
     return suggestServices?.call(this);
   }
@@ -380,6 +397,7 @@ class _$_SuggestServices implements _SuggestServices {
     TResult Function(_SuggestOrg value)? suggestOrg,
     TResult Function(_GetAllCategories value)? getAllCategories,
     TResult Function(_GetAllServices value)? getAllServices,
+    TResult Function(_ChangeTab value)? changeTab,
     required TResult orElse(),
   }) {
     if (suggestServices != null) {
@@ -468,6 +486,7 @@ class _$_SuggestOrg implements _SuggestOrg {
     required TResult Function(MapV2Params params) suggestOrg,
     required TResult Function(String? searchText) getAllCategories,
     required TResult Function(String? searchText) getAllServices,
+    required TResult Function(int index) changeTab,
   }) {
     return suggestOrg(params);
   }
@@ -480,6 +499,7 @@ class _$_SuggestOrg implements _SuggestOrg {
     TResult? Function(MapV2Params params)? suggestOrg,
     TResult? Function(String? searchText)? getAllCategories,
     TResult? Function(String? searchText)? getAllServices,
+    TResult? Function(int index)? changeTab,
   }) {
     return suggestOrg?.call(params);
   }
@@ -492,6 +512,7 @@ class _$_SuggestOrg implements _SuggestOrg {
     TResult Function(MapV2Params params)? suggestOrg,
     TResult Function(String? searchText)? getAllCategories,
     TResult Function(String? searchText)? getAllServices,
+    TResult Function(int index)? changeTab,
     required TResult orElse(),
   }) {
     if (suggestOrg != null) {
@@ -508,6 +529,7 @@ class _$_SuggestOrg implements _SuggestOrg {
     required TResult Function(_SuggestOrg value) suggestOrg,
     required TResult Function(_GetAllCategories value) getAllCategories,
     required TResult Function(_GetAllServices value) getAllServices,
+    required TResult Function(_ChangeTab value) changeTab,
   }) {
     return suggestOrg(this);
   }
@@ -520,6 +542,7 @@ class _$_SuggestOrg implements _SuggestOrg {
     TResult? Function(_SuggestOrg value)? suggestOrg,
     TResult? Function(_GetAllCategories value)? getAllCategories,
     TResult? Function(_GetAllServices value)? getAllServices,
+    TResult? Function(_ChangeTab value)? changeTab,
   }) {
     return suggestOrg?.call(this);
   }
@@ -532,6 +555,7 @@ class _$_SuggestOrg implements _SuggestOrg {
     TResult Function(_SuggestOrg value)? suggestOrg,
     TResult Function(_GetAllCategories value)? getAllCategories,
     TResult Function(_GetAllServices value)? getAllServices,
+    TResult Function(_ChangeTab value)? changeTab,
     required TResult orElse(),
   }) {
     if (suggestOrg != null) {
@@ -621,6 +645,7 @@ class _$_GetAllCategories implements _GetAllCategories {
     required TResult Function(MapV2Params params) suggestOrg,
     required TResult Function(String? searchText) getAllCategories,
     required TResult Function(String? searchText) getAllServices,
+    required TResult Function(int index) changeTab,
   }) {
     return getAllCategories(searchText);
   }
@@ -633,6 +658,7 @@ class _$_GetAllCategories implements _GetAllCategories {
     TResult? Function(MapV2Params params)? suggestOrg,
     TResult? Function(String? searchText)? getAllCategories,
     TResult? Function(String? searchText)? getAllServices,
+    TResult? Function(int index)? changeTab,
   }) {
     return getAllCategories?.call(searchText);
   }
@@ -645,6 +671,7 @@ class _$_GetAllCategories implements _GetAllCategories {
     TResult Function(MapV2Params params)? suggestOrg,
     TResult Function(String? searchText)? getAllCategories,
     TResult Function(String? searchText)? getAllServices,
+    TResult Function(int index)? changeTab,
     required TResult orElse(),
   }) {
     if (getAllCategories != null) {
@@ -661,6 +688,7 @@ class _$_GetAllCategories implements _GetAllCategories {
     required TResult Function(_SuggestOrg value) suggestOrg,
     required TResult Function(_GetAllCategories value) getAllCategories,
     required TResult Function(_GetAllServices value) getAllServices,
+    required TResult Function(_ChangeTab value) changeTab,
   }) {
     return getAllCategories(this);
   }
@@ -673,6 +701,7 @@ class _$_GetAllCategories implements _GetAllCategories {
     TResult? Function(_SuggestOrg value)? suggestOrg,
     TResult? Function(_GetAllCategories value)? getAllCategories,
     TResult? Function(_GetAllServices value)? getAllServices,
+    TResult? Function(_ChangeTab value)? changeTab,
   }) {
     return getAllCategories?.call(this);
   }
@@ -685,6 +714,7 @@ class _$_GetAllCategories implements _GetAllCategories {
     TResult Function(_SuggestOrg value)? suggestOrg,
     TResult Function(_GetAllCategories value)? getAllCategories,
     TResult Function(_GetAllServices value)? getAllServices,
+    TResult Function(_ChangeTab value)? changeTab,
     required TResult orElse(),
   }) {
     if (getAllCategories != null) {
@@ -774,6 +804,7 @@ class _$_GetAllServices implements _GetAllServices {
     required TResult Function(MapV2Params params) suggestOrg,
     required TResult Function(String? searchText) getAllCategories,
     required TResult Function(String? searchText) getAllServices,
+    required TResult Function(int index) changeTab,
   }) {
     return getAllServices(searchText);
   }
@@ -786,6 +817,7 @@ class _$_GetAllServices implements _GetAllServices {
     TResult? Function(MapV2Params params)? suggestOrg,
     TResult? Function(String? searchText)? getAllCategories,
     TResult? Function(String? searchText)? getAllServices,
+    TResult? Function(int index)? changeTab,
   }) {
     return getAllServices?.call(searchText);
   }
@@ -798,6 +830,7 @@ class _$_GetAllServices implements _GetAllServices {
     TResult Function(MapV2Params params)? suggestOrg,
     TResult Function(String? searchText)? getAllCategories,
     TResult Function(String? searchText)? getAllServices,
+    TResult Function(int index)? changeTab,
     required TResult orElse(),
   }) {
     if (getAllServices != null) {
@@ -814,6 +847,7 @@ class _$_GetAllServices implements _GetAllServices {
     required TResult Function(_SuggestOrg value) suggestOrg,
     required TResult Function(_GetAllCategories value) getAllCategories,
     required TResult Function(_GetAllServices value) getAllServices,
+    required TResult Function(_ChangeTab value) changeTab,
   }) {
     return getAllServices(this);
   }
@@ -826,6 +860,7 @@ class _$_GetAllServices implements _GetAllServices {
     TResult? Function(_SuggestOrg value)? suggestOrg,
     TResult? Function(_GetAllCategories value)? getAllCategories,
     TResult? Function(_GetAllServices value)? getAllServices,
+    TResult? Function(_ChangeTab value)? changeTab,
   }) {
     return getAllServices?.call(this);
   }
@@ -838,6 +873,7 @@ class _$_GetAllServices implements _GetAllServices {
     TResult Function(_SuggestOrg value)? suggestOrg,
     TResult Function(_GetAllCategories value)? getAllCategories,
     TResult Function(_GetAllServices value)? getAllServices,
+    TResult Function(_ChangeTab value)? changeTab,
     required TResult orElse(),
   }) {
     if (getAllServices != null) {
@@ -853,6 +889,163 @@ abstract class _GetAllServices implements OrgMapV2Event {
   String? get searchText;
   @JsonKey(ignore: true)
   _$$_GetAllServicesCopyWith<_$_GetAllServices> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_ChangeTabCopyWith<$Res> {
+  factory _$$_ChangeTabCopyWith(
+          _$_ChangeTab value, $Res Function(_$_ChangeTab) then) =
+      __$$_ChangeTabCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class __$$_ChangeTabCopyWithImpl<$Res>
+    extends _$OrgMapV2EventCopyWithImpl<$Res, _$_ChangeTab>
+    implements _$$_ChangeTabCopyWith<$Res> {
+  __$$_ChangeTabCopyWithImpl(
+      _$_ChangeTab _value, $Res Function(_$_ChangeTab) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+  }) {
+    return _then(_$_ChangeTab(
+      index: null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ChangeTab implements _ChangeTab {
+  const _$_ChangeTab({required this.index});
+
+  @override
+  final int index;
+
+  @override
+  String toString() {
+    return 'OrgMapV2Event.changeTab(index: $index)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ChangeTab &&
+            (identical(other.index, index) || other.index == index));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, index);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ChangeTabCopyWith<_$_ChangeTab> get copyWith =>
+      __$$_ChangeTabCopyWithImpl<_$_ChangeTab>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? searchText) suggestCategories,
+    required TResult Function(String? searchText) suggestServices,
+    required TResult Function(MapV2Params params) suggestOrg,
+    required TResult Function(String? searchText) getAllCategories,
+    required TResult Function(String? searchText) getAllServices,
+    required TResult Function(int index) changeTab,
+  }) {
+    return changeTab(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? searchText)? suggestCategories,
+    TResult? Function(String? searchText)? suggestServices,
+    TResult? Function(MapV2Params params)? suggestOrg,
+    TResult? Function(String? searchText)? getAllCategories,
+    TResult? Function(String? searchText)? getAllServices,
+    TResult? Function(int index)? changeTab,
+  }) {
+    return changeTab?.call(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? searchText)? suggestCategories,
+    TResult Function(String? searchText)? suggestServices,
+    TResult Function(MapV2Params params)? suggestOrg,
+    TResult Function(String? searchText)? getAllCategories,
+    TResult Function(String? searchText)? getAllServices,
+    TResult Function(int index)? changeTab,
+    required TResult orElse(),
+  }) {
+    if (changeTab != null) {
+      return changeTab(index);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SuggestCategories value) suggestCategories,
+    required TResult Function(_SuggestServices value) suggestServices,
+    required TResult Function(_SuggestOrg value) suggestOrg,
+    required TResult Function(_GetAllCategories value) getAllCategories,
+    required TResult Function(_GetAllServices value) getAllServices,
+    required TResult Function(_ChangeTab value) changeTab,
+  }) {
+    return changeTab(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SuggestCategories value)? suggestCategories,
+    TResult? Function(_SuggestServices value)? suggestServices,
+    TResult? Function(_SuggestOrg value)? suggestOrg,
+    TResult? Function(_GetAllCategories value)? getAllCategories,
+    TResult? Function(_GetAllServices value)? getAllServices,
+    TResult? Function(_ChangeTab value)? changeTab,
+  }) {
+    return changeTab?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SuggestCategories value)? suggestCategories,
+    TResult Function(_SuggestServices value)? suggestServices,
+    TResult Function(_SuggestOrg value)? suggestOrg,
+    TResult Function(_GetAllCategories value)? getAllCategories,
+    TResult Function(_GetAllServices value)? getAllServices,
+    TResult Function(_ChangeTab value)? changeTab,
+    required TResult orElse(),
+  }) {
+    if (changeTab != null) {
+      return changeTab(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeTab implements OrgMapV2Event {
+  const factory _ChangeTab({required final int index}) = _$_ChangeTab;
+
+  int get index;
+  @JsonKey(ignore: true)
+  _$$_ChangeTabCopyWith<_$_ChangeTab> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -878,6 +1071,7 @@ mixin _$OrgMapV2State {
   bool get hospitalsFetchMore => throw _privateConstructorUsedError;
   bool get typesFetchMore => throw _privateConstructorUsedError;
   bool get servicesFetchMore => throw _privateConstructorUsedError;
+  dynamic get tabIndex => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $OrgMapV2StateCopyWith<OrgMapV2State> get copyWith =>
@@ -909,7 +1103,8 @@ abstract class $OrgMapV2StateCopyWith<$Res> {
       String? servicesNext,
       bool hospitalsFetchMore,
       bool typesFetchMore,
-      bool servicesFetchMore});
+      bool servicesFetchMore,
+      dynamic tabIndex});
 }
 
 /// @nodoc
@@ -944,6 +1139,7 @@ class _$OrgMapV2StateCopyWithImpl<$Res, $Val extends OrgMapV2State>
     Object? hospitalsFetchMore = null,
     Object? typesFetchMore = null,
     Object? servicesFetchMore = null,
+    Object? tabIndex = null,
   }) {
     return _then(_value.copyWith(
       hospitals: null == hospitals
@@ -1022,6 +1218,10 @@ class _$OrgMapV2StateCopyWithImpl<$Res, $Val extends OrgMapV2State>
           ? _value.servicesFetchMore
           : servicesFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      tabIndex: null == tabIndex
+          ? _value.tabIndex
+          : tabIndex // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 }
@@ -1053,7 +1253,8 @@ abstract class _$$_OrgMapV2StateCopyWith<$Res>
       String? servicesNext,
       bool hospitalsFetchMore,
       bool typesFetchMore,
-      bool servicesFetchMore});
+      bool servicesFetchMore,
+      dynamic tabIndex});
 }
 
 /// @nodoc
@@ -1086,6 +1287,7 @@ class __$$_OrgMapV2StateCopyWithImpl<$Res>
     Object? hospitalsFetchMore = null,
     Object? typesFetchMore = null,
     Object? servicesFetchMore = null,
+    Object? tabIndex = null,
   }) {
     return _then(_$_OrgMapV2State(
       hospitals: null == hospitals
@@ -1151,6 +1353,7 @@ class __$$_OrgMapV2StateCopyWithImpl<$Res>
           ? _value.servicesFetchMore
           : servicesFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      tabIndex: null == tabIndex ? _value.tabIndex : tabIndex,
     ));
   }
 }
@@ -1177,7 +1380,8 @@ class _$_OrgMapV2State implements _OrgMapV2State {
       this.servicesNext,
       this.hospitalsFetchMore = false,
       this.typesFetchMore = false,
-      this.servicesFetchMore = false})
+      this.servicesFetchMore = false,
+      this.tabIndex = 0})
       : _hospitals = hospitals,
         _types = types,
         _services = services;
@@ -1248,10 +1452,13 @@ class _$_OrgMapV2State implements _OrgMapV2State {
   @override
   @JsonKey()
   final bool servicesFetchMore;
+  @override
+  @JsonKey()
+  final dynamic tabIndex;
 
   @override
   String toString() {
-    return 'OrgMapV2State(hospitals: $hospitals, types: $types, services: $services, getAllHospitalsStatus: $getAllHospitalsStatus, getSuggestHospitalsStatus: $getSuggestHospitalsStatus, serviceStatus: $serviceStatus, categoryStatus: $categoryStatus, hospitalsCount: $hospitalsCount, typesCount: $typesCount, servicesCount: $servicesCount, hospitalsPrevious: $hospitalsPrevious, typesPrevious: $typesPrevious, servicesPrevious: $servicesPrevious, hospitalsNext: $hospitalsNext, typesNext: $typesNext, servicesNext: $servicesNext, hospitalsFetchMore: $hospitalsFetchMore, typesFetchMore: $typesFetchMore, servicesFetchMore: $servicesFetchMore)';
+    return 'OrgMapV2State(hospitals: $hospitals, types: $types, services: $services, getAllHospitalsStatus: $getAllHospitalsStatus, getSuggestHospitalsStatus: $getSuggestHospitalsStatus, serviceStatus: $serviceStatus, categoryStatus: $categoryStatus, hospitalsCount: $hospitalsCount, typesCount: $typesCount, servicesCount: $servicesCount, hospitalsPrevious: $hospitalsPrevious, typesPrevious: $typesPrevious, servicesPrevious: $servicesPrevious, hospitalsNext: $hospitalsNext, typesNext: $typesNext, servicesNext: $servicesNext, hospitalsFetchMore: $hospitalsFetchMore, typesFetchMore: $typesFetchMore, servicesFetchMore: $servicesFetchMore, tabIndex: $tabIndex)';
   }
 
   @override
@@ -1294,7 +1501,8 @@ class _$_OrgMapV2State implements _OrgMapV2State {
             (identical(other.typesFetchMore, typesFetchMore) ||
                 other.typesFetchMore == typesFetchMore) &&
             (identical(other.servicesFetchMore, servicesFetchMore) ||
-                other.servicesFetchMore == servicesFetchMore));
+                other.servicesFetchMore == servicesFetchMore) &&
+            const DeepCollectionEquality().equals(other.tabIndex, tabIndex));
   }
 
   @override
@@ -1318,7 +1526,8 @@ class _$_OrgMapV2State implements _OrgMapV2State {
         servicesNext,
         hospitalsFetchMore,
         typesFetchMore,
-        servicesFetchMore
+        servicesFetchMore,
+        const DeepCollectionEquality().hash(tabIndex)
       ]);
 
   @JsonKey(ignore: true)
@@ -1348,7 +1557,8 @@ abstract class _OrgMapV2State implements OrgMapV2State {
       final String? servicesNext,
       final bool hospitalsFetchMore,
       final bool typesFetchMore,
-      final bool servicesFetchMore}) = _$_OrgMapV2State;
+      final bool servicesFetchMore,
+      final dynamic tabIndex}) = _$_OrgMapV2State;
 
   @override
   List<OrgMapV2Model> get hospitals;
@@ -1388,6 +1598,8 @@ abstract class _OrgMapV2State implements OrgMapV2State {
   bool get typesFetchMore;
   @override
   bool get servicesFetchMore;
+  @override
+  dynamic get tabIndex;
   @override
   @JsonKey(ignore: true)
   _$$_OrgMapV2StateCopyWith<_$_OrgMapV2State> get copyWith =>

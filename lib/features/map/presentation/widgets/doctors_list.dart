@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DoctorsList extends StatefulWidget {
   final TextEditingController textEditingController;
+
   const DoctorsList({required this.textEditingController, Key? key})
       : super(key: key);
 
@@ -32,7 +33,6 @@ class _DoctorsListState extends State<DoctorsList> {
   Widget build(BuildContext context) {
     return BlocBuilder<DoctorListBloc, DoctorListState>(
       builder: (context, state) {
-        print('doctor length => ${state.doctors.length} next => ${state.next}');
         return Align(
           alignment: Alignment.topCenter,
           child: RefreshIndicator(

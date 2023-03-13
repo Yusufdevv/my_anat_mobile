@@ -22,5 +22,6 @@ class OrgMapV2State with _$OrgMapV2State {
     @Default(false) bool hospitalsFetchMore,
     @Default(false) bool typesFetchMore,
     @Default(false) bool servicesFetchMore,
+    @Default(0) tabIndex,
   }) = _OrgMapV2State;
 }
