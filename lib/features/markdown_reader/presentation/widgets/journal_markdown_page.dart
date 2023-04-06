@@ -2,8 +2,6 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/markdown_reader/presentation/bloc/reader_controller_bloc/reader_controller_bloc.dart';
-import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -116,40 +114,41 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
             // ),
           ),
           Positioned(
-            bottom: MediaQuery.of(context).padding.bottom + 16,
-            right: 24,
-            left: 24,
+            bottom: 0,
+            right: 0,
+            left: 0,
             child: AnimatedCrossFade(
               secondChild: const SizedBox(
                 width: double.maxFinite,
               ),
-              duration: const Duration(milliseconds: 150),
+              firstCurve: Curves.bounceInOut,
+              duration: const Duration(milliseconds: 300),
               crossFadeState: buttonshow
                   ? CrossFadeState.showFirst
                   : CrossFadeState.showSecond,
               firstChild: WScaleAnimation(
                 onTap: scrollToTop,
-                child: Container(
-                  height: 48,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: textColor,
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).padding.bottom + 16,
+                      right: 24,
                     ),
-                    borderRadius: BorderRadius.circular(8),
-                    color: white,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        LocaleKeys.back_to_top.tr(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(fontSize: 15),
-                      ),
-                      SvgPicture.asset(AppIcons.arrowUp)
-                    ],
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: textColor.withOpacity(0.16),
+                          offset: const Offset(2, 6),
+                          blurRadius: 18,
+                        )
+                      ],
+                    ),
+                    child: SvgPicture.asset(AppIcons.arrowUp,
+                        width: 28, height: 28, color: primary),
                   ),
                 ),
               ),

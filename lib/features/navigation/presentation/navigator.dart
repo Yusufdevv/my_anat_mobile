@@ -1,3 +1,4 @@
+import 'package:anatomica/features/home/home_screen.dart';
 import 'package:anatomica/features/journal/presentation/pages/journal_screen.dart';
 import 'package:anatomica/features/map/presentation/map_screen.dart';
 import 'package:anatomica/features/profile/presentation/pages/profile.dart';
@@ -27,6 +28,10 @@ class _TabNavigatorState extends State<TabNavigator>
   Map<String, WidgetBuilder> _routeBuilders(
       {required BuildContext context, required RouteSettings routeSettings}) {
     switch (widget.tabItem) {
+      case NavItemEnum.home:
+        return {
+          TabNavigatorRoutes.root: (context) => const HomePage(),
+        };
       case NavItemEnum.map:
         return {TabNavigatorRoutes.root: (context) => const MapScreen()};
       case NavItemEnum.magazine:

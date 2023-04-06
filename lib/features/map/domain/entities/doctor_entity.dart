@@ -13,6 +13,13 @@ class HospitalDoctorsEntity {
   final int workExperience;
   final String address;
   final bool isFavourite;
+
+  final bool imgIsFull;
+  final double latitude;
+  final double longitude;
+  final List<List<String>> phoneNumbers;
+  final double distance;
+
   const HospitalDoctorsEntity({
     this.isFavourite = false,
     this.rating = 0,
@@ -24,5 +31,10 @@ class HospitalDoctorsEntity {
     this.phoneNumber = '',
     this.workExperience = 0,
     this.address = '',
+    this.distance = 0,
+    this.imgIsFull = false,
+    this.latitude = 0,
+    this.longitude = 0,
+    this.phoneNumbers = const [],
   });
 }

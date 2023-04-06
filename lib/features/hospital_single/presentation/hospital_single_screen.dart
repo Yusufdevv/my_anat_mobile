@@ -257,6 +257,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                     }
                   },
                   builder: (context, state) {
+                    print('isPaid => ${state.hospital.paid}');
                     if (state.status.isSubmissionInProgress) {
                       return const Center(
                         child: CupertinoActivityIndicator(),
@@ -276,7 +277,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                   AboutHospital(
                                     hospital: state.hospital,
                                   ),
-                                  const SizedBox.expand(),
+                                  const SizedBox(height: 20),
                                 ],
                               ),
                             )

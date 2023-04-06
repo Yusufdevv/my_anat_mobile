@@ -232,7 +232,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
-                  Expanded(
+                  SizedBox(
+                    height: 124,
                     child: GridView(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       physics: const NeverScrollableScrollPhysics(),
@@ -272,18 +273,99 @@ class _PaymentScreenState extends State<PaymentScreen>
                             });
                           },
                           iconHeight: 22,
-                          icon: AppImages.apelsin,
+                          icon: AppImages.uzum,
                           currentPaymentMethod: currentPaymentMethod,
-                          paymentMethod: 'apelsin',
-                        )
+                          paymentMethod: 'uzum',
+                        ),
+                        PaymentMethod(
+                          onTap: (value) {
+                            setState(() {
+                              currentPaymentMethod = value;
+                            });
+                          },
+                          iconHeight: 22,
+                          icon: AppImages.paylov,
+                          currentPaymentMethod: currentPaymentMethod,
+                          paymentMethod: 'paylov',
+                        ),
                       ],
                     ),
                   ),
+                  PaymentMethod(
+                    margin: EdgeInsets.fromLTRB(16, 16, 16, 12),
+                    onTap: (value) {
+                      setState(() {
+                        currentPaymentMethod = value;
+                      });
+                    },
+                    currentPaymentMethod: currentPaymentMethod,
+                    paymentMethod: 'card',
+                    title: Text(
+                      'Оплата с картой',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                  ),
+                  AnimatedCrossFade(
+                    firstChild: Container(
+                      margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
+                      decoration: BoxDecoration(
+                        color: lilyWhite,
+                        border: Border.all(color: lilyWhite),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 150),
+                            child: true
+                                ? SvgPicture.asset(AppIcons.paymentMethodCheck)
+                                : Container(
+                                    height: 24,
+                                    width: 24,
+                                    decoration: const BoxDecoration(
+                                        color: checkUnselected,
+                                        shape: BoxShape.circle),
+                                  ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              '8600 49** **** **04',
+                              style: Theme.of(context).textTheme.displayLarge,
+                            ),
+                          ),
+                          WScaleAnimation(
+                            onTap: () {},
+                            child: Container(
+                              height: 36,
+                              width: 36,
+                              padding: EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: textSecondary.withOpacity(.16),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: SvgPicture.asset(AppIcons.chevronsUpDown),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    secondChild: SizedBox(),
+                    crossFadeState: currentPaymentMethod == 'card'
+                        ? CrossFadeState.showFirst
+                        : CrossFadeState.showSecond,
+                    firstCurve: Curves.slowMiddle,
+                    duration: Duration(milliseconds: 300),
+                  ),
+                  Spacer(),
                   WButton(
+                    height: 40,
                     margin: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).padding.bottom + 16,
-                        left: 16,
-                        right: 16),
+                      bottom: MediaQuery.of(context).padding.bottom + 16,
+                      left: 16,
+                      right: 16,
+                    ),
                     onTap: () {
                       if (currentPaymentMethod.isEmpty) {
                         context.read<ShowPopUpBloc>().add(
@@ -347,6 +429,7 @@ class JournalArticleItem extends StatelessWidget {
   final String title;
   final String slug;
   final int price;
+
   @override
   Widget build(BuildContext context) {
     return Container(

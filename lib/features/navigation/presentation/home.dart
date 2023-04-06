@@ -17,7 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'navigator.dart';
 
-enum NavItemEnum { map, magazine, vacancies, account }
+enum NavItemEnum { home, map, magazine, vacancies, account }
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,31 +33,38 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late TabController _controller;
 
   final Map<NavItemEnum, GlobalKey<NavigatorState>> _navigatorKeys = {
+    NavItemEnum.home: GlobalKey<NavigatorState>(),
+    NavItemEnum.account: GlobalKey<NavigatorState>(),
     NavItemEnum.map: GlobalKey<NavigatorState>(),
     NavItemEnum.vacancies: GlobalKey<NavigatorState>(),
     NavItemEnum.magazine: GlobalKey<NavigatorState>(),
-    NavItemEnum.account: GlobalKey<NavigatorState>(),
   };
 
   final List<NavBar> lables = const [
     NavBar(
-      title: LocaleKeys.map,
+      // todo locale
+      title: 'Home',
       id: 0,
+      icon: AppIcons.home,
+    ),
+    NavBar(
+      title: LocaleKeys.map,
+      id: 1,
       icon: AppIcons.map,
     ),
     NavBar(
       title: LocaleKeys.magazine,
-      id: 1,
+      id: 2,
       icon: AppIcons.magazine,
     ),
     NavBar(
       title: LocaleKeys.vacancy,
-      id: 2,
+      id: 3,
       icon: AppIcons.vacancies,
     ),
     NavBar(
       title: LocaleKeys.account,
-      id: 3,
+      id: 4,
       icon: AppIcons.profile,
     ),
   ];

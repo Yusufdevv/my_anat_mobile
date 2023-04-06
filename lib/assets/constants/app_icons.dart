@@ -42,6 +42,12 @@ class AppIcons {
   static const commentEmpty = 'assets/icons/map_screen/comment_empty.svg';
   static const playIcon = 'assets/icons/map_screen/play_icon.svg';
 
+  // Home
+  static const home = 'assets/icons/home/home.svg';
+  static const moreVertical = 'assets/icons/home/more_vertical.svg';
+  static const notificationWithRedDot =
+      'assets/icons/home/notification_with_red_dot.svg';
+
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';
   static const edit = 'assets/icons/auth/edit.svg';
@@ -122,6 +128,7 @@ class AppIcons {
       'assets/icons/profile/change_password_lock.svg';
 
   static const paymentMethodCheck = 'assets/icons/magazine/payment_check.svg';
+
   //magazine
   static const magazineFilter = 'assets/icons/magazine/filter.svg';
   static const magazineSearch = 'assets/icons/magazine/search.svg';
@@ -132,6 +139,7 @@ class AppIcons {
   static const fontSizeDown = 'assets/icons/magazine/font_size_down.svg';
   static const readerCheck = 'assets/icons/magazine/reader_check.svg';
   static const brightness = 'assets/icons/magazine/brightness.svg';
+  static const chevronsUpDown = 'assets/icons/magazine/chevrons-up-down.svg';
 
   //static const close = 'assets/icons/magazine/close.svg';
   static const userPlus = 'assets/icons/magazine/user_plus.svg';
@@ -149,6 +157,6 @@ class AppIcons {
   static const locationIconOutlined =
       'assets/icons/map_screen/current_location_outline.svg';
   static const rightArrow = 'assets/icons/map_screen/right_arrow.svg';
-
-//  static const refresh = 'assets/icons/magazine/refresh.svg';
+  static const buyPremiumBackground =
+      'assets/images/buy_premium_background.png';
 }

@@ -17,6 +17,7 @@ class JournalArticleEntity extends Equatable {
   final bool isBought;
   final bool isPaidForPublish;
   final String moderationStatus;
+
   const JournalArticleEntity({
     this.redaction = '',
     this.image = const ImageEntity(),
@@ -31,6 +32,7 @@ class JournalArticleEntity extends Equatable {
     this.title = '',
     this.viewCount = 0,
   });
+
   @override
   List<Object?> get props => [
         redaction,

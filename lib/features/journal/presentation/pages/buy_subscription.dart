@@ -43,6 +43,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
   String currentPaymentMethod = '';
   PeriodEntity currentPeriod =
       const PeriodEntity(title: LocaleKeys.days_30, period: 1);
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -272,11 +273,23 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                           currentPaymentMethod = value;
                                         });
                                       },
-                                      iconHeight: 22,
-                                      icon: AppImages.apelsin,
+                                      iconHeight: 26,
+                                      icon: AppImages.uzum,
                                       currentPaymentMethod:
                                           currentPaymentMethod,
-                                      paymentMethod: 'apelsin',
+                                      paymentMethod: 'uzum',
+                                    ),
+                                    PaymentMethod(
+                                      onTap: (value) {
+                                        setState(() {
+                                          currentPaymentMethod = value;
+                                        });
+                                      },
+                                      iconHeight: 22,
+                                      icon: AppImages.paylov,
+                                      currentPaymentMethod:
+                                          currentPaymentMethod,
+                                      paymentMethod: 'paylov',
                                     )
                                   ],
                                 ),

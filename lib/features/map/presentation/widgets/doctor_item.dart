@@ -21,6 +21,7 @@ class DoctorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('rating => ${entity.rating}');
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -68,37 +69,59 @@ class DoctorItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 8),
-                        Text(
-                          entity.fullName,
-                          style: Theme.of(context).textTheme.displayLarge,
-                        ),
-                        const SizedBox(height: 4),
-                        showPosition
-                            ? Text(
-                                entity.position,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium!
-                                    .copyWith(fontSize: 14),
-                              )
-                            : Wrap(
-                                children: [
-                                  for (int i = 0;
-                                      i < entity.specializations.length;
-                                      i++)
-                                    Text(
-                                      '${entity.specializations[i].title} ',
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 8),
+                              Text(
+                                entity.fullName,
+                                style: Theme.of(context).textTheme.displayLarge,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 4),
+                              showPosition
+                                  ? Text(
+                                      entity.position,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineMedium!
                                           .copyWith(fontSize: 14),
+                                      maxLines: 2,
+                                    )
+                                  : Wrap(
+                                      children: [
+                                        for (int i = 0;
+                                            i < entity.specializations.length;
+                                            i++)
+                                          Text(
+                                            '${entity.specializations[i].title} ',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineMedium!
+                                                .copyWith(fontSize: 14),
+                                          ),
+                                      ],
                                     ),
-                                ],
-                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4, right: 4),
+                          child: SvgPicture.asset(AppIcons.location),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4, right: 8),
+                          child: Text(
+                            // TODO add distance to doctors
+                            '200 km',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ),
                       ],
                     ),
                   )

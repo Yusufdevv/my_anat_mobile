@@ -8,9 +8,10 @@ class AppImages {
   static const companyLogo = 'assets/icons/map_screen/company_logo.png';
   static const magazineBack = 'assets/images/magazine_back.png';
   static const illustrations = 'assets/images/illustrations.png';
-  static const payMe = 'assets/images/payme.png';
-  static const click = 'assets/images/click.png';
-  static const apelsin = 'assets/images/apelsin.png';
+  static const payMe = 'assets/images/payme.svg';
+  static const click = 'assets/images/click.svg';
+  static const paylov = 'assets/images/paylov.svg';
+  static const uzum = 'assets/images/uzum.svg';
   static const doctor = 'assets/images/doctor.png';
   static const organization = 'assets/images/organization.png';
   static const selectedHospital = 'assets/images/selected_hospital.png';

@@ -9,13 +9,17 @@ class PaymentMethod extends StatelessWidget {
   final String paymentMethod;
   final String currentPaymentMethod;
   final String icon;
-  final double iconHeight;
+  final double? iconHeight;
+  final Widget? title;
+  final EdgeInsets? margin;
   const PaymentMethod({
     required this.onTap,
     required this.currentPaymentMethod,
     required this.paymentMethod,
-    required this.icon,
-    required this.iconHeight,
+    this.icon = '',
+    this.iconHeight,
+    this.title,
+    this.margin,
     Key? key,
   }) : super(key: key);
 
@@ -25,10 +29,13 @@ class PaymentMethod extends StatelessWidget {
       onTap: () => onTap(paymentMethod),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
+        margin: margin,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: paymentMethod == currentPaymentMethod ? white : lilyWhite,
-          border: Border.all(color: paymentMethod == currentPaymentMethod ? primary : lilyWhite),
+          border: Border.all(
+              color:
+                  paymentMethod == currentPaymentMethod ? primary : lilyWhite),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -40,11 +47,17 @@ class PaymentMethod extends StatelessWidget {
                   : Container(
                       height: 24,
                       width: 24,
-                      decoration: const BoxDecoration(color: checkUnselected, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(
+                          color: checkUnselected, shape: BoxShape.circle),
                     ),
             ),
             const SizedBox(width: 6),
-            Image.asset(icon, height: iconHeight),
+            title ??
+                SvgPicture.asset(
+                  icon,
+                  height: iconHeight,
+                  fit: BoxFit.cover,
+                ),
           ],
         ),
       ),
