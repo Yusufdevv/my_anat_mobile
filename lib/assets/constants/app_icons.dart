@@ -13,6 +13,7 @@ class AppIcons {
   static const smallImageError = 'assets/icons/global/small_image_error.svg';
   static const book = 'assets/icons/magazine/book.svg';
   static const arrowUp = 'assets/icons/magazine/arrow_up.svg';
+  static const creditCard = 'assets/icons/global/credit_card.svg';
 
   // MapScreen
   static const listIcon = 'assets/icons/map_screen/list_icon.svg';

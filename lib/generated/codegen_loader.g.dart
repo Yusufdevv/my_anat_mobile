@@ -10,7 +10,7 @@ class CodegenLoader extends AssetLoader{
   const CodegenLoader();
 
   @override
-  Future<Map<String, dynamic>> load(String path, Locale locale ) {
+  Future<Map<String, dynamic>> load(String fullPath, Locale locale ) {
     return Future.value(mapLocales[locale.toString()]);
   }
 
@@ -314,7 +314,17 @@ class CodegenLoader extends AssetLoader{
   "privacy_1": "Регистрируясь, вы соглашаетесь с",
   "privacy_2": " Условиями использования и Политикой конфиденциальности ",
   "privacy_3": "вы подтверждаете свое согласие",
-  "back_to_top": "Обратно наверх"
+  "back_to_top": "Обратно наверх",
+  "add_card": "Добавить карту",
+  "number_card": "Номер карты",
+  "cards": "Карты",
+  "card_term": "Срок карты",
+  "enter_card_number": "Введите номер карты",
+  "enter_card_term": "Введите срок карты",
+  "payment_with_card": "Оплата с картой",
+  "my_cards": "Мои карты",
+  "read_snippet": "Читать фрагмент",
+  "v_c_h_b_s_t_y_p_n": "Код подтверждения был отправлен на ваш номер телефона"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -430,7 +440,7 @@ static const Map<String,dynamic> uz = {
   "sing_up_to_full": "Ilovadan to'liq foydalanish uchun ro'yxatdan o'ting",
   "preview": "Oldindan ko'rish",
   "buy": "Sotib olish",
-  "content": "Tarkibi",
+  "content": "Mundarija",
   "settings": "Sozlamalar",
   "subscribe": "Obuna boʻling",
   "about_doctor": "Shifokor haqida",
@@ -616,7 +626,17 @@ static const Map<String,dynamic> uz = {
   "privacy_1": "Ro‘yxatdan o‘tish orqali siz",
   "privacy_2": " Foydalanish shartlari va Maxfiylik siyosati ",
   "privacy_3": "rozilik bildirasiz",
-  "back_to_top": "Tepaga qaytish"
+  "back_to_top": "Tepaga qaytish",
+  "add_card": "Kartani qo'shish",
+  "number_card": "Karta raqami",
+  "cards": "Карты",
+  "card_term": "Karta muddati",
+  "enter_card_number": "Karta raqamini kiriting",
+  "enter_card_term": "Karda muddatini kiriting",
+  "payment_with_card": "Karta bilan to'lov",
+  "my_cards": "Mening kartalarim",
+  "read_snippet": "Parchani o'qish",
+  "v_c_h_b_s_t_y_p_n": "Telefon raqamingizga tasdiqlash kodi yuborildi"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

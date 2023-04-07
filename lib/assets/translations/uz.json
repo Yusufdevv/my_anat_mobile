@@ -298,5 +298,15 @@
   "privacy_1" : "Ro‘yxatdan o‘tish orqali siz",
   "privacy_2" : " Foydalanish shartlari va Maxfiylik siyosati ",
   "privacy_3" : "rozilik bildirasiz",
-  "back_to_top" : "Tepaga qaytish"
+  "back_to_top" : "Tepaga qaytish",
+  "add_card" : "Kartani qo'shish",
+  "number_card" : "Karta raqami",
+  "cards" : "Карты",
+  "card_term" : "Karta muddati",
+  "enter_card_number" : "Karta raqamini kiriting",
+  "enter_card_term" : "Karda muddatini kiriting",
+  "payment_with_card" : "Karta bilan to'lov",
+  "my_cards" : "Mening kartalarim",
+  "read_snippet" : "Parchani o'qish",
+  "v_c_h_b_s_t_y_p_n" : "Telefon raqamingizga tasdiqlash kodi yuborildi"
 }

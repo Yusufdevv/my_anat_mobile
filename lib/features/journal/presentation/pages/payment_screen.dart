@@ -17,6 +17,9 @@ import 'package:anatomica/features/journal/domain/usecases/order_create_journal_
 import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
+import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.dart';
+import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
+import 'package:anatomica/features/journal/presentation/widgets/cards_bottomsheet.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/markdown_reader/presentation/pages/journal_markdown_reader.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -60,9 +63,10 @@ class _PaymentScreenState extends State<PaymentScreen>
   late TabController controller;
   late TextEditingController phoneController;
   late TextEditingController emailController;
-  String currentPaymentMethod = '';
+  final ValueNotifier currentPaymentMethod = ValueNotifier<String>('');
   bool isPhone = true;
-  CrossFadeState _inputState = CrossFadeState.showFirst;
+  final ValueNotifier _inputState =
+      ValueNotifier<CrossFadeState>(CrossFadeState.showFirst);
 
   @override
   void initState() {
@@ -79,6 +83,23 @@ class _PaymentScreenState extends State<PaymentScreen>
 
     super.initState();
   }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+  Map<String, String> payments = {
+    'payme': AppImages.payMe,
+    'click': AppImages.click,
+    'uzum': AppImages.uzum,
+    'paylov': AppImages.paylov,
+  };
+  List<double> iconHeights = [24, 24, 22, 22];
+  List<double> cards = [];
 
   @override
   Widget build(BuildContext context) {
@@ -182,13 +203,9 @@ class _PaymentScreenState extends State<PaymentScreen>
                         labelColor: textColor,
                         onTap: (index) {
                           if (index == 0) {
-                            setState(() {
-                              _inputState = CrossFadeState.showFirst;
-                            });
+                            _inputState.value = CrossFadeState.showFirst;
                           } else {
-                            setState(() {
-                              _inputState = CrossFadeState.showSecond;
-                            });
+                            _inputState.value = CrossFadeState.showSecond;
                           }
                         },
                         unselectedLabelColor: textSecondary,
@@ -198,32 +215,41 @@ class _PaymentScreenState extends State<PaymentScreen>
                         ],
                       ),
                     ),
-                    AnimatedCrossFade(
-                      duration: const Duration(milliseconds: 150),
-                      crossFadeState: _inputState,
-                      firstChild: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-                        child: PhoneTextField(
-                          hasError: state.orderCreateStatus.isSubmissionFailure,
-                          controller: phoneController,
-                          title: LocaleKeys.phone_number.tr(),
-                        ),
-                      ),
-                      secondChild: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-                        child: DefaultTextField(
-                          title: LocaleKeys.mail.tr(),
-                          controller: emailController,
-                          hasError: state.orderCreateStatus.isSubmissionFailure,
-                          onChanged: (value) {},
-                          prefix: Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 8),
-                            child: SvgPicture.asset(AppIcons.mail),
-                          ),
-                          hintText: 'example@anatomica.uz',
-                        ),
-                      ),
-                    )
+                    ValueListenableBuilder(
+                        valueListenable: _inputState,
+                        builder: (context, ob, child) {
+                          return AnimatedCrossFade(
+                            duration: const Duration(milliseconds: 150),
+                            crossFadeState: _inputState.value,
+                            firstChild: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                              child: PhoneTextField(
+                                hasError:
+                                    state.orderCreateStatus.isSubmissionFailure,
+                                controller: phoneController,
+                                title: LocaleKeys.phone_number.tr(),
+                              ),
+                            ),
+                            secondChild: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                              child: DefaultTextField(
+                                title: LocaleKeys.mail.tr(),
+                                controller: emailController,
+                                hasError:
+                                    state.orderCreateStatus.isSubmissionFailure,
+                                onChanged: (value) {},
+                                prefix: Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 12, right: 8),
+                                  child: SvgPicture.asset(AppIcons.mail),
+                                ),
+                                hintText: 'example@anatomica.uz',
+                              ),
+                            ),
+                          );
+                        })
                   ],
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -232,181 +258,205 @@ class _PaymentScreenState extends State<PaymentScreen>
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
-                  SizedBox(
-                    height: 124,
-                    child: GridView(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 15,
-                              mainAxisSpacing: 16,
-                              mainAxisExtent: 54),
-                      children: [
-                        PaymentMethod(
-                          onTap: (value) {
-                            setState(() {
-                              currentPaymentMethod = value;
-                            });
-                          },
-                          icon: AppImages.payMe,
-                          currentPaymentMethod: currentPaymentMethod,
-                          paymentMethod: 'payme',
-                          iconHeight: 24,
-                        ),
-                        PaymentMethod(
-                          onTap: (value) {
-                            setState(() {
-                              currentPaymentMethod = value;
-                            });
-                          },
-                          iconHeight: 26,
-                          icon: AppImages.click,
-                          currentPaymentMethod: currentPaymentMethod,
-                          paymentMethod: 'click',
-                        ),
-                        PaymentMethod(
-                          onTap: (value) {
-                            setState(() {
-                              currentPaymentMethod = value;
-                            });
-                          },
-                          iconHeight: 22,
-                          icon: AppImages.uzum,
-                          currentPaymentMethod: currentPaymentMethod,
-                          paymentMethod: 'uzum',
-                        ),
-                        PaymentMethod(
-                          onTap: (value) {
-                            setState(() {
-                              currentPaymentMethod = value;
-                            });
-                          },
-                          iconHeight: 22,
-                          icon: AppImages.paylov,
-                          currentPaymentMethod: currentPaymentMethod,
-                          paymentMethod: 'paylov',
-                        ),
-                      ],
-                    ),
-                  ),
-                  PaymentMethod(
-                    margin: EdgeInsets.fromLTRB(16, 16, 16, 12),
-                    onTap: (value) {
-                      setState(() {
-                        currentPaymentMethod = value;
-                      });
-                    },
-                    currentPaymentMethod: currentPaymentMethod,
-                    paymentMethod: 'card',
-                    title: Text(
-                      'Оплата с картой',
-                      style: Theme.of(context).textTheme.displayLarge,
-                    ),
-                  ),
-                  AnimatedCrossFade(
-                    firstChild: Container(
-                      margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                      padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
-                      decoration: BoxDecoration(
-                        color: lilyWhite,
-                        border: Border.all(color: lilyWhite),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 150),
-                            child: true
-                                ? SvgPicture.asset(AppIcons.paymentMethodCheck)
-                                : Container(
-                                    height: 24,
-                                    width: 24,
-                                    decoration: const BoxDecoration(
-                                        color: checkUnselected,
-                                        shape: BoxShape.circle),
+                  ValueListenableBuilder(
+                      valueListenable: currentPaymentMethod,
+                      builder: (context, _, __) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 124,
+                              child: GridView(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 15,
+                                        mainAxisSpacing: 16,
+                                        mainAxisExtent: 54),
+                                children: List.generate(
+                                  iconHeights.length,
+                                  (index) => PaymentMethod(
+                                    onTap: (value) {
+                                      currentPaymentMethod.value = value;
+                                    },
+                                    icon: payments.values.toList()[index],
+                                    currentPaymentMethod:
+                                        currentPaymentMethod.value,
+                                    paymentMethod:
+                                        payments.keys.toList()[index],
+                                    iconHeight: iconHeights[index],
                                   ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              '8600 49** **** **04',
-                              style: Theme.of(context).textTheme.displayLarge,
-                            ),
-                          ),
-                          WScaleAnimation(
-                            onTap: () {},
-                            child: Container(
-                              height: 36,
-                              width: 36,
-                              padding: EdgeInsets.all(6),
-                              decoration: BoxDecoration(
-                                color: textSecondary.withOpacity(.16),
-                                borderRadius: BorderRadius.circular(6),
+                                ),
                               ),
-                              child: SvgPicture.asset(AppIcons.chevronsUpDown),
                             ),
+                            PaymentMethod(
+                              margin: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                              onTap: (value) {
+                                currentPaymentMethod.value = value;
+                              },
+                              currentPaymentMethod: currentPaymentMethod.value,
+                              paymentMethod: 'card',
+                              title: Text(
+                                LocaleKeys.payment_with_card.tr(),
+                                style: Theme.of(context).textTheme.displayLarge,
+                              ),
+                            ),
+                            AnimatedCrossFade(
+                              firstChild: cards.isNotEmpty
+                                  ? Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    child: AddCardWidget(
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                              context: context,
+                                              backgroundColor: Colors.transparent,
+                                              useRootNavigator: true,
+                                              isScrollControlled: true,
+                                              builder: (context) =>
+                                                  const AddCardBtsht());
+                                        },
+                                      ),
+                                  )
+                                  : Container(
+                                      margin: const EdgeInsets.fromLTRB(
+                                          16, 0, 16, 0),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12, 10, 10, 10),
+                                      decoration: BoxDecoration(
+                                        color: lilyWhite,
+                                        border: Border.all(color: lilyWhite),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          AnimatedSwitcher(
+                                            duration: const Duration(
+                                                milliseconds: 150),
+                                            child: true
+                                                ? SvgPicture.asset(
+                                                    AppIcons.paymentMethodCheck)
+                                                : Container(
+                                                    height: 24,
+                                                    width: 24,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            color:
+                                                                checkUnselected,
+                                                            shape: BoxShape
+                                                                .circle),
+                                                  ),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Text('8600 49** **** **04',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .displayLarge),
+                                          ),
+                                          WScaleAnimation(
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  useRootNavigator: true,
+                                                  isScrollControlled: true,
+                                                  builder: (context) =>
+                                                      const CardsBottomSheet());
+                                            },
+                                            child: Container(
+                                              height: 36,
+                                              width: 36,
+                                              padding: const EdgeInsets.all(6),
+                                              decoration: BoxDecoration(
+                                                color: textSecondary
+                                                    .withOpacity(.16),
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                              ),
+                                              child: SvgPicture.asset(
+                                                  AppIcons.chevronsUpDown),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                              secondChild: const SizedBox(),
+                              crossFadeState:
+                                  currentPaymentMethod.value == 'card'
+                                      ? CrossFadeState.showFirst
+                                      : CrossFadeState.showSecond,
+                              firstCurve: Curves.slowMiddle,
+                              duration: const Duration(milliseconds: 300),
+                            ),
+                          ],
+                        );
+                      }),
+                  const Spacer(),
+                  ValueListenableBuilder(
+                      valueListenable: currentPaymentMethod,
+                      builder: (context, _, __) {
+                        return WButton(
+                          height: 40,
+                          margin: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).padding.bottom + 16,
+                            left: 16,
+                            right: 16,
                           ),
-                        ],
-                      ),
-                    ),
-                    secondChild: SizedBox(),
-                    crossFadeState: currentPaymentMethod == 'card'
-                        ? CrossFadeState.showFirst
-                        : CrossFadeState.showSecond,
-                    firstCurve: Curves.slowMiddle,
-                    duration: Duration(milliseconds: 300),
-                  ),
-                  Spacer(),
-                  WButton(
-                    height: 40,
-                    margin: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).padding.bottom + 16,
-                      left: 16,
-                      right: 16,
-                    ),
-                    onTap: () {
-                      if (currentPaymentMethod.isEmpty) {
-                        context.read<ShowPopUpBloc>().add(
-                            ShowPopUp(message: LocaleKeys.no_payment_provider));
-                      } else {
-                        if (widget.isJournal) {
-                          context.read<PaymentBloc>().add(
-                                OrderCreateJournal(
-                                  journalId: widget.id,
-                                  price: widget.price,
-                                  isRegistered: widget.isRegistered,
-                                  phone: isPhone
-                                      ? "+998${phoneController.text.replaceAll(' ', '')}"
-                                      : '',
-                                  email: !isPhone ? emailController.text : '',
-                                  paymentProvider: currentPaymentMethod,
-                                  onSuccess: (value) {
-                                    launchUrlString(value,
-                                        mode: LaunchMode.externalApplication);
-                                    Navigator.of(context).push(
-                                      fade(
-                                        page: PaymentResultScreen(
-                                          title: widget.title,
-                                          isRegistered: widget.isRegistered,
-                                          bloc: context.read<PaymentBloc>(),
-                                        ),
+                          color: currentPaymentMethod.value.isEmpty
+                              ? textSecondary
+                              : primary,
+                          onTap: () {
+                            if (currentPaymentMethod.value.isEmpty) {
+                              context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                  message: LocaleKeys.no_payment_provider));
+                            } else {
+                              if (widget.isJournal) {
+                                context.read<PaymentBloc>().add(
+                                      OrderCreateJournal(
+                                        journalId: widget.id,
+                                        price: widget.price,
+                                        isRegistered: widget.isRegistered,
+                                        phone: isPhone
+                                            ? "+998${phoneController.text.replaceAll(' ', '')}"
+                                            : '',
+                                        email: !isPhone
+                                            ? emailController.text
+                                            : '',
+                                        paymentProvider:
+                                            currentPaymentMethod.value,
+                                        onSuccess: (value) {
+                                          launchUrlString(value,
+                                              mode: LaunchMode
+                                                  .externalApplication);
+                                          Navigator.of(context).push(
+                                            fade(
+                                              page: PaymentResultScreen(
+                                                title: widget.title,
+                                                isRegistered:
+                                                    widget.isRegistered,
+                                                bloc:
+                                                    context.read<PaymentBloc>(),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        onError: (message) {
+                                          context
+                                              .read<ShowPopUpBloc>()
+                                              .add(ShowPopUp(message: message));
+                                        },
                                       ),
                                     );
-                                  },
-                                  onError: (message) {
-                                    context
-                                        .read<ShowPopUpBloc>()
-                                        .add(ShowPopUp(message: message));
-                                  },
-                                ),
-                              );
-                        }
-                      }
-                    },
-                    text: LocaleKeys.confirm.tr(),
-                  ),
+                              }
+                            }
+                          },
+                          text: LocaleKeys.confirm.tr(),
+                        );
+                      }),
                 ],
               ),
             ),
@@ -450,7 +500,6 @@ class JournalArticleItem extends StatelessWidget {
                 fit: BoxFit.cover,
                 height: 120,
                 width: 120,
-                // width: double.infinity,
               ),
             ),
           ),
@@ -489,7 +538,7 @@ class JournalArticleItem extends StatelessWidget {
                     );
                   },
                   height: 40,
-                  text: 'Читать фрагмент',
+                  text: LocaleKeys.read_snippet.tr(),
                   textColor: primary,
                   color: unFollowButton.withOpacity(0.1),
                   border: Border.all(color: primary),
