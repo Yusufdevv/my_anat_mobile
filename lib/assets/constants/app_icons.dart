@@ -121,6 +121,7 @@ class AppIcons {
   static const deviceLaptop = 'assets/icons/profile/device_laptop.svg';
   static const cancelX = 'assets/icons/profile/cancel_x.svg';
   static const check = 'assets/icons/profile/check.svg';
+  static const circleCheck = 'assets/icons/global/circle_check.svg';
   static const flagUz = 'assets/icons/profile/flag_uz.svg';
   static const medicalDoctor = 'assets/icons/profile/medical_doctor.svg';
   static const icHospital = 'assets/icons/profile/ic_hospital.svg';

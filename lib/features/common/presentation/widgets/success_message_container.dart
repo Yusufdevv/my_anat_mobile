@@ -9,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SuccessMessageContainer extends StatelessWidget {
   final String message;
+
   const SuccessMessageContainer({
     required this.message,
     Key? key,
@@ -19,6 +20,10 @@ class SuccessMessageContainer extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
+        border: Border.all(
+          color: successBorder,
+          width: 2,
+        ),
         color: successBackground,
         borderRadius: BorderRadius.circular(16),
       ),
@@ -28,13 +33,13 @@ class SuccessMessageContainer extends StatelessWidget {
             height: 40,
             width: 40,
             decoration: BoxDecoration(
-              color: success.withOpacity(0.7),
+              color: successIcon,
               borderRadius: BorderRadius.circular(12),
             ),
             alignment: Alignment.center,
             child: SvgPicture.asset(
-              AppIcons.check,
-              color: white,
+              AppIcons.circleCheck,
+              // color: white,
             ),
           ),
           const SizedBox(width: 12),
@@ -57,7 +62,7 @@ class SuccessMessageContainer extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               child: SvgPicture.asset(
                 AppIcons.errorClose,
-                color: textColor,
+                color: successCloseIcon,
               ),
             ),
           )
