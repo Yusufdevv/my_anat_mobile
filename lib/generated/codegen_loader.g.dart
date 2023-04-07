@@ -322,6 +322,7 @@ class CodegenLoader extends AssetLoader{
   "enter_card_number": "Введите номер карты",
   "enter_card_term": "Введите срок карты",
   "payment_with_card": "Оплата с картой",
+  "my_cards": "Мои карты",
   "read_snippet": "Читать фрагмент",
   "v_c_h_b_s_t_y_p_n": "Код подтверждения был отправлен на ваш номер телефона"
 };
@@ -633,6 +634,7 @@ static const Map<String,dynamic> uz = {
   "enter_card_number": "Karta raqamini kiriting",
   "enter_card_term": "Karda muddatini kiriting",
   "payment_with_card": "Karta bilan to'lov",
+  "my_cards": "Mening kartalarim",
   "read_snippet": "Parchani o'qish",
   "v_c_h_b_s_t_y_p_n": "Telefon raqamingizga tasdiqlash kodi yuborildi"
 };

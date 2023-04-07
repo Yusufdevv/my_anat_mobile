@@ -308,6 +308,7 @@ abstract class  LocaleKeys {
   static const enter_card_number = 'enter_card_number';
   static const enter_card_term = 'enter_card_term';
   static const payment_with_card = 'payment_with_card';
+  static const my_cards = 'my_cards';
   static const read_snippet = 'read_snippet';
   static const v_c_h_b_s_t_y_p_n = 'v_c_h_b_s_t_y_p_n';
 

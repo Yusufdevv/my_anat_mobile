@@ -14,10 +14,12 @@ class AddPaymentCardVerifyScreen extends StatefulWidget {
   const AddPaymentCardVerifyScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddPaymentCardVerifyScreen> createState() => _AddPaymentCardVerifyScreenState();
+  State<AddPaymentCardVerifyScreen> createState() =>
+      _AddPaymentCardVerifyScreenState();
 }
 
-class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen> {
+class _AddPaymentCardVerifyScreenState
+    extends State<AddPaymentCardVerifyScreen> {
   late TextEditingController pinCodeController;
 
   int secondsLeft = 0;
@@ -103,18 +105,15 @@ class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen>
                   },
                 ),
                 const Spacer(),
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: 16 + MediaQuery.of(context).viewInsets.bottom),
-                  child: WButton(
-                    onTap: () {
-                      context.read<ShowPopUpBloc>().add(ShowPopUp(message: 'Карта успешно добавлена', isSuccess: true));
-                      Navigator.pop(context);
-                    },
-                    height: 40,
-                    // margin: const EdgeInsets.only(bottom: 16),
-                    text: LocaleKeys.to_main.tr(),
-                  ),
+                WButton(
+                  onTap: () {
+                    context.read<ShowPopUpBloc>().add(ShowPopUp(
+                        message: 'Карта успешно добавлена', isSuccess: true));
+                    Navigator.pop(context);
+                  },
+                  height: 40,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  text: LocaleKeys.to_main.tr(),
                 )
               ],
             ),

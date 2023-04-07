@@ -2,7 +2,6 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/register.dart';
@@ -14,6 +13,7 @@ import 'package:anatomica/features/profile/domain/usecases/get_profile.dart';
 import 'package:anatomica/features/profile/presentation/blocs/profile_bloc/profile_bloc.dart';
 import 'package:anatomica/features/profile/presentation/pages/favorites.dart';
 import 'package:anatomica/features/profile/presentation/pages/help.dart';
+import 'package:anatomica/features/profile/presentation/pages/my_cards.dart';
 import 'package:anatomica/features/profile/presentation/pages/purchased_screen.dart';
 import 'package:anatomica/features/profile/presentation/pages/safety.dart';
 import 'package:anatomica/features/profile/presentation/pages/setting.dart';
@@ -28,7 +28,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -172,7 +171,7 @@ class ProfileScreen extends StatelessWidget {
                               title: LocaleKeys.setting,
                               icon: AppIcons.setting,
                               onTap: () {
-                                Navigator.of(context).push(
+                                Navigator.of(context, rootNavigator: true).push(
                                   fade(
                                     page: const SettingScreen(),
                                   ),
@@ -182,11 +181,21 @@ class ProfileScreen extends StatelessWidget {
                           ProfileItem(
                               title: LocaleKeys.safety,
                               icon: AppIcons.lock,
+
                               onTap: () {
-                                Navigator.of(context).push(fade(
+                                Navigator.of(context,  rootNavigator: true).push(fade(
                                     page: SafetyScreen(
                                   profileBloc: context.read<ProfileBloc>(),
                                 )));
+                              }),
+                          const SizedBox(height: 12),
+                          ProfileItem(
+                            iconColor: darkGreen,
+                              title: LocaleKeys.my_cards,
+                              icon: AppIcons.creditCard,
+                              onTap: () {
+                                Navigator.of(context, rootNavigator: true)
+                                    .push(fade(page:   MyCardsScreen()));
                               }),
                           const SizedBox(height: 12),
                           ProfileItem(

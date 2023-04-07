@@ -78,7 +78,9 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
                   ),
                   const SizedBox(height: 20),
                   WButton(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     height: 40,
                     margin: const EdgeInsets.only(
                       bottom: 16,

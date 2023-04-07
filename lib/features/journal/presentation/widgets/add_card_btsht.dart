@@ -3,7 +3,7 @@ import 'package:anatomica/features/common/presentation/widgets/default_text_fiel
 import 'package:anatomica/features/common/presentation/widgets/w_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
-import 'package:anatomica/features/journal/presentation/pages/add_payment_card_screen.dart';
+import 'package:anatomica/features/journal/presentation/pages/add_payment_card_verify_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
