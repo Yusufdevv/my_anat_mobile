@@ -92,8 +92,9 @@ class _AddCardBtshtState extends State<AddCardBtsht> {
             const SizedBox(height: 24),
             WButton(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(
-                    context, fade(page: const AddPaymentCardScreen()));
+                    context, fade(page: const AddPaymentCardVerifyScreen()));
               },
               height: 40,
               margin: EdgeInsets.only(

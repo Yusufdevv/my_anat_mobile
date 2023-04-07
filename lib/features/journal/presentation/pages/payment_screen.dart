@@ -17,6 +17,7 @@ import 'package:anatomica/features/journal/domain/usecases/order_create_journal_
 import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
+import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
 import 'package:anatomica/features/journal/presentation/widgets/cards_bottomsheet.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
@@ -304,8 +305,21 @@ class _PaymentScreenState extends State<PaymentScreen>
                               ),
                             ),
                             AnimatedCrossFade(
-                              firstChild: cards.isEmpty
-                                  ? const AddCardWidget()
+                              firstChild: cards.isNotEmpty
+                                  ? Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    child: AddCardWidget(
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                              context: context,
+                                              backgroundColor: Colors.transparent,
+                                              useRootNavigator: true,
+                                              isScrollControlled: true,
+                                              builder: (context) =>
+                                                  const AddCardBtsht());
+                                        },
+                                      ),
+                                  )
                                   : Container(
                                       margin: const EdgeInsets.fromLTRB(
                                           16, 0, 16, 0),

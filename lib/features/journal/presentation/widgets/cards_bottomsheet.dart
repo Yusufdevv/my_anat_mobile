@@ -1,10 +1,9 @@
-import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.dart';
+import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class CardsBottomSheet extends StatefulWidget {
 
 class _CardsBottomSheetState extends State<CardsBottomSheet> {
   int currentStatus = 0;
-  final ValueNotifier groupValue = ValueNotifier<int>(0);
+  final ValueNotifier groupValue = ValueNotifier<int>(1);
 
   @override
   void initState() {
@@ -63,36 +62,18 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
                   ),
                   const WDivider(margin: EdgeInsets.only(right: 16)),
                   const SizedBox(height: 16),
-                  WButton(
-                    margin: const EdgeInsets.only(right: 16),
-                    padding: const EdgeInsets.all(12),
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          backgroundColor: Colors.transparent,
-                          useRootNavigator: true,
-                          isScrollControlled: true,
-                          builder: (context) => const AddCardBtsht());
-                    },
-                    borderRadius: 10,
-                    color: lilyWhite,
-                    height: 56,
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: textSecondary.withOpacity(0.16)),
-                          child: SvgPicture.asset(
-                            AppIcons.plusIcon,
-                            color: textSecondary,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Text(LocaleKeys.add_card.tr(),
-                            style: Theme.of(context).textTheme.displayLarge)
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: AddCardWidget(
+                      onTap: () {
+                        Navigator.pop(context);
+                        showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            useRootNavigator: true,
+                            isScrollControlled: true,
+                            builder: (context) => const AddCardBtsht());
+                      },
                     ),
                   ),
                   const SizedBox(height: 20),

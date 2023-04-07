@@ -630,7 +630,7 @@ static const Map<String,dynamic> uz = {
   "number_card": "Karta raqami",
   "cards": "Карты",
   "card_term": "Karta muddati",
-  "enter_card_numbet": "Karta raqamini kiriting",
+  "enter_card_number": "Karta raqamini kiriting",
   "enter_card_term": "Karda muddatini kiriting",
   "payment_with_card": "Karta bilan to'lov",
   "read_snippet": "Parchani o'qish",

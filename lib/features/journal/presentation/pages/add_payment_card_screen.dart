@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/auth/presentation/widgets/pin_code_body.dart';
+import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
@@ -7,15 +8,16 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddPaymentCardScreen extends StatefulWidget {
-  const AddPaymentCardScreen({Key? key}) : super(key: key);
+class AddPaymentCardVerifyScreen extends StatefulWidget {
+  const AddPaymentCardVerifyScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddPaymentCardScreen> createState() => _AddPaymentCardScreenState();
+  State<AddPaymentCardVerifyScreen> createState() => _AddPaymentCardVerifyScreenState();
 }
 
-class _AddPaymentCardScreenState extends State<AddPaymentCardScreen> {
+class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen> {
   late TextEditingController pinCodeController;
 
   int secondsLeft = 0;
@@ -106,6 +108,7 @@ class _AddPaymentCardScreenState extends State<AddPaymentCardScreen> {
                       bottom: 16 + MediaQuery.of(context).viewInsets.bottom),
                   child: WButton(
                     onTap: () {
+                      context.read<ShowPopUpBloc>().add(ShowPopUp(message: 'Карта успешно добавлена', isSuccess: true));
                       Navigator.pop(context);
                     },
                     height: 40,

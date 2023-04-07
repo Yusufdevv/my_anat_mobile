@@ -7,15 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddCardWidget extends StatelessWidget {
-  const AddCardWidget({Key? key}) : super(key: key);
-
+  const AddCardWidget({required this.onTap,Key? key}) : super(key: key);
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return WButton(
-      margin: const EdgeInsets.only(right: 16),
       padding: const EdgeInsets.all(12),
-      onTap: () {
-      },
+      onTap: onTap,
       borderRadius: 10,
       color: lilyWhite,
       height: 56,
