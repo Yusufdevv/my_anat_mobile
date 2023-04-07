@@ -11,7 +11,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class MyCardsScreen extends StatelessWidget {
   MyCardsScreen({Key? key}) : super(key: key);
-  final String cardType = 'humo';
   List<String> cards = ['humo', 'uzcard'];
 
   @override

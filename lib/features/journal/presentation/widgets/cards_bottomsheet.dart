@@ -24,6 +24,7 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
   void initState() {
     super.initState();
   }
+  List<String> cards = ['humo', 'uzcard'];
 
   @override
   Widget build(BuildContext context) {
@@ -47,20 +48,18 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
                   ),
                   const SizedBox(height: 12),
                   const WDivider(),
-                  CardRadioTile(
-                    cardNumber: '8600 49** **** **04',
-                    cardType: 'uzcard',
-                    value: 1,
-                    groupValue: groupValue,
-                  ),
-                  const WDivider(margin: EdgeInsets.only(right: 16)),
-                  CardRadioTile(
-                    cardNumber: '9860 12** **** **34',
-                    cardType: 'humo',
-                    value: 2,
-                    groupValue: groupValue,
-                  ),
-                  const WDivider(margin: EdgeInsets.only(right: 16)),
+                  ...List.generate(cards.length, (index) => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CardRadioTile(
+                        cardNumber: '8600 49** **** **04',
+                        cardType: cards[index],
+                        value: index+1,
+                        groupValue: groupValue,
+                      ),
+                      const WDivider(margin: EdgeInsets.only(right: 16)),
+                    ],
+                  ),),
                   const SizedBox(height: 16),
                   Padding(
                     padding: const EdgeInsets.only(right: 16),

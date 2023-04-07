@@ -363,6 +363,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                                   backgroundColor:
                                                       Colors.transparent,
                                                   useRootNavigator: true,
+                                                  isScrollControlled: true,
                                                   builder: (context) =>
                                                       const CardsBottomSheet());
                                             },

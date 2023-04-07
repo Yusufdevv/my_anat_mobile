@@ -8,7 +8,9 @@ import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class AddCardBtsht extends StatefulWidget {
   const AddCardBtsht({Key? key}) : super(key: key);
@@ -72,6 +74,8 @@ class _AddCardBtshtState extends State<AddCardBtsht> {
                   child: SvgPicture.asset(AppIcons.creditCard),
                 ),
                 hintText: LocaleKeys.enter_card_number.tr(),
+                keyboardType: TextInputType.number,
+                inputFormatters: [cardNumberFormatter],
               ),
             ),
             const SizedBox(height: 16),
@@ -86,6 +90,8 @@ class _AddCardBtshtState extends State<AddCardBtsht> {
                   padding: const EdgeInsets.only(left: 12, right: 8),
                   child: SvgPicture.asset(AppIcons.clock),
                 ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [cardExpirationDateFormatter],
                 hintText: LocaleKeys.enter_card_term.tr(),
               ),
             ),
@@ -108,4 +114,14 @@ class _AddCardBtshtState extends State<AddCardBtsht> {
       ],
     );
   }
+
+  static final cardNumberFormatter = MaskTextInputFormatter(
+      mask: '#### #### #### ####',
+      filter: {"#": RegExp(r'\d')},
+      type: MaskAutoCompletionType.lazy);
+
+  static final cardExpirationDateFormatter = MaskTextInputFormatter(
+      mask: '##/##',
+      filter: {"#": RegExp(r'\d')},
+      type: MaskAutoCompletionType.lazy);
 }
