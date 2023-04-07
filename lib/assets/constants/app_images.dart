@@ -12,6 +12,8 @@ class AppImages {
   static const click = 'assets/images/click.svg';
   static const paylov = 'assets/images/paylov.svg';
   static const uzum = 'assets/images/uzum.svg';
+  static const humo = 'assets/images/humo.svg';
+  static const uzcard = 'assets/images/uzcard.svg';
   static const doctor = 'assets/images/doctor.png';
   static const organization = 'assets/images/organization.png';
   static const selectedHospital = 'assets/images/selected_hospital.png';

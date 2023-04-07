@@ -11,7 +11,7 @@ class WBottomSheet extends StatelessWidget {
   final double? height;
   final EdgeInsets? contentPadding;
   final Color? bottomsheetBackground;
-
+  final bool hasBackButton;
   const WBottomSheet({
     required this.children,
     this.borderRadius = 16,
@@ -19,6 +19,7 @@ class WBottomSheet extends StatelessWidget {
     this.bottomNavigation,
     this.contentPadding,
     this.bottomsheetBackground,
+    this.hasBackButton = true,
     Key? key,
   }) : super(key: key);
 
@@ -52,6 +53,7 @@ class WBottomSheet extends StatelessWidget {
                     children: children,
                   ),
                 ),
+                if(hasBackButton)
                 Positioned(
                     top: 12,
                     right: 16,

@@ -17,6 +17,7 @@ import 'package:anatomica/features/journal/domain/usecases/order_create_journal_
 import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
+import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
 import 'package:anatomica/features/journal/presentation/widgets/cards_bottomsheet.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/markdown_reader/presentation/pages/journal_markdown_reader.dart';
@@ -81,6 +82,23 @@ class _PaymentScreenState extends State<PaymentScreen>
 
     super.initState();
   }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+  Map<String, String> payments = {
+    'payme': AppImages.payMe,
+    'click': AppImages.click,
+    'uzum': AppImages.uzum,
+    'paylov': AppImages.paylov,
+  };
+  List<double> iconHeights = [24, 24, 22, 22];
+  List<double> cards = [];
 
   @override
   Widget build(BuildContext context) {
@@ -184,12 +202,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                         labelColor: textColor,
                         onTap: (index) {
                           if (index == 0) {
-                            // setState(() {
-                            // });
                             _inputState.value = CrossFadeState.showFirst;
                           } else {
-                            // setState(() {
-                            // });
                             _inputState.value = CrossFadeState.showSecond;
                           }
                         },
@@ -261,48 +275,20 @@ class _PaymentScreenState extends State<PaymentScreen>
                                         crossAxisSpacing: 15,
                                         mainAxisSpacing: 16,
                                         mainAxisExtent: 54),
-                                children: [
-                                  PaymentMethod(
+                                children: List.generate(
+                                  iconHeights.length,
+                                  (index) => PaymentMethod(
                                     onTap: (value) {
                                       currentPaymentMethod.value = value;
                                     },
-                                    icon: AppImages.payMe,
+                                    icon: payments.values.toList()[index],
                                     currentPaymentMethod:
                                         currentPaymentMethod.value,
-                                    paymentMethod: 'payme',
-                                    iconHeight: 24,
+                                    paymentMethod:
+                                        payments.keys.toList()[index],
+                                    iconHeight: iconHeights[index],
                                   ),
-                                  PaymentMethod(
-                                    onTap: (value) {
-                                      currentPaymentMethod.value = value;
-                                    },
-                                    iconHeight: 26,
-                                    icon: AppImages.click,
-                                    currentPaymentMethod:
-                                        currentPaymentMethod.value,
-                                    paymentMethod: 'click',
-                                  ),
-                                  PaymentMethod(
-                                    onTap: (value) {
-                                      currentPaymentMethod.value = value;
-                                    },
-                                    iconHeight: 22,
-                                    icon: AppImages.uzum,
-                                    currentPaymentMethod:
-                                        currentPaymentMethod.value,
-                                    paymentMethod: 'uzum',
-                                  ),
-                                  PaymentMethod(
-                                    onTap: (value) {
-                                      currentPaymentMethod.value = value;
-                                    },
-                                    iconHeight: 22,
-                                    icon: AppImages.paylov,
-                                    currentPaymentMethod:
-                                        currentPaymentMethod.value,
-                                    paymentMethod: 'paylov',
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                             PaymentMethod(
@@ -313,70 +299,76 @@ class _PaymentScreenState extends State<PaymentScreen>
                               currentPaymentMethod: currentPaymentMethod.value,
                               paymentMethod: 'card',
                               title: Text(
-                                'Оплата с картой',
+                                LocaleKeys.payment_with_card.tr(),
                                 style: Theme.of(context).textTheme.displayLarge,
                               ),
                             ),
                             AnimatedCrossFade(
-                              firstChild: Container(
-                                margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                                padding:
-                                    const EdgeInsets.fromLTRB(12, 10, 10, 10),
-                                decoration: BoxDecoration(
-                                  color: lilyWhite,
-                                  border: Border.all(color: lilyWhite),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  children: [
-                                    AnimatedSwitcher(
-                                      duration:
-                                          const Duration(milliseconds: 150),
-                                      child: true
-                                          ? SvgPicture.asset(
-                                              AppIcons.paymentMethodCheck)
-                                          : Container(
-                                              height: 24,
-                                              width: 24,
-                                              decoration: const BoxDecoration(
-                                                  color: checkUnselected,
-                                                  shape: BoxShape.circle),
+                              firstChild: cards.isEmpty
+                                  ? const AddCardWidget()
+                                  : Container(
+                                      margin: const EdgeInsets.fromLTRB(
+                                          16, 0, 16, 0),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12, 10, 10, 10),
+                                      decoration: BoxDecoration(
+                                        color: lilyWhite,
+                                        border: Border.all(color: lilyWhite),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          AnimatedSwitcher(
+                                            duration: const Duration(
+                                                milliseconds: 150),
+                                            child: true
+                                                ? SvgPicture.asset(
+                                                    AppIcons.paymentMethodCheck)
+                                                : Container(
+                                                    height: 24,
+                                                    width: 24,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            color:
+                                                                checkUnselected,
+                                                            shape: BoxShape
+                                                                .circle),
+                                                  ),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Text('8600 49** **** **04',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .displayLarge),
+                                          ),
+                                          WScaleAnimation(
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  useRootNavigator: true,
+                                                  builder: (context) =>
+                                                      const CardsBottomSheet());
+                                            },
+                                            child: Container(
+                                              height: 36,
+                                              width: 36,
+                                              padding: const EdgeInsets.all(6),
+                                              decoration: BoxDecoration(
+                                                color: textSecondary
+                                                    .withOpacity(.16),
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                              ),
+                                              child: SvgPicture.asset(
+                                                  AppIcons.chevronsUpDown),
                                             ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Text(
-                                        '8600 49** **** **04',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displayLarge,
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    WScaleAnimation(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            backgroundColor: Colors.transparent,
-                                            useRootNavigator: true,
-                                            builder: (context) =>
-                                                CardsBottomSheet());
-                                      },
-                                      child: Container(
-                                        height: 36,
-                                        width: 36,
-                                        padding: const EdgeInsets.all(6),
-                                        decoration: BoxDecoration(
-                                          color: textSecondary.withOpacity(.16),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        child: SvgPicture.asset(
-                                            AppIcons.chevronsUpDown),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
                               secondChild: const SizedBox(),
                               crossFadeState:
                                   currentPaymentMethod.value == 'card'
@@ -401,7 +393,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                           ),
                           color: currentPaymentMethod.value.isEmpty
                               ? textSecondary
-                              : null,
+                              : primary,
                           onTap: () {
                             if (currentPaymentMethod.value.isEmpty) {
                               context.read<ShowPopUpBloc>().add(ShowPopUp(
@@ -493,7 +485,6 @@ class JournalArticleItem extends StatelessWidget {
                 fit: BoxFit.cover,
                 height: 120,
                 width: 120,
-                // width: double.infinity,
               ),
             ),
           ),
@@ -532,7 +523,7 @@ class JournalArticleItem extends StatelessWidget {
                     );
                   },
                   height: 40,
-                  text: 'Читать фрагмент',
+                  text: LocaleKeys.read_snippet.tr(),
                   textColor: primary,
                   color: unFollowButton.withOpacity(0.1),
                   border: Border.all(color: primary),
