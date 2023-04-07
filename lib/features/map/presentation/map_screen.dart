@@ -159,10 +159,15 @@ class _MapScreenState extends State<MapScreen>
                       minZoomLevel = await controller.getMinZoom();
                       final camera = await _mapController.getCameraPosition();
                       final position = Point(
-                          latitude: StorageRepository.getDouble('lat',
-                              defValue: 41.310990),
-                          longitude: StorageRepository.getDouble('long',
-                              defValue: 69.281997));
+                        latitude: StorageRepository.getDouble(
+                          'lat',
+                          defValue: 41.310990,
+                        ),
+                        longitude: StorageRepository.getDouble(
+                          'long',
+                          defValue: 69.281997,
+                        ),
+                      );
                       _mapController.moveCamera(
                         CameraUpdate.newCameraPosition(
                           CameraPosition(
@@ -214,7 +219,6 @@ class _MapScreenState extends State<MapScreen>
                                         .floor(),
                                   ),
                                 );
-
                                 mapOrganizationBloc.add(
                                     MapOrganizationEvent.getHospitals(
                                         latitude: position.latitude,
