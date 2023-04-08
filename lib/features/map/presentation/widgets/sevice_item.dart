@@ -1,4 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/highlighted_text.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_service_entity.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/services/services_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:anatomica/features/map/presentation/screens/service_single.dart'
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ServiceItem extends StatelessWidget {
   final HospitalServiceEntity entity;
@@ -64,7 +66,8 @@ class ServiceItem extends StatelessWidget {
                         .displayLarge!
                         .copyWith(fontSize: 15),
                   ),
-                )
+                ),
+                SvgPicture.asset(AppIcons.arrowRight, color: textSecondary)
               ],
             ),
           ),

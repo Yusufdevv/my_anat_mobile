@@ -43,6 +43,17 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
                   bottom: MediaQuery.of(context).padding.bottom + 16),
               child: Column(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 21, 16, 0),
+                    child: SearchField(
+                      controller: _controller,
+                      onChanged: (v) {
+                        widget.servicesBloc
+                            .add(ServicesEvent.searchServices(query: v));
+                      },
+                      fillColor: white,
+                    ),
+                  ),
                   if (state.services.length > 20) ...{
                     Padding(
                       padding: const EdgeInsets.all(16).copyWith(bottom: 0),

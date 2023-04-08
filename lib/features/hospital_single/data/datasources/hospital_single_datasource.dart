@@ -79,15 +79,20 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
   Future<GenericPagination<HospitalServiceModel>> getHospitalServices(
       {required int id, String? next, String search = ''}) async {
     try {
-      final response = await _dio.get(next ?? '/organization/service/',
-          queryParameters: {'organization_id': id, 'search': search},
-          options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
-                  : {}));
+      print('datsource search $search  $id');
+      final response = await _dio.get(
+        next ?? '/organization/service/',
+        queryParameters: {'organization_id': id, 'search': search},
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {
+                    'Authorization':
+                        'Token ${StorageRepository.getString('token')}'
+                  }
+                : {}),
+      );
+      print('search status ${response.statusCode}');
+      print('search results ${response.data}');
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {

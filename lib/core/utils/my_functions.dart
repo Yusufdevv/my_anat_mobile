@@ -139,13 +139,16 @@ abstract class MyFunctions {
         context: context,
         shouldAddText: false);
     final myPoint = PlacemarkMapObject(
-        opacity: 1,
-        mapId: const MapObjectId('my-point'),
-        point: point,
-        icon: PlacemarkIcon.single(PlacemarkIconStyle(
+      opacity: 1,
+      mapId: const MapObjectId('my-point'),
+      point: point,
+      icon: PlacemarkIcon.single(
+        PlacemarkIconStyle(
           scale: 0.6,
           image: BitmapDescriptor.fromBytes(myIconData),
-        )));
+        ),
+      ),
+    );
     return myPoint;
   }
 

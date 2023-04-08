@@ -4,6 +4,7 @@ import 'package:anatomica/features/hospital_single/domain/usecases/get_services.
 import 'package:anatomica/features/hospital_single/domain/usecases/get_single_service_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:flutter/foundation.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -19,6 +20,9 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       : _getSingleServiceUseCase = getSingleServiceUseCase,
         super(ServicesState()) {
     on<_GetServices>((event, emit) async {
+      if (kDebugMode) {
+        print('get event');
+      }
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress,
       ));
@@ -61,6 +65,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       }
     });
     on<_SearchServices>((event, emit) async {
+      print('search event');
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress,
       ));
