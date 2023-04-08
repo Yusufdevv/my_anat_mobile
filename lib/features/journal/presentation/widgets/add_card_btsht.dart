@@ -3,12 +3,9 @@ import 'package:anatomica/features/common/presentation/widgets/default_text_fiel
 import 'package:anatomica/features/common/presentation/widgets/w_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
-import 'package:anatomica/features/journal/presentation/pages/add_payment_card_verify_screen.dart';
-import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -25,8 +22,8 @@ class _AddCardBtshtState extends State<AddCardBtsht> {
 
   @override
   void initState() {
-    cardController = TextEditingController();
-    dateController = TextEditingController();
+    cardController = TextEditingController(text: "9860350107129008");
+    dateController = TextEditingController(text: "0927");
     super.initState();
   }
 
@@ -98,9 +95,7 @@ class _AddCardBtshtState extends State<AddCardBtsht> {
             const SizedBox(height: 24),
             WButton(
               onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                    context, fade(page: const AddPaymentCardVerifyScreen()));
+                Navigator.pop(context, {'card_number' : cardController.text.replaceAll(' ', ''),'date' :  dateController.text.replaceAll('/', '')});
               },
               height: 40,
               margin: EdgeInsets.only(

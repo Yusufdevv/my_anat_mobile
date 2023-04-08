@@ -5,13 +5,20 @@ import 'package:anatomica/features/common/presentation/widgets/custom_screen.dar
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/profile/domain/usecases/confirm_payment_cards_usecase.dart';
+import 'package:anatomica/features/profile/domain/usecases/create_payment_cards_usecase.dart';
+import 'package:anatomica/features/profile/presentation/blocs/payment_card_bloc/payment_card_bloc.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddPaymentCardVerifyScreen extends StatefulWidget {
-  const AddPaymentCardVerifyScreen({Key? key}) : super(key: key);
+  const AddPaymentCardVerifyScreen(
+      {required this.cardNumber, required this.expiredDate, Key? key})
+      : super(key: key);
+  final String cardNumber;
+  final String expiredDate;
 
   @override
   State<AddPaymentCardVerifyScreen> createState() =>
@@ -26,8 +33,8 @@ class _AddPaymentCardVerifyScreenState
 
   @override
   initState() {
-    pinCodeController = TextEditingController();
     super.initState();
+    pinCodeController = TextEditingController();
   }
 
   @override
@@ -101,15 +108,36 @@ class _AddPaymentCardVerifyScreenState
                   pinCodeController: pinCodeController,
                   secondsLeft: secondsLeft,
                   onRefresh: () {
-                    // context.read<LoginSignUpBloc>().add(ResendCode());
+                    context.read<PaymentCardBloc>().add(CreatePaymentCardEvent(
+                        onSucces: () {},
+                        onError: (message) {
+                          context.read<ShowPopUpBloc>().add(
+                              ShowPopUp(message: message, isSuccess: false));
+                        },
+                        param: CreateCardParam(
+                            cardNumber: widget.cardNumber,
+                            expireDate: widget.expiredDate)));
                   },
                 ),
                 const Spacer(),
                 WButton(
                   onTap: () {
-                    context.read<ShowPopUpBloc>().add(ShowPopUp(
-                        message: 'Карта успешно добавлена', isSuccess: true));
-                    Navigator.pop(context);
+                    context.read<PaymentCardBloc>().add(ConfirmPaymentCardEvent(
+                        onSucces: () {
+                          Navigator.pop(context);
+                          context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                message: 'Карта успешно добавлена',
+                                isSuccess: true,
+                              ));
+                        },
+                        onError: (message) {
+                          context.read<ShowPopUpBloc>().add(
+                              ShowPopUp(message: message, isSuccess: false));
+                        },
+                        param: ConfirmCardParam(
+                            cardNumber: widget.cardNumber,
+                            session: 0,
+                            otp: pinCodeController.text)));
                   },
                   height: 40,
                   margin: const EdgeInsets.only(bottom: 16),

@@ -307,19 +307,21 @@ class _PaymentScreenState extends State<PaymentScreen>
                             AnimatedCrossFade(
                               firstChild: cards.isNotEmpty
                                   ? Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                                    child: AddCardWidget(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: AddCardWidget(
                                         onTap: () {
                                           showModalBottomSheet(
                                               context: context,
-                                              backgroundColor: Colors.transparent,
+                                              backgroundColor:
+                                                  Colors.transparent,
                                               useRootNavigator: true,
                                               isScrollControlled: true,
                                               builder: (context) =>
                                                   const AddCardBtsht());
                                         },
                                       ),
-                                  )
+                                    )
                                   : Container(
                                       margin: const EdgeInsets.fromLTRB(
                                           16, 0, 16, 0),
@@ -333,22 +335,24 @@ class _PaymentScreenState extends State<PaymentScreen>
                                       child: Row(
                                         children: [
                                           AnimatedSwitcher(
-                                            duration: const Duration(
-                                                milliseconds: 150),
-                                            child: true
-                                                ? SvgPicture.asset(
-                                                    AppIcons.paymentMethodCheck)
-                                                : Container(
-                                                    height: 24,
-                                                    width: 24,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                            color:
-                                                                checkUnselected,
-                                                            shape: BoxShape
-                                                                .circle),
-                                                  ),
-                                          ),
+                                              duration: const Duration(
+                                                  milliseconds: 150),
+                                              child:
+                                                  // true
+                                                  //     ?
+                                                  SvgPicture.asset(AppIcons
+                                                      .paymentMethodCheck)
+                                              // : Container(
+                                              //     height: 24,
+                                              //     width: 24,
+                                              //     decoration:
+                                              //         const BoxDecoration(
+                                              //             color:
+                                              //                 checkUnselected,
+                                              //             shape: BoxShape
+                                              //                 .circle),
+                                              //   ),
+                                              ),
                                           const SizedBox(width: 12),
                                           Expanded(
                                             child: Text('8600 49** **** **04',

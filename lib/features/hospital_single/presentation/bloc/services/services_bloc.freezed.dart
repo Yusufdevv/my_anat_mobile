@@ -119,15 +119,23 @@ class __$$_GetServicesCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GetServices implements _GetServices {
+class _$_GetServices with DiagnosticableTreeMixin implements _GetServices {
   _$_GetServices({required this.organizationId});
 
   @override
   final int organizationId;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ServicesEvent.getServices(organizationId: $organizationId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ServicesEvent.getServices'))
+      ..add(DiagnosticsProperty('organizationId', organizationId));
   }
 
   @override
@@ -250,12 +258,21 @@ class __$$_GetMoreServicesCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GetMoreServices implements _GetMoreServices {
+class _$_GetMoreServices
+    with DiagnosticableTreeMixin
+    implements _GetMoreServices {
   _$_GetMoreServices();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ServicesEvent.getMoreServices()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'ServicesEvent.getMoreServices'));
   }
 
   @override
@@ -379,15 +396,25 @@ class __$$_SearchServicesCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SearchServices implements _SearchServices {
+class _$_SearchServices
+    with DiagnosticableTreeMixin
+    implements _SearchServices {
   _$_SearchServices({required this.query});
 
   @override
   final String query;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ServicesEvent.searchServices(query: $query)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ServicesEvent.searchServices'))
+      ..add(DiagnosticsProperty('query', query));
   }
 
   @override
@@ -524,15 +551,25 @@ class __$$_GetSingleServiceCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GetSingleService implements _GetSingleService {
+class _$_GetSingleService
+    with DiagnosticableTreeMixin
+    implements _GetSingleService {
   _$_GetSingleService({required this.serviceId});
 
   @override
   final int serviceId;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ServicesEvent.getSingleService(serviceId: $serviceId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ServicesEvent.getSingleService'))
+      ..add(DiagnosticsProperty('serviceId', serviceId));
   }
 
   @override
@@ -836,7 +873,7 @@ class __$$_ServicesStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ServicesState implements _ServicesState {
+class _$_ServicesState with DiagnosticableTreeMixin implements _ServicesState {
   _$_ServicesState(
       {this.status = FormzStatus.pure,
       this.paginationStatus = FormzStatus.pure,
@@ -886,8 +923,26 @@ class _$_ServicesState implements _ServicesState {
   final HospitalServiceSingleEntity serviceSingle;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ServicesState(status: $status, paginationStatus: $paginationStatus, services: $services, next: $next, fetchMore: $fetchMore, hospitalId: $hospitalId, searchQuery: $searchQuery, serviceCount: $serviceCount, getSingleServiceStatus: $getSingleServiceStatus, serviceSingle: $serviceSingle)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ServicesState'))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('paginationStatus', paginationStatus))
+      ..add(DiagnosticsProperty('services', services))
+      ..add(DiagnosticsProperty('next', next))
+      ..add(DiagnosticsProperty('fetchMore', fetchMore))
+      ..add(DiagnosticsProperty('hospitalId', hospitalId))
+      ..add(DiagnosticsProperty('searchQuery', searchQuery))
+      ..add(DiagnosticsProperty('serviceCount', serviceCount))
+      ..add(
+          DiagnosticsProperty('getSingleServiceStatus', getSingleServiceStatus))
+      ..add(DiagnosticsProperty('serviceSingle', serviceSingle));
   }
 
   @override

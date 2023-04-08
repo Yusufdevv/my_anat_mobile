@@ -12,6 +12,7 @@ class PaymentMethod extends StatelessWidget {
   final double? iconHeight;
   final Widget? title;
   final EdgeInsets? margin;
+
   const PaymentMethod({
     required this.onTap,
     required this.currentPaymentMethod,
@@ -51,7 +52,7 @@ class PaymentMethod extends StatelessWidget {
                           color: checkUnselected, shape: BoxShape.circle),
                     ),
             ),
-            const SizedBox(width: 6),
+            SizedBox(width: paymentMethod == 'card' ? 12 : 6),
             title ??
                 SvgPicture.asset(
                   icon,

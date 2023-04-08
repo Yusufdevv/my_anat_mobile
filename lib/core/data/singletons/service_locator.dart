@@ -21,7 +21,9 @@ import 'package:anatomica/features/map/data/repositories/map_repository_impl.dar
 import 'package:anatomica/features/markdown_reader/data/datasources/journal_pages_datasource.dart';
 import 'package:anatomica/features/markdown_reader/data/repositories/journal_pages_repository_impl.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
+import 'package:anatomica/features/profile/data/datasources/payment_cards_data_source.dart';
 import 'package:anatomica/features/profile/data/datasources/profile_data_source.dart';
+import 'package:anatomica/features/profile/data/repositories/payment_card_repo_impl.dart';
 import 'package:anatomica/features/profile/data/repositories/profile_impl.dart';
 import 'package:anatomica/features/vacancy/data/datasources/vacancy_remote_datasource.dart';
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
@@ -56,6 +58,8 @@ Future<void> setupLocator() async {
 
   serviceLocator.registerLazySingleton(
       () => PaymentDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(() => PaymentCardDatasourceImpl());
+  serviceLocator.registerLazySingleton(() => PaymentCardRepositoryImpl());
   serviceLocator.registerLazySingleton(() => PaymentRepositoryImpl(
       datasource: serviceLocator<PaymentDatasourceImpl>()));
   serviceLocator.registerLazySingleton(
