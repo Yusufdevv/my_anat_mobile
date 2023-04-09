@@ -280,7 +280,8 @@ abstract class _GetMoreHomeArticles implements HomeArticlesEvent {
 
 /// @nodoc
 mixin _$HomeArticlesState {
-  List<dynamic> get homeArticles => throw _privateConstructorUsedError;
+  List<JournalArticleModel> get homeArticles =>
+      throw _privateConstructorUsedError;
   FormzStatus get homeArticlesStatus => throw _privateConstructorUsedError;
   String? get homeArticlesNext => throw _privateConstructorUsedError;
   bool get homeArticlesFetchMore => throw _privateConstructorUsedError;
@@ -297,7 +298,7 @@ abstract class $HomeArticlesStateCopyWith<$Res> {
       _$HomeArticlesStateCopyWithImpl<$Res, HomeArticlesState>;
   @useResult
   $Res call(
-      {List<dynamic> homeArticles,
+      {List<JournalArticleModel> homeArticles,
       FormzStatus homeArticlesStatus,
       String? homeArticlesNext,
       bool homeArticlesFetchMore});
@@ -325,7 +326,7 @@ class _$HomeArticlesStateCopyWithImpl<$Res, $Val extends HomeArticlesState>
       homeArticles: null == homeArticles
           ? _value.homeArticles
           : homeArticles // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<JournalArticleModel>,
       homeArticlesStatus: null == homeArticlesStatus
           ? _value.homeArticlesStatus
           : homeArticlesStatus // ignore: cast_nullable_to_non_nullable
@@ -351,7 +352,7 @@ abstract class _$$_HomeArticlesStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<dynamic> homeArticles,
+      {List<JournalArticleModel> homeArticles,
       FormzStatus homeArticlesStatus,
       String? homeArticlesNext,
       bool homeArticlesFetchMore});
@@ -377,7 +378,7 @@ class __$$_HomeArticlesStateCopyWithImpl<$Res>
       homeArticles: null == homeArticles
           ? _value._homeArticles
           : homeArticles // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<JournalArticleModel>,
       homeArticlesStatus: null == homeArticlesStatus
           ? _value.homeArticlesStatus
           : homeArticlesStatus // ignore: cast_nullable_to_non_nullable
@@ -398,16 +399,16 @@ class __$$_HomeArticlesStateCopyWithImpl<$Res>
 
 class _$_HomeArticlesState implements _HomeArticlesState {
   _$_HomeArticlesState(
-      {final List<dynamic> homeArticles = const [],
+      {final List<JournalArticleModel> homeArticles = const [],
       this.homeArticlesStatus = FormzStatus.pure,
       this.homeArticlesNext,
       this.homeArticlesFetchMore = false})
       : _homeArticles = homeArticles;
 
-  final List<dynamic> _homeArticles;
+  final List<JournalArticleModel> _homeArticles;
   @override
   @JsonKey()
-  List<dynamic> get homeArticles {
+  List<JournalArticleModel> get homeArticles {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_homeArticles);
   }
@@ -459,13 +460,13 @@ class _$_HomeArticlesState implements _HomeArticlesState {
 
 abstract class _HomeArticlesState implements HomeArticlesState {
   factory _HomeArticlesState(
-      {final List<dynamic> homeArticles,
+      {final List<JournalArticleModel> homeArticles,
       final FormzStatus homeArticlesStatus,
       final String? homeArticlesNext,
       final bool homeArticlesFetchMore}) = _$_HomeArticlesState;
 
   @override
-  List<dynamic> get homeArticles;
+  List<JournalArticleModel> get homeArticles;
   @override
   FormzStatus get homeArticlesStatus;
   @override
