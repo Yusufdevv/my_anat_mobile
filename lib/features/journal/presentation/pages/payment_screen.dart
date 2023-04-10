@@ -2,7 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/common/presentation/bloc/payment_card/payment_cards_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
@@ -16,15 +17,16 @@ import 'package:anatomica/features/journal/domain/usecases/order_create_article_
 import 'package:anatomica/features/journal/domain/usecases/order_create_journal_usecase.dart';
 import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
+import 'package:anatomica/features/journal/presentation/pages/add_payment_card_verify_screen.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
 import 'package:anatomica/features/journal/presentation/widgets/cards_bottomsheet.dart';
+import 'package:anatomica/features/journal/presentation/widgets/journal_article_item.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
-import 'package:anatomica/features/markdown_reader/presentation/pages/journal_markdown_reader.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/profile/domain/usecases/create_payment_cards_usecase.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -99,23 +101,26 @@ class _PaymentScreenState extends State<PaymentScreen>
     'paylov': AppImages.paylov,
   };
   List<double> iconHeights = [24, 24, 22, 22];
-  List<double> cards = [];
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PaymentBloc(
-        orderCreateArticleUseCase: OrderCreateArticleUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-        orderCreateJournalUseCase: OrderCreateJournalUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-        checkPaymentStatusUseCase: CheckPaymentStatusUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-        getPricesUseCase: GetPricesUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-        payForMonthlySubscriptionUseCase: PayForMonthlySubscriptionUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PaymentBloc(
+            orderCreateArticleUseCase: OrderCreateArticleUseCase(
+                repository: serviceLocator<PaymentRepositoryImpl>()),
+            orderCreateJournalUseCase: OrderCreateJournalUseCase(
+                repository: serviceLocator<PaymentRepositoryImpl>()),
+            checkPaymentStatusUseCase: CheckPaymentStatusUseCase(
+                repository: serviceLocator<PaymentRepositoryImpl>()),
+            getPricesUseCase: GetPricesUseCase(
+                repository: serviceLocator<PaymentRepositoryImpl>()),
+            payForMonthlySubscriptionUseCase: PayForMonthlySubscriptionUseCase(
+                repository: serviceLocator<PaymentRepositoryImpl>()),
+          ),
+        ),
+      ],
       child: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {
           return CustomScreen(
@@ -279,123 +284,195 @@ class _PaymentScreenState extends State<PaymentScreen>
                                 children: List.generate(
                                   iconHeights.length,
                                   (index) => PaymentMethod(
-                                    onTap: (value) {
-                                      currentPaymentMethod.value = value;
-                                    },
-                                    icon: payments.values.toList()[index],
-                                    currentPaymentMethod:
-                                        currentPaymentMethod.value,
-                                    paymentMethod:
-                                        payments.keys.toList()[index],
-                                    iconHeight: iconHeights[index],
-                                  ),
+                                      onTap: (value) {
+                                        currentPaymentMethod.value = value;
+                                      },
+                                      icon: payments.values.toList()[index],
+                                      currentPaymentMethod:
+                                          currentPaymentMethod.value,
+                                      paymentMethod:
+                                          payments.keys.toList()[index],
+                                      iconHeight: iconHeights[index]),
                                 ),
                               ),
                             ),
-                            PaymentMethod(
-                              margin: const EdgeInsets.fromLTRB(16, 16, 16, 12),
-                              onTap: (value) {
-                                currentPaymentMethod.value = value;
-                              },
-                              currentPaymentMethod: currentPaymentMethod.value,
-                              paymentMethod: 'card',
-                              title: Text(
-                                LocaleKeys.payment_with_card.tr(),
-                                style: Theme.of(context).textTheme.displayLarge,
+                            if (context
+                                .watch<AuthenticationBloc>()
+                                .state
+                                .user
+                                .isSubscribed)
+                              PaymentMethod(
+                                margin:
+                                    const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                                onTap: (value) {
+                                  currentPaymentMethod.value = value;
+                                },
+                                currentPaymentMethod:
+                                    currentPaymentMethod.value,
+                                paymentMethod: 'card',
+                                title: Text(LocaleKeys.payment_with_card.tr(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge),
                               ),
-                            ),
-                            AnimatedCrossFade(
-                              firstChild: cards.isNotEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16),
-                                      child: AddCardWidget(
-                                        onTap: () {
-                                          showModalBottomSheet(
-                                              context: context,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              useRootNavigator: true,
-                                              isScrollControlled: true,
-                                              builder: (context) =>
-                                                  const AddCardBtsht());
-                                        },
-                                      ),
-                                    )
-                                  : Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          16, 0, 16, 0),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          12, 10, 10, 10),
-                                      decoration: BoxDecoration(
-                                        color: lilyWhite,
-                                        border: Border.all(color: lilyWhite),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          AnimatedSwitcher(
-                                              duration: const Duration(
-                                                  milliseconds: 150),
-                                              child:
-                                                  // true
-                                                  //     ?
-                                                  SvgPicture.asset(AppIcons
-                                                      .paymentMethodCheck)
-                                              // : Container(
-                                              //     height: 24,
-                                              //     width: 24,
-                                              //     decoration:
-                                              //         const BoxDecoration(
-                                              //             color:
-                                              //                 checkUnselected,
-                                              //             shape: BoxShape
-                                              //                 .circle),
-                                              //   ),
-                                              ),
-                                          const SizedBox(width: 12),
-                                          Expanded(
-                                            child: Text('8600 49** **** **04',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .displayLarge),
-                                          ),
-                                          WScaleAnimation(
-                                            onTap: () {
-                                              showModalBottomSheet(
-                                                  context: context,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  useRootNavigator: true,
-                                                  isScrollControlled: true,
-                                                  builder: (context) =>
-                                                      const CardsBottomSheet());
-                                            },
-                                            child: Container(
-                                              height: 36,
-                                              width: 36,
-                                              padding: const EdgeInsets.all(6),
-                                              decoration: BoxDecoration(
-                                                color: textSecondary
-                                                    .withOpacity(.16),
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                              ),
-                                              child: SvgPicture.asset(
-                                                  AppIcons.chevronsUpDown),
+                              BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
+                                builder: (context, state) {
+                                  return AnimatedCrossFade(
+                                    firstChild: state.paymentCards.isNotEmpty
+                                        ? Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16),
+                                            child: AddCardWidget(
+                                              onTap: () {
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    useRootNavigator: true,
+                                                    isScrollControlled: true,
+                                                    builder: (context) =>
+                                                        const AddCardBtsht());
+                                              },
+                                            ),
+                                          )
+                                        : Container(
+                                            margin: const EdgeInsets.fromLTRB(
+                                                16, 0, 16, 0),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                12, 10, 10, 10),
+                                            decoration: BoxDecoration(
+                                              color: lilyWhite,
+                                              border:
+                                                  Border.all(color: lilyWhite),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                AnimatedSwitcher(
+                                                    duration: const Duration(
+                                                        milliseconds: 150),
+                                                    child:
+                                                        // true
+                                                        //     ?
+                                                        SvgPicture.asset(AppIcons
+                                                            .paymentMethodCheck)
+                                                    // : Container(
+                                                    //     height: 24,
+                                                    //     width: 24,
+                                                    //     decoration:
+                                                    //         const BoxDecoration(
+                                                    //             color:
+                                                    //                 checkUnselected,
+                                                    //             shape: BoxShape
+                                                    //                 .circle),
+                                                    //   ),
+                                                    ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Text(
+                                                      state.selectedCard
+                                                              ?.cardNumber ??
+                                                          '',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .displayLarge),
+                                                ),
+                                                WScaleAnimation(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                        context: context,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        useRootNavigator: true,
+                                                        isScrollControlled:
+                                                            true,
+                                                        builder: (context) =>
+                                                            CardsBottomSheet(
+                                                              cards: state
+                                                                  .paymentCards,
+                                                              selectedCard: state
+                                                                  .selectedCard,
+                                                              onCreate:
+                                                                  (value) {
+                                                                context
+                                                                    .read<
+                                                                        PaymentCardsBloc>()
+                                                                    .add(
+                                                                        CreatePaymentCardEvent(
+                                                                      param:
+                                                                          CreateCardParam(
+                                                                        cardNumber:
+                                                                            value['card_number']
+                                                                                as String,
+                                                                        expireDate:
+                                                                            value['date']
+                                                                                as String,
+                                                                      ),
+                                                                      onSucces:
+                                                                          () {
+                                                                        Navigator.push(
+                                                                            context,
+                                                                            fade(
+                                                                                page: AddPaymentCardVerifyScreen(
+                                                                              expiredDate: value['card_number'] as String,
+                                                                              cardNumber: value['date'] as String,
+                                                                            )));
+                                                                      },
+                                                                      onError:
+                                                                          (message) {
+                                                                        context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                                                            message:
+                                                                                message,
+                                                                            isSuccess:
+                                                                                false));
+                                                                      },
+                                                                    ));
+                                                              },
+                                                            )).then((value) => {
+                                                          if (value[
+                                                                  'selectedCardId'] !=
+                                                              null)
+                                                            {
+                                                              context
+                                                                  .read<
+                                                                      PaymentCardsBloc>()
+                                                                  .add(SetSelectedPaymentCardEvent(
+                                                                      id: value[
+                                                                          'selectedCardId']))
+                                                            }
+                                                        });
+                                                  },
+                                                  child: Container(
+                                                    height: 36,
+                                                    width: 36,
+                                                    padding:
+                                                        const EdgeInsets.all(6),
+                                                    decoration: BoxDecoration(
+                                                      color: textSecondary
+                                                          .withOpacity(.16),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              6),
+                                                    ),
+                                                    child: SvgPicture.asset(
+                                                        AppIcons
+                                                            .chevronsUpDown),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                              secondChild: const SizedBox(),
-                              crossFadeState:
-                                  currentPaymentMethod.value == 'card'
-                                      ? CrossFadeState.showFirst
-                                      : CrossFadeState.showSecond,
-                              firstCurve: Curves.slowMiddle,
-                              duration: const Duration(milliseconds: 300),
-                            ),
+                                    secondChild: const SizedBox(),
+                                    crossFadeState:
+                                        currentPaymentMethod.value == 'card'
+                                            ? CrossFadeState.showFirst
+                                            : CrossFadeState.showSecond,
+                                    firstCurve: Curves.slowMiddle,
+                                    duration: const Duration(milliseconds: 300),
+                                  );
+                                },
+                              ),
                           ],
                         );
                       }),
@@ -406,10 +483,10 @@ class _PaymentScreenState extends State<PaymentScreen>
                         return WButton(
                           height: 40,
                           margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).padding.bottom + 16,
-                            left: 16,
-                            right: 16,
-                          ),
+                              bottom:
+                                  MediaQuery.of(context).padding.bottom + 16,
+                              left: 16,
+                              right: 16),
                           color: currentPaymentMethod.value.isEmpty
                               ? textSecondary
                               : primary,
@@ -466,91 +543,6 @@ class _PaymentScreenState extends State<PaymentScreen>
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class JournalArticleItem extends StatelessWidget {
-  const JournalArticleItem({
-    required this.price,
-    required this.title,
-    required this.imageUrl,
-    required this.slug,
-    Key? key,
-  }) : super(key: key);
-  final String imageUrl;
-  final String title;
-  final String slug;
-  final int price;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 161,
-      padding: const EdgeInsets.symmetric(horizontal: 16)
-          .copyWith(top: 16, bottom: 24),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: divider),
-                borderRadius: BorderRadius.circular(8)),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-                height: 120,
-                width: 120,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  MyFunctions.getFormatCostFromInt(price),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .copyWith(fontSize: 20),
-                ),
-                const Spacer(),
-                WButton(
-                  onTap: () {
-                    Navigator.of(context, rootNavigator: true).push(
-                      fade(
-                        page: JournalMarkdownPageReader(
-                          title: title,
-                          slug: slug,
-                          isPreview: true,
-                        ),
-                      ),
-                    );
-                  },
-                  height: 40,
-                  text: LocaleKeys.read_snippet.tr(),
-                  textColor: primary,
-                  color: unFollowButton.withOpacity(0.1),
-                  border: Border.all(color: primary),
-                )
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/auth/presentation/widgets/pin_code_body.dart';
+import 'package:anatomica/features/common/presentation/bloc/payment_card/payment_cards_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
@@ -7,7 +8,6 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/profile/domain/usecases/confirm_payment_cards_usecase.dart';
 import 'package:anatomica/features/profile/domain/usecases/create_payment_cards_usecase.dart';
-import 'package:anatomica/features/profile/presentation/blocs/payment_card_bloc/payment_card_bloc.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +108,7 @@ class _AddPaymentCardVerifyScreenState
                   pinCodeController: pinCodeController,
                   secondsLeft: secondsLeft,
                   onRefresh: () {
-                    context.read<PaymentCardBloc>().add(CreatePaymentCardEvent(
+                    context.read<PaymentCardsBloc>().add(CreatePaymentCardEvent(
                         onSucces: () {},
                         onError: (message) {
                           context.read<ShowPopUpBloc>().add(
@@ -122,7 +122,7 @@ class _AddPaymentCardVerifyScreenState
                 const Spacer(),
                 WButton(
                   onTap: () {
-                    context.read<PaymentCardBloc>().add(ConfirmPaymentCardEvent(
+                    context.read<PaymentCardsBloc>().add(ConfirmPaymentCardEvent(
                         onSucces: () {
                           Navigator.pop(context);
                           context.read<ShowPopUpBloc>().add(ShowPopUp(

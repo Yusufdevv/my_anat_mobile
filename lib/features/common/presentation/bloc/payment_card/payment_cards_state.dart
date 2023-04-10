@@ -1,36 +1,43 @@
-part of 'payment_card_bloc.dart';
+part of 'payment_cards_bloc.dart';
 
 @immutable
-class PaymentCardState {
+class PaymentCardsState {
   final List<PaymentCardEntity> paymentCards;
+  final PaymentCardEntity? selectedCard;
   final FormzStatus status;
   final FormzStatus secondStatus;
 
-  const PaymentCardState(
-      {required this.paymentCards,
-      required this.status,
-      required this.secondStatus});
+  const PaymentCardsState({
+    required this.paymentCards,
+    this.selectedCard,
+    required this.status,
+    required this.secondStatus,
+  });
 
-  const PaymentCardState.empty([
+  const PaymentCardsState.empty([
     this.paymentCards = const <PaymentCardEntity>[],
     this.status = FormzStatus.pure,
     this.secondStatus = FormzStatus.pure,
+    this.selectedCard,
   ]);
 
-  PaymentCardState copyWith({
+  PaymentCardsState copyWith({
     List<PaymentCardEntity>? paymentCards,
     FormzStatus? status,
     FormzStatus? secondStatus,
+    PaymentCardEntity? selectedCard,
   }) =>
-      PaymentCardState(
+      PaymentCardsState(
         paymentCards: paymentCards ?? this.paymentCards,
         status: status ?? this.status,
         secondStatus: secondStatus ?? this.secondStatus,
+        selectedCard: selectedCard ?? this.selectedCard,
       );
 
   List<Object?> get props => [
         paymentCards,
         status,
         secondStatus,
+        selectedCard,
       ];
 }

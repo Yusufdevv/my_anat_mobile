@@ -4,27 +4,35 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
+import 'package:anatomica/features/profile/domain/entities/payment_card_entity.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CardsBottomSheet extends StatefulWidget {
-  const CardsBottomSheet({Key? key}) : super(key: key);
+  const CardsBottomSheet({
+    required this.cards,
+    required this.onCreate,
+    this.selectedCard,
+    Key? key,
+  }) : super(key: key);
+  final List<PaymentCardEntity> cards;
+  final PaymentCardEntity? selectedCard;
+  final ValueChanged<Map<String, String>> onCreate;
 
   @override
   State<CardsBottomSheet> createState() => _CardsBottomSheetState();
 }
 
 class _CardsBottomSheetState extends State<CardsBottomSheet> {
-  int currentStatus = 0;
-  final ValueNotifier groupValue = ValueNotifier<int>(1);
+  final ValueNotifier groupValue = ValueNotifier<int?>(1);
 
   @override
   void initState() {
     super.initState();
+    groupValue.value = widget.selectedCard?.id;
   }
-  List<String> cards = ['humo', 'uzcard'];
 
   @override
   Widget build(BuildContext context) {
@@ -48,18 +56,22 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
                   ),
                   const SizedBox(height: 12),
                   const WDivider(),
-                  ...List.generate(cards.length, (index) => Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CardRadioTile(
-                        cardNumber: '8600 49** **** **04',
-                        cardType: cards[index],
-                        value: index+1,
-                        groupValue: groupValue,
+                  if (widget.cards.isNotEmpty)
+                    ...List.generate(
+                      widget.cards.length,
+                      (index) => Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CardRadioTile(
+                            cardNumber: widget.cards[index].cardNumber,
+                            cardType: widget.cards[index].cardType,
+                            value: widget.cards[index].id,
+                            groupValue: groupValue,
+                          ),
+                          const WDivider(margin: EdgeInsets.only(right: 16)),
+                        ],
                       ),
-                      const WDivider(margin: EdgeInsets.only(right: 16)),
-                    ],
-                  ),),
+                    ),
                   const SizedBox(height: 16),
                   Padding(
                     padding: const EdgeInsets.only(right: 16),
@@ -67,18 +79,26 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
                       onTap: () {
                         Navigator.pop(context);
                         showModalBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            useRootNavigator: true,
-                            isScrollControlled: true,
-                            builder: (context) => const AddCardBtsht());
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                useRootNavigator: true,
+                                isScrollControlled: true,
+                                builder: (context) => const AddCardBtsht())
+                            .then((value) => {
+                                  if (value is Map<String, String>)
+                                    {
+                                      widget.onCreate(value),
+                                    }
+                                });
+                        ;
                       },
                     ),
                   ),
                   const SizedBox(height: 20),
                   WButton(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pop(
+                          context, {'selectedCardId': widget.selectedCard?.id});
                     },
                     height: 40,
                     margin: const EdgeInsets.only(

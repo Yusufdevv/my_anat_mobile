@@ -1,11 +1,11 @@
-part of 'payment_card_bloc.dart';
+part of 'payment_cards_bloc.dart';
 
 @immutable
-abstract class PaymentCardEvent {}
+abstract class PaymentCardsEvent {}
 
-class GetPaymentCardsEvent extends PaymentCardEvent {}
+class GetPaymentCardsEvent extends PaymentCardsEvent {}
 
-class CreatePaymentCardEvent extends PaymentCardEvent {
+class CreatePaymentCardEvent extends PaymentCardsEvent {
   final CreateCardParam param;
   final Function() onSucces;
   final Function(String) onError;
@@ -17,7 +17,7 @@ class CreatePaymentCardEvent extends PaymentCardEvent {
   });
 }
 
-class ConfirmPaymentCardEvent extends PaymentCardEvent {
+class ConfirmPaymentCardEvent extends PaymentCardsEvent {
   final ConfirmCardParam param;
   final Function() onSucces;
   final Function(String) onError;
@@ -29,7 +29,14 @@ class ConfirmPaymentCardEvent extends PaymentCardEvent {
   });
 }
 
-class DeletePaymentCard extends PaymentCardEvent {
+class SetSelectedPaymentCardEvent extends PaymentCardsEvent {
+  final int id;
+
+  SetSelectedPaymentCardEvent({
+    required this.id,
+  });
+}
+class DeletePaymentCard extends PaymentCardsEvent {
   final int id;
   final Function() onSucces;
   final Function(String) onError;

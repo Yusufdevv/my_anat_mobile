@@ -7,13 +7,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CardItem extends StatelessWidget {
   final String cardType;
   final String cardNumber;
-  final VoidCallback onTap;
+  final VoidCallback onTapDelete;
 
   const CardItem({
     super.key,
     required this.cardType,
     required this.cardNumber,
-    required this.onTap,
+    required this.onTapDelete,
   });
 
   @override
@@ -28,7 +28,7 @@ class CardItem extends StatelessWidget {
             Text(cardNumber, style: Theme.of(context).textTheme.displayLarge),
             const Spacer(),
             WScaleAnimation(
-                onTap: onTap,
+                onTap: onTapDelete,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: SvgPicture.asset(AppIcons.delete),

@@ -7,7 +7,7 @@ import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/profile/presentation/blocs/profile_bloc/profile_bloc.dart';
 import 'package:anatomica/features/profile/presentation/pages/change_password.dart';
-import 'package:anatomica/features/profile/presentation/widgets/logout_dialog.dart';
+import 'package:anatomica/features/profile/presentation/widgets/custom_dialog.dart';
 import 'package:anatomica/features/profile/presentation/widgets/profile_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -44,7 +44,7 @@ class SafetyScreen extends StatelessWidget {
               const SizedBox(height: 12),
               ProfileItem(
                 onTap: () {
-                  showLogOutDialog(
+                  showCustomDialog(
                     context,
                     onConfirmTap: () {
                       profileBloc.add(
