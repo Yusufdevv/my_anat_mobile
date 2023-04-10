@@ -23,6 +23,7 @@ import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/log
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
 import 'package:anatomica/features/common/domain/repositories/connectivity_repository.dart';
 import 'package:anatomica/features/common/presentation/bloc/connectivity_bloc/connectivity_bloc.dart';
+import 'package:anatomica/features/common/presentation/bloc/payment_card/payment_cards_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/deeplinking/deep_link_bloc.dart';
 import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
@@ -122,6 +123,9 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider.value(
             value: connectivityBloc,
+          ),
+          BlocProvider(
+            create: (context) => PaymentCardsBloc(),
           ),
           BlocProvider(
             create: (context) => ShowPopUpBloc(),

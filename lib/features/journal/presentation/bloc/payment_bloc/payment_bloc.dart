@@ -1,5 +1,7 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
+import 'package:anatomica/features/journal/data/repositories/payment_repository_impl.dart';
 import 'package:anatomica/features/journal/domain/entities/payment_response_entity.dart';
 import 'package:anatomica/features/journal/domain/entities/prices_entity.dart';
 import 'package:anatomica/features/journal/domain/usecases/check_payment_status_usecase.dart';
@@ -14,26 +16,21 @@ import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 
 part 'payment_event.dart';
+
 part 'payment_state.dart';
 
 class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
-  final OrderCreateArticleUseCase _orderCreateArticleUseCase;
-  final OrderCreateJournalUseCase _orderCreateJournalUseCase;
-  final CheckPaymentStatusUseCase _checkPaymentStatusUseCase;
-  final GetPricesUseCase _getPricesUseCase;
-  final PayForMonthlySubscriptionUseCase _payForMonthlySubscriptionUseCase;
-  PaymentBloc(
-      {required OrderCreateJournalUseCase orderCreateJournalUseCase,
-      required OrderCreateArticleUseCase orderCreateArticleUseCase,
-      required CheckPaymentStatusUseCase checkPaymentStatusUseCase,
-      required GetPricesUseCase getPricesUseCase,
-      required PayForMonthlySubscriptionUseCase payForMonthlySubscriptionUseCase})
-      : _orderCreateJournalUseCase = orderCreateJournalUseCase,
-        _orderCreateArticleUseCase = orderCreateArticleUseCase,
-        _checkPaymentStatusUseCase = checkPaymentStatusUseCase,
-        _getPricesUseCase = getPricesUseCase,
-        _payForMonthlySubscriptionUseCase = payForMonthlySubscriptionUseCase,
-        super(const PaymentState()) {
+  final OrderCreateArticleUseCase _orderCreateArticleUseCase =
+      OrderCreateArticleUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
+  final OrderCreateJournalUseCase _orderCreateJournalUseCase =
+      OrderCreateJournalUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
+  final CheckPaymentStatusUseCase _checkPaymentStatusUseCase =
+      CheckPaymentStatusUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
+  final GetPricesUseCase _getPricesUseCase = GetPricesUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
+  final PayForMonthlySubscriptionUseCase _payForMonthlySubscriptionUseCase =
+      PayForMonthlySubscriptionUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
+
+  PaymentBloc() : super(const PaymentState()) {
     on<OrderCreateArticle>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateArticleUseCase.call(OrderCreateParams(

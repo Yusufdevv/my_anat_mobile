@@ -65,7 +65,7 @@ class SearchedArticles extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20)
               .copyWith(bottom: MediaQuery.of(context).padding.bottom + 20),
           separatorBuilder: (context, index) => const SizedBox(height: 12),
-          errorWidget: const Text('error'),
+          errorWidget:const Center(child:  Text('Error')),
         );
       },
     );

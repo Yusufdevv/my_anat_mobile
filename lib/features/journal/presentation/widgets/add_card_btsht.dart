@@ -22,8 +22,8 @@ class _AddCardBtshtState extends State<AddCardBtsht> {
 
   @override
   void initState() {
-    cardController = TextEditingController(text: "9860350107129008");
-    dateController = TextEditingController(text: "0927");
+    cardController = TextEditingController();
+    dateController = TextEditingController();
     super.initState();
   }
 
