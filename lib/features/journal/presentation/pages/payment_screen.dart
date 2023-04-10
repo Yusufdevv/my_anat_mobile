@@ -1,7 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
-import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/payment_card/payment_cards_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
@@ -10,12 +9,6 @@ import 'package:anatomica/features/common/presentation/widgets/default_text_fiel
 import 'package:anatomica/features/common/presentation/widgets/phone_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:anatomica/features/journal/data/repositories/payment_repository_impl.dart';
-import 'package:anatomica/features/journal/domain/usecases/check_payment_status_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_prices_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/order_create_article_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/order_create_journal_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/add_payment_card_verify_screen.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
@@ -106,12 +99,6 @@ class _PaymentScreenState extends State<PaymentScreen> with TickerProviderStateM
       providers: [
         BlocProvider(
           create: (context) => PaymentBloc(
-            orderCreateArticleUseCase: OrderCreateArticleUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
-            orderCreateJournalUseCase: OrderCreateJournalUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
-            checkPaymentStatusUseCase: CheckPaymentStatusUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
-            getPricesUseCase: GetPricesUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
-            payForMonthlySubscriptionUseCase:
-                PayForMonthlySubscriptionUseCase(repository: serviceLocator<PaymentRepositoryImpl>()),
           ),
         ),
       ],
