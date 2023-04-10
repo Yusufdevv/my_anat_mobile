@@ -1,19 +1,17 @@
-import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
-import 'package:anatomica/features/common/data/repository/global_requst_repository.dart';
-import 'package:anatomica/features/map/data/models/map_doctor.dart';
+import 'package:anatomica/features/map/data/models/doctor_spec.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 
 class GetMapDoctorUseCase
-    extends UseCase<GenericPagination<DoctorMapEntity>, String> {
+    extends UseCase<GenericPagination<DoctorSpecModel>, String> {
   final PaginationRepository repo = PaginationRepository();
 
   @override
-  Future<Either<Failure, GenericPagination<DoctorMapEntity>>> call(params,
+  Future<Either<Failure, GenericPagination<DoctorSpecModel>>> call(params,
       {MapV2Params? param}) {
     var query = <String, dynamic>{};
     if (params.isNotEmpty) {
@@ -31,7 +29,7 @@ class GetMapDoctorUseCase
     print('repo => ${query}');
     return repo.fetchMore(
       url: '/mobile/doctor/map/',
-      fromJson: MapDoctorModel.fromJson,
+      fromJson: DoctorSpecModel.fromJson,
       query: query,
       next: param!.next,
     );

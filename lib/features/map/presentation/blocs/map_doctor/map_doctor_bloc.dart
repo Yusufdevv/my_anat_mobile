@@ -1,8 +1,6 @@
+import 'package:anatomica/features/map/data/models/doctor_spec.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
-import 'package:anatomica/features/map/data/models/hospital_doctors_model.dart';
-import 'package:anatomica/features/map/domain/entities/doctor_map_entity.dart';
-import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';

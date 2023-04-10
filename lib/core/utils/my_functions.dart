@@ -8,16 +8,11 @@ import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
-import 'package:anatomica/features/map/data/models/hospital_doctors_model.dart';
+import 'package:anatomica/features/map/data/models/doctor_spec.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/data/models/map_hospital.dart';
-import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
-import 'package:anatomica/features/map/domain/entities/doctor_map_entity.dart';
-import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctor_single_bottom_sheet.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_bottom_sheet.dart';
-import 'package:anatomica/features/map/presentation/widgets/map_sheet_doctor.dart';
-import 'package:anatomica/features/map/presentation/widgets/map_sheet_hospital.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +73,9 @@ abstract class MyFunctions {
     final Canvas canvas = Canvas(pictureRecorder);
     final Paint paint = Paint()..color = Colors.red;
     canvas.drawImage(
-        await getImageInfo(context, image).then((value) => value.image), offset ?? const Offset(0, 3), paint);
+        await getImageInfo(context, image).then((value) => value.image),
+        offset ?? const Offset(0, 3),
+        paint);
 
     if (shouldAddText) {
       TextPainter painter = TextPainter(textDirection: ui.TextDirection.ltr);
@@ -89,7 +86,8 @@ abstract class MyFunctions {
       painter.layout();
       painter.paint(
         canvas,
-        Offset((width * 0.47) - painter.width * 0.2, (height * 0.1) - painter.height * 0.1),
+        Offset((width * 0.47) - painter.width * 0.2,
+            (height * 0.1) - painter.height * 0.1),
       );
     }
 
@@ -112,14 +110,18 @@ abstract class MyFunctions {
     canvas.drawCircle(Offset(radius + 10, radius + 10), radius, paint);
     canvas.drawCircle(Offset(radius + 10, radius + 10), radius, paint2);
 
-    final img = await pictureRecorder.endRecording().toImage((2 * radius + 20).toInt(), (2 * radius + 20).toInt());
+    final img = await pictureRecorder
+        .endRecording()
+        .toImage((2 * radius + 20).toInt(), (2 * radius + 20).toInt());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
     return data?.buffer.asUint8List() ?? Uint8List(0);
   }
 
-  static Future<ImageInfo> getImageInfo(BuildContext context, String image) async {
+  static Future<ImageInfo> getImageInfo(
+      BuildContext context, String image) async {
     AssetImage assetImage = AssetImage(image);
-    ImageStream stream = assetImage.resolve(createLocalImageConfiguration(context));
+    ImageStream stream =
+        assetImage.resolve(createLocalImageConfiguration(context));
     Completer<ImageInfo> completer = Completer();
     stream.addListener(ImageStreamListener((ImageInfo imageInfo, _) {
       return completer.complete(imageInfo);
@@ -127,7 +129,8 @@ abstract class MyFunctions {
     return completer.future;
   }
 
-  static Future<MapObject<dynamic>> getMyPoint(Point point, BuildContext context) async {
+  static Future<MapObject<dynamic>> getMyPoint(
+      Point point, BuildContext context) async {
     final myIconData = await getBytesFromCanvas(
         placeCount: 0,
         image: AppImages.myPlacemark,
@@ -150,15 +153,13 @@ abstract class MyFunctions {
     return myPoint;
   }
 
-  static Future<void> addHospitals({
-    required ValueChanged<List<MapObject<dynamic>>> onPointsCreated,
-    required OnMapControllerChange onMapControllerChange,
-    required List<OrgMapV2Model> points,
-    required BuildContext context,
-    required Point point,
-    required double accuracy,
-    required double deviceWidth,
-  }) async {
+  static Future<void> addHospitals(
+      List<MapHospitalModel> points,
+      BuildContext context,
+      List<MapObject<dynamic>> mapObjects,
+      YandexMapController controller,
+      Point point,
+      double accuracy) async {
     final iconData = await getBytesFromCanvas(
       placeCount: 0,
       image: AppImages.placeMarkIcon,
@@ -172,7 +173,7 @@ abstract class MyFunctions {
     final placeMarks = points.map((e) {
       return PlacemarkMapObject(
         opacity: 1,
-        mapId: MapObjectId('${e.id}'),
+        mapId: MapObjectId(e.latitude.toString()),
         point: Point(
           latitude: e.latitude,
           longitude: e.longitude,
@@ -180,7 +181,17 @@ abstract class MyFunctions {
         onTap: (object, point) async {
           // element = e;
           print('element => ${e.title}');
-          onMapControllerChange(e.latitude, e.longitude);
+          controller.moveCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: Point(
+                  latitude: e.latitude,
+                  longitude: e.longitude,
+                ),
+                zoom: 15,
+              ),
+            ),
+          );
 
           final result = await showModalBottomSheet(
             barrierColor: Colors.transparent,
@@ -190,18 +201,66 @@ abstract class MyFunctions {
             enableDrag: false,
             backgroundColor: Colors.transparent,
             builder: (context) {
-              context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
-              return MapSheetHospital(
-                deviceWidth: deviceWidth,
-                onPageChanged: (value) {
-                  onMapControllerChange(points[value].latitude, points[value].longitude);
-                },
-                points: points,
-                point: e,
+              context
+                  .read<LoginSignUpBloc>()
+                  .add(HideMainTabEvent(showMainTab: false));
+              return MediaQuery.removePadding(
+                context: context,
+                removeBottom: true,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: PageView.builder(
+                    controller: PageController(
+                      initialPage: points.indexOf(e),
+                      viewportFraction: 0.9,
+                    ),
+                    onPageChanged: (value) {
+                      controller.moveCamera(
+                          CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                              target: Point(
+                                latitude: points[value].latitude,
+                                longitude: points[value].longitude,
+                              ),
+                              zoom: 15,
+                            ),
+                          ),
+                          animation: const MapAnimation(
+                              duration: 1, type: MapAnimationType.linear));
+                    },
+                    itemCount: points.length,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16, left: 8),
+                        child: HospitalSingleBottomSheet(
+                          id: points[index].id,
+                          isHospital: true,
+                          slug: points[index].slug,
+                          title: points[index].title,
+                          phone: points[index].phoneNumber,
+                          logo: points[index].logo.middle,
+                          address: points[index].address,
+                          images: points[index]
+                              .images
+                              .map((e) => e.middle)
+                              .toList(),
+                          location: Point(
+                            latitude: points[index].latitude,
+                            longitude: points[index].longitude,
+                          ),
+                          rating: points[index].rating,
+                        ),
+                      );
+                    },
+                  ),
+                ),
               );
             },
           );
-          context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: true));
+          context
+              .read<LoginSignUpBloc>()
+              .add(HideMainTabEvent(showMainTab: true));
         },
         icon: PlacemarkIcon.single(
           PlacemarkIconStyle(
@@ -217,39 +276,8 @@ abstract class MyFunctions {
       placemarks: placeMarks,
       radius: 25,
       minZoom: 30,
-      onClusterTap: (collection, cluster) async {
-        List<OrgMapV2Model> clusterPoints = [];
-        List<String> clusterIds = cluster.placemarks.map((e) => e.mapId.value).toList();
-        for (var i = 0; i < points.length; i++) {
-          if (clusterIds.any((e) => e == '${points[i].id}')) {
-            clusterPoints.add(points[i]);
-          }
-        }
-        onMapControllerChange(clusterPoints.first.latitude, clusterPoints.first.longitude);
-
-        final result = await showModalBottomSheet(
-          barrierColor: Colors.transparent,
-          context: context,
-          useRootNavigator: true,
-          enableDrag: false,
-          backgroundColor: Colors.transparent,
-          builder: (context) {
-            context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
-            return MapSheetHospital(
-              deviceWidth: deviceWidth,
-              onPageChanged: (page) {
-                onMapControllerChange(clusterPoints[page].latitude, clusterPoints[page].longitude);
-              },
-              points: clusterPoints,
-              point: clusterPoints.first,
-            );
-          },
-        );
-        context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: true));
-      },
-      onTap: (collection, point) {
-        print(':::::::::: ON TAP:  ${collection.mapId}  ::::::::::');
-      },
+      onClusterTap: (collection, cluster) {},
+      onTap: (collection, point) {},
       onClusterAdded: (collection, cluster) async => cluster.copyWith(
         appearance: cluster.appearance.copyWith(
           opacity: 1,
@@ -272,11 +300,17 @@ abstract class MyFunctions {
       ),
     );
 
-    onPointsCreated([clusterItem, myPoint]);
+    mapObjects.clear();
+    mapObjects.addAll([clusterItem, myPoint]);
   }
 
-  static Future<void> addDoctors(List<DoctorMapEntity> points, BuildContext context,
-      List<MapObject<dynamic>> mapObjects, YandexMapController controller, Point point, double accuracy) async {
+  static void addDoctors(
+      List<DoctorSpecModel> points,
+      BuildContext context,
+      List<MapObject<dynamic>> mapObjects,
+      YandexMapController controller,
+      Point point,
+      double accuracy) async {
     final iconData = await getBytesFromCanvas(
         placeCount: 0,
         image: AppImages.doctorMark,
@@ -289,39 +323,83 @@ abstract class MyFunctions {
         .map(
           (e) => PlacemarkMapObject(
               opacity: 1,
-              mapId: MapObjectId('${e.id}'),
+              mapId: MapObjectId(e.longitude.toString()),
               point: Point(latitude: e.latitude, longitude: e.longitude),
               onTap: (object, point) async {
                 controller.moveCamera(CameraUpdate.newCameraPosition(
-                    CameraPosition(target: Point(latitude: e.latitude, longitude: e.longitude), zoom: 15)));
+                    CameraPosition(
+                        target:
+                            Point(latitude: e.latitude, longitude: e.longitude),
+                        zoom: 15)));
                 final result = await showModalBottomSheet(
                     context: context,
+                    // isScrollControlled: true,
                     useRootNavigator: true,
                     backgroundColor: Colors.transparent,
                     barrierColor: Colors.transparent,
                     builder: (context) {
-                      context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
-                      return MapSheetDoctor(
-                          initialPoint: e,
-                          onPageChanged: (value) {
-                            controller.moveCamera(
-                                CameraUpdate.newCameraPosition(
-                                  CameraPosition(
-                                    target: Point(
-                                      latitude: points[value].latitude,
-                                      longitude: points[value].longitude,
+                      context
+                          .read<LoginSignUpBloc>()
+                          .add(HideMainTabEvent(showMainTab: false));
+                      return MediaQuery.removePadding(
+                        context: context,
+                        removeBottom: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 60),
+                          child: PageView.builder(
+                              controller: PageController(
+                                initialPage: points.indexOf(e),
+                                viewportFraction: 0.9,
+                              ),
+                              physics: const BouncingScrollPhysics(),
+                              onPageChanged: (value) {
+                                controller.moveCamera(
+                                    CameraUpdate.newCameraPosition(
+                                      CameraPosition(
+                                        target: Point(
+                                          latitude: points[value].latitude,
+                                          longitude: points[value].longitude,
+                                        ),
+                                        zoom: 15,
+                                      ),
                                     ),
-                                    zoom: 15,
+                                    animation: const MapAnimation(
+                                        duration: 1,
+                                        type: MapAnimationType.linear));
+                              },
+                              itemCount: points.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: 16, left: 8),
+                                  child: DoctorSingleBottomSheet(
+                                    id: points[index].id,
+                                    isHospital: false,
+                                    specialization: points[index].position,
+                                    slug: '',
+                                    hospital: points[index].fullName,
+                                    title: points[index].fullName,
+                                    //  todo which phone
+                                    phone: points[index].phoneNumbers[0][0],
+                                    address: points[index].address,
+                                    images: [points[index].image.middle],
+                                    location: Point(
+                                        latitude: points[index].latitude,
+                                        longitude: points[index].longitude),
+                                    rating: points[index].rating,
                                   ),
-                                ),
-                                animation: const MapAnimation(duration: 1, type: MapAnimationType.linear));
-                          },
-                          doctors: points);
+                                );
+                              }),
+                        ),
+                      );
                     });
-                context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: true));
+                context
+                    .read<LoginSignUpBloc>()
+                    .add(HideMainTabEvent(showMainTab: true));
               },
-              icon: PlacemarkIcon.single(
-                  PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark), scale: 0.6))),
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                  image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark),
+                  scale: 0.6))),
         )
         .toList();
     final myPoint = await getMyPoint(point, context);
@@ -330,45 +408,6 @@ abstract class MyFunctions {
       placemarks: placeMarks,
       radius: 25,
       minZoom: 30,
-      onClusterTap: (collection, cluster) async {
-        List<DoctorMapEntity> clusterDoctors = [];
-        List<String> clusterIds = cluster.placemarks.map((e) => e.mapId.value).toList();
-        for (var i = 0; i < points.length; i++) {
-          if (clusterIds.any((e) => e == '${points[i].id}')) {
-            clusterDoctors.add(points[i]);
-          }
-        }
-
-        controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
-            target: Point(latitude: clusterDoctors.first.latitude, longitude: clusterDoctors.first.longitude),
-            zoom: 15)));
-        final result = await showModalBottomSheet(
-            context: context,
-            useRootNavigator: true,
-            backgroundColor: Colors.transparent,
-            barrierColor: Colors.transparent,
-            builder: (context) {
-              context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
-              return MapSheetDoctor(
-                onPageChanged: (value) {
-                  controller.moveCamera(
-                      CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                          target: Point(
-                            latitude: clusterDoctors[value].latitude,
-                            longitude: clusterDoctors[value].longitude,
-                          ),
-                          zoom: 15,
-                        ),
-                      ),
-                      animation: const MapAnimation(duration: 1, type: MapAnimationType.linear));
-                },
-                initialPoint: clusterDoctors.first,
-                doctors: clusterDoctors,
-              );
-            });
-        context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: true));
-      },
       onClusterAdded: (collection, cluster) async => cluster.copyWith(
         appearance: cluster.appearance.copyWith(
           opacity: 1,
@@ -397,21 +436,25 @@ abstract class MyFunctions {
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      throw const ParsingException(errorMessage: LocaleKeys.location_services_disabled);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.location_services_disabled);
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
+        throw const ParsingException(
+            errorMessage: LocaleKeys.location_permission_disabled);
       }
     }
     if (permission == LocationPermission.deniedForever) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
+        throw const ParsingException(
+            errorMessage: LocaleKeys.location_permission_disabled);
       } else if (permission == LocationPermission.deniedForever) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_permanent_disabled);
+        throw const ParsingException(
+            errorMessage: LocaleKeys.location_permission_permanent_disabled);
       }
     }
     return await Geolocator.getCurrentPosition();
@@ -458,7 +501,8 @@ abstract class MyFunctions {
   static String getPublishedDate(String date) {
     if (Jiffy(date).isSame(DateTime.now(), Units.DAY)) {
       return '${LocaleKeys.today.tr()}, ${Jiffy(date).format('HH:mm')}';
-    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 || Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
+    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 ||
+        Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
       return '${LocaleKeys.yesterday.tr()}, ${Jiffy(date).format('HH:mm')}';
     } else {
       return '${Jiffy(date).date} ${getMonth(Jiffy(date).month)}, ${Jiffy(date).year}';
