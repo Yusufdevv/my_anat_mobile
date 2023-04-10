@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/journal/data/models/journal_article_model.dart';
@@ -39,8 +37,6 @@ class JournalDatasourceImpl extends JournalDatasource {
               : {},
         ),
       );
-      log(response.realUri.toString());
-      log(response.data.toString());
 
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
@@ -122,7 +118,6 @@ class JournalDatasourceImpl extends JournalDatasource {
               : {},
         ),
       );
-      log(response.data.toString());
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return JournalArticleSingleModel.fromJson(response.data);
       } else {

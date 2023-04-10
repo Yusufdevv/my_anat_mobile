@@ -2,18 +2,26 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
+import 'package:anatomica/features/common/presentation/bloc/payment_card/payment_cards_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/journal/domain/entities/period_entity.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
+import 'package:anatomica/features/journal/presentation/pages/add_payment_card_verify_screen.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
+import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.dart';
+import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
+import 'package:anatomica/features/journal/presentation/widgets/cards_bottomsheet.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_images.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/journal/presentation/widgets/select_period_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/profile/domain/usecases/create_payment_cards_usecase.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,8 +41,15 @@ class BuySubscription extends StatefulWidget {
 }
 
 class _BuySubscriptionState extends State<BuySubscription> {
-  String currentPaymentMethod = '';
   PeriodEntity currentPeriod = const PeriodEntity(title: LocaleKeys.days_30, period: 1);
+  Map<String, String> payments = {
+    'payme': AppImages.payMe,
+    'click': AppImages.click,
+    'uzum': AppImages.uzum,
+    'paylov': AppImages.paylov
+  };
+  List<double> iconHeights = [24, 24, 22, 22];
+  final ValueNotifier currentPaymentMethod = ValueNotifier<String>('');
 
   @override
   Widget build(BuildContext context) {
@@ -170,89 +185,228 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              Expanded(
-                                child: GridView(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 16, mainAxisExtent: 54),
-                                  children: [
-                                    PaymentMethod(
-                                      onTap: (value) {
-                                        setState(() {
-                                          currentPaymentMethod = value;
-                                        });
-                                      },
-                                      icon: AppImages.payMe,
-                                      currentPaymentMethod: currentPaymentMethod,
-                                      paymentMethod: 'payme',
-                                      iconHeight: 24,
-                                    ),
-                                    PaymentMethod(
-                                      onTap: (value) {
-                                        setState(() {
-                                          currentPaymentMethod = value;
-                                        });
-                                      },
-                                      iconHeight: 26,
-                                      icon: AppImages.click,
-                                      currentPaymentMethod: currentPaymentMethod,
-                                      paymentMethod: 'click',
-                                    ),
-                                    PaymentMethod(
-                                      onTap: (value) {
-                                        setState(() {
-                                          currentPaymentMethod = value;
-                                        });
-                                      },
-                                      iconHeight: 26,
-                                      icon: AppImages.uzum,
-                                      currentPaymentMethod: currentPaymentMethod,
-                                      paymentMethod: 'uzum',
-                                    ),
-                                    PaymentMethod(
-                                      onTap: (value) {
-                                        setState(() {
-                                          currentPaymentMethod = value;
-                                        });
-                                      },
-                                      iconHeight: 22,
-                                      icon: AppImages.paylov,
-                                      currentPaymentMethod: currentPaymentMethod,
-                                      paymentMethod: 'paylov',
-                                    )
-                                  ],
-                                ),
-                              ),
+                              ValueListenableBuilder(
+                                  valueListenable: currentPaymentMethod,
+                                  builder: (context, _, __) {
+                                    return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 124,
+                                          child: GridView(
+                                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                crossAxisSpacing: 15,
+                                                mainAxisSpacing: 16,
+                                                mainAxisExtent: 54),
+                                            children: List.generate(
+                                              iconHeights.length,
+                                              (index) => PaymentMethod(
+                                                  onTap: (value) {
+                                                    currentPaymentMethod.value = value;
+                                                  },
+                                                  icon: payments.values.toList()[index],
+                                                  currentPaymentMethod: currentPaymentMethod.value,
+                                                  paymentMethod: payments.keys.toList()[index],
+                                                  iconHeight: iconHeights[index]),
+                                            ),
+                                          ),
+                                        ),
+                                        if (context.watch<AuthenticationBloc>().state.status ==
+                                            AuthenticationStatus.authenticated)
+                                          PaymentMethod(
+                                            margin: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                                            onTap: (value) {
+                                              currentPaymentMethod.value = value;
+                                            },
+                                            currentPaymentMethod: currentPaymentMethod.value,
+                                            paymentMethod: 'card',
+                                            title: Text(LocaleKeys.payment_with_card.tr(),
+                                                style: Theme.of(context).textTheme.displayLarge),
+                                          ),
+                                        BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
+                                          builder: (context, state) {
+                                            return AnimatedCrossFade(
+                                              firstChild: state.paymentCards.isEmpty
+                                                  ? Padding(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                      child: AddCardWidget(
+                                                        onTap: () {
+                                                          showModalBottomSheet(
+                                                              context: context,
+                                                              backgroundColor: Colors.transparent,
+                                                              useRootNavigator: true,
+                                                              isScrollControlled: true,
+                                                              builder: (context) =>
+                                                                  const AddCardBtsht()).then((value) => {
+                                                                if (value is Map<String, String>)
+                                                                  {
+                                                                    context
+                                                                        .read<PaymentCardsBloc>()
+                                                                        .add(CreatePaymentCardEvent(
+                                                                          param: CreateCardParam(
+                                                                              cardNumber:
+                                                                                  value['card_number'] as String,
+                                                                              expireDate: value['date'] as String),
+                                                                          onSucces: () {
+                                                                            Navigator.push(
+                                                                                context,
+                                                                                fade(
+                                                                                    page: AddPaymentCardVerifyScreen(
+                                                                                  expiredDate: value['date'] as String,
+                                                                                  cardNumber:
+                                                                                      value['card_number'] as String,
+                                                                                )));
+                                                                          },
+                                                                          onError: (message) {
+                                                                            context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                                                                message: message, isSuccess: false));
+                                                                          },
+                                                                        )),
+                                                                  },
+                                                              });
+                                                        },
+                                                      ),
+                                                    )
+                                                  : Container(
+                                                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                                                      padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
+                                                      decoration: BoxDecoration(
+                                                        color: lilyWhite,
+                                                        border: Border.all(color: lilyWhite),
+                                                        borderRadius: BorderRadius.circular(10),
+                                                      ),
+                                                      child: Row(
+                                                        children: [
+                                                          state.selectedCard?.cardType == 'humo'
+                                                              ? SvgPicture.asset(AppImages.humo)
+                                                              : SvgPicture.asset(AppImages.uzcard),
+                                                          const SizedBox(width: 12),
+                                                          Expanded(
+                                                              child: Text(state.selectedCard?.cardNumber ?? '',
+                                                                  style: Theme.of(context).textTheme.displayLarge)),
+                                                          WScaleAnimation(
+                                                            onTap: () {
+                                                              showModalBottomSheet(
+                                                                  context: context,
+                                                                  backgroundColor: Colors.transparent,
+                                                                  useRootNavigator: true,
+                                                                  isScrollControlled: true,
+                                                                  builder: (context) => CardsBottomSheet(
+                                                                        cards: state.paymentCards,
+                                                                        selectedCard: state.selectedCard,
+                                                                        onCreate: (value) {
+                                                                          context
+                                                                              .read<PaymentCardsBloc>()
+                                                                              .add(CreatePaymentCardEvent(
+                                                                                param: CreateCardParam(
+                                                                                    cardNumber:
+                                                                                        value['card_number'] as String,
+                                                                                    expireDate:
+                                                                                        value['date'] as String),
+                                                                                onSucces: () {
+                                                                                  Navigator.push(
+                                                                                      context,
+                                                                                      fade(
+                                                                                          page:
+                                                                                              AddPaymentCardVerifyScreen(
+                                                                                        expiredDate:
+                                                                                            value['date'] as String,
+                                                                                        cardNumber: value['card_number']
+                                                                                            as String,
+                                                                                      )));
+                                                                                },
+                                                                                onError: (message) {
+                                                                                  context.read<ShowPopUpBloc>().add(
+                                                                                      ShowPopUp(
+                                                                                          message: message,
+                                                                                          isSuccess: false));
+                                                                                },
+                                                                              ));
+                                                                        },
+                                                                      )).then((value) => {
+                                                                    if (value != null)
+                                                                      {
+                                                                        context.read<PaymentCardsBloc>().add(
+                                                                            SetSelectedPaymentCardEvent(
+                                                                                id: value['selectedCardId']))
+                                                                      }
+                                                                  });
+                                                            },
+                                                            child: Container(
+                                                              height: 36,
+                                                              width: 36,
+                                                              padding: const EdgeInsets.all(6),
+                                                              decoration: BoxDecoration(
+                                                                  color: textSecondary.withOpacity(.16),
+                                                                  borderRadius: BorderRadius.circular(6)),
+                                                              child: SvgPicture.asset(AppIcons.chevronsUpDown),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                              secondChild: const SizedBox(),
+                                              crossFadeState: currentPaymentMethod.value == 'card'
+                                                  ? CrossFadeState.showFirst
+                                                  : CrossFadeState.showSecond,
+                                              firstCurve: Curves.slowMiddle,
+                                              duration: const Duration(milliseconds: 300),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  }),
                             ],
                           ),
                         ),
-                        WButton(
-                          isLoading: state.payForMonthlyStatus.isSubmissionInProgress,
-                          onTap: () {
-                            context.read<PaymentBloc>().add(PayForMonthlySubscription(
-                                period: currentPeriod.period,
-                                onSuccess: (value) {
-                                  launchUrlString(value.transactionCheckoutUrl, mode: LaunchMode.externalApplication);
-                                  Navigator.of(context).push(
-                                    fade(
-                                      page: PaymentResultScreen(
-                                        title: '',
-                                        isRegistered: true,
-                                        isSubscription: true,
-                                        bloc: context.read<PaymentBloc>(),
-                                      ),
-                                    ),
-                                  );
+                        ValueListenableBuilder(
+                            valueListenable: currentPaymentMethod,
+                            builder: (context, _, __) {
+                              return WButton(
+                                isLoading: state.payForMonthlyStatus.isSubmissionInProgress,
+                                color: currentPaymentMethod.value.isEmpty ? textSecondary : primary,
+                                onTap: () {
+                                  if (currentPaymentMethod.value.isEmpty) {
+                                    context
+                                        .read<ShowPopUpBloc>()
+                                        .add(ShowPopUp(message: LocaleKeys.no_payment_provider.tr()));
+                                    return;
+                                  }
+                                  context.read<PaymentBloc>().add(PayForMonthlySubscription(
+                                      period: currentPeriod.period,
+                                      onSuccess: (value) {
+                                        if (currentPaymentMethod.value != 'card') {
+                                          launchUrlString(value.transactionCheckoutUrl,
+                                              mode: LaunchMode.externalApplication);
+                                          Navigator.of(context).push(
+                                            fade(
+                                              page: PaymentResultScreen(
+                                                title: LocaleKeys.activate_subscription.tr(),
+                                                isRegistered: true,
+                                                isSubscription: true,
+                                                bloc: context.read<PaymentBloc>(),
+                                              ),
+                                            ),
+                                          );
+                                        } else if (currentPaymentMethod.value == 'card') {
+                                          context
+                                              .read<ShowPopUpBloc>()
+                                              .add(ShowPopUp(message: 'Uspeshno', isSuccess: true));
+                                        }
+                                      },
+                                      paymentProvider: currentPaymentMethod.value,
+                                      onError: (message) {
+                                        context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                                      }));
                                 },
-                                paymentProvider: currentPaymentMethod,
-                                onError: (message) {
-                                  context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
-                                }));
-                          },
-                          margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
-                          text: LocaleKeys.confirm.tr(),
-                        ),
+                                margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
+                                text: LocaleKeys.confirm.tr(),
+                              );
+                            }),
                         SizedBox(height: mediaQuery.padding.bottom + 16)
                       ],
                     ),

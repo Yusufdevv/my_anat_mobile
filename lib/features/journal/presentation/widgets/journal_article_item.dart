@@ -24,8 +24,8 @@ class JournalArticleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 161,
-      padding: const EdgeInsets.symmetric(horizontal: 16)
+      height: 170,
+      margin: const EdgeInsets.symmetric(horizontal: 16)
           .copyWith(top: 16, bottom: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +39,7 @@ class JournalArticleItem extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
                 fit: BoxFit.cover,
-                height: 120,
+                height: 170,
                 width: 120,
               ),
             ),
