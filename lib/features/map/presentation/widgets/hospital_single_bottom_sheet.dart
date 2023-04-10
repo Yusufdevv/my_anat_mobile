@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
-import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
@@ -23,12 +22,10 @@ class HospitalSingleBottomSheet extends StatelessWidget {
   final String slug;
   final int id;
   final List<String> images;
-  final List<SpecializationEntity> types;
   final String address;
   final String phone;
   final Point location;
   final double rating;
-  final double deviceWidth;
   final bool isHospital;
   final String logo;
 
@@ -36,9 +33,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
       {required this.title,
       required this.address,
       required this.images,
-      required this.deviceWidth,
       required this.slug,
-      required this.types,
       required this.isHospital,
       required this.rating,
       required this.phone,
@@ -50,15 +45,13 @@ class HospitalSingleBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+    return Stack(
+      alignment: Alignment.topRight,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom + 42),
           padding: const EdgeInsets.only(left: 8, top: 8),
           decoration: BoxDecoration(
             color: white,
-            // color: Colors.teal,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
@@ -67,7 +60,7 @@ class HospitalSingleBottomSheet extends StatelessWidget {
               images.isEmpty
                   ? const SizedBox()
                   : SizedBox(
-                      height: 72,
+                      height: 140,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: ListView.separated(
@@ -76,7 +69,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
                               if (isHospital) {
-                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(
                                   fade(
                                     page: HospitalSingleScreen(
                                       slug: slug,
@@ -85,7 +79,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(
                                   fade(
                                     page: DoctorSingleScreen(
                                       id: id,
@@ -98,9 +93,10 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                               imageUrl: images[index],
                               fit: BoxFit.cover,
-                              width: 104,
+                              width:
+                                  MediaQuery.of(context).size.shortestSide / 2,
                               onErrorWidget: Container(
-                                width: deviceWidth - 24,
+                                width: MediaQuery.of(context).size.width - 24,
                                 alignment: Alignment.center,
                                 color: errorImageBackground,
                                 child: SvgPicture.asset(
@@ -112,7 +108,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                             ),
                           ),
                           itemCount: images.length,
-                          separatorBuilder: (context, index) => const SizedBox(width: 8),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 8),
                         ),
                       ),
                     ),
@@ -135,7 +132,9 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                             width: 40,
                             imageUrl: logo,
                             borderRadius: BorderRadius.circular(6),
-                            onErrorWidget: SvgPicture.asset(AppIcons.smallImageError, fit: BoxFit.cover),
+                            onErrorWidget: SvgPicture.asset(
+                                AppIcons.smallImageError,
+                                fit: BoxFit.cover),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -144,35 +143,15 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                             title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(fontSize: 20),
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Wrap(
-                        spacing: 16,
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        children: types
-                            .map(
-                              (e) => Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SvgPicture.asset(AppIcons.buildingHospital),
-                                  const SizedBox(width: 6),
-                                  Text(
-                                    e.title,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context).textTheme.displaySmall,
-                                  ),
-                                ],
-                              ),
-                            )
-                            .toList()),
-                    const SizedBox(height: 12),
                     Row(
                       children: [
                         SvgPicture.asset(AppIcons.location),
@@ -187,12 +166,26 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        SvgPicture.asset(AppIcons.phone),
+                        const SizedBox(width: 6),
+                        Text(
+                          MyFunctions.formatPhone(phone, false),
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 16),
                     Row(
                       children: [
                         Text(
                           rating.toString(),
-                          style: Theme.of(context).textTheme.displaySmall!.copyWith(color: darkGreen),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(color: darkGreen),
                         ),
                         const SizedBox(width: 8),
                         ...List.generate(
@@ -206,7 +199,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           5 - rating.toInt(),
                           (index) => Padding(
                             padding: const EdgeInsets.only(right: 4),
-                            child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
+                            child: SvgPicture.asset(AppIcons.star,
+                                color: inactiveStar),
                           ),
                         ),
                       ],
@@ -218,7 +212,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           child: WButton(
                             onTap: () {
                               if (isHospital) {
-                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(
                                   fade(
                                     page: HospitalSingleScreen(
                                       slug: slug,
@@ -227,7 +222,8 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                                   ),
                                 );
                               } else {
-                                Navigator.of(context, rootNavigator: true).pushReplacement(
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacement(
                                   fade(
                                     page: DoctorSingleScreen(
                                       id: id,
@@ -247,22 +243,34 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           onTap: () async {
                             Navigator.of(context).pop();
                             if (Platform.isAndroid) {
-                              if (await map_launcher.MapLauncher.isMapAvailable(map_launcher.MapType.google) ?? false) {
+                              if (await map_launcher.MapLauncher.isMapAvailable(
+                                      map_launcher.MapType.google) ??
+                                  false) {
                                 await map_launcher.MapLauncher.showDirections(
                                     mapType: map_launcher.MapType.google,
-                                    destination: map_launcher.Coords(location.latitude, location.longitude));
+                                    destination: map_launcher.Coords(
+                                        location.latitude, location.longitude));
                               } else {
-                                var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
-                                await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
+                                var uri = Uri.parse(
+                                    'geo:${location.latitude},${location.longitude}');
+                                await canLaunchUrl(uri)
+                                    ? await launchUrl(uri)
+                                    : throw 'can not open this location';
                               }
                             } else {
-                              if (await map_launcher.MapLauncher.isMapAvailable(map_launcher.MapType.apple) ?? false) {
+                              if (await map_launcher.MapLauncher.isMapAvailable(
+                                      map_launcher.MapType.apple) ??
+                                  false) {
                                 await map_launcher.MapLauncher.showDirections(
                                     mapType: map_launcher.MapType.apple,
-                                    destination: map_launcher.Coords(location.latitude, location.longitude));
+                                    destination: map_launcher.Coords(
+                                        location.latitude, location.longitude));
                               } else {
-                                var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
-                                await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
+                                var uri = Uri.parse(
+                                    'geo:${location.latitude},${location.longitude}');
+                                await canLaunchUrl(uri)
+                                    ? await launchUrl(uri)
+                                    : throw 'can not open this location';
                               }
                             }
                             // var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
@@ -278,7 +286,9 @@ class HospitalSingleBottomSheet extends StatelessWidget {
                           color: white,
                           onTap: () async {
                             var uri = Uri.parse('tel:$phone');
-                            await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open phone';
+                            await canLaunchUrl(uri)
+                                ? await launchUrl(uri)
+                                : throw 'can not open phone';
                           },
                           border: Border.all(color: primary),
                           padding: const EdgeInsets.all(8),
@@ -296,6 +306,23 @@ class HospitalSingleBottomSheet extends StatelessWidget {
             ],
           ),
         ),
+        WScaleAnimation(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Container(
+            height: 28,
+            width: 28,
+            margin: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: white,
+              shape: BoxShape.circle,
+              border: Border.all(color: divider),
+            ),
+            alignment: Alignment.center,
+            child: SvgPicture.asset(AppIcons.close),
+          ),
+        )
       ],
     );
   }

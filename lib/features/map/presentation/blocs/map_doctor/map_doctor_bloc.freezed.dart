@@ -239,7 +239,7 @@ abstract class _GetMapDoctors implements MapDoctorEvent {
 
 /// @nodoc
 mixin _$MapDoctorState {
-  List<DoctorMapEntity> get doctors => throw _privateConstructorUsedError;
+  List<DoctorSpecModel> get doctors => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -253,7 +253,7 @@ abstract class $MapDoctorStateCopyWith<$Res> {
           MapDoctorState value, $Res Function(MapDoctorState) then) =
       _$MapDoctorStateCopyWithImpl<$Res, MapDoctorState>;
   @useResult
-  $Res call({List<DoctorMapEntity> doctors, FormzStatus status});
+  $Res call({List<DoctorSpecModel> doctors, FormzStatus status});
 }
 
 /// @nodoc
@@ -276,7 +276,7 @@ class _$MapDoctorStateCopyWithImpl<$Res, $Val extends MapDoctorState>
       doctors: null == doctors
           ? _value.doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<DoctorMapEntity>,
+              as List<DoctorSpecModel>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -293,7 +293,7 @@ abstract class _$$_MapDoctorStateCopyWith<$Res>
       __$$_MapDoctorStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<DoctorMapEntity> doctors, FormzStatus status});
+  $Res call({List<DoctorSpecModel> doctors, FormzStatus status});
 }
 
 /// @nodoc
@@ -314,7 +314,7 @@ class __$$_MapDoctorStateCopyWithImpl<$Res>
       doctors: null == doctors
           ? _value._doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<DoctorMapEntity>,
+              as List<DoctorSpecModel>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -327,14 +327,14 @@ class __$$_MapDoctorStateCopyWithImpl<$Res>
 
 class _$_MapDoctorState implements _MapDoctorState {
   _$_MapDoctorState(
-      {final List<DoctorMapEntity> doctors = const [],
+      {final List<DoctorSpecModel> doctors = const [],
       this.status = FormzStatus.pure})
       : _doctors = doctors;
 
-  final List<DoctorMapEntity> _doctors;
+  final List<DoctorSpecModel> _doctors;
   @override
   @JsonKey()
-  List<DoctorMapEntity> get doctors {
+  List<DoctorSpecModel> get doctors {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_doctors);
   }
@@ -370,11 +370,11 @@ class _$_MapDoctorState implements _MapDoctorState {
 
 abstract class _MapDoctorState implements MapDoctorState {
   factory _MapDoctorState(
-      {final List<DoctorMapEntity> doctors,
+      {final List<DoctorSpecModel> doctors,
       final FormzStatus status}) = _$_MapDoctorState;
 
   @override
-  List<DoctorMapEntity> get doctors;
+  List<DoctorSpecModel> get doctors;
   @override
   FormzStatus get status;
   @override

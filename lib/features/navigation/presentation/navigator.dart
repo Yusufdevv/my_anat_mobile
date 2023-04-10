@@ -33,11 +33,7 @@ class _TabNavigatorState extends State<TabNavigator>
           TabNavigatorRoutes.root: (context) => const HomePage(),
         };
       case NavItemEnum.map:
-        return {
-          TabNavigatorRoutes.root: (context) => MapScreen(
-                deviceWidth: MediaQuery.of(context).size.width,
-              )
-        };
+        return {TabNavigatorRoutes.root: (context) => const MapScreen()};
       case NavItemEnum.magazine:
         return {
           TabNavigatorRoutes.root: (context) => const MagazineScreen(),
