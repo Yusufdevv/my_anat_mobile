@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 
 part 'payment_event.dart';
+
 part 'payment_state.dart';
 
 class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
@@ -22,13 +23,14 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   final CheckPaymentStatusUseCase _checkPaymentStatusUseCase;
   final GetPricesUseCase _getPricesUseCase;
   final PayForMonthlySubscriptionUseCase _payForMonthlySubscriptionUseCase;
-  PaymentBloc(
-      {required OrderCreateJournalUseCase orderCreateJournalUseCase,
-      required OrderCreateArticleUseCase orderCreateArticleUseCase,
-      required CheckPaymentStatusUseCase checkPaymentStatusUseCase,
-      required GetPricesUseCase getPricesUseCase,
-      required PayForMonthlySubscriptionUseCase payForMonthlySubscriptionUseCase})
-      : _orderCreateJournalUseCase = orderCreateJournalUseCase,
+
+  PaymentBloc({
+    required OrderCreateJournalUseCase orderCreateJournalUseCase,
+    required OrderCreateArticleUseCase orderCreateArticleUseCase,
+    required CheckPaymentStatusUseCase checkPaymentStatusUseCase,
+    required GetPricesUseCase getPricesUseCase,
+    required PayForMonthlySubscriptionUseCase payForMonthlySubscriptionUseCase,
+  })  : _orderCreateJournalUseCase = orderCreateJournalUseCase,
         _orderCreateArticleUseCase = orderCreateArticleUseCase,
         _checkPaymentStatusUseCase = checkPaymentStatusUseCase,
         _getPricesUseCase = getPricesUseCase,
@@ -61,10 +63,13 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       }
     });
     on<CheckPaymentStatus>((event, emit) async {
-      emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionInProgress));
+      emit(
+          state.copyWith(checkPaymentStatus: FormzStatus.submissionInProgress));
       final result = await _checkPaymentStatusUseCase.call(state.paymentId);
       if (result.isRight) {
-        emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionSuccess, status: result.right));
+        emit(state.copyWith(
+            checkPaymentStatus: FormzStatus.submissionSuccess,
+            status: result.right));
       } else {
         emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionFailure));
       }
@@ -99,15 +104,18 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       emit(state.copyWith(getPricesStatus: FormzStatus.submissionInProgress));
       final result = await _getPricesUseCase.call(NoParams());
       if (result.isRight) {
-        emit(state.copyWith(getPricesStatus: FormzStatus.submissionSuccess, prices: result.right));
+        emit(state.copyWith(
+            getPricesStatus: FormzStatus.submissionSuccess,
+            prices: result.right));
       } else {
         emit(state.copyWith(getPricesStatus: FormzStatus.submissionFailure));
       }
     });
     on<PayForMonthlySubscription>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
-      final result = await _payForMonthlySubscriptionUseCase
-          .call(SubscriptionParams(paymentProvider: event.paymentProvider, period: event.period));
+      final result = await _payForMonthlySubscriptionUseCase.call(
+          SubscriptionParams(
+              paymentProvider: event.paymentProvider, period: event.period));
       if (result.isRight) {
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
         event.onSuccess(result.right);

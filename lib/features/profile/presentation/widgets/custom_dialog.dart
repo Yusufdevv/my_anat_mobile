@@ -7,13 +7,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LogOutDialog extends StatelessWidget {
+class CustomDialog extends StatelessWidget {
   final double? height;
   final String? title;
   final String? subTitle;
   final VoidCallback onConfirmTap;
 
-  const LogOutDialog(
+  const CustomDialog(
       {this.title,
       this.subTitle,
       this.height,
@@ -86,7 +86,7 @@ class LogOutDialog extends StatelessWidget {
   }
 }
 
-void showLogOutDialog(BuildContext context,
+void showCustomDialog(BuildContext context,
     {required VoidCallback onConfirmTap, String? title, String? subTitle}) {
   showDialog(
     context: context,
@@ -100,7 +100,7 @@ void showLogOutDialog(BuildContext context,
       ),
       content: Builder(
         builder: (context) {
-          return LogOutDialog(
+          return CustomDialog(
             subTitle: subTitle,
             title: title,
             onConfirmTap: onConfirmTap,

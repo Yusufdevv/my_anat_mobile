@@ -18,7 +18,7 @@ import 'package:anatomica/features/profile/presentation/pages/purchased_screen.d
 import 'package:anatomica/features/profile/presentation/pages/safety.dart';
 import 'package:anatomica/features/profile/presentation/pages/setting.dart';
 import 'package:anatomica/features/profile/presentation/widgets/guest_card.dart';
-import 'package:anatomica/features/profile/presentation/widgets/logout_dialog.dart';
+import 'package:anatomica/features/profile/presentation/widgets/custom_dialog.dart';
 import 'package:anatomica/features/profile/presentation/widgets/other_profile_item.dart';
 import 'package:anatomica/features/profile/presentation/widgets/profile_card.dart';
 import 'package:anatomica/features/profile/presentation/widgets/profile_item.dart';
@@ -228,7 +228,7 @@ class ProfileScreen extends StatelessWidget {
                               title: LocaleKeys.sing_out,
                               icon: AppIcons.logout,
                               onTap: () {
-                                showLogOutDialog(context,
+                                showCustomDialog(context,
                                     onConfirmTap: () => context
                                         .read<AuthenticationBloc>()
                                         .add(AuthenticationStatusChanged(
