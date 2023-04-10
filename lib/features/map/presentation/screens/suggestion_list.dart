@@ -27,7 +27,9 @@ class SuggestionListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return isDoctor
         ? DoctorsList(
-            textEditingController: TextEditingController(text: searchText))
+            textEditingController: TextEditingController(text: searchText),
+            myPoint: myPoint,
+          )
         : BlocBuilder<HospitalListBloc, HospitalListState>(
             builder: (context, state) {
               return Align(

@@ -1,3 +1,4 @@
+import 'package:anatomica/features/journal/domain/entities/product_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class PaymentHistoryEntity extends Equatable {
@@ -23,7 +24,8 @@ class PaymentHistoryEntity extends Equatable {
   final String createdAt;
   final String transactionId;
   final String provider;
-  final List<String> products;
+  @ProductConverter()
+  final List<ProductEntity> products;
   final int monthCount;
   final String payedAt;
 

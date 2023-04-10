@@ -70,7 +70,7 @@ class _HospitalListState extends State<HospitalList>
       focusNode.requestFocus();
     }
     doctorListBloc = DoctorListBloc(GetDoctorsUseCase())
-      ..add(DoctorListEvent.getDoctors(search: ''));
+      ..add(DoctorListEvent.getDoctors(search: '', myPoint: widget.myLocation));
     bloc = HospitalListBloc(GetMapHospitalsWithDistanceUseCase(
         mapRepository: serviceLocator<MapRepositoryImpl>()))
       ..add(HospitalListEvent.getHospitals(
@@ -198,7 +198,10 @@ class _HospitalListState extends State<HospitalList>
                           duration: const Duration(milliseconds: 150),
                           child: state.crossFadeState ==
                                   CrossFadeState.showFirst
-                              ? DoctorsList(textEditingController: controller)
+                              ? DoctorsList(
+                                  textEditingController: controller,
+                                  myPoint: widget.myLocation,
+                                )
                               : SuggestionListScreen(
                                   isDoctor: true,
                                   myPoint: widget.myLocation,
@@ -209,9 +212,11 @@ class _HospitalListState extends State<HospitalList>
                                     controller.selection =
                                         TextSelection.fromPosition(
                                             TextPosition(offset: value.length));
-                                    doctorListBloc.add(
-                                        DoctorListEvent.getDoctors(
-                                            search: controller.text));
+                                    doctorListBloc
+                                        .add(DoctorListEvent.getDoctors(
+                                      search: controller.text,
+                                      myPoint: widget.myLocation,
+                                    ));
                                     bloc.add(HospitalListEvent.changePage(
                                         CrossFadeState.showFirst));
                                   },
@@ -308,9 +313,11 @@ class _HospitalListState extends State<HospitalList>
                                       search: controller.text,
                                       myPoint: widget.myLocation,
                                     ));
-                                    doctorListBloc.add(
-                                        DoctorListEvent.getDoctors(
-                                            search: controller.text));
+                                    doctorListBloc
+                                        .add(DoctorListEvent.getDoctors(
+                                      search: controller.text,
+                                      myPoint: widget.myLocation,
+                                    ));
                                     bloc.add(HospitalListEvent.changePage(
                                         CrossFadeState.showFirst));
                                     suggestionBloc.add(
@@ -329,9 +336,11 @@ class _HospitalListState extends State<HospitalList>
                                           myPoint: widget.myLocation,
                                         ));
                                       } else {
-                                        doctorListBloc.add(
-                                            DoctorListEvent.getDoctors(
-                                                search: controller.text));
+                                        doctorListBloc
+                                            .add(DoctorListEvent.getDoctors(
+                                          search: controller.text,
+                                          myPoint: widget.myLocation,
+                                        ));
                                       }
                                     } else {
                                       bloc.add(HospitalListEvent.changePage(

@@ -1,7 +1,6 @@
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/common/data/models/titler.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
-import 'package:anatomica/features/map/domain/entities/phone_number_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'hospital_doctors_model.g.dart';
@@ -24,6 +23,7 @@ class HospitalDoctorsModel extends HospitalDoctorsEntity {
     required super.latitude,
     required super.longitude,
     required super.phoneNumbers,
+    required super.organizationName,
   });
 
   factory HospitalDoctorsModel.fromJson(Map<String, dynamic> json) =>

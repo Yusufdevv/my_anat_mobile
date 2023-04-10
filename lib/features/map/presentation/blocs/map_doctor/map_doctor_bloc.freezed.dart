@@ -17,21 +17,20 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MapDoctorEvent {
   String get search => throw _privateConstructorUsedError;
-  MapParameter? get params => throw _privateConstructorUsedError;
+  MapV2Params? get params => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String search, MapParameter? params)
-        getMapDoctors,
+    required TResult Function(String search, MapV2Params? params) getMapDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String search, MapParameter? params)? getMapDoctors,
+    TResult? Function(String search, MapV2Params? params)? getMapDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String search, MapParameter? params)? getMapDoctors,
+    TResult Function(String search, MapV2Params? params)? getMapDoctors,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -63,7 +62,7 @@ abstract class $MapDoctorEventCopyWith<$Res> {
           MapDoctorEvent value, $Res Function(MapDoctorEvent) then) =
       _$MapDoctorEventCopyWithImpl<$Res, MapDoctorEvent>;
   @useResult
-  $Res call({String search, MapParameter? params});
+  $Res call({String search, MapV2Params? params});
 }
 
 /// @nodoc
@@ -90,7 +89,7 @@ class _$MapDoctorEventCopyWithImpl<$Res, $Val extends MapDoctorEvent>
       params: freezed == params
           ? _value.params
           : params // ignore: cast_nullable_to_non_nullable
-              as MapParameter?,
+              as MapV2Params?,
     ) as $Val);
   }
 }
@@ -103,7 +102,7 @@ abstract class _$$_GetMapDoctorsCopyWith<$Res>
       __$$_GetMapDoctorsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String search, MapParameter? params});
+  $Res call({String search, MapV2Params? params});
 }
 
 /// @nodoc
@@ -128,7 +127,7 @@ class __$$_GetMapDoctorsCopyWithImpl<$Res>
       params: freezed == params
           ? _value.params
           : params // ignore: cast_nullable_to_non_nullable
-              as MapParameter?,
+              as MapV2Params?,
     ));
   }
 }
@@ -141,7 +140,7 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   final String search;
   @override
-  final MapParameter? params;
+  final MapV2Params? params;
 
   @override
   String toString() {
@@ -169,8 +168,7 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String search, MapParameter? params)
-        getMapDoctors,
+    required TResult Function(String search, MapV2Params? params) getMapDoctors,
   }) {
     return getMapDoctors(search, params);
   }
@@ -178,7 +176,7 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String search, MapParameter? params)? getMapDoctors,
+    TResult? Function(String search, MapV2Params? params)? getMapDoctors,
   }) {
     return getMapDoctors?.call(search, params);
   }
@@ -186,7 +184,7 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String search, MapParameter? params)? getMapDoctors,
+    TResult Function(String search, MapV2Params? params)? getMapDoctors,
     required TResult orElse(),
   }) {
     if (getMapDoctors != null) {
@@ -227,12 +225,12 @@ class _$_GetMapDoctors implements _GetMapDoctors {
 abstract class _GetMapDoctors implements MapDoctorEvent {
   factory _GetMapDoctors(
       {required final String search,
-      final MapParameter? params}) = _$_GetMapDoctors;
+      final MapV2Params? params}) = _$_GetMapDoctors;
 
   @override
   String get search;
   @override
-  MapParameter? get params;
+  MapV2Params? get params;
   @override
   @JsonKey(ignore: true)
   _$$_GetMapDoctorsCopyWith<_$_GetMapDoctors> get copyWith =>

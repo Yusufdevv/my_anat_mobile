@@ -1,6 +1,5 @@
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/common/data/models/titler.dart';
-import 'package:anatomica/features/map/domain/entities/phone_number_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class HospitalDoctorsEntity extends Equatable {
@@ -18,8 +17,8 @@ class HospitalDoctorsEntity extends Equatable {
   final bool imgIsFull;
   final double latitude;
   final double longitude;
-  @PhoneNumberConverter()
-  final List<PhoneNumberEntity> phoneNumbers;
+  final String organizationName;
+  final List<List<String>> phoneNumbers;
   final double distance;
 
   const HospitalDoctorsEntity({
@@ -38,6 +37,7 @@ class HospitalDoctorsEntity extends Equatable {
     this.latitude = 0,
     this.longitude = 0,
     this.phoneNumbers = const [],
+    this.organizationName = '',
   });
 
   @override
@@ -56,5 +56,6 @@ class HospitalDoctorsEntity extends Equatable {
         longitude,
         phoneNumbers,
         distance,
+        organizationName,
       ];
 }

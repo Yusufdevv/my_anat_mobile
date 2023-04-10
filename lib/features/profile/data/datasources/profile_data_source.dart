@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/auth/data/models/user_model.dart';
@@ -172,9 +174,9 @@ class ProfileDatasourceImpl extends ProfileDatasource {
           options: Options(headers: {
             'Authorization': 'Token ${StorageRepository.getString('token')}'
           }));
-      print('my payments => ${response.data}');
+      log('my payments => ${response.data}');
       print(
-          'my payments real uri => ${response.realUri} ${response.statusCode}');
+          'my payments real uri => ${response.realUri} ${response.statusCode} ${response.requestOptions.headers}');
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) {
           print('po => ${(p0 as Map<String, dynamic>)['products']}');
