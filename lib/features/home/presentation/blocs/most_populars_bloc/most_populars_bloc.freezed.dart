@@ -549,11 +549,12 @@ abstract class _GetMorePopularOrgs implements MostPopularsEvent {
 
 /// @nodoc
 mixin _$MostPopularsState {
-  List<dynamic> get popularDoctors => throw _privateConstructorUsedError;
+  List<HospitalDoctorsModel> get popularDoctors =>
+      throw _privateConstructorUsedError;
   FormzStatus get popularDoctorsStatus => throw _privateConstructorUsedError;
   String? get popularDoctorsNext => throw _privateConstructorUsedError;
   bool get popularDoctorsFetchMore => throw _privateConstructorUsedError;
-  List<dynamic> get popularOrgs => throw _privateConstructorUsedError;
+  List<OrgMapV2Model> get popularOrgs => throw _privateConstructorUsedError;
   FormzStatus get popularOrgsStatus => throw _privateConstructorUsedError;
   String? get popularOrgsNext => throw _privateConstructorUsedError;
   bool get popularOrgsFetchMore => throw _privateConstructorUsedError;
@@ -570,11 +571,11 @@ abstract class $MostPopularsStateCopyWith<$Res> {
       _$MostPopularsStateCopyWithImpl<$Res, MostPopularsState>;
   @useResult
   $Res call(
-      {List<dynamic> popularDoctors,
+      {List<HospitalDoctorsModel> popularDoctors,
       FormzStatus popularDoctorsStatus,
       String? popularDoctorsNext,
       bool popularDoctorsFetchMore,
-      List<dynamic> popularOrgs,
+      List<OrgMapV2Model> popularOrgs,
       FormzStatus popularOrgsStatus,
       String? popularOrgsNext,
       bool popularOrgsFetchMore});
@@ -606,7 +607,7 @@ class _$MostPopularsStateCopyWithImpl<$Res, $Val extends MostPopularsState>
       popularDoctors: null == popularDoctors
           ? _value.popularDoctors
           : popularDoctors // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<HospitalDoctorsModel>,
       popularDoctorsStatus: null == popularDoctorsStatus
           ? _value.popularDoctorsStatus
           : popularDoctorsStatus // ignore: cast_nullable_to_non_nullable
@@ -622,7 +623,7 @@ class _$MostPopularsStateCopyWithImpl<$Res, $Val extends MostPopularsState>
       popularOrgs: null == popularOrgs
           ? _value.popularOrgs
           : popularOrgs // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<OrgMapV2Model>,
       popularOrgsStatus: null == popularOrgsStatus
           ? _value.popularOrgsStatus
           : popularOrgsStatus // ignore: cast_nullable_to_non_nullable
@@ -648,11 +649,11 @@ abstract class _$$_MostPopularsStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<dynamic> popularDoctors,
+      {List<HospitalDoctorsModel> popularDoctors,
       FormzStatus popularDoctorsStatus,
       String? popularDoctorsNext,
       bool popularDoctorsFetchMore,
-      List<dynamic> popularOrgs,
+      List<OrgMapV2Model> popularOrgs,
       FormzStatus popularOrgsStatus,
       String? popularOrgsNext,
       bool popularOrgsFetchMore});
@@ -682,7 +683,7 @@ class __$$_MostPopularsStateCopyWithImpl<$Res>
       popularDoctors: null == popularDoctors
           ? _value._popularDoctors
           : popularDoctors // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<HospitalDoctorsModel>,
       popularDoctorsStatus: null == popularDoctorsStatus
           ? _value.popularDoctorsStatus
           : popularDoctorsStatus // ignore: cast_nullable_to_non_nullable
@@ -698,7 +699,7 @@ class __$$_MostPopularsStateCopyWithImpl<$Res>
       popularOrgs: null == popularOrgs
           ? _value._popularOrgs
           : popularOrgs // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<OrgMapV2Model>,
       popularOrgsStatus: null == popularOrgsStatus
           ? _value.popularOrgsStatus
           : popularOrgsStatus // ignore: cast_nullable_to_non_nullable
@@ -719,21 +720,21 @@ class __$$_MostPopularsStateCopyWithImpl<$Res>
 
 class _$_MostPopularsState implements _MostPopularsState {
   _$_MostPopularsState(
-      {final List<dynamic> popularDoctors = const [],
+      {final List<HospitalDoctorsModel> popularDoctors = const [],
       this.popularDoctorsStatus = FormzStatus.pure,
       this.popularDoctorsNext,
       this.popularDoctorsFetchMore = false,
-      final List<dynamic> popularOrgs = const [],
+      final List<OrgMapV2Model> popularOrgs = const [],
       this.popularOrgsStatus = FormzStatus.submissionSuccess,
       this.popularOrgsNext,
       this.popularOrgsFetchMore = false})
       : _popularDoctors = popularDoctors,
         _popularOrgs = popularOrgs;
 
-  final List<dynamic> _popularDoctors;
+  final List<HospitalDoctorsModel> _popularDoctors;
   @override
   @JsonKey()
-  List<dynamic> get popularDoctors {
+  List<HospitalDoctorsModel> get popularDoctors {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_popularDoctors);
   }
@@ -746,10 +747,10 @@ class _$_MostPopularsState implements _MostPopularsState {
   @override
   @JsonKey()
   final bool popularDoctorsFetchMore;
-  final List<dynamic> _popularOrgs;
+  final List<OrgMapV2Model> _popularOrgs;
   @override
   @JsonKey()
-  List<dynamic> get popularOrgs {
+  List<OrgMapV2Model> get popularOrgs {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_popularOrgs);
   }
@@ -814,17 +815,17 @@ class _$_MostPopularsState implements _MostPopularsState {
 
 abstract class _MostPopularsState implements MostPopularsState {
   factory _MostPopularsState(
-      {final List<dynamic> popularDoctors,
+      {final List<HospitalDoctorsModel> popularDoctors,
       final FormzStatus popularDoctorsStatus,
       final String? popularDoctorsNext,
       final bool popularDoctorsFetchMore,
-      final List<dynamic> popularOrgs,
+      final List<OrgMapV2Model> popularOrgs,
       final FormzStatus popularOrgsStatus,
       final String? popularOrgsNext,
       final bool popularOrgsFetchMore}) = _$_MostPopularsState;
 
   @override
-  List<dynamic> get popularDoctors;
+  List<HospitalDoctorsModel> get popularDoctors;
   @override
   FormzStatus get popularDoctorsStatus;
   @override
@@ -832,7 +833,7 @@ abstract class _MostPopularsState implements MostPopularsState {
   @override
   bool get popularDoctorsFetchMore;
   @override
-  List<dynamic> get popularOrgs;
+  List<OrgMapV2Model> get popularOrgs;
   @override
   FormzStatus get popularOrgsStatus;
   @override

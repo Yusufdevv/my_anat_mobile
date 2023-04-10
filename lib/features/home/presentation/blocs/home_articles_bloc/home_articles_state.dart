@@ -7,5 +7,9 @@ class HomeArticlesState with _$HomeArticlesState {
     @Default(FormzStatus.pure) FormzStatus homeArticlesStatus,
     String? homeArticlesNext,
     @Default(false) bool homeArticlesFetchMore,
+    @Default([]) List<BannerModel> banners,
+    @Default(FormzStatus.pure) FormzStatus bannersStatus,
+    String? bannersNext,
+    @Default(false) bool bannersFetchMore,
   }) = _HomeArticlesState;
 }

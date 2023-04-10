@@ -1,10 +1,13 @@
+import 'dart:developer';
+
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
-import 'package:anatomica/features/doctor_single/data/models/doctor_interview_model.dart';
+import 'package:anatomica/features/home/data/models/banner_model.dart';
 import 'package:anatomica/features/home/data/models/category_model.dart';
 import 'package:anatomica/features/home/data/models/news_model.dart';
-import 'package:anatomica/features/hospital_single/data/models/comment_model.dart';
 import 'package:anatomica/features/journal/data/models/journal_article_model.dart';
+import 'package:anatomica/features/map/data/models/hospital_doctors_model.dart';
+import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:dio/dio.dart';
 
@@ -14,10 +17,12 @@ abstract class HomeDatasource {
   Future<GenericPagination<JournalArticleModel>> getHomeArticles(
       {String? next});
 
-  Future<GenericPagination<DoctorInterviewModel>> getPopularDoctors(
+  Future<GenericPagination<HospitalDoctorsModel>> getPopularDoctors(
       {String? next});
 
-  Future<GenericPagination<CommentModel>> getPopularOrgs({String? next});
+  Future<GenericPagination<BannerModel>> getBanners({String? next});
+
+  Future<GenericPagination<OrgMapV2Model>> getPopularOrgs({String? next});
 
   Future<GenericPagination<NewsModel>> getNews({String? next});
 
@@ -95,10 +100,9 @@ class HomeDatasourceImpl extends HomeDatasource {
   }
 
   @override
-  Future<GenericPagination<DoctorInterviewModel>> getPopularDoctors(
-      {String? next}) async {
+  Future<GenericPagination<BannerModel>> getBanners({String? next}) async {
     try {
-      final response = await _dio.get(next ?? '/interview/',
+      final response = await _dio.get(next ?? '/mobile/banners/',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {
@@ -106,11 +110,14 @@ class HomeDatasourceImpl extends HomeDatasource {
                           'Token ${StorageRepository.getString('token')}'
                     }
                   : {}));
+      print('banners => ${response.realUri} ${response.headers}');
+      print('banners result => ${response.data}');
+      log('banners after json => ${GenericPagination.fromJson(response.data, (p0) => BannerModel.fromJson(p0 as Map<String, dynamic>)).results}');
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data,
-            (p0) => DoctorInterviewModel.fromJson(p0 as Map<String, dynamic>));
+            (p0) => BannerModel.fromJson(p0 as Map<String, dynamic>));
       } else {
         throw ServerException(
             statusCode: response.statusCode!,
@@ -126,9 +133,10 @@ class HomeDatasourceImpl extends HomeDatasource {
   }
 
   @override
-  Future<GenericPagination<CommentModel>> getPopularOrgs({String? next}) async {
+  Future<GenericPagination<HospitalDoctorsModel>> getPopularDoctors(
+      {String? next}) async {
     try {
-      final response = await _dio.get(next ?? '/doctor/comment/',
+      final response = await _dio.get(next ?? '/interview/',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {
@@ -140,7 +148,39 @@ class HomeDatasourceImpl extends HomeDatasource {
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data,
-            (p0) => CommentModel.fromJson(p0 as Map<String, dynamic>));
+            (p0) => HospitalDoctorsModel.fromJson(p0 as Map<String, dynamic>));
+      } else {
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<GenericPagination<OrgMapV2Model>> getPopularOrgs(
+      {String? next}) async {
+    try {
+      final response = await _dio.get(next ?? '/organization/',
+          queryParameters: {"ordering": "-rating"},
+          options: Options(
+              headers: StorageRepository.getString('token').isNotEmpty
+                  ? {
+                      'Authorization':
+                          'Token ${StorageRepository.getString('token')}'
+                    }
+                  : {}));
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data,
+            (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));
       } else {
         throw ServerException(
             statusCode: response.statusCode!,

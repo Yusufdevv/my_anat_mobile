@@ -108,65 +108,21 @@ class _TopHospitalItemState extends State<TopHospitalItem> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Text(
-                                widget.title,
-                                style: Theme.of(context).textTheme.displayLarge,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          widget.title,
+                          style: Theme.of(context).textTheme.displayLarge,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 4),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                widget.address,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(color: textSecondary),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Container(
-                              height: 24,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              decoration: BoxDecoration(
-                                color: white,
-                                borderRadius: BorderRadius.circular(13),
-                                border: Border.all(color: textFieldColor),
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 1,
-                                    height: 30,
-                                    color: textFieldColor,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  SvgPicture.asset(AppIcons.star),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    (widget.rating > 5 ? 5.0 : widget.rating)
-                                        .toString(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .copyWith(fontSize: 14),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        Text(
+                          widget.address,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(color: textSecondary),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),

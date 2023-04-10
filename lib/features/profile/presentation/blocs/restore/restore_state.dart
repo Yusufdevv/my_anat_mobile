@@ -9,5 +9,9 @@ class RestoreState with _$RestoreState {
     @Default('') String phone,
     @Default('') String verifyError,
     bool? showRestore,
+    @Default(FormzStatus.pure) FormzStatus myPaymentsStatus,
+    @Default([]) List<PaymentHistoryModel> myPayments,
+    @Default(false) bool myPaymentsFetchMore,
+    String? myPaymentsNext,
   }) = _RestoreState;
 }
