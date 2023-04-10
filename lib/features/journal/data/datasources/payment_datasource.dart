@@ -15,6 +15,7 @@ abstract class PaymentDatasource {
     required String paymentProvider,
     required bool isRegistered,
   });
+
   Future<PaymentResponseModel> orderCreateJournal({
     required int journalId,
     required int price,
@@ -23,14 +24,19 @@ abstract class PaymentDatasource {
     required String paymentProvider,
     required bool isRegistered,
   });
+
   Future<String> checkPaymentStatus({required int id});
+
   Future<PricesModel> getPrices();
+
   Future<PaymentResponseModel> payForMonthlySubscription({required int numOfMoths, required String paymentProvider});
 }
 
 class PaymentDatasourceImpl extends PaymentDatasource {
   final Dio _dio;
+
   PaymentDatasourceImpl(this._dio);
+
   @override
   Future<PaymentResponseModel> orderCreateArticle({
     required int articleId,
