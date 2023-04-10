@@ -111,8 +111,15 @@ class _MapScreenState extends State<MapScreen>
             listener: (context, state) {
               setState(() {
                 if (_controller.index == 0) {
-                  MyFunctions.addHospitals(state.hospitals, context,
-                      _mapObjects, _mapController, myPoint, accuracy);
+                  MyFunctions.addHospitals(
+                    onClusterTap: (cluster) {},
+                    points: state.hospitals,
+                    context: context,
+                    mapObjects: _mapObjects,
+                    controller: _mapController,
+                    point: myPoint,
+                    accuracy: accuracy,
+                  );
                 } else {
                   MyFunctions.addDoctors(state.doctors, context, _mapObjects,
                       _mapController, myPoint, accuracy);
@@ -313,12 +320,13 @@ class _MapScreenState extends State<MapScreen>
                               if (index == 0) {
                                 setState(() {
                                   MyFunctions.addHospitals(
-                                    state.hospitals,
-                                    context,
-                                    _mapObjects,
-                                    _mapController,
-                                    myPoint,
-                                    accuracy,
+                                    onClusterTap: (cluster) {},
+                                    points: state.hospitals,
+                                    context: context,
+                                    mapObjects: _mapObjects,
+                                    controller: _mapController,
+                                    point: myPoint,
+                                    accuracy: accuracy,
                                   );
                                 });
                               } else {

@@ -149,13 +149,15 @@ abstract class MyFunctions {
     return myPoint;
   }
 
-  static Future<void> addHospitals(
-      List<MapHospitalModel> points,
-      BuildContext context,
-      List<MapObject<dynamic>> mapObjects,
-      YandexMapController controller,
-      Point point,
-      double accuracy) async {
+  static Future<void> addHospitals({
+    required Function(Cluster) onClusterTap,
+    required List<MapHospitalModel> points,
+    required BuildContext context,
+    required List<MapObject<dynamic>> mapObjects,
+    required YandexMapController controller,
+    required Point point,
+    required double accuracy,
+  }) async {
     final iconData = await getBytesFromCanvas(
       placeCount: 0,
       image: AppImages.placeMarkIcon,
@@ -272,8 +274,14 @@ abstract class MyFunctions {
       placemarks: placeMarks,
       radius: 25,
       minZoom: 30,
-      onClusterTap: (collection, cluster) {},
-      onTap: (collection, point) {},
+      onClusterTap: (collection, cluster) {
+        print(
+            '::::::::::: hospital coll placemarks lenth: ${collection.placemarks.length} / collection mapId: ${collection.mapId}, / cluster placemarks: ${cluster.placemarks.first.mapId} / cluster placemarks length: ${cluster.placemarks.length} ::::::::::::::');
+        onClusterTap(cluster);
+      },
+      onTap: (collection, point) {
+        print(':::::::::: ON TAP:  ${collection.mapId}  ::::::::::');
+      },
       onClusterAdded: (collection, cluster) async => cluster.copyWith(
         appearance: cluster.appearance.copyWith(
           opacity: 1,
@@ -411,6 +419,10 @@ abstract class MyFunctions {
       placemarks: placeMarks,
       radius: 25,
       minZoom: 30,
+      onClusterTap: (collection, cluster) {
+        print(
+            '::::::::::: doctor coll placemarks lenth: ${collection.placemarks.length} / collection mapId: ${collection.mapId}, / cluster placemarks: ${cluster.placemarks.first.mapId} / cluster placemarks length: ${cluster.placemarks.length} ::::::::::::::');
+      },
       onClusterAdded: (collection, cluster) async => cluster.copyWith(
         appearance: cluster.appearance.copyWith(
           opacity: 1,
