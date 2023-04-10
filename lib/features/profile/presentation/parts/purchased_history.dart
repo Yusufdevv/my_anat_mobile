@@ -25,28 +25,29 @@ class PurchasedHistoryList extends StatelessWidget {
               .displaySmall!
               .copyWith(color: Colors.white),
         ),
-        BlocBuilder<PurchasedJournalBloc, PurchasedJournalState>(
+        BlocBuilder<RestoreBloc, RestoreState>(
           builder: (context, state) {
             return Paginator(
-              paginatorStatus:
-                  MyFunctions.formzStatusToPaginatorStatus(state.status),
+              paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
+                  state.myPaymentsStatus),
               itemBuilder: (context, index) {
                 return PurchasedHistoryItem(
-                  title: state.journals[index].name,
+                  title: state.myPayments[index].products[0].data.name,
                   backgroundColor: index % 2 == 0 ? whiteSmoke2 : white,
                   summ: MyFunctions.getFormatCostFromInt(
-                      state.journals[index].price.toInt()),
-                  purchasedAt: Jiffy(state.journals[index].publishDate)
+                      state.myPayments[index].products[0].data.price),
+                  purchasedAt: Jiffy(
+                          state.myPayments[index].products[0].data.publishDate)
                       .format('dd.MM.yyyy'),
                 );
               },
-              itemCount: state.journals.length,
+              itemCount: state.myPayments.length,
               fetchMoreFunction: () {
                 context
                     .read<RestoreBloc>()
                     .add(RestoreEvent.getMoreMyPayHistory());
               },
-              hasMoreToFetch: state.next != null,
+              hasMoreToFetch: state.myPaymentsFetchMore,
               errorWidget: Container(),
             );
           },

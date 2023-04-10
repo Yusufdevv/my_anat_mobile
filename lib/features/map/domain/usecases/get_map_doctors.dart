@@ -4,30 +4,36 @@ import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/common/data/repository/global_requst_repository.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
-import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
+import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
+import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
+import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 
-class GetMapDoctorUseCase extends UseCase<List<MapDoctorModel>, String> {
-  final GlobalRequestRepository repo = GlobalRequestRepository();
+class GetMapDoctorUseCase
+    extends UseCase<GenericPagination<MapDoctorModel>, String> {
+  final PaginationRepository repo = PaginationRepository();
 
   @override
-  Future<Either<Failure, List<MapDoctorModel>>> call(params,
-      {MapParameter? param}) {
+  Future<Either<Failure, GenericPagination<MapDoctorModel>>> call(params,
+      {MapV2Params? param}) {
     var query = <String, dynamic>{};
     if (params.isNotEmpty) {
       query.addAll({"search": params});
     }
     if (param != null) {
       query.addAll({
-        "lat": param.lat,
-        "lon": param.long,
+        "lat": param.latitude,
+        "lon": param.longitude,
         "rad": param.radius,
+        "offset": param.offset,
+        "limit": param.limit,
       });
     }
     print('repo => ${query}');
-    return repo.getList(
-        endpoint: '/mobile/doctor/map/',
-        fromJson: MapDoctorModel.fromJson,
-        query: query,
-        sendToken: StorageRepository.getString('token').isNotEmpty);
+    return repo.fetchMore(
+      url: '/mobile/doctor/map/',
+      fromJson: MapDoctorModel.fromJson,
+      query: query,
+      next: param!.next,
+    );
   }
 }

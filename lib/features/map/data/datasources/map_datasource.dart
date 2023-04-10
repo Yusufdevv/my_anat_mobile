@@ -115,12 +115,9 @@ class MapDatasourceImpl extends MapDatasource {
           headers: StorageRepository.getString('token').isNotEmpty
               ? {
                   'Authorization':
-                      'Token ${StorageRepository.getString('token')}',
-                  'Accept-Language': "ru",
+                      'Token ${StorageRepository.getString('token')}'
                 }
-              : {
-                  'Accept-Language': "ru",
-                },
+              : {},
         ),
         queryParameters: queryParams,
       );

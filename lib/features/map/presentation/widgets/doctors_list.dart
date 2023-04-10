@@ -8,11 +8,13 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class DoctorsList extends StatefulWidget {
   final TextEditingController textEditingController;
-
-  const DoctorsList({required this.textEditingController, Key? key})
+  final Point myPoint;
+  const DoctorsList(
+      {required this.textEditingController, required this.myPoint, Key? key})
       : super(key: key);
 
   @override
@@ -38,7 +40,9 @@ class _DoctorsListState extends State<DoctorsList> {
           child: RefreshIndicator(
             onRefresh: () async {
               context.read<DoctorListBloc>().add(DoctorListEvent.getDoctors(
-                  search: widget.textEditingController.text));
+                    search: widget.textEditingController.text,
+                    myPoint: widget.myPoint,
+                  ));
               return await Future.delayed(const Duration(seconds: 1));
             },
             child: Paginator(

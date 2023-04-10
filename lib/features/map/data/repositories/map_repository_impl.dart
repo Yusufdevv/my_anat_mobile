@@ -11,7 +11,9 @@ import 'package:equatable/equatable.dart';
 
 class MapRepositoryImpl extends MapRepository {
   final MapDatasource datasource;
+
   MapRepositoryImpl({required this.datasource});
+
   @override
   Future<Either<Failure, GenericPagination<TypeEntity>>> getTypes(
       {String? next}) async {
@@ -69,16 +71,17 @@ class MapV2Params extends Equatable {
   final String? service;
   final int? limit;
   final int? offset;
-  final double? latitude;
-  final double? longitude;
+  final double latitude;
+  final double longitude;
   final String? title;
   final String? next;
   final String? previous;
+  final double radius;
 
   const MapV2Params({
     this.title,
-    this.longitude,
-    this.latitude,
+    this.longitude = 69,
+    this.latitude = 41,
     this.region,
     this.district,
     this.search,
@@ -88,7 +91,9 @@ class MapV2Params extends Equatable {
     this.specializationId,
     this.next,
     this.previous,
+    this.radius = 150,
   });
+
   @override
   List<Object?> get props => [
         title,
@@ -101,5 +106,6 @@ class MapV2Params extends Equatable {
         offset,
         limit,
         specializationId,
+        radius,
       ];
 }

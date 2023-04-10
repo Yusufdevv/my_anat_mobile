@@ -22,10 +22,14 @@ class HospitalListBloc extends Bloc<HospitalListEvent, HospitalListState> {
     on<_GetHospitals>(
       (event, emit) async {
         emit(state.copyWith(status: FormzStatus.submissionInProgress));
-        final result = await getHospitals.call(MapV2Params(
-            title: event.search,
+        final result = await getHospitals.call(
+          MapV2Params(
+            search: event.search,
             latitude: event.myPoint.latitude,
-            longitude: event.myPoint.longitude));
+            longitude: event.myPoint.longitude,
+            radius: 150,
+          ),
+        );
         if (result.isRight) {
           emit(state.copyWith(
             hospitals: result.right.results,

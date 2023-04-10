@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/entities/type_entity.dart';
 import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/data/models/map_hospital.dart';
+import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals.dart';
@@ -70,12 +73,13 @@ class MapOrganizationBloc
     });
 
     on<_GetDoctors>((event, emit) async {
-      final result = await getDoctors(state.searchText,
-          param: MapParameter(lat: state.lat, long: state.long, radius: 150));
+      final result = await getDoctors.call(state.searchText,
+          param: MapV2Params(
+              latitude: state.lat, longitude: state.long, radius: 150));
       if (result.isRight) {
-        emit(state.copyWith(
-          doctors: result.right,
-        ));
+        log('doctors => ${result.right.results}');
+        emit(state.copyWith(doctors: result.right.results));
+        // if(result.right)
       } else {}
     });
     on<_ChangeSearchText>((event, emit) {

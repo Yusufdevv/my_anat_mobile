@@ -15,7 +15,8 @@ PaymentHistoryModel _$PaymentHistoryModelFromJson(Map<String, dynamic> json) =>
       monthCount: json['month_count'] as int? ?? 0,
       payedAt: json['payed_at'] as String? ?? '',
       products: (json['products'] as List<dynamic>?)
-              ?.map((e) => e as String)
+              ?.map((e) =>
+                  const ProductConverter().fromJson(e as Map<String, dynamic>?))
               .toList() ??
           const [],
       provider: json['provider'] as String? ?? '',
@@ -35,7 +36,8 @@ Map<String, dynamic> _$PaymentHistoryModelToJson(
       'created_at': instance.createdAt,
       'transaction_id': instance.transactionId,
       'provider': instance.provider,
-      'products': instance.products,
+      'products':
+          instance.products.map(const ProductConverter().toJson).toList(),
       'month_count': instance.monthCount,
       'payed_at': instance.payedAt,
     };

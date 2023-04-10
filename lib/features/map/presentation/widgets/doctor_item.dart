@@ -21,7 +21,6 @@ class DoctorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('rating => ${entity.rating}');
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -117,8 +116,7 @@ class DoctorItem extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 4, right: 8),
                           child: Text(
-                            // TODO add distance to doctors
-                            '200 km',
+                            '${entity.distance.toStringAsFixed(2)} km',
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ),
