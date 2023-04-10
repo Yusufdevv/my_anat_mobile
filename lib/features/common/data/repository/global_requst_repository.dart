@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/core/data/singletons/dio_settings.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
@@ -20,12 +22,8 @@ class GlobalRequestRepository {
       final result = await dio.get(endpoint,
           queryParameters: query,
           options: Options(
-              headers: sendToken
-                  ? {
-                      "Authorization":
-                          "Token ${StorageRepository.getString('token', defValue: '')}"
-                    }
-                  : {}));
+              headers:
+                  sendToken ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"} : {}));
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         return Right(fromJson(result.data));
       } else {
@@ -50,17 +48,20 @@ class GlobalRequestRepository {
       final result = await dio.get(endpoint,
           queryParameters: query,
           options: Options(
-              headers: sendToken
-                  ? {
-                      "Authorization":
-                          "Token ${StorageRepository.getString('token', defValue: '')}"
-                    }
-                  : {}));
+              headers:
+                  sendToken ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"} : {}));
       List<S> list = [];
+      if (endpoint == '/mobile/doctor/map/') {
+        log('::::::::::  the data of doctors: ${result.data[responseDataKey]}  ::::::::::');
+      }
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {
-          var data = result.data[responseDataKey] as List<dynamic>;
-          list = data.map((e) => fromJson(e)).toList();
+          try {
+            var data = result.data[responseDataKey] as List<dynamic>;
+            list = data.map((e) => fromJson(e)).toList();
+          } catch (e) {
+            log(':::::::::: from json exception in get list: ${endpoint}  ${e.toString()}  ::::::::::');
+          }
         } else {
           var data = result.data as List<dynamic>;
           list = data.map((e) => fromJson(e)).toList();
@@ -89,12 +90,8 @@ class GlobalRequestRepository {
           queryParameters: query,
           data: data,
           options: Options(
-              headers: sendToken
-                  ? {
-                      "Authorization":
-                          "Token ${StorageRepository.getString('token', defValue: '')}"
-                    }
-                  : {}));
+              headers:
+                  sendToken ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"} : {}));
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {
           return Right(fromJson(result.data[responseDataKey]));
@@ -127,12 +124,8 @@ class GlobalRequestRepository {
           queryParameters: query,
           data: data,
           options: Options(
-              headers: sendToken
-                  ? {
-                      "Authorization":
-                          "Token ${StorageRepository.getString('token', defValue: '')}"
-                    }
-                  : {}));
+              headers:
+                  sendToken ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"} : {}));
       List<S> list = [];
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {
