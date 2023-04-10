@@ -4,6 +4,7 @@ import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:anatomica/features/profile/data/datasources/payment_cards_data_source.dart';
+import 'package:anatomica/features/profile/data/models/craete_card_response_model.dart';
 import 'package:anatomica/features/profile/domain/entities/payment_card_entity.dart';
 import 'package:anatomica/features/profile/domain/repositories/payment_card_repo.dart';
 
@@ -44,7 +45,7 @@ class PaymentCardRepositoryImpl extends PaymentCardRepository {
   }
 
   @override
-  Future<Either<Failure, String>> createPaymentCards(
+  Future<Either<Failure, CreateCardResponseModel>> createPaymentCards(
       {required String cardNumber, required String expireDate})async {
     try {
       final result = await _datasource.createPaymentCards(cardNumber: cardNumber, expireDate: expireDate);

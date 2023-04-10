@@ -33,6 +33,7 @@ class OrderCreateJournal extends PaymentEvent {
   final bool isRegistered;
   final ValueChanged<String> onSuccess;
   final ValueChanged<String> onError;
+
   OrderCreateJournal({
     required this.journalId,
     required this.price,

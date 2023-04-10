@@ -21,8 +21,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 
 // ignore: must_be_immutable
-class MyCardsScreen extends StatelessWidget {
+class MyCardsScreen extends StatefulWidget {
   const MyCardsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MyCardsScreen> createState() => _MyCardsScreenState();
+}
+
+class _MyCardsScreenState extends State<MyCardsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<PaymentCardsBloc>().add(GetPaymentCardsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +51,7 @@ class MyCardsScreen extends StatelessWidget {
             }
             if (state.status.isSubmissionSuccess) {
               return Padding(
-                padding: EdgeInsets.fromLTRB(
-                    16, 0, 16, 20 + mediaQuery.padding.bottom),
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 20 + mediaQuery.padding.bottom),
                 child: Column(
                   children: [
                     if (state.paymentCards.isNotEmpty)
@@ -52,98 +62,73 @@ class MyCardsScreen extends StatelessWidget {
                             CardItem(
                                 onTapDelete: () {
                                   showCustomDialog(context,
-                                      subTitle: LocaleKeys
-                                          .you_are_sure_to_delete_card
-                                          .tr(),
-                                      title: LocaleKeys.delete_card.tr(),
-                                      onConfirmTap: () => context
-                                          .read<PaymentCardsBloc>()
-                                          .add(DeletePaymentCard(
-                                            id: state.paymentCards[index].id,
-                                            onSucces: () {},
-                                            onError: (message) {
-                                              context.read<ShowPopUpBloc>().add(
-                                                  ShowPopUp(
-                                                      message: message,
-                                                      isSuccess: false));
-                                            },
-                                          )));
+                                      subTitle: LocaleKeys.you_are_sure_to_delete_card.tr(),
+                                      title: LocaleKeys.delete_card.tr(), onConfirmTap: () {
+                                    Navigator.pop(context);
+                                    context.read<PaymentCardsBloc>().add(DeletePaymentCard(
+                                          id: state.paymentCards[index].id,
+                                          onSucces: () {},
+                                          onError: (message) {
+                                            context
+                                                .read<ShowPopUpBloc>()
+                                                .add(ShowPopUp(message: message, isSuccess: false));
+                                          },
+                                        ));
+                                  });
                                 },
                                 cardType: state.paymentCards[index].cardType,
-                                cardNumber:
-                                    state.paymentCards[index].cardNumber),
+                                cardNumber: state.paymentCards[index].cardNumber),
                             if (index != state.paymentCards.length - 1)
-                              const WDivider(
-                                  margin: EdgeInsets.only(right: 16)),
+                              const WDivider(margin: EdgeInsets.only(right: 16)),
                           ],
                         );
                       })
                     else ...{
                       const Spacer(),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(AppIcons.emptyA),
-                            const SizedBox(height: 24),
-                            Text(
-                              LocaleKeys.empty.tr(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge!
-                                  .copyWith(fontSize: 20),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              LocaleKeys.you_dont_have_card.tr(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(color: textSecondary),
-                            )
-                          ]),
+                      Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                        SvgPicture.asset(AppIcons.emptyA),
+                        const SizedBox(height: 24),
+                        Text(
+                          LocaleKeys.empty.tr(),
+                          style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          LocaleKeys.you_dont_have_card.tr(),
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: textSecondary),
+                        )
+                      ]),
                     },
                     const Spacer(),
                     WButton(
                       onTap: () async {
                         await showModalBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            useRootNavigator: true,
-                            isScrollControlled: true,
-                            builder: (context) =>
-                                const AddCardBtsht()).then((value) => {
-                              if (value is Map<String, String>)
-                                {
-                                  context
-                                      .read<PaymentCardsBloc>()
-                                      .add(CreatePaymentCardEvent(
-                                        param: CreateCardParam(
-                                          cardNumber:
-                                              value['card_number'] as String,
-                                          expireDate: value['date'] as String,
-                                        ),
-                                        onSucces: () {
-                                          Navigator.push(
-                                              context,
-                                              fade(
-                                                  page:
-                                                      AddPaymentCardVerifyScreen(
-                                                expiredDate:
-                                                    value['card_number']
-                                                        as String,
-                                                cardNumber:
-                                                    value['date'] as String,
-                                              )));
-                                        },
-                                        onError: (message) {
-                                          context.read<ShowPopUpBloc>().add(
-                                              ShowPopUp(
-                                                  message: message,
-                                                  isSuccess: false));
-                                        },
-                                      )),
-                                }
-                            });
+                                context: context, backgroundColor: Colors.transparent, useRootNavigator: true, isScrollControlled: true, builder: (context) => const AddCardBtsht())
+                            .then((value) => {
+                                  if (value is Map<String, String>)
+                                    {
+                                      context.read<PaymentCardsBloc>().add(CreatePaymentCardEvent(
+                                            param: CreateCardParam(
+                                              cardNumber: value['card_number'] as String,
+                                              expireDate: value['date'] as String,
+                                            ),
+                                            onSucces: () {
+                                              Navigator.push(
+                                                  context,
+                                                  fade(
+                                                      page: AddPaymentCardVerifyScreen(
+                                                    expiredDate: value['date'] as String,
+                                                    cardNumber: value['card_number'] as String,
+                                                  )));
+                                            },
+                                            onError: (message) {
+                                              context
+                                                  .read<ShowPopUpBloc>()
+                                                  .add(ShowPopUp(message: message, isSuccess: false));
+                                            },
+                                          )),
+                                    }
+                                });
                       },
                       height: 40,
                       text: LocaleKeys.add_card.tr(),
