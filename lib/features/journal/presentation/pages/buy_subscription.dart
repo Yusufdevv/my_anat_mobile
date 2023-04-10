@@ -1,20 +1,13 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
-import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:anatomica/features/journal/data/repositories/payment_repository_impl.dart';
 import 'package:anatomica/features/journal/domain/entities/period_entity.dart';
-import 'package:anatomica/features/journal/domain/usecases/check_payment_status_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_prices_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/order_create_article_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/order_create_journal_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_images.dart';
@@ -41,25 +34,13 @@ class BuySubscription extends StatefulWidget {
 
 class _BuySubscriptionState extends State<BuySubscription> {
   String currentPaymentMethod = '';
-  PeriodEntity currentPeriod =
-      const PeriodEntity(title: LocaleKeys.days_30, period: 1);
+  PeriodEntity currentPeriod = const PeriodEntity(title: LocaleKeys.days_30, period: 1);
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return BlocProvider(
-      create: (context) => PaymentBloc(
-        orderCreateJournalUseCase: OrderCreateJournalUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-        orderCreateArticleUseCase: OrderCreateArticleUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-        checkPaymentStatusUseCase: CheckPaymentStatusUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-        getPricesUseCase: GetPricesUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-        payForMonthlySubscriptionUseCase: PayForMonthlySubscriptionUseCase(
-            repository: serviceLocator<PaymentRepositoryImpl>()),
-      )..add(GetPrices()),
+      create: (context) => PaymentBloc()..add(GetPrices()),
       child: CustomScreen(
         child: Scaffold(
           appBar: AppBar(
@@ -73,22 +54,15 @@ class _BuySubscriptionState extends State<BuySubscription> {
                 const SizedBox(width: 56),
                 Text(
                   LocaleKeys.activate_subscription.tr(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(color: textColor, fontSize: 20),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor, fontSize: 20),
                 ),
                 WScaleAnimation(
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 14, horizontal: 16),
-                    child: SvgPicture.asset(
-                      AppIcons.close,
-                      color: black,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                    child: SvgPicture.asset(AppIcons.close, color: black),
                   ),
                 ),
               ],
@@ -104,10 +78,8 @@ class _BuySubscriptionState extends State<BuySubscription> {
                 return SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        maxHeight: mediaQuery.size.height -
-                            mediaQuery.padding.top -
-                            kToolbarHeight),
+                    constraints:
+                        BoxConstraints(maxHeight: mediaQuery.size.height - mediaQuery.padding.top - kToolbarHeight),
                     child: Column(
                       children: [
                         const SizedBox(height: 24),
@@ -115,19 +87,12 @@ class _BuySubscriptionState extends State<BuySubscription> {
                         const SizedBox(height: 28),
                         Text.rich(
                           TextSpan(
-                            text:
-                                '${MyFunctions.getFormatCostFromInt(state.prices.journalSubscribe)} ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(color: primary, fontSize: 20),
+                            text: '${MyFunctions.getFormatCostFromInt(state.prices.journalSubscribe)} ',
+                            style: Theme.of(context).textTheme.displayLarge!.copyWith(color: primary, fontSize: 20),
                             children: [
                               TextSpan(
                                 text: LocaleKeys.for_month.tr(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displaySmall!
-                                    .copyWith(color: textColor),
+                                style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor),
                               ),
                             ],
                           ),
@@ -135,20 +100,13 @@ class _BuySubscriptionState extends State<BuySubscription> {
                         const SizedBox(height: 8),
                         Text(
                           LocaleKeys.subscription_for_all_journals.tr(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(color: textColor),
+                          style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: textColor),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          LocaleKeys.subscription_for_all_journals_description
-                              .tr(),
+                          LocaleKeys.subscription_for_all_journals_description.tr(),
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(fontSize: 13),
+                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 13),
                         ),
                         const SizedBox(height: 24),
                         Column(
@@ -158,23 +116,17 @@ class _BuySubscriptionState extends State<BuySubscription> {
                               padding: const EdgeInsets.only(left: 16),
                               child: Text(
                                 LocaleKeys.select_period.tr(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displaySmall!
-                                    .copyWith(color: textColor),
+                                style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor),
                               ),
                             ),
                             const SizedBox(height: 8),
                             WScaleAnimation(
                               onTap: () async {
-                                final periodEntity =
-                                    await showModalBottomSheet<PeriodEntity>(
+                                final periodEntity = await showModalBottomSheet<PeriodEntity>(
                                   context: context,
                                   backgroundColor: Colors.transparent,
                                   isScrollControlled: true,
-                                  builder: (_) => SelectPeriodBottomSheet(
-                                    initialPeriod: currentPeriod,
-                                  ),
+                                  builder: (_) => SelectPeriodBottomSheet(initialPeriod: currentPeriod),
                                 );
                                 if (periodEntity != null) {
                                   setState(() {
@@ -183,8 +135,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                 }
                               },
                               child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 16),
+                                margin: const EdgeInsets.symmetric(horizontal: 16),
                                 padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
                                 decoration: BoxDecoration(
                                   color: textFieldColor,
@@ -192,23 +143,14 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                 ),
                                 child: Row(
                                   children: [
-                                    SvgPicture.asset(
-                                      AppIcons.mapCalendar,
-                                      height: 20,
-                                    ),
+                                    SvgPicture.asset(AppIcons.mapCalendar, height: 20),
                                     const SizedBox(width: 8),
                                     Text(
                                       currentPeriod.title.tr(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displaySmall!
-                                          .copyWith(color: textColor),
+                                      style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor),
                                     ),
                                     const Spacer(),
-                                    SvgPicture.asset(
-                                      AppIcons.chevronDown,
-                                      height: 24,
-                                    )
+                                    SvgPicture.asset(AppIcons.chevronDown, height: 24)
                                   ],
                                 ),
                               ),
@@ -224,24 +166,16 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                 padding: const EdgeInsets.only(left: 16),
                                 child: Text(
                                   LocaleKeys.select_payment_method.tr(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displaySmall!
-                                      .copyWith(color: textColor),
+                                  style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor),
                                 ),
                               ),
                               const SizedBox(height: 16),
                               Expanded(
                                 child: GridView(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16),
+                                  padding: const EdgeInsets.symmetric(horizontal: 16),
                                   physics: const NeverScrollableScrollPhysics(),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          crossAxisSpacing: 15,
-                                          mainAxisSpacing: 16,
-                                          mainAxisExtent: 54),
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 16, mainAxisExtent: 54),
                                   children: [
                                     PaymentMethod(
                                       onTap: (value) {
@@ -250,8 +184,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                         });
                                       },
                                       icon: AppImages.payMe,
-                                      currentPaymentMethod:
-                                          currentPaymentMethod,
+                                      currentPaymentMethod: currentPaymentMethod,
                                       paymentMethod: 'payme',
                                       iconHeight: 24,
                                     ),
@@ -263,8 +196,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                       },
                                       iconHeight: 26,
                                       icon: AppImages.click,
-                                      currentPaymentMethod:
-                                          currentPaymentMethod,
+                                      currentPaymentMethod: currentPaymentMethod,
                                       paymentMethod: 'click',
                                     ),
                                     PaymentMethod(
@@ -275,8 +207,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                       },
                                       iconHeight: 26,
                                       icon: AppImages.uzum,
-                                      currentPaymentMethod:
-                                          currentPaymentMethod,
+                                      currentPaymentMethod: currentPaymentMethod,
                                       paymentMethod: 'uzum',
                                     ),
                                     PaymentMethod(
@@ -287,8 +218,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                       },
                                       iconHeight: 22,
                                       icon: AppImages.paylov,
-                                      currentPaymentMethod:
-                                          currentPaymentMethod,
+                                      currentPaymentMethod: currentPaymentMethod,
                                       paymentMethod: 'paylov',
                                     )
                                   ],
@@ -298,37 +228,29 @@ class _BuySubscriptionState extends State<BuySubscription> {
                           ),
                         ),
                         WButton(
-                          isLoading:
-                              state.payForMonthlyStatus.isSubmissionInProgress,
+                          isLoading: state.payForMonthlyStatus.isSubmissionInProgress,
                           onTap: () {
-                            context
-                                .read<PaymentBloc>()
-                                .add(PayForMonthlySubscription(
-                                    period: currentPeriod.period,
-                                    onSuccess: (value) {
-                                      launchUrlString(
-                                          value.transactionCheckoutUrl,
-                                          mode: LaunchMode.externalApplication);
-                                      Navigator.of(context).push(
-                                        fade(
-                                          page: PaymentResultScreen(
-                                            title: '',
-                                            isRegistered: true,
-                                            isSubscription: true,
-                                            bloc: context.read<PaymentBloc>(),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    paymentProvider: currentPaymentMethod,
-                                    onError: (message) {
-                                      context
-                                          .read<ShowPopUpBloc>()
-                                          .add(ShowPopUp(message: message));
-                                    }));
+                            context.read<PaymentBloc>().add(PayForMonthlySubscription(
+                                period: currentPeriod.period,
+                                onSuccess: (value) {
+                                  launchUrlString(value.transactionCheckoutUrl, mode: LaunchMode.externalApplication);
+                                  Navigator.of(context).push(
+                                    fade(
+                                      page: PaymentResultScreen(
+                                        title: '',
+                                        isRegistered: true,
+                                        isSubscription: true,
+                                        bloc: context.read<PaymentBloc>(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                paymentProvider: currentPaymentMethod,
+                                onError: (message) {
+                                  context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                                }));
                           },
-                          margin: const EdgeInsets.symmetric(horizontal: 16)
-                              .copyWith(top: 16),
+                          margin: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 16),
                           text: LocaleKeys.confirm.tr(),
                         ),
                         SizedBox(height: mediaQuery.padding.bottom + 16)

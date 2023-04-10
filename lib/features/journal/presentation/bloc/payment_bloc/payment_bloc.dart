@@ -1,5 +1,7 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
+import 'package:anatomica/features/journal/data/repositories/payment_repository_impl.dart';
 import 'package:anatomica/features/journal/domain/entities/payment_response_entity.dart';
 import 'package:anatomica/features/journal/domain/entities/prices_entity.dart';
 import 'package:anatomica/features/journal/domain/usecases/check_payment_status_usecase.dart';
@@ -18,24 +20,17 @@ part 'payment_event.dart';
 part 'payment_state.dart';
 
 class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
-  final OrderCreateArticleUseCase _orderCreateArticleUseCase;
-  final OrderCreateJournalUseCase _orderCreateJournalUseCase;
-  final CheckPaymentStatusUseCase _checkPaymentStatusUseCase;
-  final GetPricesUseCase _getPricesUseCase;
-  final PayForMonthlySubscriptionUseCase _payForMonthlySubscriptionUseCase;
+  final OrderCreateArticleUseCase _orderCreateArticleUseCase =
+      OrderCreateArticleUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
+  final OrderCreateJournalUseCase _orderCreateJournalUseCase =
+      OrderCreateJournalUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
+  final CheckPaymentStatusUseCase _checkPaymentStatusUseCase =
+      CheckPaymentStatusUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
+  final GetPricesUseCase _getPricesUseCase = GetPricesUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
+  final PayForMonthlySubscriptionUseCase _payForMonthlySubscriptionUseCase =
+      PayForMonthlySubscriptionUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
 
-  PaymentBloc({
-    required OrderCreateJournalUseCase orderCreateJournalUseCase,
-    required OrderCreateArticleUseCase orderCreateArticleUseCase,
-    required CheckPaymentStatusUseCase checkPaymentStatusUseCase,
-    required GetPricesUseCase getPricesUseCase,
-    required PayForMonthlySubscriptionUseCase payForMonthlySubscriptionUseCase,
-  })  : _orderCreateJournalUseCase = orderCreateJournalUseCase,
-        _orderCreateArticleUseCase = orderCreateArticleUseCase,
-        _checkPaymentStatusUseCase = checkPaymentStatusUseCase,
-        _getPricesUseCase = getPricesUseCase,
-        _payForMonthlySubscriptionUseCase = payForMonthlySubscriptionUseCase,
-        super(const PaymentState()) {
+  PaymentBloc() : super(const PaymentState()) {
     on<OrderCreateArticle>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateArticleUseCase.call(OrderCreateParams(
@@ -63,13 +58,10 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       }
     });
     on<CheckPaymentStatus>((event, emit) async {
-      emit(
-          state.copyWith(checkPaymentStatus: FormzStatus.submissionInProgress));
+      emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionInProgress));
       final result = await _checkPaymentStatusUseCase.call(state.paymentId);
       if (result.isRight) {
-        emit(state.copyWith(
-            checkPaymentStatus: FormzStatus.submissionSuccess,
-            status: result.right));
+        emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionSuccess, status: result.right));
       } else {
         emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionFailure));
       }
@@ -104,18 +96,15 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       emit(state.copyWith(getPricesStatus: FormzStatus.submissionInProgress));
       final result = await _getPricesUseCase.call(NoParams());
       if (result.isRight) {
-        emit(state.copyWith(
-            getPricesStatus: FormzStatus.submissionSuccess,
-            prices: result.right));
+        emit(state.copyWith(getPricesStatus: FormzStatus.submissionSuccess, prices: result.right));
       } else {
         emit(state.copyWith(getPricesStatus: FormzStatus.submissionFailure));
       }
     });
     on<PayForMonthlySubscription>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
-      final result = await _payForMonthlySubscriptionUseCase.call(
-          SubscriptionParams(
-              paymentProvider: event.paymentProvider, period: event.period));
+      final result = await _payForMonthlySubscriptionUseCase
+          .call(SubscriptionParams(paymentProvider: event.paymentProvider, period: event.period));
       if (result.isRight) {
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
         event.onSuccess(result.right);
