@@ -8,7 +8,8 @@ class DioSettings {
     receiveTimeout: 33000,
     followRedirects: false,
     headers: <String, dynamic>{
-      'Accept-Language': StorageRepository.getString('language', defValue: 'uz')
+      // TODO  default accept language must be 'uz'
+      'Accept-Language': StorageRepository.getString('language', defValue: 'ru')
     },
     validateStatus: (status) => status != null && status <= 500,
   );

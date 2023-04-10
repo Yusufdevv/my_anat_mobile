@@ -9,11 +9,11 @@ import 'package:anatomica/features/pagination/data/models/generic_pagination.dar
 import 'package:anatomica/features/pagination/data/repository/pagination.dart';
 
 class GetMapDoctorUseCase
-    extends UseCase<GenericPagination<MapDoctorModel>, String> {
+    extends UseCase<GenericPagination<DoctorMapEntity>, String> {
   final PaginationRepository repo = PaginationRepository();
 
   @override
-  Future<Either<Failure, GenericPagination<MapDoctorModel>>> call(params,
+  Future<Either<Failure, GenericPagination<DoctorMapEntity>>> call(params,
       {MapV2Params? param}) {
     var query = <String, dynamic>{};
     if (params.isNotEmpty) {
