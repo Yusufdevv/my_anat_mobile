@@ -10,6 +10,7 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/add_payment_card_verify_screen.dart';
+import 'package:anatomica/features/journal/presentation/pages/buy_subscription.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
@@ -284,77 +285,46 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                                               },
                                             ),
                                           )
-                                        : Container(
-                                            margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                                            padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
-                                            decoration: BoxDecoration(
-                                              color: lilyWhite,
-                                              border: Border.all(color: lilyWhite),
-                                              borderRadius: BorderRadius.circular(10),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                state.selectedCard?.cardType == 'humo'
-                                                    ? SvgPicture.asset(AppImages.humo)
-                                                    : SvgPicture.asset(AppImages.uzcard),
-                                                const SizedBox(width: 12),
-                                                Expanded(
-                                                    child: Text(state.selectedCard?.cardNumber ?? '',
-                                                        style: Theme.of(context).textTheme.displayLarge)),
-                                                WScaleAnimation(
-                                                  onTap: () {
-                                                    showModalBottomSheet(
-                                                        context: context,
-                                                        backgroundColor: Colors.transparent,
-                                                        useRootNavigator: true,
-                                                        isScrollControlled: true,
-                                                        builder: (cardsContext) => CardsBottomSheet(
-                                                              cards: state.paymentCards,
-                                                              selectedCard: state.selectedCard,
-                                                              onCreate: (value) {
-                                                                context
-                                                                    .read<PaymentCardsBloc>()
-                                                                    .add(CreatePaymentCardEvent(
-                                                                      param: CreateCardParam(
-                                                                          cardNumber: value['card_number'] as String,
-                                                                          expireDate: value['date'] as String),
-                                                                      onSucces: () {
-                                                                        Navigator.push(
-                                                                            context,
-                                                                            fade(
-                                                                                page: AddPaymentCardVerifyScreen(
-                                                                              expiredDate: value['date'] as String,
-                                                                              cardNumber:
-                                                                                  value['card_number'] as String,
-                                                                            )));
-                                                                      },
-                                                                      onError: (message) {
-                                                                        context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                                                            message: message, isSuccess: false));
-                                                                      },
-                                                                    ));
-                                                              },
-                                                            )).then((value) => {
-                                                          if (value != null)
-                                                            {
-                                                              context.read<PaymentCardsBloc>().add(
-                                                                  SetSelectedPaymentCardEvent(
-                                                                      id: value['selectedCardId']))
-                                                            }
-                                                        });
-                                                  },
-                                                  child: Container(
-                                                    height: 36,
-                                                    width: 36,
-                                                    padding: const EdgeInsets.all(6),
-                                                    decoration: BoxDecoration(
-                                                        color: textSecondary.withOpacity(.16),
-                                                        borderRadius: BorderRadius.circular(6)),
-                                                    child: SvgPicture.asset(AppIcons.chevronsUpDown),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                        : PaymentCardItem(
+                                            cardType: state.selectedCard?.cardType,
+                                            cardNumber: state.selectedCard?.cardNumber,
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  backgroundColor: Colors.transparent,
+                                                  useRootNavigator: true,
+                                                  isScrollControlled: true,
+                                                  builder: (context) => CardsBottomSheet(
+                                                        cards: state.paymentCards,
+                                                        selectedCard: state.selectedCard,
+                                                        onCreate: (value) {
+                                                          context.read<PaymentCardsBloc>().add(CreatePaymentCardEvent(
+                                                                param: CreateCardParam(
+                                                                    cardNumber: value['card_number'] as String,
+                                                                    expireDate: value['date'] as String),
+                                                                onSucces: () {
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      fade(
+                                                                          page: AddPaymentCardVerifyScreen(
+                                                                        expiredDate: value['date'] as String,
+                                                                        cardNumber: value['card_number'] as String,
+                                                                      )));
+                                                                },
+                                                                onError: (message) {
+                                                                  context.read<ShowPopUpBloc>().add(
+                                                                      ShowPopUp(message: message, isSuccess: false));
+                                                                },
+                                                              ));
+                                                        },
+                                                      )).then((value) => {
+                                                    if (value != null)
+                                                      {
+                                                        context.read<PaymentCardsBloc>().add(
+                                                            SetSelectedPaymentCardEvent(id: value['selectedCardId']))
+                                                      }
+                                                  });
+                                            },
                                           ),
                                     secondChild: const SizedBox(),
                                     crossFadeState: currentPaymentMethod.value == 'card'
