@@ -33,6 +33,7 @@ class TopArticlesItem extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
+        color: lilyWhite,
         image: DecorationImage(
           image: NetworkImage(imageUrl),
           fit: BoxFit.cover,

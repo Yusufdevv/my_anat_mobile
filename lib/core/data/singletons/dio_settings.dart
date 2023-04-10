@@ -26,5 +26,14 @@ class DioSettings {
 
   BaseOptions get dioBaseOptions => _dioBaseOptions;
 
-  Dio get dio => Dio(_dioBaseOptions);
+  Dio get dio {
+    final dio = Dio(_dioBaseOptions);
+    dio.interceptors.add(LogInterceptor(
+      responseBody: true,
+      requestBody: true,
+      request: true,
+      requestHeader: true,
+    ));
+    return dio;
+  }
 }

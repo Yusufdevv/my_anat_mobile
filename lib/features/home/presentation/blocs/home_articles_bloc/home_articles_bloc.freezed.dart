@@ -20,18 +20,24 @@ mixin _$HomeArticlesEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getHomeArticles,
     required TResult Function() getMoreHomeArticles,
+    required TResult Function() getBanners,
+    required TResult Function() getMoreBanners,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getHomeArticles,
     TResult? Function()? getMoreHomeArticles,
+    TResult? Function()? getBanners,
+    TResult? Function()? getMoreBanners,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getHomeArticles,
     TResult Function()? getMoreHomeArticles,
+    TResult Function()? getBanners,
+    TResult Function()? getMoreBanners,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +45,24 @@ mixin _$HomeArticlesEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetHomeArticles value) getHomeArticles,
     required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
+    required TResult Function(_GetBanners value) getBanners,
+    required TResult Function(_GetMoreBanners value) getMoreBanners,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetHomeArticles value)? getHomeArticles,
     TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult? Function(_GetBanners value)? getBanners,
+    TResult? Function(_GetMoreBanners value)? getMoreBanners,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetHomeArticles value)? getHomeArticles,
     TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult Function(_GetBanners value)? getBanners,
+    TResult Function(_GetMoreBanners value)? getMoreBanners,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +126,8 @@ class _$_GetHomeArticles implements _GetHomeArticles {
   TResult when<TResult extends Object?>({
     required TResult Function() getHomeArticles,
     required TResult Function() getMoreHomeArticles,
+    required TResult Function() getBanners,
+    required TResult Function() getMoreBanners,
   }) {
     return getHomeArticles();
   }
@@ -123,6 +137,8 @@ class _$_GetHomeArticles implements _GetHomeArticles {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getHomeArticles,
     TResult? Function()? getMoreHomeArticles,
+    TResult? Function()? getBanners,
+    TResult? Function()? getMoreBanners,
   }) {
     return getHomeArticles?.call();
   }
@@ -132,6 +148,8 @@ class _$_GetHomeArticles implements _GetHomeArticles {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getHomeArticles,
     TResult Function()? getMoreHomeArticles,
+    TResult Function()? getBanners,
+    TResult Function()? getMoreBanners,
     required TResult orElse(),
   }) {
     if (getHomeArticles != null) {
@@ -145,6 +163,8 @@ class _$_GetHomeArticles implements _GetHomeArticles {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetHomeArticles value) getHomeArticles,
     required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
+    required TResult Function(_GetBanners value) getBanners,
+    required TResult Function(_GetMoreBanners value) getMoreBanners,
   }) {
     return getHomeArticles(this);
   }
@@ -154,6 +174,8 @@ class _$_GetHomeArticles implements _GetHomeArticles {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetHomeArticles value)? getHomeArticles,
     TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult? Function(_GetBanners value)? getBanners,
+    TResult? Function(_GetMoreBanners value)? getMoreBanners,
   }) {
     return getHomeArticles?.call(this);
   }
@@ -163,6 +185,8 @@ class _$_GetHomeArticles implements _GetHomeArticles {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetHomeArticles value)? getHomeArticles,
     TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult Function(_GetBanners value)? getBanners,
+    TResult Function(_GetMoreBanners value)? getMoreBanners,
     required TResult orElse(),
   }) {
     if (getHomeArticles != null) {
@@ -216,6 +240,8 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
   TResult when<TResult extends Object?>({
     required TResult Function() getHomeArticles,
     required TResult Function() getMoreHomeArticles,
+    required TResult Function() getBanners,
+    required TResult Function() getMoreBanners,
   }) {
     return getMoreHomeArticles();
   }
@@ -225,6 +251,8 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getHomeArticles,
     TResult? Function()? getMoreHomeArticles,
+    TResult? Function()? getBanners,
+    TResult? Function()? getMoreBanners,
   }) {
     return getMoreHomeArticles?.call();
   }
@@ -234,6 +262,8 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getHomeArticles,
     TResult Function()? getMoreHomeArticles,
+    TResult Function()? getBanners,
+    TResult Function()? getMoreBanners,
     required TResult orElse(),
   }) {
     if (getMoreHomeArticles != null) {
@@ -247,6 +277,8 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetHomeArticles value) getHomeArticles,
     required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
+    required TResult Function(_GetBanners value) getBanners,
+    required TResult Function(_GetMoreBanners value) getMoreBanners,
   }) {
     return getMoreHomeArticles(this);
   }
@@ -256,6 +288,8 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetHomeArticles value)? getHomeArticles,
     TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult? Function(_GetBanners value)? getBanners,
+    TResult? Function(_GetMoreBanners value)? getMoreBanners,
   }) {
     return getMoreHomeArticles?.call(this);
   }
@@ -265,6 +299,8 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetHomeArticles value)? getHomeArticles,
     TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult Function(_GetBanners value)? getBanners,
+    TResult Function(_GetMoreBanners value)? getMoreBanners,
     required TResult orElse(),
   }) {
     if (getMoreHomeArticles != null) {
@@ -279,12 +315,244 @@ abstract class _GetMoreHomeArticles implements HomeArticlesEvent {
 }
 
 /// @nodoc
+abstract class _$$_GetBannersCopyWith<$Res> {
+  factory _$$_GetBannersCopyWith(
+          _$_GetBanners value, $Res Function(_$_GetBanners) then) =
+      __$$_GetBannersCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetBannersCopyWithImpl<$Res>
+    extends _$HomeArticlesEventCopyWithImpl<$Res, _$_GetBanners>
+    implements _$$_GetBannersCopyWith<$Res> {
+  __$$_GetBannersCopyWithImpl(
+      _$_GetBanners _value, $Res Function(_$_GetBanners) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_GetBanners implements _GetBanners {
+  const _$_GetBanners();
+
+  @override
+  String toString() {
+    return 'HomeArticlesEvent.getBanners()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetBanners);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getHomeArticles,
+    required TResult Function() getMoreHomeArticles,
+    required TResult Function() getBanners,
+    required TResult Function() getMoreBanners,
+  }) {
+    return getBanners();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getHomeArticles,
+    TResult? Function()? getMoreHomeArticles,
+    TResult? Function()? getBanners,
+    TResult? Function()? getMoreBanners,
+  }) {
+    return getBanners?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getHomeArticles,
+    TResult Function()? getMoreHomeArticles,
+    TResult Function()? getBanners,
+    TResult Function()? getMoreBanners,
+    required TResult orElse(),
+  }) {
+    if (getBanners != null) {
+      return getBanners();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetHomeArticles value) getHomeArticles,
+    required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
+    required TResult Function(_GetBanners value) getBanners,
+    required TResult Function(_GetMoreBanners value) getMoreBanners,
+  }) {
+    return getBanners(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetHomeArticles value)? getHomeArticles,
+    TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult? Function(_GetBanners value)? getBanners,
+    TResult? Function(_GetMoreBanners value)? getMoreBanners,
+  }) {
+    return getBanners?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetHomeArticles value)? getHomeArticles,
+    TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult Function(_GetBanners value)? getBanners,
+    TResult Function(_GetMoreBanners value)? getMoreBanners,
+    required TResult orElse(),
+  }) {
+    if (getBanners != null) {
+      return getBanners(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetBanners implements HomeArticlesEvent {
+  const factory _GetBanners() = _$_GetBanners;
+}
+
+/// @nodoc
+abstract class _$$_GetMoreBannersCopyWith<$Res> {
+  factory _$$_GetMoreBannersCopyWith(
+          _$_GetMoreBanners value, $Res Function(_$_GetMoreBanners) then) =
+      __$$_GetMoreBannersCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetMoreBannersCopyWithImpl<$Res>
+    extends _$HomeArticlesEventCopyWithImpl<$Res, _$_GetMoreBanners>
+    implements _$$_GetMoreBannersCopyWith<$Res> {
+  __$$_GetMoreBannersCopyWithImpl(
+      _$_GetMoreBanners _value, $Res Function(_$_GetMoreBanners) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_GetMoreBanners implements _GetMoreBanners {
+  const _$_GetMoreBanners();
+
+  @override
+  String toString() {
+    return 'HomeArticlesEvent.getMoreBanners()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetMoreBanners);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getHomeArticles,
+    required TResult Function() getMoreHomeArticles,
+    required TResult Function() getBanners,
+    required TResult Function() getMoreBanners,
+  }) {
+    return getMoreBanners();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getHomeArticles,
+    TResult? Function()? getMoreHomeArticles,
+    TResult? Function()? getBanners,
+    TResult? Function()? getMoreBanners,
+  }) {
+    return getMoreBanners?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getHomeArticles,
+    TResult Function()? getMoreHomeArticles,
+    TResult Function()? getBanners,
+    TResult Function()? getMoreBanners,
+    required TResult orElse(),
+  }) {
+    if (getMoreBanners != null) {
+      return getMoreBanners();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetHomeArticles value) getHomeArticles,
+    required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
+    required TResult Function(_GetBanners value) getBanners,
+    required TResult Function(_GetMoreBanners value) getMoreBanners,
+  }) {
+    return getMoreBanners(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetHomeArticles value)? getHomeArticles,
+    TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult? Function(_GetBanners value)? getBanners,
+    TResult? Function(_GetMoreBanners value)? getMoreBanners,
+  }) {
+    return getMoreBanners?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetHomeArticles value)? getHomeArticles,
+    TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult Function(_GetBanners value)? getBanners,
+    TResult Function(_GetMoreBanners value)? getMoreBanners,
+    required TResult orElse(),
+  }) {
+    if (getMoreBanners != null) {
+      return getMoreBanners(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetMoreBanners implements HomeArticlesEvent {
+  const factory _GetMoreBanners() = _$_GetMoreBanners;
+}
+
+/// @nodoc
 mixin _$HomeArticlesState {
   List<JournalArticleModel> get homeArticles =>
       throw _privateConstructorUsedError;
   FormzStatus get homeArticlesStatus => throw _privateConstructorUsedError;
   String? get homeArticlesNext => throw _privateConstructorUsedError;
   bool get homeArticlesFetchMore => throw _privateConstructorUsedError;
+  List<BannerModel> get banners => throw _privateConstructorUsedError;
+  FormzStatus get bannersStatus => throw _privateConstructorUsedError;
+  String? get bannersNext => throw _privateConstructorUsedError;
+  bool get bannersFetchMore => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeArticlesStateCopyWith<HomeArticlesState> get copyWith =>
@@ -301,7 +569,11 @@ abstract class $HomeArticlesStateCopyWith<$Res> {
       {List<JournalArticleModel> homeArticles,
       FormzStatus homeArticlesStatus,
       String? homeArticlesNext,
-      bool homeArticlesFetchMore});
+      bool homeArticlesFetchMore,
+      List<BannerModel> banners,
+      FormzStatus bannersStatus,
+      String? bannersNext,
+      bool bannersFetchMore});
 }
 
 /// @nodoc
@@ -321,6 +593,10 @@ class _$HomeArticlesStateCopyWithImpl<$Res, $Val extends HomeArticlesState>
     Object? homeArticlesStatus = null,
     Object? homeArticlesNext = freezed,
     Object? homeArticlesFetchMore = null,
+    Object? banners = null,
+    Object? bannersStatus = null,
+    Object? bannersNext = freezed,
+    Object? bannersFetchMore = null,
   }) {
     return _then(_value.copyWith(
       homeArticles: null == homeArticles
@@ -339,6 +615,22 @@ class _$HomeArticlesStateCopyWithImpl<$Res, $Val extends HomeArticlesState>
           ? _value.homeArticlesFetchMore
           : homeArticlesFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      banners: null == banners
+          ? _value.banners
+          : banners // ignore: cast_nullable_to_non_nullable
+              as List<BannerModel>,
+      bannersStatus: null == bannersStatus
+          ? _value.bannersStatus
+          : bannersStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      bannersNext: freezed == bannersNext
+          ? _value.bannersNext
+          : bannersNext // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bannersFetchMore: null == bannersFetchMore
+          ? _value.bannersFetchMore
+          : bannersFetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -355,7 +647,11 @@ abstract class _$$_HomeArticlesStateCopyWith<$Res>
       {List<JournalArticleModel> homeArticles,
       FormzStatus homeArticlesStatus,
       String? homeArticlesNext,
-      bool homeArticlesFetchMore});
+      bool homeArticlesFetchMore,
+      List<BannerModel> banners,
+      FormzStatus bannersStatus,
+      String? bannersNext,
+      bool bannersFetchMore});
 }
 
 /// @nodoc
@@ -373,6 +669,10 @@ class __$$_HomeArticlesStateCopyWithImpl<$Res>
     Object? homeArticlesStatus = null,
     Object? homeArticlesNext = freezed,
     Object? homeArticlesFetchMore = null,
+    Object? banners = null,
+    Object? bannersStatus = null,
+    Object? bannersNext = freezed,
+    Object? bannersFetchMore = null,
   }) {
     return _then(_$_HomeArticlesState(
       homeArticles: null == homeArticles
@@ -391,6 +691,22 @@ class __$$_HomeArticlesStateCopyWithImpl<$Res>
           ? _value.homeArticlesFetchMore
           : homeArticlesFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      banners: null == banners
+          ? _value._banners
+          : banners // ignore: cast_nullable_to_non_nullable
+              as List<BannerModel>,
+      bannersStatus: null == bannersStatus
+          ? _value.bannersStatus
+          : bannersStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      bannersNext: freezed == bannersNext
+          ? _value.bannersNext
+          : bannersNext // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bannersFetchMore: null == bannersFetchMore
+          ? _value.bannersFetchMore
+          : bannersFetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -402,8 +718,13 @@ class _$_HomeArticlesState implements _HomeArticlesState {
       {final List<JournalArticleModel> homeArticles = const [],
       this.homeArticlesStatus = FormzStatus.pure,
       this.homeArticlesNext,
-      this.homeArticlesFetchMore = false})
-      : _homeArticles = homeArticles;
+      this.homeArticlesFetchMore = false,
+      final List<BannerModel> banners = const [],
+      this.bannersStatus = FormzStatus.pure,
+      this.bannersNext,
+      this.bannersFetchMore = false})
+      : _homeArticles = homeArticles,
+        _banners = banners;
 
   final List<JournalArticleModel> _homeArticles;
   @override
@@ -421,10 +742,26 @@ class _$_HomeArticlesState implements _HomeArticlesState {
   @override
   @JsonKey()
   final bool homeArticlesFetchMore;
+  final List<BannerModel> _banners;
+  @override
+  @JsonKey()
+  List<BannerModel> get banners {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_banners);
+  }
+
+  @override
+  @JsonKey()
+  final FormzStatus bannersStatus;
+  @override
+  final String? bannersNext;
+  @override
+  @JsonKey()
+  final bool bannersFetchMore;
 
   @override
   String toString() {
-    return 'HomeArticlesState(homeArticles: $homeArticles, homeArticlesStatus: $homeArticlesStatus, homeArticlesNext: $homeArticlesNext, homeArticlesFetchMore: $homeArticlesFetchMore)';
+    return 'HomeArticlesState(homeArticles: $homeArticles, homeArticlesStatus: $homeArticlesStatus, homeArticlesNext: $homeArticlesNext, homeArticlesFetchMore: $homeArticlesFetchMore, banners: $banners, bannersStatus: $bannersStatus, bannersNext: $bannersNext, bannersFetchMore: $bannersFetchMore)';
   }
 
   @override
@@ -439,7 +776,14 @@ class _$_HomeArticlesState implements _HomeArticlesState {
             (identical(other.homeArticlesNext, homeArticlesNext) ||
                 other.homeArticlesNext == homeArticlesNext) &&
             (identical(other.homeArticlesFetchMore, homeArticlesFetchMore) ||
-                other.homeArticlesFetchMore == homeArticlesFetchMore));
+                other.homeArticlesFetchMore == homeArticlesFetchMore) &&
+            const DeepCollectionEquality().equals(other._banners, _banners) &&
+            (identical(other.bannersStatus, bannersStatus) ||
+                other.bannersStatus == bannersStatus) &&
+            (identical(other.bannersNext, bannersNext) ||
+                other.bannersNext == bannersNext) &&
+            (identical(other.bannersFetchMore, bannersFetchMore) ||
+                other.bannersFetchMore == bannersFetchMore));
   }
 
   @override
@@ -448,7 +792,11 @@ class _$_HomeArticlesState implements _HomeArticlesState {
       const DeepCollectionEquality().hash(_homeArticles),
       homeArticlesStatus,
       homeArticlesNext,
-      homeArticlesFetchMore);
+      homeArticlesFetchMore,
+      const DeepCollectionEquality().hash(_banners),
+      bannersStatus,
+      bannersNext,
+      bannersFetchMore);
 
   @JsonKey(ignore: true)
   @override
@@ -463,7 +811,11 @@ abstract class _HomeArticlesState implements HomeArticlesState {
       {final List<JournalArticleModel> homeArticles,
       final FormzStatus homeArticlesStatus,
       final String? homeArticlesNext,
-      final bool homeArticlesFetchMore}) = _$_HomeArticlesState;
+      final bool homeArticlesFetchMore,
+      final List<BannerModel> banners,
+      final FormzStatus bannersStatus,
+      final String? bannersNext,
+      final bool bannersFetchMore}) = _$_HomeArticlesState;
 
   @override
   List<JournalArticleModel> get homeArticles;
@@ -473,6 +825,14 @@ abstract class _HomeArticlesState implements HomeArticlesState {
   String? get homeArticlesNext;
   @override
   bool get homeArticlesFetchMore;
+  @override
+  List<BannerModel> get banners;
+  @override
+  FormzStatus get bannersStatus;
+  @override
+  String? get bannersNext;
+  @override
+  bool get bannersFetchMore;
   @override
   @JsonKey(ignore: true)
   _$$_HomeArticlesStateCopyWith<_$_HomeArticlesState> get copyWith =>

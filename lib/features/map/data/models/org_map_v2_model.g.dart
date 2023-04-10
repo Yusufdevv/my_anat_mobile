@@ -48,6 +48,9 @@ OrgMapV2Model _$OrgMapV2ModelFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const [],
       slug: json['slug'] as String? ?? '',
+      paid: json['paid'] as bool? ?? false,
+      subscribeFrom: json['subscribe_from'] as String? ?? '',
+      subscribeUpto: json['subscribe_upto'] as String? ?? '',
     );
 
 Map<String, dynamic> _$OrgMapV2ModelToJson(OrgMapV2Model instance) =>
@@ -75,4 +78,7 @@ Map<String, dynamic> _$OrgMapV2ModelToJson(OrgMapV2Model instance) =>
       'phone_number': instance.phoneNumber,
       'distance': instance.distance,
       'work_all_day': instance.workAllDay,
+      'subscribe_from': instance.subscribeFrom,
+      'subscribe_upto': instance.subscribeUpto,
+      'paid': instance.paid,
     };

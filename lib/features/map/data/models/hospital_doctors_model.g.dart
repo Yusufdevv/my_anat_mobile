@@ -25,6 +25,15 @@ HospitalDoctorsModel _$HospitalDoctorsModelFromJson(
       rating: (json['rating'] as num?)?.toDouble() ?? 0,
       address: json['address'] as String? ?? '',
       workExperience: json['work_experience'] as int? ?? 0,
+      distance: (json['distance'] as num?)?.toDouble() ?? 0,
+      imgIsFull: json['img_is_full'] as bool? ?? false,
+      latitude: (json['latitude'] as num?)?.toDouble() ?? 0,
+      longitude: (json['longitude'] as num?)?.toDouble() ?? 0,
+      phoneNumbers: (json['phone_numbers'] as List<dynamic>?)
+              ?.map((e) => const PhoneNumberConverter()
+                  .fromJson(e as Map<String, dynamic>?))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$HospitalDoctorsModelToJson(
@@ -40,4 +49,11 @@ Map<String, dynamic> _$HospitalDoctorsModelToJson(
       'work_experience': instance.workExperience,
       'address': instance.address,
       'is_favourite': instance.isFavourite,
+      'img_is_full': instance.imgIsFull,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+      'phone_numbers': instance.phoneNumbers
+          .map(const PhoneNumberConverter().toJson)
+          .toList(),
+      'distance': instance.distance,
     };

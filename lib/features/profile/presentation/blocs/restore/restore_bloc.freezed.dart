@@ -26,6 +26,8 @@ mixin _$RestoreEvent {
     required TResult Function(
             bool isJournal, VoidCallback onSuccess, String signature)
         sendRestore,
+    required TResult Function(MyPaymentsParams? params) getMyPayHistory,
+    required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
     required TResult Function() clear,
   }) =>
       throw _privateConstructorUsedError;
@@ -38,6 +40,8 @@ mixin _$RestoreEvent {
         verifyCode,
     TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult? Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult? Function()? clear,
   }) =>
       throw _privateConstructorUsedError;
@@ -50,6 +54,8 @@ mixin _$RestoreEvent {
         verifyCode,
     TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult Function()? clear,
     required TResult orElse(),
   }) =>
@@ -60,6 +66,8 @@ mixin _$RestoreEvent {
     required TResult Function(_ResendCode value) resendCode,
     required TResult Function(_VerifyCode value) verifyCode,
     required TResult Function(_SendRestore value) sendRestore,
+    required TResult Function(_GetMyPayHistory value) getMyPayHistory,
+    required TResult Function(_GetMoreMyPayHistory value) getMoreMyPayHistory,
     required TResult Function(_Clear value) clear,
   }) =>
       throw _privateConstructorUsedError;
@@ -69,6 +77,8 @@ mixin _$RestoreEvent {
     TResult? Function(_ResendCode value)? resendCode,
     TResult? Function(_VerifyCode value)? verifyCode,
     TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult? Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult? Function(_Clear value)? clear,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,6 +88,8 @@ mixin _$RestoreEvent {
     TResult Function(_ResendCode value)? resendCode,
     TResult Function(_VerifyCode value)? verifyCode,
     TResult Function(_SendRestore value)? sendRestore,
+    TResult Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) =>
@@ -183,6 +195,8 @@ class _$_SendCode implements _SendCode {
     required TResult Function(
             bool isJournal, VoidCallback onSuccess, String signature)
         sendRestore,
+    required TResult Function(MyPaymentsParams? params) getMyPayHistory,
+    required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
     required TResult Function() clear,
   }) {
     return sendCode(phone, onSuccess);
@@ -198,6 +212,8 @@ class _$_SendCode implements _SendCode {
         verifyCode,
     TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult? Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult? Function()? clear,
   }) {
     return sendCode?.call(phone, onSuccess);
@@ -213,6 +229,8 @@ class _$_SendCode implements _SendCode {
         verifyCode,
     TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult Function()? clear,
     required TResult orElse(),
   }) {
@@ -229,6 +247,8 @@ class _$_SendCode implements _SendCode {
     required TResult Function(_ResendCode value) resendCode,
     required TResult Function(_VerifyCode value) verifyCode,
     required TResult Function(_SendRestore value) sendRestore,
+    required TResult Function(_GetMyPayHistory value) getMyPayHistory,
+    required TResult Function(_GetMoreMyPayHistory value) getMoreMyPayHistory,
     required TResult Function(_Clear value) clear,
   }) {
     return sendCode(this);
@@ -241,6 +261,8 @@ class _$_SendCode implements _SendCode {
     TResult? Function(_ResendCode value)? resendCode,
     TResult? Function(_VerifyCode value)? verifyCode,
     TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult? Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult? Function(_Clear value)? clear,
   }) {
     return sendCode?.call(this);
@@ -253,6 +275,8 @@ class _$_SendCode implements _SendCode {
     TResult Function(_ResendCode value)? resendCode,
     TResult Function(_VerifyCode value)? verifyCode,
     TResult Function(_SendRestore value)? sendRestore,
+    TResult Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
@@ -348,6 +372,8 @@ class _$_ResendCode implements _ResendCode {
     required TResult Function(
             bool isJournal, VoidCallback onSuccess, String signature)
         sendRestore,
+    required TResult Function(MyPaymentsParams? params) getMyPayHistory,
+    required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
     required TResult Function() clear,
   }) {
     return resendCode(onSuccess);
@@ -363,6 +389,8 @@ class _$_ResendCode implements _ResendCode {
         verifyCode,
     TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult? Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult? Function()? clear,
   }) {
     return resendCode?.call(onSuccess);
@@ -378,6 +406,8 @@ class _$_ResendCode implements _ResendCode {
         verifyCode,
     TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult Function()? clear,
     required TResult orElse(),
   }) {
@@ -394,6 +424,8 @@ class _$_ResendCode implements _ResendCode {
     required TResult Function(_ResendCode value) resendCode,
     required TResult Function(_VerifyCode value) verifyCode,
     required TResult Function(_SendRestore value) sendRestore,
+    required TResult Function(_GetMyPayHistory value) getMyPayHistory,
+    required TResult Function(_GetMoreMyPayHistory value) getMoreMyPayHistory,
     required TResult Function(_Clear value) clear,
   }) {
     return resendCode(this);
@@ -406,6 +438,8 @@ class _$_ResendCode implements _ResendCode {
     TResult? Function(_ResendCode value)? resendCode,
     TResult? Function(_VerifyCode value)? verifyCode,
     TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult? Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult? Function(_Clear value)? clear,
   }) {
     return resendCode?.call(this);
@@ -418,6 +452,8 @@ class _$_ResendCode implements _ResendCode {
     TResult Function(_ResendCode value)? resendCode,
     TResult Function(_VerifyCode value)? verifyCode,
     TResult Function(_SendRestore value)? sendRestore,
+    TResult Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
@@ -530,6 +566,8 @@ class _$_VerifyCode implements _VerifyCode {
     required TResult Function(
             bool isJournal, VoidCallback onSuccess, String signature)
         sendRestore,
+    required TResult Function(MyPaymentsParams? params) getMyPayHistory,
+    required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
     required TResult Function() clear,
   }) {
     return verifyCode(code, onSuccess, onError);
@@ -545,6 +583,8 @@ class _$_VerifyCode implements _VerifyCode {
         verifyCode,
     TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult? Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult? Function()? clear,
   }) {
     return verifyCode?.call(code, onSuccess, onError);
@@ -560,6 +600,8 @@ class _$_VerifyCode implements _VerifyCode {
         verifyCode,
     TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult Function()? clear,
     required TResult orElse(),
   }) {
@@ -576,6 +618,8 @@ class _$_VerifyCode implements _VerifyCode {
     required TResult Function(_ResendCode value) resendCode,
     required TResult Function(_VerifyCode value) verifyCode,
     required TResult Function(_SendRestore value) sendRestore,
+    required TResult Function(_GetMyPayHistory value) getMyPayHistory,
+    required TResult Function(_GetMoreMyPayHistory value) getMoreMyPayHistory,
     required TResult Function(_Clear value) clear,
   }) {
     return verifyCode(this);
@@ -588,6 +632,8 @@ class _$_VerifyCode implements _VerifyCode {
     TResult? Function(_ResendCode value)? resendCode,
     TResult? Function(_VerifyCode value)? verifyCode,
     TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult? Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult? Function(_Clear value)? clear,
   }) {
     return verifyCode?.call(this);
@@ -600,6 +646,8 @@ class _$_VerifyCode implements _VerifyCode {
     TResult Function(_ResendCode value)? resendCode,
     TResult Function(_VerifyCode value)? verifyCode,
     TResult Function(_SendRestore value)? sendRestore,
+    TResult Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
@@ -718,6 +766,8 @@ class _$_SendRestore implements _SendRestore {
     required TResult Function(
             bool isJournal, VoidCallback onSuccess, String signature)
         sendRestore,
+    required TResult Function(MyPaymentsParams? params) getMyPayHistory,
+    required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
     required TResult Function() clear,
   }) {
     return sendRestore(isJournal, onSuccess, signature);
@@ -733,6 +783,8 @@ class _$_SendRestore implements _SendRestore {
         verifyCode,
     TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult? Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult? Function()? clear,
   }) {
     return sendRestore?.call(isJournal, onSuccess, signature);
@@ -748,6 +800,8 @@ class _$_SendRestore implements _SendRestore {
         verifyCode,
     TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult Function()? clear,
     required TResult orElse(),
   }) {
@@ -764,6 +818,8 @@ class _$_SendRestore implements _SendRestore {
     required TResult Function(_ResendCode value) resendCode,
     required TResult Function(_VerifyCode value) verifyCode,
     required TResult Function(_SendRestore value) sendRestore,
+    required TResult Function(_GetMyPayHistory value) getMyPayHistory,
+    required TResult Function(_GetMoreMyPayHistory value) getMoreMyPayHistory,
     required TResult Function(_Clear value) clear,
   }) {
     return sendRestore(this);
@@ -776,6 +832,8 @@ class _$_SendRestore implements _SendRestore {
     TResult? Function(_ResendCode value)? resendCode,
     TResult? Function(_VerifyCode value)? verifyCode,
     TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult? Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult? Function(_Clear value)? clear,
   }) {
     return sendRestore?.call(this);
@@ -788,6 +846,8 @@ class _$_SendRestore implements _SendRestore {
     TResult Function(_ResendCode value)? resendCode,
     TResult Function(_VerifyCode value)? verifyCode,
     TResult Function(_SendRestore value)? sendRestore,
+    TResult Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
@@ -809,6 +869,355 @@ abstract class _SendRestore implements RestoreEvent {
   String get signature;
   @JsonKey(ignore: true)
   _$$_SendRestoreCopyWith<_$_SendRestore> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_GetMyPayHistoryCopyWith<$Res> {
+  factory _$$_GetMyPayHistoryCopyWith(
+          _$_GetMyPayHistory value, $Res Function(_$_GetMyPayHistory) then) =
+      __$$_GetMyPayHistoryCopyWithImpl<$Res>;
+  @useResult
+  $Res call({MyPaymentsParams? params});
+}
+
+/// @nodoc
+class __$$_GetMyPayHistoryCopyWithImpl<$Res>
+    extends _$RestoreEventCopyWithImpl<$Res, _$_GetMyPayHistory>
+    implements _$$_GetMyPayHistoryCopyWith<$Res> {
+  __$$_GetMyPayHistoryCopyWithImpl(
+      _$_GetMyPayHistory _value, $Res Function(_$_GetMyPayHistory) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? params = freezed,
+  }) {
+    return _then(_$_GetMyPayHistory(
+      params: freezed == params
+          ? _value.params
+          : params // ignore: cast_nullable_to_non_nullable
+              as MyPaymentsParams?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GetMyPayHistory implements _GetMyPayHistory {
+  _$_GetMyPayHistory({this.params});
+
+  @override
+  final MyPaymentsParams? params;
+
+  @override
+  String toString() {
+    return 'RestoreEvent.getMyPayHistory(params: $params)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_GetMyPayHistory &&
+            (identical(other.params, params) || other.params == params));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, params);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetMyPayHistoryCopyWith<_$_GetMyPayHistory> get copyWith =>
+      __$$_GetMyPayHistoryCopyWithImpl<_$_GetMyPayHistory>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
+    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(String code, dynamic Function(String) onSuccess,
+            dynamic Function(String) onError)
+        verifyCode,
+    required TResult Function(
+            bool isJournal, VoidCallback onSuccess, String signature)
+        sendRestore,
+    required TResult Function(MyPaymentsParams? params) getMyPayHistory,
+    required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
+    required TResult Function() clear,
+  }) {
+    return getMyPayHistory(params);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(String code, dynamic Function(String) onSuccess,
+            dynamic Function(String) onError)?
+        verifyCode,
+    TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
+        sendRestore,
+    TResult? Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
+    TResult? Function()? clear,
+  }) {
+    return getMyPayHistory?.call(params);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(String code, dynamic Function(String) onSuccess,
+            dynamic Function(String) onError)?
+        verifyCode,
+    TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
+        sendRestore,
+    TResult Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult Function(MyPaymentsParams? params)? getMoreMyPayHistory,
+    TResult Function()? clear,
+    required TResult orElse(),
+  }) {
+    if (getMyPayHistory != null) {
+      return getMyPayHistory(params);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SendCode value) sendCode,
+    required TResult Function(_ResendCode value) resendCode,
+    required TResult Function(_VerifyCode value) verifyCode,
+    required TResult Function(_SendRestore value) sendRestore,
+    required TResult Function(_GetMyPayHistory value) getMyPayHistory,
+    required TResult Function(_GetMoreMyPayHistory value) getMoreMyPayHistory,
+    required TResult Function(_Clear value) clear,
+  }) {
+    return getMyPayHistory(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SendCode value)? sendCode,
+    TResult? Function(_ResendCode value)? resendCode,
+    TResult? Function(_VerifyCode value)? verifyCode,
+    TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult? Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
+    TResult? Function(_Clear value)? clear,
+  }) {
+    return getMyPayHistory?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SendCode value)? sendCode,
+    TResult Function(_ResendCode value)? resendCode,
+    TResult Function(_VerifyCode value)? verifyCode,
+    TResult Function(_SendRestore value)? sendRestore,
+    TResult Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
+    TResult Function(_Clear value)? clear,
+    required TResult orElse(),
+  }) {
+    if (getMyPayHistory != null) {
+      return getMyPayHistory(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetMyPayHistory implements RestoreEvent {
+  factory _GetMyPayHistory({final MyPaymentsParams? params}) =
+      _$_GetMyPayHistory;
+
+  MyPaymentsParams? get params;
+  @JsonKey(ignore: true)
+  _$$_GetMyPayHistoryCopyWith<_$_GetMyPayHistory> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_GetMoreMyPayHistoryCopyWith<$Res> {
+  factory _$$_GetMoreMyPayHistoryCopyWith(_$_GetMoreMyPayHistory value,
+          $Res Function(_$_GetMoreMyPayHistory) then) =
+      __$$_GetMoreMyPayHistoryCopyWithImpl<$Res>;
+  @useResult
+  $Res call({MyPaymentsParams? params});
+}
+
+/// @nodoc
+class __$$_GetMoreMyPayHistoryCopyWithImpl<$Res>
+    extends _$RestoreEventCopyWithImpl<$Res, _$_GetMoreMyPayHistory>
+    implements _$$_GetMoreMyPayHistoryCopyWith<$Res> {
+  __$$_GetMoreMyPayHistoryCopyWithImpl(_$_GetMoreMyPayHistory _value,
+      $Res Function(_$_GetMoreMyPayHistory) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? params = freezed,
+  }) {
+    return _then(_$_GetMoreMyPayHistory(
+      params: freezed == params
+          ? _value.params
+          : params // ignore: cast_nullable_to_non_nullable
+              as MyPaymentsParams?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GetMoreMyPayHistory implements _GetMoreMyPayHistory {
+  _$_GetMoreMyPayHistory({this.params});
+
+  @override
+  final MyPaymentsParams? params;
+
+  @override
+  String toString() {
+    return 'RestoreEvent.getMoreMyPayHistory(params: $params)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_GetMoreMyPayHistory &&
+            (identical(other.params, params) || other.params == params));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, params);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetMoreMyPayHistoryCopyWith<_$_GetMoreMyPayHistory> get copyWith =>
+      __$$_GetMoreMyPayHistoryCopyWithImpl<_$_GetMoreMyPayHistory>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
+    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(String code, dynamic Function(String) onSuccess,
+            dynamic Function(String) onError)
+        verifyCode,
+    required TResult Function(
+            bool isJournal, VoidCallback onSuccess, String signature)
+        sendRestore,
+    required TResult Function(MyPaymentsParams? params) getMyPayHistory,
+    required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
+    required TResult Function() clear,
+  }) {
+    return getMoreMyPayHistory(params);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(String code, dynamic Function(String) onSuccess,
+            dynamic Function(String) onError)?
+        verifyCode,
+    TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
+        sendRestore,
+    TResult? Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
+    TResult? Function()? clear,
+  }) {
+    return getMoreMyPayHistory?.call(params);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
+    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(String code, dynamic Function(String) onSuccess,
+            dynamic Function(String) onError)?
+        verifyCode,
+    TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
+        sendRestore,
+    TResult Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult Function(MyPaymentsParams? params)? getMoreMyPayHistory,
+    TResult Function()? clear,
+    required TResult orElse(),
+  }) {
+    if (getMoreMyPayHistory != null) {
+      return getMoreMyPayHistory(params);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SendCode value) sendCode,
+    required TResult Function(_ResendCode value) resendCode,
+    required TResult Function(_VerifyCode value) verifyCode,
+    required TResult Function(_SendRestore value) sendRestore,
+    required TResult Function(_GetMyPayHistory value) getMyPayHistory,
+    required TResult Function(_GetMoreMyPayHistory value) getMoreMyPayHistory,
+    required TResult Function(_Clear value) clear,
+  }) {
+    return getMoreMyPayHistory(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SendCode value)? sendCode,
+    TResult? Function(_ResendCode value)? resendCode,
+    TResult? Function(_VerifyCode value)? verifyCode,
+    TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult? Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
+    TResult? Function(_Clear value)? clear,
+  }) {
+    return getMoreMyPayHistory?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SendCode value)? sendCode,
+    TResult Function(_ResendCode value)? resendCode,
+    TResult Function(_VerifyCode value)? verifyCode,
+    TResult Function(_SendRestore value)? sendRestore,
+    TResult Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
+    TResult Function(_Clear value)? clear,
+    required TResult orElse(),
+  }) {
+    if (getMoreMyPayHistory != null) {
+      return getMoreMyPayHistory(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetMoreMyPayHistory implements RestoreEvent {
+  factory _GetMoreMyPayHistory({final MyPaymentsParams? params}) =
+      _$_GetMoreMyPayHistory;
+
+  MyPaymentsParams? get params;
+  @JsonKey(ignore: true)
+  _$$_GetMoreMyPayHistoryCopyWith<_$_GetMoreMyPayHistory> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -856,6 +1265,8 @@ class _$_Clear implements _Clear {
     required TResult Function(
             bool isJournal, VoidCallback onSuccess, String signature)
         sendRestore,
+    required TResult Function(MyPaymentsParams? params) getMyPayHistory,
+    required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
     required TResult Function() clear,
   }) {
     return clear();
@@ -871,6 +1282,8 @@ class _$_Clear implements _Clear {
         verifyCode,
     TResult? Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult? Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult? Function()? clear,
   }) {
     return clear?.call();
@@ -886,6 +1299,8 @@ class _$_Clear implements _Clear {
         verifyCode,
     TResult Function(bool isJournal, VoidCallback onSuccess, String signature)?
         sendRestore,
+    TResult Function(MyPaymentsParams? params)? getMyPayHistory,
+    TResult Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult Function()? clear,
     required TResult orElse(),
   }) {
@@ -902,6 +1317,8 @@ class _$_Clear implements _Clear {
     required TResult Function(_ResendCode value) resendCode,
     required TResult Function(_VerifyCode value) verifyCode,
     required TResult Function(_SendRestore value) sendRestore,
+    required TResult Function(_GetMyPayHistory value) getMyPayHistory,
+    required TResult Function(_GetMoreMyPayHistory value) getMoreMyPayHistory,
     required TResult Function(_Clear value) clear,
   }) {
     return clear(this);
@@ -914,6 +1331,8 @@ class _$_Clear implements _Clear {
     TResult? Function(_ResendCode value)? resendCode,
     TResult? Function(_VerifyCode value)? verifyCode,
     TResult? Function(_SendRestore value)? sendRestore,
+    TResult? Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult? Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult? Function(_Clear value)? clear,
   }) {
     return clear?.call(this);
@@ -926,6 +1345,8 @@ class _$_Clear implements _Clear {
     TResult Function(_ResendCode value)? resendCode,
     TResult Function(_VerifyCode value)? verifyCode,
     TResult Function(_SendRestore value)? sendRestore,
+    TResult Function(_GetMyPayHistory value)? getMyPayHistory,
+    TResult Function(_GetMoreMyPayHistory value)? getMoreMyPayHistory,
     TResult Function(_Clear value)? clear,
     required TResult orElse(),
   }) {
@@ -948,6 +1369,11 @@ mixin _$RestoreState {
   String get phone => throw _privateConstructorUsedError;
   String get verifyError => throw _privateConstructorUsedError;
   bool? get showRestore => throw _privateConstructorUsedError;
+  FormzStatus get myPaymentsStatus => throw _privateConstructorUsedError;
+  List<PaymentHistoryModel> get myPayments =>
+      throw _privateConstructorUsedError;
+  bool get myPaymentsFetchMore => throw _privateConstructorUsedError;
+  String? get myPaymentsNext => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RestoreStateCopyWith<RestoreState> get copyWith =>
@@ -966,7 +1392,11 @@ abstract class $RestoreStateCopyWith<$Res> {
       String signature,
       String phone,
       String verifyError,
-      bool? showRestore});
+      bool? showRestore,
+      FormzStatus myPaymentsStatus,
+      List<PaymentHistoryModel> myPayments,
+      bool myPaymentsFetchMore,
+      String? myPaymentsNext});
 }
 
 /// @nodoc
@@ -988,6 +1418,10 @@ class _$RestoreStateCopyWithImpl<$Res, $Val extends RestoreState>
     Object? phone = null,
     Object? verifyError = null,
     Object? showRestore = freezed,
+    Object? myPaymentsStatus = null,
+    Object? myPayments = null,
+    Object? myPaymentsFetchMore = null,
+    Object? myPaymentsNext = freezed,
   }) {
     return _then(_value.copyWith(
       sendCodeStatus: null == sendCodeStatus
@@ -1014,6 +1448,22 @@ class _$RestoreStateCopyWithImpl<$Res, $Val extends RestoreState>
           ? _value.showRestore
           : showRestore // ignore: cast_nullable_to_non_nullable
               as bool?,
+      myPaymentsStatus: null == myPaymentsStatus
+          ? _value.myPaymentsStatus
+          : myPaymentsStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      myPayments: null == myPayments
+          ? _value.myPayments
+          : myPayments // ignore: cast_nullable_to_non_nullable
+              as List<PaymentHistoryModel>,
+      myPaymentsFetchMore: null == myPaymentsFetchMore
+          ? _value.myPaymentsFetchMore
+          : myPaymentsFetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      myPaymentsNext: freezed == myPaymentsNext
+          ? _value.myPaymentsNext
+          : myPaymentsNext // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -1032,7 +1482,11 @@ abstract class _$$_RestoreStateCopyWith<$Res>
       String signature,
       String phone,
       String verifyError,
-      bool? showRestore});
+      bool? showRestore,
+      FormzStatus myPaymentsStatus,
+      List<PaymentHistoryModel> myPayments,
+      bool myPaymentsFetchMore,
+      String? myPaymentsNext});
 }
 
 /// @nodoc
@@ -1052,6 +1506,10 @@ class __$$_RestoreStateCopyWithImpl<$Res>
     Object? phone = null,
     Object? verifyError = null,
     Object? showRestore = freezed,
+    Object? myPaymentsStatus = null,
+    Object? myPayments = null,
+    Object? myPaymentsFetchMore = null,
+    Object? myPaymentsNext = freezed,
   }) {
     return _then(_$_RestoreState(
       sendCodeStatus: null == sendCodeStatus
@@ -1078,6 +1536,22 @@ class __$$_RestoreStateCopyWithImpl<$Res>
           ? _value.showRestore
           : showRestore // ignore: cast_nullable_to_non_nullable
               as bool?,
+      myPaymentsStatus: null == myPaymentsStatus
+          ? _value.myPaymentsStatus
+          : myPaymentsStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      myPayments: null == myPayments
+          ? _value._myPayments
+          : myPayments // ignore: cast_nullable_to_non_nullable
+              as List<PaymentHistoryModel>,
+      myPaymentsFetchMore: null == myPaymentsFetchMore
+          ? _value.myPaymentsFetchMore
+          : myPaymentsFetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      myPaymentsNext: freezed == myPaymentsNext
+          ? _value.myPaymentsNext
+          : myPaymentsNext // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1091,7 +1565,12 @@ class _$_RestoreState implements _RestoreState {
       this.signature = '',
       this.phone = '',
       this.verifyError = '',
-      this.showRestore});
+      this.showRestore,
+      this.myPaymentsStatus = FormzStatus.pure,
+      final List<PaymentHistoryModel> myPayments = const [],
+      this.myPaymentsFetchMore = false,
+      this.myPaymentsNext})
+      : _myPayments = myPayments;
 
   @override
   @JsonKey()
@@ -1110,10 +1589,26 @@ class _$_RestoreState implements _RestoreState {
   final String verifyError;
   @override
   final bool? showRestore;
+  @override
+  @JsonKey()
+  final FormzStatus myPaymentsStatus;
+  final List<PaymentHistoryModel> _myPayments;
+  @override
+  @JsonKey()
+  List<PaymentHistoryModel> get myPayments {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_myPayments);
+  }
+
+  @override
+  @JsonKey()
+  final bool myPaymentsFetchMore;
+  @override
+  final String? myPaymentsNext;
 
   @override
   String toString() {
-    return 'RestoreState(sendCodeStatus: $sendCodeStatus, verifyStatus: $verifyStatus, signature: $signature, phone: $phone, verifyError: $verifyError, showRestore: $showRestore)';
+    return 'RestoreState(sendCodeStatus: $sendCodeStatus, verifyStatus: $verifyStatus, signature: $signature, phone: $phone, verifyError: $verifyError, showRestore: $showRestore, myPaymentsStatus: $myPaymentsStatus, myPayments: $myPayments, myPaymentsFetchMore: $myPaymentsFetchMore, myPaymentsNext: $myPaymentsNext)';
   }
 
   @override
@@ -1131,12 +1626,30 @@ class _$_RestoreState implements _RestoreState {
             (identical(other.verifyError, verifyError) ||
                 other.verifyError == verifyError) &&
             (identical(other.showRestore, showRestore) ||
-                other.showRestore == showRestore));
+                other.showRestore == showRestore) &&
+            (identical(other.myPaymentsStatus, myPaymentsStatus) ||
+                other.myPaymentsStatus == myPaymentsStatus) &&
+            const DeepCollectionEquality()
+                .equals(other._myPayments, _myPayments) &&
+            (identical(other.myPaymentsFetchMore, myPaymentsFetchMore) ||
+                other.myPaymentsFetchMore == myPaymentsFetchMore) &&
+            (identical(other.myPaymentsNext, myPaymentsNext) ||
+                other.myPaymentsNext == myPaymentsNext));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, sendCodeStatus, verifyStatus,
-      signature, phone, verifyError, showRestore);
+  int get hashCode => Object.hash(
+      runtimeType,
+      sendCodeStatus,
+      verifyStatus,
+      signature,
+      phone,
+      verifyError,
+      showRestore,
+      myPaymentsStatus,
+      const DeepCollectionEquality().hash(_myPayments),
+      myPaymentsFetchMore,
+      myPaymentsNext);
 
   @JsonKey(ignore: true)
   @override
@@ -1152,7 +1665,11 @@ abstract class _RestoreState implements RestoreState {
       final String signature,
       final String phone,
       final String verifyError,
-      final bool? showRestore}) = _$_RestoreState;
+      final bool? showRestore,
+      final FormzStatus myPaymentsStatus,
+      final List<PaymentHistoryModel> myPayments,
+      final bool myPaymentsFetchMore,
+      final String? myPaymentsNext}) = _$_RestoreState;
 
   @override
   FormzStatus get sendCodeStatus;
@@ -1166,6 +1683,14 @@ abstract class _RestoreState implements RestoreState {
   String get verifyError;
   @override
   bool? get showRestore;
+  @override
+  FormzStatus get myPaymentsStatus;
+  @override
+  List<PaymentHistoryModel> get myPayments;
+  @override
+  bool get myPaymentsFetchMore;
+  @override
+  String? get myPaymentsNext;
   @override
   @JsonKey(ignore: true)
   _$$_RestoreStateCopyWith<_$_RestoreState> get copyWith =>
