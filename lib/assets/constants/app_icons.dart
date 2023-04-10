@@ -48,6 +48,9 @@ class AppIcons {
   static const moreVertical = 'assets/icons/home/more_vertical.svg';
   static const notificationWithRedDot =
       'assets/icons/home/notification_with_red_dot.svg';
+  static const bell = "assets/icons/home/bell.svg";
+  static const blackNotificationWithRedDot =
+      'assets/icons/home/black_notification_with_red_dot.svg';
 
   //auth
   static const anatomica = 'assets/icons/auth/anatomica.svg';

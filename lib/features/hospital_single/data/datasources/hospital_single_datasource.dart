@@ -38,6 +38,7 @@ abstract class HospitalSingleDatasource {
       {required int organizationId, required PostCommentModel comment});
 
   Future<Either> deleteComment({required int id});
+
   Future<HospitalSingleServiceModel> getSingleService({required int id});
 }
 
@@ -122,9 +123,14 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {
                       'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
+                          'Token ${StorageRepository.getString('token')}',
+                      'Accept-Language': "uz",
                     }
-                  : {}));
+                  : {
+                      'Accept-Language': "uz",
+                    }));
+      print(
+          'response => ${response.realUri} ${response.statusCode} ${response.data}');
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {

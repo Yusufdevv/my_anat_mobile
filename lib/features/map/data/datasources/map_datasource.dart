@@ -9,7 +9,9 @@ import 'package:dio/dio.dart';
 
 abstract class MapDatasource {
   Future<GenericPagination<TypeModel>> getTypes({String? next});
+
   Future<List<ServiceSpecSuggestModel>> getServices({String? searchedText});
+
   Future<GenericPagination<OrgMapV2Model>> getOrgV2(
       {required MapV2Params params});
 }
@@ -101,7 +103,7 @@ class MapDatasourceImpl extends MapDatasource {
     if (params.longitude != null) {
       queryParams.putIfAbsent('lon', () => params.longitude);
     }
-    if (params.title != null) {
+    if (params.title != null && params.title!.isNotEmpty) {
       queryParams.putIfAbsent('title', () => params.title);
     }
     print('queryParams => $queryParams');
@@ -110,14 +112,21 @@ class MapDatasourceImpl extends MapDatasource {
       final response = await _dio.get(
         '/mobile/organization/map/v2/',
         options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {
-                    'Authorization':
-                        'Token ${StorageRepository.getString('token')}'
-                  }
-                : {}),
+          headers: StorageRepository.getString('token').isNotEmpty
+              ? {
+                  'Authorization':
+                      'Token ${StorageRepository.getString('token')}',
+                  'Accept-Language': "ru",
+                }
+              : {
+                  'Accept-Language': "ru",
+                },
+        ),
         queryParameters: queryParams,
       );
+      print(
+          '/mobile/organization/map/ => ${response.realUri} params => ${response.headers}');
+      print('response => ${response.data}');
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data,
             (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));

@@ -4,11 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'purchased_journal_event.dart';
-
-part 'purchased_journal_state.dart';
-
 part 'purchased_journal_bloc.freezed.dart';
+part 'purchased_journal_event.dart';
+part 'purchased_journal_state.dart';
 
 class PurchasedJournalBloc
     extends Bloc<PurchasedJournalEvent, PurchasedJournalState> {

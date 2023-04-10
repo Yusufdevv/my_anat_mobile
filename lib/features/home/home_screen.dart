@@ -1,17 +1,17 @@
-import 'dart:ui';
-
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/features/common/presentation/widgets/shimmer_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/home/presentation/blocs/category_bloc/category_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/most_populars_bloc/most_populars_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:anatomica/features/home/presentation/parts/news_part.dart';
+import 'package:anatomica/features/home/presentation/widgets/banner_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/category_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/category_shimmer.dart';
 import 'package:anatomica/features/home/presentation/widgets/news_item.dart';
@@ -20,13 +20,14 @@ import 'package:anatomica/features/home/presentation/widgets/titles_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/top_articles_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/top_doctor_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/top_hospital_item.dart';
+import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
+import 'package:anatomica/features/journal/presentation/widgets/activate_premium.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,7 +42,6 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   late HomeArticlesBloc _homeArticlesBloc;
   late MostPopularsBloc _mostPopularsBloc;
   late NewsBloc _newsBloc;
-  late PageController _pageController;
   late ScrollController _scrollController;
   bool isShrink = false;
 
@@ -49,13 +49,14 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     searchController = TextEditingController();
     _categoryBloc = CategoryBloc()..add(const CategoryEvent.getCategories());
+    context.read<JournalBloc>().add(GetJournals());
     _homeArticlesBloc = HomeArticlesBloc()
-      ..add(const HomeArticlesEvent.getHomeArticles());
+      ..add(const HomeArticlesEvent.getHomeArticles())
+      ..add(const HomeArticlesEvent.getBanners());
     _mostPopularsBloc = MostPopularsBloc()
       ..add(const MostPopularsEvent.getPopularOrgs())
       ..add(const MostPopularsEvent.getPopularDoctors());
     _newsBloc = NewsBloc()..add(const NewsEvent.getNews());
-    _pageController = PageController();
     _scrollController = ScrollController()
       ..addListener(() {
         if (_scrollController.offset > 200 - kToolbarHeight && !isShrink) {
@@ -93,7 +94,10 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               SliverAppBar(
                 pinned: true,
                 backgroundColor: errorImageBackground,
-                shape: const RoundedRectangleBorder(),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(16),
+                )),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -104,10 +108,16 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                       color: isShrink ? black : white,
                     ),
                     WScaleAnimation(
-                      child: SvgPicture.asset(
-                        AppIcons.notificationWithRedDot,
-                        color: isShrink ? black : white,
-                      ),
+                      child: true
+                          ? SvgPicture.asset(
+                              AppIcons.bell,
+                              color: isShrink ? black : white,
+                            )
+                          : SvgPicture.asset(
+                              isShrink
+                                  ? AppIcons.blackNotificationWithRedDot
+                                  : AppIcons.notificationWithRedDot,
+                            ),
                       onTap: () {},
                     ),
                   ],
@@ -115,106 +125,22 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 expandedHeight: 324,
                 elevation: 0,
                 scrolledUnderElevation: 0,
-                flexibleSpace: AnimatedCrossFade(
-                  duration: const Duration(milliseconds: 300),
-                  crossFadeState: isShrink
-                      ? CrossFadeState.showSecond
-                      : CrossFadeState.showFirst,
-                  secondCurve: Curves.fastLinearToSlowEaseIn,
-                  firstCurve: Curves.fastLinearToSlowEaseIn,
-                  secondChild: Container(
-                    color: white,
-                    height: MediaQuery.of(context).size.height,
-                  ),
-                  firstChild: Stack(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        child: PageView.builder(
-                          controller: _pageController,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              foregroundDecoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    textColor.withOpacity(0.9),
-                                    textColor.withOpacity(0.2),
-                                  ],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                ),
-                              ),
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.vertical(
-                                  bottom: Radius.circular(16),
-                                ),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      'https://openseauserdata.com/files/b261626a159edf64a8a92aa7306053b8.png'),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 16,
-                        right: 16,
-                        left: 16,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                            child: Container(
-                              // height: 106,
-                              decoration: BoxDecoration(
-                                color: textColor.withOpacity(.5),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              padding:
-                                  const EdgeInsets.fromLTRB(16, 16, 16, 16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Журнал',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(color: primary),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    'Журнал ANATOMICÁ выпустил весенний номер, AKFA Medline',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .copyWith(color: white),
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 12),
-                                  SmoothPageIndicator(
-                                    controller:
-                                        _pageController, // PageController
-                                    count: 5,
-                                    effect: const WormEffect(
-                                      activeDotColor: white,
-                                      dotHeight: 10,
-                                      dotWidth: 10,
-                                    ), // your preferred effect
-                                    onDotClicked: (index) {},
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                flexibleSpace: BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
+                  builder: (context, state) {
+                    return state.bannersStatus != FormzStatus.submissionSuccess
+                        ? const ShimmerContainer(
+                            width: double.maxFinite, height: 324)
+                        : BannerItem(
+                            isShrink: isShrink,
+                            images: state.banners
+                                .map((e) => e.image.middle)
+                                .toList(),
+                            subtitles:
+                                state.banners.map((e) => e.subtitle).toList(),
+                            titles: state.banners.map((e) => e.title).toList(),
+                            types: state.banners.map((e) => e.type).toList(),
+                          );
+                  },
                 ),
               ),
               SliverToBoxAdapter(
@@ -281,6 +207,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               /// NEWS
               SliverToBoxAdapter(
                 child: TitlesItem(
+                  // TODO locale
                   title: 'Новости',
                   showAllFunction: () {
                     Navigator.of(context, rootNavigator: true)
@@ -328,6 +255,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               /// ARTICLES
               SliverToBoxAdapter(
                 child: TitlesItem(
+                  // TODO locale
                   title: 'Статьи',
                   showAllFunction: () {
                     Navigator.of(context).push(fade(page: const NewsPart()));
@@ -338,35 +266,46 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: 300,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.fromLTRB(16, 8, 0, 16),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return const TopArticlesItem(
-                        imageUrl: 'https://picsum.photos/200/300',
-                        id: 5,
-                        title: 'rejng;vsdnv;rsn;bnsfv',
-                        createdAt: '24-03-2022',
-                        category: 'Categorybfkdnsb',
+                  child: BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
+                    builder: (context, state) {
+                      return Paginator(
+                        errorWidget: Container(),
+                        fetchMoreFunction: () {},
+                        hasMoreToFetch: false,
+                        paginatorStatus:
+                            MyFunctions.formzStatusToPaginatorStatus(
+                                state.homeArticlesStatus),
+                        padding: const EdgeInsets.fromLTRB(16, 8, 0, 16),
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return TopArticlesItem(
+                            imageUrl: state.homeArticles[index].image.middle,
+                            id: state.homeArticles[index].id,
+                            title: state.homeArticles[index].title,
+                            createdAt: MyFunctions.getPublishedDate(
+                                state.homeArticles[index].publishDate),
+                            category: state.homeArticles[index].category.title,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(width: 16);
+                        },
+                        itemCount: state.homeArticles.length,
                       );
                     },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(width: 16);
-                    },
-                    itemCount: 10,
                   ),
                 ),
               ),
 
               /// TOP ORGANIZATIONS
               const SliverToBoxAdapter(
+                // TODO locale
                 child: TitlesItem(title: 'Лучшие организации'),
               ),
               BlocBuilder<MostPopularsBloc, MostPopularsState>(
                 builder: (context, state) {
                   return SliverToBoxAdapter(
-                    child: Container(
+                    child: SizedBox(
                       height: 254,
                       child: Paginator(
                         scrollDirection: Axis.horizontal,
@@ -375,22 +314,20 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                 state.popularOrgsStatus),
                         itemBuilder: (context, index) {
                           return TopHospitalItem(
-                            title: 'rke;lgka',
-                            rating: 4.3,
-                            address: 'vkflsdnsvlkj rgv;ekjn lknfdsbf gvser 46',
-                            images: List.generate(
-                              5,
-                              (index) =>
-                                  'https://openseauserdata.com/files/b261626a159edf64a8a92aa7306053b8.png',
-                            ),
-                            id: 5,
+                            title: state.popularOrgs[index].title,
+                            rating: state.popularOrgs[index].rating,
+                            address: state.popularOrgs[index].address,
+                            images: state.popularOrgs[index].images
+                                .map((e) => e.middle)
+                                .toList(),
+                            id: state.popularOrgs[index].id,
                           );
                         },
-                        itemCount: 10,
+                        itemCount: state.popularOrgs.length,
                         padding:
                             const EdgeInsets.only(left: 16, bottom: 16, top: 8),
                         fetchMoreFunction: () {},
-                        hasMoreToFetch: state.popularDoctorsFetchMore,
+                        hasMoreToFetch: false,
                         errorWidget: const SizedBox(),
                       ),
                     ),
@@ -400,90 +337,58 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
 
               /// TOP DOCTORS
               const SliverToBoxAdapter(
+                // TODO locale
                 child: TitlesItem(title: 'Лучшие врачи'),
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  // width: MediaQuery.of(context).size.width,
-                  height: 140,
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return const TopDoctorItem(
-                        id: 5,
-                        rating: 2.5,
-                        distance: 30,
-                        jobs: 'Jobs Jobs',
-                        name:
-                            'Mrokakrvaavr jnreskvblrvsdglrjktbfsdxjkbajelrkjvbS',
-                        image: 'https://picsum.photos/200/300',
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(width: 16);
-                    },
-                    itemCount: 10,
-                    padding:
-                        const EdgeInsets.only(left: 16, top: 8, bottom: 16),
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                  ),
-                ),
+              BlocBuilder<MostPopularsBloc, MostPopularsState>(
+                builder: (context, state) {
+                  return SliverToBoxAdapter(
+                    child: SizedBox(
+                      // width: MediaQuery.of(context).size.width,
+                      height: 140,
+                      child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return TopDoctorItem(
+                            id: state.popularDoctors[index].id,
+                            rating: state.popularDoctors[index].rating,
+                            distance: state.popularDoctors[index].distance,
+                            jobs: state.popularDoctors[index].specializations
+                                .map((e) => e.title)
+                                .toList()
+                                .join(' '),
+                            name: state.popularDoctors[index].fullName,
+                            image: state.popularDoctors[index].image.middle,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(width: 16);
+                        },
+                        itemCount: state.popularDoctors.length,
+                        padding:
+                            const EdgeInsets.only(left: 16, top: 8, bottom: 16),
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                      ),
+                    ),
+                  );
+                },
               ),
-              SliverToBoxAdapter(
-                child: Container(
-                  // height: 225,
-                  margin: const EdgeInsets.only(bottom: 75),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(AppIcons.buyPremiumBackground),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 48),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white60,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: white1),
-                    ),
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Активируйте подписку',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayLarge!
-                              .copyWith(fontSize: 20),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Получите доступ ко всем  платным материалам и функциям приложеним.',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            WButton(
-                              onTap: () {},
-                              text: 'Подробнее',
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(color: white),
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+              if (!context
+                  .watch<AuthenticationBloc>()
+                  .state
+                  .user
+                  .isSubscribed) ...{
+                BlocBuilder<JournalBloc, JournalState>(
+                  builder: (context, state) {
+                    return ActivatePremium(
+                        images: state.journals.map((e) => e.image).toList());
+                  },
                 ),
-              ),
+              },
+              SliverToBoxAdapter(
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height * .125))
             ],
           ),
         ),

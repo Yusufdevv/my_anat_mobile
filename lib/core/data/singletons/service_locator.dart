@@ -9,7 +9,9 @@ import 'package:anatomica/features/common/data/repository/like_unlike_repository
 import 'package:anatomica/features/doctor_single/data/datasources/doctor_single_datasource.dart';
 import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
 import 'package:anatomica/features/home/data/datasources/home_datasource.dart';
+import 'package:anatomica/features/home/data/datasources/notification_datasource.dart';
 import 'package:anatomica/features/home/data/repository_impls/home_repo_impl.dart';
+import 'package:anatomica/features/home/data/repository_impls/notification_repo_impl.dart';
 import 'package:anatomica/features/hospital_single/data/datasources/hospital_single_datasource.dart';
 import 'package:anatomica/features/hospital_single/data/repository/hospital_repository.dart';
 import 'package:anatomica/features/journal/data/datasources/journal_datasource.dart';
@@ -90,4 +92,8 @@ Future<void> setupLocator() async {
       () => HomeDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(
       () => HomeRepoImpl(datasource: serviceLocator<HomeDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(
+      () => NotificationDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(() => NotificationRepoImpl(
+      datasource: serviceLocator<NotificationDatasourceImpl>()));
 }

@@ -28,6 +28,9 @@ class OrgMapV2Entity extends Equatable {
     this.phoneNumber = '',
     this.distance = 0,
     this.workAllDay = false,
+    this.paid = false,
+    this.subscribeFrom = '',
+    this.subscribeUpto = '',
   });
 
   final int id;
@@ -55,6 +58,9 @@ class OrgMapV2Entity extends Equatable {
   final String phoneNumber;
   final double distance;
   final bool workAllDay;
+  final String subscribeFrom;
+  final String subscribeUpto;
+  final bool paid;
 
   @override
   List<Object?> get props => [
@@ -77,5 +83,8 @@ class OrgMapV2Entity extends Equatable {
         phoneNumber,
         distance,
         workAllDay,
+        paid,
+        subscribeFrom,
+        subscribeUpto,
       ];
 }

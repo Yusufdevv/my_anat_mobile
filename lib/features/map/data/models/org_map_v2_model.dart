@@ -31,6 +31,9 @@ class OrgMapV2Model extends OrgMapV2Entity {
     required super.logo,
     required super.images,
     required super.slug,
+    required super.paid,
+    required super.subscribeFrom,
+    required super.subscribeUpto,
   });
 
   factory OrgMapV2Model.fromJson(Map<String, dynamic> json) =>
