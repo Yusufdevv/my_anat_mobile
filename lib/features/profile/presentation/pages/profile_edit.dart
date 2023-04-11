@@ -17,12 +17,9 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/profile/data/repositories/profile_impl.dart';
 import 'package:anatomica/features/profile/domain/usecases/edit_profile.dart';
-import 'package:anatomica/features/profile/domain/usecases/restore.dart';
 import 'package:anatomica/features/profile/domain/usecases/send_code_to_email_usecase.dart';
 import 'package:anatomica/features/profile/domain/usecases/send_code_to_phone_usecase.dart';
-import 'package:anatomica/features/profile/domain/usecases/send_verify_code.dart';
 import 'package:anatomica/features/profile/domain/usecases/upload_img.dart';
-import 'package:anatomica/features/profile/domain/usecases/verify_restore.dart';
 import 'package:anatomica/features/profile/presentation/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:anatomica/features/profile/presentation/blocs/profile_bloc/profile_bloc.dart';
 import 'package:anatomica/features/profile/presentation/blocs/restore/restore_bloc.dart';
@@ -93,10 +90,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     phoneController = TextEditingController(
         text: MyFunctions.formatPhoneForInput(widget.userEntity.phoneNumber));
     emailController = TextEditingController(text: widget.userEntity.email);
-    restoreBloc = RestoreBloc(
-        sendRestore: SendRestoreCode(),
-        verifyRestore: VerifyRestoreCode(),
-        restore: RestoreUseCase());
+    restoreBloc = RestoreBloc();
     editBloc = EditProfileBloc(
         EditProfileUseCase(repository: serviceLocator<ProfileRepositoryImpl>()),
         UploadImageUseCase(
