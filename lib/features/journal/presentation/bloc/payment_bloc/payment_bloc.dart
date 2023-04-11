@@ -46,6 +46,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
         event.onSuccess(result.right.transactionCheckoutUrl);
       } else {
+        print('object ${result.left}');
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
           event.onError(LocaleKeys.network_error);

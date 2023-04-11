@@ -95,7 +95,6 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
 
   @override
   Widget build(BuildContext context) {
-    print('object ${widget.id}');
     return BlocProvider(
       create: (context) => PaymentBloc(),
       child: BlocBuilder<PaymentBloc, PaymentState>(
