@@ -150,8 +150,7 @@ abstract class MyFunctions {
     return myPoint;
   }
 
-  static Future<void> addHospitals({
-    required ValueChanged<List<MapObject<dynamic>>> onPointsCreated,
+  static Future<List<MapObject<dynamic>>> addHospitals({
     required OnMapControllerChange onMapControllerChange,
     required List<OrgMapV2Model> points,
     required BuildContext context,
@@ -247,9 +246,7 @@ abstract class MyFunctions {
         );
         context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: true));
       },
-      onTap: (collection, point) {
-        print(':::::::::: ON TAP:  ${collection.mapId}  ::::::::::');
-      },
+      onTap: (collection, point) {},
       onClusterAdded: (collection, cluster) async => cluster.copyWith(
         appearance: cluster.appearance.copyWith(
           opacity: 1,
@@ -272,11 +269,17 @@ abstract class MyFunctions {
       ),
     );
 
-    onPointsCreated([clusterItem, myPoint]);
+    return [clusterItem, myPoint];
   }
 
-  static Future<void> addDoctors(List<DoctorMapEntity> points, BuildContext context,
-      List<MapObject<dynamic>> mapObjects, YandexMapController controller, Point point, double accuracy) async {
+  static Future<List<MapObject<dynamic>>> addDoctors({
+    required double deviceWidth,
+    required double accuracy,
+    required OnMapControllerChange onMapControllerChange,
+    required List<DoctorMapEntity> points,
+    required BuildContext context,
+    required Point point,
+  }) async {
     final iconData = await getBytesFromCanvas(
         placeCount: 0,
         image: AppImages.doctorMark,
@@ -292,8 +295,8 @@ abstract class MyFunctions {
               mapId: MapObjectId('${e.id}'),
               point: Point(latitude: e.latitude, longitude: e.longitude),
               onTap: (object, point) async {
-                controller.moveCamera(CameraUpdate.newCameraPosition(
-                    CameraPosition(target: Point(latitude: e.latitude, longitude: e.longitude), zoom: 15)));
+                onMapControllerChange(e.latitude, e.longitude);
+
                 final result = await showModalBottomSheet(
                     context: context,
                     useRootNavigator: true,
@@ -302,19 +305,10 @@ abstract class MyFunctions {
                     builder: (context) {
                       context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
                       return MapSheetDoctor(
+                          deviceWidth: deviceWidth,
                           initialPoint: e,
                           onPageChanged: (value) {
-                            controller.moveCamera(
-                                CameraUpdate.newCameraPosition(
-                                  CameraPosition(
-                                    target: Point(
-                                      latitude: points[value].latitude,
-                                      longitude: points[value].longitude,
-                                    ),
-                                    zoom: 15,
-                                  ),
-                                ),
-                                animation: const MapAnimation(duration: 1, type: MapAnimationType.linear));
+                            onMapControllerChange(points[value].latitude, points[value].longitude);
                           },
                           doctors: points);
                     });
@@ -338,10 +332,8 @@ abstract class MyFunctions {
             clusterDoctors.add(points[i]);
           }
         }
+        onMapControllerChange(clusterDoctors.first.latitude, clusterDoctors.first.longitude);
 
-        controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
-            target: Point(latitude: clusterDoctors.first.latitude, longitude: clusterDoctors.first.longitude),
-            zoom: 15)));
         final result = await showModalBottomSheet(
             context: context,
             useRootNavigator: true,
@@ -350,18 +342,9 @@ abstract class MyFunctions {
             builder: (context) {
               context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
               return MapSheetDoctor(
+                deviceWidth: deviceWidth,
                 onPageChanged: (value) {
-                  controller.moveCamera(
-                      CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                          target: Point(
-                            latitude: clusterDoctors[value].latitude,
-                            longitude: clusterDoctors[value].longitude,
-                          ),
-                          zoom: 15,
-                        ),
-                      ),
-                      animation: const MapAnimation(duration: 1, type: MapAnimationType.linear));
+                  onMapControllerChange(clusterDoctors[value].latitude, clusterDoctors[value].longitude);
                 },
                 initialPoint: clusterDoctors.first,
                 doctors: clusterDoctors,
@@ -388,8 +371,7 @@ abstract class MyFunctions {
         ),
       ),
     );
-    mapObjects.clear();
-    mapObjects.addAll([clusterItem, myPoint]);
+    return [clusterItem, myPoint];
   }
 
   static Future<Position> determinePosition() async {

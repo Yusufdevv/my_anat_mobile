@@ -6,6 +6,7 @@ class MapOrganizationEvent with _$MapOrganizationEvent {
     required int tab,
     required BuildContext context,
     required double acuracy,
+    required bool haveToLoading,
   }) = _ChangeTab;
 
   factory MapOrganizationEvent.getHospitals({
@@ -14,7 +15,8 @@ class MapOrganizationEvent with _$MapOrganizationEvent {
     double? longitude,
     double? radius,
   }) = _GetHospitals;
-  factory MapOrganizationEvent.getDoctors({double? latitude, double? longitude, double? radius}) = _GetDoctors;
+  factory MapOrganizationEvent.getDoctors(
+      {double? latitude, double? longitude, double? radius, required BuildContext context}) = _GetDoctors;
   factory MapOrganizationEvent.getTypes({required String searchText}) = _GetTypes;
   factory MapOrganizationEvent.getMoreTypes({required String searchText}) = _GetMoreTypes;
   factory MapOrganizationEvent.changeSearchText(String text) = _ChangeSearchText;
