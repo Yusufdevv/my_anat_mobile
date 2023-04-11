@@ -17,5 +17,6 @@ class OrderCreateJournalUseCase implements UseCase<PaymentResponseEntity, OrderC
         email: params.email,
         paymentProvider: params.paymentProvider,
         isRegistered: params.isRegistered,
+        card: params.card,
       );
 }
