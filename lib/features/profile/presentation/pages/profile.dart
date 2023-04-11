@@ -84,14 +84,6 @@ class ProfileScreen extends StatelessWidget {
                           );
                         }),
                     const SizedBox(height: 12),
-                    // ProfileItem(
-                    //     title: LocaleKeys.purchased,
-                    //     icon: AppIcons.purchased,
-                    //     onTap: () {
-                    //       Navigator.of(context, rootNavigator: true)
-                    //           .push(fade(page: const PurchasedScreen()));
-                    //     }),
-                    // const SizedBox(height: 12),
                     ProfileItem(
                         title: LocaleKeys.help,
                         icon: AppIcons.help,

@@ -8,36 +8,19 @@ part of 'payment_history_model.dart';
 
 PaymentHistoryModel _$PaymentHistoryModelFromJson(Map<String, dynamic> json) =>
     PaymentHistoryModel(
-      amount: json['amount'] as int? ?? 0,
-      description: json['description'] as String? ?? '',
       id: json['id'] as int? ?? -1,
+      amount: json['amount'] as int? ?? 0,
       createdAt: json['created_at'] as String? ?? '',
-      monthCount: json['month_count'] as int? ?? 0,
+      product: json['product'] as String? ?? '',
       payedAt: json['payed_at'] as String? ?? '',
-      products: (json['products'] as List<dynamic>?)
-              ?.map((e) =>
-                  const ProductConverter().fromJson(e as Map<String, dynamic>?))
-              .toList() ??
-          const [],
-      provider: json['provider'] as String? ?? '',
-      purpose: json['purpose'] as String? ?? '',
-      status: json['status'] as String? ?? '',
-      transactionId: json['transaction_id'] as String? ?? '',
     );
 
 Map<String, dynamic> _$PaymentHistoryModelToJson(
         PaymentHistoryModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'purpose': instance.purpose,
-      'description': instance.description,
-      'status': instance.status,
       'amount': instance.amount,
       'created_at': instance.createdAt,
-      'transaction_id': instance.transactionId,
-      'provider': instance.provider,
-      'products':
-          instance.products.map(const ProductConverter().toJson).toList(),
-      'month_count': instance.monthCount,
+      'product': instance.product,
       'payed_at': instance.payedAt,
     };

@@ -5,9 +5,6 @@ import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_purchased_article.dart';
 import 'package:anatomica/features/profile/domain/usecases/get_purchased_journal.dart';
-import 'package:anatomica/features/profile/domain/usecases/restore.dart';
-import 'package:anatomica/features/profile/domain/usecases/send_verify_code.dart';
-import 'package:anatomica/features/profile/domain/usecases/verify_restore.dart';
 import 'package:anatomica/features/profile/presentation/blocs/purchased_article/purchased_article_bloc.dart';
 import 'package:anatomica/features/profile/presentation/blocs/purchased_journal/purchased_journal_bloc.dart';
 import 'package:anatomica/features/profile/presentation/blocs/restore/restore_bloc.dart';
@@ -31,27 +28,23 @@ class PurchasedScreen extends StatefulWidget {
   State<PurchasedScreen> createState() => _PurchasedScreenState();
 }
 
-class _PurchasedScreenState extends State<PurchasedScreen>
-    with TickerProviderStateMixin {
+class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   late PurchasedJournalBloc purchasedJournalBloc;
   late PurchasedArticleBloc purchasedArticleBloc;
   late RestoreBloc restoreBloc;
+  final ValueNotifier tabIndex = ValueNotifier<int>(0);
 
   @override
   void initState() {
-    restoreBloc = RestoreBloc(
-        sendRestore: SendRestoreCode(),
-        verifyRestore: VerifyRestoreCode(),
-        restore: RestoreUseCase())
-      ..add(RestoreEvent.getMyPayHistory());
+    restoreBloc = RestoreBloc()..add(RestoreEvent.getMyPayHistory());
     purchasedJournalBloc = PurchasedJournalBloc(GetPurchasedJournalUS())
       ..add(PurchasedJournalEvent.getArticle(isRefresh: false));
     purchasedArticleBloc = PurchasedArticleBloc(GetPurchasedArticleUS())
       ..add(PurchasedArticleEvent.getArticle(isRefresh: false));
     _tabController = TabController(length: 3, vsync: this)
       ..addListener(() {
-        setState(() {});
+        tabIndex.value = _tabController.index;
       });
     super.initState();
   }
@@ -70,21 +63,14 @@ class _PurchasedScreenState extends State<PurchasedScreen>
                 Navigator.of(context).pop();
               },
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                child: SvgPicture.asset(
-                  AppIcons.arrowLeft,
-                  color: textColor,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                child: SvgPicture.asset(AppIcons.arrowLeft, color: textColor),
               ),
             ),
             centerTitle: true,
             title: Text(
               LocaleKeys.purchased.tr(),
-              style: Theme.of(context)
-                  .textTheme
-                  .displayLarge!
-                  .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             titleSpacing: 0,
           ),
@@ -97,9 +83,7 @@ class _PurchasedScreenState extends State<PurchasedScreen>
               builder: (context, state) {
                 return Column(
                   children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                       height: 44,
@@ -114,147 +98,106 @@ class _PurchasedScreenState extends State<PurchasedScreen>
                             borderRadius: BorderRadius.circular(6),
                             color: white,
                             boxShadow: const [
-                              BoxShadow(
-                                  blurRadius: 24,
-                                  offset: Offset(0, 8),
-                                  color: Color(0x302B8364))
+                              BoxShadow(blurRadius: 24, offset: Offset(0, 8), color: Color(0x302B8364))
                             ]),
                         labelColor: textColor,
                         unselectedLabelColor: textSecondary,
                         labelStyle: Theme.of(context).textTheme.displaySmall,
                         controller: _tabController,
                         tabs: [
-                          Tab(
-                            text: LocaleKeys.purchased_articles.tr(),
-                          ),
-                          Tab(
-                            text: LocaleKeys.purchased_journals.tr(),
-                          ),
-                          // TODO locale
-                          Tab(text: 'История'),
+                          Tab(text: LocaleKeys.articles.tr()),
+                          Tab(text: LocaleKeys.issues.tr()),
+                          Tab(text: LocaleKeys.history.tr()),
                         ],
                       ),
                     ),
-                    if (state.showRestore ??
-                        !(StorageRepository.getBool('is_purchase_restored',
-                            defValue: false))) ...[
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      if (_tabController.index != 2) ...{
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 16),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 12),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: primary),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.edit,
-                                width: 24,
-                                height: 24,
-                                color: white,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  LocaleKeys.restore_things.tr(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayMedium!
-                                      .copyWith(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              WButton(
-                                borderRadius: 8,
-                                text: LocaleKeys.restore.tr(),
-                                textColor: primary,
-                                color: white,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                onTap: () async {
-                                  var item = await showDialog<bool>(
-                                      context: context,
-                                      builder: (c) {
-                                        return MultiBlocProvider(
-                                          providers: [
-                                            BlocProvider.value(
-                                                value: restoreBloc),
-                                            BlocProvider.value(
-                                                value: purchasedJournalBloc),
-                                            BlocProvider.value(
-                                                value: purchasedArticleBloc),
-                                          ],
-                                          child: RestorePhoneDialog(
-                                            isJournal:
-                                                _tabController.index == 1,
-                                            onSucces: () async {
-                                              var item = await showDialog<bool>(
-                                                  context: context,
-                                                  barrierDismissible: false,
-                                                  builder: (b) {
-                                                    return MultiBlocProvider(
-                                                      providers: [
-                                                        BlocProvider.value(
-                                                            value: restoreBloc),
-                                                        BlocProvider.value(
-                                                            value:
-                                                                purchasedJournalBloc),
-                                                        BlocProvider.value(
-                                                            value:
-                                                                purchasedArticleBloc),
-                                                      ],
-                                                      child:
-                                                          RestoreVerifyDialog(
-                                                        isJournal:
-                                                            _tabController
-                                                                    .index ==
-                                                                1,
-                                                      ),
-                                                    );
-                                                  });
-                                              if (item == null) {
-                                                restoreBloc
-                                                    .add(RestoreEvent.clear());
-                                              }
-                                            },
-                                          ),
-                                        );
-                                      });
+                    if (state.showRestore ?? !(StorageRepository.getBool('is_purchase_restored', defValue: false))) ...[
+                      const SizedBox(height: 16),
+                      ValueListenableBuilder(
+                        valueListenable: tabIndex,
+                        builder: (ctx, _, __) {
+                          return tabIndex.value != 2
+                              ? Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 12),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: primary),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(AppIcons.edit, width: 24, height: 24, color: white),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Text(LocaleKeys.restore_things.tr(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .displayMedium!
+                                                .copyWith(fontWeight: FontWeight.w600, fontSize: 12)),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      WButton(
+                                        borderRadius: 8,
+                                        text: LocaleKeys.restore.tr(),
+                                        textColor: primary,
+                                        color: white,
+                                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                                        onTap: () async {
+                                          var item = await showDialog<bool>(
+                                              context: context,
+                                              builder: (c) {
+                                                return MultiBlocProvider(
+                                                  providers: [
+                                                    BlocProvider.value(value: restoreBloc),
+                                                    BlocProvider.value(value: purchasedJournalBloc),
+                                                    BlocProvider.value(value: purchasedArticleBloc),
+                                                  ],
+                                                  child: RestorePhoneDialog(
+                                                    isJournal: _tabController.index == 1,
+                                                    onSucces: () async {
+                                                      var item = await showDialog<bool>(
+                                                          context: context,
+                                                          barrierDismissible: false,
+                                                          builder: (b) {
+                                                            return MultiBlocProvider(
+                                                              providers: [
+                                                                BlocProvider.value(value: restoreBloc),
+                                                                BlocProvider.value(value: purchasedJournalBloc),
+                                                                BlocProvider.value(value: purchasedArticleBloc),
+                                                              ],
+                                                              child: RestoreVerifyDialog(
+                                                                  isJournal: _tabController.index == 1),
+                                                            );
+                                                          });
+                                                      if (item == null) {
+                                                        restoreBloc.add(RestoreEvent.clear());
+                                                      }
+                                                    },
+                                                  ),
+                                                );
+                                              });
 
-                                  if (item == null) {
-                                    restoreBloc.add(RestoreEvent.clear());
-                                  }
-                                  setState(() {});
-                                },
-                                height: 36,
-                              )
-                            ],
-                          ),
-                        )
-                      },
+                                          if (item == null) {
+                                            restoreBloc.add(RestoreEvent.clear());
+                                          }
+                                        },
+                                        height: 36,
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox();
+                        },
+                      )
                     ],
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
                     Expanded(
-                        child: TabBarView(
-                      controller: _tabController,
-                      children: const [
-                        PurchasedArticleList(),
-                        PurchasedJournalList(),
-                        PurchasedHistoryList(),
-                      ],
-                    ))
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: const [
+                          PurchasedArticleList(),
+                          PurchasedJournalList(),
+                          PurchasedHistoryList(),
+                        ],
+                      ),
+                    )
                   ],
                 );
               },

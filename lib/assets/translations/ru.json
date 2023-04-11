@@ -312,5 +312,8 @@
   "empty": "Пусто",
   "you_dont_have_card": "У вас пока нету карты. Добавьте карту",
   "delete_card": "Удалить карту",
-  "you_are_sure_to_delete_card": "Вы действительно хотите удалить карту"
+  "you_are_sure_to_delete_card": "Вы действительно хотите удалить карту",
+  "history": "История",
+  "service_date": "Услуга/ Дата",
+  "amount": "Miqdor"
 }
