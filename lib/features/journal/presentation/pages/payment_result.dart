@@ -5,7 +5,7 @@ import 'package:anatomica/features/journal/presentation/pages/payment_waiting.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PaymentResultScreen extends StatelessWidget {
+class PaymentResultScreen extends StatefulWidget {
   final PaymentBloc bloc;
   final bool isSubscription;
   final String title;
@@ -20,26 +20,67 @@ class PaymentResultScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<PaymentResultScreen> createState() => _PaymentResultScreenState();
+}
+
+class _PaymentResultScreenState extends State<PaymentResultScreen> with WidgetsBindingObserver {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print('resumed');
+        widget.bloc.add(CheckPaymentStatus());
+        break;
+      case AppLifecycleState.inactive:
+        print('inactive');
+
+        break;
+      case AppLifecycleState.paused:
+        print('paused');
+
+        break;
+      case AppLifecycleState.detached:
+        print('detached');
+
+        break;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: bloc,
+      value: widget.bloc,
       child: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {
           if (state.status == 'waiting') {
             return PaymentWaiting(
-              title: title,
-              isRegistered: isRegistered,
-              isSubscription: isSubscription,
+              title: widget.title,
+              isRegistered: widget.isRegistered,
+              isSubscription: widget.isSubscription,
             );
           } else if (state.status == 'confirmed') {
-            return PaymentSuccess(title: title, isRegistered: isRegistered, isSubscription: isSubscription);
+            return PaymentSuccess(
+                title: widget.title, isRegistered: widget.isRegistered, isSubscription: widget.isSubscription);
           } else if (state.status.isNotEmpty) {
-            return PaymentFailure(title: title, isRegistered: isRegistered, isSubscription: isSubscription);
+            return PaymentFailure(
+                title: widget.title, isRegistered: widget.isRegistered, isSubscription: widget.isSubscription);
           } else {
             return PaymentWaiting(
-              title: title,
-              isRegistered: isRegistered,
-              isSubscription: isSubscription,
+              title: widget.title,
+              isRegistered: widget.isRegistered,
+              isSubscription: widget.isSubscription,
             );
           }
         },

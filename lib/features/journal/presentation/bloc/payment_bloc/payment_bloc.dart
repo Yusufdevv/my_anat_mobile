@@ -31,6 +31,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       PayForMonthlySubscriptionUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
 
   PaymentBloc() : super(const PaymentState()) {
+    ///
     on<OrderCreateArticle>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateArticleUseCase.call(OrderCreateParams(
@@ -43,10 +44,9 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         paymentProvider: event.paymentProvider,
       ));
       if (result.isRight) {
-        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
+        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess, paymentId: result.right.id));
         event.onSuccess(result.right.transactionCheckoutUrl);
       } else {
-        print('object ${result.left}');
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
           event.onError(LocaleKeys.network_error);
@@ -59,6 +59,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         }
       }
     });
+
+    ///
     on<CheckPaymentStatus>((event, emit) async {
       emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionInProgress));
       final result = await _checkPaymentStatusUseCase.call(state.paymentId);
@@ -68,6 +70,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionFailure));
       }
     });
+
+    ///
     on<OrderCreateJournal>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateJournalUseCase.call(OrderCreateParams(
@@ -80,10 +84,11 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         paymentProvider: event.paymentProvider,
       ));
       if (result.isRight) {
-        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
+        emit(state.copyWith(
+            orderCreateStatus: FormzStatus.submissionSuccess, status: 'waiting', paymentId: result.right.id));
         event.onSuccess(result.right.transactionCheckoutUrl);
       } else {
-        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure, status: 'error'));
         if (result.left is DioFailure) {
           event.onError(LocaleKeys.network_error);
         } else if (result.left is ParsingFailure) {
@@ -95,6 +100,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         }
       }
     });
+
+    ///
     on<GetPrices>((event, emit) async {
       emit(state.copyWith(getPricesStatus: FormzStatus.submissionInProgress));
       final result = await _getPricesUseCase.call(NoParams());
@@ -104,6 +111,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         emit(state.copyWith(getPricesStatus: FormzStatus.submissionFailure));
       }
     });
+
+    ///
     on<PayForMonthlySubscription>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _payForMonthlySubscriptionUseCase

@@ -85,7 +85,8 @@ class PaymentDatasourceImpl extends PaymentDatasource {
         return PaymentResponseModel.fromJson(response.data);
       } else {
         throw ServerException(
-            statusCode: response.statusCode!, errorMessage: response.data['error'] ?? response.data.toString());
+            statusCode: response.statusCode!,
+            errorMessage: response.data['error'] != null ? response.data['error']['code'] : response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -142,7 +143,9 @@ class PaymentDatasourceImpl extends PaymentDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return PaymentResponseModel.fromJson(response.data);
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data['error']['code'] ?? response.data.toString());
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data['error'] != null ? response.data['error']['code'] : response.data.toString());
       }
     } on ServerException {
       rethrow;
