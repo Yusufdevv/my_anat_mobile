@@ -14,6 +14,7 @@ abstract class PaymentDatasource {
     required String email,
     required String paymentProvider,
     required bool isRegistered,
+    required int card,
   });
 
   Future<PaymentResponseModel> orderCreateJournal({
@@ -23,6 +24,7 @@ abstract class PaymentDatasource {
     required String email,
     required String paymentProvider,
     required bool isRegistered,
+    required int card,
   });
 
   Future<String> checkPaymentStatus({required int id});
@@ -45,6 +47,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
     required String email,
     required String paymentProvider,
     required bool isRegistered,
+    required int card,
   }) async {
     try {
       final data = {
@@ -65,6 +68,14 @@ class PaymentDatasourceImpl extends PaymentDatasource {
         } else {
           throw const ServerException(statusCode: 141, errorMessage: LocaleKeys.enter_phone_or_email);
         }
+      } else {
+        if (phoneNumber.isNotEmpty && phoneNumber.length >= 13) {
+          data.putIfAbsent('phone_number', () => phoneNumber);
+        }
+      }
+
+      if (paymentProvider == 'card') {
+        data["user_card"] = card;
       }
       final response = await _dio.post('/payments/order/create/',
           data: data,
@@ -92,6 +103,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
     required String email,
     required String paymentProvider,
     required bool isRegistered,
+    required int card,
   }) async {
     try {
       final data = {
@@ -103,6 +115,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
         "provider": paymentProvider,
         "redirect_url": "/"
       };
+
       if (!isRegistered) {
         if (phoneNumber.isNotEmpty && phoneNumber.length >= 13) {
           data.putIfAbsent('phone_number', () => phoneNumber);
@@ -111,7 +124,16 @@ class PaymentDatasourceImpl extends PaymentDatasource {
         } else {
           throw const ServerException(statusCode: 141, errorMessage: LocaleKeys.enter_phone_or_email);
         }
+      } else {
+        if (phoneNumber.isNotEmpty && phoneNumber.length >= 13) {
+          data.putIfAbsent('phone_number', () => phoneNumber);
+        }
       }
+
+      if (paymentProvider == 'card') {
+        data["user_card"] = card;
+      }
+
       final response = await _dio.post('/payments/order/create/',
           data: data,
           options:

@@ -34,6 +34,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     on<OrderCreateArticle>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateArticleUseCase.call(OrderCreateParams(
+        card: event.card,
         id: event.articleId,
         price: event.price,
         phoneNumber: event.phone,
@@ -45,6 +46,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
         event.onSuccess(result.right.transactionCheckoutUrl);
       } else {
+        print('object ${result.left}');
         emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
         if (result.left is DioFailure) {
           event.onError(LocaleKeys.network_error);
@@ -69,6 +71,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     on<OrderCreateJournal>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateJournalUseCase.call(OrderCreateParams(
+        card: event.card,
         id: event.journalId,
         price: event.price,
         phoneNumber: event.phone,

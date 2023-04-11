@@ -12,6 +12,8 @@ class OrderCreateArticle extends PaymentEvent {
   final bool isRegistered;
   final ValueChanged<String> onSuccess;
   final ValueChanged<String> onError;
+  final int card;
+
   OrderCreateArticle({
     required this.articleId,
     required this.price,
@@ -21,6 +23,7 @@ class OrderCreateArticle extends PaymentEvent {
     required this.onSuccess,
     required this.onError,
     required this.isRegistered,
+    required this.card,
   });
 }
 
@@ -33,7 +36,7 @@ class OrderCreateJournal extends PaymentEvent {
   final bool isRegistered;
   final ValueChanged<String> onSuccess;
   final ValueChanged<String> onError;
-
+  final int card;
   OrderCreateJournal({
     required this.journalId,
     required this.price,
@@ -43,6 +46,7 @@ class OrderCreateJournal extends PaymentEvent {
     required this.onSuccess,
     required this.onError,
     required this.isRegistered,
+    required this.card,
   });
 }
 

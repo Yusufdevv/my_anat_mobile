@@ -19,6 +19,7 @@ class PaymentRepositoryImpl extends PaymentRepository {
     required String email,
     required String paymentProvider,
     required bool isRegistered,
+    required int card,
   }) async {
     try {
       final result = await datasource.orderCreateArticle(
@@ -28,6 +29,7 @@ class PaymentRepositoryImpl extends PaymentRepository {
         phoneNumber: phoneNumber,
         price: price,
         isRegistered: isRegistered,
+        card: card,
       );
       return Right(result);
     } on DioException {
@@ -47,15 +49,18 @@ class PaymentRepositoryImpl extends PaymentRepository {
     required String email,
     required String paymentProvider,
     required bool isRegistered,
+    required int card,
   }) async {
     try {
       final result = await datasource.orderCreateJournal(
-          email: email,
-          journalId: journalId,
-          paymentProvider: paymentProvider,
-          phoneNumber: phoneNumber,
-          price: price,
-          isRegistered: isRegistered);
+        email: email,
+        journalId: journalId,
+        paymentProvider: paymentProvider,
+        phoneNumber: phoneNumber,
+        price: price,
+        isRegistered: isRegistered,
+        card: card,
+      );
       return Right(result);
     } on DioException {
       return Left(DioFailure());

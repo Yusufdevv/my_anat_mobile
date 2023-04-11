@@ -6,7 +6,7 @@
 // import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 // import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
 // import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
-// import 'package:anatomica/features/journal/presentation/pages/one_time_payment_screen.dart';
+// import 'package:anatomica/features/journal/presentation/pages/buy_journal_payment_screen.dart';
 // import 'package:anatomica/features/journal/presentation/widgets/article_item.dart';
 // import 'package:anatomica/features/journal/presentation/widgets/journal_single_big_item.dart';
 // import 'package:anatomica/features/markdown_reader/presentation/pages/journal_markdown_reader.dart';

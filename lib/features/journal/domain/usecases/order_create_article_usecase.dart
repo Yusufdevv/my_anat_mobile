@@ -7,7 +7,9 @@ import 'package:equatable/equatable.dart';
 
 class OrderCreateArticleUseCase implements UseCase<PaymentResponseEntity, OrderCreateParams> {
   final PaymentRepository repository;
+
   OrderCreateArticleUseCase({required this.repository});
+
   @override
   Future<Either<Failure, PaymentResponseEntity>> call(OrderCreateParams params) async => repository.orderCreateArticle(
         articleId: params.id,
@@ -16,6 +18,7 @@ class OrderCreateArticleUseCase implements UseCase<PaymentResponseEntity, OrderC
         email: params.email,
         paymentProvider: params.paymentProvider,
         isRegistered: params.isRegistered,
+        card: params.card,
       );
 }
 
@@ -26,6 +29,7 @@ class OrderCreateParams extends Equatable {
   final String email;
   final String paymentProvider;
   final bool isRegistered;
+  final int card;
 
   const OrderCreateParams({
     required this.id,
@@ -34,8 +38,9 @@ class OrderCreateParams extends Equatable {
     required this.email,
     required this.paymentProvider,
     required this.isRegistered,
+    required this.card,
   });
 
   @override
-  List<Object?> get props => [id, price, phoneNumber, email, paymentProvider, isRegistered];
+  List<Object?> get props => [id, price, phoneNumber, email, paymentProvider, isRegistered, card];
 }

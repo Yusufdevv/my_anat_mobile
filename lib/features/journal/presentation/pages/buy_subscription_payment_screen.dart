@@ -18,6 +18,7 @@ import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.d
 import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
 import 'package:anatomica/features/journal/presentation/widgets/cards_bottomsheet.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_images.dart';
+import 'package:anatomica/features/journal/presentation/widgets/payment_card_item_widget.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/journal/presentation/widgets/select_period_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
@@ -41,7 +42,8 @@ class BuySubscription extends StatefulWidget {
 }
 
 class _BuySubscriptionState extends State<BuySubscription> {
-  PeriodEntity currentPeriod = const PeriodEntity(title: LocaleKeys.days_30, period: 1);
+  final ValueNotifier currentPeriod = ValueNotifier(const PeriodEntity(title: LocaleKeys.days_30, period: 1));
+  String currentPeriodTitle = LocaleKeys.days_30;
   Map<String, String> payments = {
     'payme': AppImages.payMe,
     'click': AppImages.click,
@@ -63,25 +65,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
             elevation: 1,
             leadingWidth: 0,
             titleSpacing: 0,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(width: 56),
-                Text(
-                  LocaleKeys.activate_subscription.tr(),
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor, fontSize: 20),
-                ),
-                WScaleAnimation(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                    child: SvgPicture.asset(AppIcons.close, color: black),
-                  ),
-                ),
-              ],
-            ),
+            title: const BuySubscriptionAppBarTitle(),
           ),
           body: BlocBuilder<PaymentBloc, PaymentState>(
             builder: (context, state) {
@@ -135,41 +119,44 @@ class _BuySubscriptionState extends State<BuySubscription> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            WScaleAnimation(
-                              onTap: () async {
-                                final periodEntity = await showModalBottomSheet<PeriodEntity>(
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  isScrollControlled: true,
-                                  builder: (_) => SelectPeriodBottomSheet(initialPeriod: currentPeriod),
-                                );
-                                if (periodEntity != null) {
-                                  setState(() {
-                                    currentPeriod = periodEntity;
-                                  });
-                                }
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 16),
-                                padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
-                                decoration: BoxDecoration(
-                                  color: textFieldColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(AppIcons.mapCalendar, height: 20),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      currentPeriod.title.tr(),
-                                      style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor),
+                            ValueListenableBuilder(
+                                valueListenable: currentPeriod,
+                                builder: (ctx, _, __) {
+                                  return WScaleAnimation(
+                                    onTap: () async {
+                                      final periodEntity = await showModalBottomSheet<PeriodEntity>(
+                                        context: context,
+                                        backgroundColor: Colors.transparent,
+                                        isScrollControlled: true,
+                                        builder: (_) => SelectPeriodBottomSheet(initialPeriod: currentPeriod.value),
+                                      );
+                                      if (periodEntity != null) {
+                                        currentPeriod.value = periodEntity;
+                                        currentPeriodTitle = periodEntity.title;
+                                      }
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                                      padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
+                                      decoration: BoxDecoration(
+                                        color: textFieldColor,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(AppIcons.mapCalendar, height: 20),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            currentPeriodTitle.tr(),
+                                            style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor),
+                                          ),
+                                          const Spacer(),
+                                          SvgPicture.asset(AppIcons.chevronDown, height: 24)
+                                        ],
+                                      ),
                                     ),
-                                    const Spacer(),
-                                    SvgPicture.asset(AppIcons.chevronDown, height: 24)
-                                  ],
-                                ),
-                              ),
-                            )
+                                  );
+                                })
                           ],
                         ),
                         const SizedBox(height: 24),
@@ -345,7 +332,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                     return;
                                   }
                                   context.read<PaymentBloc>().add(PayForMonthlySubscription(
-                                      period: currentPeriod.period,
+                                      period: currentPeriod.value.period,
                                       onSuccess: (value) {
                                         if (currentPaymentMethod.value != 'card') {
                                           launchUrlString(value.transactionCheckoutUrl,
@@ -395,45 +382,32 @@ class _BuySubscriptionState extends State<BuySubscription> {
   }
 }
 
-class PaymentCardItem extends StatelessWidget {
-  final String? cardType;
-  final String? cardNumber;
-  final VoidCallback onTap;
-
-  const PaymentCardItem({
-    required this.cardType,
-    required this.cardNumber,
-    required this.onTap,
+class BuySubscriptionAppBarTitle extends StatelessWidget {
+  const BuySubscriptionAppBarTitle({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-      padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
-      decoration: BoxDecoration(
-        color: lilyWhite,
-        border: Border.all(color: lilyWhite),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        children: [
-          cardType == 'humo' ? SvgPicture.asset(AppImages.humo) : SvgPicture.asset(AppImages.uzcard),
-          const SizedBox(width: 12),
-          Expanded(child: Text(cardNumber ?? '', style: Theme.of(context).textTheme.displayLarge)),
-          WScaleAnimation(
-            onTap: onTap,
-            child: Container(
-              height: 36,
-              width: 36,
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(color: textSecondary.withOpacity(.16), borderRadius: BorderRadius.circular(6)),
-              child: SvgPicture.asset(AppIcons.chevronsUpDown),
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const SizedBox(width: 56),
+        Text(
+          LocaleKeys.activate_subscription.tr(),
+          style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor, fontSize: 20),
+        ),
+        WScaleAnimation(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+            child: SvgPicture.asset(AppIcons.close, color: black),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
+
