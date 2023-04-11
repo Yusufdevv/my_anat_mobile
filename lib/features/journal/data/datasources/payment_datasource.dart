@@ -75,7 +75,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
       }
 
       if (paymentProvider == 'card') {
-        data['products'] = {"object_type": "article", "object_id": articleId, "price": price, 'user_card': card};
+        data["user_card"] = card;
       }
       final response = await _dio.post('/payments/order/create/',
           data: data,
@@ -131,7 +131,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
       }
 
       if (paymentProvider == 'card') {
-        data['products'] = {"object_type": "jurnal", "object_id": journalId, "price": price, 'user_card': card};
+        data["user_card"] = card;
       }
 
       final response = await _dio.post('/payments/order/create/',
