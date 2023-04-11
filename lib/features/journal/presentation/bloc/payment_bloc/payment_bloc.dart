@@ -34,6 +34,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     on<OrderCreateArticle>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateArticleUseCase.call(OrderCreateParams(
+        card: event.card,
         id: event.articleId,
         price: event.price,
         phoneNumber: event.phone,
@@ -69,6 +70,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     on<OrderCreateJournal>((event, emit) async {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
       final result = await _orderCreateJournalUseCase.call(OrderCreateParams(
+        card: event.card,
         id: event.journalId,
         price: event.price,
         phoneNumber: event.phone,

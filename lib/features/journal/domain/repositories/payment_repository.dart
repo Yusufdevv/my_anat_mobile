@@ -11,6 +11,7 @@ abstract class PaymentRepository {
     required String email,
     required String paymentProvider,
     required bool isRegistered,
+    required int card,
   });
   Future<Either<Failure, PaymentResponseEntity>> orderCreateArticle({
     required int articleId,
@@ -19,6 +20,7 @@ abstract class PaymentRepository {
     required String email,
     required String paymentProvider,
     required bool isRegistered,
+    required int card,
   });
   Future<Either<Failure, String>> checkPaymentStatus({required int id});
   Future<Either<Failure, PaymentResponseEntity>> payForMonthlySubscription(

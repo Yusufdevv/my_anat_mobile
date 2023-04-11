@@ -71,7 +71,6 @@ class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
     on<SetSelectedPaymentCardEvent>((event, emit) async {
       final selectedCard = state.paymentCards.firstWhere((element) => element.id == event.id);
       emit(state.copyWith(selectedCard: selectedCard));
-      print('selected card id ${state.selectedCard}');
     });
 
     ///

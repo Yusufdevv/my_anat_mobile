@@ -5,7 +5,7 @@ import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/au
 import 'package:anatomica/features/auth/presentation/pages/register.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
-import 'package:anatomica/features/journal/presentation/pages/one_time_payment_screen.dart';
+import 'package:anatomica/features/journal/presentation/pages/buy_journal_payment_screen.dart';
 import 'package:anatomica/features/journal/presentation/widgets/buy_dialog.dart';
 import 'package:anatomica/features/markdown_reader/presentation/pages/journal_markdown_reader.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
