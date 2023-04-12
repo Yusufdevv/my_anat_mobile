@@ -38,13 +38,13 @@ import 'package:anatomica/features/navigation/presentation/home.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/onboarding/presentation/pages/on_boarding_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_crashlytics/firebase_crashlytics.dart' as fire;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 Future<void> main() async {
@@ -72,17 +72,6 @@ Future<void> main() async {
           StorageRepository.getString('device_language', defValue: 'uz')),
       saveLocale: true,
       child: const MyApp()));
-
-  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
-  OneSignal.shared.setAppId("e1898670-07c9-4ac8-961e-9b061739375e");
-
-  OneSignal.shared
-      .promptUserForPushNotificationPermission()
-      .then((accepted) {});
-  final status = await OneSignal.shared.getDeviceState();
-  final String? osUserID = status?.userId;
-  await StorageRepository.putString('deviceId', osUserID!);
 }
 
 class MyHttpOverrides extends HttpOverrides {
