@@ -3,6 +3,7 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/services/services_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/service_single.dart';
+import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/map/presentation/widgets/sevice_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -81,7 +82,7 @@ class _HospitalServiceCategoriesScreenState extends State<HospitalServiceCategor
           backgroundColor: lilyWhite,
           body: BlocBuilder<ServicesBloc, ServicesState>(
             builder: (context, state) {
-              return SingleChildScrollView(
+              return state.servicesOrg.isNotEmpty ? SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -167,6 +168,16 @@ class _HospitalServiceCategoriesScreenState extends State<HospitalServiceCategor
                       ),
                     ),
                   ],
+                ),
+              )
+              : Center(
+                child: EmptyWidget(
+                  hasPadding: false,
+                  hasMargin: false,
+                  title: state.searchQuery.isNotEmpty ? LocaleKeys.nothing.tr() : LocaleKeys.no_services.tr(),
+                  content: state.searchQuery.isNotEmpty
+                      ? LocaleKeys.result_not_found.tr()
+                      : LocaleKeys.no_services_in_this_hospital.tr(),
                 ),
               );
             },
