@@ -1,4 +1,5 @@
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/common/data/models/phone_number2_model.dart';
 import 'package:anatomica/features/common/data/models/titler.dart';
 import 'package:equatable/equatable.dart';
 
@@ -18,7 +19,7 @@ class HospitalDoctorsEntity extends Equatable {
   final double latitude;
   final double longitude;
   final String organizationName;
-  final List<List<String>> phoneNumbers;
+  final List<PhoneNumber2Model> phoneNumbers;
   final double distance;
 
   const HospitalDoctorsEntity({

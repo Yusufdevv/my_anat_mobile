@@ -79,7 +79,6 @@ class _HospitalListState extends State<HospitalList>
       ));
     suggestionBloc = SuggestionBloc(GetSuggestionsUseCase());
 
-    print('tab index ${widget.orgMapV2Bloc.state.tabIndex}');
     controller = TextEditingController();
     _controller = TabController(
         length: 2,

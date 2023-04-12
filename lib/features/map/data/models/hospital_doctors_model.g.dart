@@ -31,7 +31,7 @@ HospitalDoctorsModel _$HospitalDoctorsModelFromJson(
       longitude: (json['longitude'] as num?)?.toDouble() ?? 0,
       phoneNumbers: (json['phone_numbers'] as List<dynamic>?)
               ?.map(
-                  (e) => (e as List<dynamic>).map((e) => e as String).toList())
+                  (e) => PhoneNumber2Model.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       organizationName: json['organization_name'] as String? ?? '',

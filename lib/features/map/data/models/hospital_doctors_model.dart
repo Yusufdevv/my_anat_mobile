@@ -1,4 +1,5 @@
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/common/data/models/phone_number2_model.dart';
 import 'package:anatomica/features/common/data/models/titler.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
