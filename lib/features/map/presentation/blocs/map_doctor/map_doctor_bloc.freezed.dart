@@ -17,20 +17,21 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MapDoctorEvent {
   String get search => throw _privateConstructorUsedError;
-  MapV2Params? get params => throw _privateConstructorUsedError;
+  MapParameter? get params => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String search, MapV2Params? params) getMapDoctors,
+    required TResult Function(String search, MapParameter? params)
+        getMapDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String search, MapV2Params? params)? getMapDoctors,
+    TResult? Function(String search, MapParameter? params)? getMapDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String search, MapV2Params? params)? getMapDoctors,
+    TResult Function(String search, MapParameter? params)? getMapDoctors,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -62,7 +63,7 @@ abstract class $MapDoctorEventCopyWith<$Res> {
           MapDoctorEvent value, $Res Function(MapDoctorEvent) then) =
       _$MapDoctorEventCopyWithImpl<$Res, MapDoctorEvent>;
   @useResult
-  $Res call({String search, MapV2Params? params});
+  $Res call({String search, MapParameter? params});
 }
 
 /// @nodoc
@@ -89,7 +90,7 @@ class _$MapDoctorEventCopyWithImpl<$Res, $Val extends MapDoctorEvent>
       params: freezed == params
           ? _value.params
           : params // ignore: cast_nullable_to_non_nullable
-              as MapV2Params?,
+              as MapParameter?,
     ) as $Val);
   }
 }
@@ -102,7 +103,7 @@ abstract class _$$_GetMapDoctorsCopyWith<$Res>
       __$$_GetMapDoctorsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String search, MapV2Params? params});
+  $Res call({String search, MapParameter? params});
 }
 
 /// @nodoc
@@ -127,7 +128,7 @@ class __$$_GetMapDoctorsCopyWithImpl<$Res>
       params: freezed == params
           ? _value.params
           : params // ignore: cast_nullable_to_non_nullable
-              as MapV2Params?,
+              as MapParameter?,
     ));
   }
 }
@@ -140,7 +141,7 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   final String search;
   @override
-  final MapV2Params? params;
+  final MapParameter? params;
 
   @override
   String toString() {
@@ -168,7 +169,8 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String search, MapV2Params? params) getMapDoctors,
+    required TResult Function(String search, MapParameter? params)
+        getMapDoctors,
   }) {
     return getMapDoctors(search, params);
   }
@@ -176,7 +178,7 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String search, MapV2Params? params)? getMapDoctors,
+    TResult? Function(String search, MapParameter? params)? getMapDoctors,
   }) {
     return getMapDoctors?.call(search, params);
   }
@@ -184,7 +186,7 @@ class _$_GetMapDoctors implements _GetMapDoctors {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String search, MapV2Params? params)? getMapDoctors,
+    TResult Function(String search, MapParameter? params)? getMapDoctors,
     required TResult orElse(),
   }) {
     if (getMapDoctors != null) {
@@ -225,12 +227,12 @@ class _$_GetMapDoctors implements _GetMapDoctors {
 abstract class _GetMapDoctors implements MapDoctorEvent {
   factory _GetMapDoctors(
       {required final String search,
-      final MapV2Params? params}) = _$_GetMapDoctors;
+      final MapParameter? params}) = _$_GetMapDoctors;
 
   @override
   String get search;
   @override
-  MapV2Params? get params;
+  MapParameter? get params;
   @override
   @JsonKey(ignore: true)
   _$$_GetMapDoctorsCopyWith<_$_GetMapDoctors> get copyWith =>
@@ -239,7 +241,7 @@ abstract class _GetMapDoctors implements MapDoctorEvent {
 
 /// @nodoc
 mixin _$MapDoctorState {
-  List<DoctorSpecModel> get doctors => throw _privateConstructorUsedError;
+  List<DoctorMapEntity> get doctors => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -253,7 +255,7 @@ abstract class $MapDoctorStateCopyWith<$Res> {
           MapDoctorState value, $Res Function(MapDoctorState) then) =
       _$MapDoctorStateCopyWithImpl<$Res, MapDoctorState>;
   @useResult
-  $Res call({List<DoctorSpecModel> doctors, FormzStatus status});
+  $Res call({List<DoctorMapEntity> doctors, FormzStatus status});
 }
 
 /// @nodoc
@@ -276,7 +278,7 @@ class _$MapDoctorStateCopyWithImpl<$Res, $Val extends MapDoctorState>
       doctors: null == doctors
           ? _value.doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<DoctorSpecModel>,
+              as List<DoctorMapEntity>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -293,7 +295,7 @@ abstract class _$$_MapDoctorStateCopyWith<$Res>
       __$$_MapDoctorStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<DoctorSpecModel> doctors, FormzStatus status});
+  $Res call({List<DoctorMapEntity> doctors, FormzStatus status});
 }
 
 /// @nodoc
@@ -314,7 +316,7 @@ class __$$_MapDoctorStateCopyWithImpl<$Res>
       doctors: null == doctors
           ? _value._doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<DoctorSpecModel>,
+              as List<DoctorMapEntity>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -327,14 +329,14 @@ class __$$_MapDoctorStateCopyWithImpl<$Res>
 
 class _$_MapDoctorState implements _MapDoctorState {
   _$_MapDoctorState(
-      {final List<DoctorSpecModel> doctors = const [],
+      {final List<DoctorMapEntity> doctors = const [],
       this.status = FormzStatus.pure})
       : _doctors = doctors;
 
-  final List<DoctorSpecModel> _doctors;
+  final List<DoctorMapEntity> _doctors;
   @override
   @JsonKey()
-  List<DoctorSpecModel> get doctors {
+  List<DoctorMapEntity> get doctors {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_doctors);
   }
@@ -370,11 +372,11 @@ class _$_MapDoctorState implements _MapDoctorState {
 
 abstract class _MapDoctorState implements MapDoctorState {
   factory _MapDoctorState(
-      {final List<DoctorSpecModel> doctors,
+      {final List<DoctorMapEntity> doctors,
       final FormzStatus status}) = _$_MapDoctorState;
 
   @override
-  List<DoctorSpecModel> get doctors;
+  List<DoctorMapEntity> get doctors;
   @override
   FormzStatus get status;
   @override

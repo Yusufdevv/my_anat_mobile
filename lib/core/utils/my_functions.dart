@@ -78,7 +78,9 @@ abstract class MyFunctions {
     final Canvas canvas = Canvas(pictureRecorder);
     final Paint paint = Paint()..color = Colors.red;
     canvas.drawImage(
-        await getImageInfo(context, image).then((value) => value.image), offset ?? const Offset(0, 3), paint);
+        await getImageInfo(context, image).then((value) => value.image),
+        offset ?? const Offset(0, 3),
+        paint);
 
     if (shouldAddText) {
       TextPainter painter = TextPainter(textDirection: ui.TextDirection.ltr);
@@ -89,7 +91,8 @@ abstract class MyFunctions {
       painter.layout();
       painter.paint(
         canvas,
-        Offset((width * 0.47) - painter.width * 0.2, (height * 0.1) - painter.height * 0.1),
+        Offset((width * 0.47) - painter.width * 0.2,
+            (height * 0.1) - painter.height * 0.1),
       );
     }
 
@@ -112,14 +115,18 @@ abstract class MyFunctions {
     canvas.drawCircle(Offset(radius + 10, radius + 10), radius, paint);
     canvas.drawCircle(Offset(radius + 10, radius + 10), radius, paint2);
 
-    final img = await pictureRecorder.endRecording().toImage((2 * radius + 20).toInt(), (2 * radius + 20).toInt());
+    final img = await pictureRecorder
+        .endRecording()
+        .toImage((2 * radius + 20).toInt(), (2 * radius + 20).toInt());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
     return data?.buffer.asUint8List() ?? Uint8List(0);
   }
 
-  static Future<ImageInfo> getImageInfo(BuildContext context, String image) async {
+  static Future<ImageInfo> getImageInfo(
+      BuildContext context, String image) async {
     AssetImage assetImage = AssetImage(image);
-    ImageStream stream = assetImage.resolve(createLocalImageConfiguration(context));
+    ImageStream stream =
+        assetImage.resolve(createLocalImageConfiguration(context));
     Completer<ImageInfo> completer = Completer();
     stream.addListener(ImageStreamListener((ImageInfo imageInfo, _) {
       return completer.complete(imageInfo);
@@ -127,7 +134,8 @@ abstract class MyFunctions {
     return completer.future;
   }
 
-  static Future<MapObject<dynamic>> getMyPoint(Point point, BuildContext context) async {
+  static Future<MapObject<dynamic>> getMyPoint(
+      Point point, BuildContext context) async {
     final myIconData = await getBytesFromCanvas(
         placeCount: 0,
         image: AppImages.myPlacemark,
@@ -189,18 +197,23 @@ abstract class MyFunctions {
             enableDrag: false,
             backgroundColor: Colors.transparent,
             builder: (context) {
-              context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
+              context
+                  .read<LoginSignUpBloc>()
+                  .add(HideMainTabEvent(showMainTab: false));
               return MapSheetHospital(
                 deviceWidth: deviceWidth,
                 onPageChanged: (value) {
-                  onMapControllerChange(points[value].latitude, points[value].longitude);
+                  onMapControllerChange(
+                      points[value].latitude, points[value].longitude);
                 },
                 points: points,
                 point: e,
               );
             },
           );
-          context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: true));
+          context
+              .read<LoginSignUpBloc>()
+              .add(HideMainTabEvent(showMainTab: true));
         },
         icon: PlacemarkIcon.single(
           PlacemarkIconStyle(
@@ -218,13 +231,15 @@ abstract class MyFunctions {
       minZoom: 30,
       onClusterTap: (collection, cluster) async {
         List<OrgMapV2Model> clusterPoints = [];
-        List<String> clusterIds = cluster.placemarks.map((e) => e.mapId.value).toList();
+        List<String> clusterIds =
+            cluster.placemarks.map((e) => e.mapId.value).toList();
         for (var i = 0; i < points.length; i++) {
           if (clusterIds.any((e) => e == '${points[i].id}')) {
             clusterPoints.add(points[i]);
           }
         }
-        onMapControllerChange(clusterPoints.first.latitude, clusterPoints.first.longitude);
+        onMapControllerChange(
+            clusterPoints.first.latitude, clusterPoints.first.longitude);
 
         final result = await showModalBottomSheet(
           barrierColor: Colors.transparent,
@@ -233,18 +248,23 @@ abstract class MyFunctions {
           enableDrag: false,
           backgroundColor: Colors.transparent,
           builder: (context) {
-            context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
+            context
+                .read<LoginSignUpBloc>()
+                .add(HideMainTabEvent(showMainTab: false));
             return MapSheetHospital(
               deviceWidth: deviceWidth,
               onPageChanged: (page) {
-                onMapControllerChange(clusterPoints[page].latitude, clusterPoints[page].longitude);
+                onMapControllerChange(clusterPoints[page].latitude,
+                    clusterPoints[page].longitude);
               },
               points: clusterPoints,
               point: clusterPoints.first,
             );
           },
         );
-        context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: true));
+        context
+            .read<LoginSignUpBloc>()
+            .add(HideMainTabEvent(showMainTab: true));
       },
       onTap: (collection, point) {},
       onClusterAdded: (collection, cluster) async => cluster.copyWith(
@@ -303,19 +323,25 @@ abstract class MyFunctions {
                     backgroundColor: Colors.transparent,
                     barrierColor: Colors.transparent,
                     builder: (context) {
-                      context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
+                      context
+                          .read<LoginSignUpBloc>()
+                          .add(HideMainTabEvent(showMainTab: false));
                       return MapSheetDoctor(
                           deviceWidth: deviceWidth,
                           initialPoint: e,
                           onPageChanged: (value) {
-                            onMapControllerChange(points[value].latitude, points[value].longitude);
+                            onMapControllerChange(points[value].latitude,
+                                points[value].longitude);
                           },
                           doctors: points);
                     });
-                context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: true));
+                context
+                    .read<LoginSignUpBloc>()
+                    .add(HideMainTabEvent(showMainTab: true));
               },
-              icon: PlacemarkIcon.single(
-                  PlacemarkIconStyle(image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark), scale: 0.6))),
+              icon: PlacemarkIcon.single(PlacemarkIconStyle(
+                  image: BitmapDescriptor.fromAssetImage(AppImages.doctorMark),
+                  scale: 0.6))),
         )
         .toList();
     final myPoint = await getMyPoint(point, context);
@@ -326,13 +352,15 @@ abstract class MyFunctions {
       minZoom: 30,
       onClusterTap: (collection, cluster) async {
         List<DoctorMapEntity> clusterDoctors = [];
-        List<String> clusterIds = cluster.placemarks.map((e) => e.mapId.value).toList();
+        List<String> clusterIds =
+            cluster.placemarks.map((e) => e.mapId.value).toList();
         for (var i = 0; i < points.length; i++) {
           if (clusterIds.any((e) => e == '${points[i].id}')) {
             clusterDoctors.add(points[i]);
           }
         }
-        onMapControllerChange(clusterDoctors.first.latitude, clusterDoctors.first.longitude);
+        onMapControllerChange(
+            clusterDoctors.first.latitude, clusterDoctors.first.longitude);
 
         final result = await showModalBottomSheet(
             context: context,
@@ -340,17 +368,22 @@ abstract class MyFunctions {
             backgroundColor: Colors.transparent,
             barrierColor: Colors.transparent,
             builder: (context) {
-              context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: false));
+              context
+                  .read<LoginSignUpBloc>()
+                  .add(HideMainTabEvent(showMainTab: false));
               return MapSheetDoctor(
                 deviceWidth: deviceWidth,
                 onPageChanged: (value) {
-                  onMapControllerChange(clusterDoctors[value].latitude, clusterDoctors[value].longitude);
+                  onMapControllerChange(clusterDoctors[value].latitude,
+                      clusterDoctors[value].longitude);
                 },
                 initialPoint: clusterDoctors.first,
                 doctors: clusterDoctors,
               );
             });
-        context.read<LoginSignUpBloc>().add(HideMainTabEvent(showMainTab: true));
+        context
+            .read<LoginSignUpBloc>()
+            .add(HideMainTabEvent(showMainTab: true));
       },
       onClusterAdded: (collection, cluster) async => cluster.copyWith(
         appearance: cluster.appearance.copyWith(
@@ -379,21 +412,25 @@ abstract class MyFunctions {
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      throw const ParsingException(errorMessage: LocaleKeys.location_services_disabled);
+      throw const ParsingException(
+          errorMessage: LocaleKeys.location_services_disabled);
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
+        throw const ParsingException(
+            errorMessage: LocaleKeys.location_permission_disabled);
       }
     }
     if (permission == LocationPermission.deniedForever) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
+        throw const ParsingException(
+            errorMessage: LocaleKeys.location_permission_disabled);
       } else if (permission == LocationPermission.deniedForever) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_permanent_disabled);
+        throw const ParsingException(
+            errorMessage: LocaleKeys.location_permission_permanent_disabled);
       }
     }
     return await Geolocator.getCurrentPosition();
@@ -440,7 +477,8 @@ abstract class MyFunctions {
   static String getPublishedDate(String date) {
     if (Jiffy(date).isSame(DateTime.now(), Units.DAY)) {
       return '${LocaleKeys.today.tr()}, ${Jiffy(date).format('HH:mm')}';
-    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 || Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
+    } else if (Jiffy(date).diff(DateTime.now(), Units.DAY) == 1 ||
+        Jiffy(date).diff(DateTime.now(), Units.DAY) == -1) {
       return '${LocaleKeys.yesterday.tr()}, ${Jiffy(date).format('HH:mm')}';
     } else {
       return '${Jiffy(date).date} ${getMonth(Jiffy(date).month)}, ${Jiffy(date).year}';

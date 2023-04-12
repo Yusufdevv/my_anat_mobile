@@ -67,7 +67,8 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context, rootNavigator: true).pushReplacement(
+                      Navigator.of(context, rootNavigator: true)
+                          .pushReplacement(
                         fade(
                           page: DoctorSingleScreen(
                             id: id,
@@ -104,14 +105,20 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                           title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(fontSize: 20),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           specialization,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.displaySmall!.copyWith(color: primary),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(color: primary),
                         ),
                       ],
                     ),
@@ -161,7 +168,10 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                 children: [
                   Text(
                     rating.toString(),
-                    style: Theme.of(context).textTheme.displaySmall!.copyWith(color: darkGreen),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall!
+                        .copyWith(color: darkGreen),
                   ),
                   const SizedBox(width: 8),
                   ...List.generate(
@@ -175,7 +185,8 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                     5 - rating.toInt(),
                     (index) => Padding(
                       padding: const EdgeInsets.only(right: 4),
-                      child: SvgPicture.asset(AppIcons.star, color: inactiveStar),
+                      child:
+                          SvgPicture.asset(AppIcons.star, color: inactiveStar),
                     ),
                   ),
                 ],
@@ -187,7 +198,8 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                     child: WButton(
                       onTap: () {
                         if (isHospital) {
-                          Navigator.of(context, rootNavigator: true).pushReplacement(
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(
                             fade(
                               page: HospitalSingleScreen(
                                 slug: slug,
@@ -196,7 +208,8 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                             ),
                           );
                         } else {
-                          Navigator.of(context, rootNavigator: true).pushReplacement(
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(
                             fade(
                               page: DoctorSingleScreen(
                                 id: id,
@@ -216,22 +229,34 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                     onTap: () async {
                       Navigator.of(context).pop();
                       if (Platform.isAndroid) {
-                        if (await map_launcher.MapLauncher.isMapAvailable(map_launcher.MapType.google) ?? false) {
+                        if (await map_launcher.MapLauncher.isMapAvailable(
+                                map_launcher.MapType.google) ??
+                            false) {
                           await map_launcher.MapLauncher.showDirections(
                               mapType: map_launcher.MapType.google,
-                              destination: map_launcher.Coords(location.latitude, location.longitude));
+                              destination: map_launcher.Coords(
+                                  location.latitude, location.longitude));
                         } else {
-                          var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
-                          await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
+                          var uri = Uri.parse(
+                              'geo:${location.latitude},${location.longitude}');
+                          await canLaunchUrl(uri)
+                              ? await launchUrl(uri)
+                              : throw 'can not open this location';
                         }
                       } else {
-                        if (await map_launcher.MapLauncher.isMapAvailable(map_launcher.MapType.apple) ?? false) {
+                        if (await map_launcher.MapLauncher.isMapAvailable(
+                                map_launcher.MapType.apple) ??
+                            false) {
                           await map_launcher.MapLauncher.showDirections(
                               mapType: map_launcher.MapType.apple,
-                              destination: map_launcher.Coords(location.latitude, location.longitude));
+                              destination: map_launcher.Coords(
+                                  location.latitude, location.longitude));
                         } else {
-                          var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
-                          await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open this location';
+                          var uri = Uri.parse(
+                              'geo:${location.latitude},${location.longitude}');
+                          await canLaunchUrl(uri)
+                              ? await launchUrl(uri)
+                              : throw 'can not open this location';
                         }
                       }
                       // var uri = Uri.parse('geo:${location.latitude},${location.longitude}');
@@ -247,7 +272,9 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                     color: white,
                     onTap: () async {
                       var uri = Uri.parse('tel:$phone');
-                      await canLaunchUrl(uri) ? await launchUrl(uri) : throw 'can not open phone';
+                      await canLaunchUrl(uri)
+                          ? await launchUrl(uri)
+                          : throw 'can not open phone';
                     },
                     border: Border.all(color: primary),
                     padding: const EdgeInsets.all(8),

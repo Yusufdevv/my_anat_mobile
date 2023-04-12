@@ -47,7 +47,9 @@ class MapSheetDoctor extends StatelessWidget {
                   phone: doctors[index].phoneNumbers[0].first,
                   address: doctors[index].address,
                   images: [doctors[index].image.middle],
-                  location: Point(latitude: doctors[index].latitude, longitude: doctors[index].longitude),
+                  location: Point(
+                      latitude: doctors[index].latitude,
+                      longitude: doctors[index].longitude),
                   rating: doctors[index].rating + 0,
                 ),
               );
