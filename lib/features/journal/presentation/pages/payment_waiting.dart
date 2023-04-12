@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
+import 'package:lottie/lottie.dart';
 
 class PaymentWaiting extends StatelessWidget {
   final bool isRegistered;
@@ -55,32 +56,38 @@ class PaymentWaiting extends StatelessWidget {
               .copyWith(color: textColor, fontSize: 20),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(AppIcons.expect),
-            const SizedBox(height: 16),
-            Text(
-              LocaleKeys.expect.tr(),
-              style: Theme.of(context)
-                  .textTheme
-                  .displayLarge!
-                  .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              isSubscription
-                  ? LocaleKeys.subscription_waiting.tr()
-                  : LocaleKeys.realization_expect.tr(args: [title]),
-              style: Theme.of(context)
-                  .textTheme
-                  .displaySmall!
-                  .copyWith(fontWeight: FontWeight.w400),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // SvgPicture.asset(AppIcons.expect),
+          SizedBox(
+              height: 220,
+              width: 220,
+              child: Lottie.asset('assets/lotties/waiting_lottie.json', fit: BoxFit.cover)),
+          Text(
+            // LocaleKeys.expect.tr(),
+            // TODO add to localization
+          'Оплата ожидается',
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 4, width: double.maxFinite,),
+          Text(
+            // isSubscription
+            //     ? LocaleKeys.subscription_waiting.tr()
+            //     : LocaleKeys.realization_expect.tr(args: [title]),
+            // TODO add to localization
+          'Процесс оплаты идет вне приложении',
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall!
+                .copyWith(fontWeight: FontWeight.w400),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
       bottomNavigationBar: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, state) {

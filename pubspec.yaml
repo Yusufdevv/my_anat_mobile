@@ -85,6 +85,7 @@ flutter:
   assets:
     - assets/
     - assets/fonts/
+    - assets/lotties/
     - assets/fonts/averta_cy/
     - assets/icons/
     - assets/images/
