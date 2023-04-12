@@ -7,6 +7,7 @@ import 'package:anatomica/features/hospital_single/domain/entities/comfort_entit
 import 'package:anatomica/features/hospital_single/domain/entities/comment_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_service_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_service_single.dart';
+import 'package:anatomica/features/hospital_single/domain/entities/hospital_service_special_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_single_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/post_comment_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/repositories/hospital_single_repository.dart';
@@ -38,11 +39,29 @@ class HospitalSingleRepositoryImpl extends HospitalSingleRepository {
 
   @override
   Future<Either<Failure, GenericPagination<HospitalServiceEntity>>>
-      getHospitalServices(
-          {required int id, String? next, String search = ''}) async {
+      getHospitalServicesOrg(
+          {required int orgId, required int specId, String? next, String search = ''}) async {
     try {
-      final result = await datasource.getHospitalServices(
-          id: id, next: next, search: search);
+      final result = await datasource.getHospitalServicesOrg(
+          orgId: orgId, next: next, search: search, specId: specId);
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+          errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, GenericPagination<HospitalServiceSpecialEntity>>>
+      getHospitalServicesSpecial(
+          {required int orgId, String? next, String search = ''}) async {
+    try {
+      final result = await datasource.getHospitalServicesSpecial(
+          orgId: orgId, next: next, search: search,);
       return Right(result);
     } on DioException {
       return Left(DioFailure());
@@ -56,10 +75,10 @@ class HospitalSingleRepositoryImpl extends HospitalSingleRepository {
 
   @override
   Future<Either<Failure, GenericPagination<HospitalDoctorsEntity>>>
-      getHospitalSpecialists({required int id, String? next}) async {
+      getHospitalSpecialistsDoctors({required int id, String? next}) async {
     try {
       final result =
-          await datasource.getHospitalSpecialists(id: id, next: next);
+          await datasource.getHospitalSpecialistsDoctors(id: id, next: next);
       return Right(result);
     } on DioException {
       return Left(DioFailure());

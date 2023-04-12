@@ -5,6 +5,7 @@ import 'package:anatomica/features/hospital_single/data/models/comfort_model.dar
 import 'package:anatomica/features/hospital_single/data/models/comment_model.dart';
 import 'package:anatomica/features/hospital_single/data/models/hospital_service_model.dart';
 import 'package:anatomica/features/hospital_single/data/models/hospital_service_single_model.dart';
+import 'package:anatomica/features/hospital_single/data/models/hospital_service_special_model.dart';
 import 'package:anatomica/features/hospital_single/data/models/hospital_single_model.dart';
 import 'package:anatomica/features/hospital_single/data/models/post_comment_model.dart';
 import 'package:anatomica/features/journal/data/models/journal_article_model.dart';
@@ -16,10 +17,13 @@ import 'package:dio/dio.dart';
 abstract class HospitalSingleDatasource {
   Future<HospitalSingleModel> getHospitalSingle({required String slug});
 
-  Future<GenericPagination<HospitalServiceModel>> getHospitalServices(
-      {required int id, String? next, String search = ''});
+  Future<GenericPagination<HospitalServiceModel>> getHospitalServicesOrg(
+      {required int orgId,required int specId, String? next, String search = ''});
 
-  Future<GenericPagination<HospitalDoctorsModel>> getHospitalSpecialists({required int id, String? next});
+  Future<GenericPagination<HospitalServiceSpecialModel>> getHospitalServicesSpecial(
+      {required int orgId, String? next, String search = ''});
+
+  Future<GenericPagination<HospitalDoctorsModel>> getHospitalSpecialistsDoctors({required int id, String? next});
 
   Future<GenericPagination<ComfortModel>> getHospitalConditions({required int id, String? next});
 
@@ -64,12 +68,12 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
   }
 
   @override
-  Future<GenericPagination<HospitalServiceModel>> getHospitalServices(
-      {required int id, String? next, String search = ''}) async {
+  Future<GenericPagination<HospitalServiceModel>> getHospitalServicesOrg(
+      {required int orgId,required int specId, String? next, String search = ''}) async {
     try {
       final response = await _dio.get(
         next ?? '/organization/service/',
-        queryParameters: {'organization_id': id, 'search': search},
+        queryParameters: {'organization_id': orgId, 'specialization_id': specId, 'search': search},
         options: Options(
             headers: StorageRepository.getString('token').isNotEmpty
                 ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
@@ -89,9 +93,54 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       throw ParsingException(errorMessage: e.toString());
     }
   }
+  ///
+  @override
+  Future<GenericPagination<HospitalServiceSpecialModel>> getHospitalServicesSpecial(
+      {required int orgId, String? next, String search = ''}) async {
+    try {
+      final response = await _dio.get(
+        next ?? '/organization/specialization/v2/',
+        queryParameters: {'organization_id': orgId, 'search': search},
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}),
+      );
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(
+            response.data, (p0) => HospitalServiceSpecialModel.fromJson(p0 as Map<String, dynamic>));
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
 
   @override
-  Future<GenericPagination<HospitalDoctorsModel>> getHospitalSpecialists({required int id, String? next}) async {
+  Future<HospitalSingleServiceModel> getSingleService({required int id}) async {
+    try {
+      final response = await _dio.get('/organization/service/$id/detail/');
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return HospitalSingleServiceModel.fromJson(response.data);
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<GenericPagination<HospitalDoctorsModel>> getHospitalSpecialistsDoctors({required int id, String? next}) async {
     try {
       final response = await _dio.get(next ?? '/organization/doctor/',
           queryParameters: {'organization_id': id},
@@ -246,21 +295,5 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
     }
   }
 
-  @override
-  Future<HospitalSingleServiceModel> getSingleService({required int id}) async {
-    try {
-      final response = await _dio.get('/organization/service/$id/detail/');
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return HospitalSingleServiceModel.fromJson(response.data);
-      } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
-      }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
-    }
-  }
+
 }
