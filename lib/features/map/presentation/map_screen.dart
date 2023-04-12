@@ -40,7 +40,8 @@ class MapScreen extends StatefulWidget {
   State<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, WidgetsBindingObserver {
+class _MapScreenState extends State<MapScreen>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late TextEditingController _searchFieldController;
   late MapOrganizationBloc mapOrganizationBloc;
   late OrgMapV2Bloc orgMapV2Bloc;
@@ -58,7 +59,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
 
   @override
   void initState() {
-    specBloc = SpecializationBloc(GetSpecializationUseCase())..add(SpecializationEvent.getSpecs());
+    specBloc = SpecializationBloc(GetSpecializationUseCase())
+      ..add(SpecializationEvent.getSpecs());
     mapOrganizationBloc = MapOrganizationBloc(
       // onPointsCreated: (placemarks) {
       //   _mapObjects.clear();
@@ -69,12 +71,16 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
       deviceWidth: widget.deviceWidth,
       GetMapHospitalUseCase(),
       GetMapDoctorUseCase(),
-      getTypesUseCase: GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
+      getTypesUseCase:
+          GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
     );
     orgMapV2Bloc = OrgMapV2Bloc(
-        useCase: GetMapHospitalsWithDistanceUseCase(mapRepository: serviceLocator<MapRepositoryImpl>()),
-        typesUseCase: GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
-        serviceUsecase: GetServicesV2UseCase(repository: serviceLocator<MapRepositoryImpl>()));
+        useCase: GetMapHospitalsWithDistanceUseCase(
+            mapRepository: serviceLocator<MapRepositoryImpl>()),
+        typesUseCase:
+            GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
+        serviceUsecase: GetServicesV2UseCase(
+            repository: serviceLocator<MapRepositoryImpl>()));
 
     _searchFieldController = TextEditingController();
     WidgetsBinding.instance.addObserver(this);
@@ -107,8 +113,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
             },
             listener: (context, state) {
               _searchFieldController.text = state.searchText;
-              mapOrganizationBloc.add(MapOrganizationEvent.getDoctors(context: context));
-              mapOrganizationBloc.add(MapOrganizationEvent.getHospitals(context: context));
+              mapOrganizationBloc
+                  .add(MapOrganizationEvent.getDoctors(context: context));
+              mapOrganizationBloc
+                  .add(MapOrganizationEvent.getHospitals(context: context));
             },
             builder: (context, state) {
               return Stack(
@@ -118,19 +126,26 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                     top: -24,
                     child: YandexMap(
                       rotateGesturesEnabled: false,
-                      onCameraPositionChanged: (cameraPosition, updateReason, isStopped) async {
+                      onCameraPositionChanged:
+                          (cameraPosition, updateReason, isStopped) async {
                         if (isStopped) {
                           zoomLevel = cameraPosition.zoom;
-                          mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
-                              lat: cameraPosition.target.latitude,
-                              long: cameraPosition.target.longitude,
-                              radius: MyFunctions.getRadiusFromZoom(cameraPosition.zoom).floor()));
-                          await StorageRepository.putDouble('lat', cameraPosition.target.latitude);
-                          await StorageRepository.putDouble('long', cameraPosition.target.longitude);
+                          mapOrganizationBloc.add(
+                              MapOrganizationEvent.changeLatLong(
+                                  lat: cameraPosition.target.latitude,
+                                  long: cameraPosition.target.longitude,
+                                  radius: MyFunctions.getRadiusFromZoom(
+                                          cameraPosition.zoom)
+                                      .floor()));
+                          await StorageRepository.putDouble(
+                              'lat', cameraPosition.target.latitude);
+                          await StorageRepository.putDouble(
+                              'long', cameraPosition.target.longitude);
                         }
                       },
                       onMapTap: (point) {
-                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                        WidgetsBinding.instance.focusManager.primaryFocus
+                            ?.unfocus();
                       },
                       mapObjects: state.mapObjects,
                       onMapCreated: (controller) {
@@ -153,7 +168,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                       decoration: BoxDecoration(
                         color: Colors.teal,
                         gradient: LinearGradient(
-                            colors: [white.withOpacity(0.65), white.withOpacity(0)],
+                            colors: [
+                              white.withOpacity(0.65),
+                              white.withOpacity(0)
+                            ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter),
                       ),
@@ -188,19 +206,23 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                           controller: state.tabController,
                           padding: EdgeInsets.zero,
                           indicatorPadding: EdgeInsets.zero,
-                          indicator: BoxDecoration(color: white, borderRadius: BorderRadius.circular(6), boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 8),
-                              blurRadius: 24,
-                              color: chipShadowColor.withOpacity(0.19),
-                            ),
-                          ]),
+                          indicator: BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 8),
+                                  blurRadius: 24,
+                                  color: chipShadowColor.withOpacity(0.19),
+                                ),
+                              ]),
                           labelPadding: EdgeInsets.zero,
                           labelStyle: Theme.of(context).textTheme.displaySmall,
                           labelColor: textColor,
                           onTap: (index) async {
                             if (state.tabController?.indexIsChanging ?? false) {
-                              orgMapV2Bloc.add(OrgMapV2Event.changeTab(index: state.tabController?.index ?? 0));
+                              orgMapV2Bloc.add(OrgMapV2Event.changeTab(
+                                  index: state.tabController?.index ?? 0));
 
                               mapOrganizationBloc.add(
                                 MapOrganizationEvent.changeTab(
@@ -236,33 +258,54 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                     Padding(
                                       padding: const EdgeInsets.all(16),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
                                         children: [
                                           const SizedBox(),
                                           MapControllerButtons(
                                             onCurrentLocationTap: () async {
-                                              context.read<MapOrganizationBloc>().add(
-                                                    MapOrganizationEvent.getCurrentLocation(
+                                              context
+                                                  .read<MapOrganizationBloc>()
+                                                  .add(
+                                                    MapOrganizationEvent
+                                                        .getCurrentLocation(
                                                       context: context,
-                                                      onSuccess: (position) async {
-                                                        accuracy = position.accuracy;
-                                                        state.mapController!.moveCamera(
-                                                          CameraUpdate.newCameraPosition(
+                                                      onSuccess:
+                                                          (position) async {
+                                                        accuracy =
+                                                            position.accuracy;
+                                                        state.mapController!
+                                                            .moveCamera(
+                                                          CameraUpdate
+                                                              .newCameraPosition(
                                                             CameraPosition(
                                                               target: Point(
-                                                                  latitude: position.latitude,
-                                                                  longitude: position.longitude),
+                                                                  latitude: position
+                                                                      .latitude,
+                                                                  longitude:
+                                                                      position
+                                                                          .longitude),
                                                               zoom: 15,
                                                             ),
                                                           ),
-                                                          animation: const MapAnimation(
-                                                              duration: 0.15, type: MapAnimationType.smooth),
+                                                          animation:
+                                                              const MapAnimation(
+                                                                  duration:
+                                                                      0.15,
+                                                                  type: MapAnimationType
+                                                                      .smooth),
                                                         );
                                                         zoomLevel = 15;
                                                       },
                                                       onError: (message) {
-                                                        context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                                                        context
+                                                            .read<
+                                                                ShowPopUpBloc>()
+                                                            .add(ShowPopUp(
+                                                                message:
+                                                                    message));
                                                       },
                                                     ),
                                                   );
@@ -271,9 +314,12 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                             onMinusTap: () {
                                               if (minZoomLevel < zoomLevel) {
                                                 state.mapController!.moveCamera(
-                                                  CameraUpdate.zoomTo(zoomLevel - 1),
-                                                  animation:
-                                                      const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
+                                                  CameraUpdate.zoomTo(
+                                                      zoomLevel - 1),
+                                                  animation: const MapAnimation(
+                                                      duration: 0.2,
+                                                      type: MapAnimationType
+                                                          .smooth),
                                                 );
                                                 zoomLevel--;
                                               }
@@ -281,9 +327,12 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                             onPlusTap: () async {
                                               if (maxZoomLevel > zoomLevel) {
                                                 state.mapController!.moveCamera(
-                                                  CameraUpdate.zoomTo(zoomLevel + 1),
-                                                  animation:
-                                                      const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
+                                                  CameraUpdate.zoomTo(
+                                                      zoomLevel + 1),
+                                                  animation: const MapAnimation(
+                                                      duration: 0.2,
+                                                      type: MapAnimationType
+                                                          .smooth),
                                                 );
                                                 zoomLevel++;
                                               }
@@ -294,10 +343,17 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                     ),
                                     Container(
                                       padding: EdgeInsets.fromLTRB(
-                                          16, 16, 16, MediaQuery.of(context).viewInsets.bottom + 43),
+                                          16,
+                                          16,
+                                          16,
+                                          MediaQuery.of(context)
+                                                  .viewInsets
+                                                  .bottom +
+                                              43),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(16),
-                                        border: Border.all(color: textFieldColor),
+                                        border:
+                                            Border.all(color: textFieldColor),
                                         color: white,
                                       ),
                                       child: GestureDetector(
@@ -306,16 +362,25 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                             Expanded(
                                               child: WButton(
                                                 onTap: () {
-                                                  Navigator.of(context).push(fade(
-                                                      page: HospitalList(
-                                                    controller: state.tabController!,
-                                                    myLocation:
-                                                        Point(longitude: state.currentLong, latitude: state.currentLat),
+                                                  Navigator.of(context)
+                                                      .push(fade(
+                                                          page: HospitalList(
+                                                    controller:
+                                                        state.tabController!,
+                                                    myLocation: Point(
+                                                        longitude:
+                                                            state.currentLong,
+                                                        latitude:
+                                                            state.currentLat),
                                                     orgMapV2Bloc: orgMapV2Bloc,
                                                   )));
                                                 },
-                                                border: Border.all(color: divider),
-                                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                                                border:
+                                                    Border.all(color: divider),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 12),
                                                 borderRadius: 10,
                                                 color: Colors.white,
                                                 child: Row(
@@ -333,7 +398,11 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .displayLarge!
-                                                          .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                                                          .copyWith(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
                                                     )
                                                   ],
                                                 ),
@@ -343,19 +412,28 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                             Expanded(
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  Navigator.of(context).push(fade(
-                                                      page: HospitalList(
+                                                  Navigator.of(context)
+                                                      .push(fade(
+                                                          page: HospitalList(
                                                     getFocus: true,
-                                                    controller: state.tabController!,
-                                                    myLocation:
-                                                        Point(longitude: state.currentLong, latitude: state.currentLat),
+                                                    controller:
+                                                        state.tabController!,
+                                                    myLocation: Point(
+                                                        longitude:
+                                                            state.currentLong,
+                                                        latitude:
+                                                            state.currentLat),
                                                     orgMapV2Bloc: orgMapV2Bloc,
                                                   )));
                                                 },
                                                 child: Container(
-                                                  padding: const EdgeInsets.all(10),
+                                                  padding:
+                                                      const EdgeInsets.all(10),
                                                   decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10), color: lilyWhite),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      color: lilyWhite),
                                                   child: Column(
                                                     children: [
                                                       Row(
@@ -370,20 +448,34 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                                           ),
                                                           Expanded(
                                                             child: Text(
-                                                              LocaleKeys.search.tr(),
-                                                              style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                                                                  color: state.searchText.isNotEmpty
-                                                                      ? textColor
-                                                                      : textSecondary,
-                                                                  fontWeight: FontWeight.w600,
-                                                                  fontSize: 14),
+                                                              LocaleKeys.search
+                                                                  .tr(),
+                                                              style: Theme
+                                                                      .of(
+                                                                          context)
+                                                                  .textTheme
+                                                                  .displayLarge!
+                                                                  .copyWith(
+                                                                      color: state
+                                                                              .searchText
+                                                                              .isNotEmpty
+                                                                          ? textColor
+                                                                          : textSecondary,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      fontSize:
+                                                                          14),
                                                             ),
                                                           ),
-                                                          if (state.searchText.isNotEmpty) ...{
+                                                          if (state.searchText
+                                                              .isNotEmpty) ...{
                                                             GestureDetector(
                                                               onTap: () {},
-                                                              child: SvgPicture.asset(
-                                                                AppIcons.clearRounded,
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                AppIcons
+                                                                    .clearRounded,
                                                                 width: 24,
                                                                 height: 24,
                                                               ),
