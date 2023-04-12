@@ -1,3 +1,5 @@
+import 'package:anatomica/features/map/data/models/hospital_doctors_model.dart';
+import 'package:anatomica/features/map/data/models/map_doctor.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_map_entity.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctor_single_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +9,8 @@ class MapSheetDoctor extends StatelessWidget {
   final List<DoctorMapEntity> doctors;
   final DoctorMapEntity initialPoint;
   final Function(int) onPageChanged;
-  final double deviceWidth;
 
-  const MapSheetDoctor(
-      {required this.deviceWidth,
-      required this.onPageChanged,
-      required this.initialPoint,
-      required this.doctors,
-      Key? key})
+  const MapSheetDoctor({required this.onPageChanged, required this.initialPoint, required this.doctors, Key? key})
       : super(key: key);
 
   @override
@@ -36,7 +32,6 @@ class MapSheetDoctor extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16, left: 8),
                 child: DoctorSingleBottomSheet(
-                  deviceWidth: deviceWidth,
                   id: doctors[index].id,
                   isHospital: false,
                   specialization: doctors[index].position,
