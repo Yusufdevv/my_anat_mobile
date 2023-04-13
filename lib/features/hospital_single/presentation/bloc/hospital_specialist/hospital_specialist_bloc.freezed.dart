@@ -15,59 +15,65 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$HospitalSpecialistEvent {
+mixin _$HospitalSpecialistDoctorsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int organizationId) getSpecialists,
-    required TResult Function() getMoreSpecialists,
+    required TResult Function(int organizationId) getSpecialistsDoctors,
+    required TResult Function() getMoreSpecialistsDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int organizationId)? getSpecialists,
-    TResult? Function()? getMoreSpecialists,
+    TResult? Function(int organizationId)? getSpecialistsDoctors,
+    TResult? Function()? getMoreSpecialistsDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int organizationId)? getSpecialists,
-    TResult Function()? getMoreSpecialists,
+    TResult Function(int organizationId)? getSpecialistsDoctors,
+    TResult Function()? getMoreSpecialistsDoctors,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_GetSpecialists value) getSpecialists,
-    required TResult Function(_GetMoreSpecialists value) getMoreSpecialists,
+    required TResult Function(_GetSpecialistsDoctors value)
+        getSpecialistsDoctors,
+    required TResult Function(_GetMoreSpecialistsDoctors value)
+        getMoreSpecialistsDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetSpecialists value)? getSpecialists,
-    TResult? Function(_GetMoreSpecialists value)? getMoreSpecialists,
+    TResult? Function(_GetSpecialistsDoctors value)? getSpecialistsDoctors,
+    TResult? Function(_GetMoreSpecialistsDoctors value)?
+        getMoreSpecialistsDoctors,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetSpecialists value)? getSpecialists,
-    TResult Function(_GetMoreSpecialists value)? getMoreSpecialists,
+    TResult Function(_GetSpecialistsDoctors value)? getSpecialistsDoctors,
+    TResult Function(_GetMoreSpecialistsDoctors value)?
+        getMoreSpecialistsDoctors,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HospitalSpecialistEventCopyWith<$Res> {
-  factory $HospitalSpecialistEventCopyWith(HospitalSpecialistEvent value,
-          $Res Function(HospitalSpecialistEvent) then) =
-      _$HospitalSpecialistEventCopyWithImpl<$Res, HospitalSpecialistEvent>;
+abstract class $HospitalSpecialistDoctorsEventCopyWith<$Res> {
+  factory $HospitalSpecialistDoctorsEventCopyWith(
+          HospitalSpecialistDoctorsEvent value,
+          $Res Function(HospitalSpecialistDoctorsEvent) then) =
+      _$HospitalSpecialistDoctorsEventCopyWithImpl<$Res,
+          HospitalSpecialistDoctorsEvent>;
 }
 
 /// @nodoc
-class _$HospitalSpecialistEventCopyWithImpl<$Res,
-        $Val extends HospitalSpecialistEvent>
-    implements $HospitalSpecialistEventCopyWith<$Res> {
-  _$HospitalSpecialistEventCopyWithImpl(this._value, this._then);
+class _$HospitalSpecialistDoctorsEventCopyWithImpl<$Res,
+        $Val extends HospitalSpecialistDoctorsEvent>
+    implements $HospitalSpecialistDoctorsEventCopyWith<$Res> {
+  _$HospitalSpecialistDoctorsEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -76,20 +82,21 @@ class _$HospitalSpecialistEventCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_GetSpecialistsCopyWith<$Res> {
-  factory _$$_GetSpecialistsCopyWith(
-          _$_GetSpecialists value, $Res Function(_$_GetSpecialists) then) =
-      __$$_GetSpecialistsCopyWithImpl<$Res>;
+abstract class _$$_GetSpecialistsDoctorsCopyWith<$Res> {
+  factory _$$_GetSpecialistsDoctorsCopyWith(_$_GetSpecialistsDoctors value,
+          $Res Function(_$_GetSpecialistsDoctors) then) =
+      __$$_GetSpecialistsDoctorsCopyWithImpl<$Res>;
   @useResult
   $Res call({int organizationId});
 }
 
 /// @nodoc
-class __$$_GetSpecialistsCopyWithImpl<$Res>
-    extends _$HospitalSpecialistEventCopyWithImpl<$Res, _$_GetSpecialists>
-    implements _$$_GetSpecialistsCopyWith<$Res> {
-  __$$_GetSpecialistsCopyWithImpl(
-      _$_GetSpecialists _value, $Res Function(_$_GetSpecialists) _then)
+class __$$_GetSpecialistsDoctorsCopyWithImpl<$Res>
+    extends _$HospitalSpecialistDoctorsEventCopyWithImpl<$Res,
+        _$_GetSpecialistsDoctors>
+    implements _$$_GetSpecialistsDoctorsCopyWith<$Res> {
+  __$$_GetSpecialistsDoctorsCopyWithImpl(_$_GetSpecialistsDoctors _value,
+      $Res Function(_$_GetSpecialistsDoctors) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -97,7 +104,7 @@ class __$$_GetSpecialistsCopyWithImpl<$Res>
   $Res call({
     Object? organizationId = null,
   }) {
-    return _then(_$_GetSpecialists(
+    return _then(_$_GetSpecialistsDoctors(
       organizationId: null == organizationId
           ? _value.organizationId
           : organizationId // ignore: cast_nullable_to_non_nullable
@@ -108,22 +115,22 @@ class __$$_GetSpecialistsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GetSpecialists implements _GetSpecialists {
-  _$_GetSpecialists({required this.organizationId});
+class _$_GetSpecialistsDoctors implements _GetSpecialistsDoctors {
+  _$_GetSpecialistsDoctors({required this.organizationId});
 
   @override
   final int organizationId;
 
   @override
   String toString() {
-    return 'HospitalSpecialistEvent.getSpecialists(organizationId: $organizationId)';
+    return 'HospitalSpecialistDoctorsEvent.getSpecialistsDoctors(organizationId: $organizationId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GetSpecialists &&
+            other is _$_GetSpecialistsDoctors &&
             (identical(other.organizationId, organizationId) ||
                 other.organizationId == organizationId));
   }
@@ -134,36 +141,37 @@ class _$_GetSpecialists implements _GetSpecialists {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_GetSpecialistsCopyWith<_$_GetSpecialists> get copyWith =>
-      __$$_GetSpecialistsCopyWithImpl<_$_GetSpecialists>(this, _$identity);
+  _$$_GetSpecialistsDoctorsCopyWith<_$_GetSpecialistsDoctors> get copyWith =>
+      __$$_GetSpecialistsDoctorsCopyWithImpl<_$_GetSpecialistsDoctors>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int organizationId) getSpecialists,
-    required TResult Function() getMoreSpecialists,
+    required TResult Function(int organizationId) getSpecialistsDoctors,
+    required TResult Function() getMoreSpecialistsDoctors,
   }) {
-    return getSpecialists(organizationId);
+    return getSpecialistsDoctors(organizationId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int organizationId)? getSpecialists,
-    TResult? Function()? getMoreSpecialists,
+    TResult? Function(int organizationId)? getSpecialistsDoctors,
+    TResult? Function()? getMoreSpecialistsDoctors,
   }) {
-    return getSpecialists?.call(organizationId);
+    return getSpecialistsDoctors?.call(organizationId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int organizationId)? getSpecialists,
-    TResult Function()? getMoreSpecialists,
+    TResult Function(int organizationId)? getSpecialistsDoctors,
+    TResult Function()? getMoreSpecialistsDoctors,
     required TResult orElse(),
   }) {
-    if (getSpecialists != null) {
-      return getSpecialists(organizationId);
+    if (getSpecialistsDoctors != null) {
+      return getSpecialistsDoctors(organizationId);
     }
     return orElse();
   }
@@ -171,75 +179,84 @@ class _$_GetSpecialists implements _GetSpecialists {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_GetSpecialists value) getSpecialists,
-    required TResult Function(_GetMoreSpecialists value) getMoreSpecialists,
+    required TResult Function(_GetSpecialistsDoctors value)
+        getSpecialistsDoctors,
+    required TResult Function(_GetMoreSpecialistsDoctors value)
+        getMoreSpecialistsDoctors,
   }) {
-    return getSpecialists(this);
+    return getSpecialistsDoctors(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetSpecialists value)? getSpecialists,
-    TResult? Function(_GetMoreSpecialists value)? getMoreSpecialists,
+    TResult? Function(_GetSpecialistsDoctors value)? getSpecialistsDoctors,
+    TResult? Function(_GetMoreSpecialistsDoctors value)?
+        getMoreSpecialistsDoctors,
   }) {
-    return getSpecialists?.call(this);
+    return getSpecialistsDoctors?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetSpecialists value)? getSpecialists,
-    TResult Function(_GetMoreSpecialists value)? getMoreSpecialists,
+    TResult Function(_GetSpecialistsDoctors value)? getSpecialistsDoctors,
+    TResult Function(_GetMoreSpecialistsDoctors value)?
+        getMoreSpecialistsDoctors,
     required TResult orElse(),
   }) {
-    if (getSpecialists != null) {
-      return getSpecialists(this);
+    if (getSpecialistsDoctors != null) {
+      return getSpecialistsDoctors(this);
     }
     return orElse();
   }
 }
 
-abstract class _GetSpecialists implements HospitalSpecialistEvent {
-  factory _GetSpecialists({required final int organizationId}) =
-      _$_GetSpecialists;
+abstract class _GetSpecialistsDoctors
+    implements HospitalSpecialistDoctorsEvent {
+  factory _GetSpecialistsDoctors({required final int organizationId}) =
+      _$_GetSpecialistsDoctors;
 
   int get organizationId;
   @JsonKey(ignore: true)
-  _$$_GetSpecialistsCopyWith<_$_GetSpecialists> get copyWith =>
+  _$$_GetSpecialistsDoctorsCopyWith<_$_GetSpecialistsDoctors> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_GetMoreSpecialistsCopyWith<$Res> {
-  factory _$$_GetMoreSpecialistsCopyWith(_$_GetMoreSpecialists value,
-          $Res Function(_$_GetMoreSpecialists) then) =
-      __$$_GetMoreSpecialistsCopyWithImpl<$Res>;
+abstract class _$$_GetMoreSpecialistsDoctorsCopyWith<$Res> {
+  factory _$$_GetMoreSpecialistsDoctorsCopyWith(
+          _$_GetMoreSpecialistsDoctors value,
+          $Res Function(_$_GetMoreSpecialistsDoctors) then) =
+      __$$_GetMoreSpecialistsDoctorsCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_GetMoreSpecialistsCopyWithImpl<$Res>
-    extends _$HospitalSpecialistEventCopyWithImpl<$Res, _$_GetMoreSpecialists>
-    implements _$$_GetMoreSpecialistsCopyWith<$Res> {
-  __$$_GetMoreSpecialistsCopyWithImpl(
-      _$_GetMoreSpecialists _value, $Res Function(_$_GetMoreSpecialists) _then)
+class __$$_GetMoreSpecialistsDoctorsCopyWithImpl<$Res>
+    extends _$HospitalSpecialistDoctorsEventCopyWithImpl<$Res,
+        _$_GetMoreSpecialistsDoctors>
+    implements _$$_GetMoreSpecialistsDoctorsCopyWith<$Res> {
+  __$$_GetMoreSpecialistsDoctorsCopyWithImpl(
+      _$_GetMoreSpecialistsDoctors _value,
+      $Res Function(_$_GetMoreSpecialistsDoctors) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_GetMoreSpecialists implements _GetMoreSpecialists {
-  _$_GetMoreSpecialists();
+class _$_GetMoreSpecialistsDoctors implements _GetMoreSpecialistsDoctors {
+  _$_GetMoreSpecialistsDoctors();
 
   @override
   String toString() {
-    return 'HospitalSpecialistEvent.getMoreSpecialists()';
+    return 'HospitalSpecialistDoctorsEvent.getMoreSpecialistsDoctors()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_GetMoreSpecialists);
+        (other.runtimeType == runtimeType &&
+            other is _$_GetMoreSpecialistsDoctors);
   }
 
   @override
@@ -248,30 +265,30 @@ class _$_GetMoreSpecialists implements _GetMoreSpecialists {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int organizationId) getSpecialists,
-    required TResult Function() getMoreSpecialists,
+    required TResult Function(int organizationId) getSpecialistsDoctors,
+    required TResult Function() getMoreSpecialistsDoctors,
   }) {
-    return getMoreSpecialists();
+    return getMoreSpecialistsDoctors();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int organizationId)? getSpecialists,
-    TResult? Function()? getMoreSpecialists,
+    TResult? Function(int organizationId)? getSpecialistsDoctors,
+    TResult? Function()? getMoreSpecialistsDoctors,
   }) {
-    return getMoreSpecialists?.call();
+    return getMoreSpecialistsDoctors?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int organizationId)? getSpecialists,
-    TResult Function()? getMoreSpecialists,
+    TResult Function(int organizationId)? getSpecialistsDoctors,
+    TResult Function()? getMoreSpecialistsDoctors,
     required TResult orElse(),
   }) {
-    if (getMoreSpecialists != null) {
-      return getMoreSpecialists();
+    if (getMoreSpecialistsDoctors != null) {
+      return getMoreSpecialistsDoctors();
     }
     return orElse();
   }
@@ -279,37 +296,42 @@ class _$_GetMoreSpecialists implements _GetMoreSpecialists {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_GetSpecialists value) getSpecialists,
-    required TResult Function(_GetMoreSpecialists value) getMoreSpecialists,
+    required TResult Function(_GetSpecialistsDoctors value)
+        getSpecialistsDoctors,
+    required TResult Function(_GetMoreSpecialistsDoctors value)
+        getMoreSpecialistsDoctors,
   }) {
-    return getMoreSpecialists(this);
+    return getMoreSpecialistsDoctors(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetSpecialists value)? getSpecialists,
-    TResult? Function(_GetMoreSpecialists value)? getMoreSpecialists,
+    TResult? Function(_GetSpecialistsDoctors value)? getSpecialistsDoctors,
+    TResult? Function(_GetMoreSpecialistsDoctors value)?
+        getMoreSpecialistsDoctors,
   }) {
-    return getMoreSpecialists?.call(this);
+    return getMoreSpecialistsDoctors?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetSpecialists value)? getSpecialists,
-    TResult Function(_GetMoreSpecialists value)? getMoreSpecialists,
+    TResult Function(_GetSpecialistsDoctors value)? getSpecialistsDoctors,
+    TResult Function(_GetMoreSpecialistsDoctors value)?
+        getMoreSpecialistsDoctors,
     required TResult orElse(),
   }) {
-    if (getMoreSpecialists != null) {
-      return getMoreSpecialists(this);
+    if (getMoreSpecialistsDoctors != null) {
+      return getMoreSpecialistsDoctors(this);
     }
     return orElse();
   }
 }
 
-abstract class _GetMoreSpecialists implements HospitalSpecialistEvent {
-  factory _GetMoreSpecialists() = _$_GetMoreSpecialists;
+abstract class _GetMoreSpecialistsDoctors
+    implements HospitalSpecialistDoctorsEvent {
+  factory _GetMoreSpecialistsDoctors() = _$_GetMoreSpecialistsDoctors;
 }
 
 /// @nodoc

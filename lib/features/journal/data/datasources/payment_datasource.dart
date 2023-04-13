@@ -168,7 +168,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
           throw ServerException(
               statusCode: response.statusCode!,
               errorMessage:
-                  ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'xato').toString());
+                  ((response.data as Map).values.isNotEmpty ? (response.data as Map).values.first : 'Xatolik').toString());
         } else {
           if (response.data is Map) {
             throw ServerException(

@@ -28,20 +28,13 @@ class _PaymentResultScreenState extends State<PaymentResultScreen> with WidgetsB
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
-        print('resumed');
         widget.bloc.add(CheckPaymentStatus());
         break;
       case AppLifecycleState.inactive:
-        print('inactive');
-
         break;
       case AppLifecycleState.paused:
-        print('paused');
-
         break;
       case AppLifecycleState.detached:
-        print('detached');
-
         break;
     }
   }

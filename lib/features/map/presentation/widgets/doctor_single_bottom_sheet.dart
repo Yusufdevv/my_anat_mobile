@@ -28,13 +28,11 @@ class DoctorSingleBottomSheet extends StatelessWidget {
   final String hospital;
   final Point location;
   final double rating;
-  final double deviceWidth;
   final bool isHospital;
 
   const DoctorSingleBottomSheet(
       {required this.title,
       required this.address,
-      required this.deviceWidth,
       required this.images,
       required this.specialization,
       required this.slug,
@@ -83,7 +81,7 @@ class DoctorSingleBottomSheet extends StatelessWidget {
                       width: 82,
                       height: 100,
                       onErrorWidget: Container(
-                        width: deviceWidth - 24,
+                        width: MediaQuery.of(context).size.width - 24,
                         alignment: Alignment.center,
                         color: errorImageBackground,
                         child: SvgPicture.asset(

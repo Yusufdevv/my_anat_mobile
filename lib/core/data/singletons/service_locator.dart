@@ -13,7 +13,7 @@ import 'package:anatomica/features/home/data/datasources/notification_datasource
 import 'package:anatomica/features/home/data/repository_impls/home_repo_impl.dart';
 import 'package:anatomica/features/home/data/repository_impls/notification_repo_impl.dart';
 import 'package:anatomica/features/hospital_single/data/datasources/hospital_single_datasource.dart';
-import 'package:anatomica/features/hospital_single/data/repository/hospital_repository.dart';
+import 'package:anatomica/features/hospital_single/data/repository/hospital_repository_impl.dart';
 import 'package:anatomica/features/journal/data/datasources/journal_datasource.dart';
 import 'package:anatomica/features/journal/data/datasources/payment_datasource.dart';
 import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';

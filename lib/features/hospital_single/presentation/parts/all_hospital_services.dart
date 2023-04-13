@@ -3,8 +3,10 @@ import 'package:anatomica/features/common/presentation/widgets/search_field.dart
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/services/services_bloc.dart';
+import 'package:anatomica/features/hospital_single/presentation/parts/hospital_service_categories_screen.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/map/presentation/widgets/sevice_item.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,8 +16,7 @@ import 'package:formz/formz.dart';
 class AllHospitalServices extends StatefulWidget {
   final ServicesBloc servicesBloc;
 
-  const AllHospitalServices({required this.servicesBloc, Key? key})
-      : super(key: key);
+  const AllHospitalServices({required this.servicesBloc, Key? key}) : super(key: key);
 
   @override
   State<AllHospitalServices> createState() => _AllHospitalServicesState();
@@ -39,8 +40,7 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
           builder: (context, state) {
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).padding.bottom + 16),
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16),
               child: Column(
                 children: [
                   Padding(
@@ -48,22 +48,19 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
                     child: SearchField(
                       controller: _controller,
                       onChanged: (v) {
-                        widget.servicesBloc
-                            .add(ServicesEvent.searchServices(query: v));
+                        widget.servicesBloc.add(ServicesEvent.searchServicesOrg(query: v));
                       },
                       fillColor: white,
                     ),
                   ),
-                  if (state.services.length > 20) ...{
+                  if (state.servicesSpecial.length > 20) ...{
                     Padding(
                       padding: const EdgeInsets.all(16).copyWith(bottom: 0),
                       child: SearchField(
                         fillColor: white,
                         controller: _controller,
                         onChanged: (value) {
-                          context
-                              .read<ServicesBloc>()
-                              .add(ServicesEvent.searchServices(query: value));
+                          context.read<ServicesBloc>().add(ServicesEvent.searchServicesOrg(query: value));
                         },
                       ),
                     ),
@@ -82,7 +79,7 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
                             child: CupertinoActivityIndicator(),
                           )
                         } else if (state.status.isSubmissionSuccess) ...{
-                          if (state.services.isEmpty) ...{
+                          if (state.servicesSpecial.isEmpty) ...{
                             const SizedBox(height: 16),
                             Center(
                               child: EmptyWidget(
@@ -93,8 +90,7 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
                                     : LocaleKeys.no_services.tr(),
                                 content: state.searchQuery.isNotEmpty
                                     ? LocaleKeys.result_not_found.tr()
-                                    : LocaleKeys.no_services_in_this_hospital
-                                        .tr(),
+                                    : LocaleKeys.no_services_in_this_hospital.tr(),
                               ),
                             )
                           } else ...{
@@ -105,13 +101,20 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
                               ),
                               child: Column(
                                 children: List.generate(
-                                  state.services.length,
+                                  state.servicesSpecial.length,
                                   (index) {
                                     return ServiceItem(
+                                      onTap: () {
+                                        Navigator.of(context).push(fade(
+                                            page: HospitalServiceCategoriesScreen(
+                                          appBarTitle: state.servicesSpecial[index].title,
+                                          specializationId: 0,
+                                          servicesBloc: widget.servicesBloc,
+                                        )));
+                                      },
                                       hightlightedText: state.searchQuery,
-                                      isLast:
-                                          index == state.services.length - 1,
-                                      entity: state.services[index],
+                                      isLast: index == state.servicesSpecial.length - 1,
+                                      title: state.servicesSpecial[index].title,
                                     );
                                   },
                                 ),
@@ -129,9 +132,7 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
                   if (state.fetchMore) ...[
                     WButton(
                       onTap: () {
-                        context
-                            .read<ServicesBloc>()
-                            .add(ServicesEvent.getMoreServices());
+                        context.read<ServicesBloc>().add(ServicesEvent.getMoreServicesOrg());
                       },
                       isLoading: state.paginationStatus.isSubmissionInProgress,
                       color: commentButton,

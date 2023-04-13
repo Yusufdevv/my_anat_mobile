@@ -1,3 +1,4 @@
+import 'package:anatomica/features/journal/domain/entities/product_entity.dart';
 import 'package:anatomica/features/profile/domain/entities/payment_history_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

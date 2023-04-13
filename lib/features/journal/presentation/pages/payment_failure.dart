@@ -7,16 +7,14 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 
 class PaymentFailure extends StatelessWidget {
   final bool isSubscription;
   final bool isRegistered;
   final String title;
-  const PaymentFailure(
-      {required this.isSubscription,
-      required this.isRegistered,
-      required this.title,
-      Key? key})
+
+  const PaymentFailure({required this.isSubscription, required this.isRegistered, required this.title, Key? key})
       : super(key: key);
 
   @override
@@ -47,79 +45,60 @@ class PaymentFailure extends StatelessWidget {
                 : isRegistered
                     ? LocaleKeys.buy_magazine.tr()
                     : LocaleKeys.only_pay.tr(),
-            style: Theme.of(context)
-                .textTheme
-                .displaySmall!
-                .copyWith(color: textColor, fontSize: 20),
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor, fontSize: 20),
           ),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(AppIcons.failure),
-              const SizedBox(height: 16),
-              Text(
-                LocaleKeys.error.tr(),
-                style: Theme.of(context)
-                    .textTheme
-                    .displayLarge!
-                    .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                LocaleKeys.realisation_error.tr(args: [title]),
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(fontWeight: FontWeight.w400),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // SvgPicture.asset(AppIcons.failure),
+            SizedBox(height: 180, width: 180, child: Lottie.asset('assets/lotties/error_lottie.json')),
+            Text(
+              // LocaleKeys.error.tr(),
+              // TODO add to localization
+            'Произошла ошибка',
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 4, width: double.maxFinite),
+            Text(
+              // TODO add to localization
+              'Процесс оплаты идет вне приложении',
+              style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.w400),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
         bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).padding.bottom,
-              left: 16,
-              right: 16),
-          child: Row(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: WButton(
-                  borderRadius: 6,
-                  border: Border.all(color: primary),
-                  color: unFollowButton,
-                  margin: const EdgeInsets.only(top: 12),
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      fade(page: const MagazineScreen()),
-                      (route) => route.isFirst,
-                    );
-                  },
-                  child: Text(
-                    LocaleKeys.to_main.tr(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium!
-                        .copyWith(fontSize: 14),
-                  ),
+              WButton(
+                borderRadius: 6,
+                border: Border.all(color: primary),
+                color: unFollowButton,
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    fade(page: const MagazineScreen()),
+                    (route) => route.isFirst,
+                  );
+                },
+                child: Text(
+                  LocaleKeys.to_main.tr(),
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 14),
                 ),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: WButton(
-                  margin: const EdgeInsets.only(top: 12),
-                  borderRadius: 6,
-                  onTap: () {},
-                  child: Text(
-                    LocaleKeys.to_retry.tr(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayMedium!
-                        .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
-                  ),
+              const SizedBox(height: 12),
+              WButton(
+                borderRadius: 6,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  LocaleKeys.to_retry.tr(),
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
               ),
             ],

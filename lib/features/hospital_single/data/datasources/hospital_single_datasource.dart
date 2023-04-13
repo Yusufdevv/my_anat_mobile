@@ -5,6 +5,7 @@ import 'package:anatomica/features/hospital_single/data/models/comfort_model.dar
 import 'package:anatomica/features/hospital_single/data/models/comment_model.dart';
 import 'package:anatomica/features/hospital_single/data/models/hospital_service_model.dart';
 import 'package:anatomica/features/hospital_single/data/models/hospital_service_single_model.dart';
+import 'package:anatomica/features/hospital_single/data/models/hospital_service_special_model.dart';
 import 'package:anatomica/features/hospital_single/data/models/hospital_single_model.dart';
 import 'package:anatomica/features/hospital_single/data/models/post_comment_model.dart';
 import 'package:anatomica/features/journal/data/models/journal_article_model.dart';
@@ -16,26 +17,23 @@ import 'package:dio/dio.dart';
 abstract class HospitalSingleDatasource {
   Future<HospitalSingleModel> getHospitalSingle({required String slug});
 
-  Future<GenericPagination<HospitalServiceModel>> getHospitalServices(
-      {required int id, String? next, String search = ''});
+  Future<GenericPagination<HospitalServiceModel>> getHospitalServicesOrg(
+      {required int orgId,required int specId, String? next, String search = ''});
 
-  Future<GenericPagination<HospitalDoctorsModel>> getHospitalSpecialists(
-      {required int id, String? next});
+  Future<GenericPagination<HospitalServiceSpecialModel>> getHospitalServicesSpecial(
+      {required int orgId, String? next, String search = ''});
 
-  Future<GenericPagination<ComfortModel>> getHospitalConditions(
-      {required int id, String? next});
+  Future<GenericPagination<HospitalDoctorsModel>> getHospitalSpecialistsDoctors({required int id, String? next});
 
-  Future<GenericPagination<JournalArticleModel>> getHospitalArticles(
-      {required int id, String? next});
+  Future<GenericPagination<ComfortModel>> getHospitalConditions({required int id, String? next});
 
-  Future<GenericPagination<CommentModel>> getHospitalComments(
-      {required int id, String? next});
+  Future<GenericPagination<JournalArticleModel>> getHospitalArticles({required int id, String? next});
 
-  Future<GenericPagination<VacancyListModel>> getHospitalVacancies(
-      {required int id, String? next});
+  Future<GenericPagination<CommentModel>> getHospitalComments({required int id, String? next});
 
-  Future<void> postComment(
-      {required int organizationId, required PostCommentModel comment});
+  Future<GenericPagination<VacancyListModel>> getHospitalVacancies({required int id, String? next});
+
+  Future<void> postComment({required int organizationId, required PostCommentModel comment});
 
   Future<Either> deleteComment({required int id});
 
@@ -53,19 +51,12 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       final response = await _dio.get('/organization/$slug/detail/',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return HospitalSingleModel.fromJson(response.data);
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -77,32 +68,22 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
   }
 
   @override
-  Future<GenericPagination<HospitalServiceModel>> getHospitalServices(
-      {required int id, String? next, String search = ''}) async {
+  Future<GenericPagination<HospitalServiceModel>> getHospitalServicesOrg(
+      {required int orgId,required int specId, String? next, String search = ''}) async {
     try {
-      print('datsource search $search  $id');
       final response = await _dio.get(
         next ?? '/organization/service/',
-        queryParameters: {'organization_id': id, 'search': search},
+        queryParameters: {'organization_id': orgId, 'specialization_id': specId, 'search': search},
         options: Options(
             headers: StorageRepository.getString('token').isNotEmpty
-                ? {
-                    'Authorization':
-                        'Token ${StorageRepository.getString('token')}'
-                  }
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                 : {}),
       );
-      print('search status ${response.statusCode}');
-      print('search results ${response.data}');
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => HospitalServiceModel.fromJson(p0 as Map<String, dynamic>));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(
+            response.data, (p0) => HospitalServiceModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -112,213 +93,24 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       throw ParsingException(errorMessage: e.toString());
     }
   }
-
+  ///
   @override
-  Future<GenericPagination<HospitalDoctorsModel>> getHospitalSpecialists(
-      {required int id, String? next}) async {
+  Future<GenericPagination<HospitalServiceSpecialModel>> getHospitalServicesSpecial(
+      {required int orgId, String? next, String search = ''}) async {
     try {
-      final response = await _dio.get(next ?? '/organization/doctor/',
-          queryParameters: {'organization_id': id},
-          options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}',
-                      'Accept-Language': "uz",
-                    }
-                  : {
-                      'Accept-Language': "uz",
-                    }));
-      print(
-          'response => ${response.realUri} ${response.statusCode} ${response.data}');
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => HospitalDoctorsModel.fromJson(p0 as Map<String, dynamic>));
+      final response = await _dio.get(
+        next ?? '/organization/specialization/v2/',
+        queryParameters: {'organization_id': orgId, 'search': search},
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                : {}),
+      );
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(
+            response.data, (p0) => HospitalServiceSpecialModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
-      }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
-    }
-  }
-
-  @override
-  Future<GenericPagination<ComfortModel>> getHospitalConditions(
-      {required int id, String? next}) async {
-    try {
-      final response = await _dio.get(next ?? '/organization/facility/',
-          queryParameters: {'organization_id': id},
-          options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
-                  : {}));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => ComfortModel.fromJson(p0 as Map<String, dynamic>));
-      } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
-      }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
-    }
-  }
-
-  @override
-  Future<GenericPagination<JournalArticleModel>> getHospitalArticles(
-      {required int id, String? next}) async {
-    try {
-      final response = await _dio.get(next ?? '/article/',
-          queryParameters: {'organizations': id},
-          options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
-                  : {}));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => JournalArticleModel.fromJson(p0 as Map<String, dynamic>));
-      } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
-      }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
-    }
-  }
-
-  @override
-  Future<GenericPagination<CommentModel>> getHospitalComments(
-      {required int id, String? next}) async {
-    try {
-      final response = await _dio.get(next ?? '/organization/comment/',
-          queryParameters: {'organization_id': id},
-          options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
-                  : {}));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => CommentModel.fromJson(p0 as Map<String, dynamic>));
-      } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
-      }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
-    }
-  }
-
-  @override
-  Future<GenericPagination<VacancyListModel>> getHospitalVacancies(
-      {required int id, String? next}) async {
-    try {
-      final response = await _dio.get(next ?? '/vacancy/vacancy/list/',
-          queryParameters: {'organization': id},
-          options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
-                  : {}));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
-      } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
-      }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
-    }
-  }
-
-  @override
-  Future<void> postComment(
-      {required int organizationId, required PostCommentModel comment}) async {
-    try {
-      final data = comment.toJson();
-      data.putIfAbsent('organization', () => organizationId);
-      final response = await _dio.post('/organization/comment/create/',
-          data: data,
-          options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
-          }));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-      } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
-      }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
-    }
-  }
-
-  @override
-  Future<Either> deleteComment({required int id}) async {
-    try {
-      final response = await _dio.delete('/organization/comment/$id/delete/',
-          options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
-          }));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return Right('');
-      } else {
-        return Left('');
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -333,14 +125,10 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
   Future<HospitalSingleServiceModel> getSingleService({required int id}) async {
     try {
       final response = await _dio.get('/organization/service/$id/detail/');
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return HospitalSingleServiceModel.fromJson(response.data);
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -350,4 +138,162 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       throw ParsingException(errorMessage: e.toString());
     }
   }
+
+  @override
+  Future<GenericPagination<HospitalDoctorsModel>> getHospitalSpecialistsDoctors({required int id, String? next}) async {
+    try {
+      final response = await _dio.get(next ?? '/organization/doctor/',
+          queryParameters: {'organization_id': id},
+          options: Options(
+              headers: StorageRepository.getString('token').isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}', 'Accept-Language': "uz"}
+                  : {'Accept-Language': "uz"}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(
+            response.data, (p0) => HospitalDoctorsModel.fromJson(p0 as Map<String, dynamic>));
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<GenericPagination<ComfortModel>> getHospitalConditions({required int id, String? next}) async {
+    try {
+      final response = await _dio.get(next ?? '/organization/facility/',
+          queryParameters: {'organization_id': id},
+          options: Options(
+              headers: StorageRepository.getString('token').isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                  : {}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data, (p0) => ComfortModel.fromJson(p0 as Map<String, dynamic>));
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<GenericPagination<JournalArticleModel>> getHospitalArticles({required int id, String? next}) async {
+    try {
+      final response = await _dio.get(next ?? '/article/',
+          queryParameters: {'organizations': id},
+          options: Options(
+              headers: StorageRepository.getString('token').isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                  : {}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(
+            response.data, (p0) => JournalArticleModel.fromJson(p0 as Map<String, dynamic>));
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<GenericPagination<CommentModel>> getHospitalComments({required int id, String? next}) async {
+    try {
+      final response = await _dio.get(next ?? '/organization/comment/',
+          queryParameters: {'organization_id': id},
+          options: Options(
+              headers: StorageRepository.getString('token').isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                  : {}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data, (p0) => CommentModel.fromJson(p0 as Map<String, dynamic>));
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<GenericPagination<VacancyListModel>> getHospitalVacancies({required int id, String? next}) async {
+    try {
+      final response = await _dio.get(next ?? '/vacancy/vacancy/list/',
+          queryParameters: {'organization': id},
+          options: Options(
+              headers: StorageRepository.getString('token').isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                  : {}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data, (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<void> postComment({required int organizationId, required PostCommentModel comment}) async {
+    try {
+      final data = comment.toJson();
+      data.putIfAbsent('organization', () => organizationId);
+      final response = await _dio.post('/organization/comment/create/',
+          data: data, options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+      } else {
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<Either> deleteComment({required int id}) async {
+    try {
+      final response = await _dio.delete('/organization/comment/$id/delete/',
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return Right('');
+      } else {
+        return Left('');
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+
 }

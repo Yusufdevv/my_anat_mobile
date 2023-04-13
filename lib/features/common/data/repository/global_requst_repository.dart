@@ -51,11 +51,17 @@ class GlobalRequestRepository {
               headers:
                   sendToken ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"} : {}));
       List<S> list = [];
-
+      if (endpoint == '/mobile/doctor/map/') {
+        log('::::::::::  the data of doctors: ${result.data[responseDataKey]}  ::::::::::');
+      }
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {
-          var data = result.data[responseDataKey] as List<dynamic>;
-          list = data.map((e) => fromJson(e)).toList();
+          try {
+            var data = result.data[responseDataKey] as List<dynamic>;
+            list = data.map((e) => fromJson(e)).toList();
+          } catch (e) {
+            log(':::::::::: from json exception in get list: ${endpoint}  ${e.toString()}  ::::::::::');
+          }
         } else {
           var data = result.data as List<dynamic>;
           list = data.map((e) => fromJson(e)).toList();

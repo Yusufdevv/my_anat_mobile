@@ -18,7 +18,7 @@ import 'package:anatomica/features/doctor_single/presentation/parts/doctor_comme
 import 'package:anatomica/features/doctor_single/presentation/parts/doctor_contacts.dart';
 import 'package:anatomica/features/doctor_single/presentation/parts/doctor_interviews.dart';
 import 'package:anatomica/features/doctor_single/presentation/widgets/doctor_single_appbar.dart';
-import 'package:anatomica/features/hospital_single/data/repository/hospital_repository.dart';
+import 'package:anatomica/features/hospital_single/data/repository/hospital_repository_impl.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/delete_comment.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_comments.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/post_comment_usecase.dart';
