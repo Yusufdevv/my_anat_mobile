@@ -74,14 +74,15 @@ Future<void> main() async {
 
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-  OneSignal.shared.setAppId("e1898670-07c9-4ac8-961e-9b061739375e");
+  OneSignal.shared.setAppId("bcfaa470-edc6-49b0-ae20-a8e6782e51c5");
 
   OneSignal.shared
       .promptUserForPushNotificationPermission()
-      .then((accepted) {});
-  final status = await OneSignal.shared.getDeviceState();
-  final String? osUserID = status?.userId;
-  await StorageRepository.putString('deviceId', osUserID!);
+      .then((accepted) async {
+    final status = await OneSignal.shared.getDeviceState();
+    final String? osUserID = status?.userId;
+    await StorageRepository.putString('deviceId', osUserID!);
+  });
 }
 
 class MyHttpOverrides extends HttpOverrides {
