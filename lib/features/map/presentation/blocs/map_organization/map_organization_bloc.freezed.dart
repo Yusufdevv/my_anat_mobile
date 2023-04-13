@@ -2472,25 +2472,32 @@ abstract class _ChangeLatLong implements MapOrganizationEvent {
 
 /// @nodoc
 mixin _$MapOrganizationState {
-  List<MapHospitalModel> get hospitals => throw _privateConstructorUsedError;
-  List<DoctorSpecModel> get doctors => throw _privateConstructorUsedError;
+  List<OrgMapV2Model> get hospitals => throw _privateConstructorUsedError;
+  List<DoctorMapEntity> get doctors => throw _privateConstructorUsedError;
   List<TypeEntity> get types => throw _privateConstructorUsedError;
   int get typesCount => throw _privateConstructorUsedError;
   String? get typesNext => throw _privateConstructorUsedError;
+  List<MapObject<dynamic>> get mapObjects => throw _privateConstructorUsedError;
   FormzStatus get typesStatus => throw _privateConstructorUsedError;
+  FormzStatus get tabChangingStatus => throw _privateConstructorUsedError;
   bool get typesFetchMore => throw _privateConstructorUsedError;
   int get radius => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
   FormzStatus get getTypesStatus => throw _privateConstructorUsedError;
   FormzStatus get getCurrentLocationStatus =>
       throw _privateConstructorUsedError;
+  double get maxZoomLevel => throw _privateConstructorUsedError;
+  double get minZoomLevel => throw _privateConstructorUsedError;
   double get lat => throw _privateConstructorUsedError;
   double get long => throw _privateConstructorUsedError;
   double get currentLat => throw _privateConstructorUsedError;
   double get currentLong => throw _privateConstructorUsedError;
+  double get accuracy => throw _privateConstructorUsedError;
   String get searchText => throw _privateConstructorUsedError;
   String? get next => throw _privateConstructorUsedError;
   bool get fetchMore => throw _privateConstructorUsedError;
+  YandexMapController? get mapController => throw _privateConstructorUsedError;
+  TabController? get tabController => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MapOrganizationStateCopyWith<MapOrganizationState> get copyWith =>
@@ -2504,24 +2511,31 @@ abstract class $MapOrganizationStateCopyWith<$Res> {
       _$MapOrganizationStateCopyWithImpl<$Res, MapOrganizationState>;
   @useResult
   $Res call(
-      {List<MapHospitalModel> hospitals,
-      List<DoctorSpecModel> doctors,
+      {List<OrgMapV2Model> hospitals,
+      List<DoctorMapEntity> doctors,
       List<TypeEntity> types,
       int typesCount,
       String? typesNext,
+      List<MapObject<dynamic>> mapObjects,
       FormzStatus typesStatus,
+      FormzStatus tabChangingStatus,
       bool typesFetchMore,
       int radius,
       FormzStatus status,
       FormzStatus getTypesStatus,
       FormzStatus getCurrentLocationStatus,
+      double maxZoomLevel,
+      double minZoomLevel,
       double lat,
       double long,
       double currentLat,
       double currentLong,
+      double accuracy,
       String searchText,
       String? next,
-      bool fetchMore});
+      bool fetchMore,
+      YandexMapController? mapController,
+      TabController? tabController});
 }
 
 /// @nodoc
@@ -2543,29 +2557,36 @@ class _$MapOrganizationStateCopyWithImpl<$Res,
     Object? types = null,
     Object? typesCount = null,
     Object? typesNext = freezed,
+    Object? mapObjects = null,
     Object? typesStatus = null,
+    Object? tabChangingStatus = null,
     Object? typesFetchMore = null,
     Object? radius = null,
     Object? status = null,
     Object? getTypesStatus = null,
     Object? getCurrentLocationStatus = null,
+    Object? maxZoomLevel = null,
+    Object? minZoomLevel = null,
     Object? lat = null,
     Object? long = null,
     Object? currentLat = null,
     Object? currentLong = null,
+    Object? accuracy = null,
     Object? searchText = null,
     Object? next = freezed,
     Object? fetchMore = null,
+    Object? mapController = freezed,
+    Object? tabController = freezed,
   }) {
     return _then(_value.copyWith(
       hospitals: null == hospitals
           ? _value.hospitals
           : hospitals // ignore: cast_nullable_to_non_nullable
-              as List<MapHospitalModel>,
+              as List<OrgMapV2Model>,
       doctors: null == doctors
           ? _value.doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<DoctorSpecModel>,
+              as List<DoctorMapEntity>,
       types: null == types
           ? _value.types
           : types // ignore: cast_nullable_to_non_nullable
@@ -2578,9 +2599,17 @@ class _$MapOrganizationStateCopyWithImpl<$Res,
           ? _value.typesNext
           : typesNext // ignore: cast_nullable_to_non_nullable
               as String?,
+      mapObjects: null == mapObjects
+          ? _value.mapObjects
+          : mapObjects // ignore: cast_nullable_to_non_nullable
+              as List<MapObject<dynamic>>,
       typesStatus: null == typesStatus
           ? _value.typesStatus
           : typesStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      tabChangingStatus: null == tabChangingStatus
+          ? _value.tabChangingStatus
+          : tabChangingStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
       typesFetchMore: null == typesFetchMore
           ? _value.typesFetchMore
@@ -2602,6 +2631,14 @@ class _$MapOrganizationStateCopyWithImpl<$Res,
           ? _value.getCurrentLocationStatus
           : getCurrentLocationStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
+      maxZoomLevel: null == maxZoomLevel
+          ? _value.maxZoomLevel
+          : maxZoomLevel // ignore: cast_nullable_to_non_nullable
+              as double,
+      minZoomLevel: null == minZoomLevel
+          ? _value.minZoomLevel
+          : minZoomLevel // ignore: cast_nullable_to_non_nullable
+              as double,
       lat: null == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
@@ -2618,6 +2655,10 @@ class _$MapOrganizationStateCopyWithImpl<$Res,
           ? _value.currentLong
           : currentLong // ignore: cast_nullable_to_non_nullable
               as double,
+      accuracy: null == accuracy
+          ? _value.accuracy
+          : accuracy // ignore: cast_nullable_to_non_nullable
+              as double,
       searchText: null == searchText
           ? _value.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
@@ -2630,6 +2671,14 @@ class _$MapOrganizationStateCopyWithImpl<$Res,
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      mapController: freezed == mapController
+          ? _value.mapController
+          : mapController // ignore: cast_nullable_to_non_nullable
+              as YandexMapController?,
+      tabController: freezed == tabController
+          ? _value.tabController
+          : tabController // ignore: cast_nullable_to_non_nullable
+              as TabController?,
     ) as $Val);
   }
 }
@@ -2643,24 +2692,31 @@ abstract class _$$_MapOrganizationStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<MapHospitalModel> hospitals,
-      List<DoctorSpecModel> doctors,
+      {List<OrgMapV2Model> hospitals,
+      List<DoctorMapEntity> doctors,
       List<TypeEntity> types,
       int typesCount,
       String? typesNext,
+      List<MapObject<dynamic>> mapObjects,
       FormzStatus typesStatus,
+      FormzStatus tabChangingStatus,
       bool typesFetchMore,
       int radius,
       FormzStatus status,
       FormzStatus getTypesStatus,
       FormzStatus getCurrentLocationStatus,
+      double maxZoomLevel,
+      double minZoomLevel,
       double lat,
       double long,
       double currentLat,
       double currentLong,
+      double accuracy,
       String searchText,
       String? next,
-      bool fetchMore});
+      bool fetchMore,
+      YandexMapController? mapController,
+      TabController? tabController});
 }
 
 /// @nodoc
@@ -2679,29 +2735,36 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
     Object? types = null,
     Object? typesCount = null,
     Object? typesNext = freezed,
+    Object? mapObjects = null,
     Object? typesStatus = null,
+    Object? tabChangingStatus = null,
     Object? typesFetchMore = null,
     Object? radius = null,
     Object? status = null,
     Object? getTypesStatus = null,
     Object? getCurrentLocationStatus = null,
+    Object? maxZoomLevel = null,
+    Object? minZoomLevel = null,
     Object? lat = null,
     Object? long = null,
     Object? currentLat = null,
     Object? currentLong = null,
+    Object? accuracy = null,
     Object? searchText = null,
     Object? next = freezed,
     Object? fetchMore = null,
+    Object? mapController = freezed,
+    Object? tabController = freezed,
   }) {
     return _then(_$_MapOrganizationState(
       hospitals: null == hospitals
           ? _value._hospitals
           : hospitals // ignore: cast_nullable_to_non_nullable
-              as List<MapHospitalModel>,
+              as List<OrgMapV2Model>,
       doctors: null == doctors
           ? _value._doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<DoctorSpecModel>,
+              as List<DoctorMapEntity>,
       types: null == types
           ? _value._types
           : types // ignore: cast_nullable_to_non_nullable
@@ -2714,9 +2777,17 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
           ? _value.typesNext
           : typesNext // ignore: cast_nullable_to_non_nullable
               as String?,
+      mapObjects: null == mapObjects
+          ? _value._mapObjects
+          : mapObjects // ignore: cast_nullable_to_non_nullable
+              as List<MapObject<dynamic>>,
       typesStatus: null == typesStatus
           ? _value.typesStatus
           : typesStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      tabChangingStatus: null == tabChangingStatus
+          ? _value.tabChangingStatus
+          : tabChangingStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
       typesFetchMore: null == typesFetchMore
           ? _value.typesFetchMore
@@ -2738,6 +2809,14 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
           ? _value.getCurrentLocationStatus
           : getCurrentLocationStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
+      maxZoomLevel: null == maxZoomLevel
+          ? _value.maxZoomLevel
+          : maxZoomLevel // ignore: cast_nullable_to_non_nullable
+              as double,
+      minZoomLevel: null == minZoomLevel
+          ? _value.minZoomLevel
+          : minZoomLevel // ignore: cast_nullable_to_non_nullable
+              as double,
       lat: null == lat
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
@@ -2754,6 +2833,10 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
           ? _value.currentLong
           : currentLong // ignore: cast_nullable_to_non_nullable
               as double,
+      accuracy: null == accuracy
+          ? _value.accuracy
+          : accuracy // ignore: cast_nullable_to_non_nullable
+              as double,
       searchText: null == searchText
           ? _value.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
@@ -2766,6 +2849,14 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
           ? _value.fetchMore
           : fetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      mapController: freezed == mapController
+          ? _value.mapController
+          : mapController // ignore: cast_nullable_to_non_nullable
+              as YandexMapController?,
+      tabController: freezed == tabController
+          ? _value.tabController
+          : tabController // ignore: cast_nullable_to_non_nullable
+              as TabController?,
     ));
   }
 }
@@ -2774,40 +2865,48 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
 
 class _$_MapOrganizationState implements _MapOrganizationState {
   _$_MapOrganizationState(
-      {final List<MapHospitalModel> hospitals = const [],
-      final List<DoctorSpecModel> doctors = const [],
+      {final List<OrgMapV2Model> hospitals = const [],
+      final List<DoctorMapEntity> doctors = const [],
       final List<TypeEntity> types = const [],
       this.typesCount = 0,
       this.typesNext,
+      final List<MapObject<dynamic>> mapObjects = const [],
       this.typesStatus = FormzStatus.pure,
+      this.tabChangingStatus = FormzStatus.pure,
       this.typesFetchMore = false,
       this.radius = 0,
       this.status = FormzStatus.pure,
       this.getTypesStatus = FormzStatus.pure,
       this.getCurrentLocationStatus = FormzStatus.pure,
+      this.maxZoomLevel = 0,
+      this.minZoomLevel = 0,
       this.lat = 0,
       this.long = 0,
       this.currentLat = 0,
       this.currentLong = 0,
+      this.accuracy = 0,
       this.searchText = '',
       this.next,
-      this.fetchMore = false})
+      this.fetchMore = false,
+      this.mapController = null,
+      this.tabController = null})
       : _hospitals = hospitals,
         _doctors = doctors,
-        _types = types;
+        _types = types,
+        _mapObjects = mapObjects;
 
-  final List<MapHospitalModel> _hospitals;
+  final List<OrgMapV2Model> _hospitals;
   @override
   @JsonKey()
-  List<MapHospitalModel> get hospitals {
+  List<OrgMapV2Model> get hospitals {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_hospitals);
   }
 
-  final List<DoctorSpecModel> _doctors;
+  final List<DoctorMapEntity> _doctors;
   @override
   @JsonKey()
-  List<DoctorSpecModel> get doctors {
+  List<DoctorMapEntity> get doctors {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_doctors);
   }
@@ -2825,9 +2924,20 @@ class _$_MapOrganizationState implements _MapOrganizationState {
   final int typesCount;
   @override
   final String? typesNext;
+  final List<MapObject<dynamic>> _mapObjects;
+  @override
+  @JsonKey()
+  List<MapObject<dynamic>> get mapObjects {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_mapObjects);
+  }
+
   @override
   @JsonKey()
   final FormzStatus typesStatus;
+  @override
+  @JsonKey()
+  final FormzStatus tabChangingStatus;
   @override
   @JsonKey()
   final bool typesFetchMore;
@@ -2845,6 +2955,12 @@ class _$_MapOrganizationState implements _MapOrganizationState {
   final FormzStatus getCurrentLocationStatus;
   @override
   @JsonKey()
+  final double maxZoomLevel;
+  @override
+  @JsonKey()
+  final double minZoomLevel;
+  @override
+  @JsonKey()
   final double lat;
   @override
   @JsonKey()
@@ -2857,16 +2973,25 @@ class _$_MapOrganizationState implements _MapOrganizationState {
   final double currentLong;
   @override
   @JsonKey()
+  final double accuracy;
+  @override
+  @JsonKey()
   final String searchText;
   @override
   final String? next;
   @override
   @JsonKey()
   final bool fetchMore;
+  @override
+  @JsonKey()
+  final YandexMapController? mapController;
+  @override
+  @JsonKey()
+  final TabController? tabController;
 
   @override
   String toString() {
-    return 'MapOrganizationState(hospitals: $hospitals, doctors: $doctors, types: $types, typesCount: $typesCount, typesNext: $typesNext, typesStatus: $typesStatus, typesFetchMore: $typesFetchMore, radius: $radius, status: $status, getTypesStatus: $getTypesStatus, getCurrentLocationStatus: $getCurrentLocationStatus, lat: $lat, long: $long, currentLat: $currentLat, currentLong: $currentLong, searchText: $searchText, next: $next, fetchMore: $fetchMore)';
+    return 'MapOrganizationState(hospitals: $hospitals, doctors: $doctors, types: $types, typesCount: $typesCount, typesNext: $typesNext, mapObjects: $mapObjects, typesStatus: $typesStatus, tabChangingStatus: $tabChangingStatus, typesFetchMore: $typesFetchMore, radius: $radius, status: $status, getTypesStatus: $getTypesStatus, getCurrentLocationStatus: $getCurrentLocationStatus, maxZoomLevel: $maxZoomLevel, minZoomLevel: $minZoomLevel, lat: $lat, long: $long, currentLat: $currentLat, currentLong: $currentLong, accuracy: $accuracy, searchText: $searchText, next: $next, fetchMore: $fetchMore, mapController: $mapController, tabController: $tabController)';
   }
 
   @override
@@ -2882,8 +3007,12 @@ class _$_MapOrganizationState implements _MapOrganizationState {
                 other.typesCount == typesCount) &&
             (identical(other.typesNext, typesNext) ||
                 other.typesNext == typesNext) &&
+            const DeepCollectionEquality()
+                .equals(other._mapObjects, _mapObjects) &&
             (identical(other.typesStatus, typesStatus) ||
                 other.typesStatus == typesStatus) &&
+            (identical(other.tabChangingStatus, tabChangingStatus) ||
+                other.tabChangingStatus == tabChangingStatus) &&
             (identical(other.typesFetchMore, typesFetchMore) ||
                 other.typesFetchMore == typesFetchMore) &&
             (identical(other.radius, radius) || other.radius == radius) &&
@@ -2893,40 +3022,58 @@ class _$_MapOrganizationState implements _MapOrganizationState {
             (identical(
                     other.getCurrentLocationStatus, getCurrentLocationStatus) ||
                 other.getCurrentLocationStatus == getCurrentLocationStatus) &&
+            (identical(other.maxZoomLevel, maxZoomLevel) ||
+                other.maxZoomLevel == maxZoomLevel) &&
+            (identical(other.minZoomLevel, minZoomLevel) ||
+                other.minZoomLevel == minZoomLevel) &&
             (identical(other.lat, lat) || other.lat == lat) &&
             (identical(other.long, long) || other.long == long) &&
             (identical(other.currentLat, currentLat) ||
                 other.currentLat == currentLat) &&
             (identical(other.currentLong, currentLong) ||
                 other.currentLong == currentLong) &&
+            (identical(other.accuracy, accuracy) ||
+                other.accuracy == accuracy) &&
             (identical(other.searchText, searchText) ||
                 other.searchText == searchText) &&
             (identical(other.next, next) || other.next == next) &&
             (identical(other.fetchMore, fetchMore) ||
-                other.fetchMore == fetchMore));
+                other.fetchMore == fetchMore) &&
+            (identical(other.mapController, mapController) ||
+                other.mapController == mapController) &&
+            (identical(other.tabController, tabController) ||
+                other.tabController == tabController));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_hospitals),
-      const DeepCollectionEquality().hash(_doctors),
-      const DeepCollectionEquality().hash(_types),
-      typesCount,
-      typesNext,
-      typesStatus,
-      typesFetchMore,
-      radius,
-      status,
-      getTypesStatus,
-      getCurrentLocationStatus,
-      lat,
-      long,
-      currentLat,
-      currentLong,
-      searchText,
-      next,
-      fetchMore);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(_hospitals),
+        const DeepCollectionEquality().hash(_doctors),
+        const DeepCollectionEquality().hash(_types),
+        typesCount,
+        typesNext,
+        const DeepCollectionEquality().hash(_mapObjects),
+        typesStatus,
+        tabChangingStatus,
+        typesFetchMore,
+        radius,
+        status,
+        getTypesStatus,
+        getCurrentLocationStatus,
+        maxZoomLevel,
+        minZoomLevel,
+        lat,
+        long,
+        currentLat,
+        currentLong,
+        accuracy,
+        searchText,
+        next,
+        fetchMore,
+        mapController,
+        tabController
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -2938,29 +3085,36 @@ class _$_MapOrganizationState implements _MapOrganizationState {
 
 abstract class _MapOrganizationState implements MapOrganizationState {
   factory _MapOrganizationState(
-      {final List<MapHospitalModel> hospitals,
-      final List<DoctorSpecModel> doctors,
+      {final List<OrgMapV2Model> hospitals,
+      final List<DoctorMapEntity> doctors,
       final List<TypeEntity> types,
       final int typesCount,
       final String? typesNext,
+      final List<MapObject<dynamic>> mapObjects,
       final FormzStatus typesStatus,
+      final FormzStatus tabChangingStatus,
       final bool typesFetchMore,
       final int radius,
       final FormzStatus status,
       final FormzStatus getTypesStatus,
       final FormzStatus getCurrentLocationStatus,
+      final double maxZoomLevel,
+      final double minZoomLevel,
       final double lat,
       final double long,
       final double currentLat,
       final double currentLong,
+      final double accuracy,
       final String searchText,
       final String? next,
-      final bool fetchMore}) = _$_MapOrganizationState;
+      final bool fetchMore,
+      final YandexMapController? mapController,
+      final TabController? tabController}) = _$_MapOrganizationState;
 
   @override
-  List<MapHospitalModel> get hospitals;
+  List<OrgMapV2Model> get hospitals;
   @override
-  List<DoctorSpecModel> get doctors;
+  List<DoctorMapEntity> get doctors;
   @override
   List<TypeEntity> get types;
   @override
@@ -2968,7 +3122,11 @@ abstract class _MapOrganizationState implements MapOrganizationState {
   @override
   String? get typesNext;
   @override
+  List<MapObject<dynamic>> get mapObjects;
+  @override
   FormzStatus get typesStatus;
+  @override
+  FormzStatus get tabChangingStatus;
   @override
   bool get typesFetchMore;
   @override
@@ -2980,6 +3138,10 @@ abstract class _MapOrganizationState implements MapOrganizationState {
   @override
   FormzStatus get getCurrentLocationStatus;
   @override
+  double get maxZoomLevel;
+  @override
+  double get minZoomLevel;
+  @override
   double get lat;
   @override
   double get long;
@@ -2988,11 +3150,17 @@ abstract class _MapOrganizationState implements MapOrganizationState {
   @override
   double get currentLong;
   @override
+  double get accuracy;
+  @override
   String get searchText;
   @override
   String? get next;
   @override
   bool get fetchMore;
+  @override
+  YandexMapController? get mapController;
+  @override
+  TabController? get tabController;
   @override
   @JsonKey(ignore: true)
   _$$_MapOrganizationStateCopyWith<_$_MapOrganizationState> get copyWith =>
