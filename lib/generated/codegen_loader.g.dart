@@ -331,7 +331,8 @@ class CodegenLoader extends AssetLoader{
   "you_are_sure_to_delete_card": "Вы действительно хотите удалить карту",
   "history": "История",
   "service_date": "Услуга/ Дата",
-  "amount": "Miqdor"
+  "amount": "Miqdor",
+  "payment_successed": "Платеж прошел успешно"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -649,7 +650,8 @@ static const Map<String,dynamic> uz = {
   "delete_card": "Kartani o'chirish",
   "you_are_sure_to_delete_card": "Haqiqatan ham kartani oʻchirib tashlamoqchimisiz?",
   "history": "История",
-  "service_date": "Xizmat/ Sana"
+  "service_date": "Xizmat/ Sana",
+  "payment_successed": "To'lov muvaffaqiyatli amalga oshirildi"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

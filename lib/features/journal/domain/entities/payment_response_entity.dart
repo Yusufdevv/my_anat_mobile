@@ -3,11 +3,17 @@ import 'package:equatable/equatable.dart';
 class PaymentResponseEntity extends Equatable {
   final String transactionCheckoutUrl;
   final int id;
-  const PaymentResponseEntity({this.id = 0, this.transactionCheckoutUrl = ''});
+  final String status;
+  const PaymentResponseEntity({
+    this.id = 0,
+    this.transactionCheckoutUrl = '',
+    this.status = '',
+  });
 
   @override
   List<Object?> get props => [
         id,
         transactionCheckoutUrl,
+        status,
       ];
 }

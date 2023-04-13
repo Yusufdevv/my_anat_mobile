@@ -334,6 +334,7 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                           valueListenable: currentPaymentMethod,
                           builder: (context, _, __) {
                             return WButton(
+                              isLoading: state.orderCreateStatus.isSubmissionInProgress,
                               height: 40,
                               margin: EdgeInsets.only(
                                   bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
@@ -354,9 +355,11 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                                             phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
                                             email: !isPhone ? emailController.text : '',
                                             paymentProvider: currentPaymentMethod.value,
-                                            onSuccess: (value) {
+                                            onSuccess: (value) async {
                                               if (currentPaymentMethod.value != 'card') {
-                                                launchUrlString(value, mode: LaunchMode.externalApplication);
+                                                launchUrlString(value.transactionCheckoutUrl,
+                                                    mode: LaunchMode.externalApplication);
+                                                Navigator.popUntil(context, (route) => route.isFirst);
                                                 Navigator.of(context).push(
                                                   fade(
                                                     page: PaymentResultScreen(
@@ -366,9 +369,14 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                                                   ),
                                                 );
                                               } else if (currentPaymentMethod.value == 'card') {
-                                                context
-                                                    .read<ShowPopUpBloc>()
-                                                    .add(ShowPopUp(message: 'Uspeshno', isSuccess: true));
+                                                if (value.status == 'confirmed') {
+                                                  context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                                      message: LocaleKeys.payment_successed.tr(), isSuccess: true));
+                                                  await Future.delayed(const Duration(milliseconds: 3000))
+                                                      .then((value) {
+                                                    Navigator.of(context).pop(true);
+                                                  });
+                                                }
                                               }
                                             },
                                             onError: (message) {

@@ -314,5 +314,6 @@
   "delete_card": "Kartani o'chirish",
   "you_are_sure_to_delete_card": "Haqiqatan ham kartani oʻchirib tashlamoqchimisiz?",
   "history": "История",
-  "service_date": "Xizmat/ Sana"
+  "service_date": "Xizmat/ Sana",
+  "payment_successed": "To'lov muvaffaqiyatli amalga oshirildi"
 }

@@ -5,6 +5,6 @@ part 'payment_response_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PaymentResponseModel extends PaymentResponseEntity {
-  const PaymentResponseModel({required super.transactionCheckoutUrl, required super.id});
+  const PaymentResponseModel({required super.transactionCheckoutUrl, required super.id, required super.status});
   factory PaymentResponseModel.fromJson(Map<String, dynamic> json) => _$PaymentResponseModelFromJson(json);
 }

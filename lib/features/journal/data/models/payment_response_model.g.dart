@@ -11,6 +11,7 @@ PaymentResponseModel _$PaymentResponseModelFromJson(
     PaymentResponseModel(
       transactionCheckoutUrl: json['transaction_checkout_url'] as String? ?? '',
       id: json['id'] as int? ?? 0,
+      status: json['status'] as String? ?? '',
     );
 
 Map<String, dynamic> _$PaymentResponseModelToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$PaymentResponseModelToJson(
     <String, dynamic>{
       'transaction_checkout_url': instance.transactionCheckoutUrl,
       'id': instance.id,
+      'status': instance.status,
     };

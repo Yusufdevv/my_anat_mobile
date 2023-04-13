@@ -315,5 +315,6 @@
   "you_are_sure_to_delete_card": "Вы действительно хотите удалить карту",
   "history": "История",
   "service_date": "Услуга/ Дата",
-  "amount": "Miqdor"
+  "amount": "Miqdor",
+  "payment_successed": "Платеж прошел успешно"
 }

@@ -318,5 +318,6 @@ abstract class  LocaleKeys {
   static const history = 'history';
   static const service_date = 'service_date';
   static const amount = 'amount';
+  static const payment_successed = 'payment_successed';
 
 }
