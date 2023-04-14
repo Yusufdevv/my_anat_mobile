@@ -1,10 +1,6 @@
-import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
-import 'package:anatomica/features/map/presentation/blocs/org_map_v2_bloc/org_map_v2_bloc.dart';
-import 'package:anatomica/features/map/presentation/blocs/suggestion/suggestion_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctors_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
-import 'package:anatomica/features/map/presentation/widgets/suggestion_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';

@@ -43,6 +43,7 @@ const steelBlue = _steelBlue;
 const deleteButton = _sunsetOrange2;
 const appBarDivider = _whiteSmoke3;
 const gold = _goldenTainoi;
+const gold2 = _robRoy;
 const tongerineYellow = _tongerineYellow;
 const journalShadow = _chineseBlack;
 const checkUnselected = _zircon;
@@ -56,6 +57,7 @@ const success = _honeydew;
 const successIcon = _fern;
 const successBorder = _celadon;
 const successCloseIcon = _osloGrey;
+const tacao = _tacao;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -113,3 +115,5 @@ const _honeydew2 = Color(0xffE5FFE5);
 const _fern = Color(0xff63C176);
 const _celadon = Color(0xffB1E5BB);
 const _osloGrey = Color(0xff898B8B);
+const _tacao = Color(0xffF8B76B);
+const _robRoy = Color(0xffDAA14B);

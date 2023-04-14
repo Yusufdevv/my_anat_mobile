@@ -12,6 +12,7 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class ResultList extends StatelessWidget {
   final Point myPoint;
+
   const ResultList({required this.myPoint, Key? key}) : super(key: key);
 
   @override
@@ -22,9 +23,7 @@ class ResultList extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: RefreshIndicator(
             onRefresh: () async {
-              context
-                  .read<HospitalListBloc>()
-                  .add(HospitalListEvent.getHospitals(
+              context.read<HospitalListBloc>().add(HospitalListEvent.getHospitals(
                     search: '',
                     myPoint: myPoint,
                   ));
@@ -32,10 +31,8 @@ class ResultList extends StatelessWidget {
               return await Future.delayed(const Duration(seconds: 1));
             },
             child: Paginator(
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 12),
-                padding: const EdgeInsets.all(16).copyWith(
-                    bottom: MediaQuery.of(context).padding.bottom + 136),
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 136),
                 emptyWidget: Center(
                   child: SingleChildScrollView(
                     child: EmptyPage(
@@ -45,8 +42,7 @@ class ResultList extends StatelessWidget {
                     ),
                   ),
                 ),
-                paginatorStatus:
-                    MyFunctions.formzStatusToPaginatorStatus(state.status),
+                paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
                 itemBuilder: (c, index) {
                   return HospitalItem(
                     entity: state.hospitals[index],
@@ -55,9 +51,7 @@ class ResultList extends StatelessWidget {
                 },
                 itemCount: state.hospitals.length,
                 fetchMoreFunction: () {
-                  context
-                      .read<HospitalListBloc>()
-                      .add(HospitalListEvent.getMoreHospitals());
+                  context.read<HospitalListBloc>().add(HospitalListEvent.getMoreHospitals());
                 },
                 hasMoreToFetch: state.fetchMore,
                 errorWidget: const SizedBox()),

@@ -26,6 +26,7 @@ class AppIcons {
   static const mapIcon = 'assets/icons/map_screen/map_icon.svg';
   static const chevronRight = 'assets/icons/map_screen/chevron_right.svg';
   static const location = 'assets/icons/map_screen/location.svg';
+  static const locationGreen = 'assets/icons/map_screen/location_green.svg';
   static const phone = 'assets/icons/map_screen/phone.svg';
   static const mapRoute = 'assets/icons/map_screen/map_route.svg';
   static const close = 'assets/icons/map_screen/close.svg';
