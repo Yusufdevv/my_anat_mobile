@@ -37,11 +37,11 @@ class HospitalServices extends StatelessWidget {
               //       .headlineMedium!
               //       .copyWith(color: textColor),
               // ),
-              if (state.status.isSubmissionInProgress) ...{
+              if (state.statusSpecial.isSubmissionInProgress) ...{
                 const Center(
                   child: CupertinoActivityIndicator(),
                 )
-              } else if (state.status.isSubmissionSuccess) ...{
+              } else if (state.statusSpecial.isSubmissionSuccess) ...{
                 if (state.servicesSpecial.isEmpty) ...{
                   const SizedBox(height: 16),
                   Center(
@@ -102,7 +102,7 @@ class HospitalServices extends StatelessWidget {
                     ),
                   )
                 }
-              } else if (state.status.isSubmissionFailure) ...{
+              } else if (state.statusSpecial.isSubmissionFailure) ...{
                 const Center(
                   child: Text('error'),
                 )

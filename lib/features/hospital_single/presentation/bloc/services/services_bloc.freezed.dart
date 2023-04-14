@@ -1281,14 +1281,18 @@ abstract class _GetSingleService implements ServicesEvent {
 
 /// @nodoc
 mixin _$ServicesState {
-  FormzStatus get status => throw _privateConstructorUsedError;
-  FormzStatus get paginationStatus => throw _privateConstructorUsedError;
+  FormzStatus get statusOrg => throw _privateConstructorUsedError;
+  FormzStatus get paginationStatusOrg => throw _privateConstructorUsedError;
+  FormzStatus get statusSpecial => throw _privateConstructorUsedError;
+  FormzStatus get statusSingle => throw _privateConstructorUsedError;
   List<HospitalServiceEntity> get servicesOrg =>
       throw _privateConstructorUsedError;
   List<HospitalServiceSpecialEntity> get servicesSpecial =>
       throw _privateConstructorUsedError;
-  String? get next => throw _privateConstructorUsedError;
-  bool get fetchMore => throw _privateConstructorUsedError;
+  String? get nextOrg => throw _privateConstructorUsedError;
+  bool get fetchMoreOrg => throw _privateConstructorUsedError;
+  String? get nextSpecial => throw _privateConstructorUsedError;
+  bool get fetchMoreSpecial => throw _privateConstructorUsedError;
   int get hospitalId => throw _privateConstructorUsedError;
   int get specilizationId => throw _privateConstructorUsedError;
   String get searchQuery => throw _privateConstructorUsedError;
@@ -1309,12 +1313,16 @@ abstract class $ServicesStateCopyWith<$Res> {
       _$ServicesStateCopyWithImpl<$Res, ServicesState>;
   @useResult
   $Res call(
-      {FormzStatus status,
-      FormzStatus paginationStatus,
+      {FormzStatus statusOrg,
+      FormzStatus paginationStatusOrg,
+      FormzStatus statusSpecial,
+      FormzStatus statusSingle,
       List<HospitalServiceEntity> servicesOrg,
       List<HospitalServiceSpecialEntity> servicesSpecial,
-      String? next,
-      bool fetchMore,
+      String? nextOrg,
+      bool fetchMoreOrg,
+      String? nextSpecial,
+      bool fetchMoreSpecial,
       int hospitalId,
       int specilizationId,
       String searchQuery,
@@ -1336,12 +1344,16 @@ class _$ServicesStateCopyWithImpl<$Res, $Val extends ServicesState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = null,
-    Object? paginationStatus = null,
+    Object? statusOrg = null,
+    Object? paginationStatusOrg = null,
+    Object? statusSpecial = null,
+    Object? statusSingle = null,
     Object? servicesOrg = null,
     Object? servicesSpecial = null,
-    Object? next = freezed,
-    Object? fetchMore = null,
+    Object? nextOrg = freezed,
+    Object? fetchMoreOrg = null,
+    Object? nextSpecial = freezed,
+    Object? fetchMoreSpecial = null,
     Object? hospitalId = null,
     Object? specilizationId = null,
     Object? searchQuery = null,
@@ -1350,13 +1362,21 @@ class _$ServicesStateCopyWithImpl<$Res, $Val extends ServicesState>
     Object? serviceSingle = null,
   }) {
     return _then(_value.copyWith(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      statusOrg: null == statusOrg
+          ? _value.statusOrg
+          : statusOrg // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      paginationStatus: null == paginationStatus
-          ? _value.paginationStatus
-          : paginationStatus // ignore: cast_nullable_to_non_nullable
+      paginationStatusOrg: null == paginationStatusOrg
+          ? _value.paginationStatusOrg
+          : paginationStatusOrg // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      statusSpecial: null == statusSpecial
+          ? _value.statusSpecial
+          : statusSpecial // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      statusSingle: null == statusSingle
+          ? _value.statusSingle
+          : statusSingle // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
       servicesOrg: null == servicesOrg
           ? _value.servicesOrg
@@ -1366,13 +1386,21 @@ class _$ServicesStateCopyWithImpl<$Res, $Val extends ServicesState>
           ? _value.servicesSpecial
           : servicesSpecial // ignore: cast_nullable_to_non_nullable
               as List<HospitalServiceSpecialEntity>,
-      next: freezed == next
-          ? _value.next
-          : next // ignore: cast_nullable_to_non_nullable
+      nextOrg: freezed == nextOrg
+          ? _value.nextOrg
+          : nextOrg // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: null == fetchMore
-          ? _value.fetchMore
-          : fetchMore // ignore: cast_nullable_to_non_nullable
+      fetchMoreOrg: null == fetchMoreOrg
+          ? _value.fetchMoreOrg
+          : fetchMoreOrg // ignore: cast_nullable_to_non_nullable
+              as bool,
+      nextSpecial: freezed == nextSpecial
+          ? _value.nextSpecial
+          : nextSpecial // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fetchMoreSpecial: null == fetchMoreSpecial
+          ? _value.fetchMoreSpecial
+          : fetchMoreSpecial // ignore: cast_nullable_to_non_nullable
               as bool,
       hospitalId: null == hospitalId
           ? _value.hospitalId
@@ -1411,12 +1439,16 @@ abstract class _$$_ServicesStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {FormzStatus status,
-      FormzStatus paginationStatus,
+      {FormzStatus statusOrg,
+      FormzStatus paginationStatusOrg,
+      FormzStatus statusSpecial,
+      FormzStatus statusSingle,
       List<HospitalServiceEntity> servicesOrg,
       List<HospitalServiceSpecialEntity> servicesSpecial,
-      String? next,
-      bool fetchMore,
+      String? nextOrg,
+      bool fetchMoreOrg,
+      String? nextSpecial,
+      bool fetchMoreSpecial,
       int hospitalId,
       int specilizationId,
       String searchQuery,
@@ -1436,12 +1468,16 @@ class __$$_ServicesStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = null,
-    Object? paginationStatus = null,
+    Object? statusOrg = null,
+    Object? paginationStatusOrg = null,
+    Object? statusSpecial = null,
+    Object? statusSingle = null,
     Object? servicesOrg = null,
     Object? servicesSpecial = null,
-    Object? next = freezed,
-    Object? fetchMore = null,
+    Object? nextOrg = freezed,
+    Object? fetchMoreOrg = null,
+    Object? nextSpecial = freezed,
+    Object? fetchMoreSpecial = null,
     Object? hospitalId = null,
     Object? specilizationId = null,
     Object? searchQuery = null,
@@ -1450,13 +1486,21 @@ class __$$_ServicesStateCopyWithImpl<$Res>
     Object? serviceSingle = null,
   }) {
     return _then(_$_ServicesState(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      statusOrg: null == statusOrg
+          ? _value.statusOrg
+          : statusOrg // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      paginationStatus: null == paginationStatus
-          ? _value.paginationStatus
-          : paginationStatus // ignore: cast_nullable_to_non_nullable
+      paginationStatusOrg: null == paginationStatusOrg
+          ? _value.paginationStatusOrg
+          : paginationStatusOrg // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      statusSpecial: null == statusSpecial
+          ? _value.statusSpecial
+          : statusSpecial // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      statusSingle: null == statusSingle
+          ? _value.statusSingle
+          : statusSingle // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
       servicesOrg: null == servicesOrg
           ? _value._servicesOrg
@@ -1466,13 +1510,21 @@ class __$$_ServicesStateCopyWithImpl<$Res>
           ? _value._servicesSpecial
           : servicesSpecial // ignore: cast_nullable_to_non_nullable
               as List<HospitalServiceSpecialEntity>,
-      next: freezed == next
-          ? _value.next
-          : next // ignore: cast_nullable_to_non_nullable
+      nextOrg: freezed == nextOrg
+          ? _value.nextOrg
+          : nextOrg // ignore: cast_nullable_to_non_nullable
               as String?,
-      fetchMore: null == fetchMore
-          ? _value.fetchMore
-          : fetchMore // ignore: cast_nullable_to_non_nullable
+      fetchMoreOrg: null == fetchMoreOrg
+          ? _value.fetchMoreOrg
+          : fetchMoreOrg // ignore: cast_nullable_to_non_nullable
+              as bool,
+      nextSpecial: freezed == nextSpecial
+          ? _value.nextSpecial
+          : nextSpecial // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fetchMoreSpecial: null == fetchMoreSpecial
+          ? _value.fetchMoreSpecial
+          : fetchMoreSpecial // ignore: cast_nullable_to_non_nullable
               as bool,
       hospitalId: null == hospitalId
           ? _value.hospitalId
@@ -1506,12 +1558,16 @@ class __$$_ServicesStateCopyWithImpl<$Res>
 
 class _$_ServicesState with DiagnosticableTreeMixin implements _ServicesState {
   _$_ServicesState(
-      {this.status = FormzStatus.pure,
-      this.paginationStatus = FormzStatus.pure,
+      {this.statusOrg = FormzStatus.pure,
+      this.paginationStatusOrg = FormzStatus.pure,
+      this.statusSpecial = FormzStatus.pure,
+      this.statusSingle = FormzStatus.pure,
       final List<HospitalServiceEntity> servicesOrg = const [],
       final List<HospitalServiceSpecialEntity> servicesSpecial = const [],
-      this.next,
-      this.fetchMore = false,
+      this.nextOrg,
+      this.fetchMoreOrg = false,
+      this.nextSpecial,
+      this.fetchMoreSpecial = false,
       this.hospitalId = 0,
       this.specilizationId = 0,
       this.searchQuery = '',
@@ -1523,10 +1579,16 @@ class _$_ServicesState with DiagnosticableTreeMixin implements _ServicesState {
 
   @override
   @JsonKey()
-  final FormzStatus status;
+  final FormzStatus statusOrg;
   @override
   @JsonKey()
-  final FormzStatus paginationStatus;
+  final FormzStatus paginationStatusOrg;
+  @override
+  @JsonKey()
+  final FormzStatus statusSpecial;
+  @override
+  @JsonKey()
+  final FormzStatus statusSingle;
   final List<HospitalServiceEntity> _servicesOrg;
   @override
   @JsonKey()
@@ -1544,10 +1606,15 @@ class _$_ServicesState with DiagnosticableTreeMixin implements _ServicesState {
   }
 
   @override
-  final String? next;
+  final String? nextOrg;
   @override
   @JsonKey()
-  final bool fetchMore;
+  final bool fetchMoreOrg;
+  @override
+  final String? nextSpecial;
+  @override
+  @JsonKey()
+  final bool fetchMoreSpecial;
   @override
   @JsonKey()
   final int hospitalId;
@@ -1569,7 +1636,7 @@ class _$_ServicesState with DiagnosticableTreeMixin implements _ServicesState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ServicesState(status: $status, paginationStatus: $paginationStatus, servicesOrg: $servicesOrg, servicesSpecial: $servicesSpecial, next: $next, fetchMore: $fetchMore, hospitalId: $hospitalId, specilizationId: $specilizationId, searchQuery: $searchQuery, serviceCount: $serviceCount, getSingleServiceStatus: $getSingleServiceStatus, serviceSingle: $serviceSingle)';
+    return 'ServicesState(statusOrg: $statusOrg, paginationStatusOrg: $paginationStatusOrg, statusSpecial: $statusSpecial, statusSingle: $statusSingle, servicesOrg: $servicesOrg, servicesSpecial: $servicesSpecial, nextOrg: $nextOrg, fetchMoreOrg: $fetchMoreOrg, nextSpecial: $nextSpecial, fetchMoreSpecial: $fetchMoreSpecial, hospitalId: $hospitalId, specilizationId: $specilizationId, searchQuery: $searchQuery, serviceCount: $serviceCount, getSingleServiceStatus: $getSingleServiceStatus, serviceSingle: $serviceSingle)';
   }
 
   @override
@@ -1577,12 +1644,16 @@ class _$_ServicesState with DiagnosticableTreeMixin implements _ServicesState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ServicesState'))
-      ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('paginationStatus', paginationStatus))
+      ..add(DiagnosticsProperty('statusOrg', statusOrg))
+      ..add(DiagnosticsProperty('paginationStatusOrg', paginationStatusOrg))
+      ..add(DiagnosticsProperty('statusSpecial', statusSpecial))
+      ..add(DiagnosticsProperty('statusSingle', statusSingle))
       ..add(DiagnosticsProperty('servicesOrg', servicesOrg))
       ..add(DiagnosticsProperty('servicesSpecial', servicesSpecial))
-      ..add(DiagnosticsProperty('next', next))
-      ..add(DiagnosticsProperty('fetchMore', fetchMore))
+      ..add(DiagnosticsProperty('nextOrg', nextOrg))
+      ..add(DiagnosticsProperty('fetchMoreOrg', fetchMoreOrg))
+      ..add(DiagnosticsProperty('nextSpecial', nextSpecial))
+      ..add(DiagnosticsProperty('fetchMoreSpecial', fetchMoreSpecial))
       ..add(DiagnosticsProperty('hospitalId', hospitalId))
       ..add(DiagnosticsProperty('specilizationId', specilizationId))
       ..add(DiagnosticsProperty('searchQuery', searchQuery))
@@ -1597,16 +1668,25 @@ class _$_ServicesState with DiagnosticableTreeMixin implements _ServicesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ServicesState &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.paginationStatus, paginationStatus) ||
-                other.paginationStatus == paginationStatus) &&
+            (identical(other.statusOrg, statusOrg) ||
+                other.statusOrg == statusOrg) &&
+            (identical(other.paginationStatusOrg, paginationStatusOrg) ||
+                other.paginationStatusOrg == paginationStatusOrg) &&
+            (identical(other.statusSpecial, statusSpecial) ||
+                other.statusSpecial == statusSpecial) &&
+            (identical(other.statusSingle, statusSingle) ||
+                other.statusSingle == statusSingle) &&
             const DeepCollectionEquality()
                 .equals(other._servicesOrg, _servicesOrg) &&
             const DeepCollectionEquality()
                 .equals(other._servicesSpecial, _servicesSpecial) &&
-            (identical(other.next, next) || other.next == next) &&
-            (identical(other.fetchMore, fetchMore) ||
-                other.fetchMore == fetchMore) &&
+            (identical(other.nextOrg, nextOrg) || other.nextOrg == nextOrg) &&
+            (identical(other.fetchMoreOrg, fetchMoreOrg) ||
+                other.fetchMoreOrg == fetchMoreOrg) &&
+            (identical(other.nextSpecial, nextSpecial) ||
+                other.nextSpecial == nextSpecial) &&
+            (identical(other.fetchMoreSpecial, fetchMoreSpecial) ||
+                other.fetchMoreSpecial == fetchMoreSpecial) &&
             (identical(other.hospitalId, hospitalId) ||
                 other.hospitalId == hospitalId) &&
             (identical(other.specilizationId, specilizationId) ||
@@ -1624,12 +1704,16 @@ class _$_ServicesState with DiagnosticableTreeMixin implements _ServicesState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      status,
-      paginationStatus,
+      statusOrg,
+      paginationStatusOrg,
+      statusSpecial,
+      statusSingle,
       const DeepCollectionEquality().hash(_servicesOrg),
       const DeepCollectionEquality().hash(_servicesSpecial),
-      next,
-      fetchMore,
+      nextOrg,
+      fetchMoreOrg,
+      nextSpecial,
+      fetchMoreSpecial,
       hospitalId,
       specilizationId,
       searchQuery,
@@ -1646,12 +1730,16 @@ class _$_ServicesState with DiagnosticableTreeMixin implements _ServicesState {
 
 abstract class _ServicesState implements ServicesState {
   factory _ServicesState(
-      {final FormzStatus status,
-      final FormzStatus paginationStatus,
+      {final FormzStatus statusOrg,
+      final FormzStatus paginationStatusOrg,
+      final FormzStatus statusSpecial,
+      final FormzStatus statusSingle,
       final List<HospitalServiceEntity> servicesOrg,
       final List<HospitalServiceSpecialEntity> servicesSpecial,
-      final String? next,
-      final bool fetchMore,
+      final String? nextOrg,
+      final bool fetchMoreOrg,
+      final String? nextSpecial,
+      final bool fetchMoreSpecial,
       final int hospitalId,
       final int specilizationId,
       final String searchQuery,
@@ -1660,17 +1748,25 @@ abstract class _ServicesState implements ServicesState {
       final HospitalServiceSingleEntity serviceSingle}) = _$_ServicesState;
 
   @override
-  FormzStatus get status;
+  FormzStatus get statusOrg;
   @override
-  FormzStatus get paginationStatus;
+  FormzStatus get paginationStatusOrg;
+  @override
+  FormzStatus get statusSpecial;
+  @override
+  FormzStatus get statusSingle;
   @override
   List<HospitalServiceEntity> get servicesOrg;
   @override
   List<HospitalServiceSpecialEntity> get servicesSpecial;
   @override
-  String? get next;
+  String? get nextOrg;
   @override
-  bool get fetchMore;
+  bool get fetchMoreOrg;
+  @override
+  String? get nextSpecial;
+  @override
+  bool get fetchMoreSpecial;
   @override
   int get hospitalId;
   @override

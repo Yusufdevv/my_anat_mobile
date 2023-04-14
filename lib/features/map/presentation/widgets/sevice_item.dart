@@ -41,7 +41,7 @@ class ServiceItem extends StatelessWidget {
                     allText: title,
                     highlightedText: hightlightedText,
                     textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 15),
-                    textStyleHighlight: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 15),
+                    textStyleHighlight: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 ),
                 SvgPicture.asset(AppIcons.arrowRight, color: textSecondary)

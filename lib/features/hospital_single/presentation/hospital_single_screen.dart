@@ -164,7 +164,7 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                 listeners: [
                   BlocListener<ServicesBloc, ServicesState>(
                     listener: (context, state) {
-                      if (state.status.isSubmissionSuccess && state.servicesSpecial.isEmpty) {
+                      if (state.statusSpecial.isSubmissionSuccess && state.servicesSpecial.isEmpty) {
                         setState(() {
                           tabs.removeWhere((element) => element.keyTitle == 'service');
                           hasServices = false;

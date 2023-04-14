@@ -12,12 +12,14 @@ class EmptyWidget extends StatelessWidget {
   final String? content;
   final bool hasMargin;
   final bool hasPadding;
+  final Color backColor;
   const EmptyWidget({
     this.onButtonTap,
     this.title,
     this.content,
     this.hasMargin = true,
     this.hasPadding = true,
+    this.backColor = white,
     Key? key,
   }) : super(key: key);
 
@@ -32,7 +34,7 @@ class EmptyWidget extends StatelessWidget {
           ? const EdgeInsets.symmetric(vertical: 24, horizontal: 16)
           : null,
       decoration: BoxDecoration(
-        color: white,
+        color: backColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(

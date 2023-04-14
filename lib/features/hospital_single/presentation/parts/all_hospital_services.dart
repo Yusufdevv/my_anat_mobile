@@ -74,11 +74,11 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (state.status.isSubmissionInProgress) ...{
+                        if (state.statusSpecial.isSubmissionInProgress) ...{
                           const Center(
                             child: CupertinoActivityIndicator(),
                           )
-                        } else if (state.status.isSubmissionSuccess) ...{
+                        } else if (state.statusSpecial.isSubmissionSuccess) ...{
                           if (state.servicesSpecial.isEmpty) ...{
                             const SizedBox(height: 16),
                             Center(
@@ -121,7 +121,7 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
                               ),
                             )
                           }
-                        } else if (state.status.isSubmissionFailure) ...{
+                        } else if (state.statusSpecial.isSubmissionFailure) ...{
                           const Center(
                             child: Text('error'),
                           )
@@ -129,12 +129,12 @@ class _AllHospitalServicesState extends State<AllHospitalServices> {
                       ],
                     ),
                   ),
-                  if (state.fetchMore) ...[
+                  if (state.fetchMoreSpecial) ...[
                     WButton(
                       onTap: () {
                         context.read<ServicesBloc>().add(ServicesEvent.getMoreServicesOrg());
                       },
-                      isLoading: state.paginationStatus.isSubmissionInProgress,
+                      isLoading: state.statusSpecial.isSubmissionInProgress,
                       color: commentButton,
                       text: LocaleKeys.show_all.tr(),
                       textColor: textSecondary,

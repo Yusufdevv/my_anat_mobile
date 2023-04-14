@@ -27,47 +27,44 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       if (kDebugMode) {
         print('get event');
       }
-      emit(state.copyWith(
-        status: FormzStatus.submissionInProgress,
-      ));
+      emit(state.copyWith(statusSpecial: FormzStatus.submissionInProgress));
       final result = await _getServicesSpecialUseCase(ServiceSpecialParameters(orgId: event.organizationId));
       if (result.isRight) {
         emit(
           state.copyWith(
             serviceCount: result.right.count,
-            status: FormzStatus.submissionSuccess,
+            statusSpecial: FormzStatus.submissionSuccess,
             servicesSpecial: result.right.results,
             hospitalId: event.organizationId,
-            next: result.right.next,
-            fetchMore: result.right.next != null,
+            nextSpecial: result.right.next,
+            fetchMoreSpecial: result.right.next != null,
           ),
         );
       } else {
-        emit(state.copyWith(
-          status: FormzStatus.submissionSuccess,
-        ));
+        emit(state.copyWith(statusSpecial: FormzStatus.submissionSuccess));
       }
     });
 
     ///
     on<_GetMoreServicesSpecial>((event, emit) async {
-      emit(
-        state.copyWith(paginationStatus: FormzStatus.submissionInProgress),
-      );
+      // emit(
+      //   state.copyWith(statusSpecial: FormzStatus.submissionInProgress),
+      // );
       final result = await _getServicesSpecialUseCase(
-          ServiceSpecialParameters(orgId: state.hospitalId, next: state.next, query: state.searchQuery));
+          ServiceSpecialParameters(orgId: state.hospitalId, next: state.nextSpecial, query: state.searchQuery));
       if (result.isRight) {
         emit(
           state.copyWith(
-            paginationStatus: FormzStatus.submissionSuccess,
-            next: result.right.next,
-            fetchMore: result.right.next != null,
+            statusSpecial: FormzStatus.submissionSuccess,
+            nextSpecial: result.right.next,
+            fetchMoreSpecial: result.right.next != null,
             servicesSpecial: [...state.servicesSpecial, ...result.right.results],
           ),
         );
-      } else {
-        emit(state.copyWith(paginationStatus: FormzStatus.submissionSuccess));
       }
+      // else {
+      //   emit(state.copyWith(statusSpecial: FormzStatus.submissionSuccess));
+      // }
     });
 
     ///
@@ -75,67 +72,63 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       if (kDebugMode) {
         print('get event');
       }
-      emit(state.copyWith(
-        status: FormzStatus.submissionInProgress,
-      ));
+      emit(state.copyWith(statusOrg: FormzStatus.submissionInProgress));
       final result = await getServices(ServiceParameters(orgId: state.hospitalId, specId: event.specializationId));
       if (result.isRight) {
         emit(
           state.copyWith(
             serviceCount: result.right.count,
-            status: FormzStatus.submissionSuccess,
+            statusOrg: FormzStatus.submissionSuccess,
             servicesOrg: result.right.results,
             specilizationId: event.specializationId,
-            next: result.right.next,
-            fetchMore: result.right.next != null,
+            nextOrg: result.right.next,
+            fetchMoreOrg: result.right.next != null,
           ),
         );
       } else {
-        emit(state.copyWith(
-          status: FormzStatus.submissionSuccess,
-        ));
+        emit(state.copyWith(statusOrg: FormzStatus.submissionSuccess));
       }
     });
 
     ///
     on<_GetMoreServicesOrg>((event, emit) async {
       emit(
-        state.copyWith(paginationStatus: FormzStatus.submissionInProgress),
+        state.copyWith(paginationStatusOrg: FormzStatus.submissionInProgress),
       );
       final result = await getServices(ServiceParameters(
-          orgId: state.hospitalId, next: state.next, query: state.searchQuery, specId: state.specilizationId));
+          orgId: state.hospitalId, next: state.nextOrg, query: state.searchQuery, specId: state.specilizationId));
       if (result.isRight) {
         emit(
           state.copyWith(
-            paginationStatus: FormzStatus.submissionSuccess,
-            next: result.right.next,
-            fetchMore: result.right.next != null,
+            paginationStatusOrg: FormzStatus.submissionSuccess,
+            nextOrg: result.right.next,
+            fetchMoreOrg: result.right.next != null,
             servicesOrg: [...state.servicesOrg, ...result.right.results],
           ),
         );
       } else {
-        emit(state.copyWith(paginationStatus: FormzStatus.submissionSuccess));
+        emit(state.copyWith(paginationStatusOrg: FormzStatus.submissionSuccess));
       }
     });
 
     ///
     on<_SearchServicesOrg>((event, emit) async {
       print('search event');
-      emit(state.copyWith(status: FormzStatus.submissionInProgress));
+      emit(state.copyWith(statusOrg: FormzStatus.submissionInProgress));
       final result = await getServices(
           ServiceParameters(orgId: state.hospitalId, query: event.query, specId: state.specilizationId));
       if (result.isRight) {
         emit(
           state.copyWith(
-            status: FormzStatus.submissionSuccess,
+            statusOrg: FormzStatus.submissionSuccess,
             servicesOrg: result.right.results,
-            next: result.right.next,
-            fetchMore: result.right.next != null,
+            nextOrg: result.right.next,
+            fetchMoreOrg: result.right.next != null,
             searchQuery: event.query,
           ),
         );
       } else {
-        emit(state.copyWith(status: FormzStatus.submissionSuccess));
+        emit(state.copyWith(statusOrg: FormzStatus.submissionSuccess));
       }
     }, transformer: restartable());
 
