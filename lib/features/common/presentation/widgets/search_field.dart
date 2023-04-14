@@ -82,11 +82,11 @@ class _SearchFieldState extends State<SearchField> {
               ? WScaleAnimation(
                   onTap: () {
                     _controller.clear();
+                    setState(() {
+                      showClear = false;
+                    });
                     if (widget.onClear != null) {
                       widget.onClear!();
-                      setState(() {
-                        showClear = false;
-                      });
                     }
                   },
                   child: Padding(
