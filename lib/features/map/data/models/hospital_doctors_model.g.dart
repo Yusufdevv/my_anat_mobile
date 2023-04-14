@@ -10,6 +10,7 @@ HospitalDoctorsModel _$HospitalDoctorsModelFromJson(
         Map<String, dynamic> json) =>
     HospitalDoctorsModel(
       fullName: json['full_name'] as String? ?? '',
+      doctorName: json['doctor_name'] as String? ?? '',
       id: json['id'] as int? ?? 0,
       phoneNumber: json['phone_number'] as String? ?? '',
       specializations: (json['specializations'] as List<dynamic>?)
@@ -41,6 +42,7 @@ Map<String, dynamic> _$HospitalDoctorsModelToJson(
         HospitalDoctorsModel instance) =>
     <String, dynamic>{
       'full_name': instance.fullName,
+      'doctor_name': instance.doctorName,
       'id': instance.id,
       'specializations': instance.specializations,
       'rating': instance.rating,

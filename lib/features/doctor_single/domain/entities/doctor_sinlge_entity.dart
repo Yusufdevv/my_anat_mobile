@@ -1,8 +1,10 @@
+import 'package:anatomica/features/auth/data/models/diplom_model.dart';
 import 'package:anatomica/features/auth/data/models/district_model.dart';
 import 'package:anatomica/features/auth/data/models/organization_model.dart';
 import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/region_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
+import 'package:anatomica/features/auth/domain/entities/diplom_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/district_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/organization_entity.dart';
@@ -15,6 +17,7 @@ import 'package:equatable/equatable.dart';
 class DoctorSingleEntity extends Equatable {
   final int id;
   final String fullName;
+  final String doctorName;
   @PositionEntityConverter()
   final PositionEntity position;
   final int workExperience;
@@ -51,13 +54,15 @@ class DoctorSingleEntity extends Equatable {
   final bool imgIsFull;
   final double latitude;
   final double longitude;
-  final String diplom;
+  @DiplomConverter()
+  final DiplomEntity diplom;
   final bool paid;
   final String organizationName;
 
   const DoctorSingleEntity({
     this.id = 0,
     this.fullName = '',
+    this.doctorName = '',
     this.images = const [],
     this.position = const PositionEntity(),
     this.workExperience = 0,
@@ -84,7 +89,7 @@ class DoctorSingleEntity extends Equatable {
     this.imgIsFull = false,
     this.latitude = 0,
     this.longitude = 0,
-    this.diplom = '',
+    this.diplom =const DiplomEntity(),
     this.paid = false,
     this.organizationName = '',
   });
@@ -93,6 +98,7 @@ class DoctorSingleEntity extends Equatable {
   List<Object?> get props => [
         id,
         fullName,
+        doctorName,
         position,
         workExperience,
         work,

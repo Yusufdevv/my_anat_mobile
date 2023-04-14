@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 
 class HospitalDoctorsEntity extends Equatable {
   final String fullName;
+  final String doctorName;
   final int id;
   final List<TitlerModel> specializations;
   final double rating;
@@ -28,6 +29,7 @@ class HospitalDoctorsEntity extends Equatable {
     this.specializations = const [],
     this.id = 0,
     this.fullName = '',
+    this.doctorName  = '',
     this.image = const ImageEntity(),
     this.position = '',
     this.phoneNumber = '',
@@ -44,6 +46,7 @@ class HospitalDoctorsEntity extends Equatable {
   @override
   List<Object?> get props => [
         fullName,
+        doctorName ,
         specializations,
         rating,
         image,

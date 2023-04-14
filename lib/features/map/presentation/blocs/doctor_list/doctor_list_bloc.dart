@@ -16,6 +16,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
 
   DoctorListBloc(this.useCase) : super(DoctorListState()) {
     on<_GetDoctors>((event, emit) async {
+      print('======object doctor length bloc ${state.doctors.length}');
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       final result = await useCase.call(
         MapV2Params(
@@ -31,6 +32,7 @@ class DoctorListBloc extends Bloc<DoctorListEvent, DoctorListState> {
             doctors: result.right.results,
             next: result.right.next,
             fetchMore: result.right.next != null));
+        print('======object doctor length bloc ${state.doctors.length}');
       } else {
         emit(state.copyWith(
           status: FormzStatus.submissionFailure,

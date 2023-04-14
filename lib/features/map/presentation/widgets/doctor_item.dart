@@ -76,8 +76,7 @@ class DoctorItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 8),
-                              Text(
-                                entity.fullName,
+                              Text( entity.doctorName,
                                 style: Theme.of(context).textTheme.displayLarge,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
@@ -86,23 +85,15 @@ class DoctorItem extends StatelessWidget {
                               showPosition
                                   ? Text(
                                       entity.position,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium!
-                                          .copyWith(fontSize: 14),
+                                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 14),
                                       maxLines: 2,
                                     )
                                   : Wrap(
                                       children: [
-                                        for (int i = 0;
-                                            i < entity.specializations.length;
-                                            i++)
+                                        for (int i = 0; i < entity.specializations.length; i++)
                                           Text(
                                             '${entity.specializations[i].title} ',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineMedium!
-                                                .copyWith(fontSize: 14),
+                                            style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 14),
                                           ),
                                       ],
                                     ),
@@ -150,10 +141,7 @@ class DoctorItem extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         (entity.rating > 5 ? 5.0 : entity.rating).toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(color: darkGreen, fontSize: 14),
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(color: darkGreen, fontSize: 14),
                       ),
                     ],
                   ),

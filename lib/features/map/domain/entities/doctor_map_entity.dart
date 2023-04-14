@@ -5,6 +5,7 @@ class DoctorMapEntity extends Equatable {
   const DoctorMapEntity({
     this.id = -1,
     this.fullName = '',
+    this.doctorName  = '',
     this.image = const ImageEntity(),
     this.imgIsFull = false,
     this.position = '',
@@ -18,30 +19,25 @@ class DoctorMapEntity extends Equatable {
   });
 
   final int id;
-
   final String fullName;
+  final String doctorName ;
   @ImageConverter()
   final ImageEntity image;
   final bool imgIsFull;
   final String position;
-
   final String address;
-
   final double latitude;
-
   final double longitude;
-
   final num rating;
   final List<List<String>> phoneNumbers;
-
   final String organizationName;
-
   final double distance;
 
   @override
   List<Object?> get props => [
         id,
         fullName,
+        doctorName ,
         image,
         imgIsFull,
         position,

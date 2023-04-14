@@ -33,6 +33,7 @@ class MapSheetDoctor extends StatelessWidget {
             onPageChanged: onPageChanged,
             itemCount: doctors.length,
             itemBuilder: (context, index) {
+              print('doctorName ${doctors[index].doctorName}');
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16, left: 8),
                 child: DoctorSingleBottomSheet(
@@ -41,15 +42,13 @@ class MapSheetDoctor extends StatelessWidget {
                   isHospital: false,
                   specialization: doctors[index].position,
                   slug: '',
-                  hospital: doctors[index].fullName,
-                  title: doctors[index].fullName,
+                  hospital: doctors[index].organizationName,
+                  title: doctors[index].doctorName,
                   //  todo which phone
                   phone: doctors[index].phoneNumbers[0].first,
                   address: doctors[index].address,
                   images: [doctors[index].image.middle],
-                  location: Point(
-                      latitude: doctors[index].latitude,
-                      longitude: doctors[index].longitude),
+                  location: Point(latitude: doctors[index].latitude, longitude: doctors[index].longitude),
                   rating: doctors[index].rating + 0,
                 ),
               );

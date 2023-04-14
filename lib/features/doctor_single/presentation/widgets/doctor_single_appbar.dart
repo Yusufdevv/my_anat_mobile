@@ -33,10 +33,7 @@ class DoctorSingleAppBar extends StatefulWidget {
   final PageController pageController;
 
   const DoctorSingleAppBar(
-      {required this.headerManagerBloc,
-      required this.pageController,
-      required this.doctor,
-      Key? key})
+      {required this.headerManagerBloc, required this.pageController, required this.doctor, Key? key})
       : super(key: key);
 
   @override
@@ -57,14 +54,12 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
             sliver: SliverAppBar(
               title: state.isHeaderScrolled
                   ? HospitalSingleAppBarBody(
-                      shareValue:
-                          'https://anatomica.uz/doctor/${widget.doctor.id}',
+                      shareValue: 'https://anatomica.uz/doctor/${widget.doctor.id}',
                     )
                   : Container(),
               systemOverlayStyle: SystemUiOverlayStyle(
                 statusBarColor: Colors.transparent,
-                statusBarIconBrightness:
-                    state.isHeaderScrolled ? Brightness.dark : Brightness.light,
+                statusBarIconBrightness: state.isHeaderScrolled ? Brightness.dark : Brightness.light,
               ),
               shadowColor: textFieldColor,
               stretch: true,
@@ -89,24 +84,18 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                       child: Stack(
                         children: [
                           Positioned.fill(
-                            child: BlocBuilder<DoctorSingleBloc,
-                                DoctorSingleState>(
+                            child: BlocBuilder<DoctorSingleBloc, DoctorSingleState>(
                               builder: (context, state) {
-                                if (state.doctorSingle.images.isEmpty &&
-                                    state.doctorSingle.img == ImageEntity()) {
+                                if (state.doctorSingle.images.isEmpty && state.doctorSingle.img ==const ImageEntity()) {
                                   return const BigImageErrorWidget();
                                 }
                                 return PageView.builder(
-                                  itemBuilder: (context, index) =>
-                                      GestureDetector(
+                                  itemBuilder: (context, index) => GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).push(
                                         fade(
                                           page: ImageSingleScreen(
-                                            images: [
-                                              state.doctorSingle.img,
-                                              ...state.doctorSingle.images
-                                            ],
+                                            images: [state.doctorSingle.img, ...state.doctorSingle.images],
                                             index: index,
                                           ),
                                         ),
@@ -116,15 +105,11 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                       children: [
                                         Positioned.fill(
                                           child: WImage(
-                                            imageUrl: [
-                                              state.doctorSingle.img,
-                                              ...state.doctorSingle.images
-                                            ][index]
-                                                .middle,
+                                            imageUrl:
+                                                [state.doctorSingle.img, ...state.doctorSingle.images][index].middle,
                                             fit: BoxFit.cover,
                                             onErrorColor: Colors.red,
-                                            onErrorWidget:
-                                                const BigImageErrorWidget(),
+                                            onErrorWidget: const BigImageErrorWidget(),
                                           ),
                                         ),
                                         Positioned.fill(
@@ -159,10 +144,7 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                       ],
                                     ),
                                   ),
-                                  itemCount: [
-                                    state.doctorSingle.img,
-                                    ...state.doctorSingle.images
-                                  ].length,
+                                  itemCount: [state.doctorSingle.img, ...state.doctorSingle.images].length,
                                   controller: widget.pageController,
                                   onPageChanged: (index) {
                                     setState(() {
@@ -174,8 +156,7 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).padding.top),
+                            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -185,16 +166,13 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                     padding: const EdgeInsets.all(16),
                                     child: SvgPicture.asset(
                                       AppIcons.chevronRight,
-                                      color: widget.doctor.img.middle.isNotEmpty
-                                          ? white
-                                          : textSecondary,
+                                      color: widget.doctor.img.middle.isNotEmpty ? white : textSecondary,
                                     ),
                                   ),
                                 ),
                                 WScaleAnimation(
                                   onTap: () {
-                                    Share.share(
-                                        'https://anatomica.uz/doctor/${widget.doctor.id}');
+                                    Share.share('https://anatomica.uz/doctor/${widget.doctor.id}');
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(16),
@@ -218,33 +196,23 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                           Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 16),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    widget.doctor.fullName,
+                                    widget.doctor.doctorName,
                                     maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .copyWith(color: white, fontSize: 22),
+                                    style:
+                                        Theme.of(context).textTheme.displayLarge!.copyWith(color: white, fontSize: 22),
                                   ),
                                 ),
                               ),
                               BlocBuilder<DoctorSingleBloc, DoctorSingleState>(
                                 builder: (context, state) {
-                                  return [
-                                            state.doctorSingle.img,
-                                            ...state.doctorSingle.images
-                                          ].length >
-                                          1
+                                  return [state.doctorSingle.img, ...state.doctorSingle.images].length > 1
                                       ? ImageSliderIndicator(
-                                          itemCount: [
-                                            state.doctorSingle.img,
-                                            ...state.doctorSingle.images
-                                          ].length,
+                                          itemCount: [state.doctorSingle.img, ...state.doctorSingle.images].length,
                                           currentIndex: currentImage,
                                         )
                                       : const SizedBox();
@@ -276,54 +244,40 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                       Padding(
                                         padding: const EdgeInsets.all(16),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Visibility(
-                                              visible: widget.doctor
-                                                  .specializations.isNotEmpty,
+                                              visible: widget.doctor.specializations.isNotEmpty,
                                               child: Wrap(
                                                 children: [
-                                                  SvgPicture.asset(
-                                                      AppIcons.stethoscope),
+                                                  SvgPicture.asset(AppIcons.stethoscope),
                                                   const SizedBox(width: 6),
-                                                  for (int i = 0;
-                                                      i <
-                                                          widget
-                                                              .doctor
-                                                              .specializations
-                                                              .length;
-                                                      i++)
+                                                  for (int i = 0; i < widget.doctor.specializations.length; i++)
                                                     Text(
                                                       '${widget.doctor.specializations[i].title} ',
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .displaySmall!
-                                                          .copyWith(
-                                                              color: primary),
+                                                          .copyWith(color: primary),
                                                     ),
                                                 ],
                                               ),
                                             ),
                                             const SizedBox(height: 16),
                                             Visibility(
-                                              visible: widget.doctor.position
-                                                  .title.isNotEmpty,
+                                              visible: widget.doctor.position.title.isNotEmpty,
                                               child: Column(
                                                 children: [
                                                   Row(
                                                     children: [
-                                                      SvgPicture.asset(AppIcons
-                                                          .buildingHospital),
+                                                      SvgPicture.asset(AppIcons.buildingHospital),
                                                       const SizedBox(width: 6),
                                                       Text(
-                                                        widget.doctor.position
-                                                            .title,
+                                                        widget.doctor.position.title,
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .displaySmall!
-                                                            .copyWith(
-                                                                color: black),
+                                                            .copyWith(color: black),
                                                       ),
                                                     ],
                                                   ),
@@ -331,24 +285,20 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                                 ],
                                               ),
                                             ),
-                                            if (widget
-                                                .doctor.address.isNotEmpty) ...[
+                                            if (widget.doctor.address.isNotEmpty) ...[
                                               Row(
                                                 children: [
-                                                  SvgPicture.asset(
-                                                      AppIcons.location),
+                                                  SvgPicture.asset(AppIcons.location),
                                                   const SizedBox(width: 6),
                                                   Expanded(
                                                     child: Text(
                                                       widget.doctor.address,
                                                       maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                      overflow: TextOverflow.ellipsis,
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .displaySmall!
-                                                          .copyWith(
-                                                              color: textColor),
+                                                          .copyWith(color: textColor),
                                                     ),
                                                   ),
                                                 ],
@@ -357,95 +307,50 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                             ],
                                             Wrap(
                                               children: [
-                                                if (widget.doctor.organizations
-                                                    .isNotEmpty) ...{
+                                                if (widget.doctor.organizations.isNotEmpty) ...{
                                                   ...List.generate(
-                                                    widget.doctor.organizations
-                                                        .length,
+                                                    widget.doctor.organizations.length,
                                                     (index) => GestureDetector(
-                                                      behavior: HitTestBehavior
-                                                          .opaque,
+                                                      behavior: HitTestBehavior.opaque,
                                                       onTap: () {
-                                                        if (widget
-                                                                .doctor
-                                                                .organizations[
-                                                                    index]
-                                                                .id !=
-                                                            0) {
-                                                          Navigator.of(context)
-                                                              .push(
+                                                        if (widget.doctor.organizations[index].id != 0) {
+                                                          Navigator.of(context).push(
                                                             fade(
-                                                              page:
-                                                                  HospitalSingleScreen(
-                                                                id: widget
-                                                                    .doctor
-                                                                    .organizations[
-                                                                        index]
-                                                                    .id,
-                                                                slug: widget
-                                                                    .doctor
-                                                                    .organizations[
-                                                                        index]
-                                                                    .slug,
+                                                              page: HospitalSingleScreen(
+                                                                id: widget.doctor.organizations[index].id,
+                                                                slug: widget.doctor.organizations[index].slug,
                                                               ),
                                                             ),
                                                           );
                                                         }
                                                       },
                                                       child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
+                                                        padding: const EdgeInsets.only(
                                                           top: 10,
                                                           bottom: 16,
                                                           right: 12,
                                                         ),
                                                         child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
+                                                          mainAxisSize: MainAxisSize.min,
                                                           children: [
-                                                            SvgPicture.asset(
-                                                                AppIcons
-                                                                    .building),
-                                                            const SizedBox(
-                                                                width: 6),
+                                                            SvgPicture.asset(AppIcons.building),
+                                                            const SizedBox(width: 6),
                                                             ConstrainedBox(
                                                               constraints: BoxConstraints(
-                                                                  maxWidth: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width -
-                                                                      74),
+                                                                  maxWidth: MediaQuery.of(context).size.width - 74),
                                                               child: Text(
-                                                                widget
-                                                                    .doctor
-                                                                    .organizations[
-                                                                        index]
-                                                                    .name,
+                                                                widget.doctor.organizations[index].name,
                                                                 maxLines: 1,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                style: Theme.of(
-                                                                        context)
+                                                                overflow: TextOverflow.ellipsis,
+                                                                style: Theme.of(context)
                                                                     .textTheme
                                                                     .displaySmall!
-                                                                    .copyWith(
-                                                                        color:
-                                                                            textColor),
+                                                                    .copyWith(color: textColor),
                                                               ),
                                                             ),
-                                                            if (widget
-                                                                    .doctor
-                                                                    .organizations[
-                                                                        index]
-                                                                    .id !=
-                                                                0) ...[
-                                                              const SizedBox(
-                                                                  width: 4),
-                                                              SvgPicture.asset(
-                                                                  AppIcons
-                                                                      .externalLink)
+                                                            if (widget.doctor.organizations[index].id != 0) ...[
+                                                              const SizedBox(width: 4),
+                                                              SvgPicture.asset(AppIcons.externalLink)
                                                             ]
                                                           ],
                                                         ),
@@ -460,24 +365,18 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                                 Text(
                                                   (widget.doctor.rating > 5
                                                           ? 5.0
-                                                          : widget.doctor
-                                                                      .rating <
-                                                                  0
+                                                          : widget.doctor.rating < 0
                                                               ? 0.0
-                                                              : widget.doctor
-                                                                  .rating)
+                                                              : widget.doctor.rating)
                                                       .toString(),
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .displaySmall!
-                                                      .copyWith(
-                                                          color: darkGreen),
+                                                      .copyWith(color: darkGreen),
                                                 ),
                                                 const SizedBox(width: 8),
                                                 RatingStars(
-                                                  rate: widget.doctor.rating < 5
-                                                      ? widget.doctor.rating
-                                                      : 5,
+                                                  rate: widget.doctor.rating < 5 ? widget.doctor.rating : 5,
                                                 )
                                               ],
                                             ),
@@ -488,44 +387,26 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                                   child: WButton(
                                                     color: primary,
                                                     onTap: () async {
-                                                      if (widget
-                                                              .doctor
-                                                              .phoneNumbers
-                                                              .isNotEmpty &&
-                                                          !widget.doctor
-                                                              .phoneNumbers
-                                                              .map((e) =>
-                                                                  e.phoneNumber)
+                                                      if (widget.doctor.phoneNumbers.isNotEmpty &&
+                                                          !widget.doctor.phoneNumbers
+                                                              .map((e) => e.phoneNumber)
                                                               .toList()
-                                                              .contains(widget
-                                                                  .doctor
-                                                                  .phoneNumber)) {
+                                                              .contains(widget.doctor.phoneNumber)) {
                                                         showModalBottomSheet(
                                                           context: context,
-                                                          isScrollControlled:
-                                                              true,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          builder: (_) =>
-                                                              PhonesBottomSheet(
-                                                            phones: widget
-                                                                .doctor
-                                                                .phoneNumbers
-                                                                .map((e) => e
-                                                                    .phoneNumber)
+                                                          isScrollControlled: true,
+                                                          backgroundColor: Colors.transparent,
+                                                          builder: (_) => PhonesBottomSheet(
+                                                            phones: widget.doctor.phoneNumbers
+                                                                .map((e) => e.phoneNumber)
                                                                 .toList(),
                                                           ),
                                                         );
                                                       } else {
-                                                        if (widget
-                                                            .doctor
-                                                            .phoneNumber
-                                                            .isNotEmpty) {
+                                                        if (widget.doctor.phoneNumber.isNotEmpty) {
                                                           if (await canLaunchUrlString(
                                                               'tel://${widget.doctor.phoneNumber}')) {
-                                                            await launchUrlString(
-                                                                'tel://${widget.doctor.phoneNumber}');
+                                                            await launchUrlString('tel://${widget.doctor.phoneNumber}');
                                                           } else {
                                                             throw 'Can not open phone number';
                                                           }
@@ -534,9 +415,7 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                                     },
                                                     padding: EdgeInsets.zero,
                                                     child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         SvgPicture.asset(
                                                           AppIcons.phone,
@@ -544,16 +423,13 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                                           width: 20,
                                                           color: white,
                                                         ),
-                                                        const SizedBox(
-                                                            width: 8),
+                                                        const SizedBox(width: 8),
                                                         Text(
                                                           LocaleKeys.call.tr(),
-                                                          style: Theme.of(
-                                                                  context)
+                                                          style: Theme.of(context)
                                                               .textTheme
                                                               .displaySmall!
-                                                              .copyWith(
-                                                                  color: white),
+                                                              .copyWith(color: white),
                                                         )
                                                       ],
                                                     ),
@@ -561,68 +437,37 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                                 ),
                                                 const SizedBox(width: 8),
                                                 Visibility(
-                                                  visible: widget.doctor
-                                                              .latitude !=
-                                                          0 &&
-                                                      widget.doctor.longitude !=
-                                                          0,
+                                                  visible: widget.doctor.latitude != 0 && widget.doctor.longitude != 0,
                                                   child: Expanded(
                                                     child: WButton(
                                                       color: white,
                                                       onTap: () async {
-                                                        if (Platform
-                                                            .isAndroid) {
-                                                          if (await MapLauncher
-                                                                  .isMapAvailable(
-                                                                      MapType
-                                                                          .google) ??
+                                                        if (Platform.isAndroid) {
+                                                          if (await MapLauncher.isMapAvailable(MapType.google) ??
                                                               false) {
                                                             await MapLauncher.showDirections(
-                                                                mapType: MapType
-                                                                    .google,
+                                                                mapType: MapType.google,
                                                                 destination: Coords(
-                                                                    widget
-                                                                        .doctor
-                                                                        .latitude,
-                                                                    widget
-                                                                        .doctor
-                                                                        .longitude));
+                                                                    widget.doctor.latitude, widget.doctor.longitude));
                                                           } else {
                                                             // TODO widget.doctoc.address o'rniga widget.doctor.locationUrl qo'yilishi kerak,
                                                             // TODO backendda bo'lmaganligi uchun vaqtincha shunaqa qoldirib ketildi
-                                                            if (await canLaunchUrlString(
-                                                                widget.doctor
-                                                                    .address)) {
-                                                              await launchUrlString(
-                                                                  widget.doctor
-                                                                      .address);
+                                                            if (await canLaunchUrlString(widget.doctor.address)) {
+                                                              await launchUrlString(widget.doctor.address);
                                                             } else {
                                                               throw 'Can not open Google maps';
                                                             }
                                                           }
                                                         } else {
-                                                          if (await MapLauncher
-                                                                  .isMapAvailable(
-                                                                      MapType
-                                                                          .apple) ??
+                                                          if (await MapLauncher.isMapAvailable(MapType.apple) ??
                                                               false) {
                                                             await MapLauncher.showDirections(
-                                                                mapType: MapType
-                                                                    .apple,
+                                                                mapType: MapType.apple,
                                                                 destination: Coords(
-                                                                    widget
-                                                                        .doctor
-                                                                        .latitude,
-                                                                    widget
-                                                                        .doctor
-                                                                        .longitude));
+                                                                    widget.doctor.latitude, widget.doctor.longitude));
                                                           } else {
-                                                            if (await canLaunchUrlString(
-                                                                widget.doctor
-                                                                    .address)) {
-                                                              await launchUrlString(
-                                                                  widget.doctor
-                                                                      .address);
+                                                            if (await canLaunchUrlString(widget.doctor.address)) {
+                                                              await launchUrlString(widget.doctor.address);
                                                             } else {
                                                               throw 'Can not open Google maps';
                                                             }
@@ -630,29 +475,22 @@ class _DoctorSingleAppBarState extends State<DoctorSingleAppBar> {
                                                         }
                                                       },
                                                       padding: EdgeInsets.zero,
-                                                      border: Border.all(
-                                                          color: primary),
+                                                      border: Border.all(color: primary),
                                                       child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                        mainAxisAlignment: MainAxisAlignment.center,
                                                         children: [
                                                           SvgPicture.asset(
                                                             AppIcons.mapRoute,
                                                             height: 20,
                                                             width: 20,
                                                           ),
-                                                          const SizedBox(
-                                                              width: 8),
+                                                          const SizedBox(width: 8),
                                                           Text(
                                                             LocaleKeys.get.tr(),
-                                                            style: Theme.of(
-                                                                    context)
+                                                            style: Theme.of(context)
                                                                 .textTheme
                                                                 .displaySmall!
-                                                                .copyWith(
-                                                                    color:
-                                                                        primary),
+                                                                .copyWith(color: primary),
                                                           )
                                                         ],
                                                       ),

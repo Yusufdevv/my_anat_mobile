@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return AnnotatedRegion(
       value:
-          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: _categoryBloc),
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverAppBar(
-                systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+                systemOverlayStyle:   SystemUiOverlayStyle(statusBarIconBrightness:isShrink ? Brightness.dark : Brightness.light),
                 pinned: true,
                 backgroundColor: errorImageBackground,
                 shape: const RoundedRectangleBorder(
@@ -357,7 +357,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                 .map((e) => e.title)
                                 .toList()
                                 .join(' '),
-                            name: state.popularDoctors[index].fullName,
+                            name: state.popularDoctors[index].doctorName,
                             image: state.popularDoctors[index].image.middle,
                           );
                         },

@@ -62,7 +62,7 @@ class HospitalSpecialists extends StatelessWidget {
                                 child: HospitalSpecialistsItem(
                                   id: state.specialists[index].id,
                                   image: state.specialists[index].image.middle,
-                                  fullName: state.specialists[index].fullName,
+                                  fullName: state.specialists[index].doctorName,
                                   specializations:
                                       state.specialists[index].specializations,
                                   rating: state.specialists[index].rating,
@@ -79,7 +79,7 @@ class HospitalSpecialists extends StatelessWidget {
                         )
                       : Container(
                           width: double.maxFinite,
-                          padding: EdgeInsets.symmetric(vertical: 16),
+                          padding:const EdgeInsets.symmetric(vertical: 16),
                           color: white,
                           child: EmptyWidget(
                             hasMargin: false,

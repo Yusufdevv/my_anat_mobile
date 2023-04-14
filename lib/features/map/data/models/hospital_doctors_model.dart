@@ -10,6 +10,7 @@ part 'hospital_doctors_model.g.dart';
 class HospitalDoctorsModel extends HospitalDoctorsEntity {
   const HospitalDoctorsModel({
     required super.fullName,
+    required super.doctorName ,
     required super.id,
     required super.phoneNumber,
     required super.specializations,
@@ -27,17 +28,14 @@ class HospitalDoctorsModel extends HospitalDoctorsEntity {
     required super.organizationName,
   });
 
-  factory HospitalDoctorsModel.fromJson(Map<String, dynamic> json) =>
-      _$HospitalDoctorsModelFromJson(json);
+  factory HospitalDoctorsModel.fromJson(Map<String, dynamic> json) => _$HospitalDoctorsModelFromJson(json);
 }
 
-class HospitalDoctorsConverter
-    implements JsonConverter<HospitalDoctorsEntity, Map<String, dynamic>?> {
+class HospitalDoctorsConverter implements JsonConverter<HospitalDoctorsEntity, Map<String, dynamic>?> {
   const HospitalDoctorsConverter();
 
   @override
-  HospitalDoctorsEntity fromJson(Map<String, dynamic>? json) =>
-      HospitalDoctorsModel.fromJson(json ?? {});
+  HospitalDoctorsEntity fromJson(Map<String, dynamic>? json) => HospitalDoctorsModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic>? toJson(HospitalDoctorsEntity object) => {};

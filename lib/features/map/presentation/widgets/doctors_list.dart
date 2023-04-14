@@ -13,9 +13,8 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 class DoctorsList extends StatefulWidget {
   final TextEditingController textEditingController;
   final Point myPoint;
-  const DoctorsList(
-      {required this.textEditingController, required this.myPoint, Key? key})
-      : super(key: key);
+
+  const DoctorsList({required this.textEditingController, required this.myPoint, Key? key}) : super(key: key);
 
   @override
   State<DoctorsList> createState() => _DoctorsListState();
@@ -46,10 +45,8 @@ class _DoctorsListState extends State<DoctorsList> {
               return await Future.delayed(const Duration(seconds: 1));
             },
             child: Paginator(
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 12),
-                padding: const EdgeInsets.all(16).copyWith(
-                    bottom: MediaQuery.of(context).padding.bottom + 136),
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 136),
                 emptyWidget: Center(
                   child: SingleChildScrollView(
                     child: EmptyPage(
@@ -59,8 +56,7 @@ class _DoctorsListState extends State<DoctorsList> {
                     ),
                   ),
                 ),
-                paginatorStatus:
-                    MyFunctions.formzStatusToPaginatorStatus(state.status),
+                paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
                 itemBuilder: (c, index) {
                   return DoctorItem(
                     showPosition: false,
@@ -69,9 +65,7 @@ class _DoctorsListState extends State<DoctorsList> {
                 },
                 itemCount: state.doctors.length,
                 fetchMoreFunction: () {
-                  context
-                      .read<DoctorListBloc>()
-                      .add(DoctorListEvent.getMoreDoctors());
+                  context.read<DoctorListBloc>().add(DoctorListEvent.getMoreDoctors());
                 },
                 hasMoreToFetch: state.fetchMore,
                 errorWidget: const SizedBox()),

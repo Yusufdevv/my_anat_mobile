@@ -1,8 +1,10 @@
+import 'package:anatomica/features/auth/data/models/diplom_model.dart';
 import 'package:anatomica/features/auth/data/models/district_model.dart';
 import 'package:anatomica/features/auth/data/models/organization_model.dart';
 import 'package:anatomica/features/auth/data/models/phone_number_model.dart';
 import 'package:anatomica/features/auth/data/models/region_model.dart';
 import 'package:anatomica/features/auth/data/models/specialization_model.dart';
+import 'package:anatomica/features/auth/domain/entities/diplom_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/district_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/organization_entity.dart';
@@ -18,6 +20,7 @@ class DoctorSingleModel extends DoctorSingleEntity {
   const DoctorSingleModel({
     required super.rating,
     required super.phoneNumber,
+    required super.doctorName,
     required super.email,
     required super.id,
     required super.images,
