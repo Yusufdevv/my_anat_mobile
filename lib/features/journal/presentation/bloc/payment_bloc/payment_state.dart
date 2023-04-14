@@ -22,13 +22,13 @@ class PaymentState extends Equatable {
     FormzStatus? checkPaymentStatus,
     FormzStatus? getPricesStatus,
     FormzStatus? payForMonthlyStatus,
-    int? paymentId,
+    int? paymentIdd,
     String? status,
     PricesEntity? prices,
   }) =>
       PaymentState(
         orderCreateStatus: orderCreateStatus ?? this.orderCreateStatus,
-        paymentId: paymentId ?? this.paymentId,
+        paymentId: paymentIdd ?? this.paymentId,
         checkPaymentStatus: checkPaymentStatus ?? this.checkPaymentStatus,
         getPricesStatus: getPricesStatus ?? this.getPricesStatus,
         status: status ?? this.status,

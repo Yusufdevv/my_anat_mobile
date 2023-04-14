@@ -2,7 +2,6 @@ import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
-import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
 import 'package:anatomica/features/profile/domain/entities/payment_card_entity.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -13,13 +12,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CardsBottomSheet extends StatefulWidget {
   const CardsBottomSheet({
     required this.cards,
-    required this.onCreate,
     this.selectedCard,
     Key? key,
+    required this.onAddCardPressed,
   }) : super(key: key);
   final List<PaymentCardEntity> cards;
   final PaymentCardEntity? selectedCard;
-  final ValueChanged<Map<String, String>> onCreate;
+  final VoidCallback onAddCardPressed;
 
   @override
   State<CardsBottomSheet> createState() => _CardsBottomSheetState();
@@ -73,27 +72,13 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
                   Padding(
                     padding: const EdgeInsets.only(right: 16),
                     child: AddCardWidget(
-                      onTap: () {
-                        Navigator.pop(context);
-                        showModalBottomSheet(
-                          context: context,
-                          backgroundColor: Colors.transparent,
-                          useRootNavigator: true,
-                          isScrollControlled: true,
-                          builder: (addContext) => const AddCardBtsht(),
-                        ).then((value) => {
-                              if (value is Map<String, String>)
-                                {
-                                  widget.onCreate(value),
-                                }
-                            });
-                      },
+                      onTap: widget.onAddCardPressed,
                     ),
                   ),
                   const SizedBox(height: 20),
                   WButton(
                     onTap: () {
-                      Navigator.pop(context, {'selectedCardId':  groupValue.value});
+                      Navigator.pop(context, {'selectedCardId': groupValue.value});
                     },
                     height: 40,
                     margin: const EdgeInsets.only(

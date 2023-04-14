@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
@@ -7,18 +9,19 @@ import 'package:anatomica/features/common/presentation/widgets/custom_screen.dar
 import 'package:anatomica/features/common/presentation/widgets/default_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/phone_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/add_payment_card_verify_screen.dart';
 import 'package:anatomica/features/journal/presentation/pages/payment_result.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_btsht.dart';
 import 'package:anatomica/features/journal/presentation/widgets/add_card_widget.dart';
+import 'package:anatomica/features/journal/presentation/widgets/buy_journal_payment_app_bar.dart';
 import 'package:anatomica/features/journal/presentation/widgets/cards_bottomsheet.dart';
 import 'package:anatomica/features/journal/presentation/widgets/journal_article_item.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_card_item_widget.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/profile/domain/usecases/create_payment_cards_usecase.dart';
+import 'package:anatomica/features/profile/presentation/widgets/custom_dialog.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +31,7 @@ import 'package:formz/formz.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class OneTimePaymentScreen extends StatefulWidget {
+  final VoidCallback onPaymentSuccess;
   final String imageUrl;
   final String title;
   final String subtitle;
@@ -39,6 +43,7 @@ class OneTimePaymentScreen extends StatefulWidget {
 
   const OneTimePaymentScreen(
       {required this.price,
+      required this.onPaymentSuccess,
       required this.title,
       required this.imageUrl,
       required this.isJournal,
@@ -60,9 +65,12 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
   bool isPhone = true;
   final ValueNotifier currentPaymentMethod = ValueNotifier<String>('');
   final ValueNotifier _inputState = ValueNotifier<CrossFadeState>(CrossFadeState.showFirst);
+  late PaymentBloc paymentBloc;
+  late NavigatorState _navigator;
 
   @override
   void initState() {
+    paymentBloc = PaymentBloc(paymentId: null);
     controller = TabController(length: 2, vsync: this)
       ..addListener(() {
         if (controller.index == 1) {
@@ -96,9 +104,9 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PaymentBloc(),
+      create: (context) => paymentBloc,
       child: BlocBuilder<PaymentBloc, PaymentState>(
-        builder: (context, state) {
+        builder: (context, paymentState) {
           return CustomScreen(
             child: Scaffold(
               resizeToAvoidBottomInset: false,
@@ -162,7 +170,7 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                                 firstChild: Padding(
                                   padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
                                   child: PhoneTextField(
-                                    hasError: state.orderCreateStatus.isSubmissionFailure,
+                                    hasError: paymentState.orderCreateStatus.isSubmissionFailure,
                                     controller: phoneController,
                                     title: LocaleKeys.phone_number.tr(),
                                   ),
@@ -172,7 +180,7 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                                   child: DefaultTextField(
                                       title: LocaleKeys.mail.tr(),
                                       controller: emailController,
-                                      hasError: state.orderCreateStatus.isSubmissionFailure,
+                                      hasError: paymentState.orderCreateStatus.isSubmissionFailure,
                                       onChanged: (value) {},
                                       prefix: Padding(
                                           padding: const EdgeInsets.only(left: 12, right: 8),
@@ -230,9 +238,9 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                                     ),
                                   if (widget.isRegistered)
                                     BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
-                                      builder: (context, state) {
+                                      builder: (context, cardsState) {
                                         return AnimatedCrossFade(
-                                          firstChild: state.paymentCards.isEmpty
+                                          firstChild: cardsState.paymentCards.isEmpty
                                               ? Padding(
                                                   padding: const EdgeInsets.symmetric(horizontal: 16),
                                                   child: AddCardWidget(
@@ -242,39 +250,25 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                                                         backgroundColor: Colors.transparent,
                                                         useRootNavigator: true,
                                                         isScrollControlled: true,
-                                                        builder: (context) => const AddCardBtsht(),
-                                                      ).then((value) => {
-                                                            if (value is Map<String, String>)
-                                                              {
-                                                                context
-                                                                    .read<PaymentCardsBloc>()
-                                                                    .add(CreatePaymentCardEvent(
-                                                                      param: CreateCardParam(
-                                                                          cardNumber: value['card_number'] as String,
-                                                                          expireDate: value['date'] as String),
-                                                                      onSucces: () {
-                                                                        Navigator.push(
-                                                                            context,
-                                                                            fade(
-                                                                                page: AddPaymentCardVerifyScreen(
-                                                                              expiredDate: value['date'] as String,
-                                                                              cardNumber:
-                                                                                  value['card_number'] as String,
-                                                                            )));
-                                                                      },
-                                                                      onError: (message) {
-                                                                        context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                                                            message: message, isSuccess: false));
-                                                                      },
-                                                                    )),
-                                                              },
-                                                          });
+                                                        builder: (context) => AddCardBtsht(
+                                                          isWaiting: cardsState.secondStatus.isSubmissionInProgress,
+                                                          onAddCardSuccess: (cardInfo) {
+                                                            Navigator.push(
+                                                                context,
+                                                                fade(
+                                                                    page: AddPaymentCardVerifyScreen(
+                                                                  expiredDate: cardInfo.cardNumber,
+                                                                  cardNumber: cardInfo.expireDate,
+                                                                )));
+                                                          },
+                                                        ),
+                                                      );
                                                     },
                                                   ),
                                                 )
                                               : PaymentCardItem(
-                                                  cardType: state.selectedCard?.cardType,
-                                                  cardNumber: state.selectedCard?.cardNumber,
+                                                  cardType: cardsState.selectedCard?.cardType,
+                                                  cardNumber: cardsState.selectedCard?.cardNumber,
                                                   onTap: () {
                                                     showModalBottomSheet(
                                                         context: context,
@@ -282,31 +276,30 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                                                         useRootNavigator: true,
                                                         isScrollControlled: true,
                                                         builder: (context) => CardsBottomSheet(
-                                                              cards: state.paymentCards,
-                                                              selectedCard: state.selectedCard,
-                                                              onCreate: (value) {
-                                                                context
-                                                                    .read<PaymentCardsBloc>()
-                                                                    .add(CreatePaymentCardEvent(
-                                                                      param: CreateCardParam(
-                                                                          cardNumber: value['card_number'] as String,
-                                                                          expireDate: value['date'] as String),
-                                                                      onSucces: () {
-                                                                        Navigator.push(
-                                                                            context,
-                                                                            fade(
-                                                                                page: AddPaymentCardVerifyScreen(
-                                                                              expiredDate: value['date'] as String,
-                                                                              cardNumber:
-                                                                                  value['card_number'] as String,
-                                                                            )));
-                                                                      },
-                                                                      onError: (message) {
-                                                                        context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                                                            message: message, isSuccess: false));
-                                                                      },
-                                                                    ));
+                                                              onAddCardPressed: () {
+                                                                // Navigator.pop(context);
+                                                                showModalBottomSheet(
+                                                                  context: context,
+                                                                  backgroundColor: Colors.transparent,
+                                                                  useRootNavigator: true,
+                                                                  isScrollControlled: true,
+                                                                  builder: (addContext) => AddCardBtsht(
+                                                                    isWaiting:
+                                                                        cardsState.secondStatus.isSubmissionInProgress,
+                                                                    onAddCardSuccess: (cardInfo) {
+                                                                      Navigator.push(
+                                                                          context,
+                                                                          fade(
+                                                                              page: AddPaymentCardVerifyScreen(
+                                                                            expiredDate: cardInfo.cardNumber,
+                                                                            cardNumber: cardInfo.expireDate,
+                                                                          )));
+                                                                    },
+                                                                  ),
+                                                                );
                                                               },
+                                                              cards: cardsState.paymentCards,
+                                                              selectedCard: cardsState.selectedCard,
                                                             )).then((value) => {
                                                           if (value != null)
                                                             {
@@ -331,65 +324,80 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
                             );
                           }),
                       ValueListenableBuilder(
-                          valueListenable: currentPaymentMethod,
-                          builder: (context, _, __) {
-                            return WButton(
-                              isLoading: state.orderCreateStatus.isSubmissionInProgress,
-                              height: 40,
-                              margin: EdgeInsets.only(
-                                  bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
-                              color: currentPaymentMethod.value.isEmpty ? textSecondary : primary,
-                              onTap: () {
-                                if (currentPaymentMethod.value.isEmpty) {
-                                  context
-                                      .read<ShowPopUpBloc>()
-                                      .add(ShowPopUp(message: LocaleKeys.no_payment_provider.tr()));
-                                } else {
-                                  if (widget.isJournal) {
-                                    context.read<PaymentBloc>().add(
-                                          OrderCreateJournal(
-                                            card: context.read<PaymentCardsBloc>().state.selectedCard?.id ?? -1,
-                                            journalId: widget.id,
-                                            price: widget.price,
-                                            isRegistered: widget.isRegistered,
-                                            phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
-                                            email: !isPhone ? emailController.text : '',
-                                            paymentProvider: currentPaymentMethod.value,
-                                            onSuccess: (value) async {
-                                              if (currentPaymentMethod.value != 'card') {
-                                                launchUrlString(value.transactionCheckoutUrl,
-                                                    mode: LaunchMode.externalApplication);
-                                                Navigator.popUntil(context, (route) => route.isFirst);
-                                                Navigator.of(context).push(
-                                                  fade(
-                                                    page: PaymentResultScreen(
-                                                        title: widget.title,
-                                                        isRegistered: widget.isRegistered,
-                                                        bloc: context.read<PaymentBloc>()),
-                                                  ),
-                                                );
-                                              } else if (currentPaymentMethod.value == 'card') {
-                                                if (value.status == 'confirmed') {
-                                                  context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                                      message: LocaleKeys.payment_successed.tr(), isSuccess: true));
-                                                  await Future.delayed(const Duration(milliseconds: 3000))
-                                                      .then((value) {
-                                                    Navigator.of(context).pop(true);
-                                                  });
-                                                }
-                                              }
-                                            },
-                                            onError: (message) {
-                                              context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
-                                            },
-                                          ),
-                                        );
-                                  }
+                        valueListenable: currentPaymentMethod,
+                        builder: (context, _, __) {
+                          return WButton(
+                            isLoading: paymentState.orderCreateStatus.isSubmissionInProgress,
+                            height: 40,
+                            margin: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
+                            color: currentPaymentMethod.value.isEmpty ? textSecondary : primary,
+                            onTap: () {
+                              if (currentPaymentMethod.value.isEmpty) {
+                                context
+                                    .read<ShowPopUpBloc>()
+                                    .add(ShowPopUp(message: LocaleKeys.no_payment_provider.tr()));
+                              } else {
+                                if (widget.isJournal) {
+                                  showCustomDialog(
+                                      context: context,
+                                      subTitle: LocaleKeys.are_you_sure_you_want_to_make_this_payment.tr(),
+                                      title: LocaleKeys.payment.tr(),
+                                      onConfirmTap: () {
+                                        Navigator.pop(context);
+                                        context.read<PaymentBloc>().add(
+                                              OrderCreateJournal(
+                                                card: context.read<PaymentCardsBloc>().state.selectedCard?.id ?? -1,
+                                                journalId: widget.id,
+                                                price: widget.price,
+                                                isRegistered: widget.isRegistered,
+                                                phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
+                                                email: !isPhone ? emailController.text : '',
+                                                paymentProvider: currentPaymentMethod.value,
+                                                onSuccess: (value) async {
+                                                  if (currentPaymentMethod.value != 'card') {
+                                                    launchUrlString(value.transactionCheckoutUrl,
+                                                        mode: LaunchMode.externalApplication);
+                                                    Navigator.popUntil(context, (route) => route.isFirst);
+
+                                                    final payBloc = PaymentBloc(paymentId: value.id);
+                                                    Navigator.of(context).push(
+                                                      fade(
+                                                        page: BlocProvider(
+                                                          create: (context) => payBloc,
+                                                          child: PaymentResultScreen(
+                                                            title: widget.title,
+                                                            isRegistered: widget.isRegistered,
+                                                            bloc: payBloc,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  } else if (currentPaymentMethod.value == 'card') {
+                                                    if (value.status == 'confirmed') {
+                                                      context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                                          message: LocaleKeys.payment_successed.tr(), isSuccess: true));
+                                                      await Future.delayed(const Duration(milliseconds: 3000))
+                                                          .then((value) {
+                                                        widget.onPaymentSuccess();
+                                                        Navigator.of(context).pop(true);
+                                                      });
+                                                    }
+                                                  }
+                                                },
+                                                onError: (message) {
+                                                  context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                                                },
+                                              ),
+                                            );
+                                      });
                                 }
-                              },
-                              text: LocaleKeys.confirm.tr(),
-                            );
-                          }),
+                              }
+                            },
+                            text: LocaleKeys.confirm.tr(),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -398,47 +406,6 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
           );
         },
       ),
-    );
-  }
-}
-
-class BuyJournalAppbarTitle extends StatelessWidget {
-  const BuyJournalAppbarTitle({
-    super.key,
-    required this.isRegistered,
-  });
-
-  final bool isRegistered;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: WScaleAnimation(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 16),
-                    child: SvgPicture.asset(AppIcons.chevronLeft, color: textSecondary),
-                  ),
-                ),
-              ),
-            ),
-            Text(
-              isRegistered ? LocaleKeys.buy_magazine.tr() : LocaleKeys.only_pay.tr(),
-              style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor, fontSize: 20),
-            ),
-            const Spacer()
-          ],
-        ),
-      ],
     );
   }
 }

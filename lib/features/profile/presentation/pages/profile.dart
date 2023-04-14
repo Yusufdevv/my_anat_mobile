@@ -37,10 +37,8 @@ class ProfileScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     return BlocProvider(
         create: (context) => ProfileBloc(
-            getProfileUseCase: GetProfileUseCase(
-                profileRepository: serviceLocator<ProfileRepositoryImpl>()),
-            deleteAccountUsecase: DeleteAccountUseCase(
-                repository: serviceLocator<ProfileRepositoryImpl>()))
+            getProfileUseCase: GetProfileUseCase(profileRepository: serviceLocator<ProfileRepositoryImpl>()),
+            deleteAccountUsecase: DeleteAccountUseCase(repository: serviceLocator<ProfileRepositoryImpl>()))
           ..add(GetProfileEvent()),
         child: Scaffold(
           appBar: AppBar(
@@ -67,8 +65,7 @@ class ProfileScreen extends StatelessWidget {
             builder: (context, state) {
               if (state.status == AuthenticationStatus.unauthenticated) {
                 return ListView(
-                  padding: EdgeInsets.fromLTRB(
-                      16, 16, 16, 20 + mediaQuery.padding.bottom),
+                  padding: EdgeInsets.fromLTRB(16, 16, 16, 20 + mediaQuery.padding.bottom),
                   physics: const BouncingScrollPhysics(),
                   children: [
                     const GuestCard(),
@@ -88,8 +85,7 @@ class ProfileScreen extends StatelessWidget {
                         title: LocaleKeys.help,
                         icon: AppIcons.help,
                         onTap: () {
-                          Navigator.of(context, rootNavigator: true)
-                              .push(fade(page: const HelpScreen()));
+                          Navigator.of(context, rootNavigator: true).push(fade(page: const HelpScreen()));
                         }),
                     const SizedBox(height: 12),
                     const WDivider(),
@@ -115,12 +111,10 @@ class ProfileScreen extends StatelessWidget {
                     return RefreshIndicator(
                       onRefresh: () async {
                         context.read<ProfileBloc>().add(GetProfileEvent());
-                        return await Future.delayed(
-                            const Duration(milliseconds: 1000));
+                        return await Future.delayed(const Duration(milliseconds: 1000));
                       },
                       child: ListView(
-                        padding: EdgeInsets.fromLTRB(
-                            16, 16, 16, 20 + mediaQuery.padding.bottom),
+                        padding: EdgeInsets.fromLTRB(16, 16, 16, 20 + mediaQuery.padding.bottom),
                         physics: const BouncingScrollPhysics(),
                         children: [
                           ProfileCard(
@@ -133,8 +127,7 @@ class ProfileScreen extends StatelessWidget {
                                 title: LocaleKeys.doctor_office,
                                 icon: AppIcons.scope,
                                 onTap: () {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .push(
+                                  Navigator.of(context, rootNavigator: true).push(
                                     fade(
                                       page: const WebViewScreen(
                                         page: 'CabinetDoctorAboutPage',
@@ -173,45 +166,41 @@ class ProfileScreen extends StatelessWidget {
                           ProfileItem(
                               title: LocaleKeys.safety,
                               icon: AppIcons.lock,
-
                               onTap: () {
-                                Navigator.of(context,  rootNavigator: true).push(fade(
+                                Navigator.of(context, rootNavigator: true).push(fade(
                                     page: SafetyScreen(
+                                  mediaQuery: MediaQuery.of(context),
                                   profileBloc: context.read<ProfileBloc>(),
                                 )));
                               }),
                           const SizedBox(height: 12),
                           ProfileItem(
-                            iconColor: darkGreen,
+                              iconColor: darkGreen,
                               title: LocaleKeys.my_cards,
                               icon: AppIcons.creditCard,
                               onTap: () {
-                                Navigator.of(context, rootNavigator: true)
-                                    .push(fade(page:   MyCardsScreen()));
+                                Navigator.of(context, rootNavigator: true).push(fade(page: MyCardsScreen()));
                               }),
                           const SizedBox(height: 12),
                           ProfileItem(
                               title: LocaleKeys.favorite,
                               icon: AppIcons.profileStar,
                               onTap: () {
-                                Navigator.of(context, rootNavigator: true)
-                                    .push(fade(page: const FavoritesScreen()));
+                                Navigator.of(context, rootNavigator: true).push(fade(page: const FavoritesScreen()));
                               }),
                           const SizedBox(height: 12),
                           ProfileItem(
                               title: LocaleKeys.purchased,
                               icon: AppIcons.purchased,
                               onTap: () {
-                                Navigator.of(context, rootNavigator: true)
-                                    .push(fade(page: const PurchasedScreen()));
+                                Navigator.of(context, rootNavigator: true).push(fade(page: const PurchasedScreen()));
                               }),
                           const SizedBox(height: 12),
                           ProfileItem(
                               title: LocaleKeys.help,
                               icon: AppIcons.help,
                               onTap: () {
-                                Navigator.of(context, rootNavigator: true)
-                                    .push(fade(page: const HelpScreen()));
+                                Navigator.of(context, rootNavigator: true).push(fade(page: const HelpScreen()));
                               }),
                           const SizedBox(height: 12),
                           const WDivider(),
@@ -220,12 +209,10 @@ class ProfileScreen extends StatelessWidget {
                               title: LocaleKeys.sing_out,
                               icon: AppIcons.logout,
                               onTap: () {
-                                showCustomDialog(context,
-                                    onConfirmTap: () => context
-                                        .read<AuthenticationBloc>()
-                                        .add(AuthenticationStatusChanged(
-                                            status: AuthenticationStatus
-                                                .unauthenticated)));
+                                showCustomDialog(
+                                    context: context,
+                                    onConfirmTap: () => context.read<AuthenticationBloc>().add(
+                                        AuthenticationStatusChanged(status: AuthenticationStatus.unauthenticated)));
                               },
                               color: snow),
                           const SizedBox(height: 24),
@@ -234,15 +221,13 @@ class ProfileScreen extends StatelessWidget {
                           //   const SizedBox()
                           // } else ...{
                           Offstage(
-                            offstage: state.profileEntity.isDoctor ||
-                                state.profileEntity.isOrganization,
+                            offstage: state.profileEntity.isDoctor || state.profileEntity.isOrganization,
                             child: Column(
                               children: [
                                 OtherProfileItem(
                                   onTap: () async {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(fade(
-                                            page: const WebViewScreen(
+                                    Navigator.of(context, rootNavigator: true).push(fade(
+                                        page: const WebViewScreen(
                                       page: 'CreateDoctorPage',
                                     )));
                                   },
@@ -250,8 +235,7 @@ class ProfileScreen extends StatelessWidget {
                                 const SizedBox(height: 12),
                                 OtherProfileItem(
                                   onTap: () async {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(
+                                    Navigator.of(context, rootNavigator: true).push(
                                       fade(
                                         page: const WebViewScreen(
                                           page: 'CreateOrganizationPage',

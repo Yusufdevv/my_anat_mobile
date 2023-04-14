@@ -18,13 +18,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MagazineSmallItem extends StatelessWidget {
   final JournalEntity journalEntity;
   final EdgeInsets margin;
-  // final VoidCallback onSubmit;
+  final VoidCallback onPaymentSuccess;
 
   const MagazineSmallItem({
     required this.journalEntity,
     this.margin = EdgeInsets.zero,
     Key? key,
-    // required this.onSubmit,
+    required this.onPaymentSuccess,
   }) : super(key: key);
 
   @override
@@ -101,6 +101,7 @@ class MagazineSmallItem extends StatelessWidget {
                             Navigator.of(context, rootNavigator: true).push(
                               fade(
                                 page: OneTimePaymentScreen(
+                                  onPaymentSuccess: onPaymentSuccess,
                                   slug: journalEntity.slug,
                                   price: journalEntity.price,
                                   title: journalEntity.redaction,
@@ -122,6 +123,7 @@ class MagazineSmallItem extends StatelessWidget {
                       Navigator.of(context, rootNavigator: true).push(
                         fade(
                           page: OneTimePaymentScreen(
+                            onPaymentSuccess: onPaymentSuccess,
                             slug: journalEntity.slug,
                             price: journalEntity.price,
                             title: journalEntity.redaction,

@@ -1,3 +1,4 @@
+import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/features/profile/data/models/craete_card_response_model.dart';
 import 'package:anatomica/features/profile/domain/entities/payment_card_entity.dart';
 import 'package:anatomica/features/profile/domain/usecases/confirm_payment_cards_usecase.dart';
@@ -39,13 +40,15 @@ class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
     ///
     on<CreatePaymentCardEvent>((event, emit) async {
       emit(state.copyWith(secondStatus: FormzStatus.submissionInProgress));
+
       final result = await _createPaymentCardsUseCase
           .call(CreateCardParam(expireDate: event.param.expireDate, cardNumber: event.param.cardNumber));
       if (result.isRight) {
         event.onSucces();
         emit(state.copyWith(createCardResponseModel: result.right, secondStatus: FormzStatus.submissionSuccess));
       } else {
-        event.onError(result.left.toString());
+        final error = (result.left as ServerFailure).errorMessage;
+        event.onError(error.toString());
         emit(state.copyWith(secondStatus: (FormzStatus.submissionFailure)));
       }
     });

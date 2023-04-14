@@ -33,7 +33,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   final PayForMonthlySubscriptionUseCase _payForMonthlySubscriptionUseCase =
       PayForMonthlySubscriptionUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
 
-  PaymentBloc() : super(const PaymentState()) {
+  PaymentBloc({required int? paymentId}) : super(PaymentState(paymentId: paymentId ?? -1)) {
     on<OrderCreateArticle>(_onCreateArticle);
     on<CheckPaymentStatus>(_checkPaymentStatus);
     on<OrderCreateJournal>(_orderCreate);
@@ -52,7 +52,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       paymentProvider: event.paymentProvider,
     ));
     if (result.isRight) {
-      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess, paymentId: result.right.id));
+      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess, paymentIdd: result.right.id));
       event.onSuccess(result.right.transactionCheckoutUrl);
     } else {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
@@ -122,7 +122,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     ));
     if (result.isRight) {
       emit(state.copyWith(
-          orderCreateStatus: FormzStatus.submissionSuccess, status: 'waiting', paymentId: result.right.id));
+          orderCreateStatus: FormzStatus.submissionSuccess, status: 'waiting', paymentIdd: result.right.id));
       event.onSuccess(result.right);
     } else {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure, status: 'error'));

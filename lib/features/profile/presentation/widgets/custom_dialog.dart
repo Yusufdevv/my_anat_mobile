@@ -13,13 +13,7 @@ class CustomDialog extends StatelessWidget {
   final String? subTitle;
   final VoidCallback onConfirmTap;
 
-  const CustomDialog(
-      {this.title,
-      this.subTitle,
-      this.height,
-      required this.onConfirmTap,
-      Key? key})
-      : super(key: key);
+  const CustomDialog({this.title, this.subTitle, this.height, required this.onConfirmTap, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,15 +40,13 @@ class CustomDialog extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pop();
                   },
-                  child: SvgPicture.asset(AppIcons.cancelX,
-                      color: manatee, height: 20, width: 20)),
+                  child: SvgPicture.asset(AppIcons.cancelX, color: manatee, height: 20, width: 20)),
             ],
           ),
           const SizedBox(height: 12),
           Text(
             subTitle ?? LocaleKeys.you_sure.tr(),
-            style:
-                Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14),
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14),
           ),
           const SizedBox(height: 32),
           Row(
@@ -72,11 +64,7 @@ class CustomDialog extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: WButton(
-                    color: red,
-                    text: LocaleKeys.yes.tr(),
-                    height: 40,
-                    onTap: onConfirmTap),
+                child: WButton(color: red, text: LocaleKeys.yes.tr(), height: 40, onTap: onConfirmTap),
               ),
             ],
           )
@@ -86,8 +74,8 @@ class CustomDialog extends StatelessWidget {
   }
 }
 
-void showCustomDialog(BuildContext context,
-    {required VoidCallback onConfirmTap, String? title, String? subTitle}) {
+void showCustomDialog(
+    {required BuildContext context, required VoidCallback onConfirmTap, String? title, String? subTitle}) {
   showDialog(
     context: context,
     builder: (_) => AlertDialog(

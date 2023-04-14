@@ -5,7 +5,7 @@ class PaymentResponseEntity extends Equatable {
   final int id;
   final String status;
   const PaymentResponseEntity({
-    this.id = 0,
+    this.id = -1,
     this.transactionCheckoutUrl = '',
     this.status = '',
   });

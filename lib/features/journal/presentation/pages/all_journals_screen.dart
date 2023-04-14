@@ -41,26 +41,21 @@ class AllJournalsScreen extends StatelessWidget {
               ),
               Text(
                 LocaleKeys.all_journals.tr(),
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(fontSize: 20, color: textColor),
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 20, color: textColor),
               ),
               const SizedBox(
                 width: 56,
               )
             ],
           ),
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-              statusBarIconBrightness: Brightness.dark),
+          systemOverlayStyle:
+              const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.dark),
         ),
         body: BlocBuilder<JournalBloc, JournalState>(
           builder: (context, state) {
             return GridView.builder(
               physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.all(16)
-                  .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+              padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisExtent: 364,
@@ -74,7 +69,14 @@ class AllJournalsScreen extends StatelessWidget {
                     context.read<JournalBloc>().add(GetMoreJournals());
                   }
                 }
-                return MagazineSmallItem(journalEntity: state.journals[index]);
+                return MagazineSmallItem(
+                  journalEntity: state.journals[index],
+                  onPaymentSuccess: () {
+                    bloc
+                      ..add(GetJournals())
+                      ..add(GetJournalArticles());
+                  },
+                );
               },
             );
           },
