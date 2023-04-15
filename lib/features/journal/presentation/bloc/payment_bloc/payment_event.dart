@@ -34,7 +34,7 @@ class OrderCreateJournal extends PaymentEvent {
   final String email;
   final String paymentProvider;
   final bool isRegistered;
-  final ValueChanged<String> onSuccess;
+  final ValueChanged<PaymentResponseEntity> onSuccess;
   final ValueChanged<String> onError;
   final int card;
   OrderCreateJournal({

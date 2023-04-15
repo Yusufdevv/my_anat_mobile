@@ -22,7 +22,6 @@ import 'package:anatomica/features/journal/presentation/widgets/payment_card_ite
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/journal/presentation/widgets/select_period_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
-import 'package:anatomica/features/profile/domain/usecases/create_payment_cards_usecase.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -57,7 +56,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     return BlocProvider(
-      create: (context) => PaymentBloc()..add(GetPrices()),
+      create: (context) => PaymentBloc(paymentId: null)..add(GetPrices()),
       child: CustomScreen(
         child: Scaffold(
           appBar: AppBar(
@@ -226,34 +225,19 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                                               backgroundColor: Colors.transparent,
                                                               useRootNavigator: true,
                                                               isScrollControlled: true,
-                                                              builder: (context) =>
-                                                                  const AddCardBtsht()).then((value) => {
-                                                                if (value is Map<String, String>)
-                                                                  {
-                                                                    context
-                                                                        .read<PaymentCardsBloc>()
-                                                                        .add(CreatePaymentCardEvent(
-                                                                          param: CreateCardParam(
-                                                                              cardNumber:
-                                                                                  value['card_number'] as String,
-                                                                              expireDate: value['date'] as String),
-                                                                          onSucces: () {
-                                                                            Navigator.push(
-                                                                                context,
-                                                                                fade(
-                                                                                    page: AddPaymentCardVerifyScreen(
-                                                                                  expiredDate: value['date'] as String,
-                                                                                  cardNumber:
-                                                                                      value['card_number'] as String,
-                                                                                )));
-                                                                          },
-                                                                          onError: (message) {
-                                                                            context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                                                                message: message, isSuccess: false));
-                                                                          },
-                                                                        )),
-                                                                  },
-                                                              });
+                                                              builder: (context) => AddCardBtsht(
+                                                                    isWaiting:
+                                                                        state.secondStatus.isSubmissionInProgress,
+                                                                    onAddCardSuccess: (cardInfo) {
+                                                                      Navigator.push(
+                                                                          context,
+                                                                          fade(
+                                                                              page: AddPaymentCardVerifyScreen(
+                                                                            expiredDate: cardInfo.expireDate,
+                                                                            cardNumber: cardInfo.cardNumber,
+                                                                          )));
+                                                                    },
+                                                                  ));
                                                         },
                                                       ),
                                                     )
@@ -267,32 +251,30 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                                             useRootNavigator: true,
                                                             isScrollControlled: true,
                                                             builder: (context) => CardsBottomSheet(
+                                                                  onAddCardPressed: () {
+                                                                    // Navigator.pop(context);
+                                                                    showModalBottomSheet(
+                                                                      context: context,
+                                                                      backgroundColor: Colors.transparent,
+                                                                      useRootNavigator: true,
+                                                                      isScrollControlled: true,
+                                                                      builder: (addContext) => AddCardBtsht(
+                                                                        isWaiting:
+                                                                            state.secondStatus.isSubmissionInProgress,
+                                                                        onAddCardSuccess: (cardInfo) {
+                                                                          Navigator.push(
+                                                                              context,
+                                                                              fade(
+                                                                                  page: AddPaymentCardVerifyScreen(
+                                                                                expiredDate: cardInfo.expireDate,
+                                                                                cardNumber: cardInfo.cardNumber,
+                                                                              )));
+                                                                        },
+                                                                      ),
+                                                                    );
+                                                                  },
                                                                   cards: state.paymentCards,
                                                                   selectedCard: state.selectedCard,
-                                                                  onCreate: (value) {
-                                                                    context
-                                                                        .read<PaymentCardsBloc>()
-                                                                        .add(CreatePaymentCardEvent(
-                                                                          param: CreateCardParam(
-                                                                              cardNumber:
-                                                                                  value['card_number'] as String,
-                                                                              expireDate: value['date'] as String),
-                                                                          onSucces: () {
-                                                                            Navigator.push(
-                                                                                context,
-                                                                                fade(
-                                                                                    page: AddPaymentCardVerifyScreen(
-                                                                                  expiredDate: value['date'] as String,
-                                                                                  cardNumber:
-                                                                                      value['card_number'] as String,
-                                                                                )));
-                                                                          },
-                                                                          onError: (message) {
-                                                                            context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                                                                message: message, isSuccess: false));
-                                                                          },
-                                                                        ));
-                                                                  },
                                                                 )).then((value) => {
                                                               if (value != null)
                                                                 {
@@ -410,4 +392,3 @@ class BuySubscriptionAppBarTitle extends StatelessWidget {
     );
   }
 }
-

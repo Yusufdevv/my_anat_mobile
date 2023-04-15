@@ -15,8 +15,7 @@ import 'package:formz/formz.dart';
 class ResetPasswordVerify extends StatefulWidget {
   final PageController pageController;
 
-  const ResetPasswordVerify({required this.pageController, Key? key})
-      : super(key: key);
+  const ResetPasswordVerify({required this.pageController, Key? key}) : super(key: key);
 
   @override
   State<ResetPasswordVerify> createState() => _ResetPasswordVerifyState();
@@ -36,8 +35,7 @@ class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
     return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.fromLTRB(
-              16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -45,12 +43,9 @@ class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
                 children: [
                   WScaleAnimation(
                     onTap: () {
-                      context
-                          .read<ResetPasswordBloc>()
-                          .add(SetTime(secondsLeft: secondsLeft));
-                      widget.pageController.previousPage(
-                          duration: const Duration(milliseconds: 150),
-                          curve: Curves.linear);
+                      context.read<ResetPasswordBloc>().add(SetTime(secondsLeft: secondsLeft));
+                      widget.pageController
+                          .previousPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
                     },
                     child: Container(
                       padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
@@ -71,10 +66,7 @@ class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
                         children: [
                           Text(
                             state.emailPhoneNumber,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(),
+                            style: Theme.of(context).textTheme.displayLarge!.copyWith(),
                           ),
                           const SizedBox(width: 8),
                           SvgPicture.asset(AppIcons.edit),
@@ -86,6 +78,7 @@ class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
               ),
               const SizedBox(height: 20),
               PinCodeBody(
+                onChanged: (v) {},
                 onTimeChanged: (seconds) {
                   secondsLeft = seconds;
                 },
@@ -106,14 +99,11 @@ class _ResetPasswordVerifyState extends State<ResetPasswordVerify> {
                         VerifyCode(
                           code: pinCodeController.text,
                           onSuccess: () {
-                            widget.pageController.nextPage(
-                                duration: const Duration(milliseconds: 150),
-                                curve: Curves.linear);
+                            widget.pageController
+                                .nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
                           },
                           onError: (message) {
-                            context
-                                .read<ShowPopUpBloc>()
-                                .add(ShowPopUp(message: message));
+                            context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
                           },
                         ),
                       );

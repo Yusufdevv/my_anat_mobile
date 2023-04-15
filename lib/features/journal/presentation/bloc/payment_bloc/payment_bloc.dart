@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
@@ -11,6 +13,7 @@ import 'package:anatomica/features/journal/domain/usecases/order_create_journal_
 import 'package:anatomica/features/journal/domain/usecases/pay_for_monthly_subscription_usecase.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
@@ -30,108 +33,108 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   final PayForMonthlySubscriptionUseCase _payForMonthlySubscriptionUseCase =
       PayForMonthlySubscriptionUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
 
-  PaymentBloc() : super(const PaymentState()) {
-    ///
-    on<OrderCreateArticle>((event, emit) async {
-      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
-      final result = await _orderCreateArticleUseCase.call(OrderCreateParams(
-        card: event.card,
-        id: event.articleId,
-        price: event.price,
-        phoneNumber: event.phone,
-        email: event.email,
-        isRegistered: event.isRegistered,
-        paymentProvider: event.paymentProvider,
-      ));
-      if (result.isRight) {
-        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess, paymentId: result.right.id));
-        event.onSuccess(result.right.transactionCheckoutUrl);
+  PaymentBloc({required int? paymentId}) : super(PaymentState(paymentId: paymentId ?? -1)) {
+    on<OrderCreateArticle>(_onCreateArticle);
+    on<CheckPaymentStatus>(_checkPaymentStatus);
+    on<OrderCreateJournal>(_orderCreate);
+    on<GetPrices>(_getPrices);
+    on<PayForMonthlySubscription>(_payForMonthlySubscription);
+  }
+  FutureOr<void> _onCreateArticle(OrderCreateArticle event, Emitter<PaymentState> emit) async {
+    emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
+    final result = await _orderCreateArticleUseCase.call(OrderCreateParams(
+      card: event.card,
+      id: event.articleId,
+      price: event.price,
+      phoneNumber: event.phone,
+      email: event.email,
+      isRegistered: event.isRegistered,
+      paymentProvider: event.paymentProvider,
+    ));
+    if (result.isRight) {
+      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess, paymentIdd: result.right.id));
+      event.onSuccess(result.right.transactionCheckoutUrl);
+    } else {
+      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
+      if (result.left is DioFailure) {
+        event.onError(LocaleKeys.network_error);
+      } else if (result.left is ParsingFailure) {
+        event.onError((result.left as ParsingFailure).errorMessage);
+      } else if (result.left is ServerFailure) {
+        event.onError((result.left as ServerFailure).errorMessage);
       } else {
-        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
-        if (result.left is DioFailure) {
-          event.onError(LocaleKeys.network_error);
-        } else if (result.left is ParsingFailure) {
-          event.onError((result.left as ParsingFailure).errorMessage);
-        } else if (result.left is ServerFailure) {
-          event.onError((result.left as ServerFailure).errorMessage);
-        } else {
-          event.onError(result.left.toString());
-        }
+        event.onError(result.left.toString());
       }
-    });
+    }
+  }
 
-    ///
-    on<CheckPaymentStatus>((event, emit) async {
-      emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionInProgress));
-      final result = await _checkPaymentStatusUseCase.call(state.paymentId);
-      if (result.isRight) {
-        emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionSuccess, status: result.right));
-      } else {
-        emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionFailure));
-      }
-    });
+  FutureOr<void> _checkPaymentStatus(CheckPaymentStatus event, Emitter<PaymentState> emit) async {
+    emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionInProgress));
+    final result = await _checkPaymentStatusUseCase.call(state.paymentId);
+    if (result.isRight) {
+      emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionSuccess, status: result.right));
+    } else {
+      emit(state.copyWith(checkPaymentStatus: FormzStatus.submissionFailure));
+    }
+  }
 
-    ///
-    on<OrderCreateJournal>((event, emit) async {
-      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
-      final result = await _orderCreateJournalUseCase.call(OrderCreateParams(
-        card: event.card,
-        id: event.journalId,
-        price: event.price,
-        phoneNumber: event.phone,
-        email: event.email,
-        isRegistered: event.isRegistered,
-        paymentProvider: event.paymentProvider,
-      ));
-      if (result.isRight) {
-        emit(state.copyWith(
-            orderCreateStatus: FormzStatus.submissionSuccess, status: 'waiting', paymentId: result.right.id));
-        event.onSuccess(result.right.transactionCheckoutUrl);
-      } else {
-        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure, status: 'error'));
-        if (result.left is DioFailure) {
-          event.onError(LocaleKeys.network_error);
-        } else if (result.left is ParsingFailure) {
-          event.onError((result.left as ParsingFailure).errorMessage);
-        } else if (result.left is ServerFailure) {
-          event.onError((result.left as ServerFailure).errorMessage);
-        } else {
-          event.onError(result.left.toString());
-        }
-      }
-    });
+  FutureOr<void> _getPrices(GetPrices event, Emitter<PaymentState> emit) async {
+    emit(state.copyWith(getPricesStatus: FormzStatus.submissionInProgress));
+    final result = await _getPricesUseCase.call(NoParams());
+    if (result.isRight) {
+      emit(state.copyWith(getPricesStatus: FormzStatus.submissionSuccess, prices: result.right));
+    } else {
+      emit(state.copyWith(getPricesStatus: FormzStatus.submissionFailure));
+    }
+  }
 
-    ///
-    on<GetPrices>((event, emit) async {
-      emit(state.copyWith(getPricesStatus: FormzStatus.submissionInProgress));
-      final result = await _getPricesUseCase.call(NoParams());
-      if (result.isRight) {
-        emit(state.copyWith(getPricesStatus: FormzStatus.submissionSuccess, prices: result.right));
+  FutureOr<void> _payForMonthlySubscription(PayForMonthlySubscription event, Emitter<PaymentState> emit) async {
+    emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
+    final result = await _payForMonthlySubscriptionUseCase
+        .call(SubscriptionParams(paymentProvider: event.paymentProvider, period: event.period));
+    if (result.isRight) {
+      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
+      event.onSuccess(result.right);
+    } else {
+      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
+      if (result.left is DioFailure) {
+        event.onError(LocaleKeys.network_error);
+      } else if (result.left is ParsingFailure) {
+        event.onError((result.left as ParsingFailure).errorMessage);
+      } else if (result.left is ServerFailure) {
+        event.onError((result.left as ServerFailure).errorMessage);
       } else {
-        emit(state.copyWith(getPricesStatus: FormzStatus.submissionFailure));
+        event.onError(result.left.toString());
       }
-    });
+    }
+  }
 
-    ///
-    on<PayForMonthlySubscription>((event, emit) async {
-      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
-      final result = await _payForMonthlySubscriptionUseCase
-          .call(SubscriptionParams(paymentProvider: event.paymentProvider, period: event.period));
-      if (result.isRight) {
-        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
-        event.onSuccess(result.right);
+  FutureOr<void> _orderCreate(OrderCreateJournal event, Emitter<PaymentState> emit) async {
+    emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
+    final result = await _orderCreateJournalUseCase.call(OrderCreateParams(
+      card: event.card,
+      id: event.journalId,
+      price: event.price,
+      phoneNumber: event.phone,
+      email: event.email,
+      isRegistered: event.isRegistered,
+      paymentProvider: event.paymentProvider,
+    ));
+    if (result.isRight) {
+      emit(state.copyWith(
+          orderCreateStatus: FormzStatus.submissionSuccess, status: 'waiting', paymentIdd: result.right.id));
+      event.onSuccess(result.right);
+    } else {
+      emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure, status: 'error'));
+      if (result.left is DioFailure) {
+        event.onError(LocaleKeys.network_error.tr());
+      } else if (result.left is ParsingFailure) {
+        event.onError((result.left as ParsingFailure).errorMessage);
+      } else if (result.left is ServerFailure) {
+        event.onError((result.left as ServerFailure).errorMessage);
       } else {
-        emit(state.copyWith(orderCreateStatus: FormzStatus.submissionFailure));
-        if (result.left is DioFailure) {
-          event.onError(LocaleKeys.network_error);
-        } else if (result.left is ParsingFailure) {
-          event.onError((result.left as ParsingFailure).errorMessage);
-        } else if (result.left is ServerFailure) {
-          event.onError((result.left as ServerFailure).errorMessage);
-        } else {
-          event.onError(result.left.toString());
-        }
+        event.onError(result.left.toString());
       }
-    });
+    }
   }
 }
