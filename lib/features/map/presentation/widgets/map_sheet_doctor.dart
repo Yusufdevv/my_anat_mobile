@@ -45,7 +45,7 @@ class MapSheetDoctor extends StatelessWidget {
                   hospital: doctors[index].organizationName,
                   title: doctors[index].doctorName,
                   //  todo which phone
-                  phone: doctors[index].phoneNumbers[0].first,
+                  phone: doctors[index].phoneNumbers.isNotEmpty ? doctors[index].phoneNumbers[0].first : '',
                   address: doctors[index].address,
                   images: [doctors[index].image.middle],
                   location: Point(latitude: doctors[index].latitude, longitude: doctors[index].longitude),
