@@ -50,8 +50,7 @@ class DoctorSingleScreen extends StatefulWidget {
   State<DoctorSingleScreen> createState() => _DoctorSingleScreenState();
 }
 
-class _DoctorSingleScreenState extends State<DoctorSingleScreen>
-    with TickerProviderStateMixin {
+class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
@@ -79,27 +78,21 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
   void initState() {
     super.initState();
     _pageController = PageController();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 6, vsync: this);
     _scrollController = ScrollController();
     _headerManagerBloc = HeaderManagerBloc();
     _scrollController.addListener(_scrollListener);
     _candidateSingleBloc = CandidateSingleBloc(
-        relatedCandidateListUseCase: RelatedCandidateListUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateWorkUseCase: CandidateWorkUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateCertificateUseCase: CandidateCertificateUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateEducationUseCase: CandidateEducationUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateSingleUseCase: CandidateSingleUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()));
+        relatedCandidateListUseCase: RelatedCandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateWorkUseCase: CandidateWorkUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateCertificateUseCase: CandidateCertificateUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateEducationUseCase: CandidateEducationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateSingleUseCase: CandidateSingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
     _candidateSingleBloc.add(GetRelatedCandidateListEvent(id: widget.id));
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(
-        ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
+    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
   }
 
   @override
@@ -123,23 +116,20 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
         ),
         BlocProvider(
             create: (context) => DoctorInterviewsBloc(
-                getDoctorInterviewsUseCase: GetDoctorInterviewsUseCase(
-                    repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+                getDoctorInterviewsUseCase:
+                    GetDoctorInterviewsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
               ..add(GetDoctorInterviews(doctorId: widget.id))),
         BlocProvider(
             create: (context) => CommentsBloc(
-                deletePostCommentUseCase: DeletePostCommentUseCase(
-                    repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                doctorCommentDeleteUseCase: DoctorCommentDeleteUseCase(
-                    repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-                doctorCommentUseCase: DoctorCommentUseCase(
-                    repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-                GetCommentsUseCase(
-                    repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                postCommentUseCase: PostCommentUseCase(
-                    repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                getDoctorCommentsUseCase: GetDoctorCommentsUseCase(
-                    repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+                deletePostCommentUseCase:
+                    DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+                doctorCommentDeleteUseCase:
+                    DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+                doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
+                GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+                postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
+                getDoctorCommentsUseCase:
+                    GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
               ..add(CommentsEvent.getDoctorComments(doctorId: widget.id))),
       ],
       child: WKeyboardDismisser(
@@ -181,24 +171,39 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
                       body: TabBarView(
                         controller: _tabController,
                         children: [
-                          AboutDoctor(
-                            controller: _tabController,
-                            showBio: state.doctorSingle.showInProfileBio,
-                            description: state.doctorSingle.bio,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 80),
+                            child: AboutDoctor(
+                              controller: _tabController,
+                              showBio: state.doctorSingle.showInProfileBio,
+                              description: state.doctorSingle.bio,
+                            ),
                           ),
-                          DoctorArticles(doctorId: widget.id),
-                          ListView(
-                              padding: const EdgeInsets.all(16),
-                              children: [
-                                LicenceItemList(candidateId: widget.id)
-                              ]),
-                          DoctorInterviews(doctorId: widget.id),
-                          DoctorComments(
-                            rating: state.doctorSingle.rating,
-                            doctor: widget.id,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 80),
+                            child: DoctorArticles(doctorId: widget.id),
                           ),
-                          DoctorContacts(
-                            doctorSingle: state.doctorSingle,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 80),
+                            child: ListView(
+                                padding: const EdgeInsets.all(16), children: [LicenceItemList(candidateId: widget.id)]),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 80),
+                            child: DoctorInterviews(doctorId: widget.id),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 80),
+                            child: DoctorComments(
+                              rating: state.doctorSingle.rating,
+                              doctor: widget.id,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 80),
+                            child: DoctorContacts(
+                              doctorSingle: state.doctorSingle,
+                            ),
                           ),
                         ],
                       ),
