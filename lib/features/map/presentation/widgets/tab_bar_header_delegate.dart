@@ -5,19 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final TabController tabController;
+  final TabController? tabController;
   final List<String> tabs;
   final AutoScrollController? controller;
   final ValueChanged<int>? onTabTap;
   TabBarHeaderDelegate({
-    required this.tabController,
+    this.tabController,
     required this.tabs,
     this.onTabTap,
     this.controller,
   });
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -31,8 +30,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       ),
       child: TabBar(
         controller: tabController,
-        labelStyle:
-            Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 15),
+        labelStyle: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 15),
         labelColor: darkGreen,
         labelPadding: const EdgeInsets.symmetric(horizontal: 9),
         physics: const BouncingScrollPhysics(),
@@ -41,8 +39,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
         unselectedLabelColor: textColor,
         indicatorColor: primary,
         onTap: onTabTap,
-        indicator: const CustomTabIndicator(
-            color: primary, radius: 3, horizontalPadding: 9, height: 3),
+        indicator: const CustomTabIndicator(color: primary, radius: 3, horizontalPadding: 9, height: 3),
         tabs: tabs.map((e) => Tab(text: e.tr())).toList(),
       ),
     );
