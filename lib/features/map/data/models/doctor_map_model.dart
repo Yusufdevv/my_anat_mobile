@@ -9,6 +9,7 @@ class DoctorMapModel extends DoctorMapEntity {
     required super.address,
     required super.distance,
     required super.fullName,
+    required super.doctorName,
     required super.id,
     required super.image,
     required super.imgIsFull,
