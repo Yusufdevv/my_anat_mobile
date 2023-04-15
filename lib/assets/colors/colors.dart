@@ -58,6 +58,7 @@ const successIcon = _fern;
 const successBorder = _celadon;
 const successCloseIcon = _osloGrey;
 const tacao = _tacao;
+const bottomSheetHeader = _veryLightGrey;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -117,3 +118,4 @@ const _celadon = Color(0xffB1E5BB);
 const _osloGrey = Color(0xff898B8B);
 const _tacao = Color(0xffF8B76B);
 const _robRoy = Color(0xffDAA14B);
+const _veryLightGrey = Color(0xffC9C9C9);

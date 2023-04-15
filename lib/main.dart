@@ -72,6 +72,22 @@ Future<void> main() async {
           StorageRepository.getString('device_language', defValue: 'uz')),
       saveLocale: true,
       child: const MyApp()));
+
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+  OneSignal.shared.setAppId("bcfaa470-edc6-49b0-ae20-a8e6782e51c5");
+
+  OneSignal.shared
+      .promptUserForPushNotificationPermission()
+      .then((accepted) async {
+    OSDeviceState? status = await OneSignal.shared.getDeviceState();
+    String? osUserID = status?.userId;
+    while (osUserID == null) {
+      OSDeviceState? status = await OneSignal.shared.getDeviceState();
+      osUserID = status?.userId;
+    }
+    await StorageRepository.putString('deviceId', osUserID!);
+  });
 }
 
 class MyHttpOverrides extends HttpOverrides {

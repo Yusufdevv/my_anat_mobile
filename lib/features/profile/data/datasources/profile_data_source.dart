@@ -34,6 +34,8 @@ abstract class ProfileDatasource {
 
   Future<GenericPagination<FaqModel>> getFaq({String? next});
 
+  Future<void> deleteDeviceId();
+
   Future<GenericPagination<PaymentHistoryModel>> getMyPayments({
     String? next,
     String? search,
@@ -211,6 +213,36 @@ class ProfileDatasourceImpl extends ProfileDatasource {
         throw ServerException(
             errorMessage: response.data.toString(),
             statusCode: response.statusCode ?? 0);
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteDeviceId() async {
+    try {
+      // String? deviceId = await PlatformDeviceId.getDeviceId;
+      String? deviceId = StorageRepository.getString('deviceId');
+      if (deviceId.isEmpty) return;
+      final response = await _dio.delete(
+        '/notifications/device-id/delete/',
+        data: {"device_id": deviceId},
+        options: Options(
+          headers: {
+            'Authorization': 'Token ${StorageRepository.getString('token')}'
+          },
+        ),
+      );
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+      } else {
+        throw const ServerException(statusCode: 404, errorMessage: "Error");
       }
     } on ServerException {
       rethrow;
