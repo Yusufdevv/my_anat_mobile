@@ -62,7 +62,7 @@ class HospitalSpecialists extends StatelessWidget {
                                 child: HospitalSpecialistsItem(
                                   id: state.specialists[index].id,
                                   image: state.specialists[index].image.middle,
-                                  fullName: state.specialists[index].doctorName,
+                                  fullName: state.specialists[index].fullName,
                                   specializations:
                                       state.specialists[index].specializations,
                                   rating: state.specialists[index].rating,

@@ -10,7 +10,7 @@ part 'hospital_doctors_model.g.dart';
 class HospitalDoctorsModel extends HospitalDoctorsEntity {
   const HospitalDoctorsModel({
     required super.fullName,
-    required super.doctorName ,
+    required super.doctorName,
     required super.id,
     required super.phoneNumber,
     required super.specializations,
