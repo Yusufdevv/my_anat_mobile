@@ -22,7 +22,6 @@ import 'package:anatomica/features/journal/presentation/widgets/payment_card_ite
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/journal/presentation/widgets/select_period_bottom_sheet.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
-import 'package:anatomica/features/profile/domain/usecases/create_payment_cards_usecase.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';

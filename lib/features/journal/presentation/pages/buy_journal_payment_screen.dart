@@ -20,7 +20,6 @@ import 'package:anatomica/features/journal/presentation/widgets/journal_article_
 import 'package:anatomica/features/journal/presentation/widgets/payment_card_item_widget.dart';
 import 'package:anatomica/features/journal/presentation/widgets/payment_method.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
-import 'package:anatomica/features/profile/domain/usecases/create_payment_cards_usecase.dart';
 import 'package:anatomica/features/profile/presentation/widgets/custom_dialog.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -58,7 +57,8 @@ class OneTimePaymentScreen extends StatefulWidget {
   State<OneTimePaymentScreen> createState() => _OneTimePaymentScreenState();
 }
 
-class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with TickerProviderStateMixin {
+class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController controller;
   late TextEditingController phoneController;
   late TextEditingController emailController;
@@ -408,4 +408,7 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen> with Ticker
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

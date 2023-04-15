@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/auth/presentation/widgets/pin_code_body.dart';
 import 'package:anatomica/features/common/presentation/bloc/payment_card/payment_cards_bloc.dart';
@@ -14,21 +16,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddPaymentCardVerifyScreen extends StatefulWidget {
-  const AddPaymentCardVerifyScreen({required this.cardNumber, required this.expiredDate, Key? key})
-      : super(key: key);
+  const AddPaymentCardVerifyScreen({required this.cardNumber, required this.expiredDate, Key? key}) : super(key: key);
   final String cardNumber;
   final String expiredDate;
 
   @override
-  State<AddPaymentCardVerifyScreen> createState() =>
-      _AddPaymentCardVerifyScreenState();
+  State<AddPaymentCardVerifyScreen> createState() => _AddPaymentCardVerifyScreenState();
 }
 
 class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen> {
   late TextEditingController pinCodeController;
 
   int secondsLeft = 0;
-
+  bool hasError = false;
   @override
   initState() {
     super.initState();
@@ -46,26 +46,20 @@ class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen>
           body: BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
             builder: (context, state) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: MediaQuery.of(context).padding.bottom),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
                     Text(
                       LocaleKeys.confirm.tr(),
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .displayLarge!
-                          .copyWith(fontSize: 20),
+                      style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       LocaleKeys.v_c_h_b_s_t_y_p_n.tr(),
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .displaySmall,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                     const SizedBox(height: 20),
                     WScaleAnimation(
@@ -94,11 +88,7 @@ class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen>
                           children: [
                             Text(
                               state.createCardResponseModel?.otpSentPhone ?? '',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .displayLarge!
-                                  .copyWith(),
+                              style: Theme.of(context).textTheme.displayLarge!.copyWith(),
                             ),
                           ],
                         ),
@@ -106,22 +96,25 @@ class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen>
                     ),
                     const SizedBox(height: 20),
                     PinCodeBody(
+                      onChanged: (v) {
+                        if (hasError) {
+                          hasError = false;
+                          setState(() {});
+                        }
+                      },
                       onTimeChanged: (seconds) {
                         secondsLeft = seconds;
                       },
-                      hasError: false,
+                      hasError: hasError,
                       pinCodeController: pinCodeController,
                       secondsLeft: secondsLeft,
                       onRefresh: () {
                         context.read<PaymentCardsBloc>().add(CreatePaymentCardEvent(
                             onSucces: () {},
                             onError: (message) {
-                              context.read<ShowPopUpBloc>().add(
-                                  ShowPopUp(message: message, isSuccess: false));
+                              context.read<ShowPopUpBloc>().add(ShowPopUp(message: message, isSuccess: false));
                             },
-                            param: CreateCardParam(
-                                cardNumber: widget.cardNumber,
-                                expireDate: widget.expiredDate)));
+                            param: CreateCardParam(cardNumber: widget.cardNumber, expireDate: widget.expiredDate)));
                       },
                     ),
                     const Spacer(),
@@ -131,18 +124,16 @@ class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen>
                             onSucces: () {
                               Navigator.pop(context);
                               context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                message: 'Карта успешно добавлена',
-                                isSuccess: true,
-                              ));
+                                    message: 'Карта успешно добавлена',
+                                    isSuccess: true,
+                                  ));
                             },
                             onError: (message) {
-                              context.read<ShowPopUpBloc>().add(
-                                  ShowPopUp(message: message, isSuccess: false));
+                              hasError = true;
+                              context.read<ShowPopUpBloc>().add(ShowPopUp(message: message, isSuccess: false));
                             },
                             param: ConfirmCardParam(
-                                cardNumber: widget.cardNumber,
-                                session: 0,
-                                otp: pinCodeController.text)));
+                                cardNumber: widget.cardNumber, session: 0, otp: pinCodeController.text)));
                       },
                       height: 40,
                       margin: const EdgeInsets.only(bottom: 16),
