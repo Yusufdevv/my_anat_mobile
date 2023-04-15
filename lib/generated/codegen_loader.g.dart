@@ -327,6 +327,11 @@ class CodegenLoader extends AssetLoader{
   "v_c_h_b_s_t_y_p_n": "Код подтверждения был отправлен на ваш номер телефона",
   "empty": "Пусто",
   "you_dont_have_card": "У вас пока нету карты. Добавьте карту",
+  "delete_card": "Удалить карту",
+  "you_are_sure_to_delete_card": "Вы действительно хотите удалить карту",
+  "history": "История",
+  "service_date": "Услуга/ Дата",
+  "amount": "Miqdor",
   "no_notifications": "У вас пока нет уведомлений",
   "notifications": "Уведомления"
 };
@@ -520,7 +525,7 @@ static const Map<String,dynamic> uz = {
   "region": "Mintaqa",
   "all_uzb": "Butun O'zbekiston",
   "return_results": "Afsuski, qidiruvingizga ko'ra hech qanday natija topilmadi",
-  "purchased": "Sotib olish",
+  "purchased": "Xaridlar",
   "incorrect_login": "Kirish paroli noto'g'ri",
   "error_while_get_user": "Foydalanuvchi maʼlumotlarini olishda xatolik yuz berdi",
   "login_busy": "Login band",
@@ -643,6 +648,10 @@ static const Map<String,dynamic> uz = {
   "v_c_h_b_s_t_y_p_n": "Telefon raqamingizga tasdiqlash kodi yuborildi",
   "empty": "Пусто",
   "you_dont_have_card": "Sizda hali karta yo'q. Karta qo'shing",
+  "delete_card": "Kartani o'chirish",
+  "you_are_sure_to_delete_card": "Haqiqatan ham kartani oʻchirib tashlamoqchimisiz?",
+  "history": "История",
+  "service_date": "Xizmat/ Sana",
   "no_notifications": "Sizda hali xabarnomalar yo'q",
   "notifications": "Xabarnomalar"
 };

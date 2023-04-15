@@ -45,6 +45,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 Future<void> main() async {
