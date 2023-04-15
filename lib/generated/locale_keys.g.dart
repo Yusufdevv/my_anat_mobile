@@ -313,5 +313,7 @@ abstract class  LocaleKeys {
   static const v_c_h_b_s_t_y_p_n = 'v_c_h_b_s_t_y_p_n';
   static const empty = 'empty';
   static const you_dont_have_card = 'you_dont_have_card';
+  static const no_notifications = 'no_notifications';
+  static const notifications = 'notifications';
 
 }

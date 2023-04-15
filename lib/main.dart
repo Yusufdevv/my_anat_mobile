@@ -79,8 +79,12 @@ Future<void> main() async {
   OneSignal.shared
       .promptUserForPushNotificationPermission()
       .then((accepted) async {
-    final status = await OneSignal.shared.getDeviceState();
-    final String? osUserID = status?.userId;
+    OSDeviceState? status = await OneSignal.shared.getDeviceState();
+    String? osUserID = status?.userId;
+    while (osUserID == null) {
+      OSDeviceState? status = await OneSignal.shared.getDeviceState();
+      osUserID = status?.userId;
+    }
     await StorageRepository.putString('deviceId', osUserID!);
   });
 }

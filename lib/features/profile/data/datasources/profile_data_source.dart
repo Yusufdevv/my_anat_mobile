@@ -234,7 +234,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
       String? deviceId = StorageRepository.getString('deviceId');
       if (deviceId.isEmpty) return;
       final response = await _dio.delete(
-        'notifications/device-id/delete/',
+        '/notifications/device-id/delete/',
         data: {"device_id": deviceId},
         options: Options(
           headers: {

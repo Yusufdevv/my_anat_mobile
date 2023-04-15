@@ -310,6 +310,7 @@
   "read_snippet" : "Parchani o'qish",
   "v_c_h_b_s_t_y_p_n" : "Telefon raqamingizga tasdiqlash kodi yuborildi",
   "empty": "Пусто",
-  "you_dont_have_card": "Sizda hali karta yo'q. Karta qo'shing"
-
+  "you_dont_have_card": "Sizda hali karta yo'q. Karta qo'shing",
+  "no_notifications": "Sizda hali xabarnomalar yo'q",
+  "notifications": "Xabarnomalar"
 }

@@ -38,10 +38,11 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
   Future<void> sendDeviceId() async {
     try {
       String? deviceId = StorageRepository.getString('deviceId');
+      print("device id:$deviceId");
       // String? deviceId = await PlatformDeviceId.getDeviceId;
       if (deviceId.isEmpty) return;
       final response = await _dio.post(
-        'notifications/device-id/',
+        '/notifications/device-id/',
         data: {"device_id": deviceId},
         options: Options(
           headers: {
@@ -69,9 +70,11 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
     try {
       // String? deviceId = await PlatformDeviceId.getDeviceId;
       String? deviceId = StorageRepository.getString('deviceId');
+
+      print("device id:$deviceId");
       if (deviceId.isEmpty) return;
       final response = await _dio.delete(
-        'notifications/device-id/delete/',
+        '/notifications/device-id/delete/',
         data: {"device_id": deviceId},
         options: Options(
           headers: {
@@ -105,8 +108,8 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
-        await sendDeviceId();
         await StorageRepository.putString('token', response.data['token']);
+        await sendDeviceId();
       } else if (response.statusCode != null &&
           response.statusCode! >= 400 &&
           response.statusCode! < 500) {

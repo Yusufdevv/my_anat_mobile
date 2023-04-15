@@ -11,6 +11,7 @@ import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/ho
 import 'package:anatomica/features/home/presentation/blocs/most_populars_bloc/most_populars_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:anatomica/features/home/presentation/parts/news_part.dart';
+import 'package:anatomica/features/home/presentation/parts/notifications.dart';
 import 'package:anatomica/features/home/presentation/widgets/banner_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/category_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/category_shimmer.dart';
@@ -118,7 +119,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                   ? AppIcons.blackNotificationWithRedDot
                                   : AppIcons.notificationWithRedDot,
                             ),
-                      onTap: () {},
+                      onTap: () => Navigator.push(
+                          context, fade(page: const NotificationsScreen())),
                     ),
                   ],
                 ),

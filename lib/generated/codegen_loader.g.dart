@@ -326,7 +326,9 @@ class CodegenLoader extends AssetLoader{
   "read_snippet": "Читать фрагмент",
   "v_c_h_b_s_t_y_p_n": "Код подтверждения был отправлен на ваш номер телефона",
   "empty": "Пусто",
-  "you_dont_have_card": "У вас пока нету карты. Добавьте карту"
+  "you_dont_have_card": "У вас пока нету карты. Добавьте карту",
+  "no_notifications": "У вас пока нет уведомлений",
+  "notifications": "Уведомления"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -640,7 +642,9 @@ static const Map<String,dynamic> uz = {
   "read_snippet": "Parchani o'qish",
   "v_c_h_b_s_t_y_p_n": "Telefon raqamingizga tasdiqlash kodi yuborildi",
   "empty": "Пусто",
-  "you_dont_have_card": "Sizda hali karta yo'q. Karta qo'shing"
+  "you_dont_have_card": "Sizda hali karta yo'q. Karta qo'shing",
+  "no_notifications": "Sizda hali xabarnomalar yo'q",
+  "notifications": "Xabarnomalar"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }
