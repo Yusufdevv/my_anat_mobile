@@ -59,6 +59,7 @@ class _PaymentResultScreenState extends State<PaymentResultScreen> with WidgetsB
         builder: (context, state) {
           if (state.status == 'waiting') {
             return PaymentWaiting(
+              paymentBloc: widget.bloc,
               title: widget.title,
               isRegistered: widget.isRegistered,
               isSubscription: widget.isSubscription,
@@ -71,6 +72,7 @@ class _PaymentResultScreenState extends State<PaymentResultScreen> with WidgetsB
                 title: widget.title, isRegistered: widget.isRegistered, isSubscription: widget.isSubscription);
           } else {
             return PaymentWaiting(
+              paymentBloc: widget.bloc,
               title: widget.title,
               isRegistered: widget.isRegistered,
               isSubscription: widget.isSubscription,

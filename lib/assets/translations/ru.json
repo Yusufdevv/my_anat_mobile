@@ -313,9 +313,13 @@
   "you_dont_have_card": "У вас пока нету карты. Добавьте карту",
   "delete_card": "Удалить карту",
   "you_are_sure_to_delete_card": "Вы действительно хотите удалить карту",
+  "are_you_sure_you_want_to_make_this_payment": "Вы уверены, что хотите совершить этот платеж?",
   "history": "История",
   "service_date": "Услуга/ Дата",
   "amount": "Miqdor",
   "no_notifications": "У вас пока нет уведомлений",
   "notifications": "Уведомления"
+  "amount": "Miqdor",
+  "payment_successed": "Платеж прошел успешно",
+  "payment": "Платеж"
 }

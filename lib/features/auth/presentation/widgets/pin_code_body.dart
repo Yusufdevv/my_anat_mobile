@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
@@ -18,6 +19,7 @@ class PinCodeBody extends StatefulWidget {
     this.secondsLeft,
     required this.onRefresh,
     required this.onTimeChanged,
+    required this.onChanged,
   }) : super(key: key);
 
   final TextEditingController pinCodeController;
@@ -26,6 +28,7 @@ class PinCodeBody extends StatefulWidget {
   final VoidCallback onRefresh;
   final ValueChanged<int> onTimeChanged;
   final int? secondsLeft;
+  final ValueChanged<String> onChanged;
 
   @override
   State<PinCodeBody> createState() => _PinCodeBodyState();
@@ -68,10 +71,7 @@ class _PinCodeBodyState extends State<PinCodeBody> {
           children: [
             Text(
               LocaleKeys.write_code.tr(),
-              style: Theme.of(context)
-                  .textTheme
-                  .displayLarge!
-                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
             ),
             if (widget.hasError) ...[
               const SizedBox(width: 16),
@@ -81,10 +81,7 @@ class _PinCodeBodyState extends State<PinCodeBody> {
                   textAlign: TextAlign.right,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(color: red),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(color: red),
                 ),
               )
             ],
@@ -92,6 +89,7 @@ class _PinCodeBodyState extends State<PinCodeBody> {
         ),
         const SizedBox(height: 12),
         PinCodeTextField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: TextInputType.number,
           controller: widget.pinCodeController,
           appContext: context,
@@ -100,47 +98,45 @@ class _PinCodeBodyState extends State<PinCodeBody> {
           autoDismissKeyboard: true,
           autoDisposeControllers: false,
           autoFocus: true,
-          textStyle: Theme.of(context)
-              .textTheme
-              .displaySmall!
-              .copyWith(color: textColor, fontSize: 26),
+          textStyle: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor, fontSize: 26),
           length: 6,
           animationType: AnimationType.scale,
           showCursor: true,
           pinTheme: PinTheme(
-            inactiveFillColor: textFieldColor,
-            activeFillColor: textFieldColor,
-            inactiveColor: textFieldColor,
-            activeColor: primary,
-            selectedColor: textFieldColor,
-            errorBorderColor: Theme.of(context).colorScheme.error,
-            borderWidth: 1,
-            shape: PinCodeFieldShape.box,
-            borderRadius: BorderRadius.circular(10),
-            selectedFillColor: textFieldColor,
-            fieldHeight: 56,
-            fieldWidth: 47,
-            fieldOuterPadding:
-                const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-          ),
+              inactiveFillColor: textFieldColor,
+              activeFillColor: textFieldColor,
+              inactiveColor: textFieldColor,
+              activeColor: widget.hasError ? Colors.red : primary,
+              selectedColor: textFieldColor,
+              errorBorderColor: Colors.red,
+              borderWidth: 1,
+              shape: PinCodeFieldShape.box,
+              borderRadius: BorderRadius.circular(10),
+              selectedFillColor: textFieldColor,
+              fieldHeight: 56,
+              fieldWidth: 47,
+              fieldOuterPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              disabledColor: Colors.teal),
           animationDuration: const Duration(milliseconds: 200),
           enableActiveFill: true,
-          onChanged: (text) {},
+          onChanged: widget.onChanged,
           scrollPadding: EdgeInsets.zero,
           beforeTextPaste: (text) => true,
+          validator: (v) {
+            if (widget.hasError) {
+              return 'widget.hasError';
+            }
+            return null;
+          },
         ),
         if (secondsLeft > 0) ...{
           Row(
             children: [
-              Text(LocaleKeys.again.tr(),
-                  style: Theme.of(context).textTheme.displaySmall),
+              Text(LocaleKeys.again.tr(), style: Theme.of(context).textTheme.displaySmall),
               const SizedBox(width: 6),
               Text(
                 _printDuration(secondsLeft),
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(color: textColor),
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor),
               ),
             ],
           ),
@@ -172,10 +168,7 @@ class _PinCodeBodyState extends State<PinCodeBody> {
                   SvgPicture.asset(AppIcons.refresh),
                   const SizedBox(width: 4),
                   Text(LocaleKeys.send_again.tr(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .displaySmall!
-                          .copyWith(color: primary))
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(color: primary))
                 ],
               ),
             ),

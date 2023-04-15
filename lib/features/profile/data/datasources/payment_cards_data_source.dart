@@ -60,7 +60,14 @@ class PaymentCardDatasourceImpl extends PaymentCardDatasource {
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return CreateCardResponseModel.fromJson(response.data);
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        var failure;
+        try {
+          failure = failure = response.data['error'][0]['message'];
+        } catch (e) {
+          failure = response.data.toString();
+        }
+        final exception = ServerException(statusCode: response.statusCode!, errorMessage: failure);
+        throw exception;
       }
     } on ServerException {
       rethrow;

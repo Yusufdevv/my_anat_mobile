@@ -61,20 +61,22 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                           children: [
                             CardItem(
                                 onTapDelete: () {
-                                  showCustomDialog(context,
+                                  showCustomDialog(
+                                      context: context,
                                       subTitle: LocaleKeys.you_are_sure_to_delete_card.tr(),
-                                      title: LocaleKeys.delete_card.tr(), onConfirmTap: () {
-                                    Navigator.pop(context);
-                                    context.read<PaymentCardsBloc>().add(DeletePaymentCard(
-                                          id: state.paymentCards[index].id,
-                                          onSucces: () {},
-                                          onError: (message) {
-                                            context
-                                                .read<ShowPopUpBloc>()
-                                                .add(ShowPopUp(message: message, isSuccess: false));
-                                          },
-                                        ));
-                                  });
+                                      title: LocaleKeys.delete_card.tr(),
+                                      onConfirmTap: () {
+                                        Navigator.pop(context);
+                                        context.read<PaymentCardsBloc>().add(DeletePaymentCard(
+                                              id: state.paymentCards[index].id,
+                                              onSucces: () {},
+                                              onError: (message) {
+                                                context
+                                                    .read<ShowPopUpBloc>()
+                                                    .add(ShowPopUp(message: message, isSuccess: false));
+                                              },
+                                            ));
+                                      });
                                 },
                                 cardType: state.paymentCards[index].cardType,
                                 cardNumber: state.paymentCards[index].cardNumber),
@@ -103,32 +105,22 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                     WButton(
                       onTap: () async {
                         await showModalBottomSheet(
-                                context: context, backgroundColor: Colors.transparent, useRootNavigator: true, isScrollControlled: true, builder: (context) => const AddCardBtsht())
-                            .then((value) => {
-                                  if (value is Map<String, String>)
-                                    {
-                                      context.read<PaymentCardsBloc>().add(CreatePaymentCardEvent(
-                                            param: CreateCardParam(
-                                              cardNumber: value['card_number'] as String,
-                                              expireDate: value['date'] as String,
-                                            ),
-                                            onSucces: () {
-                                              Navigator.push(
-                                                  context,
-                                                  fade(
-                                                      page: AddPaymentCardVerifyScreen(
-                                                    expiredDate: value['date'] as String,
-                                                    cardNumber: value['card_number'] as String,
-                                                  )));
-                                            },
-                                            onError: (message) {
-                                              context
-                                                  .read<ShowPopUpBloc>()
-                                                  .add(ShowPopUp(message: message, isSuccess: false));
-                                            },
-                                          )),
-                                    }
-                                });
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            useRootNavigator: true,
+                            isScrollControlled: true,
+                            builder: (context) => AddCardBtsht(
+                                  isWaiting: state.secondStatus.isSubmissionInProgress,
+                                  onAddCardSuccess: (cardInfo) {
+                                    Navigator.push(
+                                        context,
+                                        fade(
+                                            page: AddPaymentCardVerifyScreen(
+                                          expiredDate: cardInfo.expireDate,
+                                          cardNumber: cardInfo.cardNumber,
+                                        )));
+                                  },
+                                ));
                       },
                       height: 40,
                       text: LocaleKeys.add_card.tr(),

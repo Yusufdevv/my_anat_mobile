@@ -16,10 +16,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class JournalBigItem extends StatelessWidget {
+  final VoidCallback onPaymentSuccess;
   final JournalEntity journalEntity;
 
-  const JournalBigItem({required this.journalEntity, Key? key})
-      : super(key: key);
+  const JournalBigItem({required this.journalEntity, required this.onPaymentSuccess, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +31,7 @@ class JournalBigItem extends StatelessWidget {
           children: [
             Container(
               height: 492,
-              decoration: BoxDecoration(
-                  border: Border.all(color: divider),
-                  borderRadius: BorderRadius.circular(8)),
+              decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: CachedNetworkImage(
@@ -55,35 +53,27 @@ class JournalBigItem extends StatelessWidget {
                 if (journalEntity.isBought || !journalEntity.isPremium) ...{
                   Text(
                     LocaleKeys.free.tr(),
-                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: primary),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall!
+                        .copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: primary),
                   ),
                 } else ...{
                   Text(
                     MyFunctions.getFormatCostFromInt(journalEntity.price),
-                    style: Theme.of(context)
-                        .textTheme
-                        .displaySmall!
-                        .copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+                    style:
+                        Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
                   ),
                 },
                 const SizedBox(width: 4),
                 Text(
                   '•',
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(width: 4),
                 Text(
                   LocaleKeys.e_magazine.tr(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 13, fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -103,8 +93,7 @@ class JournalBigItem extends StatelessWidget {
                         ),
                       );
                     } else {
-                      if (state.status ==
-                          AuthenticationStatus.unauthenticated) {
+                      if (state.status == AuthenticationStatus.unauthenticated) {
                         showDialog(
                           context: context,
                           builder: (ctx) => BuyDialog(
@@ -112,6 +101,7 @@ class JournalBigItem extends StatelessWidget {
                               Navigator.of(context, rootNavigator: true).push(
                                 fade(
                                   page: OneTimePaymentScreen(
+                                    onPaymentSuccess: onPaymentSuccess,
                                     price: journalEntity.price,
                                     slug: journalEntity.slug,
                                     title: journalEntity.redaction,
@@ -125,8 +115,7 @@ class JournalBigItem extends StatelessWidget {
                               );
                             },
                             onRegistrationTap: () {
-                              Navigator.of(context)
-                                  .push(fade(page: const RegisterScreen()));
+                              Navigator.of(context).push(fade(page: const RegisterScreen()));
                             },
                           ),
                         );
@@ -134,6 +123,7 @@ class JournalBigItem extends StatelessWidget {
                         Navigator.of(context, rootNavigator: true).push(
                           fade(
                             page: OneTimePaymentScreen(
+                              onPaymentSuccess: onPaymentSuccess,
                               slug: journalEntity.slug,
                               price: journalEntity.price,
                               title: journalEntity.redaction,
@@ -149,13 +139,9 @@ class JournalBigItem extends StatelessWidget {
                     }
                   },
                   child: Text(
-                    journalEntity.isBought || !journalEntity.isPremium
-                        ? LocaleKeys.read.tr()
-                        : LocaleKeys.buy.tr(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayMedium!
-                        .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                    journalEntity.isBought || !journalEntity.isPremium ? LocaleKeys.read.tr() : LocaleKeys.buy.tr(),
+                    style:
+                        Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 );
               },

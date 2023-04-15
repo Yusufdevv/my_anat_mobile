@@ -15,8 +15,7 @@ import 'package:formz/formz.dart';
 class RegisterVerify extends StatefulWidget {
   final PageController pageController;
 
-  const RegisterVerify({required this.pageController, Key? key})
-      : super(key: key);
+  const RegisterVerify({required this.pageController, Key? key}) : super(key: key);
 
   @override
   State<RegisterVerify> createState() => _RegisterVerifyState();
@@ -37,8 +36,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
     return BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.fromLTRB(
-              16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -50,12 +48,9 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                     children: [
                       WScaleAnimation(
                         onTap: () {
-                          context
-                              .read<LoginSignUpBloc>()
-                              .add(SetTimer(secondsLeft: secondsLeft));
-                          widget.pageController.previousPage(
-                              duration: const Duration(milliseconds: 150),
-                              curve: Curves.linear);
+                          context.read<LoginSignUpBloc>().add(SetTimer(secondsLeft: secondsLeft));
+                          widget.pageController
+                              .previousPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
                         },
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
@@ -77,10 +72,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                             children: [
                               Text(
                                 state.phoneEmail,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(),
+                                style: Theme.of(context).textTheme.displayLarge!.copyWith(),
                               ),
                               const SizedBox(width: 8),
                               SvgPicture.asset(AppIcons.edit),
@@ -92,6 +84,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                   ),
                   const SizedBox(height: 20),
                   PinCodeBody(
+                    onChanged: (v) {},
                     onTimeChanged: (seconds) {
                       secondsLeft = seconds;
                     },
@@ -112,15 +105,12 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                         SubmitCode(
                           code: pinCodeController.text,
                           onSuccess: () {
-                            widget.pageController.nextPage(
-                                duration: const Duration(milliseconds: 150),
-                                curve: Curves.linear);
+                            widget.pageController
+                                .nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
                           },
                           onError: (message) {
                             context.read<ShowPopUpBloc>().add(
-                                  ShowPopUp(
-                                      message: message.replaceAll(
-                                          RegExp(r'\{?\[?\]?\.?}?'), '')),
+                                  ShowPopUp(message: message.replaceAll(RegExp(r'\{?\[?\]?\.?}?'), '')),
                                 );
                           },
                         ),

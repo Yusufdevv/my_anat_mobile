@@ -7,12 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomScreen extends StatelessWidget {
   final Widget child;
-  const CustomScreen({required this.child, Key? key}) : super(key: key);
+  final Color? color;
+  const CustomScreen({required this.child, this.color, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ShowPopUpBloc, ShowPopUpState>(
       builder: (context, state) => Material(
+        color: color,
         child: Stack(
           children: [
             Positioned.fill(child: WKeyboardDismisser(child: child)),

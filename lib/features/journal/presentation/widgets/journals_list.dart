@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 class JournalsList extends StatelessWidget {
   final JournalState state;
+  final VoidCallback onPaymentSuccess;
   const JournalsList({
     required this.state,
+    required this.onPaymentSuccess,
     Key? key,
   }) : super(key: key);
 
@@ -23,6 +25,7 @@ class JournalsList extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           (context, index) {
             return MagazineSmallItem(
+              onPaymentSuccess: onPaymentSuccess,
               margin: const EdgeInsets.only(top: 20),
               journalEntity: state.journals.skip(1).take(4).toList()[index],
             );

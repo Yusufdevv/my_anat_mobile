@@ -18,10 +18,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MagazineSmallItem extends StatelessWidget {
   final JournalEntity journalEntity;
   final EdgeInsets margin;
+  final VoidCallback onPaymentSuccess;
 
-  const MagazineSmallItem(
-      {required this.journalEntity, this.margin = EdgeInsets.zero, Key? key})
-      : super(key: key);
+  const MagazineSmallItem({
+    required this.journalEntity,
+    this.margin = EdgeInsets.zero,
+    Key? key,
+    required this.onPaymentSuccess,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +37,7 @@ class MagazineSmallItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: divider),
-                    borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
@@ -59,10 +61,7 @@ class MagazineSmallItem extends StatelessWidget {
               if (!(journalEntity.isBought || !journalEntity.isPremium)) ...{
                 Text(
                   MyFunctions.getFormatCostFromInt(journalEntity.price),
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
                 ),
               } else ...{
                 Text(
@@ -71,10 +70,10 @@ class MagazineSmallItem extends StatelessWidget {
                       : journalEntity.isBought
                           ? LocaleKeys.bought.tr()
                           : '',
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: primary),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: primary),
                 ),
               }
             ],
@@ -102,6 +101,7 @@ class MagazineSmallItem extends StatelessWidget {
                             Navigator.of(context, rootNavigator: true).push(
                               fade(
                                 page: OneTimePaymentScreen(
+                                  onPaymentSuccess: onPaymentSuccess,
                                   slug: journalEntity.slug,
                                   price: journalEntity.price,
                                   title: journalEntity.redaction,
@@ -115,8 +115,7 @@ class MagazineSmallItem extends StatelessWidget {
                             );
                           },
                           onRegistrationTap: () {
-                            Navigator.of(context)
-                                .push(fade(page: const RegisterScreen()));
+                            Navigator.of(context).push(fade(page: const RegisterScreen()));
                           },
                         ),
                       );
@@ -124,6 +123,7 @@ class MagazineSmallItem extends StatelessWidget {
                       Navigator.of(context, rootNavigator: true).push(
                         fade(
                           page: OneTimePaymentScreen(
+                            onPaymentSuccess: onPaymentSuccess,
                             slug: journalEntity.slug,
                             price: journalEntity.price,
                             title: journalEntity.redaction,
@@ -139,13 +139,8 @@ class MagazineSmallItem extends StatelessWidget {
                   }
                 },
                 child: Text(
-                  journalEntity.isBought || !journalEntity.isPremium
-                      ? LocaleKeys.read.tr()
-                      : LocaleKeys.buy.tr(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayMedium!
-                      .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                  journalEntity.isBought || !journalEntity.isPremium ? LocaleKeys.read.tr() : LocaleKeys.buy.tr(),
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
               );
             },

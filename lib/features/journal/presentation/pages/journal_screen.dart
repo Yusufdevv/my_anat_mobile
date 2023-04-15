@@ -17,6 +17,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MagazineScreen extends StatelessWidget {
   const MagazineScreen({Key? key}) : super(key: key);
+  onPaymentSuccess(BuildContext context) {
+    context.read<JournalBloc>()
+      ..add(GetJournals())
+      ..add(GetJournalArticles());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +65,10 @@ class MagazineScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        JournalBigItem(journalEntity: state.journals.first),
+                        JournalBigItem(
+                            journalEntity: state.journals.first, onPaymentSuccess: () => onPaymentSuccess(context)),
                       ],
-                      JournalsList(state: state),
+                      JournalsList(state: state, onPaymentSuccess: () => onPaymentSuccess(context)),
                       if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{
                         ActivatePremium(images: state.journals.map((e) => e.image).toList()),
                       },

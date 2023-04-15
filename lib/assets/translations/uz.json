@@ -313,8 +313,11 @@
   "you_dont_have_card": "Sizda hali karta yo'q. Karta qo'shing",
   "delete_card": "Kartani o'chirish",
   "you_are_sure_to_delete_card": "Haqiqatan ham kartani oʻchirib tashlamoqchimisiz?",
+  "are_you_sure_you_want_to_make_this_payment": "Rostdan ham ushbu to'lovni amalga oshirmoqchimisiz?",
   "history": "История",
   "service_date": "Xizmat/ Sana",
   "no_notifications": "Sizda hali xabarnomalar yo'q",
-  "notifications": "Xabarnomalar"
+  "notifications": "Xabarnomalar",
+  "payment_successed": "To'lov muvaffaqiyatli amalga oshirildi",
+  "payment": "To'lov"
 }

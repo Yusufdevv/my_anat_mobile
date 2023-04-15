@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
@@ -11,6 +13,7 @@ import 'package:formz/formz.dart';
 import 'package:lottie/lottie.dart';
 
 class PaymentWaiting extends StatelessWidget {
+  final PaymentBloc paymentBloc;
   final bool isRegistered;
   final bool isSubscription;
   final String title;
@@ -19,7 +22,8 @@ class PaymentWaiting extends StatelessWidget {
       {required this.isRegistered,
       required this.title,
       this.isSubscription = false,
-      Key? key})
+      Key? key,
+      required this.paymentBloc})
       : super(key: key);
 
   @override
@@ -50,10 +54,7 @@ class PaymentWaiting extends StatelessWidget {
               : isRegistered
                   ? LocaleKeys.buy_magazine.tr()
                   : LocaleKeys.only_pay.tr(),
-          style: Theme.of(context)
-              .textTheme
-              .displaySmall!
-              .copyWith(color: textColor, fontSize: 20),
+          style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor, fontSize: 20),
         ),
       ),
       body: Column(
@@ -62,43 +63,40 @@ class PaymentWaiting extends StatelessWidget {
         children: [
           // SvgPicture.asset(AppIcons.expect),
           SizedBox(
-              height: 220,
-              width: 220,
-              child: Lottie.asset('assets/lotties/waiting_lottie.json', fit: BoxFit.cover)),
+              height: 220, width: 220, child: Lottie.asset('assets/lotties/waiting_lottie.json', fit: BoxFit.cover)),
           Text(
             // LocaleKeys.expect.tr(),
             // TODO add to localization
-          'Оплата ожидается',
-            style: Theme.of(context)
-                .textTheme
-                .displayLarge!
-                .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+            'Оплата ожидается',
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
           ),
-          const SizedBox(height: 4, width: double.maxFinite,),
+          const SizedBox(
+            height: 4,
+            width: double.maxFinite,
+          ),
           Text(
             // isSubscription
             //     ? LocaleKeys.subscription_waiting.tr()
             //     : LocaleKeys.realization_expect.tr(args: [title]),
             // TODO add to localization
-          'Процесс оплаты идет вне приложении',
-            style: Theme.of(context)
-                .textTheme
-                .displaySmall!
-                .copyWith(fontWeight: FontWeight.w400),
+            'Процесс оплаты идет вне приложении',
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.w400),
             textAlign: TextAlign.center,
           ),
         ],
       ),
       bottomNavigationBar: BlocBuilder<PaymentBloc, PaymentState>(
+        bloc: paymentBloc,
         builder: (context, state) {
           return WButton(
             isLoading: state.checkPaymentStatus.isSubmissionInProgress,
-            margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).padding.bottom + 16,
-                left: 16,
-                right: 16),
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
             onTap: () {
-              context.read<PaymentBloc>().add(CheckPaymentStatus());
+              try {
+                paymentBloc.add(CheckPaymentStatus());
+              } catch (e) {
+                log('::::::::::  ${e.toString()}  ::::::::::');
+              }
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
