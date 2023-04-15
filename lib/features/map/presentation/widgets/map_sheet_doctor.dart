@@ -33,7 +33,6 @@ class MapSheetDoctor extends StatelessWidget {
             onPageChanged: onPageChanged,
             itemCount: doctors.length,
             itemBuilder: (context, index) {
-              print('doctorName ${doctors[index].doctorName}');
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16, left: 8),
                 child: DoctorSingleBottomSheet(
