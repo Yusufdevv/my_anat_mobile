@@ -39,7 +39,6 @@ class _HospitalServiceCategoriesScreenState extends State<HospitalServiceCategor
     super.initState();
     _controller = TextEditingController();
     widget.servicesBloc.add(ServicesEvent.getServicesOrg(specializationId: widget.specializationId));
-
   }
 
   @override
@@ -98,8 +97,7 @@ class _HospitalServiceCategoriesScreenState extends State<HospitalServiceCategor
                                   builder: (ctx, _, __) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                                      child:
-                                      SizedBox(
+                                      child: SizedBox(
                                         height: 40,
                                         child: TextFormField(
                                           controller: _controller,
@@ -137,8 +135,8 @@ class _HospitalServiceCategoriesScreenState extends State<HospitalServiceCategor
                                                     onTap: () {
                                                       _controller.clear();
                                                       showClearBtn.value = false;
-                                                      widget.servicesBloc
-                                                          .add(ServicesEvent.searchServicesOrg(query: _controller.text.trim()));
+                                                      widget.servicesBloc.add(ServicesEvent.searchServicesOrg(
+                                                          query: _controller.text.trim()));
                                                     },
                                                     child: Padding(
                                                       padding: const EdgeInsets.all(10),
@@ -207,20 +205,21 @@ class _HospitalServiceCategoriesScreenState extends State<HospitalServiceCategor
                             ),
                           )
                         : Padding(
-                          padding: const EdgeInsets.only(top: 150),
-                          child: Center(
+                            padding: const EdgeInsets.only(top: 150),
+                            child: Center(
                               child: EmptyWidget(
                                 hasPadding: false,
                                 hasMargin: false,
                                 backColor: lilyWhite,
-                                title:
-                                    state.searchQuery.isNotEmpty ? LocaleKeys.nothing.tr() : LocaleKeys.no_services.tr(),
+                                title: state.searchQuery.isNotEmpty
+                                    ? LocaleKeys.nothing.tr()
+                                    : LocaleKeys.no_services.tr(),
                                 content: state.searchQuery.isNotEmpty
                                     ? LocaleKeys.result_not_found.tr()
                                     : LocaleKeys.no_services_in_this_hospital.tr(),
                               ),
                             ),
-                        );
+                          );
                   }
                   return const Center(child: CupertinoActivityIndicator(color: red));
                 },
@@ -234,7 +233,7 @@ class _HospitalServiceCategoriesScreenState extends State<HospitalServiceCategor
                       onTap: () {
                         widget.servicesBloc.add(ServicesEvent.getMoreServicesOrg());
                       },
-                      text: 'Загрузить еще',
+                      text: LocaleKeys.download_more.tr(),
                       textColor: textSecondary,
                       color: commentButton,
                       margin: const EdgeInsets.all(16).copyWith(bottom: 16 + MediaQuery.of(context).padding.bottom),
