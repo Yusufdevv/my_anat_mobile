@@ -10,7 +10,7 @@ PaymentResponseModel _$PaymentResponseModelFromJson(
         Map<String, dynamic> json) =>
     PaymentResponseModel(
       transactionCheckoutUrl: json['transaction_checkout_url'] as String? ?? '',
-      id: json['id'] as int? ?? 0,
+      id: json['id'] as int? ?? -1,
       status: json['status'] as String? ?? '',
     );
 
