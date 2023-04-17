@@ -6,17 +6,15 @@ import 'package:anatomica/features/hospital_single/presentation/hospital_single_
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:yandex_mapkit/yandex_mapkit.dart';
+import 'package:flutter_svg/flutter_svg.dart'; 
 
 class HospitalItem extends StatelessWidget {
-  final OrgMapV2Model entity;
-  final Point myPoint;
+  final OrgMapV2Model entity; 
   final bool isSuggestionItem;
   final String searchText;
 
   const HospitalItem(
-      {required this.entity, required this.myPoint, this.isSuggestionItem = false, this.searchText = '', Key? key})
+      {required this.entity, this.isSuggestionItem = false, this.searchText = '', Key? key})
       : super(key: key);
 
   // double calculateDistance(lat1, lon1, lat2, lon2) {

@@ -55,8 +55,7 @@ class SuggestionListScreen extends StatelessWidget {
                         // onTapItem('');
                       },
                       child: HospitalItem(
-                        entity: state.hospitals[index],
-                        myPoint: myPoint,
+                        entity: state.hospitals[index], 
                         isSuggestionItem: true,
                         searchText: searchText,
                       ),

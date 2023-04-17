@@ -4,8 +4,10 @@ import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/home/presentation/blocs/category_bloc/category_bloc.dart';
+import 'package:anatomica/features/home/presentation/parts/categories_screen.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/map/presentation/widgets/sevice_item.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -74,14 +76,20 @@ class OtherCategoriesScreen extends StatelessWidget {
                       children: [
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context, rootNavigator: true).push(fade(
+                                page: BlocProvider.value(
+                              value: context.read<CategoryBloc>(),
+                              child: CategoriesScreen(selectedIndex: index),
+                            )));
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(16),
                             child: Row(
                               children: [
-                                state.categories[index].icon.contains('http')
+                                state.categories[index].icon.file.url.contains('http')
                                     ? SvgPicture.network(
-                                        state.categories[index].icon,
+                                        state.categories[index].icon.file.url,
                                         width: 24,
                                         height: 24,
                                         fit: BoxFit.cover,
@@ -109,11 +117,11 @@ class OtherCategoriesScreen extends StatelessWidget {
                   ))
               : Container(
                   color: white,
-                  child: const Center(
+                  child: Center(
                     // TOdo
                     child: EmptyWidget(
-                      content: 'Pustoy',
-                      title: 'Keyinroq',
+                      content: LocaleKeys.nothing.tr(),
+                      title: LocaleKeys.result_not_found.tr(),
                     ),
                   ),
                 );

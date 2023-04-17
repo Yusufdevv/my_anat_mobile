@@ -1,5 +1,4 @@
-import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/features/home/data/repository_impls/home_repo_impl.dart';
+ 
 import 'package:anatomica/features/home/domain/usecases/most_popular_doctors_usecase.dart';
 import 'package:anatomica/features/home/domain/usecases/most_popular_orgs_usecase.dart';
 import 'package:anatomica/features/map/data/models/hospital_doctors_model.dart';
@@ -14,9 +13,9 @@ part 'most_populars_state.dart';
 
 class MostPopularsBloc extends Bloc<MostPopularsEvent, MostPopularsState> {
   final MostPopularOrgsUsecase _mostPopularOrgsUsecase =
-      MostPopularOrgsUsecase(repository: serviceLocator<HomeRepoImpl>());
+      MostPopularOrgsUsecase( );
   final MostPopularDoctorsUsecase _mostPopularDoctorsUsecase =
-      MostPopularDoctorsUsecase(repository: serviceLocator<HomeRepoImpl>());
+      MostPopularDoctorsUsecase( );
 
   MostPopularsBloc() : super(MostPopularsState()) {
     on<_GetPopularDoctors>(_getPopularDoctors);

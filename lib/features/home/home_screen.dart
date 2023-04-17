@@ -169,13 +169,13 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                 ...List.generate(
                                   state.categories.length > 5 ? 5 : state.categories.length,
                                   (index) => CategoryItem(
-                                    logo: state.categories[index].icon,
+                                    logo: state.categories[index].icon.file.url,
                                     title: state.categories[index].title,
                                     onTap: () {
                                       Navigator.of(context, rootNavigator: true).push(fade(
                                           page: BlocProvider.value(
                                         value: _categoryBloc,
-                                        child: const CategoriesScreen(),
+                                        child: CategoriesScreen(selectedIndex: index),
                                       )));
                                     },
                                   ),
