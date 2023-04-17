@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:anatomica/features/home/presentation/parts/new_single_screen.dart';
 import 'package:anatomica/features/journal/presentation/pages/journal_article_single.dart';
@@ -27,7 +28,7 @@ class NewsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return WScaleAnimation(
       onTap: () {
         Navigator.of(context, rootNavigator: true)
             .push(fade(page: NewSingleScreen(bloc: newsBloc, slug: slug)));

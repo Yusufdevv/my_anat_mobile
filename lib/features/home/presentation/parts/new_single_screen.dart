@@ -17,8 +17,8 @@ class NewSingleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => bloc..add(NewsEvent.getNewSingle(slug: slug)),
+    return BlocProvider.value(
+      value: bloc..add(NewsEvent.getNewSingle(slug: slug)),
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 0,

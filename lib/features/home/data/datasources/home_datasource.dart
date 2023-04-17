@@ -137,6 +137,7 @@ class HomeDatasourceImpl extends HomeDatasource {
       {String? next}) async {
     try {
       final response = await _dio.get(next ?? '/interview/',
+          queryParameters: {"ordering": "-rating", "": "", "": ""},
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {

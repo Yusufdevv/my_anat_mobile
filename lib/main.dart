@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:anatomica/assets/themes/theme.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/data/repositories/authentication_repository_impl.dart';
 import 'package:anatomica/features/auth/domain/usecases/check_username_usecase.dart';
 import 'package:anatomica/features/auth/domain/usecases/confirm_usecase.dart';
@@ -58,6 +59,10 @@ Future<void> main() async {
   await DefaultCacheManager().emptyCache();
   // FlutterError.onError =
   //     fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
+  final position = await MyFunctions.determinePosition();
+
+  await StorageRepository.putDouble('latitude', position.latitude);
+  await StorageRepository.putDouble('longitude', position.longitude);
   HttpOverrides.global = MyHttpOverrides();
   AndroidYandexMap.useAndroidViewSurface = false;
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
@@ -88,7 +93,6 @@ Future<void> main() async {
           StorageRepository.getString('device_language', defValue: 'uz')),
       saveLocale: true,
       child: const MyApp()));
-
 }
 
 class MyHttpOverrides extends HttpOverrides {

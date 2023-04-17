@@ -1,6 +1,9 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,6 +13,7 @@ class TopHospitalItem extends StatefulWidget {
   final String address;
   final double rating;
   final int id;
+  final String slug;
 
   const TopHospitalItem(
       {required this.title,
@@ -17,6 +21,7 @@ class TopHospitalItem extends StatefulWidget {
       required this.address,
       required this.images,
       required this.id,
+      required this.slug,
       Key? key})
       : super(key: key);
 
@@ -32,12 +37,10 @@ class _TopHospitalItemState extends State<TopHospitalItem> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return WScaleAnimation(
       onTap: () {
-        // Navigator.of(context, rootNavigator: true).push(fade(
-        //     page: HospitalSingleScreen(
-        //         slug: widget.entity.slug, id: widget.entity.id)));
+        Navigator.of(context, rootNavigator: true).push(
+            fade(page: HospitalSingleScreen(slug: widget.slug, id: widget.id)));
       },
       child: Container(
         decoration: BoxDecoration(

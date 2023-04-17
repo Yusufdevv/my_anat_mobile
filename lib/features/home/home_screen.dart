@@ -10,6 +10,7 @@ import 'package:anatomica/features/home/presentation/blocs/category_bloc/categor
 import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/most_populars_bloc/most_populars_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
+import 'package:anatomica/features/home/presentation/parts/articles_part.dart';
 import 'package:anatomica/features/home/presentation/parts/news_part.dart';
 import 'package:anatomica/features/home/presentation/parts/notifications.dart';
 import 'package:anatomica/features/home/presentation/widgets/banner_item.dart';
@@ -93,7 +94,9 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverAppBar(
-                systemOverlayStyle:   SystemUiOverlayStyle(statusBarIconBrightness:isShrink ? Brightness.dark : Brightness.light),
+                systemOverlayStyle: SystemUiOverlayStyle(
+                    statusBarIconBrightness:
+                        isShrink ? Brightness.dark : Brightness.light),
                 pinned: true,
                 backgroundColor: errorImageBackground,
                 shape: const RoundedRectangleBorder(
@@ -261,7 +264,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                   // TODO locale
                   title: 'Статьи',
                   showAllFunction: () {
-                    Navigator.of(context).push(fade(page: const NewsPart()));
+                    Navigator.of(context)
+                        .push(fade(page: const ArticlesPart()));
                   },
                   showAllTitle: 'Все статьи',
                 ),
@@ -288,6 +292,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                             createdAt: MyFunctions.getPublishedDate(
                                 state.homeArticles[index].publishDate),
                             category: state.homeArticles[index].category.title,
+                            slug: state.homeArticles[index].slug,
                           );
                         },
                         separatorBuilder: (context, index) {
@@ -317,6 +322,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                 state.popularOrgsStatus),
                         itemBuilder: (context, index) {
                           return TopHospitalItem(
+                            slug: state.popularOrgs[index].slug,
                             title: state.popularOrgs[index].title,
                             rating: state.popularOrgs[index].rating,
                             address: state.popularOrgs[index].address,

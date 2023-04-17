@@ -1,4 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -13,7 +14,7 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return WScaleAnimation(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
