@@ -1,3 +1,5 @@
+import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/features/profile/presentation/widgets/text_in_row.dart';
 import 'package:flutter/material.dart';
 
 class PurchasedHistoryItem extends StatelessWidget {
@@ -19,39 +21,37 @@ class PurchasedHistoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: backgroundColor),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: whiteSmoke2),
+      child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          TextInRow(title: '', amount: ''),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: mainTextStyle ??
-                    Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(fontWeight: FontWeight.w600),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: mainTextStyle ??
+                        Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  if (purchasedAt != null)
+                    Text(
+                      purchasedAt!,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                ],
               ),
-              if (purchasedAt != null)
-                Text(
-                  purchasedAt!,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
+              Text(
+                summ,
+                style:
+                    mainTextStyle ?? Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w600),
+              ),
             ],
-          ),
-          Text(
-            summ,
-            style: mainTextStyle ??
-                Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(fontWeight: FontWeight.w600),
           ),
         ],
       ),

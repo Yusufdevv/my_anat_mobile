@@ -20,34 +20,40 @@ class PurchasedHistoryList extends StatelessWidget {
     return BlocBuilder<RestoreBloc, RestoreState>(
       builder: (context, state) {
         return state.myPayments.isNotEmpty
-            ? Column(
-                children: [
-                  PurchasedHistoryItem(
-                    title: LocaleKeys.service_date.tr(),
-                    backgroundColor: primary,
-                    summ: LocaleKeys.amount.tr(),
-                    mainTextStyle: Theme.of(context).textTheme.displaySmall!.copyWith(color: Colors.white),
-                  ),
-                  Paginator(
-                    paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.myPaymentsStatus),
-                    itemBuilder: (context, index) {
-                      return PurchasedHistoryItem(
-                        title: state.myPayments[index].product.isEmpty ? 'Title' : state.myPayments[index].product[0].data.title,
-                        backgroundColor: index % 2 != 0 ? whiteSmoke2 : white ,
-                        summ: MyFunctions.getFormatCostFromInt(state.myPayments[index].amount),
-                        purchasedAt: Jiffy(state.myPayments[index].payedAt).format('dd.MM.yyyy'),
-                      );
-                    },
-                    itemCount: state.myPayments.length,
-                    fetchMoreFunction: () {
-                      context.read<RestoreBloc>().add(RestoreEvent.getMoreMyPayHistory());
-                    },
-                    hasMoreToFetch: state.myPaymentsFetchMore,
-                    errorWidget: const SizedBox(
-                      child: Center(child: CupertinoActivityIndicator(color: Colors.red)),
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    PurchasedHistoryItem(
+                      title: LocaleKeys.service_date.tr(),
+                      backgroundColor: primary,
+                      summ: LocaleKeys.amount.tr(),
+                      mainTextStyle: Theme.of(context).textTheme.displaySmall!.copyWith(color: Colors.white),
                     ),
-                  ),
-                ],
+                    Paginator(
+                      physics: BouncingScrollPhysics(),
+                      separatorBuilder: (context, index) => const SizedBox(height: 16),
+                      paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.myPaymentsStatus),
+                      itemBuilder: (context, index) {
+                        return PurchasedHistoryItem(
+                          title: state.myPayments[index].product.isEmpty
+                              ? 'Title'
+                              : state.myPayments[index].product[0].data.name,
+                          backgroundColor: index % 2 != 0 ? whiteSmoke2 : white,
+                          summ: MyFunctions.getFormatCostFromInt(state.myPayments[index].amount),
+                          purchasedAt: Jiffy(state.myPayments[index].payedAt).format('dd.MM.yyyy'),
+                        );
+                      },
+                      itemCount: state.myPayments.length,
+                      fetchMoreFunction: () {
+                        context.read<RestoreBloc>().add(RestoreEvent.getMoreMyPayHistory());
+                      },
+                      hasMoreToFetch: state.myPaymentsFetchMore,
+                      errorWidget: const SizedBox(
+                        child: Center(child: CupertinoActivityIndicator(color: Colors.red)),
+                      ),
+                    ),
+                  ],
+                ),
               )
             : EmptyPage(
                 title: LocaleKeys.nothing.tr(),

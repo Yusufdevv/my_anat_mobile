@@ -17,12 +17,10 @@ class ProductEntity extends Equatable {
   List<Object?> get props => [type, data];
 }
 
-class ProductConverter
-    implements JsonConverter<ProductEntity, Map<String, dynamic>?> {
+class ProductConverter implements JsonConverter<ProductEntity, Map<String, dynamic>?> {
   const ProductConverter();
   @override
-  ProductEntity fromJson(Map<String, dynamic>? json) =>
-      ProductModel.fromJson(json ?? {});
+  ProductEntity fromJson(Map<String, dynamic>? json) => ProductModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(ProductEntity object) => {};
