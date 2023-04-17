@@ -8,7 +8,7 @@ part 'data_model.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class DataModel extends DataEntity {
   const DataModel({
-    required super.title,
+    required super.name,
     required super.id,
     // required super.isPremium,
     // required super.category,
@@ -27,6 +27,5 @@ class DataModel extends DataEntity {
     // required super.uzumLink,
   });
 
-  factory DataModel.fromJson(Map<String, dynamic> json) =>
-      _$DataModelFromJson(json);
+  factory DataModel.fromJson(Map<String, dynamic> json) => _$DataModelFromJson(json);
 }

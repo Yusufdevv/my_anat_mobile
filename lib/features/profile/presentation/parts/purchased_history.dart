@@ -32,8 +32,10 @@ class PurchasedHistoryList extends StatelessWidget {
                     paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.myPaymentsStatus),
                     itemBuilder: (context, index) {
                       return PurchasedHistoryItem(
-                        title: state.myPayments[index].product.isEmpty ? 'Title' : state.myPayments[index].product[0].data.title,
-                        backgroundColor: index % 2 != 0 ? whiteSmoke2 : white ,
+                        title: state.myPayments[index].product.isEmpty
+                            ? 'Title'
+                            : state.myPayments[index].product[0].data.name,
+                        backgroundColor: index % 2 != 0 ? whiteSmoke2 : white,
                         summ: MyFunctions.getFormatCostFromInt(state.myPayments[index].amount),
                         purchasedAt: Jiffy(state.myPayments[index].payedAt).format('dd.MM.yyyy'),
                       );

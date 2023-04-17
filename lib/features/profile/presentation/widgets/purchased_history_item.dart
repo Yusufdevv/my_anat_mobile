@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 class PurchasedHistoryItem extends StatelessWidget {
@@ -18,11 +20,11 @@ class PurchasedHistoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(':::::::::: purchased history item title:  ${title}  ::::::::::');
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: backgroundColor),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: backgroundColor),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,11 +34,8 @@ class PurchasedHistoryItem extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: mainTextStyle ??
-                    Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(fontWeight: FontWeight.w600),
+                style:
+                    mainTextStyle ?? Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w600),
               ),
               if (purchasedAt != null)
                 Text(
@@ -47,11 +46,7 @@ class PurchasedHistoryItem extends StatelessWidget {
           ),
           Text(
             summ,
-            style: mainTextStyle ??
-                Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(fontWeight: FontWeight.w600),
+            style: mainTextStyle ?? Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w600),
           ),
         ],
       ),
