@@ -21,8 +21,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   _getCategories(_GetCategories event, Emitter<CategoryState> emit) async {
     emit(state.copyWith(categoryStatus: FormzStatus.submissionInProgress));
     final response = await _categoryUseCase.call(null);
-    if (response.isRight) {
-      print('response => ${response.right}');
+    if (response.isRight) { 
       emit(state.copyWith(
         categoriesNext: response.right.next,
         categoryStatus: FormzStatus.submissionSuccess,

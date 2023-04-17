@@ -1,11 +1,10 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const realization_expect = 'realization_expect';
   static const subscription_waiting = 'subscription_waiting';
   static const location_permission_disabled = 'location_permission_disabled';
-  static const location_permission_permanent_disabled =
-      'location_permission_permanent_disabled';
+  static const location_permission_permanent_disabled = 'location_permission_permanent_disabled';
   static const location_services_disabled = 'location_services_disabled';
   static const enter = 'enter';
   static const has_account = 'has_account';
@@ -203,8 +202,7 @@ abstract class LocaleKeys {
   static const email_error = 'email_error';
   static const email_cannot_be_empty = 'email_cannot_be_empty';
   static const password_cannot_be_empty = 'password_cannot_be_empty';
-  static const repeated_password_cannot_be_empty =
-      'repeated_password_cannot_be_empty';
+  static const repeated_password_cannot_be_empty = 'repeated_password_cannot_be_empty';
   static const passwords_are_not_same = 'passwords_are_not_same';
   static const phone_number_error = 'phone_number_error';
   static const phone_number_cannot_be_empty = 'phone_number_cannot_be_empty';
@@ -216,19 +214,16 @@ abstract class LocaleKeys {
   static const doctor_do_not_want_show_bio = 'doctor_do_not_want_show_bio';
   static const doctor_did_write_article = 'doctor_did_write_article';
   static const no_interview = 'no_interview';
-  static const this_expert_did_not_give_interview =
-      'this_expert_did_not_give_interview';
+  static const this_expert_did_not_give_interview = 'this_expert_did_not_give_interview';
   static const no_articles = 'no_articles';
   static const no_conditions = 'no_conditions';
-  static const no_conditions_in_this_hospital =
-      'no_conditions_in_this_hospital';
+  static const no_conditions_in_this_hospital = 'no_conditions_in_this_hospital';
   static const no_contacts = 'no_contacts';
   static const no_contacts_in_this_hospital = 'no_contacts_in_this_hospital';
   static const no_services = 'no_services';
   static const no_services_in_this_hospital = 'no_services_in_this_hospital';
   static const no_specialists = 'no_specialists';
-  static const no_specialists_in_this_hospital =
-      'no_specialists_in_this_hospital';
+  static const no_specialists_in_this_hospital = 'no_specialists_in_this_hospital';
   static const no_vacancies = 'no_vacancies';
   static const no_vacancies_in_this_hospital = 'no_vacancies_in_this_hospital';
   static const enter_phone_or_email = 'enter_phone_or_email';
@@ -239,8 +234,7 @@ abstract class LocaleKeys {
   static const activate_subscription = 'activate_subscription';
   static const for_month = 'for_month';
   static const subscription_for_all_journals = 'subscription_for_all_journals';
-  static const subscription_for_all_journals_description =
-      'subscription_for_all_journals_description';
+  static const subscription_for_all_journals_description = 'subscription_for_all_journals_description';
   static const select_period = 'select_period';
   static const select_payment_method = 'select_payment_method';
   static const read = 'read';
@@ -321,12 +315,15 @@ abstract class LocaleKeys {
   static const you_dont_have_card = 'you_dont_have_card';
   static const delete_card = 'delete_card';
   static const you_are_sure_to_delete_card = 'you_are_sure_to_delete_card';
+  static const are_you_sure_you_want_to_make_this_payment = 'are_you_sure_you_want_to_make_this_payment';
   static const history = 'history';
   static const service_date = 'service_date';
   static const amount = 'amount';
   static const no_notifications = 'no_notifications';
   static const notifications = 'notifications';
-  static const are_you_sure_you_want_to_make_this_payment = 'are_you_sure_you_want_to_make_this_payment';
   static const payment_successed = 'payment_successed';
   static const payment = 'payment';
+  static const others = 'others';
+  static const others_categories = 'others_categories';
+
 }

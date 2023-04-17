@@ -49,9 +49,7 @@ class HomeDatasourceImpl extends HomeDatasource {
       );
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        print(
-            'response.data categories => ${response.realUri} ${response.data}');
+          response.statusCode! < 300) { 
         return GenericPagination.fromJson(response.data,
             (p0) => CategoryModel.fromJson(p0 as Map<String, dynamic>));
       } else {
