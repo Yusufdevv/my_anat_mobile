@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'home_articles_bloc.dart';
 
@@ -730,6 +730,7 @@ class _$_HomeArticlesState implements _HomeArticlesState {
   @override
   @JsonKey()
   List<JournalArticleModel> get homeArticles {
+    if (_homeArticles is EqualUnmodifiableListView) return _homeArticles;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_homeArticles);
   }
@@ -746,6 +747,7 @@ class _$_HomeArticlesState implements _HomeArticlesState {
   @override
   @JsonKey()
   List<BannerModel> get banners {
+    if (_banners is EqualUnmodifiableListView) return _banners;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_banners);
   }

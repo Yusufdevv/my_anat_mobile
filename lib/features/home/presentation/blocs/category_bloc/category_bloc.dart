@@ -1,5 +1,6 @@
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/home/data/repository_impls/home_repo_impl.dart';
+import 'package:anatomica/features/home/domain/entities/category_entity.dart';
 import 'package:anatomica/features/home/domain/usecases/category_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:formz/formz.dart';

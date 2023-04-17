@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'category_bloc.dart';
 
@@ -280,7 +280,7 @@ abstract class _GetMoreCategories implements CategoryEvent {
 
 /// @nodoc
 mixin _$CategoryState {
-  List<dynamic> get categories => throw _privateConstructorUsedError;
+  List<CategoryEntity> get categories => throw _privateConstructorUsedError;
   FormzStatus get categoryStatus => throw _privateConstructorUsedError;
   String? get categoriesNext => throw _privateConstructorUsedError;
   bool get categoriesFetchMore => throw _privateConstructorUsedError;
@@ -297,7 +297,7 @@ abstract class $CategoryStateCopyWith<$Res> {
       _$CategoryStateCopyWithImpl<$Res, CategoryState>;
   @useResult
   $Res call(
-      {List<dynamic> categories,
+      {List<CategoryEntity> categories,
       FormzStatus categoryStatus,
       String? categoriesNext,
       bool categoriesFetchMore});
@@ -325,7 +325,7 @@ class _$CategoryStateCopyWithImpl<$Res, $Val extends CategoryState>
       categories: null == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<CategoryEntity>,
       categoryStatus: null == categoryStatus
           ? _value.categoryStatus
           : categoryStatus // ignore: cast_nullable_to_non_nullable
@@ -351,7 +351,7 @@ abstract class _$$_CategoryStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<dynamic> categories,
+      {List<CategoryEntity> categories,
       FormzStatus categoryStatus,
       String? categoriesNext,
       bool categoriesFetchMore});
@@ -377,7 +377,7 @@ class __$$_CategoryStateCopyWithImpl<$Res>
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<CategoryEntity>,
       categoryStatus: null == categoryStatus
           ? _value.categoryStatus
           : categoryStatus // ignore: cast_nullable_to_non_nullable
@@ -398,16 +398,17 @@ class __$$_CategoryStateCopyWithImpl<$Res>
 
 class _$_CategoryState implements _CategoryState {
   _$_CategoryState(
-      {final List<dynamic> categories = const [],
+      {final List<CategoryEntity> categories = const <CategoryEntity>[],
       this.categoryStatus = FormzStatus.pure,
       this.categoriesNext,
       this.categoriesFetchMore = false})
       : _categories = categories;
 
-  final List<dynamic> _categories;
+  final List<CategoryEntity> _categories;
   @override
   @JsonKey()
-  List<dynamic> get categories {
+  List<CategoryEntity> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_categories);
   }
@@ -458,13 +459,13 @@ class _$_CategoryState implements _CategoryState {
 
 abstract class _CategoryState implements CategoryState {
   factory _CategoryState(
-      {final List<dynamic> categories,
+      {final List<CategoryEntity> categories,
       final FormzStatus categoryStatus,
       final String? categoriesNext,
       final bool categoriesFetchMore}) = _$_CategoryState;
 
   @override
-  List<dynamic> get categories;
+  List<CategoryEntity> get categories;
   @override
   FormzStatus get categoryStatus;
   @override

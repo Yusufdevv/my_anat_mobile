@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'notification_bloc.dart';
 
@@ -565,15 +565,15 @@ class __$$_ReadAllNotificattionsCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? onSuccess = null,
-    Object? onError = null,
+    Object? onSuccess = freezed,
+    Object? onError = freezed,
   }) {
     return _then(_$_ReadAllNotificattions(
-      onSuccess: null == onSuccess
+      onSuccess: freezed == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as VoidCallback?,
-      onError: null == onError
+      onError: freezed == onError
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
               as VoidCallback?,
@@ -601,15 +601,13 @@ class _$_ReadAllNotificattions implements _ReadAllNotificattions {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ReadAllNotificattions &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
-            const DeepCollectionEquality().equals(other.onError, onError));
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess) &&
+            (identical(other.onError, onError) || other.onError == onError));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(onSuccess),
-      const DeepCollectionEquality().hash(onError));
+  int get hashCode => Object.hash(runtimeType, onSuccess, onError);
 
   @JsonKey(ignore: true)
   @override
@@ -746,16 +744,16 @@ class __$$_ReadNotificationCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? onSuccess = null,
-    Object? onError = null,
+    Object? onSuccess = freezed,
+    Object? onError = freezed,
     Object? id = null,
   }) {
     return _then(_$_ReadNotification(
-      onSuccess: null == onSuccess
+      onSuccess: freezed == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as VoidCallback?,
-      onError: null == onError
+      onError: freezed == onError
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
               as VoidCallback?,
@@ -789,17 +787,14 @@ class _$_ReadNotification implements _ReadNotification {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ReadNotification &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
-            const DeepCollectionEquality().equals(other.onError, onError) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess) &&
+            (identical(other.onError, onError) || other.onError == onError) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(onSuccess),
-      const DeepCollectionEquality().hash(onError),
-      id);
+  int get hashCode => Object.hash(runtimeType, onSuccess, onError, id);
 
   @JsonKey(ignore: true)
   @override
@@ -1245,6 +1240,7 @@ class _$_NotificationState implements _NotificationState {
   @override
   @JsonKey()
   List<NotificationModel> get notifications {
+    if (_notifications is EqualUnmodifiableListView) return _notifications;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_notifications);
   }

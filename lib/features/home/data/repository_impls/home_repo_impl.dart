@@ -2,9 +2,9 @@ import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/home/data/datasources/home_datasource.dart';
-import 'package:anatomica/features/home/data/models/banner_model.dart';
-import 'package:anatomica/features/home/data/models/category_model.dart';
+import 'package:anatomica/features/home/data/models/banner_model.dart'; 
 import 'package:anatomica/features/home/data/models/news_model.dart';
+import 'package:anatomica/features/home/domain/entities/category_entity.dart';
 import 'package:anatomica/features/home/domain/repositories/home_repository.dart';
 import 'package:anatomica/features/journal/data/models/journal_article_model.dart';
 import 'package:anatomica/features/map/data/models/hospital_doctors_model.dart';
@@ -17,7 +17,7 @@ class HomeRepoImpl extends HomeRepository {
   HomeRepoImpl({required this.datasource});
 
   @override
-  Future<Either<Failure, GenericPagination<CategoryModel>>> getCategories(
+  Future<Either<Failure, GenericPagination<CategoryEntity>>> getCategories(
       {String? next}) async {
     try {
       final result = await datasource.getCategories(next: next);
