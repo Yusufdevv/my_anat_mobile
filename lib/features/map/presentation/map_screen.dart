@@ -153,7 +153,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                     child: Container(
                       height: MediaQuery.of(context).padding.top + 84,
                       decoration: BoxDecoration(
-                        color: Colors.teal,
                         gradient: LinearGradient(
                             colors: [white.withOpacity(0.65), white.withOpacity(0)],
                             begin: Alignment.topCenter,

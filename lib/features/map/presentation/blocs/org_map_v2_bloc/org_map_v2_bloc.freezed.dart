@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'org_map_v2_bloc.dart';
 
@@ -1123,13 +1123,13 @@ class _$OrgMapV2StateCopyWithImpl<$Res, $Val extends OrgMapV2State>
     Object? hospitals = null,
     Object? types = null,
     Object? services = null,
-    Object? getAllHospitalsStatus = null,
-    Object? getSuggestHospitalsStatus = null,
-    Object? serviceStatus = null,
-    Object? categoryStatus = null,
-    Object? hospitalsCount = null,
-    Object? typesCount = null,
-    Object? servicesCount = null,
+    Object? getAllHospitalsStatus = freezed,
+    Object? getSuggestHospitalsStatus = freezed,
+    Object? serviceStatus = freezed,
+    Object? categoryStatus = freezed,
+    Object? hospitalsCount = freezed,
+    Object? typesCount = freezed,
+    Object? servicesCount = freezed,
     Object? hospitalsPrevious = freezed,
     Object? typesPrevious = freezed,
     Object? servicesPrevious = freezed,
@@ -1139,7 +1139,7 @@ class _$OrgMapV2StateCopyWithImpl<$Res, $Val extends OrgMapV2State>
     Object? hospitalsFetchMore = null,
     Object? typesFetchMore = null,
     Object? servicesFetchMore = null,
-    Object? tabIndex = null,
+    Object? tabIndex = freezed,
   }) {
     return _then(_value.copyWith(
       hospitals: null == hospitals
@@ -1154,31 +1154,31 @@ class _$OrgMapV2StateCopyWithImpl<$Res, $Val extends OrgMapV2State>
           ? _value.services
           : services // ignore: cast_nullable_to_non_nullable
               as List<ServiceSpecSuggestModel>,
-      getAllHospitalsStatus: null == getAllHospitalsStatus
+      getAllHospitalsStatus: freezed == getAllHospitalsStatus
           ? _value.getAllHospitalsStatus
           : getAllHospitalsStatus // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      getSuggestHospitalsStatus: null == getSuggestHospitalsStatus
+      getSuggestHospitalsStatus: freezed == getSuggestHospitalsStatus
           ? _value.getSuggestHospitalsStatus
           : getSuggestHospitalsStatus // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      serviceStatus: null == serviceStatus
+      serviceStatus: freezed == serviceStatus
           ? _value.serviceStatus
           : serviceStatus // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      categoryStatus: null == categoryStatus
+      categoryStatus: freezed == categoryStatus
           ? _value.categoryStatus
           : categoryStatus // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      hospitalsCount: null == hospitalsCount
+      hospitalsCount: freezed == hospitalsCount
           ? _value.hospitalsCount
           : hospitalsCount // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      typesCount: null == typesCount
+      typesCount: freezed == typesCount
           ? _value.typesCount
           : typesCount // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      servicesCount: null == servicesCount
+      servicesCount: freezed == servicesCount
           ? _value.servicesCount
           : servicesCount // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -1218,7 +1218,7 @@ class _$OrgMapV2StateCopyWithImpl<$Res, $Val extends OrgMapV2State>
           ? _value.servicesFetchMore
           : servicesFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      tabIndex: null == tabIndex
+      tabIndex: freezed == tabIndex
           ? _value.tabIndex
           : tabIndex // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -1271,13 +1271,13 @@ class __$$_OrgMapV2StateCopyWithImpl<$Res>
     Object? hospitals = null,
     Object? types = null,
     Object? services = null,
-    Object? getAllHospitalsStatus = null,
-    Object? getSuggestHospitalsStatus = null,
-    Object? serviceStatus = null,
-    Object? categoryStatus = null,
-    Object? hospitalsCount = null,
-    Object? typesCount = null,
-    Object? servicesCount = null,
+    Object? getAllHospitalsStatus = freezed,
+    Object? getSuggestHospitalsStatus = freezed,
+    Object? serviceStatus = freezed,
+    Object? categoryStatus = freezed,
+    Object? hospitalsCount = freezed,
+    Object? typesCount = freezed,
+    Object? servicesCount = freezed,
     Object? hospitalsPrevious = freezed,
     Object? typesPrevious = freezed,
     Object? servicesPrevious = freezed,
@@ -1287,7 +1287,7 @@ class __$$_OrgMapV2StateCopyWithImpl<$Res>
     Object? hospitalsFetchMore = null,
     Object? typesFetchMore = null,
     Object? servicesFetchMore = null,
-    Object? tabIndex = null,
+    Object? tabIndex = freezed,
   }) {
     return _then(_$_OrgMapV2State(
       hospitals: null == hospitals
@@ -1302,21 +1302,21 @@ class __$$_OrgMapV2StateCopyWithImpl<$Res>
           ? _value._services
           : services // ignore: cast_nullable_to_non_nullable
               as List<ServiceSpecSuggestModel>,
-      getAllHospitalsStatus: null == getAllHospitalsStatus
-          ? _value.getAllHospitalsStatus
+      getAllHospitalsStatus: freezed == getAllHospitalsStatus
+          ? _value.getAllHospitalsStatus!
           : getAllHospitalsStatus,
-      getSuggestHospitalsStatus: null == getSuggestHospitalsStatus
-          ? _value.getSuggestHospitalsStatus
+      getSuggestHospitalsStatus: freezed == getSuggestHospitalsStatus
+          ? _value.getSuggestHospitalsStatus!
           : getSuggestHospitalsStatus,
       serviceStatus:
-          null == serviceStatus ? _value.serviceStatus : serviceStatus,
+          freezed == serviceStatus ? _value.serviceStatus! : serviceStatus,
       categoryStatus:
-          null == categoryStatus ? _value.categoryStatus : categoryStatus,
+          freezed == categoryStatus ? _value.categoryStatus! : categoryStatus,
       hospitalsCount:
-          null == hospitalsCount ? _value.hospitalsCount : hospitalsCount,
-      typesCount: null == typesCount ? _value.typesCount : typesCount,
+          freezed == hospitalsCount ? _value.hospitalsCount! : hospitalsCount,
+      typesCount: freezed == typesCount ? _value.typesCount! : typesCount,
       servicesCount:
-          null == servicesCount ? _value.servicesCount : servicesCount,
+          freezed == servicesCount ? _value.servicesCount! : servicesCount,
       hospitalsPrevious: freezed == hospitalsPrevious
           ? _value.hospitalsPrevious
           : hospitalsPrevious // ignore: cast_nullable_to_non_nullable
@@ -1353,7 +1353,7 @@ class __$$_OrgMapV2StateCopyWithImpl<$Res>
           ? _value.servicesFetchMore
           : servicesFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      tabIndex: null == tabIndex ? _value.tabIndex : tabIndex,
+      tabIndex: freezed == tabIndex ? _value.tabIndex! : tabIndex,
     ));
   }
 }
@@ -1390,6 +1390,7 @@ class _$_OrgMapV2State implements _OrgMapV2State {
   @override
   @JsonKey()
   List<OrgMapV2Model> get hospitals {
+    if (_hospitals is EqualUnmodifiableListView) return _hospitals;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_hospitals);
   }
@@ -1398,6 +1399,7 @@ class _$_OrgMapV2State implements _OrgMapV2State {
   @override
   @JsonKey()
   List<TypeModel> get types {
+    if (_types is EqualUnmodifiableListView) return _types;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_types);
   }
@@ -1406,6 +1408,7 @@ class _$_OrgMapV2State implements _OrgMapV2State {
   @override
   @JsonKey()
   List<ServiceSpecSuggestModel> get services {
+    if (_services is EqualUnmodifiableListView) return _services;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_services);
   }

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'doctor_list_bloc.dart';
 
@@ -322,7 +322,7 @@ abstract class _GetMoreDoctors implements DoctorListEvent {
 
 /// @nodoc
 mixin _$DoctorListState {
-  List<HospitalDoctorsEntity> get doctors => throw _privateConstructorUsedError;
+  List<DoctorMapModel> get doctors => throw _privateConstructorUsedError;
   FormzStatus get status => throw _privateConstructorUsedError;
   String? get next => throw _privateConstructorUsedError;
   bool get fetchMore => throw _privateConstructorUsedError;
@@ -339,7 +339,7 @@ abstract class $DoctorListStateCopyWith<$Res> {
       _$DoctorListStateCopyWithImpl<$Res, DoctorListState>;
   @useResult
   $Res call(
-      {List<HospitalDoctorsEntity> doctors,
+      {List<DoctorMapModel> doctors,
       FormzStatus status,
       String? next,
       bool fetchMore});
@@ -367,7 +367,7 @@ class _$DoctorListStateCopyWithImpl<$Res, $Val extends DoctorListState>
       doctors: null == doctors
           ? _value.doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<HospitalDoctorsEntity>,
+              as List<DoctorMapModel>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -393,7 +393,7 @@ abstract class _$$_DoctorListStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<HospitalDoctorsEntity> doctors,
+      {List<DoctorMapModel> doctors,
       FormzStatus status,
       String? next,
       bool fetchMore});
@@ -419,7 +419,7 @@ class __$$_DoctorListStateCopyWithImpl<$Res>
       doctors: null == doctors
           ? _value._doctors
           : doctors // ignore: cast_nullable_to_non_nullable
-              as List<HospitalDoctorsEntity>,
+              as List<DoctorMapModel>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -440,16 +440,17 @@ class __$$_DoctorListStateCopyWithImpl<$Res>
 
 class _$_DoctorListState implements _DoctorListState {
   _$_DoctorListState(
-      {final List<HospitalDoctorsEntity> doctors = const [],
+      {final List<DoctorMapModel> doctors = const [],
       this.status = FormzStatus.pure,
       this.next,
       this.fetchMore = false})
       : _doctors = doctors;
 
-  final List<HospitalDoctorsEntity> _doctors;
+  final List<DoctorMapModel> _doctors;
   @override
   @JsonKey()
-  List<HospitalDoctorsEntity> get doctors {
+  List<DoctorMapModel> get doctors {
+    if (_doctors is EqualUnmodifiableListView) return _doctors;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_doctors);
   }
@@ -493,13 +494,13 @@ class _$_DoctorListState implements _DoctorListState {
 
 abstract class _DoctorListState implements DoctorListState {
   factory _DoctorListState(
-      {final List<HospitalDoctorsEntity> doctors,
+      {final List<DoctorMapModel> doctors,
       final FormzStatus status,
       final String? next,
       final bool fetchMore}) = _$_DoctorListState;
 
   @override
-  List<HospitalDoctorsEntity> get doctors;
+  List<DoctorMapModel> get doctors;
   @override
   FormzStatus get status;
   @override

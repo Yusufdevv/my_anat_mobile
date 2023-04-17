@@ -12,8 +12,7 @@ import 'package:flutter/material.dart';
 class LanguageBottomSheet extends StatefulWidget {
   final Locale currentLocale;
 
-  const LanguageBottomSheet({required this.currentLocale, Key? key})
-      : super(key: key);
+  const LanguageBottomSheet({required this.currentLocale, Key? key}) : super(key: key);
 
   @override
   State<LanguageBottomSheet> createState() => _LanguageBottomSheetState();
@@ -56,8 +55,8 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
           ),
           onTap: () async {
             serviceLocator<DioSettings>().setBaseOptions(lang: 'ru');
-            StorageRepository.putString('language', 'ru');
-            StorageRepository.putString('device_language', 'ru');
+            await StorageRepository.putString('language', 'ru');
+            await StorageRepository.putString('device_language', 'ru');
             Navigator.pop(context);
             await context.setLocale(const Locale('ru'));
             setState(() {
@@ -75,10 +74,10 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
           ),
           onTap: () async {
             serviceLocator<DioSettings>().setBaseOptions(lang: 'uz');
-            StorageRepository.putString('language', 'uz');
-            StorageRepository.putString('device_language', 'uz');
+            await StorageRepository.putString('language', 'uz');
+            await StorageRepository.putString('device_language', 'uz');
             Navigator.pop(context);
-            await context.setLocale(const Locale('uz'));
+            context.setLocale(const Locale('uz'));
             setState(() {
               currentStatus = 3;
             });

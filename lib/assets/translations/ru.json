@@ -318,8 +318,7 @@
   "service_date": "Услуга/ Дата",
   "amount": "Miqdor",
   "no_notifications": "У вас пока нет уведомлений",
-  "notifications": "Уведомления"
-  "amount": "Miqdor",
+  "notifications": "Уведомления",
   "payment_successed": "Платеж прошел успешно",
   "payment": "Платеж"
 }

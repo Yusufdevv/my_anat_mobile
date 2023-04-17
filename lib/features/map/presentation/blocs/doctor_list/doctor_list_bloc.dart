@@ -1,3 +1,4 @@
+import 'package:anatomica/features/map/data/models/doctor_map_model.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';

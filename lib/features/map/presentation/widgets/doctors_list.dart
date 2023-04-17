@@ -1,7 +1,9 @@
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/common/data/models/phone_number2_model.dart';
 import 'package:anatomica/features/common/presentation/widgets/empty_page.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
+import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/map/presentation/blocs/doctor_list/doctor_list_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctor_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -60,7 +62,34 @@ class _DoctorsListState extends State<DoctorsList> {
                 itemBuilder: (c, index) {
                   return DoctorItem(
                     showPosition: false,
-                    entity: state.doctors[index],
+                    entity: HospitalDoctorsEntity(
+                        image: state.doctors[index].image,
+                        longitude: state.doctors[index].longitude,
+                        latitude: state.doctors[index].latitude,
+                        phoneNumber: state.doctors[index].phoneNumbers.isEmpty
+                            ? ''
+                            : state.doctors[index].phoneNumbers.first.isEmpty
+                                ? ''
+                                : state.doctors[index].phoneNumbers.first.first,
+                        address: state.doctors[index].address,
+                        id: state.doctors[index].id,
+                        distance: state.doctors[index].distance,
+                        doctorName: state.doctors[index].doctorName,
+                        fullName: state.doctors[index].fullName,
+                        imgIsFull: state.doctors[index].imgIsFull,
+                        isFavourite: false,
+                        organizationName: state.doctors[index].organizationName,
+                        phoneNumbers: state.doctors[index].phoneNumbers.isEmpty
+                            ? []
+                            : state.doctors[index].phoneNumbers.first.isEmpty
+                                ? []
+                                : state.doctors[index].phoneNumbers.first
+                                    .map((e) => PhoneNumber2Model(phoneNumber: e))
+                                    .toList(),
+                        position: state.doctors[index].position,
+                        rating: state.doctors[index].rating + 0,
+                        specializations: [],
+                        workExperience: 0),
                   );
                 },
                 itemCount: state.doctors.length,

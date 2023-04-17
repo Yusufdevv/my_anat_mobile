@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'comments_bloc.dart';
 
@@ -870,12 +870,12 @@ class _$_PostComment implements _PostComment {
         (other.runtimeType == runtimeType &&
             other is _$_PostComment &&
             (identical(other.comment, comment) || other.comment == comment) &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess));
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, comment, const DeepCollectionEquality().hash(onSuccess));
+  int get hashCode => Object.hash(runtimeType, comment, onSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -1745,8 +1745,8 @@ class _$CommentsStateCopyWithImpl<$Res, $Val extends CommentsState>
     Object? doctorId = null,
     Object? doctorCommentCount = null,
     Object? hospitalCommentCount = null,
-    Object? postCommentStatus = null,
-    Object? sendDoctorCommentStatus = null,
+    Object? postCommentStatus = freezed,
+    Object? sendDoctorCommentStatus = freezed,
     Object? isDoctorCommented = null,
     Object? isOrganizationCommented = null,
   }) {
@@ -1799,11 +1799,11 @@ class _$CommentsStateCopyWithImpl<$Res, $Val extends CommentsState>
           ? _value.hospitalCommentCount
           : hospitalCommentCount // ignore: cast_nullable_to_non_nullable
               as int,
-      postCommentStatus: null == postCommentStatus
+      postCommentStatus: freezed == postCommentStatus
           ? _value.postCommentStatus
           : postCommentStatus // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      sendDoctorCommentStatus: null == sendDoctorCommentStatus
+      sendDoctorCommentStatus: freezed == sendDoctorCommentStatus
           ? _value.sendDoctorCommentStatus
           : sendDoctorCommentStatus // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -1869,8 +1869,8 @@ class __$$_CommentsStateCopyWithImpl<$Res>
     Object? doctorId = null,
     Object? doctorCommentCount = null,
     Object? hospitalCommentCount = null,
-    Object? postCommentStatus = null,
-    Object? sendDoctorCommentStatus = null,
+    Object? postCommentStatus = freezed,
+    Object? sendDoctorCommentStatus = freezed,
     Object? isDoctorCommented = null,
     Object? isOrganizationCommented = null,
   }) {
@@ -1923,11 +1923,11 @@ class __$$_CommentsStateCopyWithImpl<$Res>
           ? _value.hospitalCommentCount
           : hospitalCommentCount // ignore: cast_nullable_to_non_nullable
               as int,
-      postCommentStatus: null == postCommentStatus
-          ? _value.postCommentStatus
+      postCommentStatus: freezed == postCommentStatus
+          ? _value.postCommentStatus!
           : postCommentStatus,
-      sendDoctorCommentStatus: null == sendDoctorCommentStatus
-          ? _value.sendDoctorCommentStatus
+      sendDoctorCommentStatus: freezed == sendDoctorCommentStatus
+          ? _value.sendDoctorCommentStatus!
           : sendDoctorCommentStatus,
       isDoctorCommented: null == isDoctorCommented
           ? _value.isDoctorCommented
@@ -1971,6 +1971,7 @@ class _$_CommentsState implements _CommentsState {
   @override
   @JsonKey()
   List<CommentEntity> get comments {
+    if (_comments is EqualUnmodifiableListView) return _comments;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_comments);
   }
@@ -1990,6 +1991,7 @@ class _$_CommentsState implements _CommentsState {
   @override
   @JsonKey()
   List<CommentEntity> get doctorComments {
+    if (_doctorComments is EqualUnmodifiableListView) return _doctorComments;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_doctorComments);
   }

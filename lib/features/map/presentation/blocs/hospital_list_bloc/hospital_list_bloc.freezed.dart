@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'hospital_list_bloc.dart';
 
@@ -523,7 +523,7 @@ class _$HospitalListStateCopyWithImpl<$Res, $Val extends HospitalListState>
     Object? crossFadeState = null,
     Object? hospitals = null,
     Object? status = null,
-    Object? count = null,
+    Object? count = freezed,
     Object? next = freezed,
     Object? fetchMore = null,
   }) {
@@ -540,7 +540,7 @@ class _$HospitalListStateCopyWithImpl<$Res, $Val extends HospitalListState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      count: null == count
+      count: freezed == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -587,7 +587,7 @@ class __$$_HospitalListStateCopyWithImpl<$Res>
     Object? crossFadeState = null,
     Object? hospitals = null,
     Object? status = null,
-    Object? count = null,
+    Object? count = freezed,
     Object? next = freezed,
     Object? fetchMore = null,
   }) {
@@ -604,7 +604,7 @@ class __$$_HospitalListStateCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
-      count: null == count ? _value.count : count,
+      count: freezed == count ? _value.count! : count,
       next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
@@ -636,6 +636,7 @@ class _$_HospitalListState implements _HospitalListState {
   @override
   @JsonKey()
   List<OrgMapV2Model> get hospitals {
+    if (_hospitals is EqualUnmodifiableListView) return _hospitals;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_hospitals);
   }

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'restore_bloc.dart';
 
@@ -171,12 +171,12 @@ class _$_SendCode implements _SendCode {
         (other.runtimeType == runtimeType &&
             other is _$_SendCode &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess));
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, phone, const DeepCollectionEquality().hash(onSuccess));
+  int get hashCode => Object.hash(runtimeType, phone, onSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -348,12 +348,12 @@ class _$_ResendCode implements _ResendCode {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ResendCode &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess));
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(onSuccess));
+  int get hashCode => Object.hash(runtimeType, onSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -740,14 +740,14 @@ class _$_SendRestore implements _SendRestore {
             other is _$_SendRestore &&
             (identical(other.isJournal, isJournal) ||
                 other.isJournal == isJournal) &&
-            const DeepCollectionEquality().equals(other.onSuccess, onSuccess) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess) &&
             (identical(other.signature, signature) ||
                 other.signature == signature));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isJournal,
-      const DeepCollectionEquality().hash(onSuccess), signature);
+  int get hashCode => Object.hash(runtimeType, isJournal, onSuccess, signature);
 
   @JsonKey(ignore: true)
   @override
@@ -1596,6 +1596,7 @@ class _$_RestoreState implements _RestoreState {
   @override
   @JsonKey()
   List<PaymentHistoryModel> get myPayments {
+    if (_myPayments is EqualUnmodifiableListView) return _myPayments;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_myPayments);
   }
