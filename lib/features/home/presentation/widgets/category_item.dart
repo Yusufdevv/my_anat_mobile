@@ -7,8 +7,8 @@ class CategoryItem extends StatelessWidget {
   final String logo;
   final String title;
   final VoidCallback onTap;
-
-  const CategoryItem({required this.title, required this.logo, required this.onTap, Key? key}) : super(key: key);
+  bool isGreen;
+  CategoryItem({required this.title, required this.logo, required this.onTap, this.isGreen = true, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +33,13 @@ class CategoryItem extends StatelessWidget {
                     width: 24,
                     height: 24,
                     fit: BoxFit.cover,
+                    color: isGreen ? primary : textSecondary,
                   )
                 : SvgPicture.asset(
                     logo.isEmpty ? AppIcons.moreVertical : logo,
                     width: 24,
                     height: 24,
+                    color: isGreen ? primary : textSecondary,
                     fit: BoxFit.cover,
                   ),
             const SizedBox(height: 6),
