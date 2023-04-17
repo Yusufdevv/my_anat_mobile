@@ -80,7 +80,10 @@ class OtherCategoriesScreen extends StatelessWidget {
                             Navigator.of(context, rootNavigator: true).push(fade(
                                 page: BlocProvider.value(
                               value: context.read<CategoryBloc>(),
-                              child: CategoriesScreen(selectedIndex: index),
+                              child: CategoriesScreen(
+                                selectedIndex: index,
+                                categoryItemSize: (MediaQuery.of(context).size.width - 48) / 3,
+                              ),
                             )));
                           },
                           child: Padding(

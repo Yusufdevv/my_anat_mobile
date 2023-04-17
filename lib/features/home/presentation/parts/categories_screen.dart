@@ -14,18 +14,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({required this.selectedIndex, super.key});
+  const CategoriesScreen({required this.selectedIndex, required this.categoryItemSize, super.key});
   final int selectedIndex;
-
+  final double categoryItemSize;
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  late final ScrollController categoryController;
   @override
   void initState() {
     super.initState();
+    categoryController = ScrollController();
     context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(widget.selectedIndex));
+    Future.delayed(const Duration(milliseconds: 200), () {
+      categoryController.animateTo(widget.categoryItemSize * widget.selectedIndex,
+          duration: const Duration(milliseconds: 100), curve: Curves.easeIn);
+    });
   }
 
   @override
@@ -42,94 +48,121 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
-          return Stack(
-            children: [
-              Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: 45,
-                        color: white,
-                        width: double.maxFinite,
-                      ),
-                      Container(
-                        height: 7,
-                        width: double.maxFinite,
-                        decoration:
-                            const BoxDecoration(color: white, border: Border(top: BorderSide(color: lilyWhite))),
-                      ),
-                    ],
-                  )),
-              Positioned.fill(
-                  child: SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: Column(
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                Stack(
                   children: [
+                    Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              height: 45,
+                              color: white,
+                              width: double.maxFinite,
+                            ),
+                            Container(
+                              height: 7,
+                              width: double.maxFinite,
+                              decoration:
+                                  const BoxDecoration(color: white, border: Border(top: BorderSide(color: lilyWhite))),
+                            ),
+                          ],
+                        )),
                     SizedBox(
                       height: 89,
-                      child: Paginator(
-                        fetchMoreFunction: () {
-                          context.read<CategoryBloc>().add(const CategoryEvent.getMoreCategories());
+                      child: NotificationListener<OverscrollIndicatorNotification>(
+                        onNotification: (overscroll) {
+                          overscroll.disallowIndicator();
+                          return true;
                         },
-                        hasMoreToFetch: state.categoriesFetchMore,
-                        errorWidget: const SizedBox(),
-                        paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.categoryStatus),
-                        padding: const EdgeInsets.only(top: 12, left: 16, right: 8),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: state.categories.length,
-                        itemBuilder: (ctx, i) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: CategoryItem(
-                              logo: state.categories[i].icon.file.url,
-                              title: state.categories[i].title,
-                              onTap: () {
-                                context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(i));
-                              },
-                              isGreen: i == state.selectedCategory,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Paginator(
-                      separatorBuilder: (context, index) => const SizedBox(height: 12),
-                      padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-                      emptyWidget: Padding(
-                        padding: const EdgeInsets.only(top: 100),
-                        child: Center(
-                          child: EmptyPage(
-                              title: LocaleKeys.nothing.tr(),
-                              desc: LocaleKeys.result_not_found.tr(),
-                              iconPath: AppIcons.emptyA),
+                        child: Paginator(
+                          physics: const ClampingScrollPhysics(),
+                          controller: categoryController,
+                          fetchMoreFunction: () {
+                            context.read<CategoryBloc>().add(const CategoryEvent.getMoreCategories());
+                          },
+                          hasMoreToFetch: state.categoriesFetchMore,
+                          errorWidget: const SizedBox(),
+                          paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.categoryStatus),
+                          padding: const EdgeInsets.only(top: 12, left: 16, right: 8),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.categories.length,
+                          itemBuilder: (ctx, i) {
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: CategoryItem(
+                                logo: state.categories[i].icon.file.url,
+                                title: state.categories[i].title,
+                                onTap: () {
+                                  context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(i));
+                                },
+                                isGreen: i == state.selectedCategory,
+                              ),
+                            );
+                          },
                         ),
-                      ),
-                      paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.organizationsStatus),
-                      itemBuilder: (c, index) {
-                        return HospitalItem(entity: state.organizations[index]);
-                      },
-                      itemCount: state.organizations.length,
-                      fetchMoreFunction: () {
-                        context.read<CategoryBloc>().add(const CategoryEvent.getMoreOrganizations());
-                      },
-                      hasMoreToFetch: state.organizationsFetchMore,
-                      errorWidget: const SizedBox(),
-                      loadingWidget: const Padding(
-                        padding: EdgeInsets.only(top: 200),
-                        child: Center(child: CupertinoActivityIndicator()),
                       ),
                     ),
                   ],
                 ),
-              ))
-            ],
+                Paginator(
+                  separatorBuilder: (context, index) => const SizedBox(height: 12),
+                  padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                  emptyWidget: Padding(
+                    padding: const EdgeInsets.only(top: 100),
+                    child: Center(
+                      child: EmptyPage(
+                          title: LocaleKeys.nothing.tr(),
+                          desc: LocaleKeys.result_not_found.tr(),
+                          iconPath: AppIcons.emptyA),
+                    ),
+                  ),
+                  paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.organizationsStatus),
+                  itemBuilder: (c, index) {
+                    return HospitalItem(entity: state.organizations[index]);
+                  },
+                  itemCount: state.organizations.length,
+                  fetchMoreFunction: () {
+                    context.read<CategoryBloc>().add(const CategoryEvent.getMoreOrganizations());
+                  },
+                  hasMoreToFetch: state.organizationsFetchMore,
+                  errorWidget: const SizedBox(),
+                  loadingWidget: const Padding(
+                    padding: EdgeInsets.only(top: 200),
+                    child: Center(child: CupertinoActivityIndicator()),
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),
     );
   }
 }
+// Positioned(
+//                   top: 0,
+//                   left: 0,
+//                   right: 0,
+//                   child: Column(
+//                     mainAxisSize: MainAxisSize.min,
+//                     children: [
+//                       Container(
+//                         height: 45,
+//                         color: white,
+//                         width: double.maxFinite,
+//                       ),
+//                       Container(
+//                         height: 7,
+//                         width: double.maxFinite,
+//                         decoration:
+//                             const BoxDecoration(color: white, border: Border(top: BorderSide(color: lilyWhite))),
+//                       ),
+//                     ],
+//                   )),

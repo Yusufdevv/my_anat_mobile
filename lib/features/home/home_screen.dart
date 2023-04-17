@@ -175,7 +175,10 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                       Navigator.of(context, rootNavigator: true).push(fade(
                                           page: BlocProvider.value(
                                         value: _categoryBloc,
-                                        child: CategoriesScreen(selectedIndex: index),
+                                        child: CategoriesScreen(
+                                          selectedIndex: index,
+                                          categoryItemSize: (MediaQuery.of(context).size.width - 48) / 3,
+                                        ),
                                       )));
                                     },
                                   ),
