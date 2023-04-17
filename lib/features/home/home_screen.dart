@@ -183,11 +183,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                     },
                                   ),
                                 ),
-                                Offstage(
-                                  offstage: state.categories.length > 6,
-                                  child:
-                                      // if (state.categories.length < 6)
-                                      CategoryItem(
+                                if (state.categories.length > 5)
+                                  CategoryItem(
                                     logo: AppIcons.moreVertical,
                                     title: LocaleKeys.others.tr(),
                                     onTap: () {
@@ -196,7 +193,6 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                               value: _categoryBloc, child: const OtherCategoriesScreen())));
                                     },
                                   ),
-                                ),
                               ],
                             ),
                     ),

@@ -146,23 +146,3 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 }
-// Positioned(
-//                   top: 0,
-//                   left: 0,
-//                   right: 0,
-//                   child: Column(
-//                     mainAxisSize: MainAxisSize.min,
-//                     children: [
-//                       Container(
-//                         height: 45,
-//                         color: white,
-//                         width: double.maxFinite,
-//                       ),
-//                       Container(
-//                         height: 7,
-//                         width: double.maxFinite,
-//                         decoration:
-//                             const BoxDecoration(color: white, border: Border(top: BorderSide(color: lilyWhite))),
-//                       ),
-//                     ],
-//                   )),
