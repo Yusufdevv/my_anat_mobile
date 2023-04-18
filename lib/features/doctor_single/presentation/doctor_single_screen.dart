@@ -119,18 +119,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                 getDoctorInterviewsUseCase:
                     GetDoctorInterviewsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
               ..add(GetDoctorInterviews(doctorId: widget.id))),
-        BlocProvider(
-            create: (context) => CommentsBloc(
-                deletePostCommentUseCase:
-                    DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                doctorCommentDeleteUseCase:
-                    DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-                doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-                GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                getDoctorCommentsUseCase:
-                    GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
-              ..add(CommentsEvent.getDoctorComments(doctorId: widget.id))),
+        BlocProvider(create: (context) => CommentsBloc()..add(CommentsEvent.getDoctorComments(doctorId: widget.id))),
       ],
       child: WKeyboardDismisser(
         child: AnnotatedRegion(
