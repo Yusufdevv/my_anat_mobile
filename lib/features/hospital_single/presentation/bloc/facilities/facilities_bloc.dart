@@ -1,3 +1,5 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/features/hospital_single/data/repository/hospital_repository_impl.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/comfort_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_comforts.dart';
@@ -10,9 +12,9 @@ part 'facilities_event.dart';
 part 'facilities_state.dart';
 
 class FacilitiesBloc extends Bloc<FacilitiesEvent, FacilitiesState> {
-  final GetComfortsUseCase getComforts;
+  final GetComfortsUseCase getComforts = GetComfortsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>());
 
-  FacilitiesBloc(this.getComforts) : super(FacilitiesState()) {
+  FacilitiesBloc() : super(FacilitiesState()) {
     on<_GetFacilities>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       final result = await getComforts(TypeParameter(id: event.organizationId));

@@ -1,3 +1,5 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/features/hospital_single/data/repository/hospital_repository_impl.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_hospital_specialists_doctors_usecase.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_entity.dart';
@@ -10,10 +12,10 @@ part 'hospital_specialist_event.dart';
 part 'hospital_specialist_state.dart';
 
 class HospitalSpecialistBloc extends Bloc<HospitalSpecialistDoctorsEvent, HospitalSpecialistState> {
-  final GetHospitalSpecialistsDoctorsUseCase getSpecialistsDoctors;
+  final GetHospitalSpecialistsDoctorsUseCase getSpecialistsDoctors =
+      GetHospitalSpecialistsDoctorsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>());
 
-  HospitalSpecialistBloc(this.getSpecialistsDoctors) : super(HospitalSpecialistState()) {
-
+  HospitalSpecialistBloc() : super(HospitalSpecialistState()) {
     on<_GetSpecialistsDoctors>((event, emit) async {
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress,
