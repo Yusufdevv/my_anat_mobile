@@ -9,9 +9,9 @@ part 'specialization_event.dart';
 part 'specialization_state.dart';
 
 class SpecializationBloc extends Bloc<SpecializationEvent, SpecializationState> {
-  final GetSpecializationUseCase getSpecs;
+  final GetSpecializationUseCase getSpecs =GetSpecializationUseCase();
 
-  SpecializationBloc(this.getSpecs) : super(SpecializationState()) {
+  SpecializationBloc( ) : super(SpecializationState()) {
     on<_GetSpecs>((event, emit) async {
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress,
