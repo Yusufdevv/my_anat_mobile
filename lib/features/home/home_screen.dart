@@ -33,6 +33,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -113,14 +114,17 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                       color: isShrink ? black : white,
                     ),
                     WScaleAnimation(
-                      child: true
-                          ? SvgPicture.asset(
-                              AppIcons.bell,
-                              color: isShrink ? black : white,
-                            )
-                          : SvgPicture.asset(
-                              isShrink ? AppIcons.blackNotificationWithRedDot : AppIcons.notificationWithRedDot,
-                            ),
+                      child:
+                          // true
+                          //     ?
+                          SvgPicture.asset(
+                        AppIcons.bell,
+                        color: isShrink ? black : white,
+                      )
+                      // : SvgPicture.asset(
+                      //     isShrink ? AppIcons.blackNotificationWithRedDot : AppIcons.notificationWithRedDot,
+                      //   )
+                      ,
                       onTap: () => Navigator.push(context, fade(page: const NotificationsScreen())),
                     ),
                   ],
@@ -245,12 +249,15 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               /// ARTICLES
               SliverToBoxAdapter(
                 child: TitlesItem(
-                  // TODO locale
-                  title: 'Статьи',
+                  title: LocaleKeys.articles.tr(),
                   showAllFunction: () {
-                    Navigator.of(context).push(fade(page: const NewsPart()));
+                    // Navigator.of(context).push(fade(page: const NewsPart()));
+                    launchUrl(
+                      Uri.parse('https://anatomica.uz/article'),
+                      mode: LaunchMode.inAppWebView,
+                    );
                   },
-                  showAllTitle: 'Все статьи',
+                  showAllTitle: LocaleKeys.all_articles.tr(),
                 ),
               ),
               SliverToBoxAdapter(
