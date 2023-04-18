@@ -1,4 +1,5 @@
 import 'package:anatomica/features/home/domain/entities/category_entity.dart';
+import 'package:anatomica/features/home/domain/entities/icon_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'category_model.g.dart';

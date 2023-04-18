@@ -7,16 +7,13 @@ import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class HospitalItem extends StatelessWidget {
   final OrgMapV2Model entity;
-  final Point myPoint;
   final bool isSuggestionItem;
   final String searchText;
 
-  const HospitalItem(
-      {required this.entity, required this.myPoint, this.isSuggestionItem = false, this.searchText = '', Key? key})
+  const HospitalItem({required this.entity, this.isSuggestionItem = false, this.searchText = '', Key? key})
       : super(key: key);
 
   // double calculateDistance(lat1, lon1, lat2, lon2) {
@@ -109,7 +106,8 @@ class HospitalItem extends StatelessWidget {
                                       textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 15),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      textStyleHighlight: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14),
+                                      textStyleHighlight:
+                                          Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14),
                                     )
                                   : Text(
                                       entity.title,
@@ -132,17 +130,19 @@ class HospitalItem extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 12),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: List.generate(
-                              entity.specialization.length,
-                              (index) => SpecilaizationItem(
-                                  allText: entity.specialization[index].title,
-                                  highlightedText: searchText,
-                                  fenceColor: index == 0 ? darkGreen : gold2)),
-                        )
+                        if (isSuggestionItem) ...[
+                          const SizedBox(height: 12),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: List.generate(
+                                entity.specialization.length,
+                                (index) => SpecilaizationItem(
+                                    allText: entity.specialization[index].title,
+                                    highlightedText: searchText,
+                                    fenceColor: index == 0 ? darkGreen : gold2)),
+                          )
+                        ],
                       ],
                     ),
                   ),

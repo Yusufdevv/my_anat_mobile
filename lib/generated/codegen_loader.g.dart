@@ -336,7 +336,9 @@ class CodegenLoader extends AssetLoader{
   "no_notifications": "У вас пока нет уведомлений",
   "notifications": "Уведомления",
   "payment_successed": "Платеж прошел успешно",
-  "payment": "Платеж"
+  "payment": "Платеж",
+  "others": "Другие",
+  "others_categories": "Другие категории"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -657,10 +659,13 @@ static const Map<String,dynamic> uz = {
   "history": "История",
   "amount": "Miqdor",
   "service_date": "Xizmat/ Sana",
+  "amount": "Miqdor",
   "no_notifications": "Sizda hali xabarnomalar yo'q",
   "notifications": "Xabarnomalar",
   "payment_successed": "To'lov muvaffaqiyatli amalga oshirildi",
-  "payment": "To'lov"
+  "payment": "To'lov",
+  "others": "Boshqalar",
+  "others_categories": "Boshqa kategoriyalar"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

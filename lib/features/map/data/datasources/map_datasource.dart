@@ -93,8 +93,7 @@ class MapDatasourceImpl extends MapDatasource {
     }
     if (params.title != null && params.title!.isNotEmpty) {
       queryParams.putIfAbsent('title', () => params.title);
-    }
-    print('queryParams => $queryParams');
+    } 
 
     try {
       final response = await _dio.get(
@@ -105,9 +104,7 @@ class MapDatasourceImpl extends MapDatasource {
               : {},
         ),
         queryParameters: queryParams,
-      );
-      print('/mobile/organization/map/ => ${response.realUri} params => ${response.headers}');
-      print('response => ${response.data}');
+      ); 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));
       } else {

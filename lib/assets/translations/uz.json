@@ -317,8 +317,12 @@
   "history": "История",
   "amount": "Miqdor",
   "service_date": "Xizmat/ Sana",
+  "amount": "Miqdor",
   "no_notifications": "Sizda hali xabarnomalar yo'q",
   "notifications": "Xabarnomalar",
   "payment_successed": "To'lov muvaffaqiyatli amalga oshirildi",
-  "payment": "To'lov"
+  "payment": "To'lov",
+  "others": "Boshqalar",
+  "others_categories": "Boshqa kategoriyalar"
+
 }

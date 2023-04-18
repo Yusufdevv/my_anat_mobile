@@ -91,7 +91,7 @@ Future<void> setupLocator() async {
   serviceLocator.registerLazySingleton(
       () => HomeDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(
-      () => HomeRepoImpl(datasource: serviceLocator<HomeDatasourceImpl>()));
+      () => HomeRepoImpl( ));
   serviceLocator.registerLazySingleton(
       () => NotificationDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(() => NotificationRepoImpl(

@@ -16,7 +16,7 @@ class HomeArticlesBloc extends Bloc<HomeArticlesEvent, HomeArticlesState> {
   final TopArticlesUsecase _topArticlesUsecase =
       TopArticlesUsecase(repository: serviceLocator<HomeRepoImpl>());
   final BannersUsecase _bannersUsecase =
-      BannersUsecase(repository: serviceLocator<HomeRepoImpl>());
+      BannersUsecase();
 
   HomeArticlesBloc() : super(HomeArticlesState()) {
     on<_GetHomeArticles>(_getHomeArticles);

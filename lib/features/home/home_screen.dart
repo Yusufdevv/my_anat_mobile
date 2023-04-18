@@ -10,8 +10,10 @@ import 'package:anatomica/features/home/presentation/blocs/category_bloc/categor
 import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/most_populars_bloc/most_populars_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
+import 'package:anatomica/features/home/presentation/parts/categories_screen.dart';
 import 'package:anatomica/features/home/presentation/parts/news_part.dart';
 import 'package:anatomica/features/home/presentation/parts/notifications.dart';
+import 'package:anatomica/features/home/presentation/parts/other_categories_screen.dart';
 import 'package:anatomica/features/home/presentation/widgets/banner_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/category_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/category_shimmer.dart';
@@ -24,6 +26,8 @@ import 'package:anatomica/features/home/presentation/widgets/top_hospital_item.d
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/widgets/activate_premium.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,8 +68,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
           setState(() {
             isShrink = true;
           });
-        } else if (_scrollController.offset < 200 - kToolbarHeight &&
-            isShrink) {
+        } else if (_scrollController.offset < 200 - kToolbarHeight && isShrink) {
           setState(() {
             isShrink = false;
           });
@@ -77,8 +80,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-      value:
-          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+      value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: _categoryBloc),
@@ -93,7 +95,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverAppBar(
-                systemOverlayStyle:   SystemUiOverlayStyle(statusBarIconBrightness:isShrink ? Brightness.dark : Brightness.light),
+                systemOverlayStyle:
+                    SystemUiOverlayStyle(statusBarIconBrightness: isShrink ? Brightness.dark : Brightness.light),
                 pinned: true,
                 backgroundColor: errorImageBackground,
                 shape: const RoundedRectangleBorder(
@@ -116,12 +119,9 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                               color: isShrink ? black : white,
                             )
                           : SvgPicture.asset(
-                              isShrink
-                                  ? AppIcons.blackNotificationWithRedDot
-                                  : AppIcons.notificationWithRedDot,
+                              isShrink ? AppIcons.blackNotificationWithRedDot : AppIcons.notificationWithRedDot,
                             ),
-                      onTap: () => Navigator.push(
-                          context, fade(page: const NotificationsScreen())),
+                      onTap: () => Navigator.push(context, fade(page: const NotificationsScreen())),
                     ),
                   ],
                 ),
@@ -131,15 +131,11 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 flexibleSpace: BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
                   builder: (context, state) {
                     return state.bannersStatus != FormzStatus.submissionSuccess
-                        ? const ShimmerContainer(
-                            width: double.maxFinite, height: 324)
+                        ? const ShimmerContainer(width: double.maxFinite, height: 324)
                         : BannerItem(
                             isShrink: isShrink,
-                            images: state.banners
-                                .map((e) => e.image.middle)
-                                .toList(),
-                            subtitles:
-                                state.banners.map((e) => e.subtitle).toList(),
+                            images: state.banners.map((e) => e.image.middle).toList(),
+                            subtitles: state.banners.map((e) => e.subtitle).toList(),
                             titles: state.banners.map((e) => e.title).toList(),
                             types: state.banners.map((e) => e.type).toList(),
                           );
@@ -160,48 +156,45 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                   return SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16, top: 16),
-                      child:
-                          state.categoryStatus != FormzStatus.submissionSuccess
-                              ? Wrap(
-                                  runSpacing: 8,
-                                  spacing: 8,
-                                  children: [
-                                    ...List.generate(
-                                        6, (index) => const CategoryShimmer())
-                                  ],
-                                )
-                              : Wrap(
-                                  runSpacing: 8,
-                                  spacing: 8,
-                                  children: [
-                                    ...List.generate(
-                                      state.categories.length > 5
-                                          ? 5
-                                          : state.categories.length,
-                                      (index) => CategoryItem(
-                                        logo: state.categories[index].icon,
-                                        title: state.categories[index].title,
-                                        onTap: () {
-                                          // Navigator.of(context, rootNavigator: true)
-                                          //     .push(
-                                          //   fade(
-                                          //     page:
-                                          //   ),
-                                          // );
-                                        },
-                                      ),
-                                    ),
-                                    Offstage(
-                                      offstage: state.categories.length < 6,
-                                      child: CategoryItem(
-                                        logo: AppIcons.moreVertical,
-                                        // TODO locale
-                                        title: "Другие",
-                                        onTap: () {},
-                                      ),
-                                    ),
-                                  ],
+                      child: state.categoryStatus != FormzStatus.submissionSuccess
+                          ? Wrap(
+                              runSpacing: 8,
+                              spacing: 8,
+                              children: [...List.generate(6, (index) => const CategoryShimmer())],
+                            )
+                          : Wrap(
+                              runSpacing: 8,
+                              spacing: 8,
+                              children: [
+                                ...List.generate(
+                                  state.categories.length > 5 ? 5 : state.categories.length,
+                                  (index) => CategoryItem(
+                                    logo: state.categories[index].icon.file.url,
+                                    title: state.categories[index].title,
+                                    onTap: () {
+                                      Navigator.of(context, rootNavigator: true).push(fade(
+                                          page: BlocProvider.value(
+                                        value: _categoryBloc,
+                                        child: CategoriesScreen(
+                                          selectedIndex: index,
+                                          categoryItemSize: (MediaQuery.of(context).size.width - 48) / 3,
+                                        ),
+                                      )));
+                                    },
+                                  ),
                                 ),
+                                if (state.categories.length > 5)
+                                  CategoryItem(
+                                    logo: AppIcons.moreVertical,
+                                    title: LocaleKeys.others.tr(),
+                                    onTap: () {
+                                      Navigator.of(context, rootNavigator: true).push(fade(
+                                          page: BlocProvider.value(
+                                              value: _categoryBloc, child: const OtherCategoriesScreen())));
+                                    },
+                                  ),
+                              ],
+                            ),
                     ),
                   );
                 },
@@ -213,8 +206,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                   // TODO locale
                   title: 'Новости',
                   showAllFunction: () {
-                    Navigator.of(context, rootNavigator: true)
-                        .push(fade(page: const NewsPart()));
+                    Navigator.of(context, rootNavigator: true).push(fade(page: const NewsPart()));
                   },
                   showAllTitle: 'Все новости',
                 ),
@@ -225,21 +217,16 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                     child: state.newsStatus != FormzStatus.submissionSuccess
                         ? ListView.separated(
                             itemCount: 10,
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                            itemBuilder: (context, index) =>
-                                const NewsShimmer(),
+                            separatorBuilder: (context, index) => const SizedBox(height: 12),
+                            itemBuilder: (context, index) => const NewsShimmer(),
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                           )
                         : ListView.separated(
-                            itemCount:
-                                state.news.length > 5 ? 5 : state.news.length,
+                            itemCount: state.news.length > 5 ? 5 : state.news.length,
                             padding: const EdgeInsets.only(left: 16),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                            itemBuilder: (context, index) => state.newsStatus !=
-                                    FormzStatus.submissionSuccess
+                            separatorBuilder: (context, index) => const SizedBox(height: 12),
+                            itemBuilder: (context, index) => state.newsStatus != FormzStatus.submissionSuccess
                                 ? const NewsShimmer()
                                 : NewsItem(
                                     newsBloc: _newsBloc,
@@ -275,9 +262,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                         errorWidget: Container(),
                         fetchMoreFunction: () {},
                         hasMoreToFetch: false,
-                        paginatorStatus:
-                            MyFunctions.formzStatusToPaginatorStatus(
-                                state.homeArticlesStatus),
+                        paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.homeArticlesStatus),
                         padding: const EdgeInsets.fromLTRB(16, 8, 0, 16),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -285,8 +270,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                             imageUrl: state.homeArticles[index].image.middle,
                             id: state.homeArticles[index].id,
                             title: state.homeArticles[index].title,
-                            createdAt: MyFunctions.getPublishedDate(
-                                state.homeArticles[index].publishDate),
+                            createdAt: MyFunctions.getPublishedDate(state.homeArticles[index].publishDate),
                             category: state.homeArticles[index].category.title,
                           );
                         },
@@ -312,23 +296,18 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                       height: 254,
                       child: Paginator(
                         scrollDirection: Axis.horizontal,
-                        paginatorStatus:
-                            MyFunctions.formzStatusToPaginatorStatus(
-                                state.popularOrgsStatus),
+                        paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.popularOrgsStatus),
                         itemBuilder: (context, index) {
                           return TopHospitalItem(
                             title: state.popularOrgs[index].title,
                             rating: state.popularOrgs[index].rating,
                             address: state.popularOrgs[index].address,
-                            images: state.popularOrgs[index].images
-                                .map((e) => e.middle)
-                                .toList(),
+                            images: state.popularOrgs[index].images.map((e) => e.middle).toList(),
                             id: state.popularOrgs[index].id,
                           );
                         },
                         itemCount: state.popularOrgs.length,
-                        padding:
-                            const EdgeInsets.only(left: 16, bottom: 16, top: 8),
+                        padding: const EdgeInsets.only(left: 16, bottom: 16, top: 8),
                         fetchMoreFunction: () {},
                         hasMoreToFetch: false,
                         errorWidget: const SizedBox(),
@@ -355,10 +334,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                             id: state.popularDoctors[index].id,
                             rating: state.popularDoctors[index].rating,
                             distance: state.popularDoctors[index].distance,
-                            jobs: state.popularDoctors[index].specializations
-                                .map((e) => e.title)
-                                .toList()
-                                .join(' '),
+                            jobs: state.popularDoctors[index].specializations.map((e) => e.title).toList().join(' '),
                             name: state.popularDoctors[index].doctorName,
                             image: state.popularDoctors[index].image.middle,
                           );
@@ -367,8 +343,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                           return const SizedBox(width: 16);
                         },
                         itemCount: state.popularDoctors.length,
-                        padding:
-                            const EdgeInsets.only(left: 16, top: 8, bottom: 16),
+                        padding: const EdgeInsets.only(left: 16, top: 8, bottom: 16),
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
@@ -377,21 +352,14 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                   );
                 },
               ),
-              if (!context
-                  .watch<AuthenticationBloc>()
-                  .state
-                  .user
-                  .isSubscribed) ...{
+              if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{
                 BlocBuilder<JournalBloc, JournalState>(
                   builder: (context, state) {
-                    return ActivatePremium(
-                        images: state.journals.map((e) => e.image).toList());
+                    return ActivatePremium(images: state.journals.map((e) => e.image).toList());
                   },
                 ),
               },
-              SliverToBoxAdapter(
-                  child: SizedBox(
-                      height: MediaQuery.of(context).size.height * .125))
+              SliverToBoxAdapter(child: SizedBox(height: MediaQuery.of(context).size.height * .125))
             ],
           ),
         ),
