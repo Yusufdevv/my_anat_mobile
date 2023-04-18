@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:anatomica/assets/themes/theme.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/core/data/singletons/storage.dart'; 
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
@@ -100,28 +100,14 @@ class _MyAppState extends State<MyApp> {
       providers: [RepositoryProvider.value(value: connectivityRepository)],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => AuthenticationBloc(),
-          ),
-          BlocProvider.value(
-            value: connectivityBloc,
-          ),
-          BlocProvider(
-            create: (context) => PaymentCardsBloc(),
-          ),
-          BlocProvider(
-            create: (context) => ShowPopUpBloc(),
-          ),
-          BlocProvider(
-            create: (context) => DownloadBloc(),
-          ),
+          BlocProvider(create: (context) => AuthenticationBloc()),
+          BlocProvider.value(value: connectivityBloc),
+          BlocProvider(create: (context) => PaymentCardsBloc()),
+          BlocProvider(create: (context) => ShowPopUpBloc()),
+          BlocProvider(create: (context) => DownloadBloc()),
           BlocProvider(create: (context) => DeepLinkBloc()),
-          BlocProvider(
-            create: (context) => JournalBloc(),
-          ),
-          BlocProvider(
-            create: (_) => LoginSignUpBloc(),
-          ),
+          BlocProvider(create: (context) => JournalBloc()),
+          BlocProvider(create: (_) => LoginSignUpBloc()),
         ],
         child: MaterialApp(
           supportedLocales: context.supportedLocales,
@@ -138,15 +124,6 @@ class _MyAppState extends State<MyApp> {
                 } else {
                   navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
                 }
-
-                // switch (state.status) {
-                //   case AuthenticationStatus.unauthenticated:
-                //     navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
-                //     break;
-                //   case AuthenticationStatus.authenticated:
-                //     navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
-                //     break;
-                // }
               },
               child: child,
             );
