@@ -67,7 +67,10 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       emit(state.copyWith(
         organizationsNext: response.right.next,
         organizationsFetchMore: response.right.next != null,
-        organizations: [...state.organizations, ...response.right.results],
+        organizations: [
+          ...state.organizations,
+          ...response.right.results,
+        ],
       ));
     }
   }
