@@ -18,6 +18,7 @@ class TextInRow extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(),
             ),
           ),
+          const SizedBox(width: 20),
           Text(
             '${MyFunctions.getPriceFormat(amount)} UZS',
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w600),

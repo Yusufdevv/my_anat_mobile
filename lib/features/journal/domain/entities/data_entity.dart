@@ -15,7 +15,7 @@ class DataEntity extends Equatable {
     // this.category = const CategoryEntity(),
     // this.redaction = '',
     // this.isPremium = false,
-    // this.price = 0,
+    this.price = 0,
     // this.author = const [],
     // this.isActive = false,
     // this.publishDate = '',
@@ -36,7 +36,7 @@ class DataEntity extends Equatable {
   // final CategoryEntity category;
   // final String redaction;
   // final bool isPremium;
-  // final int price;
+  final int price;
   // final List<String> author;
   // final bool isActive;
   // final String publishDate;
