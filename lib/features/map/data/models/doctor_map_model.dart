@@ -1,4 +1,5 @@
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/common/data/models/titler.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_map_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'doctor_map_model.g.dart';
@@ -10,6 +11,7 @@ class DoctorMapModel extends DoctorMapEntity {
     required super.distance,
     required super.fullName,
     required super.doctorName,
+    required super.specializations,
     required super.id,
     required super.image,
     required super.imgIsFull,

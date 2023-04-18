@@ -332,13 +332,12 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 builder: (context, state) {
                   return SliverToBoxAdapter(
                     child: SizedBox(
-                      // width: MediaQuery.of(context).size.width,
                       height: 140,
                       child: ListView.separated(
                         itemBuilder: (context, index) {
                           return TopDoctorItem(
                             id: state.popularDoctors[index].id,
-                            rating: state.popularDoctors[index].rating,
+                            rating: state.popularDoctors[index].rating as double,
                             distance: state.popularDoctors[index].distance,
                             jobs: state.popularDoctors[index].specializations.map((e) => e.title).toList().join(' '),
                             name: state.popularDoctors[index].doctorName,
@@ -352,7 +351,6 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                         padding: const EdgeInsets.only(left: 16, top: 8, bottom: 16),
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
                       ),
                     ),
                   );

@@ -549,8 +549,7 @@ abstract class _GetMorePopularOrgs implements MostPopularsEvent {
 
 /// @nodoc
 mixin _$MostPopularsState {
-  List<HospitalDoctorsModel> get popularDoctors =>
-      throw _privateConstructorUsedError;
+  List<DoctorMapModel> get popularDoctors => throw _privateConstructorUsedError;
   FormzStatus get popularDoctorsStatus => throw _privateConstructorUsedError;
   String? get popularDoctorsNext => throw _privateConstructorUsedError;
   bool get popularDoctorsFetchMore => throw _privateConstructorUsedError;
@@ -571,7 +570,7 @@ abstract class $MostPopularsStateCopyWith<$Res> {
       _$MostPopularsStateCopyWithImpl<$Res, MostPopularsState>;
   @useResult
   $Res call(
-      {List<HospitalDoctorsModel> popularDoctors,
+      {List<DoctorMapModel> popularDoctors,
       FormzStatus popularDoctorsStatus,
       String? popularDoctorsNext,
       bool popularDoctorsFetchMore,
@@ -607,7 +606,7 @@ class _$MostPopularsStateCopyWithImpl<$Res, $Val extends MostPopularsState>
       popularDoctors: null == popularDoctors
           ? _value.popularDoctors
           : popularDoctors // ignore: cast_nullable_to_non_nullable
-              as List<HospitalDoctorsModel>,
+              as List<DoctorMapModel>,
       popularDoctorsStatus: null == popularDoctorsStatus
           ? _value.popularDoctorsStatus
           : popularDoctorsStatus // ignore: cast_nullable_to_non_nullable
@@ -649,7 +648,7 @@ abstract class _$$_MostPopularsStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<HospitalDoctorsModel> popularDoctors,
+      {List<DoctorMapModel> popularDoctors,
       FormzStatus popularDoctorsStatus,
       String? popularDoctorsNext,
       bool popularDoctorsFetchMore,
@@ -683,7 +682,7 @@ class __$$_MostPopularsStateCopyWithImpl<$Res>
       popularDoctors: null == popularDoctors
           ? _value._popularDoctors
           : popularDoctors // ignore: cast_nullable_to_non_nullable
-              as List<HospitalDoctorsModel>,
+              as List<DoctorMapModel>,
       popularDoctorsStatus: null == popularDoctorsStatus
           ? _value.popularDoctorsStatus
           : popularDoctorsStatus // ignore: cast_nullable_to_non_nullable
@@ -720,7 +719,7 @@ class __$$_MostPopularsStateCopyWithImpl<$Res>
 
 class _$_MostPopularsState implements _MostPopularsState {
   _$_MostPopularsState(
-      {final List<HospitalDoctorsModel> popularDoctors = const [],
+      {final List<DoctorMapModel> popularDoctors = const [],
       this.popularDoctorsStatus = FormzStatus.pure,
       this.popularDoctorsNext,
       this.popularDoctorsFetchMore = false,
@@ -731,10 +730,10 @@ class _$_MostPopularsState implements _MostPopularsState {
       : _popularDoctors = popularDoctors,
         _popularOrgs = popularOrgs;
 
-  final List<HospitalDoctorsModel> _popularDoctors;
+  final List<DoctorMapModel> _popularDoctors;
   @override
   @JsonKey()
-  List<HospitalDoctorsModel> get popularDoctors {
+  List<DoctorMapModel> get popularDoctors {
     if (_popularDoctors is EqualUnmodifiableListView) return _popularDoctors;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_popularDoctors);
@@ -817,7 +816,7 @@ class _$_MostPopularsState implements _MostPopularsState {
 
 abstract class _MostPopularsState implements MostPopularsState {
   factory _MostPopularsState(
-      {final List<HospitalDoctorsModel> popularDoctors,
+      {final List<DoctorMapModel> popularDoctors,
       final FormzStatus popularDoctorsStatus,
       final String? popularDoctorsNext,
       final bool popularDoctorsFetchMore,
@@ -827,7 +826,7 @@ abstract class _MostPopularsState implements MostPopularsState {
       final bool popularOrgsFetchMore}) = _$_MostPopularsState;
 
   @override
-  List<HospitalDoctorsModel> get popularDoctors;
+  List<DoctorMapModel> get popularDoctors;
   @override
   FormzStatus get popularDoctorsStatus;
   @override

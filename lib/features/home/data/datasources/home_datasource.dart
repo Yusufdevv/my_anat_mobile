@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:anatomica/core/data/singletons/storage.dart';
-import 'package:anatomica/core/exceptions/exceptions.dart';
+import 'package:anatomica/core/exceptions/exceptions.dart'; 
 import 'package:anatomica/features/home/data/models/banner_model.dart';
 import 'package:anatomica/features/home/data/models/category_model.dart';
 import 'package:anatomica/features/home/data/models/news_model.dart';
 import 'package:anatomica/features/journal/data/models/journal_article_model.dart';
-import 'package:anatomica/features/map/data/models/hospital_doctors_model.dart';
+import 'package:anatomica/features/map/data/models/doctor_map_model.dart'; 
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:dio/dio.dart';
@@ -18,7 +18,7 @@ abstract class HomeDatasource {
 
   Future<GenericPagination<JournalArticleModel>> getHomeArticles({String? next});
 
-  Future<GenericPagination<HospitalDoctorsModel>> getPopularDoctors({String? next});
+  Future<GenericPagination<DoctorMapModel>> getPopularDoctors({String? next});
 
   Future<GenericPagination<BannerModel>> getBanners({String? next});
 
@@ -128,16 +128,15 @@ class HomeDatasourceImpl extends HomeDatasource {
   }
 
   @override
-  Future<GenericPagination<HospitalDoctorsModel>> getPopularDoctors({String? next}) async {
+  Future<GenericPagination<DoctorMapModel>> getPopularDoctors({String? next}) async {
     try {
-      final response = await _dio.get(next ?? '/interview/',
+      final response = await _dio.get(next ?? '/mobile/doctor/map/?ordering=-rating&lat=41&lon=69&rad=150',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
                   : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(
-            response.data, (p0) => HospitalDoctorsModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(response.data, (p0) => DoctorMapModel.fromJson(p0 as Map<String, dynamic>));
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }

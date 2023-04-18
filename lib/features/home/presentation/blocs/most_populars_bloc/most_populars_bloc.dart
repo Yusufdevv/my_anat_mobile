@@ -1,6 +1,8 @@
  
+import 'package:anatomica/features/auth/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/home/domain/usecases/most_popular_doctors_usecase.dart';
 import 'package:anatomica/features/home/domain/usecases/most_popular_orgs_usecase.dart';
+import 'package:anatomica/features/map/data/models/doctor_map_model.dart';
 import 'package:anatomica/features/map/data/models/hospital_doctors_model.dart';
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:bloc/bloc.dart';
