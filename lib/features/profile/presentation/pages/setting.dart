@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
+import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_app_bar.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
 import 'package:anatomica/features/profile/presentation/widgets/language_bottomsheet.dart';
@@ -6,6 +10,7 @@ import 'package:anatomica/features/profile/presentation/widgets/setting_item.dar
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -22,8 +27,21 @@ class SettingScreen extends StatelessWidget {
             SettingItem(
               title: LocaleKeys.language_app.tr(),
               icon: context.locale.languageCode == 'ru' ? AppIcons.flagRu : AppIcons.flagUz,
-              onTap: () {
-                showLanguageBottomSheet(context);
+              onTap: () async {
+                showLanguageBottomSheet(context).then((value) {
+                  try {
+                    context.read<AuthenticationBloc>().add(
+                          AuthenticationStatusChanged(
+                            status:
+                                context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated
+                                    ? AuthenticationStatus.unauthenticated
+                                    : AuthenticationStatus.authenticated,
+                          ),
+                        );
+                  } catch (e) {
+                    log(':::::::::: Authentication exception  ${e.toString()}  ::::::::::');
+                  }
+                });
               },
             ),
             const SizedBox(height: 12),

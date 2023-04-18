@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/core/data/singletons/dio_settings.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/auth/data/datasources/authentication_data_source.dart';
@@ -5,6 +7,7 @@ import 'package:anatomica/features/auth/data/datasources/reset_password_datasour
 import 'package:anatomica/features/auth/data/repositories/authentication_repository_impl.dart';
 import 'package:anatomica/features/auth/data/repositories/reset_password_repository_impl.dart';
 import 'package:anatomica/features/common/data/datasources/like_unlike_datasource.dart';
+import 'package:anatomica/features/common/data/repository/global_requst_repository.dart';
 import 'package:anatomica/features/common/data/repository/like_unlike_repository_impl.dart';
 import 'package:anatomica/features/doctor_single/data/datasources/doctor_single_datasource.dart';
 import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
@@ -36,64 +39,58 @@ final serviceLocator = GetIt.I;
 
 Future<void> setupLocator() async {
   await StorageRepository.getInstance();
+  //
   serviceLocator.registerLazySingleton(() => DioSettings());
   serviceLocator.registerLazySingleton(() => PaginationDatasource());
-  serviceLocator.registerLazySingleton(() =>
-      VacancyRemoteDataSourceImpl(paginationDatasource: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => VacancyRepositoryImpl(
-      dataSource: serviceLocator<VacancyRemoteDataSourceImpl>()));
-  serviceLocator.registerLazySingleton(
-      () => VacancyListUseCase(repository: serviceLocator()));
-  serviceLocator.registerLazySingleton(
-      () => AuthenticationDataSourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(
-      () => ResetPasswordDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(() => VacancyRemoteDataSourceImpl(paginationDatasource: serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => VacancyRepositoryImpl(dataSource: serviceLocator<VacancyRemoteDataSourceImpl>()));
+  serviceLocator.registerLazySingleton(() => VacancyListUseCase(repository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => AuthenticationDataSourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(() => ResetPasswordDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(() => AuthenticationRepositoryImpl(
       dataSource: serviceLocator<AuthenticationDataSourceImpl>(),
       resetPasswordDatasource: serviceLocator<ResetPasswordDatasourceImpl>()));
-  serviceLocator.registerLazySingleton(() => ResetPasswordRepositoryImpl(
-      datasource: serviceLocator<ResetPasswordDatasourceImpl>()));
   serviceLocator.registerLazySingleton(
-      () => JournalDatasourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(() => JournalRepositoryImpl(
-      datasource: serviceLocator<JournalDatasourceImpl>()));
+      () => ResetPasswordRepositoryImpl(datasource: serviceLocator<ResetPasswordDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => JournalDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator
+      .registerLazySingleton(() => JournalRepositoryImpl(datasource: serviceLocator<JournalDatasourceImpl>()));
 
-  serviceLocator.registerLazySingleton(
-      () => PaymentDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(() => PaymentDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(() => PaymentCardDatasourceImpl());
   serviceLocator.registerLazySingleton(() => PaymentCardRepositoryImpl());
-  serviceLocator.registerLazySingleton(() => PaymentRepositoryImpl(
-      datasource: serviceLocator<PaymentDatasourceImpl>()));
+  serviceLocator
+      .registerLazySingleton(() => PaymentRepositoryImpl(datasource: serviceLocator<PaymentDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => ProfileDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator
+      .registerLazySingleton(() => ProfileRepositoryImpl(profileDatasource: serviceLocator<ProfileDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => LikeUnlikeDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator
+      .registerLazySingleton(() => LikeUnlikeRepositoryImpl(datasource: serviceLocator<LikeUnlikeDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => HospitalSingleDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(
-      () => ProfileDatasourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(() => ProfileRepositoryImpl(
-      profileDatasource: serviceLocator<ProfileDatasourceImpl>()));
+      () => HospitalSingleRepositoryImpl(datasource: serviceLocator<HospitalSingleDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => DoctorSingleDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(
-      () => LikeUnlikeDatasourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(() => LikeUnlikeRepositoryImpl(
-      datasource: serviceLocator<LikeUnlikeDatasourceImpl>()));
+      () => DoctorSingleRepositoryImpl(datasource: serviceLocator<DoctorSingleDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => MapDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(() => MapRepositoryImpl(datasource: serviceLocator<MapDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => JournalPagesDatasourceImpl(serviceLocator<DioSettings>().dio));
   serviceLocator.registerLazySingleton(
-      () => HospitalSingleDatasourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(() => HospitalSingleRepositoryImpl(
-      datasource: serviceLocator<HospitalSingleDatasourceImpl>()));
-  serviceLocator.registerLazySingleton(
-      () => DoctorSingleDatasourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(() => DoctorSingleRepositoryImpl(
-      datasource: serviceLocator<DoctorSingleDatasourceImpl>()));
-  serviceLocator.registerLazySingleton(
-      () => MapDatasourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(
-      () => MapRepositoryImpl(datasource: serviceLocator<MapDatasourceImpl>()));
-  serviceLocator.registerLazySingleton(
-      () => JournalPagesDatasourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(() => JournalPagesRepositoryImpl(
-      datasource: serviceLocator<JournalPagesDatasourceImpl>()));
-  serviceLocator.registerLazySingleton(
-      () => HomeDatasourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(
-      () => HomeRepoImpl( ));
-  serviceLocator.registerLazySingleton(
-      () => NotificationDatasourceImpl(serviceLocator<DioSettings>().dio));
-  serviceLocator.registerLazySingleton(() => NotificationRepoImpl(
-      datasource: serviceLocator<NotificationDatasourceImpl>()));
+      () => JournalPagesRepositoryImpl(datasource: serviceLocator<JournalPagesDatasourceImpl>()));
+  serviceLocator.registerLazySingleton(() => HomeDatasourceImpl(serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(() => HomeRepoImpl());
+  serviceLocator.registerLazySingleton(() => NotificationDatasourceImpl(dio: serviceLocator<DioSettings>().dio));
+  serviceLocator.registerLazySingleton(() => GlobalRequestRepository(serviceLocator<DioSettings>().dio));
+  serviceLocator
+      .registerLazySingleton(() => NotificationRepoImpl(datasource: serviceLocator<NotificationDatasourceImpl>()));
+}
+
+Future resetLocator() async {
+  log('::::::::::  resut locator triggered}  ::::::::::');
+
+  await serviceLocator.reset();
+
+  await setupLocator();
 }
