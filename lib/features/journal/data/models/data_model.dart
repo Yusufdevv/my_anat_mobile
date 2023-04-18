@@ -22,7 +22,7 @@ class DataModel extends DataEntity {
     // required super.languageRu,
     // required super.languageUz,
     // required super.organization,
-    // required super.price,
+    required super.price,
     // required super.tags,
     // required super.uzumLink,
   });
