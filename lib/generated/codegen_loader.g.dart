@@ -338,7 +338,8 @@ class CodegenLoader extends AssetLoader{
   "payment_successed": "Платеж прошел успешно",
   "payment": "Платеж",
   "others": "Другие",
-  "others_categories": "Другие категории"
+  "others_categories": "Другие категории",
+  "the_best_doctors": "Лучшие врачи"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -664,7 +665,8 @@ static const Map<String,dynamic> uz = {
   "payment_successed": "To'lov muvaffaqiyatli amalga oshirildi",
   "payment": "To'lov",
   "others": "Boshqalar",
-  "others_categories": "Boshqa kategoriyalar"
+  "others_categories": "Boshqa kategoriyalar",
+  "the_best_doctors": "Eng yaxshi shifokorlar"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

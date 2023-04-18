@@ -29,8 +29,7 @@ class MostPopularsBloc extends Bloc<MostPopularsEvent, MostPopularsState> {
     emit(
         state.copyWith(popularDoctorsStatus: FormzStatus.submissionInProgress));
     final response = await _mostPopularDoctorsUsecase.call(null);
-    if (response.isRight) {
-      print('response => ${response.right}');
+    if (response.isRight) { 
       emit(state.copyWith(
         popularDoctorsNext: response.right.next,
         popularDoctorsStatus: FormzStatus.submissionSuccess,
@@ -57,8 +56,7 @@ class MostPopularsBloc extends Bloc<MostPopularsEvent, MostPopularsState> {
       _GetPopularOrgs event, Emitter<MostPopularsState> emit) async {
     emit(state.copyWith(popularOrgsStatus: FormzStatus.submissionInProgress));
     final response = await _mostPopularOrgsUsecase.call(null);
-    if (response.isRight) {
-      print('response => ${response.right}');
+    if (response.isRight) { 
       emit(state.copyWith(
         popularOrgsNext: response.right.next,
         popularOrgsStatus: FormzStatus.submissionSuccess,

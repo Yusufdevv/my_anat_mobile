@@ -325,9 +325,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               ),
 
               /// TOP DOCTORS
-              const SliverToBoxAdapter(
-                // TODO locale
-                child: TitlesItem(title: 'Лучшие врачи'),
+              SliverToBoxAdapter(
+                child: TitlesItem(title: LocaleKeys.the_best_doctors.tr()),
               ),
               BlocBuilder<MostPopularsBloc, MostPopularsState>(
                 builder: (context, state) {
