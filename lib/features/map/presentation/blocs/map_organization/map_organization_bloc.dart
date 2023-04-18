@@ -6,6 +6,7 @@ import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/entities/type_entity.dart';
+import 'package:anatomica/features/common/data/repository/global_requst_repository.dart';
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_map_entity.dart';
@@ -13,7 +14,7 @@ import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals.dart';
 import 'package:anatomica/features/map/domain/usecases/get_types_usecase.dart';
-import 'package:bloc/bloc.dart'; 
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -31,17 +32,12 @@ part 'map_organization_state.dart';
 typedef OnMapControllerChange = Function(double lat, double long);
 
 class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationState> {
-  // final ValueChanged<List<MapObject<dynamic>>> onPointsCreated;
   final GetMapHospitalUseCase getHospitals = GetMapHospitalUseCase();
-  final GetMapDoctorUseCase getDoctors = GetMapDoctorUseCase();
+  final GetMapDoctorUseCase getDoctors = GetMapDoctorUseCase(repo: serviceLocator<GlobalRequestRepository>());
   final double deviceWidth;
   final GetTypesUseCase getTypesUseCase = GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>());
 
-  MapOrganizationBloc(
-      {
-      // required this.onPointsCreated,
-      required this.deviceWidth,
-      required TickerProvider tickerProvider})
+  MapOrganizationBloc({required this.deviceWidth, required TickerProvider tickerProvider})
       : super(MapOrganizationState(tabController: TabController(length: 2, vsync: tickerProvider))) {
     on<_OnMapCreated>(_onMapCreated);
     on<_ChangeTab>(_changeTab);

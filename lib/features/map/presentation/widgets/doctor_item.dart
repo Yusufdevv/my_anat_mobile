@@ -76,7 +76,8 @@ class DoctorItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 8),
-                              Text( entity.fullName,
+                              Text(
+                                entity.doctorName,
                                 style: Theme.of(context).textTheme.displayLarge,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,

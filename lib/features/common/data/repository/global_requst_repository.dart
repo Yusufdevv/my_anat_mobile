@@ -8,8 +8,8 @@ import 'package:anatomica/core/utils/either.dart';
 import 'package:dio/dio.dart';
 
 class GlobalRequestRepository {
-  final dio = serviceLocator<DioSettings>().dio;
-
+  final Dio _dio;
+  GlobalRequestRepository(this._dio);
   String token = 'fe977373806790366944dac3f8206452fc79441b';
 
   ///Request for any kind of GET request for retrieving single model, ,not a List of models
@@ -19,7 +19,7 @@ class GlobalRequestRepository {
       required S Function(Map<String, dynamic>) fromJson,
       bool sendToken = true}) async {
     try {
-      final result = await dio.get(endpoint,
+      final result = await _dio.get(endpoint,
           queryParameters: query,
           options: Options(
               headers:
@@ -45,7 +45,7 @@ class GlobalRequestRepository {
       String? responseDataKey,
       bool sendToken = true}) async {
     try {
-      final result = await dio.get(endpoint,
+      final result = await _dio.get(endpoint,
           queryParameters: query,
           options: Options(
               headers:
@@ -80,7 +80,7 @@ class GlobalRequestRepository {
       String? errorFieldKey,
       bool sendToken = true}) async {
     try {
-      final result = await dio.post(endpoint,
+      final result = await _dio.post(endpoint,
           queryParameters: query,
           data: data,
           options: Options(
@@ -114,7 +114,7 @@ class GlobalRequestRepository {
       String? responseDataKey,
       bool sendToken = true}) async {
     try {
-      final result = await dio.post(endpoint,
+      final result = await _dio.post(endpoint,
           queryParameters: query,
           data: data,
           options: Options(

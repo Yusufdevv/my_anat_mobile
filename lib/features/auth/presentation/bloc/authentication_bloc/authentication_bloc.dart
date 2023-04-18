@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
@@ -31,6 +32,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       add(AuthenticationStatusChanged(status: event));
     });
     on<AuthenticationStatusChanged>((event, emit) async {
+      log(':::::::::: Authentication exception  ${event.status.name.toString()}  ::::::::::');
       switch (event.status) {
         case AuthenticationStatus.authenticated:
           final userData = await _getUserDataUseCase.call(NoParams());
