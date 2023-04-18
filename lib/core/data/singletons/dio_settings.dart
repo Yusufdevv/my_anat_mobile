@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:dio/dio.dart';
 
@@ -15,6 +17,7 @@ class DioSettings {
   );
 
   void setBaseOptions({String? lang}) {
+    log(':::::::::: set base options:  ${lang}  ::::::::::');
     _dioBaseOptions = BaseOptions(
       baseUrl: 'https://panel.anatomica.uz/api/v1',
       connectTimeout: 35000,

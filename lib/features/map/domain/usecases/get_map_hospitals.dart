@@ -1,3 +1,4 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
@@ -8,11 +9,10 @@ import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 
 class GetMapHospitalUseCase extends UseCase<List<OrgMapV2Model>, String> {
-  final GlobalRequestRepository repo = GlobalRequestRepository();
+  final GlobalRequestRepository repo = serviceLocator<GlobalRequestRepository>();
 
   @override
-  Future<Either<Failure, List<OrgMapV2Model>>> call(params,
-      {MapParameter? param}) {
+  Future<Either<Failure, List<OrgMapV2Model>>> call(params, {MapParameter? param}) {
     var query = <String, dynamic>{};
     if (params.isNotEmpty) {
       query.addAll({"search": params});

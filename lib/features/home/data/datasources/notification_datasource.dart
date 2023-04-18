@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/home/data/models/device_id_model.dart';
@@ -18,29 +20,23 @@ abstract class NotificationDatasource {
 }
 
 class NotificationDatasourceImpl extends NotificationDatasource {
-  final Dio _dio;
+  final Dio dio;
 
-  NotificationDatasourceImpl(this._dio);
+  NotificationDatasourceImpl({required this.dio});
 
   @override
-  Future<GenericPagination<NotificationModel>> getNotifications(
-      {String? next}) async {
+  Future<GenericPagination<NotificationModel>> getNotifications({String? next}) async {
     try {
-      final response = await _dio.get(
+      final response = await dio.get(
         next ?? '/notifications/',
-        options: Options(headers: {
-          'Authorization': 'Token ${StorageRepository.getString('token')}'
-        }),
+        options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}),
       );
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => NotificationModel.fromJson(p0 as Map<String, dynamic>));
+      log(':::::::::: the log of Notification:  ${response.data}  ::::::::::');
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+        return GenericPagination.fromJson(
+            response.data, (p0) => NotificationModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -54,18 +50,12 @@ class NotificationDatasourceImpl extends NotificationDatasource {
   @override
   Future<NotificationModel> getNotificationSingle({required int id}) async {
     try {
-      final response = await _dio.get('/notifications/$id',
-          options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
-          }));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      final response = await dio.get('/notifications/$id',
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return NotificationModel.fromJson(response.data);
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -79,17 +69,11 @@ class NotificationDatasourceImpl extends NotificationDatasource {
   @override
   Future<void> readAllNotificattions() async {
     try {
-      final response = await _dio.post('/notifications/read-all/',
-          options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
-          }));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      final response = await dio.post('/notifications/read-all/',
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -103,17 +87,11 @@ class NotificationDatasourceImpl extends NotificationDatasource {
   @override
   Future<void> readNotification({required int id}) async {
     try {
-      final response = await _dio.post('/notifications/$id/read/',
-          options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
-          }));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+      final response = await dio.post('/notifications/$id/read/',
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -127,19 +105,13 @@ class NotificationDatasourceImpl extends NotificationDatasource {
   @override
   Future<DeviceIdModel> postDeviceId({required int id}) async {
     try {
-      final response = await _dio.post('/notifications/device-id/',
+      final response = await dio.post('/notifications/device-id/',
           data: {"device_id": id},
-          options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
-          }));
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return DeviceIdModel.fromJson(response.data);
       } else {
-        throw ServerException(
-            statusCode: response.statusCode!,
-            errorMessage: response.data.toString());
+        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
