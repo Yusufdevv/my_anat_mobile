@@ -657,7 +657,6 @@ static const Map<String,dynamic> uz = {
   "you_are_sure_to_delete_card": "Haqiqatan ham kartani oʻchirib tashlamoqchimisiz?",
   "are_you_sure_you_want_to_make_this_payment": "Rostdan ham ushbu to'lovni amalga oshirmoqchimisiz?",
   "history": "История",
-  "amount": "Miqdor",
   "service_date": "Xizmat/ Sana",
   "amount": "Miqdor",
   "no_notifications": "Sizda hali xabarnomalar yo'q",
