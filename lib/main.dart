@@ -3,21 +3,7 @@ import 'dart:io';
 
 import 'package:anatomica/assets/themes/theme.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/core/data/singletons/storage.dart';
-import 'package:anatomica/features/auth/data/repositories/authentication_repository_impl.dart';
-import 'package:anatomica/features/auth/domain/usecases/check_username_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/confirm_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/create_new_state_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/get_authentication_status_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/get_user_data_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/login_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/resend_code_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/submit_changed_email_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/submit_changed_phone_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/submit_email_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/submit_name_username_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/submit_password_usecase.dart';
-import 'package:anatomica/features/auth/domain/usecases/submit_phone_usecase.dart';
+import 'package:anatomica/core/data/singletons/storage.dart'; 
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/splash.dart';
@@ -26,12 +12,6 @@ import 'package:anatomica/features/common/presentation/bloc/connectivity_bloc/co
 import 'package:anatomica/features/common/presentation/bloc/payment_card/payment_cards_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/deeplinking/deep_link_bloc.dart';
-import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journal_article_single_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journal_articles_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journal_single_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journal_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journale_single_articles_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/navigation/presentation/home.dart';
@@ -121,14 +101,7 @@ class _MyAppState extends State<MyApp> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AuthenticationBloc(
-              statusUseCase: GetAuthenticationStatusUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              getUserDataUseCase: GetUserDataUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-            ),
+            create: (context) => AuthenticationBloc(),
           ),
           BlocProvider.value(
             value: connectivityBloc,
@@ -144,23 +117,7 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(create: (context) => DeepLinkBloc()),
           BlocProvider(
-            create: (context) => JournalBloc(
-              getJournalSingleUseCase: GetJournalSingleUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-              getJournalUseCase: GetJournalUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-              getJournalArticlesUseCase: GetJournalArticlesUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-              getJournalArticleSingleUseCase: GetJournalArticleSingleUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-              getJournalSingleArticlesUseCase: GetJournalSingleArticlesUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-            ),
+            create: (context) => JournalBloc(),
           ),
           BlocProvider(
             create: (_) => LoginSignUpBloc(),

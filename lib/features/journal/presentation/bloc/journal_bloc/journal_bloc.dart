@@ -1,4 +1,6 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
+import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
 import 'package:anatomica/features/journal/domain/entities/article_entity.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_article_single.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
@@ -18,23 +20,22 @@ part 'journal_event.dart';
 part 'journal_state.dart';
 
 class JournalBloc extends Bloc<JournalEvent, JournalState> {
-  final GetJournalUseCase _getJournalUseCase;
-  final GetJournalArticlesUseCase _getJournalArticlesUseCase;
-  final GetJournalArticleSingleUseCase _getJournalArticleSingleUseCase;
-  final GetJournalSingleArticlesUseCase _getJournalSingleArticlesUseCase;
-  final GetJournalSingleUseCase _getJournalSingleUseCase;
-  JournalBloc({
-    required GetJournalUseCase getJournalUseCase,
-    required GetJournalArticlesUseCase getJournalArticlesUseCase,
-    required GetJournalArticleSingleUseCase getJournalArticleSingleUseCase,
-    required GetJournalSingleArticlesUseCase getJournalSingleArticlesUseCase,
-    required GetJournalSingleUseCase getJournalSingleUseCase,
-  })  : _getJournalUseCase = getJournalUseCase,
-        _getJournalArticlesUseCase = getJournalArticlesUseCase,
-        _getJournalArticleSingleUseCase = getJournalArticleSingleUseCase,
-        _getJournalSingleArticlesUseCase = getJournalSingleArticlesUseCase,
-        _getJournalSingleUseCase = getJournalSingleUseCase,
-        super(const JournalState()) {
+  final GetJournalUseCase _getJournalUseCase = GetJournalUseCase(
+    repository: serviceLocator<JournalRepositoryImpl>(),
+  );
+  final GetJournalArticlesUseCase _getJournalArticlesUseCase = GetJournalArticlesUseCase(
+    repository: serviceLocator<JournalRepositoryImpl>(),
+  );
+  final GetJournalArticleSingleUseCase _getJournalArticleSingleUseCase = GetJournalArticleSingleUseCase(
+    repository: serviceLocator<JournalRepositoryImpl>(),
+  );
+  final GetJournalSingleArticlesUseCase _getJournalSingleArticlesUseCase = GetJournalSingleArticlesUseCase(
+    repository: serviceLocator<JournalRepositoryImpl>(),
+  );
+  final GetJournalSingleUseCase _getJournalSingleUseCase = GetJournalSingleUseCase(
+    repository: serviceLocator<JournalRepositoryImpl>(),
+  );
+  JournalBloc() : super(const JournalState()) {
     on<GetJournals>((event, emit) async {
       emit(state.copyWith(status: PaginatorStatus.PAGINATOR_LOADING));
       final results = await _getJournalUseCase.call(null);
