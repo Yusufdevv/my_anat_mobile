@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
@@ -59,9 +60,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
     _homeArticlesBloc = HomeArticlesBloc()
       ..add(const HomeArticlesEvent.getHomeArticles())
       ..add(const HomeArticlesEvent.getBanners());
-    _mostPopularsBloc = MostPopularsBloc()
-      ..add(const MostPopularsEvent.getPopularOrgs())
-      ..add(const MostPopularsEvent.getPopularDoctors());
+    _mostPopularsBloc = MostPopularsBloc()..add(const MostPopularsEvent.getPopularOrgs());
+    getDoctors();
     _newsBloc = NewsBloc()..add(const NewsEvent.getNews());
     _scrollController = ScrollController()
       ..addListener(() {
@@ -76,6 +76,14 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
         }
       });
     super.initState();
+  }
+
+  getDoctors() async {
+    await MyFunctions.determinePosition().then((value) async {
+      await StorageRepository.putDouble('lat', value.latitude);
+      await StorageRepository.putDouble('long', value.longitude);
+      _mostPopularsBloc.add(const MostPopularsEvent.getPopularDoctors());
+    });
   }
 
   @override
@@ -325,35 +333,45 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               ),
 
               /// TOP DOCTORS
-              SliverToBoxAdapter(
-                child: TitlesItem(title: LocaleKeys.the_best_doctors.tr()),
-              ),
+
               BlocBuilder<MostPopularsBloc, MostPopularsState>(
                 builder: (context, state) {
-                  return SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 140,
-                      child: ListView.separated(
-                        itemBuilder: (context, index) {
-                          return TopDoctorItem(
-                            id: state.popularDoctors[index].id,
-                            rating: state.popularDoctors[index].rating as double,
-                            distance: state.popularDoctors[index].distance,
-                            jobs: state.popularDoctors[index].specializations.map((e) => e.title).toList().join(' '),
-                            name: state.popularDoctors[index].doctorName,
-                            image: state.popularDoctors[index].image.middle,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(width: 16);
-                        },
-                        itemCount: state.popularDoctors.length,
-                        padding: const EdgeInsets.only(left: 16, top: 8, bottom: 16),
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                      ),
-                    ),
-                  );
+                  return state.popularDoctors.isNotEmpty
+                      ? SliverToBoxAdapter(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TitlesItem(title: LocaleKeys.the_best_doctors.tr()),
+                              SizedBox(
+                                height: 140,
+                                child: ListView.separated(
+                                  itemBuilder: (context, index) {
+                                    return TopDoctorItem(
+                                      id: state.popularDoctors[index].id,
+                                      rating: state.popularDoctors[index].rating as double,
+                                      distance: state.popularDoctors[index].distance,
+                                      jobs: state.popularDoctors[index].specializations
+                                          .map((e) => e.title)
+                                          .toList()
+                                          .join(' '),
+                                      name: state.popularDoctors[index].doctorName,
+                                      image: state.popularDoctors[index].image.middle,
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return const SizedBox(width: 16);
+                                  },
+                                  itemCount: state.popularDoctors.length,
+                                  padding: const EdgeInsets.only(left: 16, top: 8, bottom: 16),
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : const SizedBox();
                 },
               ),
               if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{

@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:anatomica/core/data/singletons/storage.dart';
-import 'package:anatomica/core/exceptions/exceptions.dart'; 
+import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/features/home/data/models/banner_model.dart';
 import 'package:anatomica/features/home/data/models/category_model.dart';
 import 'package:anatomica/features/home/data/models/news_model.dart';
 import 'package:anatomica/features/journal/data/models/journal_article_model.dart';
-import 'package:anatomica/features/map/data/models/doctor_map_model.dart'; 
+import 'package:anatomica/features/map/data/models/doctor_map_model.dart';
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 import 'package:dio/dio.dart';
@@ -129,8 +129,10 @@ class HomeDatasourceImpl extends HomeDatasource {
 
   @override
   Future<GenericPagination<DoctorMapModel>> getPopularDoctors({String? next}) async {
+    final lat = StorageRepository.getDouble('lat') != 0.0 ? StorageRepository.getDouble('lat') : 41;
+    final lon = StorageRepository.getDouble('long') != 0.0 ? StorageRepository.getDouble('long') : 69;
     try {
-      final response = await _dio.get(next ?? '/mobile/doctor/map/?ordering=-rating&lat=41&lon=69&rad=150',
+      final response = await _dio.get(next ?? '/mobile/doctor/map/?ordering=-rating&lat=$lat&$lon=69&rad=150',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
                   ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
