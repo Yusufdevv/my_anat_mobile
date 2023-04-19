@@ -61,7 +61,6 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
       ..add(const HomeArticlesEvent.getHomeArticles())
       ..add(const HomeArticlesEvent.getBanners());
     _mostPopularsBloc = MostPopularsBloc()..add(const MostPopularsEvent.getPopularOrgs());
-    getDoctors();
     _newsBloc = NewsBloc()..add(const NewsEvent.getNews());
     _scrollController = ScrollController()
       ..addListener(() {
@@ -75,15 +74,20 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
           });
         }
       });
+    getDoctors();
     super.initState();
   }
 
   getDoctors() async {
-    await MyFunctions.determinePosition().then((value) async {
-      await StorageRepository.putDouble('lat', value.latitude);
-      await StorageRepository.putDouble('long', value.longitude);
+    try {
+      await MyFunctions.determinePosition().then((value) async {
+        await StorageRepository.putDouble('lat', value.latitude);
+        await StorageRepository.putDouble('long', value.longitude);
+        _mostPopularsBloc.add(const MostPopularsEvent.getPopularDoctors());
+      });
+    } on Exception {
       _mostPopularsBloc.add(const MostPopularsEvent.getPopularDoctors());
-    });
+    }
   }
 
   @override
@@ -259,7 +263,6 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 child: TitlesItem(
                   title: LocaleKeys.articles.tr(),
                   showAllFunction: () {
-                    // Navigator.of(context).push(fade(page: const NewsPart()));
                     launchUrl(
                       Uri.parse('https://anatomica.uz/article'),
                       mode: LaunchMode.inAppWebView,

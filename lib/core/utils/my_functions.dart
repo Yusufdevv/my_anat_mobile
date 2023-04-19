@@ -376,16 +376,14 @@ abstract class MyFunctions {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          throw const ParsingException(
-              errorMessage: 'location_permission_disabled');
+          throw const ParsingException(errorMessage: 'location_permission_disabled');
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          throw const ParsingException(
-              errorMessage: 'location_permission_disabled');
+          throw const ParsingException(errorMessage: 'location_permission_disabled');
         } else if (permission == LocationPermission.deniedForever) {
           throw const ParsingException(
               errorMessage: 'location_permission_permanent_disabled');
