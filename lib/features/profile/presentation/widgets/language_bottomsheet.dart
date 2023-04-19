@@ -6,6 +6,8 @@ import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/navigation/presentation/home.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/profile/presentation/widgets/language_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -60,7 +62,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
               currentStatus = 1;
             });
             await setLanguage(locale: 'ru', context: context).then((value) {
-              Navigator.pop(context);
+              // Navigator.pop(context);
             });
           },
         ),
@@ -77,7 +79,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
               currentStatus = 3;
             });
             await setLanguage(locale: 'uz', context: context).then((value) {
-              Navigator.pop(context);
+              // Navigator.pop(context);
             });
           },
         ),
@@ -93,6 +95,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
     serviceLocator<DioSettings>().setBaseOptions(lang: locale);
 
     await resetLocator();
+    Navigator.of(context).pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
     log('::::::::::  after reset:   ::::::::::');
   }
 }
