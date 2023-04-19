@@ -16,8 +16,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
-class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final GetAuthenticationStatusUseCase _statusUseCase = GetAuthenticationStatusUseCase(
+class AuthenticationBloc
+    extends Bloc<AuthenticationEvent, AuthenticationState> {
+  final GetAuthenticationStatusUseCase _statusUseCase =
+      GetAuthenticationStatusUseCase(
     repository: serviceLocator<AuthenticationRepositoryImpl>(),
   );
   final GetUserDataUseCase _getUserDataUseCase = GetUserDataUseCase(
@@ -27,12 +29,12 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   late StreamSubscription<AuthenticationStatus> statusSubscription;
 
   AuthenticationBloc() : super(const AuthenticationState.unauthenticated()) {
-    _deleteDeviceIdUseCase = DeleteDeviceIdUseCase(repository: serviceLocator<AuthenticationRepositoryImpl>());
+    _deleteDeviceIdUseCase = DeleteDeviceIdUseCase(
+        repository: serviceLocator<AuthenticationRepositoryImpl>());
     statusSubscription = _statusUseCase.call(NoParams()).listen((event) {
       add(AuthenticationStatusChanged(status: event));
     });
     on<AuthenticationStatusChanged>((event, emit) async {
-      log(':::::::::: Authentication exception  ${event.status.name.toString()}  ::::::::::');
       switch (event.status) {
         case AuthenticationStatus.authenticated:
           final userData = await _getUserDataUseCase.call(NoParams());

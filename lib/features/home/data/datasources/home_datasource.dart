@@ -14,9 +14,11 @@ import 'package:dio/dio.dart';
 abstract class HomeDatasource {
   Future<GenericPagination<CategoryModel>> getCategories({String? next});
 
-  Future<GenericPagination<OrgMapV2Model>> getOrganizations({String? next, required int type});
+  Future<GenericPagination<OrgMapV2Model>> getOrganizations(
+      {String? next, required int type});
 
-  Future<GenericPagination<JournalArticleModel>> getHomeArticles({String? next});
+  Future<GenericPagination<JournalArticleModel>> getHomeArticles(
+      {String? next});
 
   Future<GenericPagination<DoctorMapModel>> getPopularDoctors({String? next});
 
@@ -35,18 +37,27 @@ class HomeDatasourceImpl extends HomeDatasource {
   HomeDatasourceImpl(this._dio);
 
   @override
-  Future<GenericPagination<OrgMapV2Model>> getOrganizations({String? next, required int type}) async {
+  Future<GenericPagination<OrgMapV2Model>> getOrganizations(
+      {String? next, required int type}) async {
     try {
       final response = await _dio.get(next ?? '/organization/',
           queryParameters: {"types": type},
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                  ? {
+                      'Authorization':
+                          'Token ${StorageRepository.getString('token')}'
+                    }
                   : {}));
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data, (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data,
+            (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -64,13 +75,21 @@ class HomeDatasourceImpl extends HomeDatasource {
         next ?? '/organization/type/',
         options: Options(
             headers: StorageRepository.getString('token').isNotEmpty
-                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                ? {
+                    'Authorization':
+                        'Token ${StorageRepository.getString('token')}'
+                  }
                 : {}),
       );
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data, (p0) => CategoryModel.fromJson(p0 as Map<String, dynamic>));
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data,
+            (p0) => CategoryModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -82,18 +101,26 @@ class HomeDatasourceImpl extends HomeDatasource {
   }
 
   @override
-  Future<GenericPagination<JournalArticleModel>> getHomeArticles({String? next}) async {
+  Future<GenericPagination<JournalArticleModel>> getHomeArticles(
+      {String? next}) async {
     try {
       final response = await _dio.get(next ?? '/article/popular/',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                  ? {
+                      'Authorization':
+                          'Token ${StorageRepository.getString('token')}'
+                    }
                   : {}));
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(
-            response.data, (p0) => JournalArticleModel.fromJson(p0 as Map<String, dynamic>));
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data,
+            (p0) => JournalArticleModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -110,13 +137,20 @@ class HomeDatasourceImpl extends HomeDatasource {
       final response = await _dio.get(next ?? '/mobile/banners/',
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                  ? {
+                      'Authorization':
+                          'Token ${StorageRepository.getString('token')}'
+                    }
                   : {}));
-      log('banners after json => ${GenericPagination.fromJson(response.data, (p0) => BannerModel.fromJson(p0 as Map<String, dynamic>)).results}');
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data, (p0) => BannerModel.fromJson(p0 as Map<String, dynamic>));
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data,
+            (p0) => BannerModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -128,19 +162,38 @@ class HomeDatasourceImpl extends HomeDatasource {
   }
 
   @override
-  Future<GenericPagination<DoctorMapModel>> getPopularDoctors({String? next}) async {
-    final lat = StorageRepository.getDouble('lat') != 0.0 ? StorageRepository.getDouble('lat') : 41;
-    final lon = StorageRepository.getDouble('long') != 0.0 ? StorageRepository.getDouble('long') : 69;
+  Future<GenericPagination<DoctorMapModel>> getPopularDoctors(
+      {String? next}) async {
+    final lat = StorageRepository.getDouble('lat') != 0.0
+        ? StorageRepository.getDouble('lat')
+        : 41;
+    final lon = StorageRepository.getDouble('long') != 0.0
+        ? StorageRepository.getDouble('long')
+        : 69;
     try {
-      final response = await _dio.get(next ?? '/mobile/doctor/map/?ordering=-rating&lat=$lat&$lon=69&rad=150',
+      final response = await _dio.get(next ?? '/mobile/doctor/map/',
+          queryParameters: {
+            "ordering": "-rating",
+            "lat": lat,
+            "lon": lon,
+            "rad": 150,
+          },
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                  ? {
+                      'Authorization':
+                          'Token ${StorageRepository.getString('token')}'
+                    }
                   : {}));
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data, (p0) => DoctorMapModel.fromJson(p0 as Map<String, dynamic>));
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data,
+            (p0) => DoctorMapModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -152,18 +205,27 @@ class HomeDatasourceImpl extends HomeDatasource {
   }
 
   @override
-  Future<GenericPagination<OrgMapV2Model>> getPopularOrgs({String? next}) async {
+  Future<GenericPagination<OrgMapV2Model>> getPopularOrgs(
+      {String? next}) async {
     try {
       final response = await _dio.get(next ?? '/organization/',
           queryParameters: {"ordering": "-rating"},
           options: Options(
               headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                  ? {
+                      'Authorization':
+                          'Token ${StorageRepository.getString('token')}'
+                    }
                   : {}));
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data, (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data,
+            (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;
@@ -181,13 +243,21 @@ class HomeDatasourceImpl extends HomeDatasource {
         next ?? '/news/',
         options: Options(
             headers: StorageRepository.getString('token').isNotEmpty
-                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                ? {
+                    'Authorization':
+                        'Token ${StorageRepository.getString('token')}'
+                  }
                 : {}),
       );
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data, (p0) => NewsModel.fromJson(p0 as Map<String, dynamic>));
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return GenericPagination.fromJson(response.data,
+            (p0) => NewsModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: (response.data as List<dynamic>).first);
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: (response.data as List<dynamic>).first);
       }
     } on ServerException {
       rethrow;
@@ -205,13 +275,20 @@ class HomeDatasourceImpl extends HomeDatasource {
         '/news/$slug/detail/',
         options: Options(
             headers: StorageRepository.getString('token').isNotEmpty
-                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+                ? {
+                    'Authorization':
+                        'Token ${StorageRepository.getString('token')}'
+                  }
                 : {}),
       );
-      if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
         return NewsModel.fromJson(response.data);
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: (response.data as List<dynamic>).first);
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: (response.data as List<dynamic>).first);
       }
     } on ServerException {
       rethrow;
