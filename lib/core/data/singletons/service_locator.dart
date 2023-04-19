@@ -89,8 +89,6 @@ Future<void> setupLocator() async {
 
 Future resetLocator() async {
   log('::::::::::  resut locator triggered}  ::::::::::');
-
   await serviceLocator.reset();
-
   await setupLocator();
 }
