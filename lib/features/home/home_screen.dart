@@ -371,7 +371,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                             ],
                           ),
                         )
-                      : const SizedBox();
+                      : const SliverToBoxAdapter(child: SizedBox());
                 },
               ),
               if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{

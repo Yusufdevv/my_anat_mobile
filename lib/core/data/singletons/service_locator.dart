@@ -86,9 +86,9 @@ Future<void> setupLocator() async {
   serviceLocator
       .registerLazySingleton(() => NotificationRepoImpl(datasource: serviceLocator<NotificationDatasourceImpl>()));
 }
-
-Future resetLocator() async {
-  log('::::::::::  resut locator triggered}  ::::::::::');
-  await serviceLocator.reset();
-  await setupLocator();
-}
+//
+// Future resetLocator() async {
+//   log('::::::::::  resut locator triggered}  ::::::::::');
+//   await serviceLocator.reset();
+//   await setupLocator();
+// }

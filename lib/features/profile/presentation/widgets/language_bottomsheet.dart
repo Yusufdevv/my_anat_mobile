@@ -94,7 +94,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
     await StorageRepository.putString('device_language', locale);
     serviceLocator<DioSettings>().setBaseOptions(lang: locale);
 
-    await resetLocator();
+    // await resetLocator();
     Navigator.of(context).pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
     log('::::::::::  after reset:   ::::::::::');
   }
