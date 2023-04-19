@@ -27,12 +27,6 @@ import 'package:anatomica/features/common/presentation/bloc/connectivity_bloc/co
 import 'package:anatomica/features/common/presentation/bloc/payment_card/payment_cards_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/deeplinking/deep_link_bloc.dart';
-import 'package:anatomica/features/journal/data/repositories/journal_repository_impl.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journal_article_single_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journal_articles_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journal_single_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journal_usecase.dart';
-import 'package:anatomica/features/journal/domain/usecases/get_journale_single_articles_usecase.dart';
 import 'package:anatomica/features/journal/presentation/bloc/download/download_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/navigation/presentation/home.dart';
@@ -59,10 +53,6 @@ Future<void> main() async {
   await DefaultCacheManager().emptyCache();
   // FlutterError.onError =
   //     fire.FirebaseCrashlytics.instance.recordFlutterFatalError;
-  final position = await MyFunctions.determinePosition();
-
-  await StorageRepository.putDouble('latitude', position.latitude);
-  await StorageRepository.putDouble('longitude', position.longitude);
   HttpOverrides.global = MyHttpOverrides();
   AndroidYandexMap.useAndroidViewSurface = false;
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
@@ -78,7 +68,7 @@ Future<void> main() async {
       OSDeviceState? status = await OneSignal.shared.getDeviceState();
       osUserID = status?.userId;
     }
-    await StorageRepository.putString('deviceId', osUserID!);
+    await StorageRepository.putString('deviceId', osUserID);
   });
 
   runApp(EasyLocalization(
@@ -132,85 +122,14 @@ class _MyAppState extends State<MyApp> {
       providers: [RepositoryProvider.value(value: connectivityRepository)],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => AuthenticationBloc(
-              statusUseCase: GetAuthenticationStatusUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              getUserDataUseCase: GetUserDataUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-            ),
-          ),
-          BlocProvider.value(
-            value: connectivityBloc,
-          ),
-          BlocProvider(
-            create: (context) => PaymentCardsBloc(),
-          ),
-          BlocProvider(
-            create: (context) => ShowPopUpBloc(),
-          ),
-          BlocProvider(
-            create: (context) => DownloadBloc(),
-          ),
+          BlocProvider(create: (context) => AuthenticationBloc()),
+          BlocProvider.value(value: connectivityBloc),
+          BlocProvider(create: (context) => PaymentCardsBloc()),
+          BlocProvider(create: (context) => ShowPopUpBloc()),
+          BlocProvider(create: (context) => DownloadBloc()),
           BlocProvider(create: (context) => DeepLinkBloc()),
-          BlocProvider(
-            create: (context) => JournalBloc(
-              getJournalSingleUseCase: GetJournalSingleUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-              getJournalUseCase: GetJournalUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-              getJournalArticlesUseCase: GetJournalArticlesUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-              getJournalArticleSingleUseCase: GetJournalArticleSingleUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-              getJournalSingleArticlesUseCase: GetJournalSingleArticlesUseCase(
-                repository: serviceLocator<JournalRepositoryImpl>(),
-              ),
-            ),
-          ),
-          BlocProvider(
-            create: (_) => LoginSignUpBloc(
-              loginUseCase: LoginUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              checkUsernameUseCase: CheckUsernameUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              confirmUseCase: ConfirmUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              createNewStateUseCase: CreateNewStateUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              submitEmailUseCase: SubmitEmailUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              submitNameUsernameUseCase: SubmitNameUserNameUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              submitPasswordUseCase: SubmitPasswordUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              submitPhoneUseCase: SubmitPhoneUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              resendCodeUseCase: ResendCodeUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              submitChangedEmailUseCase: SubmitChangedEmailUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-              submitChangedPhoneUseCase: SubmitChangedPhoneUseCase(
-                repository: serviceLocator<AuthenticationRepositoryImpl>(),
-              ),
-            ),
-          ),
+          BlocProvider(create: (context) => JournalBloc()),
+          BlocProvider(create: (_) => LoginSignUpBloc()),
         ],
         child: MaterialApp(
           supportedLocales: context.supportedLocales,
@@ -229,15 +148,6 @@ class _MyAppState extends State<MyApp> {
                   navigator.pushAndRemoveUntil(
                       fade(page: const HomeScreen()), (route) => false);
                 }
-
-                // switch (state.status) {
-                //   case AuthenticationStatus.unauthenticated:
-                //     navigator.pushAndRemoveUntil(fade(page: const LoginScreen()), (route) => false);
-                //     break;
-                //   case AuthenticationStatus.authenticated:
-                //     navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
-                //     break;
-                // }
               },
               child: child,
             );

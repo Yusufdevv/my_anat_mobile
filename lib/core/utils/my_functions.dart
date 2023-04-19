@@ -370,22 +370,26 @@ abstract class MyFunctions {
     bool serviceEnabled;
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      throw const ParsingException(errorMessage: LocaleKeys.location_services_disabled);
-    }
     permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+    if (!serviceEnabled || permission == LocationPermission.denied) {
+      permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          throw const ParsingException(
+              errorMessage: 'location_permission_disabled');
+        }
       }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_disabled);
-      } else if (permission == LocationPermission.deniedForever) {
-        throw const ParsingException(errorMessage: LocaleKeys.location_permission_permanent_disabled);
+
+      if (permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          throw const ParsingException(
+              errorMessage: 'location_permission_disabled');
+        } else if (permission == LocationPermission.deniedForever) {
+          throw const ParsingException(
+              errorMessage: 'location_permission_permanent_disabled');
+        }
       }
     }
     return await Geolocator.getCurrentPosition();

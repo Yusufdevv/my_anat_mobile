@@ -109,7 +109,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           response.statusCode! >= 200 &&
           response.statusCode! < 300) {
         await StorageRepository.putString('token', response.data['token']);
-        await sendDeviceId();
+        // await sendDeviceId();
       } else if (response.statusCode != null &&
           response.statusCode! >= 400 &&
           response.statusCode! < 500) {

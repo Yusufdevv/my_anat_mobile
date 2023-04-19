@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/dio_settings.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/navigation/presentation/home.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/profile/presentation/widgets/language_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -54,13 +58,11 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
             status: 1,
           ),
           onTap: () async {
-            serviceLocator<DioSettings>().setBaseOptions(lang: 'ru');
-            await StorageRepository.putString('language', 'ru');
-            await StorageRepository.putString('device_language', 'ru');
-            Navigator.pop(context);
-            await context.setLocale(const Locale('ru'));
             setState(() {
               currentStatus = 1;
+            });
+            await setLanguage(locale: 'ru', context: context).then((value) {
+              // Navigator.pop(context);
             });
           },
         ),
@@ -73,23 +75,33 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
             status: 3,
           ),
           onTap: () async {
-            serviceLocator<DioSettings>().setBaseOptions(lang: 'uz');
-            await StorageRepository.putString('language', 'uz');
-            await StorageRepository.putString('device_language', 'uz');
-            Navigator.pop(context);
-            context.setLocale(const Locale('uz'));
             setState(() {
               currentStatus = 3;
+            });
+            await setLanguage(locale: 'uz', context: context).then((value) {
+              // Navigator.pop(context);
             });
           },
         ),
       ],
     );
   }
+
+  Future<void> setLanguage({required String locale, required BuildContext context}) async {
+    await context.setLocale(Locale(locale));
+
+    await StorageRepository.putString('language', locale);
+    await StorageRepository.putString('device_language', locale);
+    serviceLocator<DioSettings>().setBaseOptions(lang: locale);
+
+    // await resetLocator();
+    Navigator.of(context).pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
+    log('::::::::::  after reset:   ::::::::::');
+  }
 }
 
-void showLanguageBottomSheet(BuildContext context) {
-  showModalBottomSheet(
+Future<void> showLanguageBottomSheet(BuildContext context) async {
+  await showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
     useRootNavigator: true,

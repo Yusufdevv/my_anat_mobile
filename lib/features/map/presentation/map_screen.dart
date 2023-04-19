@@ -1,21 +1,11 @@
-import 'dart:developer';
-
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/assets/constants/app_icons.dart'; 
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
-import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
-import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
-import 'package:anatomica/features/map/domain/usecases/get_map_hospitals.dart';
-import 'package:anatomica/features/map/domain/usecases/get_map_hospitals_with_distance.dart';
-import 'package:anatomica/features/map/domain/usecases/get_service_usecase.dart';
-import 'package:anatomica/features/map/domain/usecases/get_specialization.dart';
-import 'package:anatomica/features/map/domain/usecases/get_types_usecase.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_button.dart'; 
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/org_map_v2_bloc/org_map_v2_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/specialization/specialization_bloc.dart';
@@ -58,7 +48,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
 
   @override
   void initState() {
-    specBloc = SpecializationBloc(GetSpecializationUseCase())..add(SpecializationEvent.getSpecs());
+    specBloc = SpecializationBloc()..add(SpecializationEvent.getSpecs());
     mapOrganizationBloc = MapOrganizationBloc(
       // onPointsCreated: (placemarks) {
       //   _mapObjects.clear();
@@ -67,14 +57,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
       // },
       tickerProvider: this,
       deviceWidth: widget.deviceWidth,
-      GetMapHospitalUseCase(),
-      GetMapDoctorUseCase(),
-      getTypesUseCase: GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
     );
-    orgMapV2Bloc = OrgMapV2Bloc(
-        useCase: GetMapHospitalsWithDistanceUseCase(mapRepository: serviceLocator<MapRepositoryImpl>()),
-        typesUseCase: GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>()),
-        serviceUsecase: GetServicesV2UseCase(repository: serviceLocator<MapRepositoryImpl>()));
+    orgMapV2Bloc = OrgMapV2Bloc();
 
     _searchFieldController = TextEditingController();
     WidgetsBinding.instance.addObserver(this);

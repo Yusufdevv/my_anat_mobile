@@ -12,6 +12,10 @@ DoctorMapModel _$DoctorMapModelFromJson(Map<String, dynamic> json) =>
       distance: (json['distance'] as num?)?.toDouble() ?? 0,
       fullName: json['full_name'] as String? ?? '',
       doctorName: json['doctor_name'] as String? ?? '',
+      specializations: (json['specializations'] as List<dynamic>?)
+              ?.map((e) => TitlerModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       id: json['id'] as int? ?? -1,
       image: json['image'] == null
           ? const ImageEntity()

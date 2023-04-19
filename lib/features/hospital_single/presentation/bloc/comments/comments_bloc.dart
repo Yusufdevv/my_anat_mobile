@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
+import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment_delete.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
+import 'package:anatomica/features/hospital_single/data/repository/hospital_repository_impl.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/comment_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/post_comment_entity.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/delete_comment.dart';
@@ -21,26 +24,19 @@ part 'comments_event.dart';
 part 'comments_state.dart';
 
 class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
-  final GetCommentsUseCase getComments;
-  final PostCommentUseCase _postCommentUseCase;
-  final GetDoctorCommentsUseCase _getDoctorCommentsUseCase;
-  final DoctorCommentUseCase _doctorCommentUseCase;
-  final DoctorCommentDeleteUseCase _doctorCommentDeleteUseCase;
-  final DeletePostCommentUseCase _deletePostCommentUseCase;
+  final GetCommentsUseCase getComments = GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>());
+  final PostCommentUseCase _postCommentUseCase =
+      PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>());
+  final GetDoctorCommentsUseCase _getDoctorCommentsUseCase =
+      GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>());
+  final DoctorCommentUseCase _doctorCommentUseCase =
+      DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>());
+  final DoctorCommentDeleteUseCase _doctorCommentDeleteUseCase =
+      DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>());
+  final DeletePostCommentUseCase _deletePostCommentUseCase =
+      DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>());
 
-  CommentsBloc(
-    this.getComments, {
-    required PostCommentUseCase postCommentUseCase,
-    required GetDoctorCommentsUseCase getDoctorCommentsUseCase,
-    required DoctorCommentUseCase doctorCommentUseCase,
-    required DoctorCommentDeleteUseCase doctorCommentDeleteUseCase,
-    required DeletePostCommentUseCase deletePostCommentUseCase,
-  })  : _postCommentUseCase = postCommentUseCase,
-        _doctorCommentDeleteUseCase = doctorCommentDeleteUseCase,
-        _doctorCommentUseCase = doctorCommentUseCase,
-        _deletePostCommentUseCase = deletePostCommentUseCase,
-        _getDoctorCommentsUseCase = getDoctorCommentsUseCase,
-        super(CommentsState()) {
+  CommentsBloc() : super(CommentsState()) {
     on<_GetComments>((event, emit) async {
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress,
@@ -79,14 +75,12 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         doctorCommentStatus: FormzStatus.submissionInProgress,
         doctorId: event.doctorId,
       ));
-      final result =
-          await _getDoctorCommentsUseCase(TypeParameter(id: event.doctorId));
+      final result = await _getDoctorCommentsUseCase(TypeParameter(id: event.doctorId));
       if (result.isRight) {
         emit(state.copyWith(
           doctorCommentStatus: FormzStatus.submissionSuccess,
           doctorComments: result.right.results,
-          isDoctorCommented:
-              result.right.results.where((element) => element.isOwn).isNotEmpty,
+          isDoctorCommented: result.right.results.where((element) => element.isOwn).isNotEmpty,
           doctorCommentNext: result.right.next,
           doctorCommentFetchMore: result.right.next != null,
           doctorCommentCount: result.right.count,
@@ -103,8 +97,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         final results = [...state.doctorComments, ...result.right.results];
         emit(state.copyWith(
           doctorComments: results,
-          isDoctorCommented:
-              results.where((element) => element.isOwn).isNotEmpty,
+          isDoctorCommented: results.where((element) => element.isOwn).isNotEmpty,
           doctorCommentNext: result.right.next,
           doctorCommentFetchMore: result.right.next != null,
         ));
@@ -112,8 +105,8 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     });
     on<_PostComment>((event, emit) async {
       emit(state.copyWith(postCommentStatus: FormzStatus.submissionInProgress));
-      final result = await _postCommentUseCase.call(PostCommentParams(
-          comment: event.comment, organizationId: state.organizationId));
+      final result = await _postCommentUseCase
+          .call(PostCommentParams(comment: event.comment, organizationId: state.organizationId));
       if (result.isRight) {
         emit(state.copyWith(postCommentStatus: FormzStatus.submissionSuccess, isOrganizationCommented: true));
         event.onSuccess();
@@ -122,22 +115,18 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
       }
     });
     on<_SendDoctorComment>((event, emit) async {
-      emit(state.copyWith(
-          sendDoctorCommentStatus: FormzStatus.submissionInProgress));
+      emit(state.copyWith(sendDoctorCommentStatus: FormzStatus.submissionInProgress));
       final result = await _doctorCommentUseCase.call(DoctorCommentParams(
         comment: event.comment,
         doctor: event.doctor,
         rating: event.rating,
       ));
       if (result.isRight) {
-        emit(state.copyWith(
-            doctorCommentStatus: FormzStatus.submissionSuccess,
-            isDoctorCommented: true));
+        emit(state.copyWith(doctorCommentStatus: FormzStatus.submissionSuccess, isDoctorCommented: true));
         event.onSuccess();
       } else {
         event.onError((result.left as ServerFailure).errorMessage);
-        emit(
-            state.copyWith(doctorCommentStatus: FormzStatus.submissionFailure));
+        emit(state.copyWith(doctorCommentStatus: FormzStatus.submissionFailure));
       }
     });
     on<_DeleteDoctorComment>((event, emit) async {

@@ -45,8 +45,7 @@ class ResultList extends StatelessWidget {
                 paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
                 itemBuilder: (c, index) {
                   return HospitalItem(
-                    entity: state.hospitals[index],
-                    myPoint: myPoint,
+                    entity: state.hospitals[index], 
                   );
                 },
                 itemCount: state.hospitals.length,

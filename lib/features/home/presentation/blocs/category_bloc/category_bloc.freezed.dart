@@ -20,18 +20,24 @@ mixin _$CategoryEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getCategories,
     required TResult Function() getMoreCategories,
+    required TResult Function(int type) getOrganizations,
+    required TResult Function() getMoreOrganizations,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getCategories,
     TResult? Function()? getMoreCategories,
+    TResult? Function(int type)? getOrganizations,
+    TResult? Function()? getMoreOrganizations,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getCategories,
     TResult Function()? getMoreCategories,
+    TResult Function(int type)? getOrganizations,
+    TResult Function()? getMoreOrganizations,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +45,24 @@ mixin _$CategoryEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetCategories value) getCategories,
     required TResult Function(_GetMoreCategories value) getMoreCategories,
+    required TResult Function(_GetOrganizations value) getOrganizations,
+    required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetCategories value)? getCategories,
     TResult? Function(_GetMoreCategories value)? getMoreCategories,
+    TResult? Function(_GetOrganizations value)? getOrganizations,
+    TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetCategories value)? getCategories,
     TResult Function(_GetMoreCategories value)? getMoreCategories,
+    TResult Function(_GetOrganizations value)? getOrganizations,
+    TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,6 +126,8 @@ class _$_GetCategories implements _GetCategories {
   TResult when<TResult extends Object?>({
     required TResult Function() getCategories,
     required TResult Function() getMoreCategories,
+    required TResult Function(int type) getOrganizations,
+    required TResult Function() getMoreOrganizations,
   }) {
     return getCategories();
   }
@@ -123,6 +137,8 @@ class _$_GetCategories implements _GetCategories {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getCategories,
     TResult? Function()? getMoreCategories,
+    TResult? Function(int type)? getOrganizations,
+    TResult? Function()? getMoreOrganizations,
   }) {
     return getCategories?.call();
   }
@@ -132,6 +148,8 @@ class _$_GetCategories implements _GetCategories {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getCategories,
     TResult Function()? getMoreCategories,
+    TResult Function(int type)? getOrganizations,
+    TResult Function()? getMoreOrganizations,
     required TResult orElse(),
   }) {
     if (getCategories != null) {
@@ -145,6 +163,8 @@ class _$_GetCategories implements _GetCategories {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetCategories value) getCategories,
     required TResult Function(_GetMoreCategories value) getMoreCategories,
+    required TResult Function(_GetOrganizations value) getOrganizations,
+    required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
   }) {
     return getCategories(this);
   }
@@ -154,6 +174,8 @@ class _$_GetCategories implements _GetCategories {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetCategories value)? getCategories,
     TResult? Function(_GetMoreCategories value)? getMoreCategories,
+    TResult? Function(_GetOrganizations value)? getOrganizations,
+    TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
   }) {
     return getCategories?.call(this);
   }
@@ -163,6 +185,8 @@ class _$_GetCategories implements _GetCategories {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetCategories value)? getCategories,
     TResult Function(_GetMoreCategories value)? getMoreCategories,
+    TResult Function(_GetOrganizations value)? getOrganizations,
+    TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
     required TResult orElse(),
   }) {
     if (getCategories != null) {
@@ -216,6 +240,8 @@ class _$_GetMoreCategories implements _GetMoreCategories {
   TResult when<TResult extends Object?>({
     required TResult Function() getCategories,
     required TResult Function() getMoreCategories,
+    required TResult Function(int type) getOrganizations,
+    required TResult Function() getMoreOrganizations,
   }) {
     return getMoreCategories();
   }
@@ -225,6 +251,8 @@ class _$_GetMoreCategories implements _GetMoreCategories {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getCategories,
     TResult? Function()? getMoreCategories,
+    TResult? Function(int type)? getOrganizations,
+    TResult? Function()? getMoreOrganizations,
   }) {
     return getMoreCategories?.call();
   }
@@ -234,6 +262,8 @@ class _$_GetMoreCategories implements _GetMoreCategories {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getCategories,
     TResult Function()? getMoreCategories,
+    TResult Function(int type)? getOrganizations,
+    TResult Function()? getMoreOrganizations,
     required TResult orElse(),
   }) {
     if (getMoreCategories != null) {
@@ -247,6 +277,8 @@ class _$_GetMoreCategories implements _GetMoreCategories {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetCategories value) getCategories,
     required TResult Function(_GetMoreCategories value) getMoreCategories,
+    required TResult Function(_GetOrganizations value) getOrganizations,
+    required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
   }) {
     return getMoreCategories(this);
   }
@@ -256,6 +288,8 @@ class _$_GetMoreCategories implements _GetMoreCategories {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetCategories value)? getCategories,
     TResult? Function(_GetMoreCategories value)? getMoreCategories,
+    TResult? Function(_GetOrganizations value)? getOrganizations,
+    TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
   }) {
     return getMoreCategories?.call(this);
   }
@@ -265,6 +299,8 @@ class _$_GetMoreCategories implements _GetMoreCategories {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetCategories value)? getCategories,
     TResult Function(_GetMoreCategories value)? getMoreCategories,
+    TResult Function(_GetOrganizations value)? getOrganizations,
+    TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
     required TResult orElse(),
   }) {
     if (getMoreCategories != null) {
@@ -279,11 +315,275 @@ abstract class _GetMoreCategories implements CategoryEvent {
 }
 
 /// @nodoc
+abstract class _$$_GetOrganizationsCopyWith<$Res> {
+  factory _$$_GetOrganizationsCopyWith(
+          _$_GetOrganizations value, $Res Function(_$_GetOrganizations) then) =
+      __$$_GetOrganizationsCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int type});
+}
+
+/// @nodoc
+class __$$_GetOrganizationsCopyWithImpl<$Res>
+    extends _$CategoryEventCopyWithImpl<$Res, _$_GetOrganizations>
+    implements _$$_GetOrganizationsCopyWith<$Res> {
+  __$$_GetOrganizationsCopyWithImpl(
+      _$_GetOrganizations _value, $Res Function(_$_GetOrganizations) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? type = null,
+  }) {
+    return _then(_$_GetOrganizations(
+      null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GetOrganizations implements _GetOrganizations {
+  const _$_GetOrganizations(this.type);
+
+  @override
+  final int type;
+
+  @override
+  String toString() {
+    return 'CategoryEvent.getOrganizations(type: $type)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_GetOrganizations &&
+            (identical(other.type, type) || other.type == type));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, type);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetOrganizationsCopyWith<_$_GetOrganizations> get copyWith =>
+      __$$_GetOrganizationsCopyWithImpl<_$_GetOrganizations>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getCategories,
+    required TResult Function() getMoreCategories,
+    required TResult Function(int type) getOrganizations,
+    required TResult Function() getMoreOrganizations,
+  }) {
+    return getOrganizations(type);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getCategories,
+    TResult? Function()? getMoreCategories,
+    TResult? Function(int type)? getOrganizations,
+    TResult? Function()? getMoreOrganizations,
+  }) {
+    return getOrganizations?.call(type);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getCategories,
+    TResult Function()? getMoreCategories,
+    TResult Function(int type)? getOrganizations,
+    TResult Function()? getMoreOrganizations,
+    required TResult orElse(),
+  }) {
+    if (getOrganizations != null) {
+      return getOrganizations(type);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetCategories value) getCategories,
+    required TResult Function(_GetMoreCategories value) getMoreCategories,
+    required TResult Function(_GetOrganizations value) getOrganizations,
+    required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
+  }) {
+    return getOrganizations(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetCategories value)? getCategories,
+    TResult? Function(_GetMoreCategories value)? getMoreCategories,
+    TResult? Function(_GetOrganizations value)? getOrganizations,
+    TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
+  }) {
+    return getOrganizations?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetCategories value)? getCategories,
+    TResult Function(_GetMoreCategories value)? getMoreCategories,
+    TResult Function(_GetOrganizations value)? getOrganizations,
+    TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    required TResult orElse(),
+  }) {
+    if (getOrganizations != null) {
+      return getOrganizations(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetOrganizations implements CategoryEvent {
+  const factory _GetOrganizations(final int type) = _$_GetOrganizations;
+
+  int get type;
+  @JsonKey(ignore: true)
+  _$$_GetOrganizationsCopyWith<_$_GetOrganizations> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_GetMoreOrganizationsCopyWith<$Res> {
+  factory _$$_GetMoreOrganizationsCopyWith(_$_GetMoreOrganizations value,
+          $Res Function(_$_GetMoreOrganizations) then) =
+      __$$_GetMoreOrganizationsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_GetMoreOrganizationsCopyWithImpl<$Res>
+    extends _$CategoryEventCopyWithImpl<$Res, _$_GetMoreOrganizations>
+    implements _$$_GetMoreOrganizationsCopyWith<$Res> {
+  __$$_GetMoreOrganizationsCopyWithImpl(_$_GetMoreOrganizations _value,
+      $Res Function(_$_GetMoreOrganizations) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_GetMoreOrganizations implements _GetMoreOrganizations {
+  const _$_GetMoreOrganizations();
+
+  @override
+  String toString() {
+    return 'CategoryEvent.getMoreOrganizations()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_GetMoreOrganizations);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getCategories,
+    required TResult Function() getMoreCategories,
+    required TResult Function(int type) getOrganizations,
+    required TResult Function() getMoreOrganizations,
+  }) {
+    return getMoreOrganizations();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getCategories,
+    TResult? Function()? getMoreCategories,
+    TResult? Function(int type)? getOrganizations,
+    TResult? Function()? getMoreOrganizations,
+  }) {
+    return getMoreOrganizations?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getCategories,
+    TResult Function()? getMoreCategories,
+    TResult Function(int type)? getOrganizations,
+    TResult Function()? getMoreOrganizations,
+    required TResult orElse(),
+  }) {
+    if (getMoreOrganizations != null) {
+      return getMoreOrganizations();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetCategories value) getCategories,
+    required TResult Function(_GetMoreCategories value) getMoreCategories,
+    required TResult Function(_GetOrganizations value) getOrganizations,
+    required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
+  }) {
+    return getMoreOrganizations(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetCategories value)? getCategories,
+    TResult? Function(_GetMoreCategories value)? getMoreCategories,
+    TResult? Function(_GetOrganizations value)? getOrganizations,
+    TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
+  }) {
+    return getMoreOrganizations?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetCategories value)? getCategories,
+    TResult Function(_GetMoreCategories value)? getMoreCategories,
+    TResult Function(_GetOrganizations value)? getOrganizations,
+    TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    required TResult orElse(),
+  }) {
+    if (getMoreOrganizations != null) {
+      return getMoreOrganizations(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetMoreOrganizations implements CategoryEvent {
+  const factory _GetMoreOrganizations() = _$_GetMoreOrganizations;
+}
+
+/// @nodoc
 mixin _$CategoryState {
-  List<dynamic> get categories => throw _privateConstructorUsedError;
+  List<CategoryEntity> get categories => throw _privateConstructorUsedError;
+  List<OrgMapV2Model> get organizations => throw _privateConstructorUsedError;
   FormzStatus get categoryStatus => throw _privateConstructorUsedError;
+  FormzStatus get organizationsStatus => throw _privateConstructorUsedError;
   String? get categoriesNext => throw _privateConstructorUsedError;
+  String? get organizationsNext => throw _privateConstructorUsedError;
   bool get categoriesFetchMore => throw _privateConstructorUsedError;
+  bool get organizationsFetchMore => throw _privateConstructorUsedError;
+  int get selectedCategory => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CategoryStateCopyWith<CategoryState> get copyWith =>
@@ -297,10 +597,15 @@ abstract class $CategoryStateCopyWith<$Res> {
       _$CategoryStateCopyWithImpl<$Res, CategoryState>;
   @useResult
   $Res call(
-      {List<dynamic> categories,
+      {List<CategoryEntity> categories,
+      List<OrgMapV2Model> organizations,
       FormzStatus categoryStatus,
+      FormzStatus organizationsStatus,
       String? categoriesNext,
-      bool categoriesFetchMore});
+      String? organizationsNext,
+      bool categoriesFetchMore,
+      bool organizationsFetchMore,
+      int selectedCategory});
 }
 
 /// @nodoc
@@ -317,27 +622,52 @@ class _$CategoryStateCopyWithImpl<$Res, $Val extends CategoryState>
   @override
   $Res call({
     Object? categories = null,
+    Object? organizations = null,
     Object? categoryStatus = null,
+    Object? organizationsStatus = null,
     Object? categoriesNext = freezed,
+    Object? organizationsNext = freezed,
     Object? categoriesFetchMore = null,
+    Object? organizationsFetchMore = null,
+    Object? selectedCategory = null,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<CategoryEntity>,
+      organizations: null == organizations
+          ? _value.organizations
+          : organizations // ignore: cast_nullable_to_non_nullable
+              as List<OrgMapV2Model>,
       categoryStatus: null == categoryStatus
           ? _value.categoryStatus
           : categoryStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      organizationsStatus: null == organizationsStatus
+          ? _value.organizationsStatus
+          : organizationsStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
       categoriesNext: freezed == categoriesNext
           ? _value.categoriesNext
           : categoriesNext // ignore: cast_nullable_to_non_nullable
               as String?,
+      organizationsNext: freezed == organizationsNext
+          ? _value.organizationsNext
+          : organizationsNext // ignore: cast_nullable_to_non_nullable
+              as String?,
       categoriesFetchMore: null == categoriesFetchMore
           ? _value.categoriesFetchMore
           : categoriesFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      organizationsFetchMore: null == organizationsFetchMore
+          ? _value.organizationsFetchMore
+          : organizationsFetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedCategory: null == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -351,10 +681,15 @@ abstract class _$$_CategoryStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<dynamic> categories,
+      {List<CategoryEntity> categories,
+      List<OrgMapV2Model> organizations,
       FormzStatus categoryStatus,
+      FormzStatus organizationsStatus,
       String? categoriesNext,
-      bool categoriesFetchMore});
+      String? organizationsNext,
+      bool categoriesFetchMore,
+      bool organizationsFetchMore,
+      int selectedCategory});
 }
 
 /// @nodoc
@@ -369,27 +704,52 @@ class __$$_CategoryStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categories = null,
+    Object? organizations = null,
     Object? categoryStatus = null,
+    Object? organizationsStatus = null,
     Object? categoriesNext = freezed,
+    Object? organizationsNext = freezed,
     Object? categoriesFetchMore = null,
+    Object? organizationsFetchMore = null,
+    Object? selectedCategory = null,
   }) {
     return _then(_$_CategoryState(
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<CategoryEntity>,
+      organizations: null == organizations
+          ? _value._organizations
+          : organizations // ignore: cast_nullable_to_non_nullable
+              as List<OrgMapV2Model>,
       categoryStatus: null == categoryStatus
           ? _value.categoryStatus
           : categoryStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
+      organizationsStatus: null == organizationsStatus
+          ? _value.organizationsStatus
+          : organizationsStatus // ignore: cast_nullable_to_non_nullable
               as FormzStatus,
       categoriesNext: freezed == categoriesNext
           ? _value.categoriesNext
           : categoriesNext // ignore: cast_nullable_to_non_nullable
               as String?,
+      organizationsNext: freezed == organizationsNext
+          ? _value.organizationsNext
+          : organizationsNext // ignore: cast_nullable_to_non_nullable
+              as String?,
       categoriesFetchMore: null == categoriesFetchMore
           ? _value.categoriesFetchMore
           : categoriesFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      organizationsFetchMore: null == organizationsFetchMore
+          ? _value.organizationsFetchMore
+          : organizationsFetchMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedCategory: null == selectedCategory
+          ? _value.selectedCategory
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -398,33 +758,59 @@ class __$$_CategoryStateCopyWithImpl<$Res>
 
 class _$_CategoryState implements _CategoryState {
   _$_CategoryState(
-      {final List<dynamic> categories = const [],
+      {final List<CategoryEntity> categories = const <CategoryEntity>[],
+      final List<OrgMapV2Model> organizations = const <OrgMapV2Model>[],
       this.categoryStatus = FormzStatus.pure,
+      this.organizationsStatus = FormzStatus.pure,
       this.categoriesNext,
-      this.categoriesFetchMore = false})
-      : _categories = categories;
+      this.organizationsNext,
+      this.categoriesFetchMore = false,
+      this.organizationsFetchMore = false,
+      this.selectedCategory = -1})
+      : _categories = categories,
+        _organizations = organizations;
 
-  final List<dynamic> _categories;
+  final List<CategoryEntity> _categories;
   @override
   @JsonKey()
-  List<dynamic> get categories {
+  List<CategoryEntity> get categories {
     if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_categories);
+  }
+
+  final List<OrgMapV2Model> _organizations;
+  @override
+  @JsonKey()
+  List<OrgMapV2Model> get organizations {
+    if (_organizations is EqualUnmodifiableListView) return _organizations;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_organizations);
   }
 
   @override
   @JsonKey()
   final FormzStatus categoryStatus;
   @override
+  @JsonKey()
+  final FormzStatus organizationsStatus;
+  @override
   final String? categoriesNext;
+  @override
+  final String? organizationsNext;
   @override
   @JsonKey()
   final bool categoriesFetchMore;
+  @override
+  @JsonKey()
+  final bool organizationsFetchMore;
+  @override
+  @JsonKey()
+  final int selectedCategory;
 
   @override
   String toString() {
-    return 'CategoryState(categories: $categories, categoryStatus: $categoryStatus, categoriesNext: $categoriesNext, categoriesFetchMore: $categoriesFetchMore)';
+    return 'CategoryState(categories: $categories, organizations: $organizations, categoryStatus: $categoryStatus, organizationsStatus: $organizationsStatus, categoriesNext: $categoriesNext, organizationsNext: $organizationsNext, categoriesFetchMore: $categoriesFetchMore, organizationsFetchMore: $organizationsFetchMore, selectedCategory: $selectedCategory)';
   }
 
   @override
@@ -434,21 +820,36 @@ class _$_CategoryState implements _CategoryState {
             other is _$_CategoryState &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
+            const DeepCollectionEquality()
+                .equals(other._organizations, _organizations) &&
             (identical(other.categoryStatus, categoryStatus) ||
                 other.categoryStatus == categoryStatus) &&
+            (identical(other.organizationsStatus, organizationsStatus) ||
+                other.organizationsStatus == organizationsStatus) &&
             (identical(other.categoriesNext, categoriesNext) ||
                 other.categoriesNext == categoriesNext) &&
+            (identical(other.organizationsNext, organizationsNext) ||
+                other.organizationsNext == organizationsNext) &&
             (identical(other.categoriesFetchMore, categoriesFetchMore) ||
-                other.categoriesFetchMore == categoriesFetchMore));
+                other.categoriesFetchMore == categoriesFetchMore) &&
+            (identical(other.organizationsFetchMore, organizationsFetchMore) ||
+                other.organizationsFetchMore == organizationsFetchMore) &&
+            (identical(other.selectedCategory, selectedCategory) ||
+                other.selectedCategory == selectedCategory));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_organizations),
       categoryStatus,
+      organizationsStatus,
       categoriesNext,
-      categoriesFetchMore);
+      organizationsNext,
+      categoriesFetchMore,
+      organizationsFetchMore,
+      selectedCategory);
 
   @JsonKey(ignore: true)
   @override
@@ -459,19 +860,34 @@ class _$_CategoryState implements _CategoryState {
 
 abstract class _CategoryState implements CategoryState {
   factory _CategoryState(
-      {final List<dynamic> categories,
+      {final List<CategoryEntity> categories,
+      final List<OrgMapV2Model> organizations,
       final FormzStatus categoryStatus,
+      final FormzStatus organizationsStatus,
       final String? categoriesNext,
-      final bool categoriesFetchMore}) = _$_CategoryState;
+      final String? organizationsNext,
+      final bool categoriesFetchMore,
+      final bool organizationsFetchMore,
+      final int selectedCategory}) = _$_CategoryState;
 
   @override
-  List<dynamic> get categories;
+  List<CategoryEntity> get categories;
+  @override
+  List<OrgMapV2Model> get organizations;
   @override
   FormzStatus get categoryStatus;
   @override
+  FormzStatus get organizationsStatus;
+  @override
   String? get categoriesNext;
   @override
+  String? get organizationsNext;
+  @override
   bool get categoriesFetchMore;
+  @override
+  bool get organizationsFetchMore;
+  @override
+  int get selectedCategory;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryStateCopyWith<_$_CategoryState> get copyWith =>

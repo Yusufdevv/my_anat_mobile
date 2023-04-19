@@ -7,11 +7,13 @@ part of 'data_model.dart';
 // **************************************************************************
 
 DataModel _$DataModelFromJson(Map<String, dynamic> json) => DataModel(
-      title: json['title'] as String? ?? '',
+      name: json['name'] as String? ?? '',
       id: json['id'] as int? ?? -1,
+      price: json['price'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$DataModelToJson(DataModel instance) => <String, dynamic>{
       'id': instance.id,
-      'title': instance.title,
+      'name': instance.name,
+      'price': instance.price,
     };

@@ -7,7 +7,7 @@ import 'package:json_annotation/json_annotation.dart';
 class DataEntity extends Equatable {
   const DataEntity({
     this.id = -1,
-    this.title = '',
+    this.name = '',
     // this.slug = '',
     // this.description = '',
     // this.image = const ImageEntity(),
@@ -15,7 +15,7 @@ class DataEntity extends Equatable {
     // this.category = const CategoryEntity(),
     // this.redaction = '',
     // this.isPremium = false,
-    // this.price = 0,
+    this.price = 0,
     // this.author = const [],
     // this.isActive = false,
     // this.publishDate = '',
@@ -26,7 +26,7 @@ class DataEntity extends Equatable {
   });
 
   final int id;
-  final String title;
+  final String name;
   // final String slug;
   // final String description;
   // @ImageConverter()
@@ -36,7 +36,7 @@ class DataEntity extends Equatable {
   // final CategoryEntity category;
   // final String redaction;
   // final bool isPremium;
-  // final int price;
+  final int price;
   // final List<String> author;
   // final bool isActive;
   // final String publishDate;
@@ -49,12 +49,10 @@ class DataEntity extends Equatable {
   List<Object?> get props => [];
 }
 
-class DataConverter
-    implements JsonConverter<DataEntity, Map<String, dynamic>?> {
+class DataConverter implements JsonConverter<DataEntity, Map<String, dynamic>?> {
   const DataConverter();
   @override
-  DataEntity fromJson(Map<String, dynamic>? json) =>
-      DataModel.fromJson(json ?? {});
+  DataEntity fromJson(Map<String, dynamic>? json) => DataModel.fromJson(json ?? {});
 
   @override
   Map<String, dynamic> toJson(DataEntity object) => {};

@@ -1,20 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
-import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
-import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
-import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment_delete.dart';
-import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
-import 'package:anatomica/features/hospital_single/data/repository/hospital_repository_impl.dart';
 import 'package:anatomica/features/hospital_single/domain/entities/hospital_single_widget_type.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/delete_comment.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/get_comforts.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/get_comments.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/get_hospital_specialists_doctors_usecase.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/get_single_hospital.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/get_vacancies.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/post_comment_usecase.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/facilities/facilities_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/h_articles/h_articles_bloc.dart';
@@ -94,29 +80,14 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
   void initState() {
     super.initState();
     controller = AutoScrollController();
-    vacanciesBloc =
-        HospitalVacanciesBloc(GetHospitalVacancies(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-          ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
-    articlesBloc = HArticlesBloc(GetHArticlesUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-      ..add(HArticlesEvent.getArticles(organizationId: widget.id));
-    facilitiesBloc = FacilitiesBloc(GetComfortsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-      ..add(FacilitiesEvent.getFacilities(organizationId: widget.id));
-    hospitalSpecialistBloc = HospitalSpecialistBloc(
-        GetHospitalSpecialistsDoctorsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
+    vacanciesBloc = HospitalVacanciesBloc()..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
+    articlesBloc = HArticlesBloc()..add(HArticlesEvent.getArticles(organizationId: widget.id));
+    facilitiesBloc = FacilitiesBloc()..add(FacilitiesEvent.getFacilities(organizationId: widget.id));
+    hospitalSpecialistBloc = HospitalSpecialistBloc()
       ..add(HospitalSpecialistDoctorsEvent.getSpecialistsDoctors(organizationId: widget.id));
     servicesBloc = ServicesBloc()..add(ServicesEvent.getServicesSpecial(organizationId: widget.id));
-    commentsBloc = CommentsBloc(
-        deletePostCommentUseCase: DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        doctorCommentDeleteUseCase:
-            DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-        doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-        GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-        getDoctorCommentsUseCase: GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
-      ..add(CommentsEvent.getComments(organizationId: widget.id));
-    hospitalSingleBloc =
-        HospitalSingleBloc(GetSingleHospitalUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()))
-          ..add(HospitalSingleEvent.getHospital(widget.slug));
+    commentsBloc = CommentsBloc()..add(CommentsEvent.getComments(organizationId: widget.id));
+    hospitalSingleBloc = HospitalSingleBloc()..add(HospitalSingleEvent.getHospital(widget.slug));
     _tabController = TabController(length: tabs.length, vsync: this);
     _headerManagerBloc = HeaderManagerBloc();
     _pageController = PageController();
@@ -129,7 +100,6 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
 
   @override
   Widget build(BuildContext context) {
-    print('hospital slug => ${widget.slug}');
     return WKeyboardDismisser(
       child: DefaultTabController(
         length: tabs.length,

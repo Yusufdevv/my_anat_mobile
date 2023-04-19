@@ -323,5 +323,8 @@ abstract class  LocaleKeys {
   static const notifications = 'notifications';
   static const payment_successed = 'payment_successed';
   static const payment = 'payment';
+  static const others = 'others';
+  static const others_categories = 'others_categories';
+  static const the_best_doctors = 'the_best_doctors';
 
 }

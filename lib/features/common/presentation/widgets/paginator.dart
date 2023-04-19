@@ -13,7 +13,7 @@ class Paginator extends StatelessWidget {
   final Axis scrollDirection;
   final Widget? loadingWidget;
   final ScrollPhysics physics;
-
+  final ScrollController? controller;
   const Paginator({
     required this.paginatorStatus,
     required this.itemBuilder,
@@ -26,6 +26,7 @@ class Paginator extends StatelessWidget {
     this.separatorBuilder,
     this.emptyWidget,
     this.loadingWidget,
+    this.controller,
     this.physics = const BouncingScrollPhysics(),
     Key? key,
   }) : super(key: key);
@@ -40,6 +41,7 @@ class Paginator extends StatelessWidget {
       return itemCount == 0
           ? emptyWidget ?? const SizedBox()
           : ListView.separated(
+            controller: controller,
               scrollDirection: scrollDirection,
               physics: physics,
               padding: padding,

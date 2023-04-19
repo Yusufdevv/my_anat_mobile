@@ -1,11 +1,11 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/common/data/repository/global_requst_repository.dart';
 
 class SendRestoreCode extends UseCase<String, String> {
-  final GlobalRequestRepository repo = GlobalRequestRepository();
-
+  final GlobalRequestRepository repo = serviceLocator<GlobalRequestRepository>();
   @override
   Future<Either<Failure, String>> call(String params) {
     return repo.postAndSingle(

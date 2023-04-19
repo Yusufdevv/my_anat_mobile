@@ -1,3 +1,5 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/features/hospital_single/data/repository/hospital_repository_impl.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_articles.dart';
 import 'package:anatomica/features/hospital_single/domain/usecases/get_vacancies.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_list.dart';
@@ -10,9 +12,10 @@ part 'hospital_vacancies_event.dart';
 part 'hospital_vacancies_state.dart';
 
 class HospitalVacanciesBloc extends Bloc<HospitalVacanciesEvent, HospitalVacanciesState> {
-  final GetHospitalVacancies getVacancies;
+  final GetHospitalVacancies getVacancies =
+      GetHospitalVacancies(repository: serviceLocator<HospitalSingleRepositoryImpl>());
 
-  HospitalVacanciesBloc(this.getVacancies) : super(HospitalVacanciesState()) {
+  HospitalVacanciesBloc() : super(HospitalVacanciesState()) {
     on<_GetVacancies>((event, emit) async {
       emit(state.copyWith(
         status: FormzStatus.submissionInProgress,

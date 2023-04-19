@@ -1,7 +1,8 @@
-import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/features/home/data/repository_impls/home_repo_impl.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
+import 'package:anatomica/features/auth/domain/entities/doctor_entity.dart';
 import 'package:anatomica/features/home/domain/usecases/most_popular_doctors_usecase.dart';
 import 'package:anatomica/features/home/domain/usecases/most_popular_orgs_usecase.dart';
+import 'package:anatomica/features/map/data/models/doctor_map_model.dart';
 import 'package:anatomica/features/map/data/models/hospital_doctors_model.dart';
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:bloc/bloc.dart';
@@ -13,10 +14,8 @@ part 'most_populars_event.dart';
 part 'most_populars_state.dart';
 
 class MostPopularsBloc extends Bloc<MostPopularsEvent, MostPopularsState> {
-  final MostPopularOrgsUsecase _mostPopularOrgsUsecase =
-      MostPopularOrgsUsecase(repository: serviceLocator<HomeRepoImpl>());
-  final MostPopularDoctorsUsecase _mostPopularDoctorsUsecase =
-      MostPopularDoctorsUsecase(repository: serviceLocator<HomeRepoImpl>());
+  final MostPopularOrgsUsecase _mostPopularOrgsUsecase = MostPopularOrgsUsecase();
+  final MostPopularDoctorsUsecase _mostPopularDoctorsUsecase = MostPopularDoctorsUsecase();
 
   MostPopularsBloc() : super(MostPopularsState()) {
     on<_GetPopularDoctors>(_getPopularDoctors);
@@ -25,13 +24,10 @@ class MostPopularsBloc extends Bloc<MostPopularsEvent, MostPopularsState> {
     on<_GetMorePopularOrgs>(_getMorePopularOrgs);
   }
 
-  _getPopularDoctors(
-      _GetPopularDoctors event, Emitter<MostPopularsState> emit) async {
-    emit(
-        state.copyWith(popularDoctorsStatus: FormzStatus.submissionInProgress));
+  _getPopularDoctors(_GetPopularDoctors event, Emitter<MostPopularsState> emit) async {
+    emit(state.copyWith(popularDoctorsStatus: FormzStatus.submissionInProgress));
     final response = await _mostPopularDoctorsUsecase.call(null);
     if (response.isRight) {
-      print('response => ${response.right}');
       emit(state.copyWith(
         popularDoctorsNext: response.right.next,
         popularDoctorsStatus: FormzStatus.submissionSuccess,
@@ -41,10 +37,8 @@ class MostPopularsBloc extends Bloc<MostPopularsEvent, MostPopularsState> {
     }
   }
 
-  _getMorePopularDoctors(
-      _GetMorePopularDoctors event, Emitter<MostPopularsState> emit) async {
-    final response =
-        await _mostPopularDoctorsUsecase.call(state.popularDoctorsNext);
+  _getMorePopularDoctors(_GetMorePopularDoctors event, Emitter<MostPopularsState> emit) async {
+    final response = await _mostPopularDoctorsUsecase.call(state.popularDoctorsNext);
     if (response.isRight) {
       emit(state.copyWith(
         popularDoctorsNext: response.right.next,
@@ -54,12 +48,10 @@ class MostPopularsBloc extends Bloc<MostPopularsEvent, MostPopularsState> {
     }
   }
 
-  _getPopularOrgs(
-      _GetPopularOrgs event, Emitter<MostPopularsState> emit) async {
+  _getPopularOrgs(_GetPopularOrgs event, Emitter<MostPopularsState> emit) async {
     emit(state.copyWith(popularOrgsStatus: FormzStatus.submissionInProgress));
     final response = await _mostPopularOrgsUsecase.call(null);
     if (response.isRight) {
-      print('response => ${response.right}');
       emit(state.copyWith(
         popularOrgsNext: response.right.next,
         popularOrgsStatus: FormzStatus.submissionSuccess,
@@ -69,8 +61,7 @@ class MostPopularsBloc extends Bloc<MostPopularsEvent, MostPopularsState> {
     }
   }
 
-  _getMorePopularOrgs(
-      _GetMorePopularOrgs event, Emitter<MostPopularsState> emit) async {
+  _getMorePopularOrgs(_GetMorePopularOrgs event, Emitter<MostPopularsState> emit) async {
     final response = await _mostPopularOrgsUsecase.call(state.popularOrgsNext);
     if (response.isRight) {
       emit(state.copyWith(

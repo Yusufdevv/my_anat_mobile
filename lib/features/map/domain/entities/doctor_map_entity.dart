@@ -1,4 +1,5 @@
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:anatomica/features/common/data/models/titler.dart';
 import 'package:equatable/equatable.dart';
 
 class DoctorMapEntity extends Equatable {
@@ -16,6 +17,8 @@ class DoctorMapEntity extends Equatable {
     this.phoneNumbers = const <List<String>>[],
     this.organizationName = '',
     this.distance = 0,
+    this.specializations = const [],
+
   });
 
   final int id;
@@ -23,6 +26,7 @@ class DoctorMapEntity extends Equatable {
   final String doctorName ;
   @ImageConverter()
   final ImageEntity image;
+  final List<TitlerModel> specializations;
   final bool imgIsFull;
   final String position;
   final String address;
@@ -40,6 +44,7 @@ class DoctorMapEntity extends Equatable {
         doctorName ,
         image,
         imgIsFull,
+        specializations,
         position,
         address,
         latitude,

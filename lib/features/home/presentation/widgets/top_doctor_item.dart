@@ -2,6 +2,8 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/doctor_single/presentation/doctor_single_screen.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -27,11 +29,11 @@ class TopDoctorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return WScaleAnimation(
       onTap: () {
-        // Navigator.of(context, rootNavigator: true).push(
-        //   fade(
-        //     page: DoctorSingleScreen(id: entity.id),
-        //   ),
-        // );
+        Navigator.of(context, rootNavigator: true).push(
+          fade(
+            page: DoctorSingleScreen(id: id),
+          ),
+        );
       },
       child: Container(
         width: MediaQuery.of(context).size.width * .75,
@@ -116,7 +118,7 @@ class TopDoctorItem extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 4, right: 8),
                               child: Text(
                                 // TODO add distance to doctors
-                                '$distance km',
+                                '${distance.toStringAsFixed(2)} km',
                                 style:
                                     Theme.of(context).textTheme.headlineSmall,
                               ),

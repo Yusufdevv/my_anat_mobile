@@ -1,6 +1,5 @@
-import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/features/home/data/models/news_model.dart';
-import 'package:anatomica/features/home/data/repository_impls/home_repo_impl.dart';
+ 
+import 'package:anatomica/features/home/data/models/news_model.dart'; 
 import 'package:anatomica/features/home/domain/usecases/new_single_usecase.dart';
 import 'package:anatomica/features/home/domain/usecases/news_usecase.dart';
 import 'package:bloc/bloc.dart';
@@ -13,9 +12,9 @@ part 'news_state.dart';
 
 class NewsBloc extends Bloc<NewsEvent, NewsState> {
   final NewsUseCase newsUseCase =
-      NewsUseCase(repository: serviceLocator<HomeRepoImpl>());
+      NewsUseCase( );
   final NewSingleUseCase _newSingleUseCase =
-      NewSingleUseCase(repository: serviceLocator<HomeRepoImpl>());
+      NewSingleUseCase( );
 
   NewsBloc() : super(NewsState()) {
     on<_GetNews>(_getNewsEvent);

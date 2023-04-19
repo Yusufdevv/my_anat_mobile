@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
@@ -11,8 +12,10 @@ import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/ho
 import 'package:anatomica/features/home/presentation/blocs/most_populars_bloc/most_populars_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:anatomica/features/home/presentation/parts/articles_part.dart';
+import 'package:anatomica/features/home/presentation/parts/categories_screen.dart';
 import 'package:anatomica/features/home/presentation/parts/news_part.dart';
 import 'package:anatomica/features/home/presentation/parts/notifications.dart';
+import 'package:anatomica/features/home/presentation/parts/other_categories_screen.dart';
 import 'package:anatomica/features/home/presentation/widgets/banner_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/category_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/category_shimmer.dart';
@@ -25,11 +28,14 @@ import 'package:anatomica/features/home/presentation/widgets/top_hospital_item.d
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/widgets/activate_premium.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -56,8 +62,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
       ..add(const HomeArticlesEvent.getHomeArticles())
       ..add(const HomeArticlesEvent.getBanners());
     _mostPopularsBloc = MostPopularsBloc()
-      ..add(const MostPopularsEvent.getPopularOrgs())
-      ..add(const MostPopularsEvent.getPopularDoctors());
+      ..add(const MostPopularsEvent.getPopularOrgs());
+    getDoctors();
     _newsBloc = NewsBloc()..add(const NewsEvent.getNews());
     _scrollController = ScrollController()
       ..addListener(() {
@@ -73,6 +79,14 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
         }
       });
     super.initState();
+  }
+
+  getDoctors() async {
+    await MyFunctions.determinePosition().then((value) async {
+      await StorageRepository.putDouble('lat', value.latitude);
+      await StorageRepository.putDouble('long', value.longitude);
+      _mostPopularsBloc.add(const MostPopularsEvent.getPopularDoctors());
+    });
   }
 
   @override
@@ -115,14 +129,14 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                     WScaleAnimation(
                       child: true
                           ? SvgPicture.asset(
-                              AppIcons.bell,
-                              color: isShrink ? black : white,
-                            )
+                        AppIcons.bell,
+                        color: isShrink ? black : white,
+                      )
                           : SvgPicture.asset(
-                              isShrink
-                                  ? AppIcons.blackNotificationWithRedDot
-                                  : AppIcons.notificationWithRedDot,
-                            ),
+                        isShrink
+                            ? AppIcons.blackNotificationWithRedDot
+                            : AppIcons.notificationWithRedDot,
+                      ),
                       onTap: () => Navigator.push(
                           context, fade(page: const NotificationsScreen())),
                     ),
@@ -163,48 +177,60 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                   return SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16, top: 16),
-                      child:
-                          state.categoryStatus != FormzStatus.submissionSuccess
-                              ? Wrap(
-                                  runSpacing: 8,
-                                  spacing: 8,
-                                  children: [
-                                    ...List.generate(
-                                        6, (index) => const CategoryShimmer())
-                                  ],
-                                )
-                              : Wrap(
-                                  runSpacing: 8,
-                                  spacing: 8,
-                                  children: [
-                                    ...List.generate(
-                                      state.categories.length > 5
-                                          ? 5
-                                          : state.categories.length,
-                                      (index) => CategoryItem(
-                                        logo: state.categories[index].icon,
-                                        title: state.categories[index].title,
-                                        onTap: () {
-                                          // Navigator.of(context, rootNavigator: true)
-                                          //     .push(
-                                          //   fade(
-                                          //     page:
-                                          //   ),
-                                          // );
-                                        },
-                                      ),
-                                    ),
-                                    Offstage(
-                                      offstage: state.categories.length < 6,
-                                      child: CategoryItem(
-                                        logo: AppIcons.moreVertical,
-                                        // TODO locale
-                                        title: "Другие",
-                                        onTap: () {},
-                                      ),
-                                    ),
-                                  ],
+                      child: state.categoryStatus !=
+                              FormzStatus.submissionSuccess
+                          ? Wrap(
+                              runSpacing: 8,
+                              spacing: 8,
+                              children: [
+                                ...List.generate(
+                                    6, (index) => const CategoryShimmer())
+                              ],
+                            )
+                          : Wrap(
+                              runSpacing: 8,
+                              spacing: 8,
+                              children: [
+                                ...List.generate(
+                                  state.categories.length > 5
+                                      ? 5
+                                      : state.categories.length,
+                                  (index) => CategoryItem(
+                                    logo: state.categories[index].icon.file.url,
+                                    title: state.categories[index].title,
+                                    onTap: () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .push(fade(
+                                              page: BlocProvider.value(
+                                        value: _categoryBloc,
+                                        child: CategoriesScreen(
+                                          selectedIndex: index,
+                                          categoryItemSize:
+                                              (MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                      48) /
+                                                  3,
+                                        ),
+                                      )));
+                                    },
+                                  ),
                                 ),
+                                if (state.categories.length > 5)
+                                  CategoryItem(
+                                    logo: AppIcons.moreVertical,
+                                    title: LocaleKeys.others.tr(),
+                                    onTap: () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .push(fade(
+                                              page: BlocProvider.value(
+                                                  value: _categoryBloc,
+                                                  child:
+                                                      const OtherCategoriesScreen())));
+                                    },
+                                  ),
+                              ],
+                            ),
                     ),
                   );
                 },
@@ -261,13 +287,15 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               /// ARTICLES
               SliverToBoxAdapter(
                 child: TitlesItem(
-                  // TODO locale
-                  title: 'Статьи',
+                  title: LocaleKeys.articles.tr(),
                   showAllFunction: () {
-                    Navigator.of(context)
-                        .push(fade(page: const ArticlesPart()));
+                    // Navigator.of(context).push(fade(page: const NewsPart()));
+                    launchUrl(
+                      Uri.parse('https://anatomica.uz/article'),
+                      mode: LaunchMode.inAppWebView,
+                    );
                   },
-                  showAllTitle: 'Все статьи',
+                  showAllTitle: LocaleKeys.all_articles.tr(),
                 ),
               ),
               SliverToBoxAdapter(
@@ -345,42 +373,52 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               ),
 
               /// TOP DOCTORS
-              const SliverToBoxAdapter(
-                // TODO locale
-                child: TitlesItem(title: 'Лучшие врачи'),
-              ),
+
               BlocBuilder<MostPopularsBloc, MostPopularsState>(
                 builder: (context, state) {
-                  return SliverToBoxAdapter(
-                    child: SizedBox(
-                      // width: MediaQuery.of(context).size.width,
-                      height: 140,
-                      child: ListView.separated(
-                        itemBuilder: (context, index) {
-                          return TopDoctorItem(
-                            id: state.popularDoctors[index].id,
-                            rating: state.popularDoctors[index].rating,
-                            distance: state.popularDoctors[index].distance,
-                            jobs: state.popularDoctors[index].specializations
-                                .map((e) => e.title)
-                                .toList()
-                                .join(' '),
-                            name: state.popularDoctors[index].doctorName,
-                            image: state.popularDoctors[index].image.middle,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(width: 16);
-                        },
-                        itemCount: state.popularDoctors.length,
-                        padding:
-                            const EdgeInsets.only(left: 16, top: 8, bottom: 16),
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                      ),
-                    ),
-                  );
+                  return state.popularDoctors.isNotEmpty
+                      ? SliverToBoxAdapter(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TitlesItem(
+                                  title: LocaleKeys.the_best_doctors.tr()),
+                              SizedBox(
+                                height: 140,
+                                child: ListView.separated(
+                                  itemBuilder: (context, index) {
+                                    return TopDoctorItem(
+                                      id: state.popularDoctors[index].id,
+                                      rating: state.popularDoctors[index].rating
+                                          as double,
+                                      distance:
+                                          state.popularDoctors[index].distance,
+                                      jobs: state
+                                          .popularDoctors[index].specializations
+                                          .map((e) => e.title)
+                                          .toList()
+                                          .join(' '),
+                                      name: state
+                                          .popularDoctors[index].doctorName,
+                                      image: state
+                                          .popularDoctors[index].image.middle,
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return const SizedBox(width: 16);
+                                  },
+                                  itemCount: state.popularDoctors.length,
+                                  padding: const EdgeInsets.only(
+                                      left: 16, top: 8, bottom: 16),
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : const SliverToBoxAdapter(child: SizedBox());
                 },
               ),
               if (!context

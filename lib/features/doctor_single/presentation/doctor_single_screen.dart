@@ -3,10 +3,7 @@ import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_keyboard_dismisser.dart';
 import 'package:anatomica/features/doctor_single/data/repositories/doctor_single_repository_impl.dart';
-import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment.dart';
-import 'package:anatomica/features/doctor_single/domain/usecases/doctor_comment_delete.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_articles_usecase.dart';
-import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_comments_usecase.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_interviews_usecase.dart';
 import 'package:anatomica/features/doctor_single/domain/usecases/get_doctor_single_usecase.dart';
 import 'package:anatomica/features/doctor_single/presentation/blocs/doctor_articles_bloc/doctor_articles_bloc.dart';
@@ -18,10 +15,6 @@ import 'package:anatomica/features/doctor_single/presentation/parts/doctor_comme
 import 'package:anatomica/features/doctor_single/presentation/parts/doctor_contacts.dart';
 import 'package:anatomica/features/doctor_single/presentation/parts/doctor_interviews.dart';
 import 'package:anatomica/features/doctor_single/presentation/widgets/doctor_single_appbar.dart';
-import 'package:anatomica/features/hospital_single/data/repository/hospital_repository_impl.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/delete_comment.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/get_comments.dart';
-import 'package:anatomica/features/hospital_single/domain/usecases/post_comment_usecase.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/comments/comments_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/header_manager_bloc/header_manager_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_delegate.dart';
@@ -50,7 +43,8 @@ class DoctorSingleScreen extends StatefulWidget {
   State<DoctorSingleScreen> createState() => _DoctorSingleScreenState();
 }
 
-class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProviderStateMixin {
+class _DoctorSingleScreenState extends State<DoctorSingleScreen>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
@@ -83,16 +77,22 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
     _headerManagerBloc = HeaderManagerBloc();
     _scrollController.addListener(_scrollListener);
     _candidateSingleBloc = CandidateSingleBloc(
-        relatedCandidateListUseCase: RelatedCandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateWorkUseCase: CandidateWorkUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateCertificateUseCase: CandidateCertificateUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateEducationUseCase: CandidateEducationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateSingleUseCase: CandidateSingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
+        relatedCandidateListUseCase: RelatedCandidateListUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateWorkUseCase: CandidateWorkUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateCertificateUseCase: CandidateCertificateUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateEducationUseCase: CandidateEducationUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateSingleUseCase: CandidateSingleUseCase(
+            repository: serviceLocator<VacancyRepositoryImpl>()));
     _candidateSingleBloc.add(GetRelatedCandidateListEvent(id: widget.id));
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
+    _headerManagerBloc.add(
+        ChangeHeaderScrollPosition(headerPosition: _scrollController.offset));
   }
 
   @override
@@ -116,20 +116,11 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
         ),
         BlocProvider(
             create: (context) => DoctorInterviewsBloc(
-                getDoctorInterviewsUseCase:
-                    GetDoctorInterviewsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+                getDoctorInterviewsUseCase: GetDoctorInterviewsUseCase(
+                    repository: serviceLocator<DoctorSingleRepositoryImpl>()))
               ..add(GetDoctorInterviews(doctorId: widget.id))),
         BlocProvider(
-            create: (context) => CommentsBloc(
-                deletePostCommentUseCase:
-                    DeletePostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                doctorCommentDeleteUseCase:
-                    DoctorCommentDeleteUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-                doctorCommentUseCase: DoctorCommentUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()),
-                GetCommentsUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                postCommentUseCase: PostCommentUseCase(repository: serviceLocator<HospitalSingleRepositoryImpl>()),
-                getDoctorCommentsUseCase:
-                    GetDoctorCommentsUseCase(repository: serviceLocator<DoctorSingleRepositoryImpl>()))
+            create: (context) => CommentsBloc()
               ..add(CommentsEvent.getDoctorComments(doctorId: widget.id))),
       ],
       child: WKeyboardDismisser(
@@ -186,7 +177,10 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen> with TickerProv
                           Padding(
                             padding: const EdgeInsets.only(top: 80),
                             child: ListView(
-                                padding: const EdgeInsets.all(16), children: [LicenceItemList(candidateId: widget.id)]),
+                                padding: const EdgeInsets.all(16),
+                                children: [
+                                  LicenceItemList(candidateId: widget.id)
+                                ]),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 80),

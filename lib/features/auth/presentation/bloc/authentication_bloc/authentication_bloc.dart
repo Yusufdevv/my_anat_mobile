@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
@@ -17,16 +18,17 @@ part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final GetAuthenticationStatusUseCase _statusUseCase;
-  final GetUserDataUseCase _getUserDataUseCase;
+  final GetAuthenticationStatusUseCase _statusUseCase =
+      GetAuthenticationStatusUseCase(
+    repository: serviceLocator<AuthenticationRepositoryImpl>(),
+  );
+  final GetUserDataUseCase _getUserDataUseCase = GetUserDataUseCase(
+    repository: serviceLocator<AuthenticationRepositoryImpl>(),
+  );
   late final DeleteDeviceIdUseCase _deleteDeviceIdUseCase;
   late StreamSubscription<AuthenticationStatus> statusSubscription;
-  AuthenticationBloc(
-      {required GetAuthenticationStatusUseCase statusUseCase,
-      required GetUserDataUseCase getUserDataUseCase})
-      : _statusUseCase = statusUseCase,
-        _getUserDataUseCase = getUserDataUseCase,
-        super(const AuthenticationState.unauthenticated()) {
+
+  AuthenticationBloc() : super(const AuthenticationState.unauthenticated()) {
     _deleteDeviceIdUseCase = DeleteDeviceIdUseCase(
         repository: serviceLocator<AuthenticationRepositoryImpl>());
     statusSubscription = _statusUseCase.call(NoParams()).listen((event) {

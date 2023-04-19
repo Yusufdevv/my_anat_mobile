@@ -1,3 +1,4 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/auth/data/models/type_model.dart';
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/map/data/models/service_spec_suggest_model.dart';
@@ -14,15 +15,12 @@ part 'org_map_v2_event.dart';
 part 'org_map_v2_state.dart';
 
 class OrgMapV2Bloc extends Bloc<OrgMapV2Event, OrgMapV2State> {
-  final GetMapHospitalsWithDistanceUseCase useCase;
-  final GetTypesUseCase typesUseCase;
-  final GetServicesV2UseCase serviceUsecase;
+  final GetMapHospitalsWithDistanceUseCase useCase =
+      GetMapHospitalsWithDistanceUseCase(mapRepository: serviceLocator<MapRepositoryImpl>());
+  final GetTypesUseCase typesUseCase = GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>());
+  final GetServicesV2UseCase serviceUsecase = GetServicesV2UseCase(repository: serviceLocator<MapRepositoryImpl>());
 
-  OrgMapV2Bloc(
-      {required this.useCase,
-      required this.typesUseCase,
-      required this.serviceUsecase})
-      : super(OrgMapV2State()) {
+  OrgMapV2Bloc() : super(OrgMapV2State()) {
     on<_SuggestCategories>(suggestCategories);
     on<_SuggestServices>(suggestServices);
     on<_SuggestOrg>(suggestOrg);
@@ -31,8 +29,7 @@ class OrgMapV2Bloc extends Bloc<OrgMapV2Event, OrgMapV2State> {
     on<_ChangeTab>(changeTab);
   }
 
-  suggestCategories(
-      _SuggestCategories event, Emitter<OrgMapV2State> emit) async {
+  suggestCategories(_SuggestCategories event, Emitter<OrgMapV2State> emit) async {
     emit(state.copyWith(categoryStatus: FormzStatus.submissionInProgress));
     // final result = await typesUseCase.call(null);
     // if (result.isRight) {
@@ -65,8 +62,7 @@ class OrgMapV2Bloc extends Bloc<OrgMapV2Event, OrgMapV2State> {
   }
 
   suggestOrg(_SuggestOrg event, Emitter<OrgMapV2State> emit) async {
-    emit(state.copyWith(
-        getSuggestHospitalsStatus: FormzStatus.submissionInProgress));
+    emit(state.copyWith(getSuggestHospitalsStatus: FormzStatus.submissionInProgress));
     final result = await useCase.call(MapV2Params(
       next: event.params.next,
       latitude: event.params.latitude,
@@ -94,14 +90,11 @@ class OrgMapV2Bloc extends Bloc<OrgMapV2Event, OrgMapV2State> {
     }
   }
 
-  getAllCategories(
-      _GetAllCategories event, Emitter<OrgMapV2State> emit) async {}
+  getAllCategories(_GetAllCategories event, Emitter<OrgMapV2State> emit) async {}
 
   getAllServices(_GetAllServices event, Emitter<OrgMapV2State> emit) async {}
 
-  changeTab(_ChangeTab event, Emitter<OrgMapV2State> emit) async {
-    print('tab => ${event.index}');
-    emit(state.copyWith(tabIndex: event.index));
-    print('state tab => ${state.tabIndex}');
+  changeTab(_ChangeTab event, Emitter<OrgMapV2State> emit) async { 
+    emit(state.copyWith(tabIndex: event.index)); 
   }
 }
