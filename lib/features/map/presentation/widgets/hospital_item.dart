@@ -15,8 +15,6 @@ class HospitalItem extends StatelessWidget {
 
   const HospitalItem({required this.entity, this.isSuggestionItem = false, this.searchText = '', Key? key})
       : super(key: key);
-
-  // double calculateDistance(lat1, lon1, lat2, lon2) {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
