@@ -26,7 +26,7 @@ class _HospitalItemState extends State<HospitalItem> {
   late List<ServiceOrSpecializationEntity> wrapItems;
   @override
   void initState() {
-    wrapItems = [
+    final v = [
       ...widget.entity.specialization
           .map((e) => ServiceOrSpecializationEntity(title: e.title, id: e.id, isService: false))
           .toList(),
@@ -34,6 +34,8 @@ class _HospitalItemState extends State<HospitalItem> {
           .map((e) => ServiceOrSpecializationEntity(title: e.name, id: e.id, isService: true))
           .toList(),
     ];
+
+    wrapItems = v.where((e) => e.title.contains(widget.searchText)).toList();
     super.initState();
   }
 
