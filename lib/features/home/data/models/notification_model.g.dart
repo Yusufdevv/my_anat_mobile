@@ -16,6 +16,8 @@ NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
           : const ImageConverter()
               .fromJson(json['image'] as Map<String, dynamic>?),
       id: json['id'] as int? ?? 0,
+      createdAt: json['created_at'] as String? ?? '',
+      content: json['content'] as String? ?? '',
     );
 
 Map<String, dynamic> _$NotificationModelToJson(NotificationModel instance) =>
@@ -25,4 +27,6 @@ Map<String, dynamic> _$NotificationModelToJson(NotificationModel instance) =>
       'image': const ImageConverter().toJson(instance.image),
       'type': instance.type,
       'read': instance.read,
+      'created_at': instance.createdAt,
+      'content': instance.content,
     };

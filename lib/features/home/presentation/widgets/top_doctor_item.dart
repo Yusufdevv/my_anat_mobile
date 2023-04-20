@@ -117,7 +117,6 @@ class TopDoctorItem extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 4, right: 8),
                               child: Text(
-                                // TODO add distance to doctors
                                 '${distance.toStringAsFixed(2)} km',
                                 style:
                                     Theme.of(context).textTheme.headlineSmall,

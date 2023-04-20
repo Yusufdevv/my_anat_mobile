@@ -1,6 +1,7 @@
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/features/home/data/models/banner_model.dart';
 import 'package:anatomica/features/home/data/repository_impls/home_repo_impl.dart';
+import 'package:anatomica/features/home/domain/usecases/banner_single_usecase.dart';
 import 'package:anatomica/features/home/domain/usecases/banners_usecase.dart';
 import 'package:anatomica/features/home/domain/usecases/top_articles_usecase.dart';
 import 'package:anatomica/features/journal/data/models/journal_article_model.dart';
@@ -15,13 +16,14 @@ part 'home_articles_state.dart';
 class HomeArticlesBloc extends Bloc<HomeArticlesEvent, HomeArticlesState> {
   final TopArticlesUsecase _topArticlesUsecase =
       TopArticlesUsecase(repository: serviceLocator<HomeRepoImpl>());
-  final BannersUsecase _bannersUsecase =
-      BannersUsecase();
+  final BannersUsecase _bannersUsecase = BannersUsecase();
+  final BannerSingleUsecase _bannerSingleUsecase = BannerSingleUsecase();
 
   HomeArticlesBloc() : super(HomeArticlesState()) {
     on<_GetHomeArticles>(_getHomeArticles);
     on<_GetMoreHomeArticles>(_getMoreHomeArticles);
     on<_GetBanners>(_getBanners);
+    on<_GetBannerSingle>(_getBannerSingle);
     on<_GetMoreBanners>(_getMoreBanners);
   }
 
@@ -37,6 +39,21 @@ class HomeArticlesBloc extends Bloc<HomeArticlesEvent, HomeArticlesState> {
         homeArticlesFetchMore: response.right.next != null,
         homeArticles: response.right.results,
       ));
+    }
+  }
+
+  _getBannerSingle(
+      _GetBannerSingle event, Emitter<HomeArticlesState> emit) async {
+    emit(state.copyWith(bannerSingleStatus: FormzStatus.submissionInProgress));
+    final response = await _bannerSingleUsecase.call(event.id);
+    if (response.isRight) {
+      print('response => ${response.right}');
+      emit(
+        state.copyWith(
+          bannerSingleStatus: FormzStatus.submissionSuccess,
+          bannerSingle: response.right,
+        ),
+      );
     }
   }
 

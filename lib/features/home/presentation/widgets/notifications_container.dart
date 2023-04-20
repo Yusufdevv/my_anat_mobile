@@ -20,56 +20,63 @@ class NotificationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: isRead ? 12 : 16, vertical: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: isRead ? primary : textFieldColor),
       ),
+      padding: const EdgeInsets.fromLTRB(0, 16, 16, 16),
       child: Row(
         children: [
-          Container(
-            width: 4,
-            height: 32,
-            decoration: const BoxDecoration(
-              color: primary,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(4),
-                bottomRight: Radius.circular(4),
-              ),
-            ),
-          ),
-          Column(
-            children: [
-              Text(
-                time,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(fontWeight: FontWeight.w400),
-              ),
-              const SizedBox(height: 12),
-              WScaleAnimation(
-                onTap: onDetailsTap,
-                child: Row(
-                  children: [
-                    Text(
-                      'Перейти',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(fontSize: 14),
-                    ),
-                    const SizedBox(width: 4),
-                    SvgPicture.asset(AppIcons.arrowRight, color: primary)
-                  ],
+          if (isRead) ...{
+            Container(
+              width: 4,
+              height: 32,
+              decoration: const BoxDecoration(
+                color: primary,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(4),
+                  bottomRight: Radius.circular(4),
                 ),
-              )
-            ],
+              ),
+            )
+          },
+          SizedBox(width: isRead ? 16 : 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  time,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.w400),
+                ),
+                const SizedBox(height: 12),
+                WScaleAnimation(
+                  onTap: onDetailsTap,
+                  child: Row(
+                    children: [
+                      Text(
+                        // todo locale
+                        'Перейти',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(fontSize: 14),
+                      ),
+                      const SizedBox(width: 4),
+                      SvgPicture.asset(AppIcons.arrowRight, color: primary)
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),

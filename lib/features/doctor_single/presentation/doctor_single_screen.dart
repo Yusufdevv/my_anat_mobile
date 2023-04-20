@@ -21,6 +21,7 @@ import 'package:anatomica/features/map/presentation/widgets/tab_bar_header_deleg
 import 'package:anatomica/features/vacancy/data/repositories/vacancy_repository_impl.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_certificate.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_education.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_education_files_usecase.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_work.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/related_candidate.dart';
@@ -81,7 +82,7 @@ class _DoctorSingleScreenState extends State<DoctorSingleScreen>
             repository: serviceLocator<VacancyRepositoryImpl>()),
         candidateWorkUseCase: CandidateWorkUseCase(
             repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateCertificateUseCase: CandidateCertificateUseCase(
+        candidateEducationFilesUseCase: CandidateEducationFilesUseCase(
             repository: serviceLocator<VacancyRepositoryImpl>()),
         candidateEducationUseCase: CandidateEducationUseCase(
             repository: serviceLocator<VacancyRepositoryImpl>()),

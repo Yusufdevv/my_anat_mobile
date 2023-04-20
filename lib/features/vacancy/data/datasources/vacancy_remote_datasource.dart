@@ -463,7 +463,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   @override
   Future<GenericPagination<CandidateEducationFilesModel>> getCandidateEducationFiles({required int id}) async {
     try {
-      final response = await dio.get('/doctor/$id/education/',
+      final response = await dio.get('/doctor/$id/education/files/',
           options: Options(
             headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                 ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}

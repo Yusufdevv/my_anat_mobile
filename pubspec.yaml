@@ -98,6 +98,7 @@ flutter:
     - lib/assets/translations/ru.json
     - lib/assets/translations/uz.json
     - lib/assets/translations/
+    - assets/lotties/
   fonts:
     - family: Averta CY
       fonts:

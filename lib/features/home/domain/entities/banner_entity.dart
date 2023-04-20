@@ -12,14 +12,15 @@ class BannerEntity extends Equatable {
     this.doctor = 0,
     this.journal = '',
     this.link = '',
+    this.content = '',
   });
-
   final int id;
   final String title;
   final String subtitle;
   @ImageConverter()
   final ImageEntity image;
   final String type;
+  final String content;
   final String organization;
   final int doctor;
   final String journal;

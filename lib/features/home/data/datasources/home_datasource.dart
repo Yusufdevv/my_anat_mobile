@@ -27,6 +27,7 @@ abstract class HomeDatasource {
   Future<GenericPagination<NewsModel>> getNews({String? next});
 
   Future<NewsModel> getNewSingle({required String slug});
+  Future<BannerModel> getBannerSingle({required int id});
 }
 
 class HomeDatasourceImpl extends HomeDatasource {
@@ -71,6 +72,37 @@ class HomeDatasourceImpl extends HomeDatasource {
         return GenericPagination.fromJson(response.data, (p0) => CategoryModel.fromJson(p0 as Map<String, dynamic>));
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError {
+      throw DioException();
+    } on Exception catch (e) {
+      throw ParsingException(errorMessage: e.toString());
+    }
+  }
+
+  @override
+  Future<BannerModel> getBannerSingle({required int id}) async {
+    try {
+      final response = await _dio.get(
+        '/mobile/banners/$id/',
+        options: Options(
+            headers: StorageRepository.getString('token').isNotEmpty
+                ? {
+                    'Authorization':
+                        'Token ${StorageRepository.getString('token')}'
+                  }
+                : {}),
+      );
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        return BannerModel.fromJson(response.data);
+      } else {
+        throw ServerException(
+            statusCode: response.statusCode!,
+            errorMessage: response.data.toString());
       }
     } on ServerException {
       rethrow;

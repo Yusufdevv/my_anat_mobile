@@ -19,6 +19,7 @@ BannerModel _$BannerModelFromJson(Map<String, dynamic> json) => BannerModel(
       organization: json['organization'] as String? ?? '',
       subtitle: json['subtitle'] as String? ?? '',
       type: json['type'] as String? ?? '',
+      content: json['content'] as String? ?? '',
     );
 
 Map<String, dynamic> _$BannerModelToJson(BannerModel instance) =>
@@ -28,6 +29,7 @@ Map<String, dynamic> _$BannerModelToJson(BannerModel instance) =>
       'subtitle': instance.subtitle,
       'image': const ImageConverter().toJson(instance.image),
       'type': instance.type,
+      'content': instance.content,
       'organization': instance.organization,
       'doctor': instance.doctor,
       'journal': instance.journal,

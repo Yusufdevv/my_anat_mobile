@@ -8,6 +8,8 @@ class NotificationEntity extends Equatable {
   final ImageEntity image;
   final String type;
   final bool read;
+  final String createdAt;
+  final String content;
 
   const NotificationEntity({
     this.image = const ImageEntity(),
@@ -15,6 +17,8 @@ class NotificationEntity extends Equatable {
     this.type = '',
     this.title = '',
     this.read = false,
+    this.createdAt = '',
+    this.content = '',
   });
 
   @override
@@ -24,5 +28,7 @@ class NotificationEntity extends Equatable {
         title,
         type,
         read,
+        createdAt,
+        content,
       ];
 }

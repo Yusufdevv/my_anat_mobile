@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
@@ -25,8 +27,7 @@ class NewSingleScreen extends StatelessWidget {
           leadingWidth: 0,
           automaticallyImplyLeading: false,
           elevation: 1,
-          title: HospitalSingleAppBarBody(
-              shareValue: 'https://anatomica.uz/news/$slug'),
+          title: HospitalSingleAppBarBody(),
           shadowColor: textFieldColor,
         ),
         body: BlocBuilder<NewsBloc, NewsState>(
@@ -40,11 +41,6 @@ class NewSingleScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16)
                     .copyWith(bottom: MediaQuery.of(context).padding.bottom),
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: CachedNetworkImage(
-                        imageUrl: state.newSingle!.image.middle),
-                  ),
                   Html(
                     data: state.newSingle!.description,
                     style: {

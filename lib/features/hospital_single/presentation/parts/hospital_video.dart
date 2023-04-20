@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
@@ -37,21 +39,36 @@ class _HospitalVideoState extends State<HospitalVideo> {
 
     for (int i = 0; i < widget.videos.length; i++) {
       controllers = List.generate(
-          widget.videos.length,
-          (index) => YoutubePlayerController(
-                initialVideoId:
-                    YoutubePlayer.convertUrlToId(widget.videos[index]) ?? '',
-                flags: const YoutubePlayerFlags(
-                  autoPlay: false,
-                  disableDragSeek: true,
-                  hideControls: true,
-                ),
-              ));
+        widget.videos.length,
+        (index) => YoutubePlayerController(
+          initialVideoId:
+              YoutubePlayer.convertUrlToId(widget.videos[index]) ?? '',
+          flags: const YoutubePlayerFlags(
+            autoPlay: false,
+            disableDragSeek: true,
+            hideControls: true,
+          ),
+        ),
+      );
+    }
+    if (widget.videoUrl.isNotEmpty) {
+      controllers = controllers
+        ..add(
+          YoutubePlayerController(
+            initialVideoId: YoutubePlayer.convertUrlToId(widget.videoUrl) ?? '',
+            flags: const YoutubePlayerFlags(
+              autoPlay: false,
+              disableDragSeek: true,
+              hideControls: true,
+            ),
+          ),
+        );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    log('videos => ${widget.videos} video link => ${widget.videoUrl}');
     if (widget.videoUrl.isNotEmpty || widget.videos.isNotEmpty) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -134,8 +151,7 @@ class _HospitalVideoState extends State<HospitalVideo> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (widget.videoUrl.isNotEmpty &&
-                        widget.videos.isNotEmpty) ...{
+                    if (widget.videoUrl.isNotEmpty) ...{
                       Stack(
                         children: [
                           ClipRRect(

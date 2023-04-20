@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
@@ -21,11 +23,18 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
+  late NotificationBloc _notificationBloc;
+  @override
+  void initState() {
+    _notificationBloc = NotificationBloc()
+      ..add(const NotificationEvent.getNotifications());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          NotificationBloc()..add(const NotificationEvent.getNotifications()),
+    return BlocProvider.value(
+      value: _notificationBloc,
       child: Scaffold(
         appBar: AppBar(
           elevation: 1,
@@ -78,18 +87,23 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
                   state.notificationsStatus),
               itemBuilder: (c, index) {
+                log('notif => ${state.notifications[index]}');
                 return NotificationItem(
                   isRead: state.notifications[index].read,
-                  time: state.notifications[index].type,
+                  time: MyFunctions.getPublishedDate(
+                      state.notifications[index].createdAt),
                   title: state.notifications[index].title,
                   onDetailsTap: () {
-                    context.read<NotificationBloc>().add(
-                        NotificationEvent.readNotification(
+                    _notificationBloc.add(
+                        NotificationEvent.getNotificationSingle(
                             id: state.notifications[index].id));
                     showModalBottomSheet(
                       context: context,
+                      backgroundColor: Colors.transparent,
+                      isScrollControlled: true,
                       builder: (ctx) {
-                        return const NotificationSingle();
+                        return NotificationSingle(
+                            notificationBloc: _notificationBloc);
                       },
                     );
                   },
@@ -97,8 +111,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               },
               itemCount: state.notifications.length,
               fetchMoreFunction: () {
-                context
-                    .read<NotificationBloc>()
+                _notificationBloc
                     .add(const NotificationEvent.getMoreNotifications());
               },
               hasMoreToFetch: state.notificationsFetchMore,

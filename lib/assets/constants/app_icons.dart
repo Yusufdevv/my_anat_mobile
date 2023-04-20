@@ -165,4 +165,5 @@ class AppIcons {
   static const rightArrow = 'assets/icons/map_screen/right_arrow.svg';
   static const buyPremiumBackground =
       'assets/images/buy_premium_background.png';
+  static const file = 'assets/icons/global/file.svg';
 }

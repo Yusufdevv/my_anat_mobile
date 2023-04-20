@@ -22,6 +22,7 @@ mixin _$HomeArticlesEvent {
     required TResult Function() getMoreHomeArticles,
     required TResult Function() getBanners,
     required TResult Function() getMoreBanners,
+    required TResult Function(int id) getBannerSingle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$HomeArticlesEvent {
     TResult? Function()? getMoreHomeArticles,
     TResult? Function()? getBanners,
     TResult? Function()? getMoreBanners,
+    TResult? Function(int id)? getBannerSingle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$HomeArticlesEvent {
     TResult Function()? getMoreHomeArticles,
     TResult Function()? getBanners,
     TResult Function()? getMoreBanners,
+    TResult Function(int id)? getBannerSingle,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$HomeArticlesEvent {
     required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
     required TResult Function(_GetBanners value) getBanners,
     required TResult Function(_GetMoreBanners value) getMoreBanners,
+    required TResult Function(_GetBannerSingle value) getBannerSingle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$HomeArticlesEvent {
     TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult? Function(_GetBanners value)? getBanners,
     TResult? Function(_GetMoreBanners value)? getMoreBanners,
+    TResult? Function(_GetBannerSingle value)? getBannerSingle,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$HomeArticlesEvent {
     TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult Function(_GetBanners value)? getBanners,
     TResult Function(_GetMoreBanners value)? getMoreBanners,
+    TResult Function(_GetBannerSingle value)? getBannerSingle,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -128,6 +134,7 @@ class _$_GetHomeArticles implements _GetHomeArticles {
     required TResult Function() getMoreHomeArticles,
     required TResult Function() getBanners,
     required TResult Function() getMoreBanners,
+    required TResult Function(int id) getBannerSingle,
   }) {
     return getHomeArticles();
   }
@@ -139,6 +146,7 @@ class _$_GetHomeArticles implements _GetHomeArticles {
     TResult? Function()? getMoreHomeArticles,
     TResult? Function()? getBanners,
     TResult? Function()? getMoreBanners,
+    TResult? Function(int id)? getBannerSingle,
   }) {
     return getHomeArticles?.call();
   }
@@ -150,6 +158,7 @@ class _$_GetHomeArticles implements _GetHomeArticles {
     TResult Function()? getMoreHomeArticles,
     TResult Function()? getBanners,
     TResult Function()? getMoreBanners,
+    TResult Function(int id)? getBannerSingle,
     required TResult orElse(),
   }) {
     if (getHomeArticles != null) {
@@ -165,6 +174,7 @@ class _$_GetHomeArticles implements _GetHomeArticles {
     required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
     required TResult Function(_GetBanners value) getBanners,
     required TResult Function(_GetMoreBanners value) getMoreBanners,
+    required TResult Function(_GetBannerSingle value) getBannerSingle,
   }) {
     return getHomeArticles(this);
   }
@@ -176,6 +186,7 @@ class _$_GetHomeArticles implements _GetHomeArticles {
     TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult? Function(_GetBanners value)? getBanners,
     TResult? Function(_GetMoreBanners value)? getMoreBanners,
+    TResult? Function(_GetBannerSingle value)? getBannerSingle,
   }) {
     return getHomeArticles?.call(this);
   }
@@ -187,6 +198,7 @@ class _$_GetHomeArticles implements _GetHomeArticles {
     TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult Function(_GetBanners value)? getBanners,
     TResult Function(_GetMoreBanners value)? getMoreBanners,
+    TResult Function(_GetBannerSingle value)? getBannerSingle,
     required TResult orElse(),
   }) {
     if (getHomeArticles != null) {
@@ -242,6 +254,7 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
     required TResult Function() getMoreHomeArticles,
     required TResult Function() getBanners,
     required TResult Function() getMoreBanners,
+    required TResult Function(int id) getBannerSingle,
   }) {
     return getMoreHomeArticles();
   }
@@ -253,6 +266,7 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
     TResult? Function()? getMoreHomeArticles,
     TResult? Function()? getBanners,
     TResult? Function()? getMoreBanners,
+    TResult? Function(int id)? getBannerSingle,
   }) {
     return getMoreHomeArticles?.call();
   }
@@ -264,6 +278,7 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
     TResult Function()? getMoreHomeArticles,
     TResult Function()? getBanners,
     TResult Function()? getMoreBanners,
+    TResult Function(int id)? getBannerSingle,
     required TResult orElse(),
   }) {
     if (getMoreHomeArticles != null) {
@@ -279,6 +294,7 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
     required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
     required TResult Function(_GetBanners value) getBanners,
     required TResult Function(_GetMoreBanners value) getMoreBanners,
+    required TResult Function(_GetBannerSingle value) getBannerSingle,
   }) {
     return getMoreHomeArticles(this);
   }
@@ -290,6 +306,7 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
     TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult? Function(_GetBanners value)? getBanners,
     TResult? Function(_GetMoreBanners value)? getMoreBanners,
+    TResult? Function(_GetBannerSingle value)? getBannerSingle,
   }) {
     return getMoreHomeArticles?.call(this);
   }
@@ -301,6 +318,7 @@ class _$_GetMoreHomeArticles implements _GetMoreHomeArticles {
     TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult Function(_GetBanners value)? getBanners,
     TResult Function(_GetMoreBanners value)? getMoreBanners,
+    TResult Function(_GetBannerSingle value)? getBannerSingle,
     required TResult orElse(),
   }) {
     if (getMoreHomeArticles != null) {
@@ -356,6 +374,7 @@ class _$_GetBanners implements _GetBanners {
     required TResult Function() getMoreHomeArticles,
     required TResult Function() getBanners,
     required TResult Function() getMoreBanners,
+    required TResult Function(int id) getBannerSingle,
   }) {
     return getBanners();
   }
@@ -367,6 +386,7 @@ class _$_GetBanners implements _GetBanners {
     TResult? Function()? getMoreHomeArticles,
     TResult? Function()? getBanners,
     TResult? Function()? getMoreBanners,
+    TResult? Function(int id)? getBannerSingle,
   }) {
     return getBanners?.call();
   }
@@ -378,6 +398,7 @@ class _$_GetBanners implements _GetBanners {
     TResult Function()? getMoreHomeArticles,
     TResult Function()? getBanners,
     TResult Function()? getMoreBanners,
+    TResult Function(int id)? getBannerSingle,
     required TResult orElse(),
   }) {
     if (getBanners != null) {
@@ -393,6 +414,7 @@ class _$_GetBanners implements _GetBanners {
     required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
     required TResult Function(_GetBanners value) getBanners,
     required TResult Function(_GetMoreBanners value) getMoreBanners,
+    required TResult Function(_GetBannerSingle value) getBannerSingle,
   }) {
     return getBanners(this);
   }
@@ -404,6 +426,7 @@ class _$_GetBanners implements _GetBanners {
     TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult? Function(_GetBanners value)? getBanners,
     TResult? Function(_GetMoreBanners value)? getMoreBanners,
+    TResult? Function(_GetBannerSingle value)? getBannerSingle,
   }) {
     return getBanners?.call(this);
   }
@@ -415,6 +438,7 @@ class _$_GetBanners implements _GetBanners {
     TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult Function(_GetBanners value)? getBanners,
     TResult Function(_GetMoreBanners value)? getMoreBanners,
+    TResult Function(_GetBannerSingle value)? getBannerSingle,
     required TResult orElse(),
   }) {
     if (getBanners != null) {
@@ -470,6 +494,7 @@ class _$_GetMoreBanners implements _GetMoreBanners {
     required TResult Function() getMoreHomeArticles,
     required TResult Function() getBanners,
     required TResult Function() getMoreBanners,
+    required TResult Function(int id) getBannerSingle,
   }) {
     return getMoreBanners();
   }
@@ -481,6 +506,7 @@ class _$_GetMoreBanners implements _GetMoreBanners {
     TResult? Function()? getMoreHomeArticles,
     TResult? Function()? getBanners,
     TResult? Function()? getMoreBanners,
+    TResult? Function(int id)? getBannerSingle,
   }) {
     return getMoreBanners?.call();
   }
@@ -492,6 +518,7 @@ class _$_GetMoreBanners implements _GetMoreBanners {
     TResult Function()? getMoreHomeArticles,
     TResult Function()? getBanners,
     TResult Function()? getMoreBanners,
+    TResult Function(int id)? getBannerSingle,
     required TResult orElse(),
   }) {
     if (getMoreBanners != null) {
@@ -507,6 +534,7 @@ class _$_GetMoreBanners implements _GetMoreBanners {
     required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
     required TResult Function(_GetBanners value) getBanners,
     required TResult Function(_GetMoreBanners value) getMoreBanners,
+    required TResult Function(_GetBannerSingle value) getBannerSingle,
   }) {
     return getMoreBanners(this);
   }
@@ -518,6 +546,7 @@ class _$_GetMoreBanners implements _GetMoreBanners {
     TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult? Function(_GetBanners value)? getBanners,
     TResult? Function(_GetMoreBanners value)? getMoreBanners,
+    TResult? Function(_GetBannerSingle value)? getBannerSingle,
   }) {
     return getMoreBanners?.call(this);
   }
@@ -529,6 +558,7 @@ class _$_GetMoreBanners implements _GetMoreBanners {
     TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
     TResult Function(_GetBanners value)? getBanners,
     TResult Function(_GetMoreBanners value)? getMoreBanners,
+    TResult Function(_GetBannerSingle value)? getBannerSingle,
     required TResult orElse(),
   }) {
     if (getMoreBanners != null) {
@@ -543,6 +573,157 @@ abstract class _GetMoreBanners implements HomeArticlesEvent {
 }
 
 /// @nodoc
+abstract class _$$_GetBannerSingleCopyWith<$Res> {
+  factory _$$_GetBannerSingleCopyWith(
+          _$_GetBannerSingle value, $Res Function(_$_GetBannerSingle) then) =
+      __$$_GetBannerSingleCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int id});
+}
+
+/// @nodoc
+class __$$_GetBannerSingleCopyWithImpl<$Res>
+    extends _$HomeArticlesEventCopyWithImpl<$Res, _$_GetBannerSingle>
+    implements _$$_GetBannerSingleCopyWith<$Res> {
+  __$$_GetBannerSingleCopyWithImpl(
+      _$_GetBannerSingle _value, $Res Function(_$_GetBannerSingle) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$_GetBannerSingle(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_GetBannerSingle implements _GetBannerSingle {
+  const _$_GetBannerSingle({required this.id});
+
+  @override
+  final int id;
+
+  @override
+  String toString() {
+    return 'HomeArticlesEvent.getBannerSingle(id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_GetBannerSingle &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetBannerSingleCopyWith<_$_GetBannerSingle> get copyWith =>
+      __$$_GetBannerSingleCopyWithImpl<_$_GetBannerSingle>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getHomeArticles,
+    required TResult Function() getMoreHomeArticles,
+    required TResult Function() getBanners,
+    required TResult Function() getMoreBanners,
+    required TResult Function(int id) getBannerSingle,
+  }) {
+    return getBannerSingle(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getHomeArticles,
+    TResult? Function()? getMoreHomeArticles,
+    TResult? Function()? getBanners,
+    TResult? Function()? getMoreBanners,
+    TResult? Function(int id)? getBannerSingle,
+  }) {
+    return getBannerSingle?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getHomeArticles,
+    TResult Function()? getMoreHomeArticles,
+    TResult Function()? getBanners,
+    TResult Function()? getMoreBanners,
+    TResult Function(int id)? getBannerSingle,
+    required TResult orElse(),
+  }) {
+    if (getBannerSingle != null) {
+      return getBannerSingle(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetHomeArticles value) getHomeArticles,
+    required TResult Function(_GetMoreHomeArticles value) getMoreHomeArticles,
+    required TResult Function(_GetBanners value) getBanners,
+    required TResult Function(_GetMoreBanners value) getMoreBanners,
+    required TResult Function(_GetBannerSingle value) getBannerSingle,
+  }) {
+    return getBannerSingle(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetHomeArticles value)? getHomeArticles,
+    TResult? Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult? Function(_GetBanners value)? getBanners,
+    TResult? Function(_GetMoreBanners value)? getMoreBanners,
+    TResult? Function(_GetBannerSingle value)? getBannerSingle,
+  }) {
+    return getBannerSingle?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetHomeArticles value)? getHomeArticles,
+    TResult Function(_GetMoreHomeArticles value)? getMoreHomeArticles,
+    TResult Function(_GetBanners value)? getBanners,
+    TResult Function(_GetMoreBanners value)? getMoreBanners,
+    TResult Function(_GetBannerSingle value)? getBannerSingle,
+    required TResult orElse(),
+  }) {
+    if (getBannerSingle != null) {
+      return getBannerSingle(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetBannerSingle implements HomeArticlesEvent {
+  const factory _GetBannerSingle({required final int id}) = _$_GetBannerSingle;
+
+  int get id;
+  @JsonKey(ignore: true)
+  _$$_GetBannerSingleCopyWith<_$_GetBannerSingle> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$HomeArticlesState {
   List<JournalArticleModel> get homeArticles =>
       throw _privateConstructorUsedError;
@@ -550,6 +731,8 @@ mixin _$HomeArticlesState {
   String? get homeArticlesNext => throw _privateConstructorUsedError;
   bool get homeArticlesFetchMore => throw _privateConstructorUsedError;
   List<BannerModel> get banners => throw _privateConstructorUsedError;
+  BannerModel? get bannerSingle => throw _privateConstructorUsedError;
+  FormzStatus get bannerSingleStatus => throw _privateConstructorUsedError;
   FormzStatus get bannersStatus => throw _privateConstructorUsedError;
   String? get bannersNext => throw _privateConstructorUsedError;
   bool get bannersFetchMore => throw _privateConstructorUsedError;
@@ -571,6 +754,8 @@ abstract class $HomeArticlesStateCopyWith<$Res> {
       String? homeArticlesNext,
       bool homeArticlesFetchMore,
       List<BannerModel> banners,
+      BannerModel? bannerSingle,
+      FormzStatus bannerSingleStatus,
       FormzStatus bannersStatus,
       String? bannersNext,
       bool bannersFetchMore});
@@ -594,6 +779,8 @@ class _$HomeArticlesStateCopyWithImpl<$Res, $Val extends HomeArticlesState>
     Object? homeArticlesNext = freezed,
     Object? homeArticlesFetchMore = null,
     Object? banners = null,
+    Object? bannerSingle = freezed,
+    Object? bannerSingleStatus = null,
     Object? bannersStatus = null,
     Object? bannersNext = freezed,
     Object? bannersFetchMore = null,
@@ -619,6 +806,14 @@ class _$HomeArticlesStateCopyWithImpl<$Res, $Val extends HomeArticlesState>
           ? _value.banners
           : banners // ignore: cast_nullable_to_non_nullable
               as List<BannerModel>,
+      bannerSingle: freezed == bannerSingle
+          ? _value.bannerSingle
+          : bannerSingle // ignore: cast_nullable_to_non_nullable
+              as BannerModel?,
+      bannerSingleStatus: null == bannerSingleStatus
+          ? _value.bannerSingleStatus
+          : bannerSingleStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
       bannersStatus: null == bannersStatus
           ? _value.bannersStatus
           : bannersStatus // ignore: cast_nullable_to_non_nullable
@@ -649,6 +844,8 @@ abstract class _$$_HomeArticlesStateCopyWith<$Res>
       String? homeArticlesNext,
       bool homeArticlesFetchMore,
       List<BannerModel> banners,
+      BannerModel? bannerSingle,
+      FormzStatus bannerSingleStatus,
       FormzStatus bannersStatus,
       String? bannersNext,
       bool bannersFetchMore});
@@ -670,6 +867,8 @@ class __$$_HomeArticlesStateCopyWithImpl<$Res>
     Object? homeArticlesNext = freezed,
     Object? homeArticlesFetchMore = null,
     Object? banners = null,
+    Object? bannerSingle = freezed,
+    Object? bannerSingleStatus = null,
     Object? bannersStatus = null,
     Object? bannersNext = freezed,
     Object? bannersFetchMore = null,
@@ -695,6 +894,14 @@ class __$$_HomeArticlesStateCopyWithImpl<$Res>
           ? _value._banners
           : banners // ignore: cast_nullable_to_non_nullable
               as List<BannerModel>,
+      bannerSingle: freezed == bannerSingle
+          ? _value.bannerSingle
+          : bannerSingle // ignore: cast_nullable_to_non_nullable
+              as BannerModel?,
+      bannerSingleStatus: null == bannerSingleStatus
+          ? _value.bannerSingleStatus
+          : bannerSingleStatus // ignore: cast_nullable_to_non_nullable
+              as FormzStatus,
       bannersStatus: null == bannersStatus
           ? _value.bannersStatus
           : bannersStatus // ignore: cast_nullable_to_non_nullable
@@ -720,6 +927,8 @@ class _$_HomeArticlesState implements _HomeArticlesState {
       this.homeArticlesNext,
       this.homeArticlesFetchMore = false,
       final List<BannerModel> banners = const [],
+      this.bannerSingle,
+      this.bannerSingleStatus = FormzStatus.pure,
       this.bannersStatus = FormzStatus.pure,
       this.bannersNext,
       this.bannersFetchMore = false})
@@ -753,6 +962,11 @@ class _$_HomeArticlesState implements _HomeArticlesState {
   }
 
   @override
+  final BannerModel? bannerSingle;
+  @override
+  @JsonKey()
+  final FormzStatus bannerSingleStatus;
+  @override
   @JsonKey()
   final FormzStatus bannersStatus;
   @override
@@ -763,7 +977,7 @@ class _$_HomeArticlesState implements _HomeArticlesState {
 
   @override
   String toString() {
-    return 'HomeArticlesState(homeArticles: $homeArticles, homeArticlesStatus: $homeArticlesStatus, homeArticlesNext: $homeArticlesNext, homeArticlesFetchMore: $homeArticlesFetchMore, banners: $banners, bannersStatus: $bannersStatus, bannersNext: $bannersNext, bannersFetchMore: $bannersFetchMore)';
+    return 'HomeArticlesState(homeArticles: $homeArticles, homeArticlesStatus: $homeArticlesStatus, homeArticlesNext: $homeArticlesNext, homeArticlesFetchMore: $homeArticlesFetchMore, banners: $banners, bannerSingle: $bannerSingle, bannerSingleStatus: $bannerSingleStatus, bannersStatus: $bannersStatus, bannersNext: $bannersNext, bannersFetchMore: $bannersFetchMore)';
   }
 
   @override
@@ -780,6 +994,10 @@ class _$_HomeArticlesState implements _HomeArticlesState {
             (identical(other.homeArticlesFetchMore, homeArticlesFetchMore) ||
                 other.homeArticlesFetchMore == homeArticlesFetchMore) &&
             const DeepCollectionEquality().equals(other._banners, _banners) &&
+            (identical(other.bannerSingle, bannerSingle) ||
+                other.bannerSingle == bannerSingle) &&
+            (identical(other.bannerSingleStatus, bannerSingleStatus) ||
+                other.bannerSingleStatus == bannerSingleStatus) &&
             (identical(other.bannersStatus, bannersStatus) ||
                 other.bannersStatus == bannersStatus) &&
             (identical(other.bannersNext, bannersNext) ||
@@ -796,6 +1014,8 @@ class _$_HomeArticlesState implements _HomeArticlesState {
       homeArticlesNext,
       homeArticlesFetchMore,
       const DeepCollectionEquality().hash(_banners),
+      bannerSingle,
+      bannerSingleStatus,
       bannersStatus,
       bannersNext,
       bannersFetchMore);
@@ -815,6 +1035,8 @@ abstract class _HomeArticlesState implements HomeArticlesState {
       final String? homeArticlesNext,
       final bool homeArticlesFetchMore,
       final List<BannerModel> banners,
+      final BannerModel? bannerSingle,
+      final FormzStatus bannerSingleStatus,
       final FormzStatus bannersStatus,
       final String? bannersNext,
       final bool bannersFetchMore}) = _$_HomeArticlesState;
@@ -829,6 +1051,10 @@ abstract class _HomeArticlesState implements HomeArticlesState {
   bool get homeArticlesFetchMore;
   @override
   List<BannerModel> get banners;
+  @override
+  BannerModel? get bannerSingle;
+  @override
+  FormzStatus get bannerSingleStatus;
   @override
   FormzStatus get bannersStatus;
   @override
