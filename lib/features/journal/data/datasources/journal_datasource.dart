@@ -32,8 +32,8 @@ class JournalDatasourceImpl extends JournalDatasource {
       final response = await _dio.get(
         next ?? '/journal/',
         options: Options(
-          headers: StorageRepository.getString('token').isNotEmpty
-              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+          headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
       );
@@ -60,8 +60,8 @@ class JournalDatasourceImpl extends JournalDatasource {
         next ?? '/journal/',
         queryParameters: {'search': query},
         options: Options(
-          headers: StorageRepository.getString('token').isNotEmpty
-              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+          headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
       );
@@ -87,8 +87,8 @@ class JournalDatasourceImpl extends JournalDatasource {
         next ?? '/article/',
         queryParameters: {'ordering': '-publish_date', 'search': query},
         options: Options(
-          headers: StorageRepository.getString('token').isNotEmpty
-              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+          headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
       );
@@ -113,8 +113,8 @@ class JournalDatasourceImpl extends JournalDatasource {
       final response = await _dio.get(
         '/article/$slug/detail/',
         options: Options(
-          headers: StorageRepository.getString('token').isNotEmpty
-              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+          headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
       );
@@ -139,8 +139,8 @@ class JournalDatasourceImpl extends JournalDatasource {
         next ?? '/article/',
         queryParameters: {'journal': id},
         options: Options(
-          headers: StorageRepository.getString('token').isNotEmpty
-              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+          headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
       );
@@ -165,8 +165,8 @@ class JournalDatasourceImpl extends JournalDatasource {
       final response = await _dio.get(
         '/journal/$slug/file/',
         options: Options(
-          headers: StorageRepository.getString('token').isNotEmpty
-              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+          headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
       );
@@ -190,8 +190,8 @@ class JournalDatasourceImpl extends JournalDatasource {
       final response = await _dio.get(
         '/journal/$slug/detail/',
         options: Options(
-          headers: StorageRepository.getString('token').isNotEmpty
-              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+          headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
       );

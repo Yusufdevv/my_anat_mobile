@@ -25,10 +25,10 @@ class JournalPagesDatasourceImpl extends JournalPagesDatasource {
       final response = await _dio.get(
           next == null || next.isEmpty ? '/journal/$slug/pages/' : next,
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                   ? {
                       'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
+                          'Token ${StorageRepository.getString(StoreKeys.token)}'
                     }
                   : {}));
       print('next link => $next ${response.realUri}');
@@ -57,10 +57,10 @@ class JournalPagesDatasourceImpl extends JournalPagesDatasource {
     try {
       final response = await _dio.get(next ?? '/journal/$slug/outline/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                   ? {
                       'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
+                          'Token ${StorageRepository.getString(StoreKeys.token)}'
                     }
                   : {}));
       if (response.statusCode != null &&

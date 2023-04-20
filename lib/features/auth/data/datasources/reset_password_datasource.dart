@@ -180,9 +180,8 @@ class ResetPasswordDatasourceImpl extends ResetPasswordDatasource {
           "state_id": stateId,
           "password": password,
         });
-
         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
-          await StorageRepository.putString('token', response.data['token']);
+          await StorageRepository.putString(StoreKeys.token, response.data[StoreKeys.token]);
         } else {
           if (response.data is Map) {
             throw ServerException(

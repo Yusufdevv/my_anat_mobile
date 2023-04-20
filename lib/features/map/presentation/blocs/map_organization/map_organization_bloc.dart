@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
+import 'dart:developer';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
@@ -41,6 +42,8 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
       : super(MapOrganizationState(tabController: TabController(length: 2, vsync: tickerProvider))) {
     on<_OnMapCreated>(_onMapCreated);
     on<_ChangeTab>(_changeTab);
+    on<_ZoomIn>(_zoomIn);
+    on<_ZoomOut>(_zoomOut);
 
     on<_GetHospitals>(_getHospitals);
 
@@ -58,11 +61,28 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
       emit(state.copyWith(radius: event.radius));
     });
   }
+  FutureOr<void> _zoomIn(_ZoomIn event, Emitter<MapOrganizationState> emit) async {
+    if (state.maxZoomLevel > state.zoomLevel) {
+      state.mapController!.moveCamera(CameraUpdate.zoomTo(state.zoomLevel + 1),
+          animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth));
+      emit(state.copyWith(zoomLevel: state.zoomLevel + 1));
+    }
+  }
+
+  FutureOr<void> _zoomOut(_ZoomOut event, Emitter<MapOrganizationState> emit) async {
+    if (state.minZoomLevel < state.zoomLevel) {
+      state.mapController!.moveCamera(
+        CameraUpdate.zoomTo(state.zoomLevel - 1),
+        animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
+      );
+      emit(state.copyWith(zoomLevel: state.zoomLevel - 1));
+    }
+  }
 
   FutureOr<void> _changeTab(_ChangeTab event, Emitter<MapOrganizationState> emit) async {
     if (event.haveToLoading) {
       emit(state.copyWith(tabChangingStatus: FormzStatus.submissionInProgress));
-      await Future.delayed(const Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 500));
     }
 
     if (event.tab == 0) {
@@ -288,8 +308,8 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
     try {
       final position = await MyFunctions.determinePosition();
 
-      await StorageRepository.putDouble('latitude', position.latitude);
-      await StorageRepository.putDouble('longitude', position.longitude);
+      await StorageRepository.putDouble(StoreKeys.latitude, position.latitude);
+      await StorageRepository.putDouble(StoreKeys.longitude, position.longitude);
       final myPoint = Point(latitude: position.latitude, longitude: position.longitude);
       final myPlaceMark = await MyFunctions.getMyPoint(myPoint, event.context);
       var placemarks = [...state.mapObjects];
@@ -298,13 +318,17 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
       await state.mapController!.moveCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-            target: Point(latitude: position.latitude, longitude: position.longitude),
-          ),
+              target: Point(
+                latitude: position.latitude,
+                longitude: position.longitude,
+              ),
+              zoom: 15),
         ),
         animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
       );
-      emit(state.copyWith(getCurrentLocationStatus: FormzStatus.submissionSuccess, mapObjects: placemarks));
-      event.onSuccess(position);
+      log(':::::::::: place marks lenth:  ${placemarks.length}  ::::::::::');
+      emit(state.copyWith(
+          getCurrentLocationStatus: FormzStatus.submissionSuccess, mapObjects: placemarks, zoomLevel: 15));
     } on ParsingException catch (e) {
       event.onError(e.errorMessage);
       emit(state.copyWith(getCurrentLocationStatus: FormzStatus.submissionSuccess));
@@ -327,35 +351,28 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
     );
 
     final camera = await controller.getCameraPosition();
-    final position = Point(
-      latitude: StorageRepository.getDouble(
-        'lat',
-        defValue: 41.310990,
-      ),
-      longitude: StorageRepository.getDouble(
-        'long',
-        defValue: 69.281997,
-      ),
+    var lat = StorageRepository.getDouble(
+      StoreKeys.latitude,
+      defValue: -1,
     );
+    var long = StorageRepository.getDouble(
+      StoreKeys.longitude,
+      defValue: -1,
+    );
+    Position? currentPosition;
+    if (lat == -1 || long == -1) {
+      emit(state.copyWith(getCurrentLocationStatus: FormzStatus.submissionInProgress));
+      currentPosition = await MyFunctions.determinePosition();
+      lat = currentPosition.latitude;
+      long = currentPosition.longitude;
+      await StorageRepository.putDouble(StoreKeys.latitude, lat);
+      await StorageRepository.putDouble(StoreKeys.longitude, long);
+    }
+
     controller.moveCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
-          target: Point(latitude: position.latitude, longitude: position.longitude),
-        ),
-      ),
-      animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
-    );
-
-    emit(state.copyWith(getCurrentLocationStatus: FormzStatus.submissionInProgress));
-    Position currentPosition = await MyFunctions.determinePosition();
-    await StorageRepository.putDouble('latitude', currentPosition.latitude);
-    await StorageRepository.putDouble('longitude', currentPosition.longitude);
-
-    var accuracy = currentPosition.accuracy;
-    controller.moveCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: Point(latitude: currentPosition.latitude, longitude: currentPosition.longitude),
+          target: Point(latitude: lat, longitude: long),
         ),
       ),
       animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
@@ -363,8 +380,8 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
     final hospitalResult = await getHospitals(
       state.searchText,
       param: MapParameter(
-        lat: currentPosition.latitude,
-        long: currentPosition.longitude,
+        lat: lat,
+        long: long,
         // todo get hospital radius
         radius: 150,
       ),
@@ -377,12 +394,13 @@ class MapOrganizationBloc extends Bloc<MapOrganizationEvent, MapOrganizationStat
         getCurrentLocationStatus: FormzStatus.submissionSuccess,
         doctors: doctorsResult.isRight ? doctorsResult.right : [],
         hospitals: hospitalResult.isRight ? hospitalResult.right : [],
-        lat: currentPosition.latitude,
-        long: currentPosition.longitude,
-        currentLat: currentPosition.latitude,
-        currentLong: currentPosition.longitude,
+        lat: lat,
+        long: long,
+        currentLat: lat,
+        currentLong: long,
         radius: MyFunctions.getRadiusFromZoom(camera.zoom).toInt()));
-    add(MapOrganizationEvent.changeTab(context: event.context, tab: 0, acuracy: accuracy, haveToLoading: false));
+    add(MapOrganizationEvent.changeTab(
+        context: event.context, tab: 0, acuracy: currentPosition?.accuracy ?? 20.0, haveToLoading: false));
   }
 
   EventTransformer<MyEvent> debounce<MyEvent>(Duration duration) =>

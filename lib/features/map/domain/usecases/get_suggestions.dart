@@ -24,6 +24,7 @@ class GetSuggestionsUseCase extends UseCase<List<SuggestionModel>, SuggestionPar
 class SuggestionParam {
   final String search;
   final bool isDoctor;
+  final String where;
 
-  SuggestionParam({required this.isDoctor, required this.search});
+  SuggestionParam({required this.where, required this.isDoctor, required this.search});
 }

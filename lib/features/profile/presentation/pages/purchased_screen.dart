@@ -111,7 +111,8 @@ class _PurchasedScreenState extends State<PurchasedScreen> with TickerProviderSt
                         ],
                       ),
                     ),
-                    if (state.showRestore ?? !(StorageRepository.getBool('is_purchase_restored', defValue: false))) ...[
+                    if (state.showRestore ??
+                        !(StorageRepository.getBool(StoreKeys.isPurchaseRestored, defValue: false))) ...[
                       const SizedBox(height: 16),
                       ValueListenableBuilder(
                         valueListenable: tabIndex,

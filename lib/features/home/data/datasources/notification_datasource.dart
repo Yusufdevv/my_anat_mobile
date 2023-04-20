@@ -29,7 +29,7 @@ class NotificationDatasourceImpl extends NotificationDatasource {
     try {
       final response = await dio.get(
         next ?? '/notifications/',
-        options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}),
+        options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}),
       );
       log(':::::::::: the log of Notification:  ${response.data}  ::::::::::');
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
@@ -51,7 +51,7 @@ class NotificationDatasourceImpl extends NotificationDatasource {
   Future<NotificationModel> getNotificationSingle({required int id}) async {
     try {
       final response = await dio.get('/notifications/$id',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return NotificationModel.fromJson(response.data);
       } else {
@@ -70,7 +70,7 @@ class NotificationDatasourceImpl extends NotificationDatasource {
   Future<void> readAllNotificattions() async {
     try {
       final response = await dio.post('/notifications/read-all/',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -88,7 +88,7 @@ class NotificationDatasourceImpl extends NotificationDatasource {
   Future<void> readNotification({required int id}) async {
     try {
       final response = await dio.post('/notifications/$id/read/',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -107,7 +107,7 @@ class NotificationDatasourceImpl extends NotificationDatasource {
     try {
       final response = await dio.post('/notifications/device-id/',
           data: {"device_id": id},
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return DeviceIdModel.fromJson(response.data);
       } else {

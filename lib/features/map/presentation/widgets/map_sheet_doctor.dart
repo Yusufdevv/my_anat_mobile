@@ -19,40 +19,36 @@ class MapSheetDoctor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MediaQuery.removePadding(
-      context: context,
-      removeBottom: true,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 60),
-        child: PageView.builder(
-            controller: PageController(
-              initialPage: doctors.indexOf(initialPoint),
-              viewportFraction: 0.9,
-            ),
-            physics: const BouncingScrollPhysics(),
-            onPageChanged: onPageChanged,
-            itemCount: doctors.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 16, left: 8),
-                child: DoctorSingleBottomSheet(
-                  deviceWidth: deviceWidth,
-                  id: doctors[index].id,
-                  isHospital: false,
-                  specialization: doctors[index].position,
-                  slug: '',
-                  hospital: doctors[index].organizationName,
-                  title: doctors[index].doctorName,
-                  //  todo which phone
-                  phone: doctors[index].phoneNumbers.isNotEmpty ? doctors[index].phoneNumbers[0].first : '',
-                  address: doctors[index].address,
-                  images: [doctors[index].image.middle],
-                  location: Point(latitude: doctors[index].latitude, longitude: doctors[index].longitude),
-                  rating: doctors[index].rating + 0,
-                ),
-              );
-            }),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 40),
+      child: PageView.builder(
+          controller: PageController(
+            initialPage: doctors.indexOf(initialPoint),
+            viewportFraction: 0.9,
+          ),
+          physics: const BouncingScrollPhysics(),
+          onPageChanged: onPageChanged,
+          itemCount: doctors.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16, left: 8),
+              child: DoctorSingleBottomSheet(
+                deviceWidth: deviceWidth,
+                id: doctors[index].id,
+                isHospital: false,
+                specialization: doctors[index].position,
+                slug: '',
+                hospital: doctors[index].organizationName,
+                title: doctors[index].doctorName,
+                //  todo which phone
+                phone: doctors[index].phoneNumbers.isNotEmpty ? doctors[index].phoneNumbers[0].first : '',
+                address: doctors[index].address,
+                images: [doctors[index].image.middle],
+                location: Point(latitude: doctors[index].latitude, longitude: doctors[index].longitude),
+                rating: doctors[index].rating + 0,
+              ),
+            );
+          }),
     );
   }
 }

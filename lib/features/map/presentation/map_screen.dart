@@ -1,11 +1,11 @@
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/assets/constants/app_icons.dart'; 
+import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_button.dart'; 
+import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/org_map_v2_bloc/org_map_v2_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/specialization/specialization_bloc.dart';
@@ -13,6 +13,7 @@ import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_controller_buttons.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,25 +37,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
   late OrgMapV2Bloc orgMapV2Bloc;
   late SpecializationBloc specBloc;
 
-  // late List<MapObject<dynamic>> _mapObjects = [];
-
-  double latitude = 0;
-  double longitude = 0;
-  double zoomLevel = 15;
-  int currentRadius = 100000;
-  double maxZoomLevel = 0;
-  double minZoomLevel = 0;
-  double accuracy = 0;
-
   @override
   void initState() {
     specBloc = SpecializationBloc()..add(SpecializationEvent.getSpecs());
     mapOrganizationBloc = MapOrganizationBloc(
-      // onPointsCreated: (placemarks) {
-      //   _mapObjects.clear();
-      //   _mapObjects = placemarks;
-      //   // setState(() {});
-      // },
       tickerProvider: this,
       deviceWidth: widget.deviceWidth,
     );
@@ -97,20 +83,20 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
             builder: (context, state) {
               return Stack(
                 children: [
+                  /// Yandex Map
                   Positioned.fill(
-                    bottom: MediaQuery.of(context).viewInsets.bottom + 48,
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
                     top: -24,
                     child: YandexMap(
                       rotateGesturesEnabled: false,
                       onCameraPositionChanged: (cameraPosition, updateReason, isStopped) async {
                         if (isStopped) {
-                          zoomLevel = cameraPosition.zoom;
                           mapOrganizationBloc.add(MapOrganizationEvent.changeLatLong(
                               lat: cameraPosition.target.latitude,
                               long: cameraPosition.target.longitude,
                               radius: MyFunctions.getRadiusFromZoom(cameraPosition.zoom).floor()));
-                          await StorageRepository.putDouble('lat', cameraPosition.target.latitude);
-                          await StorageRepository.putDouble('long', cameraPosition.target.longitude);
+                          await StorageRepository.putDouble(StoreKeys.latitude, cameraPosition.target.latitude);
+                          await StorageRepository.putDouble(StoreKeys.longitude, cameraPosition.target.longitude);
                         }
                       },
                       onMapTap: (point) {
@@ -125,11 +111,11 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                             orgMapV2TabIndex: orgMapV2Bloc.state.tabIndex,
                           ),
                         );
-                        maxZoomLevel = await controller.getMaxZoom();
-                        minZoomLevel = await controller.getMinZoom();
                       },
                     ),
                   ),
+
+                  /// Under Tab Bar LinearGradient
                   Positioned(
                     right: 0,
                     left: 0,
@@ -144,6 +130,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                       ),
                     ),
                   ),
+
+                  /// Tab Bar
                   Positioned(
                     left: 16,
                     right: 16,
@@ -190,7 +178,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                               mapOrganizationBloc.add(
                                 MapOrganizationEvent.changeTab(
                                   haveToLoading: true,
-                                  acuracy: accuracy,
+                                  acuracy: state.accuracy,
                                   context: context,
                                   tab: index,
                                 ),
@@ -206,6 +194,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                       ),
                     ),
                   ),
+
+                  /// Search and Controller buttons
                   Positioned(
                     left: 0,
                     right: 0,
@@ -230,50 +220,14 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin, Wi
                                               context.read<MapOrganizationBloc>().add(
                                                     MapOrganizationEvent.getCurrentLocation(
                                                       context: context,
-                                                      onSuccess: (position) async {
-                                                        accuracy = position.accuracy;
-                                                        state.mapController!.moveCamera(
-                                                          CameraUpdate.newCameraPosition(
-                                                            CameraPosition(
-                                                              target: Point(
-                                                                  latitude: position.latitude,
-                                                                  longitude: position.longitude),
-                                                              zoom: 15,
-                                                            ),
-                                                          ),
-                                                          animation: const MapAnimation(
-                                                              duration: 0.15, type: MapAnimationType.smooth),
-                                                        );
-                                                        zoomLevel = 15;
-                                                      },
                                                       onError: (message) {
                                                         context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
                                                       },
                                                     ),
                                                   );
-                                              zoomLevel = 15;
                                             },
-                                            onMinusTap: () {
-                                              if (minZoomLevel < zoomLevel) {
-                                                state.mapController!.moveCamera(
-                                                  CameraUpdate.zoomTo(zoomLevel - 1),
-                                                  animation:
-                                                      const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
-                                                );
-                                                zoomLevel--;
-                                              }
-                                            },
-                                            onPlusTap: () async {
-                                              print('max zoom level: $maxZoomLevel');
-                                              if (maxZoomLevel > zoomLevel) {
-                                                state.mapController!.moveCamera(
-                                                  CameraUpdate.zoomTo(zoomLevel + 1),
-                                                  animation:
-                                                      const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
-                                                );
-                                                zoomLevel++;
-                                              }
-                                            },
+                                            onMinusTap: () => mapOrganizationBloc.add(MapOrganizationEvent.zoomOut()),
+                                            onPlusTap: () => mapOrganizationBloc.add(MapOrganizationEvent.zoomIn()),
                                           )
                                         ],
                                       ),

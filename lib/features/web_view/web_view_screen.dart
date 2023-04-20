@@ -83,7 +83,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               },
               initialUrlRequest: URLRequest(
                   url: Uri.parse(widget.url ??
-                      'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString("token")}&' : ''}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}')),
+                      'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString(StoreKeys.token)}&' : ''}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}')),
             ),
           ),
         ),

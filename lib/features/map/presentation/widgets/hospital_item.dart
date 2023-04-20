@@ -4,24 +4,46 @@ import 'package:anatomica/features/common/presentation/widgets/highlighted_text.
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/hospital_single/presentation/hospital_single_screen.dart';
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
+import 'package:anatomica/features/map/domain/entities/service_or_specialization_entity.dart';
+import 'package:anatomica/features/map/presentation/widgets/specialization_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HospitalItem extends StatelessWidget {
+class HospitalItem extends StatefulWidget {
   final OrgMapV2Model entity;
   final bool isSuggestionItem;
   final String searchText;
 
   const HospitalItem({required this.entity, this.isSuggestionItem = false, this.searchText = '', Key? key})
       : super(key: key);
+
+  @override
+  State<HospitalItem> createState() => _HospitalItemState();
+}
+
+class _HospitalItemState extends State<HospitalItem> {
+  late List<ServiceOrSpecializationEntity> wrapItems;
+  @override
+  void initState() {
+    wrapItems = [
+      ...widget.entity.specialization
+          .map((e) => ServiceOrSpecializationEntity(title: e.title, id: e.id, isService: false))
+          .toList(),
+      ...widget.entity.service
+          .map((e) => ServiceOrSpecializationEntity(title: e.name, id: e.id, isService: true))
+          .toList(),
+    ];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
         Navigator.of(context, rootNavigator: true)
-            .push(fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id)));
+            .push(fade(page: HospitalSingleScreen(slug: widget.entity.slug, id: widget.entity.id)));
       },
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -42,17 +64,17 @@ class HospitalItem extends StatelessWidget {
                     height: 140,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: entity.images.isNotEmpty
+                      child: widget.entity.images.isNotEmpty
                           ? ListView.separated(
                               physics: const BouncingScrollPhysics(),
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.horizontal,
-                              itemCount: entity.images.length,
+                              itemCount: widget.entity.images.length,
                               separatorBuilder: (context, index) => const SizedBox(width: 8),
                               itemBuilder: (context, index) => ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: WImage(
-                                  imageUrl: entity.images[index].middle,
+                                  imageUrl: widget.entity.images[index].middle,
                                   fit: BoxFit.cover,
                                   width: MediaQuery.of(context).size.shortestSide / 2,
                                   onErrorWidget: SvgPicture.asset(
@@ -89,26 +111,26 @@ class HospitalItem extends StatelessWidget {
                               child: WImage(
                                 height: 32,
                                 width: 32,
-                                imageUrl: entity.logo.middle,
+                                imageUrl: widget.entity.logo.middle,
                                 borderRadius: BorderRadius.circular(6),
                                 onErrorWidget: SvgPicture.asset(AppIcons.smallImageError, fit: BoxFit.cover),
                               ),
                             ),
                             const SizedBox(width: 12),
                             Expanded(
-                              child: isSuggestionItem
+                              child: widget.isSuggestionItem
                                   ? HighlightedText(
-                                      allText: entity.title,
-                                      highlightedText: searchText,
+                                      allText: widget.entity.title,
+                                      highlightedText: widget.searchText,
                                       highlightColor: tongerineYellow,
                                       textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 15),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       textStyleHighlight:
-                                          Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14),
+                                          Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 15),
                                     )
                                   : Text(
-                                      entity.title,
+                                      widget.entity.title,
                                       style: Theme.of(context).textTheme.displayLarge,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
@@ -121,25 +143,28 @@ class HospitalItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: Text(entity.address,
+                              child: Text(widget.entity.address,
                                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: textSecondary),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis),
                             ),
                           ],
                         ),
-                        if (isSuggestionItem) ...[
+                        if (widget.isSuggestionItem) ...[
                           const SizedBox(height: 12),
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
-                            children: List.generate(
-                                entity.specialization.length,
-                                (index) => SpecilaizationItem(
-                                    allText: entity.specialization[index].title,
-                                    highlightedText: searchText,
-                                    fenceColor: index == 0 ? darkGreen : gold2)),
-                          )
+                            children: wrapItems
+                                .map(
+                                  (e) => SpecilaizationItem(
+                                    allText: e.title,
+                                    highlightedText: widget.searchText,
+                                    fenceColor: e.isService ? gold2 : darkGreen,
+                                  ),
+                                )
+                                .toList(),
+                          ),
                         ],
                       ],
                     ),
@@ -147,7 +172,7 @@ class HospitalItem extends StatelessWidget {
                 ],
               ),
             ),
-            if (entity.rating != 0) ...{
+            if (widget.entity.rating != 0) ...{
               Positioned(
                 top: 16,
                 left: -12,
@@ -170,7 +195,7 @@ class HospitalItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        entity.rating.toString(),
+                        widget.entity.rating.toString(),
                         style: Theme.of(context).textTheme.displayLarge!.copyWith(color: black, fontSize: 13),
                       ),
                       const SizedBox(width: 4),
@@ -179,7 +204,7 @@ class HospitalItem extends StatelessWidget {
                 ),
               )
             },
-            if (entity.distance != 0) ...{
+            if (widget.entity.distance != 0) ...{
               Positioned(
                 top: 16,
                 right: -12,
@@ -198,7 +223,7 @@ class HospitalItem extends StatelessWidget {
                       SvgPicture.asset(AppIcons.locationGreen, height: 16, width: 16),
                       const SizedBox(width: 4),
                       Text(
-                        '${entity.distance.toStringAsFixed(1)} КМ',
+                        '${widget.entity.distance.toStringAsFixed(1)} КМ',
                         style: Theme.of(context).textTheme.displayLarge!.copyWith(color: black, fontSize: 13),
                       ),
                       const SizedBox(width: 4),
@@ -209,45 +234,6 @@ class HospitalItem extends StatelessWidget {
             }
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SpecilaizationItem extends StatelessWidget {
-  const SpecilaizationItem({
-    required this.allText,
-    required this.highlightedText,
-    required this.fenceColor,
-    super.key,
-  });
-
-  final String allText;
-  final String highlightedText;
-  final Color fenceColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      decoration: BoxDecoration(
-        color: lilyWhite,
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: lilyWhite),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('#', style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: fenceColor)),
-          const SizedBox(width: 4),
-          HighlightedText(
-            allText: allText,
-            highlightColor: tacao,
-            highlightedText: highlightedText,
-            textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w400, color: textColor),
-            textStyleHighlight: const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: textColor),
-          ),
-        ],
       ),
     );
   }

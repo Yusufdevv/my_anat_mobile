@@ -16,28 +16,18 @@ class MapOrganizationEvent with _$MapOrganizationEvent {
     double? radius,
   }) = _GetHospitals;
   factory MapOrganizationEvent.getDoctors(
-      {double? latitude,
-      double? longitude,
-      double? radius,
-      required BuildContext context}) = _GetDoctors;
-  factory MapOrganizationEvent.getTypes({required String searchText}) =
-      _GetTypes;
-  factory MapOrganizationEvent.getMoreTypes({required String searchText}) =
-      _GetMoreTypes;
-  factory MapOrganizationEvent.changeSearchText(String text) =
-      _ChangeSearchText;
+      {double? latitude, double? longitude, double? radius, required BuildContext context}) = _GetDoctors;
+  factory MapOrganizationEvent.getTypes({required String searchText}) = _GetTypes;
+  factory MapOrganizationEvent.getMoreTypes({required String searchText}) = _GetMoreTypes;
+  factory MapOrganizationEvent.changeSearchText(String text) = _ChangeSearchText;
   factory MapOrganizationEvent.onMapCreated(
       {required YandexMapController controller,
       required int orgMapV2TabIndex,
       required BuildContext context}) = _OnMapCreated;
-  factory MapOrganizationEvent.changeRadius({required int radius}) =
-      _ChangeRadius;
+  factory MapOrganizationEvent.changeRadius({required int radius}) = _ChangeRadius;
+  factory MapOrganizationEvent.zoomIn() = _ZoomIn;
+  factory MapOrganizationEvent.zoomOut() = _ZoomOut;
   factory MapOrganizationEvent.getCurrentLocation(
-      {required ValueChanged<String> onError,
-      required ValueChanged<Position> onSuccess,
-      required BuildContext context}) = _GetCurrentLocation;
-  factory MapOrganizationEvent.changeLatLong(
-      {required double lat,
-      required double long,
-      int? radius}) = _ChangeLatLong;
+      {required ValueChanged<String> onError, required BuildContext context}) = _GetCurrentLocation;
+  factory MapOrganizationEvent.changeLatLong({required double lat, required double long, int? radius}) = _ChangeLatLong;
 }

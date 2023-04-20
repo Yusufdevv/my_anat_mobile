@@ -54,7 +54,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       event.onNotDownloaded();
       await file.create();
-      final token = StorageRepository.getString('token');
+      final token = StorageRepository.getString(StoreKeys.token);
       final fileUrl = await dio.get('/journal/${event.slug}/file/');
       await dio.download(fileUrl.data['file'], path,
           options: Options(headers: token.isNotEmpty ? {'Authorization': "Token $token"} : {}),
@@ -93,7 +93,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       event.onNotDownloaded();
       await file.create();
-      final token = StorageRepository.getString('token');
+      final token = StorageRepository.getString(StoreKeys.token);
       await dio.download(event.fileUrl, path,
           options: Options(headers: token.isNotEmpty ? {'Authorization': "Token $token"} : {}),
           deleteOnError: true, onReceiveProgress: (receivedBytes, totalBytes) {

@@ -33,8 +33,7 @@ abstract class VacancyRemoteDataSource {
 
   VacancyRemoteDataSource({required this.paginationDatasource});
 
-  Future<VacancyModel> getVacancyList(
-      {String? next, VacancyParamsEntity? vacancyParamsEntity});
+  Future<VacancyModel> getVacancyList({String? next, VacancyParamsEntity? vacancyParamsEntity});
 
   Future<TopOrganizationModel> getTopOrganization();
 
@@ -44,14 +43,10 @@ abstract class VacancyRemoteDataSource {
 
   Future<List<VacancyOptionModel>> getVacancyOption();
 
-  Future<GenericPagination<VacancyListModel>> getRelatedVacancyList(
-      {required String slug});
+  Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug});
 
   Future<GenericPagination<CandidateListModel>> getCandidateList(
-      {String? next,
-      String? search,
-      List<int>? categoryId,
-      CandidateListParams? params});
+      {String? next, String? search, List<int>? categoryId, CandidateListParams? params});
 
   Future<CandidateSingleModel> getCandidateSingle({required int id});
 
@@ -63,20 +58,15 @@ abstract class VacancyRemoteDataSource {
 
   Future<List<VacancyOptionEntity>> getVacancyFilter();
 
-  Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation(
-      {required int id});
+  Future<GenericPagination<CandidateEducationEntity>> getCandidateEducation({required int id});
 
-  Future<GenericPagination<CandidateEducationFilesEntity>>
-      getCandidateEducationFiles({required int id});
+  Future<GenericPagination<CandidateEducationFilesEntity>> getCandidateEducationFiles({required int id});
 
-  Future<GenericPagination<CertificateEntity>> getCandidateCertificate(
-      {required int id});
+  Future<GenericPagination<CertificateEntity>> getCandidateCertificate({required int id});
 
-  Future<GenericPagination<CandidateWorkEntity>> getCandidateWork(
-      {required int id});
+  Future<GenericPagination<CandidateWorkEntity>> getCandidateWork({required int id});
 
-  Future<GenericPagination<CandidateListEntity>> getRelatedCandidateList(
-      {required int id});
+  Future<GenericPagination<CandidateListEntity>> getRelatedCandidateList({required int id});
 }
 
 class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
@@ -85,46 +75,39 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   VacancyRemoteDataSourceImpl({required super.paginationDatasource});
 
   @override
-  Future<VacancyModel> getVacancyList(
-      {String? next, VacancyParamsEntity? vacancyParamsEntity}) async {
+  Future<VacancyModel> getVacancyList({String? next, VacancyParamsEntity? vacancyParamsEntity}) async {
     try {
       const url = '/vacancy/vacancy/list/';
       final Map<String, dynamic> query = {};
       if (vacancyParamsEntity != null) {
-        if (vacancyParamsEntity.category != null &&
-            vacancyParamsEntity.category!.isNotEmpty) {
+        if (vacancyParamsEntity.category != null && vacancyParamsEntity.category!.isNotEmpty) {
           var value = '';
           for (var i = 0; i < vacancyParamsEntity.category!.length; i++) {
-            value +=
-                '${vacancyParamsEntity.category![i]}${i == vacancyParamsEntity.category!.length - 1 ? '' : ','}';
+            value += '${vacancyParamsEntity.category![i]}${i == vacancyParamsEntity.category!.length - 1 ? '' : ','}';
           }
           query.putIfAbsent('category', () => value);
         }
         if (vacancyParamsEntity.organization != null) {
-          query.putIfAbsent(
-              'organization', () => vacancyParamsEntity.organization);
+          query.putIfAbsent('organization', () => vacancyParamsEntity.organization);
         }
         if (vacancyParamsEntity.search != null) {
           query.putIfAbsent('search', () => vacancyParamsEntity.search);
         }
-        if (vacancyParamsEntity.salary != null &&
-            vacancyParamsEntity.salary!.isNotEmpty) {
+        if (vacancyParamsEntity.salary != null && vacancyParamsEntity.salary!.isNotEmpty) {
           var value = '';
           for (final param in vacancyParamsEntity.salary!) {
             value += '$param,';
           }
           query.putIfAbsent('salary', () => value);
         }
-        if (vacancyParamsEntity.experience != null &&
-            vacancyParamsEntity.experience!.isNotEmpty) {
+        if (vacancyParamsEntity.experience != null && vacancyParamsEntity.experience!.isNotEmpty) {
           var value = '';
           for (final param in vacancyParamsEntity.experience!) {
             value += '$param,';
           }
           query.putIfAbsent('experience', () => value);
         }
-        if (vacancyParamsEntity.district != null &&
-            vacancyParamsEntity.district!.isNotEmpty) {
+        if (vacancyParamsEntity.district != null && vacancyParamsEntity.district!.isNotEmpty) {
           var value = '';
           for (final param in vacancyParamsEntity.district!) {
             value += '$param,';
@@ -150,8 +133,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       rethrow;
     } on DioError catch (error) {
       throw ServerException(
-        errorMessage:
-            'Authentication Repository Dio Error. Error message: ${error.message}',
+        errorMessage: 'Authentication Repository Dio Error. Error message: ${error.message}',
         statusCode: 141,
       );
     } on Exception catch (error) {
@@ -167,19 +149,14 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     try {
       final response = await dio.get('/vacancy/vacancy/top-organization/',
           options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {
-                    'Authorization':
-                        'Token ${StorageRepository.getString('token')}'
-                  }
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                 : {},
           ));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return TopOrganizationModel.fromJson(response.data);
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -194,19 +171,14 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     try {
       final response = await dio.get('/vacancy/vacancy/$slug/detail/',
           options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {
-                    'Authorization':
-                        'Token ${StorageRepository.getString('token')}'
-                  }
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                 : {},
           ));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return VacancyListModel.fromJson(response.data);
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -221,20 +193,14 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     try {
       final response = await dio.get('/vacancy/vacancy/specization/list/',
           options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {
-                    'Authorization':
-                        'Token ${StorageRepository.getString('token')}'
-                  }
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                 : {},
           ));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(
-            response.data, (p0) => SpecizationModel.fromJson);
+        return GenericPagination.fromJson(response.data, (p0) => SpecizationModel.fromJson);
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -249,21 +215,14 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     try {
       final response = await dio.get('/vacancy/vacancy/list/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       final result = response.requestOptions.data;
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return (response.requestOptions.data as List)
-            .map((e) => VacancyOptionModel.fromJson(e))
-            .toList();
+        return (response.requestOptions.data as List).map((e) => VacancyOptionModel.fromJson(e)).toList();
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -274,24 +233,17 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<VacancyListModel>> getRelatedVacancyList(
-      {required String slug}) async {
+  Future<GenericPagination<VacancyListModel>> getRelatedVacancyList({required String slug}) async {
     try {
       final response = await dio.get('/vacancy/vacancy/$slug/related/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(response.data, (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -303,10 +255,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
 
   @override
   Future<GenericPagination<CandidateListModel>> getCandidateList(
-      {String? next,
-      String? search,
-      List<int>? categoryId,
-      CandidateListParams? params}) async {
+      {String? next, String? search, List<int>? categoryId, CandidateListParams? params}) async {
     try {
       final Map<String, dynamic> query = {};
       if (search != null) {
@@ -336,19 +285,14 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       final response = await dio.get(next ?? '/doctor/open-to-work/',
           queryParameters: query,
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(
+            response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -363,19 +307,14 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     try {
       final response = await dio.get('/doctor/$id/detail/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return CandidateSingleModel.fromJson(response.data);
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -386,8 +325,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<DistrictModel>> getDistrict(
-      {String? next, int? id}) async {
+  Future<GenericPagination<DistrictModel>> getDistrict({String? next, int? id}) async {
     try {
       final Map<String, dynamic> query = {};
       if (id != null) {
@@ -396,19 +334,13 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
       final response = await dio.get(next ?? '/district/',
           queryParameters: query,
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => DistrictModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(response.data, (p0) => DistrictModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -423,20 +355,14 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     try {
       final response = await dio.get(next ?? '/region/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}),
           queryParameters: {'limit': 6});
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => RegionModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(response.data, (p0) => RegionModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -447,25 +373,18 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CategoryListModel>> getCategoryList(
-      {String? next}) async {
+  Future<GenericPagination<CategoryListModel>> getCategoryList({String? next}) async {
     try {
-      final response = await dio.get(
-          next ?? '/vacancy/vacancy/specization/list/',
+      final response = await dio.get(next ?? '/vacancy/vacancy/specization/list/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(
+            response.data, (p0) => CategoryListModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -480,20 +399,13 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
     try {
       final response = await dio.get('/vacancy/vacancy/filters/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return (response.data as List)
-            .map((e) => VacancyOptionModel.fromJson(e))
-            .toList();
+        return (response.data as List).map((e) => VacancyOptionModel.fromJson(e)).toList();
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -504,25 +416,18 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CertificateEntity>> getCandidateCertificate(
-      {required int id}) async {
+  Future<GenericPagination<CertificateEntity>> getCandidateCertificate({required int id}) async {
     try {
       final response = await dio.get('/doctor/$id/certificates/',
           options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {
-                    'Authorization':
-                        'Token ${StorageRepository.getString('token')}'
-                  }
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                 : {},
           ));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => CertificateModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(response.data, (p0) => CertificateModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -533,27 +438,19 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CandidateEducationModel>> getCandidateEducation(
-      {required int id}) async {
+  Future<GenericPagination<CandidateEducationModel>> getCandidateEducation({required int id}) async {
     try {
       final response = await dio.get('/doctor/$id/education/files/',
           options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {
-                    'Authorization':
-                        'Token ${StorageRepository.getString('token')}'
-                  }
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                 : {},
           ));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
-            response.data,
-            (p0) =>
-                CandidateEducationModel.fromJson(p0 as Map<String, dynamic>));
+            response.data, (p0) => CandidateEducationModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -564,27 +461,19 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CandidateEducationFilesModel>>
-      getCandidateEducationFiles({required int id}) async {
+  Future<GenericPagination<CandidateEducationFilesModel>> getCandidateEducationFiles({required int id}) async {
     try {
       final response = await dio.get('/doctor/$id/education/',
           options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {
-                    'Authorization':
-                        'Token ${StorageRepository.getString('token')}'
-                  }
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                 : {},
           ));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
-            response.data,
-            (p0) => CandidateEducationFilesModel.fromJson(
-                p0 as Map<String, dynamic>));
+            response.data, (p0) => CandidateEducationFilesModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -595,24 +484,18 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CandidateWorkEntity>> getCandidateWork(
-      {required int id}) async {
+  Future<GenericPagination<CandidateWorkEntity>> getCandidateWork({required int id}) async {
     try {
       final response = await dio.get('/doctor/$id/work/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(
+            response.data, (p0) => CandidateWorkModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {
@@ -623,24 +506,18 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   }
 
   @override
-  Future<GenericPagination<CandidateListEntity>> getRelatedCandidateList(
-      {required int id}) async {
+  Future<GenericPagination<CandidateListEntity>> getRelatedCandidateList({required int id}) async {
     try {
       final response = await dio.get('/doctor/$id/related/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {
-                      'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
-                    }
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data,
-            (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(
+            response.data, (p0) => CandidateListModel.fromJson(p0 as Map<String, dynamic>));
       }
-      throw ServerException(
-          statusCode: response.statusCode ?? 0,
-          errorMessage: response.statusMessage ?? '');
+      throw ServerException(statusCode: response.statusCode ?? 0, errorMessage: response.statusMessage ?? '');
     } on ServerException {
       rethrow;
     } on DioError {

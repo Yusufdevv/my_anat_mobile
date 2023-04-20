@@ -22,8 +22,9 @@ class GlobalRequestRepository {
       final result = await _dio.get(endpoint,
           queryParameters: query,
           options: Options(
-              headers:
-                  sendToken ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"} : {}));
+              headers: sendToken
+                  ? {"Authorization": "Token ${StorageRepository.getString(StoreKeys.token, defValue: '')}"}
+                  : {}));
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         return Right(fromJson(result.data));
       } else {
@@ -35,21 +36,22 @@ class GlobalRequestRepository {
   }
 
   ///Request for any kind of GET request for retrieving List of models,not a single model
-  Future<Either<Failure, List<S>>> getList<S>(
-      {required String endpoint,
-      Map<String, dynamic>? query,
-      required S Function(
-        Map<String, dynamic>,
-      )
-          fromJson,
-      String? responseDataKey,
-      bool sendToken = true}) async {
+  Future<Either<Failure, List<S>>> getList<S>({
+    required String endpoint,
+
+    ///                                  /doctor/search/suggest/
+    Map<String, dynamic>? query,
+    required S Function(Map<String, dynamic>) fromJson,
+    String? responseDataKey,
+    bool sendToken = true,
+  }) async {
     try {
       final result = await _dio.get(endpoint,
           queryParameters: query,
           options: Options(
-              headers:
-                  sendToken ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"} : {}));
+              headers: sendToken
+                  ? {"Authorization": "Token ${StorageRepository.getString(StoreKeys.token, defValue: '')}"}
+                  : {}));
       List<S> list = [];
 
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
@@ -84,8 +86,9 @@ class GlobalRequestRepository {
           queryParameters: query,
           data: data,
           options: Options(
-              headers:
-                  sendToken ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"} : {}));
+              headers: sendToken
+                  ? {"Authorization": "Token ${StorageRepository.getString(StoreKeys.token, defValue: '')}"}
+                  : {}));
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {
           return Right(fromJson(result.data[responseDataKey]));
@@ -118,8 +121,9 @@ class GlobalRequestRepository {
           queryParameters: query,
           data: data,
           options: Options(
-              headers:
-                  sendToken ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"} : {}));
+              headers: sendToken
+                  ? {"Authorization": "Token ${StorageRepository.getString(StoreKeys.token, defValue: '')}"}
+                  : {}));
       List<S> list = [];
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         if (responseDataKey != null && responseDataKey.isNotEmpty) {

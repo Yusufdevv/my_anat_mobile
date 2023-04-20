@@ -55,16 +55,12 @@ class VacancyItem extends StatelessWidget {
                     children: [
                       HighlightedText(
                         allText: vacancyEntity.title,
-                        textStyle: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(),
+                        textStyle: Theme.of(context).textTheme.displayLarge!,
                         highlightedText: searchText,
                         overflow: TextOverflow.ellipsis,
-                        textStyleHighlight:
-                            Theme.of(context).textTheme.displayLarge!.copyWith(
-                                  color: white,
-                                ),
+                        textStyleHighlight: Theme.of(context).textTheme.displayLarge!.copyWith(
+                              color: white,
+                            ),
                         maxLines: 2,
                         highlightColor: tongerineYellow,
                       ),
@@ -86,12 +82,10 @@ class VacancyItem extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             VacancyItemTextWidget(
-                title:
-                    '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} ${LocaleKeys.year.tr()}',
+                title: '${vacancyEntity.experienceFrom} - ${vacancyEntity.experienceTo} ${LocaleKeys.year.tr()}',
                 icon: AppIcons.briefCase),
             const SizedBox(height: 4),
-            VacancyItemTextWidget(
-                title: vacancyEntity.address, icon: AppIcons.mapPin),
+            VacancyItemTextWidget(title: vacancyEntity.address, icon: AppIcons.mapPin),
             const SizedBox(height: 4),
             VacancyItemTextWidget(
                 title:
@@ -100,8 +94,7 @@ class VacancyItem extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Text(LocaleKeys.published.tr(),
-                    style: Theme.of(context).textTheme.titleSmall),
+                Text(LocaleKeys.published.tr(), style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(width: 4),
                 Text(MyFunctions.getPublishedDate(vacancyEntity.publishedAt),
                     style: Theme.of(context).textTheme.titleSmall),

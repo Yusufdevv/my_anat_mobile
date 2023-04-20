@@ -14,6 +14,8 @@ import 'package:anatomica/features/map/presentation/blocs/suggestion/suggestion_
 import 'package:anatomica/features/map/presentation/screens/result_list.dart';
 import 'package:anatomica/features/map/presentation/screens/suggestion_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctors_list.dart';
+import 'package:anatomica/features/map/presentation/widgets/hospital_app_bar.dart';
+import 'package:anatomica/features/map/presentation/widgets/the_search_field_of_hospitals.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -28,20 +30,15 @@ class HospitalList extends StatefulWidget {
   final OrgMapV2Bloc orgMapV2Bloc;
 
   const HospitalList(
-      {required this.controller,
-      required this.myLocation,
-      required this.orgMapV2Bloc,
-      this.getFocus = false,
-      Key? key})
+      {required this.controller, required this.myLocation, required this.orgMapV2Bloc, this.getFocus = false, Key? key})
       : super(key: key);
 
   @override
   State<HospitalList> createState() => _HospitalListState();
 }
 
-class _HospitalListState extends State<HospitalList>
-    with TickerProviderStateMixin {
-  late TabController _controller;
+class _HospitalListState extends State<HospitalList> with TickerProviderStateMixin {
+  late TabController _tabController;
   late TextEditingController controller;
   late HospitalListBloc bloc;
   late DoctorListBloc doctorListBloc;
@@ -71,8 +68,7 @@ class _HospitalListState extends State<HospitalList>
     }
     doctorListBloc = DoctorListBloc(GetDoctorsUseCase())
       ..add(DoctorListEvent.getDoctors(search: '', myPoint: widget.myLocation));
-    bloc = HospitalListBloc(GetMapHospitalsWithDistanceUseCase(
-        mapRepository: serviceLocator<MapRepositoryImpl>()))
+    bloc = HospitalListBloc(GetMapHospitalsWithDistanceUseCase(mapRepository: serviceLocator<MapRepositoryImpl>()))
       ..add(HospitalListEvent.getHospitals(
         search: '',
         myPoint: widget.myLocation,
@@ -80,15 +76,12 @@ class _HospitalListState extends State<HospitalList>
     suggestionBloc = SuggestionBloc(GetSuggestionsUseCase());
 
     controller = TextEditingController();
-    _controller = TabController(
-        length: 2,
-        vsync: this,
-        initialIndex: widget.orgMapV2Bloc.state.tabIndex)
+    suggestionBloc.add(SuggestionEvent.changePage(widget.controller.index));
+    _tabController = TabController(length: 2, vsync: this, initialIndex: widget.controller.index)
       ..addListener(() {
-        suggestionBloc.add(SuggestionEvent.changePage(_controller.index));
-        if (_controller.indexIsChanging) {
-          widget.orgMapV2Bloc
-              .add(OrgMapV2Event.changeTab(index: _controller.index));
+        suggestionBloc.add(SuggestionEvent.changePage(_tabController.index));
+        if (_tabController.indexIsChanging) {
+          widget.orgMapV2Bloc.add(OrgMapV2Event.changeTab(index: _tabController.index));
         }
       });
     super.initState();
@@ -96,10 +89,9 @@ class _HospitalListState extends State<HospitalList>
 
   @override
   Widget build(BuildContext context) {
-    if (_controller.index != widget.orgMapV2Bloc.state.tabIndex) {
-      print(
-          '${_controller.index} indexesss hospital ${widget.orgMapV2Bloc.state.tabIndex}');
-      _controller.animateTo(widget.orgMapV2Bloc.state.tabIndex);
+    if (_tabController.index != widget.orgMapV2Bloc.state.tabIndex) {
+      print('${_tabController.index} indexesss hospital ${widget.orgMapV2Bloc.state.tabIndex}');
+      _tabController.animateTo(widget.orgMapV2Bloc.state.tabIndex);
     }
     return MultiBlocProvider(
       providers: [
@@ -110,54 +102,9 @@ class _HospitalListState extends State<HospitalList>
       child: WKeyboardDismisser(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            elevation: 1,
-            shadowColor: textFieldColor,
-            toolbarHeight: 70,
-            titleSpacing: 0,
-            leadingWidth: 0,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 8,
-                ),
-                Container(
-                  height: 36,
-                  padding: const EdgeInsets.all(2),
-                  margin: const EdgeInsets.symmetric(horizontal: 16)
-                      .copyWith(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: textFieldColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TabBar(
-                    controller: _controller,
-                    padding: EdgeInsets.zero,
-                    indicatorPadding: EdgeInsets.zero,
-                    indicator: BoxDecoration(
-                        color: white,
-                        borderRadius: BorderRadius.circular(6),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 8),
-                            blurRadius: 24,
-                            color: chipShadowColor.withOpacity(0.19),
-                          ),
-                        ]),
-                    labelPadding: EdgeInsets.zero,
-                    labelStyle: Theme.of(context).textTheme.displaySmall,
-                    labelColor: textColor,
-                    onTap: (index) {},
-                    unselectedLabelColor: textSecondary,
-                    tabs: [
-                      Tab(text: LocaleKeys.organization.tr()),
-                      Tab(text: LocaleKeys.doctor.tr()),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          appBar: HospitalAppBar(
+            controller: _tabController,
+            mediaQuery: MediaQuery.of(context),
           ),
           body: BlocBuilder<HospitalListBloc, HospitalListState>(
             builder: (context, state) {
@@ -166,12 +113,11 @@ class _HospitalListState extends State<HospitalList>
                   Positioned.fill(
                     child: TabBarView(
                       physics: const NeverScrollableScrollPhysics(),
-                      controller: _controller,
+                      controller: _tabController,
                       children: [
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 150),
-                          child: state.crossFadeState ==
-                                  CrossFadeState.showFirst
+                          child: state.crossFadeState == CrossFadeState.showFirst
                               ? ResultList(myPoint: widget.myLocation)
                               : SuggestionListScreen(
                                   isDoctor: false,
@@ -181,22 +127,19 @@ class _HospitalListState extends State<HospitalList>
                                     focusNode.unfocus();
                                     controller.text = value;
                                     controller.selection =
-                                        TextSelection.fromPosition(
-                                            TextPosition(offset: value.length));
+                                        TextSelection.fromPosition(TextPosition(offset: value.length));
                                     bloc
                                       ..add(HospitalListEvent.getHospitals(
                                         search: value,
                                         myPoint: widget.myLocation,
                                       ))
-                                      ..add(HospitalListEvent.changePage(
-                                          CrossFadeState.showFirst));
+                                      ..add(HospitalListEvent.changePage(CrossFadeState.showFirst));
                                   },
                                 ),
                         ),
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 150),
-                          child: state.crossFadeState ==
-                                  CrossFadeState.showFirst
+                          child: state.crossFadeState == CrossFadeState.showFirst
                               ? DoctorsList(
                                   textEditingController: controller,
                                   myPoint: widget.myLocation,
@@ -209,15 +152,12 @@ class _HospitalListState extends State<HospitalList>
                                     focusNode.unfocus();
                                     controller.text = value;
                                     controller.selection =
-                                        TextSelection.fromPosition(
-                                            TextPosition(offset: value.length));
-                                    doctorListBloc
-                                        .add(DoctorListEvent.getDoctors(
+                                        TextSelection.fromPosition(TextPosition(offset: value.length));
+                                    doctorListBloc.add(DoctorListEvent.getDoctors(
                                       search: controller.text,
                                       myPoint: widget.myLocation,
                                     ));
-                                    bloc.add(HospitalListEvent.changePage(
-                                        CrossFadeState.showFirst));
+                                    bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
                                   },
                                 ),
                         ),
@@ -231,147 +171,43 @@ class _HospitalListState extends State<HospitalList>
                         : MediaQuery.of(context).padding.bottom - 30,
                     left: 0,
                     right: 0,
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 45),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: textFieldColor),
-                            color: white,
-                          ),
-                          child: Row(
-                            children: [
-                              AnimatedContainer(
-                                duration: const Duration(milliseconds: 300),
-                                height: 40,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 12),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: divider)),
-                                width: isSearching || controller.text.isNotEmpty
-                                    ? 0
-                                    : (MediaQuery.of(context).size.width - 44) /
-                                        2,
-                                child: GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: AnimatedSwitcher(
-                                    duration: Duration(
-                                        milliseconds: isSearching ||
-                                                controller.text.isNotEmpty
-                                            ? 300
-                                            : 0),
-                                    child: isSearching ||
-                                            controller.text.isNotEmpty
-                                        ? const SizedBox(
-                                            key: ValueKey<int>(2),
-                                          )
-                                        : Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                AppIcons.map,
-                                                width: 20,
-                                                height: 20,
-                                              ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text(
-                                                LocaleKeys.on_map.tr(),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .displayLarge!
-                                                    .copyWith(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                              )
-                                            ],
-                                          ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: isSearching || controller.text.isNotEmpty
-                                    ? 0
-                                    : 12,
-                              ),
-                              Expanded(
-                                child: SearchField(
-                                  stateKey: _formKey,
-                                  focusNode: focusNode,
-                                  controller: controller,
-                                  onClear: () {
-                                    controller.clear();
-                                    bloc.add(HospitalListEvent.getHospitals(
-                                      search: controller.text,
-                                      myPoint: widget.myLocation,
-                                    ));
-                                    doctorListBloc
-                                        .add(DoctorListEvent.getDoctors(
-                                      search: controller.text,
-                                      myPoint: widget.myLocation,
-                                    ));
-                                    bloc.add(HospitalListEvent.changePage(
-                                        CrossFadeState.showFirst));
-                                    suggestionBloc.add(
-                                        SuggestionEvent.getSuggestions(
-                                            controller.text));
-                                  },
-                                  onChanged: (value) {
-                                    suggestionBloc.add(
-                                        SuggestionEvent.getSuggestions(value));
-                                    if (value.isNotEmpty) {
-                                      bloc.add(HospitalListEvent.changePage(
-                                          CrossFadeState.showSecond));
-                                      if (_controller.index == 0) {
-                                        bloc.add(HospitalListEvent.getHospitals(
-                                          search: controller.text,
-                                          myPoint: widget.myLocation,
-                                        ));
-                                      } else {
-                                        doctorListBloc
-                                            .add(DoctorListEvent.getDoctors(
-                                          search: controller.text,
-                                          myPoint: widget.myLocation,
-                                        ));
-                                      }
-                                    } else {
-                                      bloc.add(HospitalListEvent.changePage(
-                                          CrossFadeState.showFirst));
-                                    }
-                                  },
-                                ),
-                              ),
-                              isSearching
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        focusNode.unfocus();
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.only(
-                                            left: 12, right: 4),
-                                        child: Text(
-                                          LocaleKeys.close.tr(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 12),
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox()
-                            ],
-                          ),
-                        ),
-                      ],
+                    child: TheSearchFieldOfHospitals(
+                      focusNode: focusNode,
+                      controller: controller,
+                      formKey: _formKey,
+                      isSearching: isSearching,
+                      onClear: () {
+                        controller.clear();
+                        bloc.add(HospitalListEvent.getHospitals(
+                          search: controller.text,
+                          myPoint: widget.myLocation,
+                        ));
+                        doctorListBloc.add(DoctorListEvent.getDoctors(
+                          search: controller.text,
+                          myPoint: widget.myLocation,
+                        ));
+                        bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
+                        suggestionBloc.add(SuggestionEvent.getSuggestions(controller.text));
+                      },
+                      onChanged: (value) {
+                        suggestionBloc.add(SuggestionEvent.getSuggestions(value));
+                        if (value.isNotEmpty) {
+                          bloc.add(HospitalListEvent.changePage(CrossFadeState.showSecond));
+                          if (_tabController.index == 0) {
+                            bloc.add(HospitalListEvent.getHospitals(
+                              search: controller.text,
+                              myPoint: widget.myLocation,
+                            ));
+                          } else {
+                            doctorListBloc.add(DoctorListEvent.getDoctors(
+                              search: controller.text,
+                              myPoint: widget.myLocation,
+                            ));
+                          }
+                        } else {
+                          bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
+                        }
+                      },
                     ),
                   ),
                 ],

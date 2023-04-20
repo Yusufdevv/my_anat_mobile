@@ -8,6 +8,11 @@ part of 'org_map_v2_model.dart';
 
 OrgMapV2Model _$OrgMapV2ModelFromJson(Map<String, dynamic> json) =>
     OrgMapV2Model(
+      service: (json['service'] as List<dynamic>?)
+              ?.map((e) => const IdNameUrlConverter()
+                  .fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <IdNameUrlEntity>[],
       workAllDay: json['work_all_day'] as bool? ?? false,
       id: json['id'] as int? ?? -1,
       phoneNumber: json['phone_number'] as String? ?? '',
@@ -75,6 +80,8 @@ Map<String, dynamic> _$OrgMapV2ModelToJson(OrgMapV2Model instance) =>
           .toList(),
       'types':
           instance.types.map(const SpecializationConverter().toJson).toList(),
+      'service':
+          instance.service.map(const IdNameUrlConverter().toJson).toList(),
       'phone_number': instance.phoneNumber,
       'distance': instance.distance,
       'work_all_day': instance.workAllDay,

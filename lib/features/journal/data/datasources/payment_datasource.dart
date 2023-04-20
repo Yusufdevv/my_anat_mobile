@@ -80,7 +80,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
       final response = await _dio.post('/payments/order/create/',
           data: data,
           options:
-              Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString('token')}'} : {}));
+              Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'} : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return PaymentResponseModel.fromJson(response.data);
       } else {
@@ -139,7 +139,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
       final response = await _dio.post('/payments/order/create/',
           data: data,
           options:
-              Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString('token')}'} : {}));
+              Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'} : {}));
 
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return PaymentResponseModel.fromJson(response.data);
@@ -162,7 +162,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
   Future<String> checkPaymentStatus({required int id}) async {
     try {
       final response = await _dio.get('/payments/$id/detail/',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return response.data['status'] as String;
       } else {
@@ -195,7 +195,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
   Future<PricesModel> getPrices() async {
     try {
       final response = await _dio.get('/payments/prices/',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return PricesModel.fromJson(response.data);
       } else {
@@ -231,7 +231,7 @@ class PaymentDatasourceImpl extends PaymentDatasource {
       try {
         final response = await _dio.post('/payments/subscribe/',
             data: {'month_count': numOfMoths, 'payment_provider': paymentProvider, 'subscribe_type': "journal"},
-            options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+            options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
           return PaymentResponseModel.fromJson(response.data);
         } else {

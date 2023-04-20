@@ -30,6 +30,6 @@ class GetMapDoctorUseCase extends UseCase<List<DoctorMapEntity>, String> {
         fromJson: DoctorMapModel.fromJson,
         query: query,
         responseDataKey: 'results',
-        sendToken: StorageRepository.getString('token').isNotEmpty);
+        sendToken: StorageRepository.getString(StoreKeys.token).isNotEmpty);
   }
 }

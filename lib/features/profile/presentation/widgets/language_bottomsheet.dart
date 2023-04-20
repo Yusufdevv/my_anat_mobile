@@ -90,8 +90,8 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
   Future<void> setLanguage({required String locale, required BuildContext context}) async {
     await context.setLocale(Locale(locale));
 
-    await StorageRepository.putString('language', locale);
-    await StorageRepository.putString('device_language', locale);
+    await StorageRepository.putString(StoreKeys.language, locale);
+    await StorageRepository.putString(StoreKeys.deviceLanguage, locale);
     serviceLocator<DioSettings>().setBaseOptions(lang: locale);
 
     // await resetLocator();

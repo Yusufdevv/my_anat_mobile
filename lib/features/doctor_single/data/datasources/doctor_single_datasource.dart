@@ -36,10 +36,10 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
     try {
       final response = await _dio.get('/doctor/$id/detail/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                   ? {
                       'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
+                          'Token ${StorageRepository.getString(StoreKeys.token)}'
                     }
                   : {}));
       if (response.statusCode != null &&
@@ -68,10 +68,10 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
       final response = await _dio.get(next ?? '/article/',
           queryParameters: {'authors': id},
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                   ? {
                       'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
+                          'Token ${StorageRepository.getString(StoreKeys.token)}'
                     }
                   : {}));
       if (response.statusCode != null &&
@@ -100,10 +100,10 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
       final response = await _dio.get(next ?? '/interview/',
           queryParameters: {'doctors': id},
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                   ? {
                       'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
+                          'Token ${StorageRepository.getString(StoreKeys.token)}'
                     }
                   : {}));
       if (response.statusCode != null &&
@@ -132,10 +132,10 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
       final response = await _dio.get(next ?? '/doctor/comment/',
           queryParameters: {'doctor_id': id},
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                   ? {
                       'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
+                          'Token ${StorageRepository.getString(StoreKeys.token)}'
                     }
                   : {}));
       if (response.statusCode != null &&
@@ -170,10 +170,10 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
             'comment': comment,
           },
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                   ? {
                       'Authorization':
-                          'Token ${StorageRepository.getString('token')}'
+                          'Token ${StorageRepository.getString(StoreKeys.token)}'
                     }
                   : {}));
 
@@ -201,10 +201,10 @@ class DoctorSingleDatasourceImpl extends DoctorSingleDatasource {
       final response = await _dio.delete(
         '/doctor/comment/$id/delete/',
         options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                 ? {
                     'Authorization':
-                        'Token ${StorageRepository.getString('token')}'
+                        'Token ${StorageRepository.getString(StoreKeys.token)}'
                   }
                 : {}),
       );
