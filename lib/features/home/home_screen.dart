@@ -2,6 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
@@ -28,6 +29,7 @@ import 'package:anatomica/features/home/presentation/widgets/top_hospital_item.d
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/widgets/activate_premium.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/features/web_view/web_view_screen.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +53,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   late MostPopularsBloc _mostPopularsBloc;
   late NewsBloc _newsBloc;
   late ScrollController _scrollController;
-  bool isShrink = false;
+  ValueNotifier<bool> isShrink = ValueNotifier(false);
 
   @override
   void initState() {
@@ -67,15 +69,12 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
     _newsBloc = NewsBloc()..add(const NewsEvent.getNews());
     _scrollController = ScrollController()
       ..addListener(() {
-        if (_scrollController.offset > 200 - kToolbarHeight && !isShrink) {
-          setState(() {
-            isShrink = true;
-          });
+        if (_scrollController.offset > 200 - kToolbarHeight &&
+            !isShrink.value) {
+          isShrink.value = true;
         } else if (_scrollController.offset < 200 - kToolbarHeight &&
-            isShrink) {
-          setState(() {
-            isShrink = false;
-          });
+            isShrink.value) {
+          isShrink.value = false;
         }
       });
     super.initState();
@@ -110,7 +109,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               SliverAppBar(
                 systemOverlayStyle: SystemUiOverlayStyle(
                     statusBarIconBrightness:
-                        isShrink ? Brightness.dark : Brightness.light),
+                        isShrink.value ? Brightness.dark : Brightness.light),
                 pinned: true,
                 backgroundColor: errorImageBackground,
                 shape: const RoundedRectangleBorder(
@@ -124,22 +123,26 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                       AppIcons.anatomica,
                       width: 128,
                       height: 28,
-                      color: isShrink ? black : white,
+                      color: isShrink.value ? black : white,
                     ),
-                    WScaleAnimation(
-                      child: true
-                          ? SvgPicture.asset(
-                        AppIcons.bell,
-                        color: isShrink ? black : white,
-                      )
-                          : SvgPicture.asset(
-                        isShrink
-                            ? AppIcons.blackNotificationWithRedDot
-                            : AppIcons.notificationWithRedDot,
-                      ),
-                      onTap: () => Navigator.push(
-                          context, fade(page: const NotificationsScreen())),
-                    ),
+                    context.read<AuthenticationBloc>().state.status !=
+                            AuthenticationStatus.authenticated
+                        ? const Spacer()
+                        : WScaleAnimation(
+                            child: true
+                                ? SvgPicture.asset(
+                                    AppIcons.bell,
+                                    color: isShrink.value ? black : white,
+                                  )
+                                : SvgPicture.asset(
+                                    isShrink.value
+                                        ? AppIcons.blackNotificationWithRedDot
+                                        : AppIcons.notificationWithRedDot,
+                                  ),
+                            onTap: () => Navigator.of(context,
+                                    rootNavigator: true)
+                                .push(fade(page: const NotificationsScreen())),
+                          ),
                   ],
                 ),
                 expandedHeight: 324,
@@ -151,7 +154,9 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                         ? const ShimmerContainer(
                             width: double.maxFinite, height: 324)
                         : BannerItem(
-                            isShrink: isShrink,
+                            ids: state.banners.map((e) => e.id).toList(),
+                            bloc: _homeArticlesBloc,
+                            isShrink: isShrink.value,
                             images: state.banners
                                 .map((e) => e.image.middle)
                                 .toList(),
@@ -163,15 +168,15 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                   },
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                  child: SearchField(
-                    controller: searchController,
-                    onChanged: (value) {},
-                  ),
-                ),
-              ),
+              // SliverToBoxAdapter(
+              //   child: Padding(
+              //     padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              //     child: SearchField(
+              //       controller: searchController,
+              //       onChanged: (value) {},
+              //     ),
+              //   ),
+              // ),
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   return SliverToBoxAdapter(
@@ -239,13 +244,12 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               /// NEWS
               SliverToBoxAdapter(
                 child: TitlesItem(
-                  // TODO locale
-                  title: 'Новости',
+                  title: LocaleKeys.news.tr(),
                   showAllFunction: () {
                     Navigator.of(context, rootNavigator: true)
                         .push(fade(page: const NewsPart()));
                   },
-                  showAllTitle: 'Все новости',
+                  showAllTitle: LocaleKeys.all_news.tr(),
                 ),
               ),
               BlocBuilder<NewsBloc, NewsState>(
@@ -289,10 +293,13 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 child: TitlesItem(
                   title: LocaleKeys.articles.tr(),
                   showAllFunction: () {
-                    // Navigator.of(context).push(fade(page: const NewsPart()));
-                    launchUrl(
-                      Uri.parse('https://anatomica.uz/article'),
-                      mode: LaunchMode.inAppWebView,
+                    Navigator.of(context, rootNavigator: true).push(
+                      fade(
+                        page: const WebViewScreen(
+                          page: '',
+                          url: 'https://anatomica.uz/article',
+                        ),
+                      ),
                     );
                   },
                   showAllTitle: LocaleKeys.all_articles.tr(),
@@ -334,9 +341,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
               ),
 
               /// TOP ORGANIZATIONS
-              const SliverToBoxAdapter(
-                // TODO locale
-                child: TitlesItem(title: 'Лучшие организации'),
+              SliverToBoxAdapter(
+                child: TitlesItem(title: LocaleKeys.popular_orgs.tr()),
               ),
               BlocBuilder<MostPopularsBloc, MostPopularsState>(
                 builder: (context, state) {

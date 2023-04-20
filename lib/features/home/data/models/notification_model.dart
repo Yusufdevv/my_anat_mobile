@@ -12,6 +12,8 @@ class NotificationModel extends NotificationEntity {
     required super.read,
     required super.image,
     required super.id,
+    required super.createdAt,
+    required super.content,
   });
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>

@@ -3,7 +3,7 @@ part of 'candidate_single_bloc.dart';
 class CandidateSingleState extends Equatable {
   final FormzStatus status;
   final CandidateSingleEntity candidate;
-  final List<CertificateEntity> certificateList;
+  final List<CandidateEducationFilesEntity> educationFilesList;
   final List<CandidateWorkEntity> workEntity;
   final List<CandidateEducationEntity> educationList;
   final FormzStatus certificateStatus;
@@ -17,7 +17,7 @@ class CandidateSingleState extends Equatable {
   const CandidateSingleState({
     required this.status,
     required this.candidate,
-    required this.certificateList,
+    required this.educationFilesList,
     required this.educationList,
     required this.workEntity,
     required this.certificateStatus,
@@ -32,13 +32,13 @@ class CandidateSingleState extends Equatable {
   CandidateSingleState copyWith({
     FormzStatus? status,
     CandidateSingleEntity? candidate,
-    List<CertificateEntity>? certificateList,
     List<CandidateWorkEntity>? workEntity,
     List<CandidateEducationEntity>? educationList,
     FormzStatus? certificateStatus,
     FormzStatus? workStatus,
     FormzStatus? educationStatus,
     List<CandidateListEntity>? candidateList,
+    List<CandidateEducationFilesEntity>? educationFilesList,
     final String? next,
     final PaginatorStatus? paginatorStatus,
     final bool? fetchMore,
@@ -46,7 +46,7 @@ class CandidateSingleState extends Equatable {
       CandidateSingleState(
         status: status ?? this.status,
         candidate: candidate ?? this.candidate,
-        certificateList: certificateList ?? this.certificateList,
+        educationFilesList: educationFilesList ?? this.educationFilesList,
         educationList: educationList ?? this.educationList,
         workEntity: workEntity ?? this.workEntity,
         certificateStatus: certificateStatus ?? this.certificateStatus,
@@ -62,7 +62,7 @@ class CandidateSingleState extends Equatable {
   List<Object?> get props => [
         status,
         candidate,
-        certificateList,
+        educationFilesList,
         educationList,
         workEntity,
         certificateStatus,

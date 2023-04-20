@@ -7,8 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class DownloadUtil {
-  Future<bool> download(
-      TargetPlatform? platform, String url, String filename) async {
+  Future<bool> download(TargetPlatform? platform, String url, String filename,
+      {void Function(int, int)? onReceiveProgress}) async {
     bool downloaded = false;
     var permissionReady = await checkPermission(platform);
     if (permissionReady) {
@@ -16,7 +16,8 @@ class DownloadUtil {
       String savePath = "$localPath/$filename";
 
       try {
-        await Dio().download(url, savePath);
+        await Dio()
+            .download(url, savePath, onReceiveProgress: onReceiveProgress);
         await StorageRepository.putBool(key: url, value: true);
 
         downloaded = true;

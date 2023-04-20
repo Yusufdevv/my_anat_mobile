@@ -9,7 +9,12 @@ class CategoryItem extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   bool isGreen;
-  CategoryItem({required this.title, required this.logo, required this.onTap, this.isGreen = true, super.key});
+  CategoryItem(
+      {required this.title,
+      required this.logo,
+      required this.onTap,
+      this.isGreen = true,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,10 @@ class CategoryItem extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(fontWeight: FontWeight.w600),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,

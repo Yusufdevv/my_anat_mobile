@@ -323,5 +323,9 @@
   "payment": "Платеж",
   "others": "Другие",
   "others_categories": "Другие категории",
-  "the_best_doctors": "Лучшие врачи"
+  "the_best_doctors": "Лучшие врачи",
+  "home": "Главная",
+  "news": "Новости",
+  "all_news": "Все новости",
+  "popular_orgs": "Лучшие организации"
 }

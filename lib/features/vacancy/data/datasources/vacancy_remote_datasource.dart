@@ -567,7 +567,7 @@ class VacancyRemoteDataSourceImpl extends VacancyRemoteDataSource {
   Future<GenericPagination<CandidateEducationFilesModel>>
       getCandidateEducationFiles({required int id}) async {
     try {
-      final response = await dio.get('/doctor/$id/education/',
+      final response = await dio.get('/doctor/$id/education/files/',
           options: Options(
             headers: StorageRepository.getString('token').isNotEmpty
                 ? {

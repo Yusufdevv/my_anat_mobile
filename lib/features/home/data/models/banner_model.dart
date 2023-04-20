@@ -16,6 +16,7 @@ class BannerModel extends BannerEntity {
     required super.organization,
     required super.subtitle,
     required super.type,
+    required super.content,
   });
 
   factory BannerModel.fromJson(Map<String, dynamic> json) =>

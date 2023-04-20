@@ -38,6 +38,7 @@ class TopArticlesItem extends StatelessWidget {
         Navigator.of(context, rootNavigator: true).push(
           fade(
             page: WebViewScreen(
+              shareValue: 'https://anatomica.uz/article/$slug',
               page: 'ArticleSinglePage',
               slug: slug,
             ),

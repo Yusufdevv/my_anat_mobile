@@ -1,6 +1,9 @@
 import 'dart:ui';
 
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
+import 'package:anatomica/features/home/presentation/parts/banner_single_screen.dart';
+import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -10,6 +13,8 @@ class BannerItem extends StatefulWidget {
   final List<String> titles;
   final List<String> subtitles;
   final List<String> types;
+  final List<int> ids;
+  final HomeArticlesBloc bloc;
 
   const BannerItem(
       {required this.isShrink,
@@ -17,6 +22,8 @@ class BannerItem extends StatefulWidget {
       required this.subtitles,
       required this.titles,
       required this.types,
+      required this.bloc,
+      required this.ids,
       Key? key})
       : super(key: key);
 
@@ -70,7 +77,7 @@ class _BannerItemState extends State<BannerItem> {
                     ),
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
+                    borderRadius: const BorderRadius.vertical(
                       bottom: Radius.circular(16),
                     ),
                     image: DecorationImage(
@@ -86,49 +93,63 @@ class _BannerItemState extends State<BannerItem> {
             bottom: 16,
             right: 16,
             left: 16,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-                child: Container(
-                  // height: 106,
-                  decoration: BoxDecoration(
-                    color: textColor.withOpacity(.5),
-                    borderRadius: BorderRadius.circular(10),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).push(
+                  fade(
+                    page: BannerSingleScreen(
+                      bloc: widget.bloc,
+                      image: widget.images[pageIndex],
+                      id: widget.ids[pageIndex],
+                    ),
                   ),
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.types[pageIndex],
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(color: primary),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        widget.titles[pageIndex],
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(color: white),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 12),
-                      SmoothPageIndicator(
-                        controller: _pageController, // PageController
-                        count: widget.images.length,
-                        effect: const WormEffect(
-                          activeDotColor: white,
-                          dotHeight: 10,
-                          dotWidth: 10,
-                        ), // your preferred effect
-                        onDotClicked: (index) {},
-                      ),
-                    ],
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                  child: Container(
+                    // height: 106,
+                    decoration: BoxDecoration(
+                      color: textColor.withOpacity(.5),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.types[pageIndex],
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(color: primary),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          widget.titles[pageIndex],
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(color: white),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 12),
+                        SmoothPageIndicator(
+                          controller: _pageController, // PageController
+                          count: widget.images.length,
+                          effect: const WormEffect(
+                            activeDotColor: white,
+                            dotHeight: 10,
+                            dotWidth: 10,
+                          ), // your preferred effect
+                          onDotClicked: (index) {},
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

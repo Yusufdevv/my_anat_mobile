@@ -8,6 +8,8 @@ class HomeArticlesState with _$HomeArticlesState {
     String? homeArticlesNext,
     @Default(false) bool homeArticlesFetchMore,
     @Default([]) List<BannerModel> banners,
+    BannerModel? bannerSingle,
+    @Default(FormzStatus.pure) FormzStatus bannerSingleStatus,
     @Default(FormzStatus.pure) FormzStatus bannersStatus,
     String? bannersNext,
     @Default(false) bool bannersFetchMore,

@@ -2,11 +2,13 @@ import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/vacancy/data/models/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_education.dart';
+import 'package:anatomica/features/vacancy/domain/entities/candidate_education_files_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/entities/candidate_work.dart';
 import 'package:anatomica/features/vacancy/domain/entities/certificate.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_certificate.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_education.dart';
+import 'package:anatomica/features/vacancy/domain/usecases/candidate_education_files_usecase.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_single.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_work.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/related_candidate.dart';
@@ -19,9 +21,10 @@ part 'candidate_single_event.dart';
 
 part 'candidate_single_state.dart';
 
-class CandidateSingleBloc extends Bloc<CandidateSingleEvent, CandidateSingleState> {
+class CandidateSingleBloc
+    extends Bloc<CandidateSingleEvent, CandidateSingleState> {
   final CandidateSingleUseCase candidateSingleUseCase;
-  final CandidateCertificateUseCase candidateCertificateUseCase;
+  final CandidateEducationFilesUseCase candidateEducationFilesUseCase;
   final CandidateEducationUseCase candidateEducationUseCase;
   final CandidateWorkUseCase candidateWorkUseCase;
   final RelatedCandidateListUseCase relatedCandidateListUseCase;
@@ -29,7 +32,7 @@ class CandidateSingleBloc extends Bloc<CandidateSingleEvent, CandidateSingleStat
   CandidateSingleBloc({
     required this.candidateSingleUseCase,
     required this.candidateWorkUseCase,
-    required this.candidateCertificateUseCase,
+    required this.candidateEducationFilesUseCase,
     required this.candidateEducationUseCase,
     required this.relatedCandidateListUseCase,
   }) : super(
@@ -38,7 +41,7 @@ class CandidateSingleBloc extends Bloc<CandidateSingleEvent, CandidateSingleStat
             candidate: CandidateSingleModel.fromJson(const {}),
             workEntity: const [],
             educationList: const [],
-            certificateList: const [],
+            educationFilesList: const [],
             workStatus: FormzStatus.pure,
             educationStatus: FormzStatus.pure,
             certificateStatus: FormzStatus.pure,
@@ -49,20 +52,22 @@ class CandidateSingleBloc extends Bloc<CandidateSingleEvent, CandidateSingleStat
         ) {
     on<GetCandidateSingleEvent>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await candidateSingleUseCase.call(CandidateSingleParams(id: event.id));
+      final result = await candidateSingleUseCase
+          .call(CandidateSingleParams(id: event.id));
       if (result.isRight) {
-        emit(state.copyWith(status: FormzStatus.submissionSuccess, candidate: result.right));
+        emit(state.copyWith(
+            status: FormzStatus.submissionSuccess, candidate: result.right));
       } else {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
       }
     });
     on<CandidateCertificateEvent>((event, emit) async {
       emit(state.copyWith(certificateStatus: FormzStatus.submissionInProgress));
-      final response = await candidateCertificateUseCase.call(event.id);
+      final response = await candidateEducationFilesUseCase.call(event.id);
       if (response.isRight) {
         emit(state.copyWith(
           certificateStatus: FormzStatus.submissionSuccess,
-          certificateList: response.right.results,
+          educationFilesList: response.right.results,
         ));
       } else {
         emit(state.copyWith(certificateStatus: FormzStatus.submissionFailure));

@@ -47,14 +47,14 @@ class _LicenceItemListState extends State<LicenceItemList> {
         } else if (state.certificateStatus.isSubmissionInProgress) {
           return const Center(child: CupertinoActivityIndicator());
         } else if (state.certificateStatus.isSubmissionSuccess) {
-          if (state.certificateList.isNotEmpty) {
+          if (state.educationFilesList.isNotEmpty) {
             return ListView.separated(
               shrinkWrap: true,
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 bool isDownloaded = StorageRepository.getBool(
-                    state.certificateList[index].file.url,
+                    state.educationFilesList[index].document.url,
                     defValue: false);
                 return GestureDetector(
                     onTap: () async {
@@ -66,34 +66,52 @@ class _LicenceItemListState extends State<LicenceItemList> {
                       var localPath =
                           await DownloadUtil().prepareSaveDir(platform);
                       String savePath =
-                          "$localPath/${state.certificateList[index].file.url.split('/').last}";
+                          "$localPath/${state.educationFilesList[index].document.url.split('/').last}";
                       if (isDownloaded) {
                         OpenFile.open(savePath);
                       } else {
                         var downloaded = await DownloadUtil().download(
-                            platform,
-                            state.certificateList[index].file.url,
-                            state.certificateList[index].file.url
-                                .split('/')
-                                .last);
+                          platform,
+                          state.educationFilesList[index].document.url,
+                          state.educationFilesList[index].document.url
+                              .split('/')
+                              .last,
+                          onReceiveProgress: (count, total) {
+                            if (count / total != 1) {
+                              showCupertinoDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      CupertinoActivityIndicator());
+                            }
+                            ;
+                          },
+                        );
                         if (downloaded) {
                           OpenFile.open(savePath);
                           await StorageRepository.putBool(
-                              key: state.certificateList[index].file.url,
+                              key: state.educationFilesList[index].document.url,
                               value: true);
                         }
                       }
                     },
                     behavior: HitTestBehavior.opaque,
-                    child: LicenceItem(entity: state.certificateList[index]));
+                    child:
+                        LicenceItem(entity: state.educationFilesList[index]));
               },
               separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemCount: state.certificateList.length,
+              itemCount: state.educationFilesList.length,
             );
           } else {
-            return EmptyWidget(
-              content: LocaleKeys.no_certificates.tr(),
-              title: LocaleKeys.no_certificates.tr(),
+            return MediaQuery.removePadding(
+              removeBottom: true,
+              removeLeft: true,
+              removeRight: true,
+              removeTop: true,
+              context: context,
+              child: EmptyWidget(
+                content: LocaleKeys.no_certificates.tr(),
+                title: LocaleKeys.no_certificates.tr(),
+              ),
             );
           }
         } else if (state.certificateStatus.isSubmissionFailure) {

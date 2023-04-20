@@ -9,4 +9,7 @@ class HomeArticlesEvent with _$HomeArticlesEvent {
   const factory HomeArticlesEvent.getBanners() = _GetBanners;
 
   const factory HomeArticlesEvent.getMoreBanners() = _GetMoreBanners;
+
+  const factory HomeArticlesEvent.getBannerSingle({required int id}) =
+      _GetBannerSingle;
 }

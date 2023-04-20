@@ -22,7 +22,8 @@ enum NavItemEnum { home, map, magazine, vacancies, account }
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  static Route route() => MaterialPageRoute<void>(builder: (_) => const HomeScreen());
+  static Route route() =>
+      MaterialPageRoute<void>(builder: (_) => const HomeScreen());
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -41,8 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   final List<NavBar> lables = const [
     NavBar(
-      // todo locale
-      title: 'Home',
+      title: LocaleKeys.home,
       id: 0,
       icon: AppIcons.home,
     ),
@@ -75,7 +75,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _controller = TabController(length: lables.length, vsync: this);
     _controller.addListener(onTabChange);
 
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
+        overlays: SystemUiOverlay.values);
     super.initState();
   }
 
@@ -107,12 +108,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             listener: (context, state) {
               if (state is DoctorLinkTriggered) {
                 if (state.doctorId != null) {
-                  Navigator.of(context).push(fade(page: DoctorSingleScreen(id: state.doctorId!)));
+                  Navigator.of(context).push(
+                      fade(page: DoctorSingleScreen(id: state.doctorId!)));
                 }
               } else if (state is OrganizationLinkTriggered) {
-                if (state.organizationSlug != null && state.organizationId != null) {
-                  Navigator.of(context)
-                      .push(fade(page: HospitalSingleScreen(id: state.organizationId!, slug: state.organizationSlug!)));
+                if (state.organizationSlug != null &&
+                    state.organizationId != null) {
+                  Navigator.of(context).push(fade(
+                      page: HospitalSingleScreen(
+                          id: state.organizationId!,
+                          slug: state.organizationSlug!)));
                 }
               } else if (state is OnlineJournalLinkTriggered) {
                 if (mounted) {
@@ -123,7 +128,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: WillPopScope(
               onWillPop: () async {
                 final isFirstRouteInCurrentTab =
-                    !await _navigatorKeys[NavItemEnum.values[_currentIndex]]!.currentState!.maybePop();
+                    !await _navigatorKeys[NavItemEnum.values[_currentIndex]]!
+                        .currentState!
+                        .maybePop();
                 if (isFirstRouteInCurrentTab) {
                   changePage(0);
                   return false;
@@ -149,8 +156,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           duration: const Duration(milliseconds: 250),
                           child: state.showMainTab
                               ? Container(
-                                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-                                  height: 64 + MediaQuery.of(context).padding.bottom,
+                                  padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .padding
+                                          .bottom),
+                                  height: 64 +
+                                      MediaQuery.of(context).padding.bottom,
                                   decoration: BoxDecoration(
                                     color: white,
                                     border: Border.all(color: textFieldColor),
@@ -160,13 +171,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: const Color(0xff8898AA).withOpacity(0.08),
+                                        color: const Color(0xff8898AA)
+                                            .withOpacity(0.08),
                                         blurRadius: 30,
                                         offset: const Offset(0, -4),
                                       ),
                                     ],
                                   ),
-                                  child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                                  child: BlocBuilder<AuthenticationBloc,
+                                      AuthenticationState>(
                                     builder: (context, state) {
                                       return TabBar(
                                         enableFeedback: true,
@@ -179,8 +192,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         controller: _controller,
                                         indicatorPadding: EdgeInsets.zero,
                                         padding: EdgeInsets.zero,
-                                        indicator:
-                                            const CustomTabIndicator(radius: 3, color: primary, horizontalPadding: 35),
+                                        indicator: const CustomTabIndicator(
+                                            radius: 3,
+                                            color: primary,
+                                            horizontalPadding: 35),
                                         labelPadding: EdgeInsets.zero,
                                         tabs: List.generate(
                                           lables.length,
@@ -226,7 +241,8 @@ class HomeTabControllerProvider extends InheritedWidget {
   }) : super(key: key, child: child);
 
   static HomeTabControllerProvider of(BuildContext context) {
-    final result = context.dependOnInheritedWidgetOfExactType<HomeTabControllerProvider>();
+    final result =
+        context.dependOnInheritedWidgetOfExactType<HomeTabControllerProvider>();
     assert(result != null, 'No HomeTabControllerProvider found in context');
     return result!;
   }

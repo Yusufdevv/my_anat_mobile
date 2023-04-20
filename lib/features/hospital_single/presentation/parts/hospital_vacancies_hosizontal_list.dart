@@ -72,6 +72,7 @@ class HospitalVacanciesHorizontalList extends StatelessWidget {
                             },
                             width:
                                 MediaQuery.of(context).size.shortestSide - 32,
+                            // todo locale
                             title: 'Все вакансии',
                           );
                         }

@@ -326,5 +326,9 @@ abstract class  LocaleKeys {
   static const others = 'others';
   static const others_categories = 'others_categories';
   static const the_best_doctors = 'the_best_doctors';
+  static const home = 'home';
+  static const news = 'news';
+  static const all_news = 'all_news';
+  static const popular_orgs = 'popular_orgs';
 
 }
