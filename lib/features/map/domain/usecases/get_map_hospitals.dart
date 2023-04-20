@@ -31,6 +31,6 @@ class GetMapHospitalUseCase extends UseCase<List<OrgMapV2Model>, String> {
         endpoint: '/mobile/organization/map/',
         fromJson: OrgMapV2Model.fromJson,
         query: query,
-        sendToken: StorageRepository.getString('token').isNotEmpty);
+        sendToken: StorageRepository.getString(StoreKeys.token).isNotEmpty);
   }
 }

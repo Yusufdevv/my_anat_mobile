@@ -16,7 +16,7 @@ class LikeUnlikeDatasourceImpl extends LikeUnlikeDatasource {
   Future<void> likeVacancy(int id) async {
     try {
       final response = await _dio.post('/vacancy/vacancy/$id/like',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -34,7 +34,7 @@ class LikeUnlikeDatasourceImpl extends LikeUnlikeDatasource {
   Future<void> unlikeVacancy(int id) async {
     try {
       final response = await _dio.delete('/vacancy/vacancy/$id/dislike',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -52,7 +52,7 @@ class LikeUnlikeDatasourceImpl extends LikeUnlikeDatasource {
   Future<void> likeDoctor(int id) async {
     try {
       final response = await _dio.post('/doctor/$id/like/',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -70,7 +70,7 @@ class LikeUnlikeDatasourceImpl extends LikeUnlikeDatasource {
   Future<void> unlikeDoctor(int id) async {
     try {
       final response = await _dio.delete('/doctor/$id/dislike/',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());

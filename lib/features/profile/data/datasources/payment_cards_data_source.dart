@@ -26,7 +26,7 @@ class PaymentCardDatasourceImpl extends PaymentCardDatasource {
   Future<GenericPagination<PaymentCardModel>> getPaymentCards({String? next}) async {
     try {
       final response = await _dio.get(next ?? '/payments/GetUserCardList',
-          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'})));
+          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'})));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
             response.data, (p0) => PaymentCardModel.fromJson((p0 as Map<String, dynamic>)));
@@ -56,7 +56,7 @@ class PaymentCardDatasourceImpl extends PaymentCardDatasource {
             "card_number": cardNumber,
             "expire_date": expireDate,
           },
-          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'})));
+          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'})));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return CreateCardResponseModel.fromJson(response.data);
       } else {
@@ -93,7 +93,7 @@ class PaymentCardDatasourceImpl extends PaymentCardDatasource {
             "otp": otp,
             "card_number": cardNumber,
           },
-          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'})));
+          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'})));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return '';
       } else {
@@ -118,7 +118,7 @@ class PaymentCardDatasourceImpl extends PaymentCardDatasource {
   Future<void> deletePaymentCards(int id) async {
     try {
       final response = await _dio.delete('/payments/DeleteUserCard/$id',
-          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'})));
+          options: (Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'})));
       print(' response $response');
       print(' response ${response.statusCode}');
       print(' response ${response.data}');

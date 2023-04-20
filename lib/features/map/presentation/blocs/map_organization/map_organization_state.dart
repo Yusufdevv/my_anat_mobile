@@ -23,6 +23,7 @@ class MapOrganizationState with _$MapOrganizationState {
     @Default(0) double currentLat,
     @Default(0) double currentLong,
     @Default(0) double accuracy,
+    @Default(0) double zoomLevel,
     @Default('') String searchText,
     String? next,
     @Default(false) bool fetchMore,

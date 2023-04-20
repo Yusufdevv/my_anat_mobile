@@ -47,8 +47,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
   await DefaultCacheManager().emptyCache();
   // FlutterError.onError =
@@ -59,16 +58,14 @@ Future<void> main() async {
 
   OneSignal.shared.setAppId("e1898670-07c9-4ac8-961e-9b061739375e");
 
-  OneSignal.shared
-      .promptUserForPushNotificationPermission()
-      .then((accepted) async {
+  OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) async {
     OSDeviceState? status = await OneSignal.shared.getDeviceState();
     String? osUserID = status?.userId;
     while (osUserID == null) {
       OSDeviceState? status = await OneSignal.shared.getDeviceState();
       osUserID = status?.userId;
     }
-    await StorageRepository.putString('deviceId', osUserID);
+    await StorageRepository.putString(StoreKeys.deviceId, osUserID);
   });
 
   runApp(EasyLocalization(
@@ -77,10 +74,8 @@ Future<void> main() async {
         Locale('ru'),
         Locale('uz'),
       ],
-      fallbackLocale: Locale(
-          StorageRepository.getString('device_language', defValue: 'uz')),
-      startLocale: Locale(
-          StorageRepository.getString('device_language', defValue: 'uz')),
+      fallbackLocale: Locale(StorageRepository.getString(StoreKeys.deviceLanguage, defValue: 'uz')),
+      startLocale: Locale(StorageRepository.getString(StoreKeys.deviceLanguage, defValue: 'uz')),
       saveLocale: true,
       child: const MyApp()));
 }
@@ -89,8 +84,7 @@ class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
 
@@ -111,8 +105,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     connectivityRepository = ConnectivityRepository();
-    connectivityBloc = ConnectivityBloc(connectivityRepository)
-      ..add(const ConnectivityEvent.setup());
+    connectivityBloc = ConnectivityBloc(connectivityRepository)..add(const ConnectivityEvent.setup());
     super.initState();
   }
 
@@ -141,12 +134,10 @@ class _MyAppState extends State<MyApp> {
           builder: (context, child) {
             return BlocListener<AuthenticationBloc, AuthenticationState>(
               listener: (context, state) {
-                if (!StorageRepository.getBool('onboarding', defValue: false)) {
-                  navigator.pushAndRemoveUntil(
-                      fade(page: const OnBoardingScreen()), (route) => false);
+                if (!StorageRepository.getBool(StoreKeys.onBoarding, defValue: false)) {
+                  navigator.pushAndRemoveUntil(fade(page: const OnBoardingScreen()), (route) => false);
                 } else {
-                  navigator.pushAndRemoveUntil(
-                      fade(page: const HomeScreen()), (route) => false);
+                  navigator.pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
                 }
               },
               child: child,

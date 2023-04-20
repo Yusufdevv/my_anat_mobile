@@ -34,8 +34,10 @@ mixin _$MapOrganizationEvent {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -59,8 +61,9 @@ mixin _$MapOrganizationEvent {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) =>
@@ -83,8 +86,9 @@ mixin _$MapOrganizationEvent {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -100,6 +104,8 @@ mixin _$MapOrganizationEvent {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) =>
@@ -114,6 +120,8 @@ mixin _$MapOrganizationEvent {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) =>
@@ -128,6 +136,8 @@ mixin _$MapOrganizationEvent {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -265,8 +275,10 @@ class _$_ChangeTab implements _ChangeTab {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -293,8 +305,9 @@ class _$_ChangeTab implements _ChangeTab {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
@@ -320,8 +333,9 @@ class _$_ChangeTab implements _ChangeTab {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -343,6 +357,8 @@ class _$_ChangeTab implements _ChangeTab {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -360,6 +376,8 @@ class _$_ChangeTab implements _ChangeTab {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -377,6 +395,8 @@ class _$_ChangeTab implements _ChangeTab {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -516,8 +536,10 @@ class _$_GetHospitals implements _GetHospitals {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -544,8 +566,9 @@ class _$_GetHospitals implements _GetHospitals {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
@@ -571,8 +594,9 @@ class _$_GetHospitals implements _GetHospitals {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -594,6 +618,8 @@ class _$_GetHospitals implements _GetHospitals {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -611,6 +637,8 @@ class _$_GetHospitals implements _GetHospitals {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -628,6 +656,8 @@ class _$_GetHospitals implements _GetHospitals {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -767,8 +797,10 @@ class _$_GetDoctors implements _GetDoctors {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -795,8 +827,9 @@ class _$_GetDoctors implements _GetDoctors {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
@@ -822,8 +855,9 @@ class _$_GetDoctors implements _GetDoctors {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -845,6 +879,8 @@ class _$_GetDoctors implements _GetDoctors {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -862,6 +898,8 @@ class _$_GetDoctors implements _GetDoctors {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -879,6 +917,8 @@ class _$_GetDoctors implements _GetDoctors {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -987,8 +1027,10 @@ class _$_GetTypes implements _GetTypes {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -1015,8 +1057,9 @@ class _$_GetTypes implements _GetTypes {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
@@ -1042,8 +1085,9 @@ class _$_GetTypes implements _GetTypes {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -1065,6 +1109,8 @@ class _$_GetTypes implements _GetTypes {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -1082,6 +1128,8 @@ class _$_GetTypes implements _GetTypes {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -1099,6 +1147,8 @@ class _$_GetTypes implements _GetTypes {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -1200,8 +1250,10 @@ class _$_GetMoreTypes implements _GetMoreTypes {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -1228,8 +1280,9 @@ class _$_GetMoreTypes implements _GetMoreTypes {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
@@ -1255,8 +1308,9 @@ class _$_GetMoreTypes implements _GetMoreTypes {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -1278,6 +1332,8 @@ class _$_GetMoreTypes implements _GetMoreTypes {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -1295,6 +1351,8 @@ class _$_GetMoreTypes implements _GetMoreTypes {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -1312,6 +1370,8 @@ class _$_GetMoreTypes implements _GetMoreTypes {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -1412,8 +1472,10 @@ class _$_ChangeSearchText implements _ChangeSearchText {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -1440,8 +1502,9 @@ class _$_ChangeSearchText implements _ChangeSearchText {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
@@ -1467,8 +1530,9 @@ class _$_ChangeSearchText implements _ChangeSearchText {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -1490,6 +1554,8 @@ class _$_ChangeSearchText implements _ChangeSearchText {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -1507,6 +1573,8 @@ class _$_ChangeSearchText implements _ChangeSearchText {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -1524,6 +1592,8 @@ class _$_ChangeSearchText implements _ChangeSearchText {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -1649,8 +1719,10 @@ class _$_OnMapCreated implements _OnMapCreated {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -1677,8 +1749,9 @@ class _$_OnMapCreated implements _OnMapCreated {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
@@ -1704,8 +1777,9 @@ class _$_OnMapCreated implements _OnMapCreated {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -1727,6 +1801,8 @@ class _$_OnMapCreated implements _OnMapCreated {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -1744,6 +1820,8 @@ class _$_OnMapCreated implements _OnMapCreated {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -1761,6 +1839,8 @@ class _$_OnMapCreated implements _OnMapCreated {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -1866,8 +1946,10 @@ class _$_ChangeRadius implements _ChangeRadius {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -1894,8 +1976,9 @@ class _$_ChangeRadius implements _ChangeRadius {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
@@ -1921,8 +2004,9 @@ class _$_ChangeRadius implements _ChangeRadius {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -1944,6 +2028,8 @@ class _$_ChangeRadius implements _ChangeRadius {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -1961,6 +2047,8 @@ class _$_ChangeRadius implements _ChangeRadius {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -1978,6 +2066,8 @@ class _$_ChangeRadius implements _ChangeRadius {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -1999,15 +2089,391 @@ abstract class _ChangeRadius implements MapOrganizationEvent {
 }
 
 /// @nodoc
+abstract class _$$_ZoomInCopyWith<$Res> {
+  factory _$$_ZoomInCopyWith(_$_ZoomIn value, $Res Function(_$_ZoomIn) then) =
+      __$$_ZoomInCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_ZoomInCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res, _$_ZoomIn>
+    implements _$$_ZoomInCopyWith<$Res> {
+  __$$_ZoomInCopyWithImpl(_$_ZoomIn _value, $Res Function(_$_ZoomIn) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_ZoomIn implements _ZoomIn {
+  _$_ZoomIn();
+
+  @override
+  String toString() {
+    return 'MapOrganizationEvent.zoomIn()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_ZoomIn);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            int tab, BuildContext context, double acuracy, bool haveToLoading)
+        changeTab,
+    required TResult Function(BuildContext context, double? latitude,
+            double? longitude, double? radius)
+        getHospitals,
+    required TResult Function(double? latitude, double? longitude,
+            double? radius, BuildContext context)
+        getDoctors,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
+    required TResult Function(String text) changeSearchText,
+    required TResult Function(YandexMapController controller,
+            int orgMapV2TabIndex, BuildContext context)
+        onMapCreated,
+    required TResult Function(int radius) changeRadius,
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
+        getCurrentLocation,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
+  }) {
+    return zoomIn();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            int tab, BuildContext context, double acuracy, bool haveToLoading)?
+        changeTab,
+    TResult? Function(BuildContext context, double? latitude, double? longitude,
+            double? radius)?
+        getHospitals,
+    TResult? Function(double? latitude, double? longitude, double? radius,
+            BuildContext context)?
+        getDoctors,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(YandexMapController controller, int orgMapV2TabIndex,
+            BuildContext context)?
+        onMapCreated,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
+        getCurrentLocation,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
+  }) {
+    return zoomIn?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            int tab, BuildContext context, double acuracy, bool haveToLoading)?
+        changeTab,
+    TResult Function(BuildContext context, double? latitude, double? longitude,
+            double? radius)?
+        getHospitals,
+    TResult Function(double? latitude, double? longitude, double? radius,
+            BuildContext context)?
+        getDoctors,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
+    TResult Function(String text)? changeSearchText,
+    TResult Function(YandexMapController controller, int orgMapV2TabIndex,
+            BuildContext context)?
+        onMapCreated,
+    TResult Function(int radius)? changeRadius,
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
+        getCurrentLocation,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    required TResult orElse(),
+  }) {
+    if (zoomIn != null) {
+      return zoomIn();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ChangeTab value) changeTab,
+    required TResult Function(_GetHospitals value) getHospitals,
+    required TResult Function(_GetDoctors value) getDoctors,
+    required TResult Function(_GetTypes value) getTypes,
+    required TResult Function(_GetMoreTypes value) getMoreTypes,
+    required TResult Function(_ChangeSearchText value) changeSearchText,
+    required TResult Function(_OnMapCreated value) onMapCreated,
+    required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
+    required TResult Function(_GetCurrentLocation value) getCurrentLocation,
+    required TResult Function(_ChangeLatLong value) changeLatLong,
+  }) {
+    return zoomIn(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ChangeTab value)? changeTab,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_OnMapCreated value)? onMapCreated,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
+    TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
+  }) {
+    return zoomIn?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ChangeTab value)? changeTab,
+    TResult Function(_GetHospitals value)? getHospitals,
+    TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
+    TResult Function(_ChangeSearchText value)? changeSearchText,
+    TResult Function(_OnMapCreated value)? onMapCreated,
+    TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
+    TResult Function(_GetCurrentLocation value)? getCurrentLocation,
+    TResult Function(_ChangeLatLong value)? changeLatLong,
+    required TResult orElse(),
+  }) {
+    if (zoomIn != null) {
+      return zoomIn(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ZoomIn implements MapOrganizationEvent {
+  factory _ZoomIn() = _$_ZoomIn;
+}
+
+/// @nodoc
+abstract class _$$_ZoomOutCopyWith<$Res> {
+  factory _$$_ZoomOutCopyWith(
+          _$_ZoomOut value, $Res Function(_$_ZoomOut) then) =
+      __$$_ZoomOutCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_ZoomOutCopyWithImpl<$Res>
+    extends _$MapOrganizationEventCopyWithImpl<$Res, _$_ZoomOut>
+    implements _$$_ZoomOutCopyWith<$Res> {
+  __$$_ZoomOutCopyWithImpl(_$_ZoomOut _value, $Res Function(_$_ZoomOut) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_ZoomOut implements _ZoomOut {
+  _$_ZoomOut();
+
+  @override
+  String toString() {
+    return 'MapOrganizationEvent.zoomOut()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_ZoomOut);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            int tab, BuildContext context, double acuracy, bool haveToLoading)
+        changeTab,
+    required TResult Function(BuildContext context, double? latitude,
+            double? longitude, double? radius)
+        getHospitals,
+    required TResult Function(double? latitude, double? longitude,
+            double? radius, BuildContext context)
+        getDoctors,
+    required TResult Function(String searchText) getTypes,
+    required TResult Function(String searchText) getMoreTypes,
+    required TResult Function(String text) changeSearchText,
+    required TResult Function(YandexMapController controller,
+            int orgMapV2TabIndex, BuildContext context)
+        onMapCreated,
+    required TResult Function(int radius) changeRadius,
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
+        getCurrentLocation,
+    required TResult Function(double lat, double long, int? radius)
+        changeLatLong,
+  }) {
+    return zoomOut();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            int tab, BuildContext context, double acuracy, bool haveToLoading)?
+        changeTab,
+    TResult? Function(BuildContext context, double? latitude, double? longitude,
+            double? radius)?
+        getHospitals,
+    TResult? Function(double? latitude, double? longitude, double? radius,
+            BuildContext context)?
+        getDoctors,
+    TResult? Function(String searchText)? getTypes,
+    TResult? Function(String searchText)? getMoreTypes,
+    TResult? Function(String text)? changeSearchText,
+    TResult? Function(YandexMapController controller, int orgMapV2TabIndex,
+            BuildContext context)?
+        onMapCreated,
+    TResult? Function(int radius)? changeRadius,
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
+        getCurrentLocation,
+    TResult? Function(double lat, double long, int? radius)? changeLatLong,
+  }) {
+    return zoomOut?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            int tab, BuildContext context, double acuracy, bool haveToLoading)?
+        changeTab,
+    TResult Function(BuildContext context, double? latitude, double? longitude,
+            double? radius)?
+        getHospitals,
+    TResult Function(double? latitude, double? longitude, double? radius,
+            BuildContext context)?
+        getDoctors,
+    TResult Function(String searchText)? getTypes,
+    TResult Function(String searchText)? getMoreTypes,
+    TResult Function(String text)? changeSearchText,
+    TResult Function(YandexMapController controller, int orgMapV2TabIndex,
+            BuildContext context)?
+        onMapCreated,
+    TResult Function(int radius)? changeRadius,
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
+        getCurrentLocation,
+    TResult Function(double lat, double long, int? radius)? changeLatLong,
+    required TResult orElse(),
+  }) {
+    if (zoomOut != null) {
+      return zoomOut();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ChangeTab value) changeTab,
+    required TResult Function(_GetHospitals value) getHospitals,
+    required TResult Function(_GetDoctors value) getDoctors,
+    required TResult Function(_GetTypes value) getTypes,
+    required TResult Function(_GetMoreTypes value) getMoreTypes,
+    required TResult Function(_ChangeSearchText value) changeSearchText,
+    required TResult Function(_OnMapCreated value) onMapCreated,
+    required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
+    required TResult Function(_GetCurrentLocation value) getCurrentLocation,
+    required TResult Function(_ChangeLatLong value) changeLatLong,
+  }) {
+    return zoomOut(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ChangeTab value)? changeTab,
+    TResult? Function(_GetHospitals value)? getHospitals,
+    TResult? Function(_GetDoctors value)? getDoctors,
+    TResult? Function(_GetTypes value)? getTypes,
+    TResult? Function(_GetMoreTypes value)? getMoreTypes,
+    TResult? Function(_ChangeSearchText value)? changeSearchText,
+    TResult? Function(_OnMapCreated value)? onMapCreated,
+    TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
+    TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
+    TResult? Function(_ChangeLatLong value)? changeLatLong,
+  }) {
+    return zoomOut?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ChangeTab value)? changeTab,
+    TResult Function(_GetHospitals value)? getHospitals,
+    TResult Function(_GetDoctors value)? getDoctors,
+    TResult Function(_GetTypes value)? getTypes,
+    TResult Function(_GetMoreTypes value)? getMoreTypes,
+    TResult Function(_ChangeSearchText value)? changeSearchText,
+    TResult Function(_OnMapCreated value)? onMapCreated,
+    TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
+    TResult Function(_GetCurrentLocation value)? getCurrentLocation,
+    TResult Function(_ChangeLatLong value)? changeLatLong,
+    required TResult orElse(),
+  }) {
+    if (zoomOut != null) {
+      return zoomOut(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ZoomOut implements MapOrganizationEvent {
+  factory _ZoomOut() = _$_ZoomOut;
+}
+
+/// @nodoc
 abstract class _$$_GetCurrentLocationCopyWith<$Res> {
   factory _$$_GetCurrentLocationCopyWith(_$_GetCurrentLocation value,
           $Res Function(_$_GetCurrentLocation) then) =
       __$$_GetCurrentLocationCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {ValueChanged<String> onError,
-      ValueChanged<Position> onSuccess,
-      BuildContext context});
+  $Res call({ValueChanged<String> onError, BuildContext context});
 }
 
 /// @nodoc
@@ -2022,7 +2488,6 @@ class __$$_GetCurrentLocationCopyWithImpl<$Res>
   @override
   $Res call({
     Object? onError = null,
-    Object? onSuccess = null,
     Object? context = null,
   }) {
     return _then(_$_GetCurrentLocation(
@@ -2030,10 +2495,6 @@ class __$$_GetCurrentLocationCopyWithImpl<$Res>
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
               as ValueChanged<String>,
-      onSuccess: null == onSuccess
-          ? _value.onSuccess
-          : onSuccess // ignore: cast_nullable_to_non_nullable
-              as ValueChanged<Position>,
       context: null == context
           ? _value.context
           : context // ignore: cast_nullable_to_non_nullable
@@ -2045,19 +2506,16 @@ class __$$_GetCurrentLocationCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GetCurrentLocation implements _GetCurrentLocation {
-  _$_GetCurrentLocation(
-      {required this.onError, required this.onSuccess, required this.context});
+  _$_GetCurrentLocation({required this.onError, required this.context});
 
   @override
   final ValueChanged<String> onError;
-  @override
-  final ValueChanged<Position> onSuccess;
   @override
   final BuildContext context;
 
   @override
   String toString() {
-    return 'MapOrganizationEvent.getCurrentLocation(onError: $onError, onSuccess: $onSuccess, context: $context)';
+    return 'MapOrganizationEvent.getCurrentLocation(onError: $onError, context: $context)';
   }
 
   @override
@@ -2066,13 +2524,11 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
         (other.runtimeType == runtimeType &&
             other is _$_GetCurrentLocation &&
             (identical(other.onError, onError) || other.onError == onError) &&
-            (identical(other.onSuccess, onSuccess) ||
-                other.onSuccess == onSuccess) &&
             (identical(other.context, context) || other.context == context));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, onError, onSuccess, context);
+  int get hashCode => Object.hash(runtimeType, onError, context);
 
   @JsonKey(ignore: true)
   @override
@@ -2100,13 +2556,15 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
   }) {
-    return getCurrentLocation(onError, onSuccess, context);
+    return getCurrentLocation(onError, context);
   }
 
   @override
@@ -2128,12 +2586,13 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
-    return getCurrentLocation?.call(onError, onSuccess, context);
+    return getCurrentLocation?.call(onError, context);
   }
 
   @override
@@ -2155,14 +2614,15 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
   }) {
     if (getCurrentLocation != null) {
-      return getCurrentLocation(onError, onSuccess, context);
+      return getCurrentLocation(onError, context);
     }
     return orElse();
   }
@@ -2178,6 +2638,8 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -2195,6 +2657,8 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -2212,6 +2676,8 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -2226,11 +2692,9 @@ class _$_GetCurrentLocation implements _GetCurrentLocation {
 abstract class _GetCurrentLocation implements MapOrganizationEvent {
   factory _GetCurrentLocation(
       {required final ValueChanged<String> onError,
-      required final ValueChanged<Position> onSuccess,
       required final BuildContext context}) = _$_GetCurrentLocation;
 
   ValueChanged<String> get onError;
-  ValueChanged<Position> get onSuccess;
   BuildContext get context;
   @JsonKey(ignore: true)
   _$$_GetCurrentLocationCopyWith<_$_GetCurrentLocation> get copyWith =>
@@ -2333,8 +2797,10 @@ class _$_ChangeLatLong implements _ChangeLatLong {
             int orgMapV2TabIndex, BuildContext context)
         onMapCreated,
     required TResult Function(int radius) changeRadius,
-    required TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)
+    required TResult Function() zoomIn,
+    required TResult Function() zoomOut,
+    required TResult Function(
+            ValueChanged<String> onError, BuildContext context)
         getCurrentLocation,
     required TResult Function(double lat, double long, int? radius)
         changeLatLong,
@@ -2361,8 +2827,9 @@ class _$_ChangeLatLong implements _ChangeLatLong {
             BuildContext context)?
         onMapCreated,
     TResult? Function(int radius)? changeRadius,
-    TResult? Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult? Function()? zoomIn,
+    TResult? Function()? zoomOut,
+    TResult? Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult? Function(double lat, double long, int? radius)? changeLatLong,
   }) {
@@ -2388,8 +2855,9 @@ class _$_ChangeLatLong implements _ChangeLatLong {
             BuildContext context)?
         onMapCreated,
     TResult Function(int radius)? changeRadius,
-    TResult Function(ValueChanged<String> onError,
-            ValueChanged<Position> onSuccess, BuildContext context)?
+    TResult Function()? zoomIn,
+    TResult Function()? zoomOut,
+    TResult Function(ValueChanged<String> onError, BuildContext context)?
         getCurrentLocation,
     TResult Function(double lat, double long, int? radius)? changeLatLong,
     required TResult orElse(),
@@ -2411,6 +2879,8 @@ class _$_ChangeLatLong implements _ChangeLatLong {
     required TResult Function(_ChangeSearchText value) changeSearchText,
     required TResult Function(_OnMapCreated value) onMapCreated,
     required TResult Function(_ChangeRadius value) changeRadius,
+    required TResult Function(_ZoomIn value) zoomIn,
+    required TResult Function(_ZoomOut value) zoomOut,
     required TResult Function(_GetCurrentLocation value) getCurrentLocation,
     required TResult Function(_ChangeLatLong value) changeLatLong,
   }) {
@@ -2428,6 +2898,8 @@ class _$_ChangeLatLong implements _ChangeLatLong {
     TResult? Function(_ChangeSearchText value)? changeSearchText,
     TResult? Function(_OnMapCreated value)? onMapCreated,
     TResult? Function(_ChangeRadius value)? changeRadius,
+    TResult? Function(_ZoomIn value)? zoomIn,
+    TResult? Function(_ZoomOut value)? zoomOut,
     TResult? Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult? Function(_ChangeLatLong value)? changeLatLong,
   }) {
@@ -2445,6 +2917,8 @@ class _$_ChangeLatLong implements _ChangeLatLong {
     TResult Function(_ChangeSearchText value)? changeSearchText,
     TResult Function(_OnMapCreated value)? onMapCreated,
     TResult Function(_ChangeRadius value)? changeRadius,
+    TResult Function(_ZoomIn value)? zoomIn,
+    TResult Function(_ZoomOut value)? zoomOut,
     TResult Function(_GetCurrentLocation value)? getCurrentLocation,
     TResult Function(_ChangeLatLong value)? changeLatLong,
     required TResult orElse(),
@@ -2493,6 +2967,7 @@ mixin _$MapOrganizationState {
   double get currentLat => throw _privateConstructorUsedError;
   double get currentLong => throw _privateConstructorUsedError;
   double get accuracy => throw _privateConstructorUsedError;
+  double get zoomLevel => throw _privateConstructorUsedError;
   String get searchText => throw _privateConstructorUsedError;
   String? get next => throw _privateConstructorUsedError;
   bool get fetchMore => throw _privateConstructorUsedError;
@@ -2531,6 +3006,7 @@ abstract class $MapOrganizationStateCopyWith<$Res> {
       double currentLat,
       double currentLong,
       double accuracy,
+      double zoomLevel,
       String searchText,
       String? next,
       bool fetchMore,
@@ -2572,6 +3048,7 @@ class _$MapOrganizationStateCopyWithImpl<$Res,
     Object? currentLat = null,
     Object? currentLong = null,
     Object? accuracy = null,
+    Object? zoomLevel = null,
     Object? searchText = null,
     Object? next = freezed,
     Object? fetchMore = null,
@@ -2659,6 +3136,10 @@ class _$MapOrganizationStateCopyWithImpl<$Res,
           ? _value.accuracy
           : accuracy // ignore: cast_nullable_to_non_nullable
               as double,
+      zoomLevel: null == zoomLevel
+          ? _value.zoomLevel
+          : zoomLevel // ignore: cast_nullable_to_non_nullable
+              as double,
       searchText: null == searchText
           ? _value.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
@@ -2712,6 +3193,7 @@ abstract class _$$_MapOrganizationStateCopyWith<$Res>
       double currentLat,
       double currentLong,
       double accuracy,
+      double zoomLevel,
       String searchText,
       String? next,
       bool fetchMore,
@@ -2750,6 +3232,7 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
     Object? currentLat = null,
     Object? currentLong = null,
     Object? accuracy = null,
+    Object? zoomLevel = null,
     Object? searchText = null,
     Object? next = freezed,
     Object? fetchMore = null,
@@ -2837,6 +3320,10 @@ class __$$_MapOrganizationStateCopyWithImpl<$Res>
           ? _value.accuracy
           : accuracy // ignore: cast_nullable_to_non_nullable
               as double,
+      zoomLevel: null == zoomLevel
+          ? _value.zoomLevel
+          : zoomLevel // ignore: cast_nullable_to_non_nullable
+              as double,
       searchText: null == searchText
           ? _value.searchText
           : searchText // ignore: cast_nullable_to_non_nullable
@@ -2885,6 +3372,7 @@ class _$_MapOrganizationState implements _MapOrganizationState {
       this.currentLat = 0,
       this.currentLong = 0,
       this.accuracy = 0,
+      this.zoomLevel = 0,
       this.searchText = '',
       this.next,
       this.fetchMore = false,
@@ -2980,6 +3468,9 @@ class _$_MapOrganizationState implements _MapOrganizationState {
   final double accuracy;
   @override
   @JsonKey()
+  final double zoomLevel;
+  @override
+  @JsonKey()
   final String searchText;
   @override
   final String? next;
@@ -2995,7 +3486,7 @@ class _$_MapOrganizationState implements _MapOrganizationState {
 
   @override
   String toString() {
-    return 'MapOrganizationState(hospitals: $hospitals, doctors: $doctors, types: $types, typesCount: $typesCount, typesNext: $typesNext, mapObjects: $mapObjects, typesStatus: $typesStatus, tabChangingStatus: $tabChangingStatus, typesFetchMore: $typesFetchMore, radius: $radius, status: $status, getTypesStatus: $getTypesStatus, getCurrentLocationStatus: $getCurrentLocationStatus, maxZoomLevel: $maxZoomLevel, minZoomLevel: $minZoomLevel, lat: $lat, long: $long, currentLat: $currentLat, currentLong: $currentLong, accuracy: $accuracy, searchText: $searchText, next: $next, fetchMore: $fetchMore, mapController: $mapController, tabController: $tabController)';
+    return 'MapOrganizationState(hospitals: $hospitals, doctors: $doctors, types: $types, typesCount: $typesCount, typesNext: $typesNext, mapObjects: $mapObjects, typesStatus: $typesStatus, tabChangingStatus: $tabChangingStatus, typesFetchMore: $typesFetchMore, radius: $radius, status: $status, getTypesStatus: $getTypesStatus, getCurrentLocationStatus: $getCurrentLocationStatus, maxZoomLevel: $maxZoomLevel, minZoomLevel: $minZoomLevel, lat: $lat, long: $long, currentLat: $currentLat, currentLong: $currentLong, accuracy: $accuracy, zoomLevel: $zoomLevel, searchText: $searchText, next: $next, fetchMore: $fetchMore, mapController: $mapController, tabController: $tabController)';
   }
 
   @override
@@ -3038,6 +3529,8 @@ class _$_MapOrganizationState implements _MapOrganizationState {
                 other.currentLong == currentLong) &&
             (identical(other.accuracy, accuracy) ||
                 other.accuracy == accuracy) &&
+            (identical(other.zoomLevel, zoomLevel) ||
+                other.zoomLevel == zoomLevel) &&
             (identical(other.searchText, searchText) ||
                 other.searchText == searchText) &&
             (identical(other.next, next) || other.next == next) &&
@@ -3072,6 +3565,7 @@ class _$_MapOrganizationState implements _MapOrganizationState {
         currentLat,
         currentLong,
         accuracy,
+        zoomLevel,
         searchText,
         next,
         fetchMore,
@@ -3109,6 +3603,7 @@ abstract class _MapOrganizationState implements MapOrganizationState {
       final double currentLat,
       final double currentLong,
       final double accuracy,
+      final double zoomLevel,
       final String searchText,
       final String? next,
       final bool fetchMore,
@@ -3155,6 +3650,8 @@ abstract class _MapOrganizationState implements MapOrganizationState {
   double get currentLong;
   @override
   double get accuracy;
+  @override
+  double get zoomLevel;
   @override
   String get searchText;
   @override

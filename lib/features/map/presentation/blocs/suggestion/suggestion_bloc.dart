@@ -15,7 +15,11 @@ class SuggestionBloc extends Bloc<SuggestionEvent, SuggestionState> {
   SuggestionBloc(this.getSuggestions) : super(SuggestionState()) {
     on<_GetSuggestions>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress, searchText: event.text));
-      final result = await getSuggestions(SuggestionParam(isDoctor: state.currentPage == 1, search: event.text));
+      final result = await getSuggestions(SuggestionParam(
+        where: 'Suggestion Bloc _GetSuggestions',
+        isDoctor: state.currentPage == 1,
+        search: event.text,
+      ));
       if (result.isRight) {
         emit(state.copyWith(status: FormzStatus.submissionInProgress, list: result.right));
       } else {
@@ -26,7 +30,8 @@ class SuggestionBloc extends Bloc<SuggestionEvent, SuggestionState> {
     }, transformer: debounce(const Duration(milliseconds: 200)));
     on<_ChangePage>((event, emit) async {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
-      final result = await getSuggestions(SuggestionParam(isDoctor: state.currentPage == 1, search: state.searchText));
+      final result = await getSuggestions(
+          SuggestionParam(where: 'Suggestion Bloc _ChangePage', isDoctor: event.page == 1, search: state.searchText));
       if (result.isRight) {
         emit(state.copyWith(status: FormzStatus.submissionInProgress, list: result.right));
       } else {

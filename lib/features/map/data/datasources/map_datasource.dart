@@ -25,8 +25,8 @@ class MapDatasourceImpl extends MapDatasource {
     try {
       final response = await _dio.get('/organization/specialization/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) => TypeModel.fromJson(p0 as Map<String, dynamic>));
@@ -93,18 +93,19 @@ class MapDatasourceImpl extends MapDatasource {
     }
     if (params.title != null && params.title!.isNotEmpty) {
       queryParams.putIfAbsent('title', () => params.title);
-    } 
+    }
 
     try {
       final response = await _dio.get(
         '/mobile/organization/map/v2/',
         options: Options(
-          headers: StorageRepository.getString('token').isNotEmpty
-              ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+          headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+              ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
         queryParameters: queryParams,
-      ); 
+      );
+
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));
       } else {

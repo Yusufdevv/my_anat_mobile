@@ -11,7 +11,7 @@ class DioSettings {
     followRedirects: false,
     headers: <String, dynamic>{
       // TODO  default accept language must be 'uz'
-      'Accept-Language': StorageRepository.getString('language', defValue: 'ru')
+      'Accept-Language': StorageRepository.getString(StoreKeys.language, defValue: 'ru')
     },
     validateStatus: (status) => status != null && status <= 500,
   );

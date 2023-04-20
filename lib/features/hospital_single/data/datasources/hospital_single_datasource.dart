@@ -50,8 +50,8 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
     try {
       final response = await _dio.get('/organization/$slug/detail/',
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return HospitalSingleModel.fromJson(response.data);
@@ -75,8 +75,8 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
         next ?? '/organization/service/',
         queryParameters: {'organization_id': orgId, 'specialization_id': specId, 'search': search},
         options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                 : {}),
       );
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
@@ -102,8 +102,8 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
         next ?? '/organization/specialization/v2/',
         queryParameters: {'organization_id': orgId, 'search': search},
         options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                 : {}),
       );
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
@@ -145,8 +145,8 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       final response = await _dio.get(next ?? '/organization/doctor/',
           queryParameters: {'organization_id': id},
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}', 'Accept-Language': "uz"}
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}', 'Accept-Language': "uz"}
                   : {'Accept-Language': "uz"}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
@@ -169,8 +169,8 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       final response = await _dio.get(next ?? '/organization/facility/',
           queryParameters: {'organization_id': id},
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) => ComfortModel.fromJson(p0 as Map<String, dynamic>));
@@ -192,8 +192,8 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       final response = await _dio.get(next ?? '/article/',
           queryParameters: {'organizations': id},
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
@@ -216,8 +216,8 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       final response = await _dio.get(next ?? '/organization/comment/',
           queryParameters: {'organization_id': id},
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) => CommentModel.fromJson(p0 as Map<String, dynamic>));
@@ -239,8 +239,8 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       final response = await _dio.get(next ?? '/vacancy/vacancy/list/',
           queryParameters: {'organization': id},
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString('token')}'}
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
                   : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) => VacancyListModel.fromJson(p0 as Map<String, dynamic>));
@@ -262,7 +262,7 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
       final data = comment.toJson();
       data.putIfAbsent('organization', () => organizationId);
       final response = await _dio.post('/organization/comment/create/',
-          data: data, options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          data: data, options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
         throw ServerException(statusCode: response.statusCode!, errorMessage: response.data.toString());
@@ -280,7 +280,7 @@ class HospitalSingleDatasourceImpl extends HospitalSingleDatasource {
   Future<Either> deleteComment({required int id}) async {
     try {
       final response = await _dio.delete('/organization/comment/$id/delete/',
-          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString('token')}'}));
+          options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return Right('');
       } else {

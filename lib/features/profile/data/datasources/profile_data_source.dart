@@ -56,7 +56,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final results = await _dio.get(next ?? '/vacancy/vacancy/liked',
           options: (Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           })));
 
       return GenericPagination.fromJson(
@@ -84,7 +84,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.get('/user/profile/',
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
@@ -110,7 +110,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
       final response = await _dio.patch('/user/profile/update/',
           data: FormData.fromMap(data),
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
@@ -144,7 +144,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
       final response = await _dio.post('/image/create/',
           data: formData,
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return UploadedImageModel.fromJson(response.data);
@@ -172,7 +172,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.get(next ?? '/payments/user-purchases/',
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) {
@@ -201,7 +201,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
             'new_password': newPassword
           },
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         if (!(response.data['success'] as bool)) {
@@ -227,14 +227,14 @@ class ProfileDatasourceImpl extends ProfileDatasource {
   Future<void> deleteDeviceId() async {
     try {
       // String? deviceId = await PlatformDeviceId.getDeviceId;
-      String? deviceId = StorageRepository.getString('deviceId');
+      String? deviceId = StorageRepository.getString(StoreKeys.deviceId);
       if (deviceId.isEmpty) return;
       final response = await _dio.delete(
         '/notifications/device-id/delete/',
         data: {"device_id": deviceId},
         options: Options(
           headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           },
         ),
       );
@@ -258,7 +258,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.delete('/user/profile/delete/',
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (!(response.statusCode! >= 200 && response.statusCode! < 300)) {
         throw ServerException(
@@ -301,7 +301,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.get(next ?? '/doctor/liked/',
           options: (Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           })));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
@@ -333,7 +333,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
         },
         options: Options(
           headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           },
         ),
       );
@@ -364,7 +364,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
         },
         options: Options(
           headers: {
-            'Authorization': 'Token ${StorageRepository.getString('token')}'
+            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
           },
         ),
       );

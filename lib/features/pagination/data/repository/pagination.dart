@@ -25,8 +25,8 @@ class PaginationRepository {
       final result = await dio.get(
         next!=null&&next.isNotEmpty?next: url,
         options: Options(
-            headers: StorageRepository.getString('token').isNotEmpty
-                ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"}
+            headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                ? {"Authorization": "Token ${StorageRepository.getString(StoreKeys.token, defValue: '')}"}
                 : {}),
         queryParameters: queryParams,
       );
@@ -63,8 +63,8 @@ class PaginationDatasource {
       final result = await dio.get(next ?? url,
           queryParameters: queryParams,
           options: Options(
-              headers: StorageRepository.getString('token').isNotEmpty
-                  ? {"Authorization": "Token ${StorageRepository.getString('token', defValue: '')}"}
+              headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
+                  ? {"Authorization": "Token ${StorageRepository.getString(StoreKeys.token, defValue: '')}"}
                   : {}));
       if (result.statusCode! >= 200 && result.statusCode! < 300) {
         final data = GenericPagination<T>.fromJson((result.data!), (data) => fromJson((data as Map<String, dynamic>)));

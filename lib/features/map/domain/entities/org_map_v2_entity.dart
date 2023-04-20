@@ -4,6 +4,7 @@ import 'package:anatomica/features/auth/data/models/specialization_model.dart';
 import 'package:anatomica/features/auth/domain/entities/district_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/region_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
+import 'package:anatomica/features/map/domain/entities/id_name_url_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:equatable/equatable.dart';
 
@@ -31,6 +32,7 @@ class OrgMapV2Entity extends Equatable {
     this.paid = false,
     this.subscribeFrom = '',
     this.subscribeUpto = '',
+    this.service = const <IdNameUrlEntity>[],
   });
 
   final int id;
@@ -55,6 +57,8 @@ class OrgMapV2Entity extends Equatable {
   final List<SpecializationEntity> specialization;
   @SpecializationConverter()
   final List<SpecializationEntity> types;
+  @IdNameUrlConverter()
+  final List<IdNameUrlEntity> service;
   final String phoneNumber;
   final double distance;
   final bool workAllDay;
@@ -86,5 +90,6 @@ class OrgMapV2Entity extends Equatable {
         paid,
         subscribeFrom,
         subscribeUpto,
+        service,
       ];
 }

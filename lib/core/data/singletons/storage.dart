@@ -1,3 +1,4 @@
+export 'package:anatomica/core/data/singletons/store_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageRepository {
@@ -37,6 +38,7 @@ class StorageRepository {
 
     return _preferences!.getString(key) ?? defValue;
   }
+
 
   static Future<bool>? deleteString(String key) {
     if (_preferences == null) return null;
