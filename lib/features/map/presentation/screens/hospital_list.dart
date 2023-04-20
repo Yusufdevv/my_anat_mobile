@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
@@ -179,32 +181,41 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                       onClear: () {
                         controller.clear();
                         bloc.add(HospitalListEvent.getHospitals(
-                          search: controller.text,
+                          search: '',
                           myPoint: widget.myLocation,
                         ));
                         doctorListBloc.add(DoctorListEvent.getDoctors(
-                          search: controller.text,
+                          search: '',
                           myPoint: widget.myLocation,
                         ));
                         bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
                         suggestionBloc.add(SuggestionEvent.getSuggestions(controller.text));
                       },
                       onChanged: (value) {
+                        log(':::::::::: the changing value  ${value} / ${_tabController.index}  ::::::::::');
                         suggestionBloc.add(SuggestionEvent.getSuggestions(value));
                         if (value.isNotEmpty) {
                           bloc.add(HospitalListEvent.changePage(CrossFadeState.showSecond));
                           if (_tabController.index == 0) {
                             bloc.add(HospitalListEvent.getHospitals(
-                              search: controller.text,
+                              search: value,
                               myPoint: widget.myLocation,
                             ));
                           } else {
                             doctorListBloc.add(DoctorListEvent.getDoctors(
-                              search: controller.text,
+                              search: value,
                               myPoint: widget.myLocation,
                             ));
                           }
                         } else {
+                          bloc.add(HospitalListEvent.getHospitals(
+                            search: '',
+                            myPoint: widget.myLocation,
+                          ));
+                          doctorListBloc.add(DoctorListEvent.getDoctors(
+                            search: '',
+                            myPoint: widget.myLocation,
+                          ));
                           bloc.add(HospitalListEvent.changePage(CrossFadeState.showFirst));
                         }
                       },
