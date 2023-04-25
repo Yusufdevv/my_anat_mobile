@@ -327,5 +327,9 @@
   "home": "Главная",
   "news": "Новости",
   "all_news": "Все новости",
-  "popular_orgs": "Лучшие организации"
+  "popular_orgs": "Лучшие организации",
+  "auto_payment": "Автоплатеж",
+  "enable_auto_payment": "Включить автоплатеж",
+  "doctor_organization": "Доктор/Организация",
+  "journal_article": "Журналы/Статьи"
 }

@@ -31,7 +31,7 @@ abstract class PaymentDatasource {
 
   Future<PricesModel> getPrices();
 
-  Future<PaymentResponseModel> payForMonthlySubscription({required int numOfMoths, required String paymentProvider});
+  Future<PaymentResponseModel> payForMonthlySubscription({required int numOfMoths, required String paymentProvider,  required bool autoReNewJournal});
 }
 
 class PaymentDatasourceImpl extends PaymentDatasource {
@@ -79,8 +79,8 @@ class PaymentDatasourceImpl extends PaymentDatasource {
       }
       final response = await _dio.post('/payments/order/create/',
           data: data,
-          options:
-              Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'} : {}));
+          options: Options(
+              headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'} : {}));
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return PaymentResponseModel.fromJson(response.data);
       } else {
@@ -138,8 +138,8 @@ class PaymentDatasourceImpl extends PaymentDatasource {
 
       final response = await _dio.post('/payments/order/create/',
           data: data,
-          options:
-              Options(headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'} : {}));
+          options: Options(
+              headers: isRegistered ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'} : {}));
 
       if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
         return PaymentResponseModel.fromJson(response.data);
@@ -226,11 +226,16 @@ class PaymentDatasourceImpl extends PaymentDatasource {
 
   @override
   Future<PaymentResponseModel> payForMonthlySubscription(
-      {required int numOfMoths, required String paymentProvider}) async {
+      {required int numOfMoths, required String paymentProvider, required bool autoReNewJournal}) async {
     if (paymentProvider.isNotEmpty) {
       try {
         final response = await _dio.post('/payments/subscribe/',
-            data: {'month_count': numOfMoths, 'payment_provider': paymentProvider, 'subscribe_type': "journal"},
+            data: {
+              'month_count': numOfMoths,
+              'payment_provider': paymentProvider,
+              'subscribe_type': "journal",
+              'auto_renew_journal': autoReNewJournal,
+            },
             options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}));
         if (response.statusCode != null && response.statusCode! >= 200 && response.statusCode! < 300) {
           return PaymentResponseModel.fromJson(response.data);

@@ -57,6 +57,7 @@ class GetPrices extends PaymentEvent {}
 class PayForMonthlySubscription extends PaymentEvent {
   final String paymentProvider;
   final int period;
+  final bool autoReNewJournal;
   final ValueChanged<PaymentResponseEntity> onSuccess;
   final ValueChanged<String> onError;
   PayForMonthlySubscription({
@@ -64,5 +65,6 @@ class PayForMonthlySubscription extends PaymentEvent {
     required this.onSuccess,
     required this.paymentProvider,
     required this.onError,
+    required this.autoReNewJournal,
   });
 }

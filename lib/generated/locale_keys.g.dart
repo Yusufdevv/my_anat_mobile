@@ -330,5 +330,9 @@ abstract class  LocaleKeys {
   static const news = 'news';
   static const all_news = 'all_news';
   static const popular_orgs = 'popular_orgs';
+  static const auto_payment = 'auto_payment';
+  static const enable_auto_payment = 'enable_auto_payment';
+  static const doctor_organization = 'doctor_organization';
+  static const journal_article = 'journal_article';
 
 }

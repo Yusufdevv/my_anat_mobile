@@ -101,10 +101,10 @@ class PaymentRepositoryImpl extends PaymentRepository {
 
   @override
   Future<Either<Failure, PaymentResponseEntity>> payForMonthlySubscription(
-      {required int numOfMoths, required String paymentProvider}) async {
+      {required int numOfMoths, required String paymentProvider,  required bool autoReNewJournal}) async {
     try {
       final result =
-          await datasource.payForMonthlySubscription(numOfMoths: numOfMoths, paymentProvider: paymentProvider);
+          await datasource.payForMonthlySubscription(numOfMoths: numOfMoths, paymentProvider: paymentProvider, autoReNewJournal: autoReNewJournal);
       return Right(result);
     } on DioException {
       return Left(DioFailure());

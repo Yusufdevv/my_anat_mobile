@@ -327,5 +327,9 @@
   "popular_orgs": "Eng yaxshi shifoxonalar",
   "others": "Boshqalar",
   "others_categories": "Boshqa kategoriyalar",
-  "the_best_doctors": "Eng yaxshi shifokorlar"
+  "the_best_doctors": "Eng yaxshi shifokorlar",
+  "auto_payment": "Avtomatik to'lov",
+  "enable_auto_payment": "Avtomatik toʻlovni yoqish",
+  "doctor_organization": "Shifokor/Tashkilot",
+  "journal_article": "Jurnal/Maqola"
 }

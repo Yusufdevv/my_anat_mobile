@@ -9,11 +9,13 @@ class PayForMonthlySubscriptionUseCase implements UseCase<PaymentResponseEntity,
   PayForMonthlySubscriptionUseCase({required this.repository});
   @override
   Future<Either<Failure, PaymentResponseEntity>> call(SubscriptionParams params) async =>
-      await repository.payForMonthlySubscription(numOfMoths: params.period, paymentProvider: params.paymentProvider);
+      await repository.payForMonthlySubscription(numOfMoths: params.period, paymentProvider: params.paymentProvider, autoReNewJournal: params.autoReNewJournal);
 }
 
 class SubscriptionParams {
   final int period;
   final String paymentProvider;
-  const SubscriptionParams({required this.paymentProvider, required this.period});
+  final bool autoReNewJournal;
+
+  const SubscriptionParams({required this.paymentProvider, required this.period,  required this.autoReNewJournal});
 }

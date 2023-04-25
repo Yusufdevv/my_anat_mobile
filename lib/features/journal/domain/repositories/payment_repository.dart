@@ -24,6 +24,6 @@ abstract class PaymentRepository {
   });
   Future<Either<Failure, String>> checkPaymentStatus({required int id});
   Future<Either<Failure, PaymentResponseEntity>> payForMonthlySubscription(
-      {required int numOfMoths, required String paymentProvider});
+      {required int numOfMoths, required String paymentProvider,  required bool autoReNewJournal});
   Future<Either<Failure, PricesEntity>> getPrices();
 }

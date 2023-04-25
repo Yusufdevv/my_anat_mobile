@@ -114,6 +114,7 @@ class AppIcons {
   static const setting = 'assets/icons/profile/setting.svg';
   static const lock = 'assets/icons/profile/lock.svg';
   static const profileStar = 'assets/icons/profile/star.svg';
+  static const clockGreen = 'assets/icons/profile/clock_green.svg';
   static const help = 'assets/icons/profile/help.svg';
   static const logout = 'assets/icons/profile/logout.svg';
   static const at = 'assets/icons/profile/at.svg';

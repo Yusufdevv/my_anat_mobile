@@ -91,7 +91,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   FutureOr<void> _payForMonthlySubscription(PayForMonthlySubscription event, Emitter<PaymentState> emit) async {
     emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
     final result = await _payForMonthlySubscriptionUseCase
-        .call(SubscriptionParams(paymentProvider: event.paymentProvider, period: event.period));
+        .call(SubscriptionParams(paymentProvider: event.paymentProvider, period: event.period, autoReNewJournal: event.autoReNewJournal));
     if (result.isRight) {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
       event.onSuccess(result.right);

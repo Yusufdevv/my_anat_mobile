@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/assets/constants/app_images.dart';
@@ -66,7 +64,6 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
   final ValueNotifier currentPaymentMethod = ValueNotifier<String>('');
   final ValueNotifier _inputState = ValueNotifier<CrossFadeState>(CrossFadeState.showFirst);
   late PaymentBloc paymentBloc;
-  late NavigatorState _navigator;
 
   @override
   void initState() {
@@ -103,6 +100,7 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocProvider(
       create: (context) => paymentBloc,
       child: BlocBuilder<PaymentBloc, PaymentState>(

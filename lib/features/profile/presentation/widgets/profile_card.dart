@@ -14,8 +14,7 @@ class ProfileCard extends StatelessWidget {
   final UserEntity user;
   final FormzStatus status;
 
-  const ProfileCard({required this.user, required this.status, Key? key})
-      : super(key: key);
+  const ProfileCard({required this.user, required this.status, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +23,9 @@ class ProfileCard extends StatelessWidget {
       onTap: () {
         if (status == FormzStatus.submissionFailure) {
         } else {
-          Navigator.of(context, rootNavigator: true).push(
-            fade(
-              page: MyInfoScreen(
-                profileBloc: context.read<ProfileBloc>(),
-              ),
-            ),
-          );
+          Navigator.of(context, rootNavigator: true).push(fade(
+            page: MyInfoScreen(profileBloc: context.read<ProfileBloc>()),
+          ));
         }
       },
       child: Container(
@@ -62,9 +57,7 @@ class ProfileCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    status == FormzStatus.submissionFailure
-                        ? 'User'
-                        : user.fullName,
+                    status == FormzStatus.submissionFailure ? 'User' : user.fullName,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.displayLarge,
                     maxLines: 2,
