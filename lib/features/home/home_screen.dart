@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
@@ -69,11 +71,9 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
     _newsBloc = NewsBloc()..add(const NewsEvent.getNews());
     _scrollController = ScrollController()
       ..addListener(() {
-        if (_scrollController.offset > 200 - kToolbarHeight &&
-            !isShrink.value) {
+        if (_scrollController.offset > 200 - kToolbarHeight && !isShrink.value) {
           isShrink.value = true;
-        } else if (_scrollController.offset < 200 - kToolbarHeight &&
-            isShrink.value) {
+        } else if (_scrollController.offset < 200 - kToolbarHeight && isShrink.value) {
           isShrink.value = false;
         }
       });
@@ -83,6 +83,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   getDoctors() async {
     try {
       await MyFunctions.determinePosition().then((value) async {
+        log('::::::::::  in home 86:   lat: ${value.latitude} / long: ${value.longitude}  ::::::::::');
         await StorageRepository.putDouble(StoreKeys.latitude, value.latitude);
         await StorageRepository.putDouble(StoreKeys.longitude, value.longitude);
         _mostPopularsBloc.add(const MostPopularsEvent.getPopularDoctors());
@@ -110,9 +111,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverAppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarIconBrightness:
-                        isShrink.value ? Brightness.dark : Brightness.light),
+                systemOverlayStyle:
+                    SystemUiOverlayStyle(statusBarIconBrightness: isShrink.value ? Brightness.dark : Brightness.light),
                 pinned: true,
                 backgroundColor: errorImageBackground,
                 shape: const RoundedRectangleBorder(
@@ -128,8 +128,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                       height: 28,
                       color: isShrink.value ? black : white,
                     ),
-                    context.read<AuthenticationBloc>().state.status !=
-                            AuthenticationStatus.authenticated
+                    context.read<AuthenticationBloc>().state.status != AuthenticationStatus.authenticated
                         ? const Spacer()
                         : WScaleAnimation(
                             child: true
@@ -142,8 +141,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                         ? AppIcons.blackNotificationWithRedDot
                                         : AppIcons.notificationWithRedDot,
                                   ),
-                            onTap: () => Navigator.of(context,
-                                    rootNavigator: true)
+                            onTap: () => Navigator.of(context, rootNavigator: true)
                                 .push(fade(page: const NotificationsScreen())),
                           ),
                   ],
@@ -154,17 +152,13 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 flexibleSpace: BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
                   builder: (context, state) {
                     return state.bannersStatus != FormzStatus.submissionSuccess
-                        ? const ShimmerContainer(
-                            width: double.maxFinite, height: 324)
+                        ? const ShimmerContainer(width: double.maxFinite, height: 324)
                         : BannerItem(
                             ids: state.banners.map((e) => e.id).toList(),
                             bloc: _homeArticlesBloc,
                             isShrink: isShrink.value,
-                            images: state.banners
-                                .map((e) => e.image.middle)
-                                .toList(),
-                            subtitles:
-                                state.banners.map((e) => e.subtitle).toList(),
+                            images: state.banners.map((e) => e.image.middle).toList(),
+                            subtitles: state.banners.map((e) => e.subtitle).toList(),
                             titles: state.banners.map((e) => e.title).toList(),
                             types: state.banners.map((e) => e.type).toList(),
                           );
@@ -234,8 +228,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 child: TitlesItem(
                   title: LocaleKeys.news.tr(),
                   showAllFunction: () {
-                    Navigator.of(context, rootNavigator: true)
-                        .push(fade(page: const NewsPart()));
+                    Navigator.of(context, rootNavigator: true).push(fade(page: const NewsPart()));
                   },
                   showAllTitle: LocaleKeys.all_news.tr(),
                 ),

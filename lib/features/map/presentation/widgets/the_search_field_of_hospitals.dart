@@ -8,7 +8,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class TheSearchFieldOfHospitals extends StatelessWidget {
   final bool isSearching;
-  final GlobalKey<FormState> formKey;
   final TextEditingController controller;
   final FocusNode focusNode;
   final VoidCallback onClear;
@@ -16,7 +15,6 @@ class TheSearchFieldOfHospitals extends StatelessWidget {
   const TheSearchFieldOfHospitals(
       {Key? key,
       required this.isSearching,
-      required this.formKey,
       required this.controller,
       required this.focusNode,
       required this.onClear,
@@ -79,7 +77,6 @@ class TheSearchFieldOfHospitals extends StatelessWidget {
           ),
           Expanded(
             child: SearchField(
-              stateKey: formKey,
               focusNode: focusNode,
               controller: controller,
               onClear: onClear,

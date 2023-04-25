@@ -34,8 +34,12 @@ class _HospitalItemState extends State<HospitalItem> {
           .map((e) => ServiceOrSpecializationEntity(title: e.name, id: e.id, isService: true))
           .toList(),
     ];
+    if (widget.searchText.isNotEmpty) {
+      wrapItems = v.where((e) => e.title.contains(widget.searchText)).toList();
+    } else {
+      wrapItems = v;
+    }
 
-    wrapItems = v.where((e) => e.title.contains(widget.searchText)).toList();
     super.initState();
   }
 
