@@ -198,7 +198,8 @@ class ProfileScreen extends StatelessWidget {
                               title: LocaleKeys.auto_payment,
                               icon: AppIcons.clockGreen,
                               onTap: () {
-                                Navigator.of(context, rootNavigator: true).push(fade(page: const AutoPaymentPage()));
+                                Navigator.of(context, rootNavigator: true)
+                                    .push(fade(page: AutoPaymentPage(profileBloc: context.read<ProfileBloc>())));
                               }),
                           const SizedBox(height: 12),
                           ProfileItem(

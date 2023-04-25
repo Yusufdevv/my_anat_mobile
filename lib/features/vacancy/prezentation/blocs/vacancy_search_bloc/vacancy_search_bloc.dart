@@ -65,6 +65,7 @@ class VacancySearchBloc extends Bloc<VacancySearchEvent, VacancySearchState> {
         emit(state.copyWith(vacancyPaginatorStatus: PaginatorStatus.PAGINATOR_ERROR));
       }
     }, transformer: debounce(const Duration(milliseconds: 300)));
+
     on<GetCandidateSearchEvent>((event, emit) async {
       final response = await candidateListUseCase.call(CandidateListParams(search: event.search));
       if (response.isRight) {
