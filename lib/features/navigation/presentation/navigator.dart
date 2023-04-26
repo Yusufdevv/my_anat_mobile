@@ -1,6 +1,6 @@
 import 'package:anatomica/features/home/home_screen.dart';
 import 'package:anatomica/features/journal/presentation/pages/journal_screen.dart';
-import 'package:anatomica/features/map/presentation/map_screen.dart';
+import 'package:anatomica/features/map/presentation/map_page.dart';
 import 'package:anatomica/features/profile/presentation/pages/profile.dart';
 import 'package:anatomica/features/vacancy/prezentation/pages/vacancy.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,18 +15,14 @@ class TabNavigator extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final NavItemEnum tabItem;
 
-  const TabNavigator(
-      {required this.tabItem, required this.navigatorKey, Key? key})
-      : super(key: key);
+  const TabNavigator({required this.tabItem, required this.navigatorKey, Key? key}) : super(key: key);
 
   @override
   State<TabNavigator> createState() => _TabNavigatorState();
 }
 
-class _TabNavigatorState extends State<TabNavigator>
-    with AutomaticKeepAliveClientMixin {
-  Map<String, WidgetBuilder> _routeBuilders(
-      {required BuildContext context, required RouteSettings routeSettings}) {
+class _TabNavigatorState extends State<TabNavigator> with AutomaticKeepAliveClientMixin {
+  Map<String, WidgetBuilder> _routeBuilders({required BuildContext context, required RouteSettings routeSettings}) {
     switch (widget.tabItem) {
       case NavItemEnum.home:
         return {
@@ -34,8 +30,8 @@ class _TabNavigatorState extends State<TabNavigator>
         };
       case NavItemEnum.map:
         return {
-          TabNavigatorRoutes.root: (context) => MapScreen(
-                deviceWidth: MediaQuery.of(context).size.width,
+          TabNavigatorRoutes.root: (context) => MapPage(
+                mediaQuery: MediaQuery.of(context),
               )
         };
       case NavItemEnum.magazine:
@@ -65,12 +61,10 @@ class _TabNavigatorState extends State<TabNavigator>
       key: widget.navigatorKey,
       initialRoute: TabNavigatorRoutes.root,
       onGenerateRoute: (routeSettings) {
-        final routeBuilders =
-            _routeBuilders(context: context, routeSettings: routeSettings);
+        final routeBuilders = _routeBuilders(context: context, routeSettings: routeSettings);
         return CupertinoPageRoute(
-          builder: (context) => routeBuilders.containsKey(routeSettings.name)
-              ? routeBuilders[routeSettings.name]!(context)
-              : Container(),
+          builder: (context) =>
+              routeBuilders.containsKey(routeSettings.name) ? routeBuilders[routeSettings.name]!(context) : Container(),
         );
       },
     );
@@ -80,18 +74,14 @@ class _TabNavigatorState extends State<TabNavigator>
   bool get wantKeepAlive => true;
 }
 
-PageRouteBuilder fade({required Widget page, RouteSettings? settings}) =>
-    PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 200),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            FadeTransition(
-              opacity: CurvedAnimation(
-                curve: const Interval(0, 1, curve: Curves.linear),
-                parent: animation,
-              ),
-              child: child,
-            ),
-        settings: settings,
-        pageBuilder: (BuildContext context, Animation<double> animation,
-                Animation<double> secondaryAnimation) =>
-            page);
+PageRouteBuilder fade({required Widget page, RouteSettings? settings}) => PageRouteBuilder(
+    transitionDuration: const Duration(milliseconds: 200),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
+          opacity: CurvedAnimation(
+            curve: const Interval(0, 1, curve: Curves.linear),
+            parent: animation,
+          ),
+          child: child,
+        ),
+    settings: settings,
+    pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => page);

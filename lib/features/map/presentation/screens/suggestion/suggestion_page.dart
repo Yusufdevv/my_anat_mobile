@@ -1,9 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
-import 'package:anatomica/features/map/domain/usecases/get_suggestions.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
-import 'package:anatomica/features/map/presentation/blocs/suggestion/suggestion_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/suggestion_list.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -17,34 +15,21 @@ class SuggestionPage extends StatefulWidget {
   final String? text;
   final Point myPoint;
 
-  const SuggestionPage(
-      {required this.statusBarHeight,
-      required this.myPoint,
-      this.text,
-      Key? key})
-      : super(key: key);
+  const SuggestionPage({required this.statusBarHeight, required this.myPoint, this.text, Key? key}) : super(key: key);
 
   @override
   State<SuggestionPage> createState() => _SuggestionPageState();
 }
 
-class _SuggestionPageState extends State<SuggestionPage>
-    with TickerProviderStateMixin {
+class _SuggestionPageState extends State<SuggestionPage> with TickerProviderStateMixin {
   late TabController _controller;
   late TextEditingController controller;
-  late SuggestionBloc doctorSuggestion;
-  late SuggestionBloc hospitalSuggestion;
   late FocusNode focusNode;
 
   @override
   void initState() {
     focusNode = FocusNode()..requestFocus();
-    var useCase = GetSuggestionsUseCase();
-    doctorSuggestion = SuggestionBloc(useCase)
-      ..add(SuggestionEvent.changePage(1))
-      ..add(SuggestionEvent.getSuggestions(widget.text ?? ''));
-    hospitalSuggestion = SuggestionBloc(useCase)
-      ..add(SuggestionEvent.getSuggestions(widget.text ?? ''));
+
     controller = TextEditingController(text: widget.text ?? '');
     _controller = TabController(length: 2, vsync: this);
     super.initState();
@@ -60,8 +45,7 @@ class _SuggestionPageState extends State<SuggestionPage>
             children: [
               Container(
                 alignment: Alignment.centerRight,
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top + 48),
+                margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 48),
                 child: GestureDetector(
                   onTap: () => Navigator.of(context).pop(),
                   child: Padding(
@@ -110,31 +94,23 @@ class _SuggestionPageState extends State<SuggestionPage>
                   child: TabBarView(
                     controller: _controller,
                     children: [
-                      BlocProvider.value(
-                        value: hospitalSuggestion,
-                        child: SuggestionListScreen(
-                          isDoctor: true,
-                          myPoint: widget.myPoint,
-                          searchText: controller.text,
-                          onTapItem: (text) {
-                            context.read<MapOrganizationBloc>().add(
-                                MapOrganizationEvent.changeSearchText(text));
-                            Navigator.pop(context);
-                          },
-                        ),
+                      SuggestionListScreen(
+                        isDoctor: true,
+                        myPoint: widget.myPoint,
+                        searchText: controller.text,
+                        onTapItem: (text) {
+                          context.read<MapOrganizationBloc>().add(MapChooseEvent(searchText: text));
+                          Navigator.pop(context);
+                        },
                       ),
-                      BlocProvider.value(
-                        value: doctorSuggestion,
-                        child: SuggestionListScreen(
-                          isDoctor: true,
-                          myPoint: widget.myPoint,
-                          searchText: controller.text,
-                          onTapItem: (text) {
-                            context.read<MapOrganizationBloc>().add(
-                                MapOrganizationEvent.changeSearchText(text));
-                            Navigator.pop(context);
-                          },
-                        ),
+                      SuggestionListScreen(
+                        isDoctor: true,
+                        myPoint: widget.myPoint,
+                        searchText: controller.text,
+                        onTapItem: (text) {
+                          context.read<MapOrganizationBloc>().add(MapChooseEvent(searchText: text));
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),
@@ -147,13 +123,8 @@ class _SuggestionPageState extends State<SuggestionPage>
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.fromLTRB(
-                            16,
-                            16,
-                            16,
-                            16 +
-                                MediaQuery.of(context).viewInsets.bottom +
-                                MediaQuery.of(context).padding.bottom),
+                        padding: EdgeInsets.fromLTRB(16, 16, 16,
+                            16 + MediaQuery.of(context).viewInsets.bottom + MediaQuery.of(context).padding.bottom),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: textFieldColor),
@@ -163,13 +134,7 @@ class _SuggestionPageState extends State<SuggestionPage>
                           focusNode: focusNode,
                           controller: controller,
                           onChanged: (value) {
-                            if (_controller.index == 0) {
-                              hospitalSuggestion
-                                  .add(SuggestionEvent.getSuggestions(value));
-                            } else {
-                              doctorSuggestion
-                                  .add(SuggestionEvent.getSuggestions(value));
-                            }
+                            context.read<MapOrganizationBloc>().add(MapGetSuggestionsEvent(text: value));
                           },
                         ),
                       ),

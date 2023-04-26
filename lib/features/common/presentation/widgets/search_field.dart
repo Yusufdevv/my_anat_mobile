@@ -10,6 +10,7 @@ class SearchField extends StatefulWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
   final VoidCallback? onClear;
+  final VoidCallback? onTap;
   final Color fillColor;
   final FocusNode? focusNode;
   final double borderRadius;
@@ -20,6 +21,7 @@ class SearchField extends StatefulWidget {
     this.stateKey,
     required this.controller,
     required this.onChanged,
+    this.onTap,
     this.onClear,
     this.borderRadius = 10,
     this.fillColor = textFieldColor,
@@ -45,6 +47,7 @@ class _SearchFieldState extends State<SearchField> {
     return SizedBox(
       height: 40,
       child: TextFormField(
+        onTap: widget.onTap,
         key: widget.stateKey,
         focusNode: widget.focusNode,
         controller: _controller,
@@ -60,10 +63,7 @@ class _SearchFieldState extends State<SearchField> {
             });
           }
         },
-        style: Theme.of(context)
-            .textTheme
-            .displaySmall!
-            .copyWith(color: textColor),
+        style: Theme.of(context).textTheme.displaySmall!.copyWith(color: textColor),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
           fillColor: widget.fillColor,
