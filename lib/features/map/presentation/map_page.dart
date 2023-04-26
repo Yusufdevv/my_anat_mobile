@@ -164,6 +164,9 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                           context.read<MapOrganizationBloc>().add(MapChooseEvent(isSuggestion: false));
                         }
                       },
+                      onCloseTap: () {
+                        state.focusNode.unfocus();
+                      },
                     ),
                   ),
                 ],

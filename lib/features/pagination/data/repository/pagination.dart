@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/core/data/singletons/dio_settings.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
@@ -21,9 +23,11 @@ class PaginationRepository {
       if (query != null) {
         queryParams = query;
       }
-
+      if (url == '/mobile/doctor/map/') {
+        log(':::::::::: the query of doctors: ${query} / $queryParams ::::::::::');
+      }
       final result = await dio.get(
-        next!=null&&next.isNotEmpty?next: url,
+        next != null && next.isNotEmpty ? next : url,
         options: Options(
             headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
                 ? {"Authorization": "Token ${StorageRepository.getString(StoreKeys.token, defValue: '')}"}

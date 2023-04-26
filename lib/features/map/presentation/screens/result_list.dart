@@ -2,6 +2,7 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/empty_page.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
+import 'package:anatomica/features/map/domain/entities/org_map_v2_entity.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -32,7 +33,7 @@ class ResultList extends StatelessWidget {
             },
             child: Paginator(
                 separatorBuilder: (context, index) => const SizedBox(height: 12),
-                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 136),
+                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).viewInsets.bottom + 136),
                 emptyWidget: Center(
                   child: SingleChildScrollView(
                     child: EmptyPage(
@@ -45,6 +46,7 @@ class ResultList extends StatelessWidget {
                 paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
                 itemBuilder: (c, index) {
                   return HospitalItem(
+                    wrapItems: state.hospitals[index].getServiceOrSpecialization,
                     entity: state.hospitals[index],
                   );
                 },

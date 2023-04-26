@@ -18,6 +18,7 @@ class TheSearchFieldOfHospitals extends StatelessWidget {
   final MediaQueryData mediaQuery;
   final VoidCallback onLeftButtonPressed;
   final VoidCallback onSearchFieldTap;
+  final VoidCallback onCloseTap;
 
   const TheSearchFieldOfHospitals({
     Key? key,
@@ -30,6 +31,7 @@ class TheSearchFieldOfHospitals extends StatelessWidget {
     required this.mediaQuery,
     required this.onLeftButtonPressed,
     required this.onSearchFieldTap,
+    required this.onCloseTap,
   }) : super(key: key);
 
   @override
@@ -91,9 +93,7 @@ class TheSearchFieldOfHospitals extends StatelessWidget {
               ),
               isSearching
                   ? GestureDetector(
-                      onTap: () {
-                        focusNode.unfocus();
-                      },
+                      onTap: onCloseTap,
                       child: Container(
                         margin: const EdgeInsets.only(left: 12, right: 4),
                         child: Text(

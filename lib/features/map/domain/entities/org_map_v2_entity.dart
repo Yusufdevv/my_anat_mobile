@@ -5,6 +5,7 @@ import 'package:anatomica/features/auth/domain/entities/district_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/region_entity.dart';
 import 'package:anatomica/features/auth/domain/entities/specialization_entity.dart';
 import 'package:anatomica/features/map/domain/entities/id_name_url_entity.dart';
+import 'package:anatomica/features/map/domain/entities/service_or_specialization_entity.dart';
 import 'package:anatomica/features/vacancy/domain/entities/top_organization.dart';
 import 'package:equatable/equatable.dart';
 
@@ -91,5 +92,14 @@ class OrgMapV2Entity extends Equatable {
         subscribeFrom,
         subscribeUpto,
         service,
+      ];
+}
+
+extension OrgMapV2EntityExtention on OrgMapV2Entity {
+  List<ServiceOrSpecializationEntity> get getServiceOrSpecialization => [
+        ...specialization
+            .map((e) => ServiceOrSpecializationEntity(isService: false, id: e.id, title: e.title))
+            .toList(),
+        ...service.map((e) => ServiceOrSpecializationEntity(isService: false, id: e.id, title: e.name)).toList()
       ];
 }
