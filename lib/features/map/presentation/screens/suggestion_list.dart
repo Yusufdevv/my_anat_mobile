@@ -1,4 +1,4 @@
-import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
+import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/doctors_list.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +12,7 @@ class SuggestionListScreen extends StatelessWidget {
   final bool isDoctor;
 
   const SuggestionListScreen(
-      {required this.onTapItem,
-      required this.isDoctor,
-      required this.searchText,
-      required this.myPoint,
-      Key? key})
+      {required this.onTapItem, required this.isDoctor, required this.searchText, required this.myPoint, Key? key})
       : super(key: key);
 
   @override
@@ -26,14 +22,13 @@ class SuggestionListScreen extends StatelessWidget {
             textEditingController: TextEditingController(text: searchText),
             myPoint: myPoint,
           )
-        : BlocBuilder<HospitalListBloc, HospitalListState>(
-            builder: (context, state) {
+        : BlocBuilder<MapOrganizationBloc, MapOrganizationState>(
+            builder: (context, statee) {
               return Align(
                 alignment: Alignment.topCenter,
                 child: ListView.separated(
                   padding: const EdgeInsets.all(16),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 8),
+                  separatorBuilder: (context, index) => const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     // if (index == 0) {
                     //   return GestureDetector(
@@ -55,13 +50,13 @@ class SuggestionListScreen extends StatelessWidget {
                         // onTapItem('');
                       },
                       child: HospitalItem(
-                        entity: state.hospitals[index], 
+                        entity: statee.hospitalsWithDistance[index],
                         isSuggestionItem: true,
                         searchText: searchText,
                       ),
                     );
                   },
-                  itemCount: state.count,
+                  itemCount: statee.hospitalsWithDistance.length,
                 ),
               );
             },

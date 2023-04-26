@@ -2,7 +2,7 @@ import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/empty_page.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
-import 'package:anatomica/features/map/presentation/blocs/hospital_list_bloc/hospital_list_bloc.dart';
+import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -17,13 +17,13 @@ class ResultList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HospitalListBloc, HospitalListState>(
+    return BlocBuilder<MapOrganizationBloc, MapOrganizationState>(
       builder: (context, state) {
         return Align(
           alignment: Alignment.topCenter,
           child: RefreshIndicator(
             onRefresh: () async {
-              context.read<HospitalListBloc>().add(HospitalListEvent.getHospitals(
+              context.read<MapOrganizationBloc>().add(MapGetHospitalsWithDistance(
                     search: '',
                     myPoint: myPoint,
                   ));
@@ -45,12 +45,12 @@ class ResultList extends StatelessWidget {
                 paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
                 itemBuilder: (c, index) {
                   return HospitalItem(
-                    entity: state.hospitals[index], 
+                    entity: state.hospitals[index],
                   );
                 },
                 itemCount: state.hospitals.length,
                 fetchMoreFunction: () {
-                  context.read<HospitalListBloc>().add(HospitalListEvent.getMoreHospitals());
+                  context.read<MapOrganizationBloc>().add(MapGetMoreHospitalsWithDistanceEvent());
                 },
                 hasMoreToFetch: state.fetchMore,
                 errorWidget: const SizedBox()),
