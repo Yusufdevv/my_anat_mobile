@@ -10,38 +10,15 @@ import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HospitalItem extends StatefulWidget {
+class HospitalItem extends StatelessWidget {
   final OrgMapV2Model entity;
   final bool isSuggestionItem;
   final String searchText;
+  final List<ServiceOrSpecializationEntity> wrapItems;
 
-  const HospitalItem({required this.entity, this.isSuggestionItem = false, this.searchText = '', Key? key})
+  const HospitalItem(
+      {required this.entity, this.isSuggestionItem = false, this.searchText = '', required this.wrapItems, Key? key})
       : super(key: key);
-
-  @override
-  State<HospitalItem> createState() => _HospitalItemState();
-}
-
-class _HospitalItemState extends State<HospitalItem> {
-  late List<ServiceOrSpecializationEntity> wrapItems;
-  @override
-  void initState() {
-    final v = [
-      ...widget.entity.specialization
-          .map((e) => ServiceOrSpecializationEntity(title: e.title, id: e.id, isService: false))
-          .toList(),
-      ...widget.entity.service
-          .map((e) => ServiceOrSpecializationEntity(title: e.name, id: e.id, isService: true))
-          .toList(),
-    ];
-    if (widget.searchText.isNotEmpty) {
-      wrapItems = v.where((e) => e.title.contains(widget.searchText)).toList();
-    } else {
-      wrapItems = v;
-    }
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +26,7 @@ class _HospitalItemState extends State<HospitalItem> {
       behavior: HitTestBehavior.translucent,
       onTap: () {
         Navigator.of(context, rootNavigator: true)
-            .push(fade(page: HospitalSingleScreen(slug: widget.entity.slug, id: widget.entity.id)));
+            .push(fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id)));
       },
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -70,17 +47,17 @@ class _HospitalItemState extends State<HospitalItem> {
                     height: 140,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: widget.entity.images.isNotEmpty
+                      child: entity.images.isNotEmpty
                           ? ListView.separated(
                               physics: const BouncingScrollPhysics(),
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.horizontal,
-                              itemCount: widget.entity.images.length,
+                              itemCount: entity.images.length,
                               separatorBuilder: (context, index) => const SizedBox(width: 8),
                               itemBuilder: (context, index) => ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: WImage(
-                                  imageUrl: widget.entity.images[index].middle,
+                                  imageUrl: entity.images[index].middle,
                                   fit: BoxFit.cover,
                                   width: MediaQuery.of(context).size.shortestSide / 2,
                                   onErrorWidget: SvgPicture.asset(
@@ -117,17 +94,17 @@ class _HospitalItemState extends State<HospitalItem> {
                               child: WImage(
                                 height: 32,
                                 width: 32,
-                                imageUrl: widget.entity.logo.middle,
+                                imageUrl: entity.logo.middle,
                                 borderRadius: BorderRadius.circular(6),
                                 onErrorWidget: SvgPicture.asset(AppIcons.smallImageError, fit: BoxFit.cover),
                               ),
                             ),
                             const SizedBox(width: 12),
                             Expanded(
-                              child: widget.isSuggestionItem
+                              child: isSuggestionItem
                                   ? HighlightedText(
-                                      allText: widget.entity.title,
-                                      highlightedText: widget.searchText,
+                                      allText: entity.title,
+                                      highlightedText: searchText,
                                       highlightColor: tongerineYellow,
                                       textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 15),
                                       maxLines: 2,
@@ -136,7 +113,7 @@ class _HospitalItemState extends State<HospitalItem> {
                                           Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 15),
                                     )
                                   : Text(
-                                      widget.entity.title,
+                                      entity.title,
                                       style: Theme.of(context).textTheme.displayLarge,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
@@ -149,14 +126,14 @@ class _HospitalItemState extends State<HospitalItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: Text(widget.entity.address,
+                              child: Text(entity.address,
                                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: textSecondary),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis),
                             ),
                           ],
                         ),
-                        if (widget.isSuggestionItem) ...[
+                        if (isSuggestionItem) ...[
                           const SizedBox(height: 12),
                           Wrap(
                             spacing: 8,
@@ -165,7 +142,7 @@ class _HospitalItemState extends State<HospitalItem> {
                                 .map(
                                   (e) => SpecilaizationItem(
                                     allText: e.title,
-                                    highlightedText: widget.searchText,
+                                    highlightedText: searchText,
                                     fenceColor: e.isService ? gold2 : darkGreen,
                                   ),
                                 )
@@ -178,7 +155,7 @@ class _HospitalItemState extends State<HospitalItem> {
                 ],
               ),
             ),
-            if (widget.entity.rating != 0) ...{
+            if (entity.rating != 0) ...{
               Positioned(
                 top: 16,
                 left: -12,
@@ -201,7 +178,7 @@ class _HospitalItemState extends State<HospitalItem> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.entity.rating.toString(),
+                        entity.rating.toString(),
                         style: Theme.of(context).textTheme.displayLarge!.copyWith(color: black, fontSize: 13),
                       ),
                       const SizedBox(width: 4),
@@ -210,7 +187,7 @@ class _HospitalItemState extends State<HospitalItem> {
                 ),
               )
             },
-            if (widget.entity.distance != 0) ...{
+            if (entity.distance != 0) ...{
               Positioned(
                 top: 16,
                 right: -12,
@@ -229,7 +206,7 @@ class _HospitalItemState extends State<HospitalItem> {
                       SvgPicture.asset(AppIcons.locationGreen, height: 16, width: 16),
                       const SizedBox(width: 4),
                       Text(
-                        '${widget.entity.distance.toStringAsFixed(1)} КМ',
+                        '${entity.distance.toStringAsFixed(1)} КМ',
                         style: Theme.of(context).textTheme.displayLarge!.copyWith(color: black, fontSize: 13),
                       ),
                       const SizedBox(width: 4),

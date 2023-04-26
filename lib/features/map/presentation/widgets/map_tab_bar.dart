@@ -70,7 +70,7 @@ class MapTabBar extends StatelessWidget {
                         ),
                       ]
                     : null,
-                border: Border.all(color: divider),
+                border: isMap ? Border.all(color: divider) : null,
                 borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.all(4),
@@ -78,7 +78,7 @@ class MapTabBar extends StatelessWidget {
                 height: 36,
                 decoration: BoxDecoration(
                   color: textFieldColor,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 padding: const EdgeInsets.all(2),
                 child: TabBar(

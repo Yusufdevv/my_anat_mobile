@@ -5,6 +5,7 @@ import 'package:anatomica/features/common/presentation/widgets/empty_page.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/home/presentation/blocs/category_bloc/category_bloc.dart';
 import 'package:anatomica/features/home/presentation/widgets/category_item.dart';
+import 'package:anatomica/features/map/domain/entities/org_map_v2_entity.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
@@ -125,7 +126,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   ),
                   paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.organizationsStatus),
                   itemBuilder: (c, index) {
-                    return HospitalItem(entity: state.organizations[index]);
+                    return HospitalItem(
+                      entity: state.organizations[index],
+                      wrapItems: state.organizations[index].getServiceOrSpecialization,
+                    );
                   },
                   itemCount: state.organizations.length,
                   fetchMoreFunction: () {
