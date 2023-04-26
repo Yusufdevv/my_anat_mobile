@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/markdown_reader/data/repositories/journal_pages_repository_impl.dart';
@@ -230,7 +231,9 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                               showController = false;
                                             });
                                           },
-                                          data: state.isRussian ? pages[index].contentRu : pages[index].contentUz,
+                                          data: state.isRussian
+                                              ? MyFunctions.changePXtoREM(pages[index].contentRu)
+                                              : MyFunctions.changePXtoREM(pages[index].contentUz),
                                         );
                                       },
                                     );

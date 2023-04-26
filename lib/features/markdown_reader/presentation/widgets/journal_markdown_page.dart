@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
@@ -30,8 +32,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
   bool buttonshow = false;
 
   void scrollToTop() {
-    webViewController
-        .runJavascript("window.scrollTo({top: 0, behavior: 'smooth'});");
+    webViewController.runJavascript("window.scrollTo({top: 0, behavior: 'smooth'});");
   }
 
   @override
@@ -42,6 +43,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
 
   @override
   Widget build(BuildContext context) {
+    log('::::::::::  THE DATA ${widget.data}  ::::::::::');
     return BlocListener<ReaderControllerBloc, ReaderControllerState>(
       listenWhen: (state1, state2) {
         return state1.isRussian != state2.isRussian;
@@ -67,8 +69,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
                     onMessageReceived: (message) {
                       final scrollOffset = double.tryParse(message.message);
                       final deviceHeight = MediaQuery.of(context).size.height;
-                      if (scrollOffset != null &&
-                          scrollOffset / deviceHeight > 1) {
+                      if (scrollOffset != null && scrollOffset / deviceHeight > 1) {
                         setState(() {
                           buttonshow = true;
                         });
@@ -80,13 +81,13 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
                     })
               },
               navigationDelegate: (NavigationRequest request) {
+                log(':::::::::: Navigation request url:  ${request.url}  ::::::::::');
                 if (request.url.contains('about:blank') ||
                     request.url.contains(RegExp(
                         r'''(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'''))) {
                   return NavigationDecision.navigate;
                 } else {
-                  launchUrlString(request.url,
-                      mode: LaunchMode.externalApplication);
+                  launchUrlString(request.url, mode: LaunchMode.externalApplication);
                   return NavigationDecision.prevent;
                 }
               },
@@ -123,9 +124,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
               ),
               firstCurve: Curves.bounceInOut,
               duration: const Duration(milliseconds: 300),
-              crossFadeState: buttonshow
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
+              crossFadeState: buttonshow ? CrossFadeState.showFirst : CrossFadeState.showSecond,
               firstChild: WScaleAnimation(
                 onTap: scrollToTop,
                 child: Align(
@@ -147,8 +146,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
                         )
                       ],
                     ),
-                    child: SvgPicture.asset(AppIcons.arrowUp,
-                        width: 28, height: 28, color: primary),
+                    child: SvgPicture.asset(AppIcons.arrowUp, width: 28, height: 28, color: primary),
                   ),
                 ),
               ),

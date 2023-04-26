@@ -43,7 +43,7 @@ class BuySubscription extends StatefulWidget {
 class _BuySubscriptionState extends State<BuySubscription> {
   late PaymentBloc paymentBloc;
 
-  bool enableAutoPayment = false;
+  bool enableAutoPaymentt = false;
 
   @override
   void initState() {
@@ -298,9 +298,9 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                         children: [
                                           WCupertinoSwitch(
                                             onChange: (val) {
-                                              enableAutoPayment = val;
+                                              enableAutoPaymentt = val;
                                             },
-                                            isSwitched: enableAutoPayment,
+                                            isSwitched: enableAutoPaymentt,
                                             inactiveColor: textSecondary,
                                           ),
                                           const SizedBox(width: 8),
@@ -330,9 +330,9 @@ class _BuySubscriptionState extends State<BuySubscription> {
                             context.read<ShowPopUpBloc>().add(ShowPopUp(message: LocaleKeys.no_payment_provider.tr()));
                             return;
                           }
-                          context.read<PaymentBloc>().add(PayForMonthlySubscription(
+                          paymentBloc.add(PayForMonthlySubscription(
                               autoReNewJournal:
-                                  !(paymentState.selectedPayment?.isCard ?? false) ? false : enableAutoPayment,
+                                  !(paymentState.selectedPayment?.isCard ?? false) ? false : enableAutoPaymentt,
                               period: paymentState.selectedPeriod.months,
                               onSuccess: (value) {
                                 if (!(paymentState.selectedPayment?.isCard ?? false)) {

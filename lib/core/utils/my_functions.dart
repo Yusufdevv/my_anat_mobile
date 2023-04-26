@@ -24,6 +24,29 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 abstract class MyFunctions {
   static const clusterId = MapObjectId('big_cluster_id');
+  static double pxToRem(double pxValue) {
+    double baseFontSize = 8.0; // You can change this value to match your design
+    return pxValue / baseFontSize;
+  }
+
+  static String changePXtoREM(String html) {
+    String htmlContent = '';
+    String newFontSize = '16px';
+
+// Use regular expression to find font-size:14px
+    RegExp regex = RegExp(r'''style\s*=\s*(\'|\")[^\'\"]*font-size:\s*([\d\.]+)(px|em|rem|pt);?[^\'\"]*(\'|\")''');
+    htmlContent = html.replaceAllMapped(regex, (match) {
+      String? fontSizeValue = match.group(2);
+      String? fontSizeUnit = match.group(3);
+      double rmValue = pxToRem(double.tryParse(fontSizeValue ?? '0') ?? 0);
+      String? newFontSizeValue = newFontSize.replaceAll(RegExp('[a-z]+\$'), '');
+      return 'style=${match.group(1)}${match.group(0)!.replaceAll('$fontSizeValue$fontSizeUnit', '${rmValue}rem')}${match.group(4)}';
+    });
+
+// Print updated HTML content
+    print(htmlContent);
+    return htmlContent;
+  }
 
   static String safeDateFormat(String date, String pattern) {
     try {
