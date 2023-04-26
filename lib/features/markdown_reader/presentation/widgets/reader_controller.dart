@@ -17,8 +17,7 @@ class ReaderController extends StatefulWidget {
   State<ReaderController> createState() => _ReaderControllerState();
 }
 
-class _ReaderControllerState extends State<ReaderController>
-    with SingleTickerProviderStateMixin {
+class _ReaderControllerState extends State<ReaderController> with SingleTickerProviderStateMixin {
   late CrossFadeState crossFadeState;
   late TabController _tabController;
 
@@ -42,15 +41,10 @@ class _ReaderControllerState extends State<ReaderController>
   final List<String> fontFamily = ['Averta CY', 'IBM Plex Serif'];
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
+  Widget build(BuildContext context) => BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
         builder: (context, state) {
-          print(
-              'state => ${context.read<ReaderControllerBloc>().state.journalLang}');
-          _tabController.animateTo(
-              context.read<ReaderControllerBloc>().state.journalLang == 'ru'
-                  ? 0
-                  : 1);
+          print('state => ${context.read<ReaderControllerBloc>().state.journalLang}');
+          _tabController.animateTo(context.read<ReaderControllerBloc>().state.journalLang == 'ru' ? 0 : 1);
           return Container(
             margin: const EdgeInsets.all(20),
             width: 300,
@@ -93,18 +87,14 @@ class _ReaderControllerState extends State<ReaderController>
                     ),
                     indicatorPadding: EdgeInsets.zero,
                     indicatorWeight: 0,
-                    labelStyle: Theme.of(context)
-                        .textTheme
-                        .displaySmall!
-                        .copyWith(fontSize: 12, color: textColor),
+                    labelStyle: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 12, color: textColor),
                     labelColor: textColor,
                     unselectedLabelColor: state.selectedTextColor,
                     onTap: (index) {
                       print('bosildi $index ${_tabController.index}');
-                      context.read<ReaderControllerBloc>().add(
-                          ChangeReaderLanguage(
-                              journalLang:
-                                  _tabController.index == 1 ? 'uz' : 'ru'));
+                      context
+                          .read<ReaderControllerBloc>()
+                          .add(ChangeReaderLanguage(journalLang: _tabController.index == 1 ? 'uz' : 'ru'));
                     },
                     tabs: [
                       Tab(
@@ -167,9 +157,7 @@ class _ReaderControllerState extends State<ReaderController>
                           ChangeFontSizeButton(
                             iconColor: state.selectedTextColor,
                             onTap: () {
-                              context
-                                  .read<ReaderControllerBloc>()
-                                  .add(DowngradeFontSize());
+                              context.read<ReaderControllerBloc>().add(DowngradeFontSize());
                             },
                             icon: AppIcons.fontSizeDown,
                           ),
@@ -188,9 +176,7 @@ class _ReaderControllerState extends State<ReaderController>
                           ),
                           ChangeFontSizeButton(
                             onTap: () {
-                              context
-                                  .read<ReaderControllerBloc>()
-                                  .add(UpgradeFontSize());
+                              context.read<ReaderControllerBloc>().add(UpgradeFontSize());
                             },
                             iconColor: state.selectedTextColor,
                             icon: AppIcons.fontSizeUp,
