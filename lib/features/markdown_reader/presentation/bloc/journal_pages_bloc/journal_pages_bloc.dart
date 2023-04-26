@@ -47,7 +47,7 @@ class JournalPagesBloc extends Bloc<JournalPagesEvent, JournalPagesState> {
       final result = await _getJournalPagesUseCase
           .call(JournalPagesParams(slug: state.slug, next: state.next));
       if (result.isRight) {
-        log('results => ${result.right.next}');
+        print('results next => ${result.right.next}');
         emit(
           state.copyWith(
             pages: [...state.pages, ...result.right.results],

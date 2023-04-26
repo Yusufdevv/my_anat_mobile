@@ -30,7 +30,10 @@ class NotificationDatasourceImpl extends NotificationDatasource {
     try {
       final response = await dio.get(
         next ?? '/notifications/',
-        options: Options(headers: {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}),
+        options: Options(headers: {
+          'Authorization':
+              'Token ${StorageRepository.getString(StoreKeys.token)}'
+        }),
       );
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
@@ -81,7 +84,8 @@ class NotificationDatasourceImpl extends NotificationDatasource {
     try {
       final response = await dio.post('/notifications/read-all/',
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
@@ -105,7 +109,8 @@ class NotificationDatasourceImpl extends NotificationDatasource {
     try {
       final response = await dio.post('/notifications/$id/read/',
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
@@ -130,7 +135,8 @@ class NotificationDatasourceImpl extends NotificationDatasource {
       final response = await dio.post('/notifications/device-id/',
           data: {"device_id": id},
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
