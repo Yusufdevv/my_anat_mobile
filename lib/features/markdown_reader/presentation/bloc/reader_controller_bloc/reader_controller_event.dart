@@ -19,9 +19,10 @@ class SetWebPage extends ReaderControllerEvent {
   final int index;
   SetWebPage({required this.index});
 }
+
 class ChangeReaderLanguage extends ReaderControllerEvent {
-  final bool  isRussian;
-  ChangeReaderLanguage({required this.isRussian});
+  final String journalLang;
+  ChangeReaderLanguage({required this.journalLang});
 }
 
 class UpgradeFontSize extends ReaderControllerEvent {}

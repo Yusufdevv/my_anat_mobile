@@ -32,7 +32,9 @@ class ReaderControllerBloc
           fontSizePercentage: size, jsFunction: 'setSize($size)'));
     });
     on<ChangeReaderLanguage>((event, emit) {
-      emit(state.copyWith(isRussian: event.isRussian));
+      print('isRussian => ${event.journalLang}');
+      emit(state.copyWith(journalLang: event.journalLang));
+      print('after isRussian => ${state.journalLang}');
     });
   }
 }

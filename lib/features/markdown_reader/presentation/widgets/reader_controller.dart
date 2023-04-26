@@ -25,7 +25,10 @@ class _ReaderControllerState extends State<ReaderController>
   @override
   void initState() {
     crossFadeState = CrossFadeState.showFirst;
-    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController = TabController(
+      length: 2,
+      vsync: this,
+    );
     super.initState();
   }
 
@@ -42,6 +45,12 @@ class _ReaderControllerState extends State<ReaderController>
   Widget build(BuildContext context) =>
       BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
         builder: (context, state) {
+          print(
+              'state => ${context.read<ReaderControllerBloc>().state.journalLang}');
+          _tabController.animateTo(
+              context.read<ReaderControllerBloc>().state.journalLang == 'ru'
+                  ? 0
+                  : 1);
           return Container(
             margin: const EdgeInsets.all(20),
             width: 300,
@@ -94,7 +103,8 @@ class _ReaderControllerState extends State<ReaderController>
                       print('bosildi $index ${_tabController.index}');
                       context.read<ReaderControllerBloc>().add(
                           ChangeReaderLanguage(
-                              isRussian: _tabController.index == 1));
+                              journalLang:
+                                  _tabController.index == 1 ? 'uz' : 'ru'));
                     },
                     tabs: [
                       Tab(

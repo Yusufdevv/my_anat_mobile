@@ -43,9 +43,9 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ReaderControllerBloc, ReaderControllerState>(
-      listenWhen: (state1, state2) {
-        return state1.isRussian != state2.isRussian;
-      },
+      // listenWhen: (state1, state2) {
+      //   return state1.journalLang != 'ru';
+      // },
       listener: (context, state) {
         webViewController.loadHtmlString(widget.data);
       },
@@ -54,47 +54,51 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
           GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: widget.onTap,
-            child: WebView(
-              initialUrl: widget.data,
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (controller) {
-                webViewController = controller;
-                webViewController.loadHtmlString(widget.data);
-              },
-              javascriptChannels: {
-                JavascriptChannel(
-                    name: 'FLUTTER_CHANNEL',
-                    onMessageReceived: (message) {
-                      final scrollOffset = double.tryParse(message.message);
-                      final deviceHeight = MediaQuery.of(context).size.height;
-                      if (scrollOffset != null &&
-                          scrollOffset / deviceHeight > 1) {
-                        setState(() {
-                          buttonshow = true;
-                        });
-                      } else {
-                        setState(() {
-                          buttonshow = false;
-                        });
-                      }
-                    })
-              },
-              navigationDelegate: (NavigationRequest request) {
-                if (request.url.contains('about:blank') ||
-                    request.url.contains(RegExp(
-                        r'''(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'''))) {
-                  return NavigationDecision.navigate;
-                } else {
-                  launchUrlString(request.url,
-                      mode: LaunchMode.externalApplication);
-                  return NavigationDecision.prevent;
-                }
-              },
-              gestureNavigationEnabled: true,
-              debuggingEnabled: true,
-              gestureRecognizers: {
-                Factory<OneSequenceGestureRecognizer>(() => verticalRecognizer),
-              },
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: WebView(
+                initialUrl: widget.data,
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (controller) {
+                  webViewController = controller;
+                  webViewController.loadHtmlString(widget.data);
+                },
+                javascriptChannels: {
+                  JavascriptChannel(
+                      name: 'FLUTTER_CHANNEL',
+                      onMessageReceived: (message) {
+                        final scrollOffset = double.tryParse(message.message);
+                        final deviceHeight = MediaQuery.of(context).size.height;
+                        if (scrollOffset != null &&
+                            scrollOffset / deviceHeight > 1) {
+                          setState(() {
+                            buttonshow = true;
+                          });
+                        } else {
+                          setState(() {
+                            buttonshow = false;
+                          });
+                        }
+                      })
+                },
+                navigationDelegate: (NavigationRequest request) {
+                  if (request.url.contains('about:blank') ||
+                      request.url.contains(RegExp(
+                          r'''(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'''))) {
+                    return NavigationDecision.navigate;
+                  } else {
+                    launchUrlString(request.url,
+                        mode: LaunchMode.externalApplication);
+                    return NavigationDecision.prevent;
+                  }
+                },
+                gestureNavigationEnabled: true,
+                debuggingEnabled: true,
+                gestureRecognizers: {
+                  Factory<OneSequenceGestureRecognizer>(
+                      () => verticalRecognizer),
+                },
+              ),
             ),
             // child: InAppWebView(
             //   onWebViewCreated: (controller) {
