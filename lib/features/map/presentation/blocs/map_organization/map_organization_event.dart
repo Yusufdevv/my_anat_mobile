@@ -43,13 +43,11 @@ class MapZoomIn extends MapEvent {
 
 class MapOnCreateEvent extends MapEvent {
   final YandexMapController controller;
-  final int orgMapV2TabIndex;
   final BuildContext context;
   final Function(Point) onSuccess;
 
   MapOnCreateEvent({
     required this.controller,
-    required this.orgMapV2TabIndex,
     required this.context,
     required this.onSuccess,
   });

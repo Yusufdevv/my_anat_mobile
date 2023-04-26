@@ -164,14 +164,12 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     if (index == state.pages.length) {
-                                      // if (state.fetchMore) {
-                                      //   context
-                                      //       .read<JournalPagesBloc>()
-                                      //       .add(GetMoreJournalPages());
-                                      //   return const Center(
-                                      //     child: CupertinoActivityIndicator(),
-                                      //   );
-                                      // }
+                                      if (state.fetchMore) {
+                                        context.read<JournalPagesBloc>().add(GetMoreJournalPages());
+                                        return const Center(
+                                          child: CupertinoActivityIndicator(),
+                                        );
+                                      }
                                     }
                                     return GestureDetector(
                                       onTap: () {

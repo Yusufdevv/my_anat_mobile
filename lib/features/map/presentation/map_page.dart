@@ -4,7 +4,6 @@ import 'package:anatomica/features/map/presentation/blocs/doctor_list/doctor_lis
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
 import 'package:anatomica/features/map/presentation/screens/map_screen.dart';
-import 'package:anatomica/features/map/presentation/widgets/map_search_area.dart';
 import 'package:anatomica/features/map/presentation/widgets/map_tab_bar.dart';
 import 'package:anatomica/features/map/presentation/widgets/the_search_field_of_hospitals.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +73,6 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                         }
                         if (state.screenStatus.isList) {
                           return HospitalList(
-                            getFocus: state.isGetFocus,
                             myLocation: Point(longitude: state.currentLong, latitude: state.currentLat),
                           );
                         }
@@ -87,6 +85,8 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                     ),
                   ),
                   MapTabBar(
+                      isDoctor: state.tabController.index == 1,
+                      isMap: state.screenStatus.isMap,
                       mediaQuery: widget.mediaQuery,
                       onTabChanged: (index) async {
                         if (state.tabController?.indexIsChanging ?? false) {
@@ -101,16 +101,6 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                         }
                       },
                       tabController: state.tabController),
-                  MapSearchArea(
-                    onButtonPressed: () {
-                      mapOrganizationBloc.add(MapChooseEvent(screenStatus: MapScreenStatus.list, isGetFocus: false));
-                    },
-                    onRightbuttonPressed: () {
-                      mapOrganizationBloc.add(MapChooseEvent(screenStatus: MapScreenStatus.list, isGetFocus: true));
-                    },
-                    searchText: state.searchText,
-                    mediaQuery: widget.mediaQuery,
-                  ),
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 150),
                     bottom: MediaQuery.of(context).viewInsets.bottom > 0
@@ -119,6 +109,15 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                     left: 0,
                     right: 0,
                     child: TheSearchFieldOfHospitals(
+                      onSearchFieldTap: () {
+                        mapOrganizationBloc.add(MapChooseEvent(screenStatus: MapScreenStatus.list, isGetFocus: true));
+                      },
+                      onLeftButtonPressed: () {
+                        mapOrganizationBloc
+                            .add(MapChooseEvent(screenStatus: state.screenStatus.switchIt, isGetFocus: false));
+                      },
+                      isMap: state.screenStatus.isMap,
+                      mediaQuery: widget.mediaQuery,
                       focusNode: state.focusNode,
                       controller: state.searchController,
                       isSearching: state.isSearching,

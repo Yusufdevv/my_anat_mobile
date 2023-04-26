@@ -88,17 +88,17 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   }
 
   FutureOr<void> _getSpecializations(MapGetSpecializationsEvent event, Emitter<MapOrganizationState> emit) async {
-    // emit(state.copyWith(
-    //   status: FormzStatus.submissionInProgress,
-    // ));
-    // final result = await getSpecializationsUseCase('');
-    // if (result.isRight) {
-    //   emit(state.copyWith(status: FormzStatus.submissionSuccess, specializations: result.right.results));
-    // } else {
-    //   emit(state.copyWith(
-    //     status: FormzStatus.submissionFailure,
-    //   ));
-    // }
+    emit(state.copyWith(
+      status: FormzStatus.submissionInProgress,
+    ));
+    final result = await getSpecializationsUseCase('');
+    if (result.isRight) {
+      emit(state.copyWith(status: FormzStatus.submissionSuccess, specializations: result.right.results));
+    } else {
+      emit(state.copyWith(
+        status: FormzStatus.submissionFailure,
+      ));
+    }
   }
 
   FutureOr<void> _getMoreHospitalsWithDistance(
@@ -149,6 +149,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       lat: event.lat,
       long: event.long,
       isGetFocus: event.isGetFocus,
+      isSuggestion: event.isSuggestion,
     ));
   }
 
@@ -171,6 +172,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   }
 
   FutureOr<void> _changeTab(MapChangeTabEvent event, Emitter<MapOrganizationState> emit) async {
+    if (state.screenStatus.isList) return;
     if (event.haveToLoading) {
       emit(state.copyWith(tabChangingStatus: FormzStatus.submissionInProgress));
       await Future.delayed(const Duration(milliseconds: 500));
@@ -429,9 +431,6 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
 
   FutureOr<void> _onMapCreated(MapOnCreateEvent event, Emitter<MapOrganizationState> emit) async {
     mapController = event.controller;
-    if (state.tabController!.index != event.orgMapV2TabIndex) {
-      state.tabController!.animateTo(event.orgMapV2TabIndex);
-    }
 
     var maxZoomLevel = await mapController.getMaxZoom();
     var minZoomLevel = await mapController.getMinZoom();
@@ -509,4 +508,6 @@ extension MapScreenStatusExtention on MapScreenStatus {
   bool get isList => this == MapScreenStatus.list;
 
   bool get isMap => this == MapScreenStatus.map;
+
+  MapScreenStatus get switchIt => this == MapScreenStatus.map ? MapScreenStatus.list : MapScreenStatus.map;
 }

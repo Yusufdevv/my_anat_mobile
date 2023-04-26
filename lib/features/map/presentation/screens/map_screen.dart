@@ -76,7 +76,6 @@ class _MapScreenState extends State<MapScreen> {
                       onSuccess: widget.onMapCreateSuccess,
                       context: context,
                       controller: controller,
-                      orgMapV2TabIndex: 0,
                     ),
                   );
                 },

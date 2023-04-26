@@ -9,10 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class HospitalList extends StatefulWidget {
-  final bool getFocus;
   final Point myLocation;
 
-  const HospitalList({required this.myLocation, this.getFocus = false, Key? key}) : super(key: key);
+  const HospitalList({required this.myLocation, Key? key}) : super(key: key);
 
   @override
   State<HospitalList> createState() => _HospitalListState();
@@ -34,68 +33,61 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
     return WKeyboardDismisser(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        // appBar: HospitalAppBar(
-        //   controller: _tabController,
-        //   mediaQuery: MediaQuery.of(context),
-        // ),
         body: BlocBuilder<MapOrganizationBloc, MapOrganizationState>(
           builder: (context, state) {
-            return Stack(
-              children: [
-                Positioned.fill(
-                  child: TabBarView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: state.tabController,
-                    children: [
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 150),
-                        child: !state.isSuggestion
-                            ? ResultList(myPoint: widget.myLocation)
-                            : SuggestionListScreen(
-                                isDoctor: false,
-                                myPoint: widget.myLocation,
-                                searchText: state.searchController.text,
-                                onTapItem: (value) {
-                                  state.focusNode.unfocus();
-                                  state.searchController.text = value;
-                                  state.searchController.selection =
-                                      TextSelection.fromPosition(TextPosition(offset: value.length));
-                                  context.read<MapOrganizationBloc>().add(MapGetHospitalsWithDistance(
-                                        search: value,
-                                        myPoint: widget.myLocation,
-                                      ));
-                                  context.read<MapOrganizationBloc>().add(MapChooseEvent(isSuggestion: false));
-                                },
-                              ),
-                      ),
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 150),
-                        child: !state.isSuggestion
-                            ? DoctorsList(
-                                textEditingController: state.searchController,
-                                myPoint: widget.myLocation,
-                              )
-                            : SuggestionListScreen(
-                                isDoctor: true,
-                                myPoint: widget.myLocation,
-                                searchText: state.searchController.text,
-                                onTapItem: (value) {
-                                  state.focusNode.unfocus();
-                                  state.searchController.text = value;
-                                  state.searchController.selection =
-                                      TextSelection.fromPosition(TextPosition(offset: value.length));
-                                  context.read<DoctorListBloc>().add(DoctorListEvent.getDoctors(
-                                        search: state.searchController.text,
-                                        myPoint: widget.myLocation,
-                                      ));
-                                  context.read<MapOrganizationBloc>().add(MapChooseEvent(isSuggestion: false));
-                                },
-                              ),
-                      ),
-                    ],
+            return Padding(
+              padding: const EdgeInsets.only(top: 147),
+              child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: state.tabController,
+                children: [
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 150),
+                    child: !state.isSuggestion
+                        ? ResultList(myPoint: widget.myLocation)
+                        : SuggestionListScreen(
+                            isDoctor: false,
+                            myPoint: widget.myLocation,
+                            searchText: state.searchController.text,
+                            onTapItem: (value) {
+                              state.focusNode.unfocus();
+                              state.searchController.text = value;
+                              state.searchController.selection =
+                                  TextSelection.fromPosition(TextPosition(offset: value.length));
+                              context.read<MapOrganizationBloc>().add(MapGetHospitalsWithDistance(
+                                    search: value,
+                                    myPoint: widget.myLocation,
+                                  ));
+                              context.read<MapOrganizationBloc>().add(MapChooseEvent(isSuggestion: false));
+                            },
+                          ),
                   ),
-                ),
-              ],
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 150),
+                    child: !state.isSuggestion
+                        ? DoctorsList(
+                            textEditingController: state.searchController,
+                            myPoint: widget.myLocation,
+                          )
+                        : SuggestionListScreen(
+                            isDoctor: true,
+                            myPoint: widget.myLocation,
+                            searchText: state.searchController.text,
+                            onTapItem: (value) {
+                              state.focusNode.unfocus();
+                              state.searchController.text = value;
+                              state.searchController.selection =
+                                  TextSelection.fromPosition(TextPosition(offset: value.length));
+                              context.read<DoctorListBloc>().add(DoctorListEvent.getDoctors(
+                                    search: state.searchController.text,
+                                    myPoint: widget.myLocation,
+                                  ));
+                              context.read<MapOrganizationBloc>().add(MapChooseEvent(isSuggestion: false));
+                            },
+                          ),
+                  ),
+                ],
+              ),
             );
           },
         ),
