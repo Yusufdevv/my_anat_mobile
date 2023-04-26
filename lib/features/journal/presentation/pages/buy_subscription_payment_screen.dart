@@ -191,7 +191,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                               },
                                               icon: e.icon,
                                               isSelected: paymentState.selectedPayment == e,
-                                              paymentMethod: e.type,
+                                              paymentMethod: e.provider,
                                               iconHeight: e.iconHeight,
                                             );
                                           },
@@ -351,7 +351,7 @@ class _BuySubscriptionState extends State<BuySubscription> {
                                   context.read<ShowPopUpBloc>().add(ShowPopUp(message: 'Uspeshno', isSuccess: true));
                                 }
                               },
-                              paymentProvider: paymentState.selectedPayment!.type,
+                              paymentProvider: paymentState.selectedPayment!.provider,
                               onError: (message) {
                                 context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
                               }));

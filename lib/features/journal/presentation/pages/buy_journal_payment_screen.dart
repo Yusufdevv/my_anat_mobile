@@ -215,7 +215,7 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                                       },
                                       icon: e.icon,
                                       isSelected: paymentState.selectedPayment == e,
-                                      paymentMethod: e.type,
+                                      paymentMethod: e.provider,
                                       iconHeight: e.iconHeight,
                                     );
                                   },
@@ -342,7 +342,7 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                                             isRegistered: widget.isRegistered,
                                             phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
                                             email: !isPhone ? emailController.text : '',
-                                            paymentProvider: paymentState.selectedPayment!.type,
+                                            paymentProvider: paymentState.selectedPayment!.provider,
                                             onSuccess: (value) async {
                                               if (!(paymentState.selectedPayment?.isCard ?? false)) {
                                                 launchUrlString(value.transactionCheckoutUrl,

@@ -158,14 +158,13 @@ enum PaymentType {
   paylov('paylov', AppImages.paylov, 22),
   card('card', '', 0);
 
-  const PaymentType(this.type, this.icon, this.iconHeight);
-  final String type;
+  const PaymentType(this.provider, this.icon, this.iconHeight);
+  final String provider;
   final String icon;
   final double iconHeight;
 }
 
 extension PaymentTypeExtention on PaymentType {
-  List<PaymentType> get forGrid => PaymentType.values..removeAt(PaymentType.values.length - 1);
   bool get isCard => this == PaymentType.card;
 }
 
