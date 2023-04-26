@@ -18,8 +18,19 @@ class AutoPaymentPage extends StatefulWidget {
 
 class _AutoPaymentPageState extends State<AutoPaymentPage> {
   bool enableJournalAutoPay = false;
+  bool enableDoctorAutoPay = false;
+  bool enableOrganizationAutoPay = false;
 
-  bool enableDoctorlAutoPay = false;
+  @override
+  void initState() {
+    super.initState();
+    enableDoctorAutoPay = widget.profileBloc.state.profileEntity.autoRenewDoctor;
+    enableJournalAutoPay = widget.profileBloc.state.profileEntity.autoRenewJournal;
+    enableOrganizationAutoPay = widget.profileBloc.state.profileEntity.autoRenewOrganization;
+    print('=======autoRenewDoctor ${widget.profileBloc.state.profileEntity.autoRenewDoctor}');
+    print('=======autoRenewJournal ${widget.profileBloc.state.profileEntity.autoRenewJournal}');
+    print('=======autoRenewOrganization ${widget.profileBloc.state.profileEntity.autoRenewOrganization}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,25 +54,27 @@ class _AutoPaymentPageState extends State<AutoPaymentPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            LocaleKeys.doctor_organization.tr(),
+                            state.profileEntity.isDoctor ? LocaleKeys.doctorr.tr() : LocaleKeys.organizationn.tr(),
                             style: Theme.of(context).textTheme.displaySmall!.copyWith(color: dark),
                           ),
                           WCupertinoSwitch(
                             onChange: (val) {
-                              enableDoctorlAutoPay = val;
-                              // widget.profileBloc.add(
-                              //   UpdateProfileEvent(
-                              //     profileEntity: _localUser.copyWith(
-                              //       birthDate: '${date.year}-${date.month}-${date.day}',
-                              //       fullName: nameController.text,
-                              //       phoneNumber: '+998${phoneController.text.replaceAll(' ', '')}',
-                              //       email: emailController.text,
-                              //       img: state.imageUrl.isNotEmpty ? ImageEntity(middle: state.imageUrl) : _localUser.img,
-                              //     ),
-                              //   ),
-                              // );
+                              if (state.profileEntity.isDoctor) {
+                                enableDoctorAutoPay = val;
+                              }
+                              if (state.profileEntity.isOrganization) {
+                                enableOrganizationAutoPay = val;
+                              }
+                              widget.profileBloc.add(
+                                UpdateUserAutoPayStatusEvent(
+                                  profileEntity: state.profileEntity.copyWith(
+                                    autoRenewDoctor: enableDoctorAutoPay,
+                                    autoRenewOrganization: enableOrganizationAutoPay,
+                                  ),
+                                ),
+                              );
                             },
-                            isSwitched: enableDoctorlAutoPay,
+                            isSwitched: state.profileEntity.isDoctor ? enableDoctorAutoPay : enableOrganizationAutoPay,
                             inactiveColor: textSecondary,
                           ),
                         ],
@@ -73,25 +86,21 @@ class _AutoPaymentPageState extends State<AutoPaymentPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          LocaleKeys.journal_article.tr(),
+                          LocaleKeys.journals.tr(),
                           style: Theme.of(context).textTheme.displaySmall!.copyWith(color: dark),
                         ),
                         WCupertinoSwitch(
                           onChange: (val) {
                             enableJournalAutoPay = val;
-                            // widget.profileBloc.add(
-                            //   UpdateProfileEvent(
-                            //     profileEntity: _localUser.copyWith(
-                            //       birthDate: '${date.year}-${date.month}-${date.day}',
-                            //       fullName: nameController.text,
-                            //       phoneNumber: '+998${phoneController.text.replaceAll(' ', '')}',
-                            //       email: emailController.text,
-                            //       img: state.imageUrl.isNotEmpty ? ImageEntity(middle: state.imageUrl) : _localUser.img,
-                            //     ),
-                            //   ),
-                            // );
+                            widget.profileBloc.add(
+                              UpdateUserAutoPayStatusEvent(
+                                profileEntity: state.profileEntity.copyWith(
+                                  autoRenewJournal: enableJournalAutoPay,
+                                ),
+                              ),
+                            );
                           },
-                          isSwitched: enableDoctorlAutoPay,
+                          isSwitched: enableJournalAutoPay,
                           inactiveColor: textSecondary,
                         ),
                       ],

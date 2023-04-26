@@ -21,10 +21,13 @@ class UserEntity extends Equatable {
   final DoctorEntity doctor;
   @UserOrganizationConverter()
   final List<UserOrganizationEntity> organizations;
+  final bool autoRenewDoctor;
+  final bool autoRenewOrganization;
+  final bool autoRenewJournal;
 
   const UserEntity({
     this.id = 0,
-    this.birthDay='' ,
+    this.birthDay = '',
     this.img = const ImageEntity(),
     this.fullName = '',
     this.email = '',
@@ -35,21 +38,28 @@ class UserEntity extends Equatable {
     this.isSubscribed = false,
     this.organizations = const [],
     this.phoneNumber = '',
+    this.autoRenewDoctor = false,
+    this.autoRenewOrganization = false,
+    this.autoRenewJournal = false,
   });
 
-  UserEntity copyWith(
-          {int? id,
-          String? birthDate,
-          String? fullName,
-          String? email,
-          String? username,
-          ImageEntity? img,
-          String? phoneNumber,
-          bool? isDoctor,
-          bool? isOrganization,
-          bool? isSubscribed,
-          DoctorEntity? doctor,
-          List<UserOrganizationEntity>? organizations}) =>
+  UserEntity copyWith({
+    int? id,
+    String? birthDate,
+    String? fullName,
+    String? email,
+    String? username,
+    ImageEntity? img,
+    String? phoneNumber,
+    bool? isDoctor,
+    bool? autoRenewDoctor,
+    bool? autoRenewOrganization,
+    bool? autoRenewJournal,
+    bool? isOrganization,
+    bool? isSubscribed,
+    DoctorEntity? doctor,
+    List<UserOrganizationEntity>? organizations,
+  }) =>
       UserEntity(
         birthDay: birthDate ?? birthDay,
         id: id ?? this.id,
@@ -63,6 +73,9 @@ class UserEntity extends Equatable {
         organizations: organizations ?? this.organizations,
         phoneNumber: phoneNumber ?? this.phoneNumber,
         username: username ?? this.username,
+        autoRenewDoctor: autoRenewDoctor ?? this.autoRenewDoctor,
+        autoRenewOrganization: autoRenewOrganization ?? this.autoRenewOrganization,
+        autoRenewJournal: autoRenewJournal ?? this.autoRenewJournal,
       );
 
   @override
@@ -79,5 +92,8 @@ class UserEntity extends Equatable {
         isSubscribed,
         doctor,
         organizations,
+        autoRenewDoctor,
+        autoRenewOrganization,
+        autoRenewJournal,
       ];
 }

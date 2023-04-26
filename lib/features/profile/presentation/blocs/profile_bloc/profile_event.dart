@@ -12,6 +12,13 @@ class UpdateProfileEvent extends ProfileEvent {
     required this.profileEntity,
   });
 }
+class UpdateUserAutoPayStatusEvent extends ProfileEvent {
+  final UserEntity profileEntity;
+
+  UpdateUserAutoPayStatusEvent({
+    required this.profileEntity,
+  });
+}
 
 class DeleteAccount extends ProfileEvent {
   final VoidCallback onSuccess;

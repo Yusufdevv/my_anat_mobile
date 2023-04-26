@@ -81,6 +81,7 @@ class ProfileDatasourceImpl extends ProfileDatasource {
 
   @override
   Future<UserModel> getProfile() async {
+    print('======= shu yer');
     try {
       final response = await _dio.get('/user/profile/',
           options: Options(headers: {

@@ -346,8 +346,9 @@ class CodegenLoader extends AssetLoader{
   "popular_orgs": "Лучшие организации",
   "auto_payment": "Автоплатеж",
   "enable_auto_payment": "Включить автоплатеж",
-  "doctor_organization": "Доктор/Организация",
-  "journal_article": "Журналы/Статьи"
+  "organizationn": "Организация",
+  "doctorr": "Доктор",
+  "journals": "Журналы"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -680,7 +681,10 @@ static const Map<String,dynamic> uz = {
   "others_categories": "Boshqa kategoriyalar",
   "the_best_doctors": "Eng yaxshi shifokorlar",
   "auto_payment": "Avtomatik to'lov",
-  "enable_auto_payment": "Avtomatik toʻlovni yoqish"
+  "enable_auto_payment": "Avtomatik toʻlovni yoqish",
+  "organizationn": "Tashkilot",
+  "doctorr": "Shifokor",
+  "journals": "Jurnallar"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

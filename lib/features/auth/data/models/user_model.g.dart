@@ -29,6 +29,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       id: json['id'] as int? ?? 0,
       phoneNumber: json['phone_number'] as String? ?? '',
       birthDay: json['birth_day'] as String? ?? '',
+      autoRenewDoctor: json['auto_renew_doctor'] as bool? ?? false,
+      autoRenewJournal: json['auto_renew_journal'] as bool? ?? false,
+      autoRenewOrganization: json['auto_renew_organization'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -46,4 +49,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'organizations': instance.organizations
           .map(const UserOrganizationConverter().toJson)
           .toList(),
+      'auto_renew_doctor': instance.autoRenewDoctor,
+      'auto_renew_organization': instance.autoRenewOrganization,
+      'auto_renew_journal': instance.autoRenewJournal,
     };

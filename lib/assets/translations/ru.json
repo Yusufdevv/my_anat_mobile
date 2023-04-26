@@ -330,6 +330,7 @@
   "popular_orgs": "Лучшие организации",
   "auto_payment": "Автоплатеж",
   "enable_auto_payment": "Включить автоплатеж",
-  "doctor_organization": "Доктор/Организация",
-  "journal_article": "Журналы/Статьи"
+  "organizationn": "Организация", 
+  "doctorr": "Доктор",
+  "journals": "Журналы"
 }
