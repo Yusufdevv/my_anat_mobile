@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class PaymentMethod extends StatelessWidget {
   final ValueChanged<String> onTap;
   final String paymentMethod;
-  final String currentPaymentMethod;
+  final bool isSelected;
   final String icon;
   final double? iconHeight;
   final Widget? title;
@@ -15,7 +15,7 @@ class PaymentMethod extends StatelessWidget {
 
   const PaymentMethod({
     required this.onTap,
-    required this.currentPaymentMethod,
+    required this.isSelected,
     required this.paymentMethod,
     this.icon = '',
     this.iconHeight,
@@ -33,23 +33,20 @@ class PaymentMethod extends StatelessWidget {
         margin: margin,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: paymentMethod == currentPaymentMethod ? white : lilyWhite,
-          border: Border.all(
-              color:
-                  paymentMethod == currentPaymentMethod ? primary : lilyWhite),
+          color: isSelected ? white : lilyWhite,
+          border: Border.all(color: isSelected ? primary : lilyWhite),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
           children: [
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 150),
-              child: paymentMethod == currentPaymentMethod
+              child: isSelected
                   ? SvgPicture.asset(AppIcons.paymentMethodCheck)
                   : Container(
                       height: 24,
                       width: 24,
-                      decoration: const BoxDecoration(
-                          color: checkUnselected, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(color: checkUnselected, shape: BoxShape.circle),
                     ),
             ),
             SizedBox(width: paymentMethod == 'card' ? 12 : 6),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/usecases/usecase.dart';
@@ -33,13 +34,24 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   final PayForMonthlySubscriptionUseCase _payForMonthlySubscriptionUseCase =
       PayForMonthlySubscriptionUseCase(repository: serviceLocator<PaymentRepositoryImpl>());
 
-  PaymentBloc({required int? paymentId}) : super(PaymentState(paymentId: paymentId ?? -1)) {
+  PaymentBloc({required int? paymentId})
+      : super(PaymentState(selectedPeriod: PeriodType.days_30, paymentId: paymentId ?? -1)) {
     on<OrderCreateArticle>(_onCreateArticle);
     on<CheckPaymentStatus>(_checkPaymentStatus);
     on<OrderCreateJournal>(_orderCreate);
     on<GetPrices>(_getPrices);
     on<PayForMonthlySubscription>(_payForMonthlySubscription);
+    on<PaymentChooseEvent>(_choose);
   }
+  FutureOr<void> _choose(PaymentChooseEvent event, Emitter<PaymentState> emit) async {
+    emit(
+      state.copyWith(
+        selectedPeriod: event.selectedPeriod,
+        selectedPayment: event.selectedPayment,
+      ),
+    );
+  }
+
   FutureOr<void> _onCreateArticle(OrderCreateArticle event, Emitter<PaymentState> emit) async {
     emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
     final result = await _orderCreateArticleUseCase.call(OrderCreateParams(
@@ -90,8 +102,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
 
   FutureOr<void> _payForMonthlySubscription(PayForMonthlySubscription event, Emitter<PaymentState> emit) async {
     emit(state.copyWith(orderCreateStatus: FormzStatus.submissionInProgress));
-    final result = await _payForMonthlySubscriptionUseCase
-        .call(SubscriptionParams(paymentProvider: event.paymentProvider, period: event.period, autoReNewJournal: event.autoReNewJournal));
+    final result = await _payForMonthlySubscriptionUseCase.call(SubscriptionParams(
+        paymentProvider: event.paymentProvider, period: event.period, autoReNewJournal: event.autoReNewJournal));
     if (result.isRight) {
       emit(state.copyWith(orderCreateStatus: FormzStatus.submissionSuccess));
       event.onSuccess(result.right);
@@ -137,4 +149,33 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
       }
     }
   }
+}
+
+enum PaymentType {
+  payme('payme', AppImages.payMe, 24),
+  click('click', AppImages.click, 24),
+  uzum('uzum', AppImages.uzum, 22),
+  paylov('paylov', AppImages.paylov, 22),
+  card('card', '', 0);
+
+  const PaymentType(this.type, this.icon, this.iconHeight);
+  final String type;
+  final String icon;
+  final double iconHeight;
+}
+
+extension PaymentTypeExtention on PaymentType {
+  List<PaymentType> get forGrid => PaymentType.values..removeAt(PaymentType.values.length - 1);
+  bool get isCard => this == PaymentType.card;
+}
+
+enum PeriodType {
+  days_30(LocaleKeys.days_30, 1),
+  months_3(LocaleKeys.months_3, 3),
+  months_6(LocaleKeys.months_6, 6),
+  year_1(LocaleKeys.year_1, 12);
+
+  const PeriodType(this.title, this.months);
+  final String title;
+  final int months;
 }

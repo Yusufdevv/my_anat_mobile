@@ -2,7 +2,7 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
-import 'package:anatomica/features/journal/domain/entities/period_entity.dart';
+import 'package:anatomica/features/journal/presentation/bloc/payment_bloc/payment_bloc.dart';
 import 'package:anatomica/features/journal/presentation/widgets/select_period_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -10,27 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SelectPeriodBottomSheet extends StatefulWidget {
-  final PeriodEntity initialPeriod;
+  final PeriodType initialPeriod;
   const SelectPeriodBottomSheet({
     required this.initialPeriod,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<SelectPeriodBottomSheet> createState() =>
-      _SelectPeriodBottomSheetState();
+  State<SelectPeriodBottomSheet> createState() => _SelectPeriodBottomSheetState();
 }
 
 class _SelectPeriodBottomSheetState extends State<SelectPeriodBottomSheet> {
-  PeriodEntity selectedPeriod =
-      const PeriodEntity(title: LocaleKeys.days_30, period: 1);
-
-  List<PeriodEntity> periods = const [
-    PeriodEntity(title: LocaleKeys.days_30, period: 1),
-    PeriodEntity(title: LocaleKeys.months_3, period: 3),
-    PeriodEntity(title: LocaleKeys.months_6, period: 6),
-    PeriodEntity(title: LocaleKeys.year_1, period: 12),
-  ];
+  late PeriodType selectedPeriod;
 
   @override
   void initState() {
@@ -57,10 +48,7 @@ class _SelectPeriodBottomSheetState extends State<SelectPeriodBottomSheet> {
                 padding: const EdgeInsets.only(left: 16),
                 child: Text(
                   LocaleKeys.period.tr(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayLarge!
-                      .copyWith(fontSize: 20),
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20),
                 ),
               ),
               WScaleAnimation(
@@ -78,19 +66,18 @@ class _SelectPeriodBottomSheetState extends State<SelectPeriodBottomSheet> {
             indent: 16,
             color: textFieldColor,
           ),
-          ...List.generate(
-            periods.length,
-            (index) => SelectPeriodItem(
-              selectedPeriod: selectedPeriod,
-              period: periods[index],
-              isLast: index == periods.length - 1,
-              onChanged: (value) {
-                setState(() {
-                  selectedPeriod = value;
-                });
-              },
-            ),
-          ),
+          ...PeriodType.values
+              .map((e) => SelectPeriodItem(
+                    selectedPeriod: selectedPeriod,
+                    period: e,
+                    isLast: e == PeriodType.values.last,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedPeriod = value;
+                      });
+                    },
+                  ))
+              .toList(),
           WButton(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             onTap: () {

@@ -7,14 +7,18 @@ class PaymentState extends Equatable {
   final FormzStatus getPricesStatus;
   final FormzStatus payForMonthlyStatus;
   final String status;
+  final PaymentType? selectedPayment;
+  final PeriodType selectedPeriod;
   final PricesEntity prices;
   const PaymentState({
+    required this.selectedPeriod,
     this.paymentId = 0,
     this.orderCreateStatus = FormzStatus.pure,
     this.checkPaymentStatus = FormzStatus.pure,
     this.getPricesStatus = FormzStatus.pure,
     this.payForMonthlyStatus = FormzStatus.pure,
     this.status = '',
+    this.selectedPayment,
     this.prices = const PricesEntity(),
   });
   PaymentState copyWith({
@@ -22,11 +26,15 @@ class PaymentState extends Equatable {
     FormzStatus? checkPaymentStatus,
     FormzStatus? getPricesStatus,
     FormzStatus? payForMonthlyStatus,
+    PeriodType? selectedPeriod,
     int? paymentIdd,
     String? status,
+    PaymentType? selectedPayment,
     PricesEntity? prices,
   }) =>
       PaymentState(
+        selectedPeriod: selectedPeriod ?? this.selectedPeriod,
+        selectedPayment: selectedPayment ?? this.selectedPayment,
         orderCreateStatus: orderCreateStatus ?? this.orderCreateStatus,
         paymentId: paymentIdd ?? this.paymentId,
         checkPaymentStatus: checkPaymentStatus ?? this.checkPaymentStatus,
@@ -37,6 +45,8 @@ class PaymentState extends Equatable {
       );
   @override
   List<Object?> get props => [
+        selectedPeriod,
+        selectedPayment,
         orderCreateStatus,
         checkPaymentStatus,
         getPricesStatus,

@@ -61,7 +61,6 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
   late TextEditingController phoneController;
   late TextEditingController emailController;
   bool isPhone = true;
-  final ValueNotifier currentPaymentMethod = ValueNotifier<String>('');
   final ValueNotifier _inputState = ValueNotifier<CrossFadeState>(CrossFadeState.showFirst);
   late PaymentBloc paymentBloc;
 
@@ -160,241 +159,231 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                           ),
                         ),
                         ValueListenableBuilder(
-                            valueListenable: _inputState,
-                            builder: (context, ob, child) {
-                              return AnimatedCrossFade(
-                                duration: const Duration(milliseconds: 150),
-                                crossFadeState: _inputState.value,
-                                firstChild: Padding(
-                                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-                                  child: PhoneTextField(
+                          valueListenable: _inputState,
+                          builder: (context, ob, child) {
+                            return AnimatedCrossFade(
+                              duration: const Duration(milliseconds: 150),
+                              crossFadeState: _inputState.value,
+                              firstChild: Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                                child: PhoneTextField(
+                                  hasError: paymentState.orderCreateStatus.isSubmissionFailure,
+                                  controller: phoneController,
+                                  title: LocaleKeys.phone_number.tr(),
+                                ),
+                              ),
+                              secondChild: Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                                child: DefaultTextField(
+                                    title: LocaleKeys.mail.tr(),
+                                    controller: emailController,
                                     hasError: paymentState.orderCreateStatus.isSubmissionFailure,
-                                    controller: phoneController,
-                                    title: LocaleKeys.phone_number.tr(),
-                                  ),
-                                ),
-                                secondChild: Padding(
-                                  padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
-                                  child: DefaultTextField(
-                                      title: LocaleKeys.mail.tr(),
-                                      controller: emailController,
-                                      hasError: paymentState.orderCreateStatus.isSubmissionFailure,
-                                      onChanged: (value) {},
-                                      prefix: Padding(
-                                          padding: const EdgeInsets.only(left: 12, right: 8),
-                                          child: SvgPicture.asset(AppIcons.mail)),
-                                      hintText: 'example@anatomica.uz'),
-                                ),
-                              );
-                            })
+                                    onChanged: (value) {},
+                                    prefix: Padding(
+                                        padding: const EdgeInsets.only(left: 12, right: 8),
+                                        child: SvgPicture.asset(AppIcons.mail)),
+                                    hintText: 'example@anatomica.uz'),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                       Padding(
                         padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                         child: Text(LocaleKeys.select_payment_method.tr(),
                             style: Theme.of(context).textTheme.displayLarge),
                       ),
-                      ValueListenableBuilder(
-                          valueListenable: currentPaymentMethod,
-                          builder: (context, _, __) {
-                            return Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 124,
-                                    child: GridView(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          crossAxisSpacing: 15,
-                                          mainAxisSpacing: 16,
-                                          mainAxisExtent: 54),
-                                      children: List.generate(
-                                        iconHeights.length,
-                                        (index) => PaymentMethod(
-                                            onTap: (value) {
-                                              currentPaymentMethod.value = value;
-                                            },
-                                            icon: payments.values.toList()[index],
-                                            currentPaymentMethod: currentPaymentMethod.value,
-                                            paymentMethod: payments.keys.toList()[index],
-                                            iconHeight: iconHeights[index]),
-                                      ),
-                                    ),
-                                  ),
-                                  if (widget.isRegistered)
-                                    PaymentMethod(
-                                      margin: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 124,
+                              child: GridView(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 16, mainAxisExtent: 54),
+                                children: PaymentType.values.map(
+                                  (e) {
+                                    if (e.isCard) {
+                                      return const SizedBox.shrink();
+                                    }
+                                    return PaymentMethod(
                                       onTap: (value) {
-                                        currentPaymentMethod.value = value;
+                                        paymentBloc.add(PaymentChooseEvent(selectedPayment: e));
                                       },
-                                      currentPaymentMethod: currentPaymentMethod.value,
-                                      paymentMethod: 'card',
-                                      title: Text(LocaleKeys.payment_with_card.tr(),
-                                          style: Theme.of(context).textTheme.displayLarge),
-                                    ),
-                                  if (widget.isRegistered)
-                                    BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
-                                      builder: (context, cardsState) {
-                                        return AnimatedCrossFade(
-                                          firstChild: cardsState.paymentCards.isEmpty
-                                              ? Padding(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                                                  child: AddCardWidget(
-                                                    onTap: () {
-                                                      showModalBottomSheet(
-                                                        context: context,
-                                                        backgroundColor: Colors.transparent,
-                                                        useRootNavigator: true,
-                                                        isScrollControlled: true,
-                                                        builder: (context) => AddCardBtsht(
-                                                          isWaiting: cardsState.secondStatus.isSubmissionInProgress,
-                                                          onAddCardSuccess: (cardInfo) {
-                                                            Navigator.push(
-                                                                context,
-                                                                fade(
-                                                                    page: AddPaymentCardVerifyScreen(
-                                                                  expiredDate: cardInfo.cardNumber,
-                                                                  cardNumber: cardInfo.expireDate,
-                                                                )));
-                                                          },
-                                                        ),
-                                                      );
+                                      icon: e.icon,
+                                      isSelected: paymentState.selectedPayment == e,
+                                      paymentMethod: e.type,
+                                      iconHeight: e.iconHeight,
+                                    );
+                                  },
+                                ).toList(),
+                              ),
+                            ),
+                            if (widget.isRegistered)
+                              PaymentMethod(
+                                margin: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                                onTap: (value) {
+                                  paymentBloc.add(PaymentChooseEvent(selectedPayment: PaymentType.card));
+                                },
+                                isSelected: paymentState.selectedPayment?.isCard ?? false,
+                                paymentMethod: 'card',
+                                title: Text(LocaleKeys.payment_with_card.tr(),
+                                    style: Theme.of(context).textTheme.displayLarge),
+                              ),
+                            if (widget.isRegistered)
+                              BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
+                                builder: (context, cardsState) {
+                                  return AnimatedCrossFade(
+                                    firstChild: cardsState.paymentCards.isEmpty
+                                        ? Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                                            child: AddCardWidget(
+                                              onTap: () {
+                                                showModalBottomSheet(
+                                                  context: context,
+                                                  backgroundColor: Colors.transparent,
+                                                  useRootNavigator: true,
+                                                  isScrollControlled: true,
+                                                  builder: (context) => AddCardBtsht(
+                                                    isWaiting: cardsState.secondStatus.isSubmissionInProgress,
+                                                    onAddCardSuccess: (cardInfo) {
+                                                      Navigator.push(
+                                                          context,
+                                                          fade(
+                                                              page: AddPaymentCardVerifyScreen(
+                                                            expiredDate: cardInfo.cardNumber,
+                                                            cardNumber: cardInfo.expireDate,
+                                                          )));
                                                     },
                                                   ),
-                                                )
-                                              : PaymentCardItem(
-                                                  cardType: cardsState.selectedCard?.cardType,
-                                                  cardNumber: cardsState.selectedCard?.cardNumber,
-                                                  onTap: () {
-                                                    showModalBottomSheet(
-                                                        context: context,
-                                                        backgroundColor: Colors.transparent,
-                                                        useRootNavigator: true,
-                                                        isScrollControlled: true,
-                                                        builder: (context) => CardsBottomSheet(
-                                                              onAddCardPressed: () {
-                                                                // Navigator.pop(context);
-                                                                showModalBottomSheet(
-                                                                  context: context,
-                                                                  backgroundColor: Colors.transparent,
-                                                                  useRootNavigator: true,
-                                                                  isScrollControlled: true,
-                                                                  builder: (addContext) => AddCardBtsht(
-                                                                    isWaiting:
-                                                                        cardsState.secondStatus.isSubmissionInProgress,
-                                                                    onAddCardSuccess: (cardInfo) {
-                                                                      Navigator.push(
-                                                                          context,
-                                                                          fade(
-                                                                              page: AddPaymentCardVerifyScreen(
-                                                                            expiredDate: cardInfo.cardNumber,
-                                                                            cardNumber: cardInfo.expireDate,
-                                                                          )));
-                                                                    },
-                                                                  ),
-                                                                );
+                                                );
+                                              },
+                                            ),
+                                          )
+                                        : PaymentCardItem(
+                                            cardType: cardsState.selectedCard?.cardType,
+                                            cardNumber: cardsState.selectedCard?.cardNumber,
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  backgroundColor: Colors.transparent,
+                                                  useRootNavigator: true,
+                                                  isScrollControlled: true,
+                                                  builder: (context) => CardsBottomSheet(
+                                                        onAddCardPressed: () {
+                                                          // Navigator.pop(context);
+                                                          showModalBottomSheet(
+                                                            context: context,
+                                                            backgroundColor: Colors.transparent,
+                                                            useRootNavigator: true,
+                                                            isScrollControlled: true,
+                                                            builder: (addContext) => AddCardBtsht(
+                                                              isWaiting: cardsState.secondStatus.isSubmissionInProgress,
+                                                              onAddCardSuccess: (cardInfo) {
+                                                                Navigator.push(
+                                                                    context,
+                                                                    fade(
+                                                                        page: AddPaymentCardVerifyScreen(
+                                                                      expiredDate: cardInfo.cardNumber,
+                                                                      cardNumber: cardInfo.expireDate,
+                                                                    )));
                                                               },
-                                                              cards: cardsState.paymentCards,
-                                                              selectedCard: cardsState.selectedCard,
-                                                            )).then((value) => {
-                                                          if (value != null)
-                                                            {
-                                                              context.read<PaymentCardsBloc>().add(
-                                                                  SetSelectedPaymentCardEvent(
-                                                                      id: value['selectedCardId']))
-                                                            }
-                                                        });
-                                                  },
-                                                ),
-                                          secondChild: const SizedBox(),
-                                          crossFadeState: currentPaymentMethod.value == 'card'
-                                              ? CrossFadeState.showFirst
-                                              : CrossFadeState.showSecond,
-                                          firstCurve: Curves.slowMiddle,
-                                          duration: const Duration(milliseconds: 300),
-                                        );
-                                      },
-                                    ),
-                                ],
+                                                            ),
+                                                          );
+                                                        },
+                                                        cards: cardsState.paymentCards,
+                                                        selectedCard: cardsState.selectedCard,
+                                                      )).then((value) => {
+                                                    if (value != null)
+                                                      {
+                                                        context.read<PaymentCardsBloc>().add(
+                                                            SetSelectedPaymentCardEvent(id: value['selectedCardId']))
+                                                      }
+                                                  });
+                                            },
+                                          ),
+                                    secondChild: const SizedBox(),
+                                    crossFadeState: paymentState.selectedPayment?.isCard ?? false
+                                        ? CrossFadeState.showFirst
+                                        : CrossFadeState.showSecond,
+                                    firstCurve: Curves.slowMiddle,
+                                    duration: const Duration(milliseconds: 300),
+                                  );
+                                },
                               ),
-                            );
-                          }),
-                      ValueListenableBuilder(
-                        valueListenable: currentPaymentMethod,
-                        builder: (context, _, __) {
-                          return WButton(
-                            isLoading: paymentState.orderCreateStatus.isSubmissionInProgress,
-                            height: 40,
-                            margin: EdgeInsets.only(
-                                bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
-                            color: currentPaymentMethod.value.isEmpty ? textSecondary : primary,
-                            onTap: () {
-                              if (currentPaymentMethod.value.isEmpty) {
-                                context
-                                    .read<ShowPopUpBloc>()
-                                    .add(ShowPopUp(message: LocaleKeys.no_payment_provider.tr()));
-                              } else {
-                                if (widget.isJournal) {
-                                  showCustomDialog(
-                                      context: context,
-                                      subTitle: LocaleKeys.are_you_sure_you_want_to_make_this_payment.tr(),
-                                      title: LocaleKeys.payment.tr(),
-                                      onConfirmTap: () {
-                                        Navigator.pop(context);
-                                        context.read<PaymentBloc>().add(
-                                              OrderCreateJournal(
-                                                card: context.read<PaymentCardsBloc>().state.selectedCard?.id ?? -1,
-                                                journalId: widget.id,
-                                                price: widget.price,
-                                                isRegistered: widget.isRegistered,
-                                                phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
-                                                email: !isPhone ? emailController.text : '',
-                                                paymentProvider: currentPaymentMethod.value,
-                                                onSuccess: (value) async {
-                                                  if (currentPaymentMethod.value != 'card') {
-                                                    launchUrlString(value.transactionCheckoutUrl,
-                                                        mode: LaunchMode.externalApplication);
-                                                    Navigator.popUntil(context, (route) => route.isFirst);
+                          ],
+                        ),
+                      ),
+                      WButton(
+                        isLoading: paymentState.orderCreateStatus.isSubmissionInProgress,
+                        height: 40,
+                        margin:
+                            EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
+                        color: paymentState.selectedPayment == null ? textSecondary : primary,
+                        onTap: () {
+                          if (paymentState.selectedPayment == null) {
+                            context.read<ShowPopUpBloc>().add(ShowPopUp(message: LocaleKeys.no_payment_provider.tr()));
+                          } else {
+                            if (widget.isJournal) {
+                              showCustomDialog(
+                                  context: context,
+                                  subTitle: LocaleKeys.are_you_sure_you_want_to_make_this_payment.tr(),
+                                  title: LocaleKeys.payment.tr(),
+                                  onConfirmTap: () {
+                                    Navigator.pop(context);
+                                    context.read<PaymentBloc>().add(
+                                          OrderCreateJournal(
+                                            card: context.read<PaymentCardsBloc>().state.selectedCard?.id ?? -1,
+                                            journalId: widget.id,
+                                            price: widget.price,
+                                            isRegistered: widget.isRegistered,
+                                            phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
+                                            email: !isPhone ? emailController.text : '',
+                                            paymentProvider: paymentState.selectedPayment!.type,
+                                            onSuccess: (value) async {
+                                              if (!(paymentState.selectedPayment?.isCard ?? false)) {
+                                                launchUrlString(value.transactionCheckoutUrl,
+                                                    mode: LaunchMode.externalApplication);
+                                                Navigator.popUntil(context, (route) => route.isFirst);
 
-                                                    final payBloc = PaymentBloc(paymentId: value.id);
-                                                    Navigator.of(context).push(
-                                                      fade(
-                                                        page: BlocProvider(
-                                                          create: (context) => payBloc,
-                                                          child: PaymentResultScreen(
-                                                            title: widget.title,
-                                                            isRegistered: widget.isRegistered,
-                                                            bloc: payBloc,
-                                                          ),
-                                                        ),
+                                                final payBloc = PaymentBloc(paymentId: value.id);
+                                                Navigator.of(context).push(
+                                                  fade(
+                                                    page: BlocProvider(
+                                                      create: (context) => payBloc,
+                                                      child: PaymentResultScreen(
+                                                        title: widget.title,
+                                                        isRegistered: widget.isRegistered,
+                                                        bloc: payBloc,
                                                       ),
-                                                    );
-                                                  } else if (currentPaymentMethod.value == 'card') {
-                                                    if (value.status == 'confirmed') {
-                                                      context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                                          message: LocaleKeys.payment_successed.tr(), isSuccess: true));
-                                                      await Future.delayed(const Duration(milliseconds: 3000))
-                                                          .then((value) {
-                                                        widget.onPaymentSuccess();
-                                                        Navigator.of(context).pop(true);
-                                                      });
-                                                    }
-                                                  }
-                                                },
-                                                onError: (message) {
-                                                  context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
-                                                },
-                                              ),
-                                            );
-                                      });
-                                }
-                              }
-                            },
-                            text: LocaleKeys.confirm.tr(),
-                          );
+                                                    ),
+                                                  ),
+                                                );
+                                              } else if (paymentState.selectedPayment?.isCard ?? false) {
+                                                if (value.status == 'confirmed') {
+                                                  context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                                      message: LocaleKeys.payment_successed.tr(), isSuccess: true));
+                                                  await Future.delayed(const Duration(milliseconds: 3000))
+                                                      .then((value) {
+                                                    widget.onPaymentSuccess();
+                                                    Navigator.of(context).pop(true);
+                                                  });
+                                                }
+                                              }
+                                            },
+                                            onError: (message) {
+                                              context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                                            },
+                                          ),
+                                        );
+                                  });
+                            }
+                          }
                         },
+                        text: LocaleKeys.confirm.tr(),
                       ),
                     ],
                   ),

@@ -54,6 +54,13 @@ class CheckPaymentStatus extends PaymentEvent {}
 
 class GetPrices extends PaymentEvent {}
 
+class PaymentChooseEvent extends PaymentEvent {
+  final PaymentType? selectedPayment;
+  final PeriodType? selectedPeriod;
+
+  PaymentChooseEvent({this.selectedPayment, this.selectedPeriod});
+}
+
 class PayForMonthlySubscription extends PaymentEvent {
   final String paymentProvider;
   final int period;
