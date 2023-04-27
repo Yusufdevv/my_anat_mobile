@@ -5,7 +5,7 @@ class ReaderControllerState extends Equatable {
   final Color selectedTextColor;
   final String colorName;
   final String selectedFontFamily;
-  final int fontSizePercentage;
+  final int fontSizeIndex;
   final String changedWebPage;
   final String changedDataAsWebPage;
   final String jsFunction;
@@ -17,7 +17,7 @@ class ReaderControllerState extends Equatable {
     this.journalLang = 'ru',
     this.selectedTextColor = textColor,
     this.selectedFontFamily = 'Averta CY',
-    this.fontSizePercentage = 20,
+    this.fontSizeIndex = 0,
     this.changedWebPage = '',
     this.colorName = '',
     this.changedDataAsWebPage = '',
@@ -34,7 +34,7 @@ class ReaderControllerState extends Equatable {
     String? colorName,
     String? changedDataAsWebPage,
     String? jsFunction,
-    int? fontSizePercentage,
+    int? fontSizeIndex,
     int? journalIndex,
   }) =>
       ReaderControllerState(
@@ -45,7 +45,7 @@ class ReaderControllerState extends Equatable {
         changedWebPage: changedWebPage ?? this.changedWebPage,
         selectedTextColor: selectedTextColor ?? this.selectedTextColor,
         selectedFontFamily: selectedFontFamily ?? this.selectedFontFamily,
-        fontSizePercentage: fontSizePercentage ?? this.fontSizePercentage,
+        fontSizeIndex: fontSizeIndex ?? this.fontSizeIndex,
         jsFunction: jsFunction ?? this.jsFunction,
         journalIndex: journalIndex ?? this.journalIndex,
       );
@@ -56,7 +56,7 @@ class ReaderControllerState extends Equatable {
         journalLang,
         selectedTextColor,
         selectedFontFamily,
-        fontSizePercentage,
+        fontSizeIndex,
         changedWebPage,
         colorName,
         changedDataAsWebPage,

@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
-import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_image.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/markdown_reader/data/repositories/journal_pages_repository_impl.dart';
@@ -15,7 +14,6 @@ import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_
 import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_menu.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/journal_table_of_contents.dart';
 import 'package:anatomica/features/markdown_reader/presentation/widgets/reader_controller.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,11 +40,23 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
   bool showSettings = false;
   late PageController _pageController;
   late ItemScrollController _itemScrollController;
+  late JournalPagesBloc journalPagesBloc;
+  late ReaderControllerBloc readerControllerBloc;
 
   @override
   void initState() {
     super.initState();
-
+    readerControllerBloc = ReaderControllerBloc();
+    journalPagesBloc = JournalPagesBloc(
+      getJournalPagesUseCase: GetJournalPagesUseCase(
+        repository: serviceLocator<JournalPagesRepositoryImpl>(),
+      ),
+      getJournalContentsUseCase: GetJournalContentsUseCase(
+        repository: serviceLocator<JournalPagesRepositoryImpl>(),
+      ),
+    )
+      ..add(GetJournalPages(slug: widget.slug))
+      ..add(GetJournalTableOfContents(slug: widget.slug));
     _pageController = PageController();
     _itemScrollController = ItemScrollController();
   }
@@ -56,19 +66,10 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => JournalPagesBloc(
-            getJournalPagesUseCase: GetJournalPagesUseCase(
-              repository: serviceLocator<JournalPagesRepositoryImpl>(),
-            ),
-            getJournalContentsUseCase: GetJournalContentsUseCase(
-              repository: serviceLocator<JournalPagesRepositoryImpl>(),
-            ),
-          )
-            ..add(GetJournalPages(slug: widget.slug))
-            ..add(GetJournalTableOfContents(slug: widget.slug)),
+          create: (context) => journalPagesBloc,
         ),
         BlocProvider(
-          create: (context) => ReaderControllerBloc(),
+          create: (context) => readerControllerBloc,
         ),
       ],
       child: BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
@@ -128,17 +129,20 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                 ),
               ],
             ),
-            body: BlocBuilder<JournalPagesBloc, JournalPagesState>(
+            body: BlocConsumer<JournalPagesBloc, JournalPagesState>(
+              listenWhen: (state, oldState) {
+                final v = state.fontSizeIndex != oldState.fontSizeIndex;
+                return v;
+              },
+              listener: (context, state) {
+                setState(() {});
+              },
               builder: (context, state) {
                 if (state.getJournalPagesStatus.isSubmissionInProgress) {
                   return const Center(
                     child: CupertinoActivityIndicator(),
                   );
                 } else if (state.getJournalPagesStatus.isSubmissionSuccess) {
-                  var pages = state.pages;
-                  if (widget.isPreview) {
-                    pages = state.pages.where((element) => element.preview).toList();
-                  }
                   print('succes => ${state.getJournalPagesStatus.isSubmissionSuccess}');
                   return Stack(
                     children: [
@@ -212,8 +216,7 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                     context.read<ReaderControllerBloc>().add(SetWebPage(index: index));
                                   },
                                   itemBuilder: (context, index) {
-                                    print('index => $index  pages length => ${pages.length}');
-                                    if (index == pages.length) {
+                                    if (index == state.getPages(isPreview: widget.isPreview).length) {
                                       print('index ishladi');
                                       if (state.fetchMore) {
                                         context.read<JournalPagesBloc>().add(GetMoreJournalPages());
@@ -223,13 +226,10 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                       }
                                     }
                                     return BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
-                                      builder: (context, state) {
-                                        log('rus => ${state.journalLang}');
-                                        log('uzbek => ${state.journalLang} ');
-                                        print('journal lang => ${state.journalLang == 'ru'}');
+                                      builder: (context, readerControllerState) {
                                         return AnimatedCrossFade(
                                           duration: const Duration(milliseconds: 250),
-                                          crossFadeState: state.journalLang == 'ru'
+                                          crossFadeState: readerControllerState.journalLang == 'ru'
                                               ? CrossFadeState.showFirst
                                               : CrossFadeState.showSecond,
                                           secondChild: JournalMarkdownPage(
@@ -238,7 +238,7 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                                 showController = false;
                                               });
                                             },
-                                            data: MyFunctions.changePXtoREM(pages[index].contentUz),
+                                            data: state.getPages(isPreview: widget.isPreview)[index].contentUz,
                                           ),
                                           firstChild: JournalMarkdownPage(
                                             onTap: () {
@@ -246,13 +246,15 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                                 showController = false;
                                               });
                                             },
-                                            data: MyFunctions.changePXtoREM(pages[index].contentRu),
+                                            data: state.getPages(isPreview: widget.isPreview)[index].contentRu,
                                           ),
                                         );
                                       },
                                     );
                                   },
-                                  itemCount: state.fetchMore ? pages.length + 1 : pages.length,
+                                  itemCount: state.fetchMore
+                                      ? state.getPages(isPreview: widget.isPreview).length + 1
+                                      : state.getPages(isPreview: widget.isPreview).length,
                                 ),
                               ),
                             ),

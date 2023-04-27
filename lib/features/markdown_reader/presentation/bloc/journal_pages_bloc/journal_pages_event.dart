@@ -1,7 +1,14 @@
 part of 'journal_pages_bloc.dart';
 
-@immutable
 abstract class JournalPagesEvent {}
+
+class JournalUpgradeFontSizeEvent extends JournalPagesEvent {
+  JournalUpgradeFontSizeEvent();
+}
+
+class JournalDownGradeFontSizeEvent extends JournalPagesEvent {
+  JournalDownGradeFontSizeEvent();
+}
 
 class GetJournalPages extends JournalPagesEvent {
   final String slug;
@@ -9,6 +16,7 @@ class GetJournalPages extends JournalPagesEvent {
 }
 
 class GetMoreJournalPages extends JournalPagesEvent {}
+
 class GetJournalTableOfContents extends JournalPagesEvent {
   final String slug;
   GetJournalTableOfContents({required this.slug});

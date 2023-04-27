@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/markdown_reader/presentation/bloc/journal_pages_bloc/journal_pages_bloc.dart';
 import 'package:anatomica/features/markdown_reader/presentation/bloc/reader_controller_bloc/reader_controller_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -25,28 +29,55 @@ class JournalMarkdownPage extends StatefulWidget {
 }
 
 class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
-  late WebViewController webViewController;
+  WebViewController? webViewController;
   late VerticalDragGestureRecognizer verticalRecognizer;
   bool buttonshow = false;
+  late String theData;
 
-  void scrollToTop() {
-    webViewController.runJavascript("window.scrollTo({top: 0, behavior: 'smooth'});");
-  }
+  void scrollToTop() {}
 
   @override
   void initState() {
-    verticalRecognizer = VerticalDragGestureRecognizer();
     super.initState();
+    webViewController = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadHtmlString(widget.data);
+    theData = widget.data;
+    verticalRecognizer = VerticalDragGestureRecognizer();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<ReaderControllerBloc, ReaderControllerState>(
-      // listenWhen: (state1, state2) {
-      //   return state1.journalLang != 'ru';
-      // },
-      listener: (context, state) {
-        webViewController.loadHtmlString(widget.data);
+      listenWhen: (state1, state2) {
+        return state1.fontSizeIndex != state2.fontSizeIndex;
+      },
+      listener: (context, state) async {
+        if (webViewController != null) {
+          theData = MyFunctions.setBaseSize(cssCode: theData, fontSize: fontSizesInPixels[state.fontSizeIndex]);
+          log(':::::::::: the font size in markdown reader:  ${state.fontSizeIndex}  ::::::::::');
+
+          await webViewController!.loadHtmlString(theData);
+          await webViewController!.reload();
+          setState(() {});
+        }
       },
       child: Stack(
         children: [
@@ -55,63 +86,8 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
             onTap: widget.onTap,
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: WebView(
-                initialUrl: widget.data,
-                javascriptMode: JavascriptMode.unrestricted,
-                onWebViewCreated: (controller) {
-                  webViewController = controller;
-                  webViewController.loadHtmlString(widget.data);
-                },
-                javascriptChannels: {
-                  JavascriptChannel(
-                      name: 'FLUTTER_CHANNEL',
-                      onMessageReceived: (message) {
-                        final scrollOffset = double.tryParse(message.message);
-                        final deviceHeight = MediaQuery.of(context).size.height;
-                        if (scrollOffset != null && scrollOffset / deviceHeight > 1) {
-                          setState(() {
-                            buttonshow = true;
-                          });
-                        } else {
-                          setState(() {
-                            buttonshow = false;
-                          });
-                        }
-                      })
-                },
-                navigationDelegate: (NavigationRequest request) {
-                  if (request.url.contains('about:blank') ||
-                      request.url.contains(RegExp(
-                          r'''(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'''))) {
-                    return NavigationDecision.navigate;
-                  } else {
-                    launchUrlString(request.url, mode: LaunchMode.externalApplication);
-                    return NavigationDecision.prevent;
-                  }
-                },
-                gestureNavigationEnabled: true,
-                debuggingEnabled: true,
-                gestureRecognizers: {
-                  Factory<OneSequenceGestureRecognizer>(() => verticalRecognizer),
-                },
-              ),
+              child: WebViewWidget(controller: webViewController!),
             ),
-            // child: InAppWebView(
-            //   onWebViewCreated: (controller) {
-            //     _controller = controller;
-            //   },
-            //   shouldOverrideUrlLoading: (controller, shouldOverrideUrlLoadingRequest) async {
-            //     final url = await controller.getUrl();
-            //     return NavigationActionPolicy.ALLOW;
-            //   },
-            //   initialData: InAppWebViewInitialData(data: widget.data, mimeType: 'text/html'),
-            //   gestureRecognizers: {
-            //     Factory<OneSequenceGestureRecognizer>(
-            //       () => VerticalDragGestureRecognizer(),
-            //     ),
-            //   },
-            //   initialOptions: options,
-            // ),
           ),
           Positioned(
             bottom: 0,

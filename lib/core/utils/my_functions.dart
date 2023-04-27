@@ -25,27 +25,39 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 abstract class MyFunctions {
   static const clusterId = MapObjectId('big_cluster_id');
   static double pxToRem(double pxValue) {
-    double baseFontSize = 8.0; // You can change this value to match your design
+    double baseFontSize = 16.0;
     return pxValue / baseFontSize;
   }
 
+  /// <p style="text-align:center"><span style="font-size:26px">&rarr;</span></p>
   static String changePXtoREM(String html) {
-    String htmlContent = '';
-    String newFontSize = '16px';
+    String replacedString = html.replaceAllMapped(
+      RegExp(r'<span style="font-size:(\d+)px">'),
+      (match) {
+        double currentFontSize = double.tryParse(match.group(1) ?? '0') ?? 0;
+        double newFontSize = pxToRem(currentFontSize);
+        return '<span style="font-size:${newFontSize}rem">';
+      },
+    );
 
-// Use regular expression to find font-size:14px
-    RegExp regex = RegExp(r'''style\s*=\s*(\'|\")[^\'\"]*font-size:\s*([\d\.]+)(px|em|rem|pt);?[^\'\"]*(\'|\")''');
-    htmlContent = html.replaceAllMapped(regex, (match) {
-      String? fontSizeValue = match.group(2);
-      String? fontSizeUnit = match.group(3);
-      double rmValue = pxToRem(double.tryParse(fontSizeValue ?? '0') ?? 0);
-      String? newFontSizeValue = newFontSize.replaceAll(RegExp('[a-z]+\$'), '');
-      return 'style=${match.group(1)}${match.group(0)!.replaceAll('$fontSizeValue$fontSizeUnit', '${rmValue}rem')}${match.group(4)}';
+    final v = replacedString;
+    return replacedString;
+  }
+
+  static String setBaseSize({required String cssCode, String selector = 'html', required double fontSize}) {
+    RegExp regex = RegExp(r'(?<=' + selector + r'\s*{\s*font-size:\s*)(\d+)(?=px)');
+    String modifiedCssCode = cssCode.replaceAllMapped(regex, (match) {
+      final matchZero = match.group(0);
+      if (matchZero != null) {
+        final v = fontSize.toString();
+        return v;
+      } else {
+        final v = 'font-size: ${fontSize}px';
+        return v;
+      }
     });
-
-// Print updated HTML content
-    print(htmlContent);
-    return htmlContent;
+    final v = modifiedCssCode;
+    return modifiedCssCode;
   }
 
   static String safeDateFormat(String date, String pattern) {

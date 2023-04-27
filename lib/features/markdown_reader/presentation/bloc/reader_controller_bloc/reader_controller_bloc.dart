@@ -7,29 +7,23 @@ part 'reader_controller_event.dart';
 
 part 'reader_controller_state.dart';
 
-class ReaderControllerBloc
-    extends Bloc<ReaderControllerEvent, ReaderControllerState> {
+class ReaderControllerBloc extends Bloc<ReaderControllerEvent, ReaderControllerState> {
   ReaderControllerBloc() : super(const ReaderControllerState()) {
     on<SetWebPage>((event, emit) {
-      emit(state.copyWith(
-          jsFunction: 'setSize(${state.fontSizePercentage})',
-          journalIndex: event.index));
+      emit(state.copyWith(jsFunction: 'setSize(${state.fontSizeIndex})', journalIndex: event.index));
     });
     on<SelectColor>((event, emit) {
-      emit(state.copyWith(
-          selectedColor: event.color,
-          selectedTextColor: event.textColor,
-          jsFunction: event.colorName));
+      emit(state.copyWith(selectedColor: event.color, selectedTextColor: event.textColor, jsFunction: event.colorName));
     });
     on<UpgradeFontSize>((event, emit) {
-      final size = state.fontSizePercentage + 1;
-      emit(state.copyWith(
-          fontSizePercentage: size, jsFunction: 'setSize($size)'));
+      if (state.fontSizeIndex > 5) return;
+      final size = state.fontSizeIndex + 1;
+      emit(state.copyWith(fontSizeIndex: size, jsFunction: 'setSize($size)'));
     });
     on<DowngradeFontSize>((event, emit) {
-      final size = state.fontSizePercentage - 1;
-      emit(state.copyWith(
-          fontSizePercentage: size, jsFunction: 'setSize($size)'));
+      if (state.fontSizeIndex < 1) return;
+      final size = state.fontSizeIndex - 1;
+      emit(state.copyWith(fontSizeIndex: size, jsFunction: 'setSize($size)'));
     });
     on<ChangeReaderLanguage>((event, emit) {
       print('isRussian => ${event.journalLang}');

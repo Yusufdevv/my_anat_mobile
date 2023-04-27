@@ -10,6 +10,7 @@ class JournalPagesState extends Equatable {
   final FormzStatus getJournalContentsStatus;
   final bool contentsFetchMore;
   final String slug;
+  final int fontSizeIndex;
 
   const JournalPagesState({
     this.pages = const [],
@@ -21,9 +22,11 @@ class JournalPagesState extends Equatable {
     this.getJournalContentsStatus = FormzStatus.pure,
     this.contentsFetchMore = false,
     this.contentsNext,
+    this.fontSizeIndex = 0,
   });
 
   JournalPagesState copyWith({
+    int? fontSizeIndex,
     String? next,
     String? contentsNext,
     String? slug,
@@ -36,21 +39,27 @@ class JournalPagesState extends Equatable {
     bool? contentsFetchMore,
   }) =>
       JournalPagesState(
+        fontSizeIndex: fontSizeIndex ?? this.fontSizeIndex,
         pages: pages ?? this.pages,
-        getJournalPagesStatus:
-            getJournalPagesStatus ?? this.getJournalPagesStatus,
+        getJournalPagesStatus: getJournalPagesStatus ?? this.getJournalPagesStatus,
         fetchMore: fetchMore ?? this.fetchMore,
         next: next,
         contents: contents ?? this.contents,
-        getJournalContentsStatus:
-            getJournalContentsStatus ?? this.getJournalContentsStatus,
+        getJournalContentsStatus: getJournalContentsStatus ?? this.getJournalContentsStatus,
         contentsFetchMore: contentsFetchMore ?? this.contentsFetchMore,
         contentsNext: contentsNext,
         slug: slug ?? this.slug,
       );
+  List<JournalPageEntity> getPages({required bool isPreview}) {
+    if (isPreview) {
+      return pages.where((element) => element.preview).toList();
+    }
+    return pages;
+  }
 
   @override
   List<Object?> get props => [
+        fontSizeIndex,
         pages,
         getJournalPagesStatus,
         fetchMore,

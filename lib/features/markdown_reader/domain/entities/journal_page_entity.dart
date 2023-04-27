@@ -1,6 +1,8 @@
+import 'package:anatomica/core/utils/my_functions.dart';
+import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-class JournalPageEntity {
+class JournalPageEntity extends Equatable {
   final int journal;
   @JsonKey(name: 'content_ru')
   final String contentRu;
@@ -17,4 +19,42 @@ class JournalPageEntity {
     this.contentUz = '',
     this.imgContent = '',
   });
+  JournalPageEntity remizeContents({required double fontSize}) {
+    final remizedRu = MyFunctions.changePXtoREM(contentRu);
+    final remizedUz = MyFunctions.changePXtoREM(contentUz);
+    final baseSizedRu = MyFunctions.setBaseSize(fontSize: fontSize, cssCode: remizedRu, selector: 'html');
+    final baseSizedUz = MyFunctions.setBaseSize(fontSize: fontSize, cssCode: remizedUz, selector: 'html');
+    return JournalPageEntity(
+      page: page,
+      contentRu: baseSizedRu,
+      contentUz: baseSizedUz,
+      imgContent: imgContent,
+      journal: journal,
+      preview: preview,
+    );
+  }
+
+  JournalPageEntity setSize({required double fontSize}) {
+    final baseSizedRu = MyFunctions.setBaseSize(fontSize: fontSize, cssCode: contentRu, selector: 'html');
+    final baseSizedUz = MyFunctions.setBaseSize(fontSize: fontSize, cssCode: contentUz, selector: 'html');
+    return JournalPageEntity(
+      page: page,
+      contentRu: baseSizedRu,
+      contentUz: baseSizedUz,
+      imgContent: imgContent,
+      journal: journal,
+      preview: preview,
+    );
+  }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        page,
+        preview,
+        journal,
+        contentRu,
+        contentUz,
+        imgContent,
+      ];
 }
