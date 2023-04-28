@@ -25,7 +25,6 @@ class SuggestionListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(':::::::::: is Doctor:  ${isDoctor}  ::::::::::');
     return isDoctor
         ? DoctorsList(
             textEditingController: TextEditingController(text: searchText),

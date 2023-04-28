@@ -44,19 +44,16 @@ abstract class MyFunctions {
     return replacedString;
   }
 
-  static String setBaseSize({required String cssCode, String selector = 'html', required double fontSize}) {
-    RegExp regex = RegExp(r'(?<=' + selector + r'\s*{\s*font-size:\s*)(\d+)(?=px)');
+  static String setBaseSize({required String cssCode, String selector = 'html', required num fontSize}) {
+    RegExp regex = RegExp(r'(?<=' + selector + r'\s*{\s*font-size:\s*)(\d*\.?\d+)(?=px)');
     String modifiedCssCode = cssCode.replaceAllMapped(regex, (match) {
       final matchZero = match.group(0);
       if (matchZero != null) {
-        final v = fontSize.toString();
-        return v;
+        return fontSize.toString();
       } else {
-        final v = 'font-size: ${fontSize}px';
-        return v;
+        return 'font-size: ${fontSize}px';
       }
     });
-    final v = modifiedCssCode;
     return modifiedCssCode;
   }
 

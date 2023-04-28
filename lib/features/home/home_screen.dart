@@ -66,17 +66,14 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
     _homeArticlesBloc = HomeArticlesBloc()
       ..add(const HomeArticlesEvent.getHomeArticles())
       ..add(const HomeArticlesEvent.getBanners());
-    _mostPopularsBloc = MostPopularsBloc()
-      ..add(const MostPopularsEvent.getPopularOrgs());
+    _mostPopularsBloc = MostPopularsBloc()..add(const MostPopularsEvent.getPopularOrgs());
     getDoctors();
     _newsBloc = NewsBloc()..add(const NewsEvent.getNews());
     _scrollController = ScrollController()
       ..addListener(() {
-        if (_scrollController.offset > 200 - kToolbarHeight &&
-            !isShrink.value) {
+        if (_scrollController.offset > 200 - kToolbarHeight && !isShrink.value) {
           isShrink.value = true;
-        } else if (_scrollController.offset < 200 - kToolbarHeight &&
-            isShrink.value) {
+        } else if (_scrollController.offset < 200 - kToolbarHeight && isShrink.value) {
           isShrink.value = false;
         }
       });
@@ -86,7 +83,6 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   getDoctors() async {
     try {
       await MyFunctions.determinePosition().then((value) async {
-        log('::::::::::  in home 86:   lat: ${value.latitude} / long: ${value.longitude}  ::::::::::');
         await StorageRepository.putDouble(StoreKeys.latitude, value.latitude);
         await StorageRepository.putDouble(StoreKeys.longitude, value.longitude);
         _mostPopularsBloc.add(const MostPopularsEvent.getPopularDoctors());
@@ -99,8 +95,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-      value:
-          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+      value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: _categoryBloc),
@@ -115,9 +110,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverAppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarIconBrightness:
-                        isShrink.value ? Brightness.dark : Brightness.light),
+                systemOverlayStyle:
+                    SystemUiOverlayStyle(statusBarIconBrightness: isShrink.value ? Brightness.dark : Brightness.light),
                 pinned: true,
                 backgroundColor: errorImageBackground,
                 shape: const RoundedRectangleBorder(
@@ -133,8 +127,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                       height: 28,
                       color: isShrink.value ? black : white,
                     ),
-                    context.read<AuthenticationBloc>().state.status !=
-                            AuthenticationStatus.authenticated
+                    context.read<AuthenticationBloc>().state.status != AuthenticationStatus.authenticated
                         ? const Spacer()
                         : WScaleAnimation(
                             child: true
@@ -147,8 +140,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                         ? AppIcons.blackNotificationWithRedDot
                                         : AppIcons.notificationWithRedDot,
                                   ),
-                            onTap: () => Navigator.of(context,
-                                    rootNavigator: true)
+                            onTap: () => Navigator.of(context, rootNavigator: true)
                                 .push(fade(page: const NotificationsScreen())),
                           ),
                   ],
@@ -159,17 +151,13 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 flexibleSpace: BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
                   builder: (context, state) {
                     return state.bannersStatus != FormzStatus.submissionSuccess
-                        ? const ShimmerContainer(
-                            width: double.maxFinite, height: 324)
+                        ? const ShimmerContainer(width: double.maxFinite, height: 324)
                         : BannerItem(
                             ids: state.banners.map((e) => e.id).toList(),
                             bloc: _homeArticlesBloc,
                             isShrink: isShrink.value,
-                            images: state.banners
-                                .map((e) => e.image.middle)
-                                .toList(),
-                            subtitles:
-                                state.banners.map((e) => e.subtitle).toList(),
+                            images: state.banners.map((e) => e.image.middle).toList(),
+                            subtitles: state.banners.map((e) => e.subtitle).toList(),
                             titles: state.banners.map((e) => e.title).toList(),
                             types: state.banners.map((e) => e.type).toList(),
                           );
@@ -190,40 +178,28 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                   return SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16, top: 16),
-                      child: state.categoryStatus !=
-                              FormzStatus.submissionSuccess
+                      child: state.categoryStatus != FormzStatus.submissionSuccess
                           ? Wrap(
                               runSpacing: 8,
                               spacing: 8,
-                              children: [
-                                ...List.generate(
-                                    6, (index) => const CategoryShimmer())
-                              ],
+                              children: [...List.generate(6, (index) => const CategoryShimmer())],
                             )
                           : Wrap(
                               runSpacing: 8,
                               spacing: 8,
                               children: [
                                 ...List.generate(
-                                  state.categories.length > 5
-                                      ? 5
-                                      : state.categories.length,
+                                  state.categories.length > 5 ? 5 : state.categories.length,
                                   (index) => CategoryItem(
                                     logo: state.categories[index].icon.file.url,
                                     title: state.categories[index].title,
                                     onTap: () {
-                                      Navigator.of(context, rootNavigator: true)
-                                          .push(fade(
-                                              page: BlocProvider.value(
+                                      Navigator.of(context, rootNavigator: true).push(fade(
+                                          page: BlocProvider.value(
                                         value: _categoryBloc,
                                         child: CategoriesScreen(
                                           selectedIndex: index,
-                                          categoryItemSize:
-                                              (MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      48) /
-                                                  3,
+                                          categoryItemSize: (MediaQuery.of(context).size.width - 48) / 3,
                                         ),
                                       )));
                                     },
@@ -234,12 +210,9 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                     logo: AppIcons.moreVertical,
                                     title: LocaleKeys.others.tr(),
                                     onTap: () {
-                                      Navigator.of(context, rootNavigator: true)
-                                          .push(fade(
-                                              page: BlocProvider.value(
-                                                  value: _categoryBloc,
-                                                  child:
-                                                      const OtherCategoriesScreen())));
+                                      Navigator.of(context, rootNavigator: true).push(fade(
+                                          page: BlocProvider.value(
+                                              value: _categoryBloc, child: const OtherCategoriesScreen())));
                                     },
                                   ),
                               ],
@@ -254,8 +227,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 child: TitlesItem(
                   title: LocaleKeys.news.tr(),
                   showAllFunction: () {
-                    Navigator.of(context, rootNavigator: true)
-                        .push(fade(page: const NewsPart()));
+                    Navigator.of(context, rootNavigator: true).push(fade(page: const NewsPart()));
                   },
                   showAllTitle: LocaleKeys.all_news.tr(),
                 ),
@@ -266,21 +238,16 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                     child: state.newsStatus != FormzStatus.submissionSuccess
                         ? ListView.separated(
                             itemCount: 10,
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                            itemBuilder: (context, index) =>
-                                const NewsShimmer(),
+                            separatorBuilder: (context, index) => const SizedBox(height: 12),
+                            itemBuilder: (context, index) => const NewsShimmer(),
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                           )
                         : ListView.separated(
-                            itemCount:
-                                state.news.length > 5 ? 5 : state.news.length,
+                            itemCount: state.news.length > 5 ? 5 : state.news.length,
                             padding: const EdgeInsets.only(left: 16),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 12),
-                            itemBuilder: (context, index) => state.newsStatus !=
-                                    FormzStatus.submissionSuccess
+                            separatorBuilder: (context, index) => const SizedBox(height: 12),
+                            itemBuilder: (context, index) => state.newsStatus != FormzStatus.submissionSuccess
                                 ? const NewsShimmer()
                                 : NewsItem(
                                     newsBloc: _newsBloc,
@@ -322,9 +289,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                         errorWidget: Container(),
                         fetchMoreFunction: () {},
                         hasMoreToFetch: false,
-                        paginatorStatus:
-                            MyFunctions.formzStatusToPaginatorStatus(
-                                state.homeArticlesStatus),
+                        paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.homeArticlesStatus),
                         padding: const EdgeInsets.fromLTRB(16, 8, 0, 16),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -332,8 +297,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                             imageUrl: state.homeArticles[index].image.middle,
                             id: state.homeArticles[index].id,
                             title: state.homeArticles[index].title,
-                            createdAt: MyFunctions.getPublishedDate(
-                                state.homeArticles[index].publishDate),
+                            createdAt: MyFunctions.getPublishedDate(state.homeArticles[index].publishDate),
                             category: state.homeArticles[index].category.title,
                             slug: state.homeArticles[index].slug,
                           );
@@ -359,24 +323,19 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                       height: 254,
                       child: Paginator(
                         scrollDirection: Axis.horizontal,
-                        paginatorStatus:
-                            MyFunctions.formzStatusToPaginatorStatus(
-                                state.popularOrgsStatus),
+                        paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.popularOrgsStatus),
                         itemBuilder: (context, index) {
                           return TopHospitalItem(
                             slug: state.popularOrgs[index].slug,
                             title: state.popularOrgs[index].title,
                             rating: state.popularOrgs[index].rating,
                             address: state.popularOrgs[index].address,
-                            images: state.popularOrgs[index].images
-                                .map((e) => e.middle)
-                                .toList(),
+                            images: state.popularOrgs[index].images.map((e) => e.middle).toList(),
                             id: state.popularOrgs[index].id,
                           );
                         },
                         itemCount: state.popularOrgs.length,
-                        padding:
-                            const EdgeInsets.only(left: 16, bottom: 16, top: 8),
+                        padding: const EdgeInsets.only(left: 16, bottom: 16, top: 8),
                         fetchMoreFunction: () {},
                         hasMoreToFetch: false,
                         errorWidget: const SizedBox(),
@@ -396,35 +355,28 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              TitlesItem(
-                                  title: LocaleKeys.the_best_doctors.tr()),
+                              TitlesItem(title: LocaleKeys.the_best_doctors.tr()),
                               SizedBox(
                                 height: 140,
                                 child: ListView.separated(
                                   itemBuilder: (context, index) {
                                     return TopDoctorItem(
                                       id: state.popularDoctors[index].id,
-                                      rating: state.popularDoctors[index].rating
-                                          as double,
-                                      distance:
-                                          state.popularDoctors[index].distance,
-                                      jobs: state
-                                          .popularDoctors[index].specializations
+                                      rating: state.popularDoctors[index].rating as double,
+                                      distance: state.popularDoctors[index].distance,
+                                      jobs: state.popularDoctors[index].specializations
                                           .map((e) => e.title)
                                           .toList()
                                           .join(' '),
-                                      name: state
-                                          .popularDoctors[index].doctorName,
-                                      image: state
-                                          .popularDoctors[index].image.middle,
+                                      name: state.popularDoctors[index].doctorName,
+                                      image: state.popularDoctors[index].image.middle,
                                     );
                                   },
                                   separatorBuilder: (context, index) {
                                     return const SizedBox(width: 16);
                                   },
                                   itemCount: state.popularDoctors.length,
-                                  padding: const EdgeInsets.only(
-                                      left: 16, top: 8, bottom: 16),
+                                  padding: const EdgeInsets.only(left: 16, top: 8, bottom: 16),
                                   scrollDirection: Axis.horizontal,
                                   physics: const BouncingScrollPhysics(),
                                 ),
@@ -435,22 +387,15 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                       : const SliverToBoxAdapter(child: SizedBox());
                 },
               ),
-              if (!context
-                  .watch<AuthenticationBloc>()
-                  .state
-                  .user
-                  .isSubscribed) ...{
+              if (!context.watch<AuthenticationBloc>().state.user.isSubscribed) ...{
                 BlocBuilder<JournalBloc, JournalState>(
                   builder: (context, state) {
-                    return ActivatePremium(
-                        images: state.journals.map((e) => e.image).toList());
+                    return ActivatePremium(images: state.journals.map((e) => e.image).toList());
                   },
                 ),
               },
 
-              SliverToBoxAdapter(
-                  child: SizedBox(
-                      height: MediaQuery.of(context).size.height * .125)),
+              SliverToBoxAdapter(child: SizedBox(height: MediaQuery.of(context).size.height * .125)),
             ],
           ),
         ),

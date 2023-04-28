@@ -113,6 +113,7 @@ const List<int> sizesInPercentage = [
   130,
   150,
 ];
+
 const List<double> fontSizesInPixels = [
   8.0,
   11.2,

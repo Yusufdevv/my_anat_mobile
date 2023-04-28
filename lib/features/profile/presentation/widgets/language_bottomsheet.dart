@@ -96,7 +96,6 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
 
     // await resetLocator();
     Navigator.of(context).pushAndRemoveUntil(fade(page: const HomeScreen()), (route) => false);
-    log('::::::::::  after reset:   ::::::::::');
   }
 }
 

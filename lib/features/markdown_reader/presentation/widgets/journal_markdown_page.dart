@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:anatomica/assets/colors/colors.dart';
@@ -72,11 +73,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
       listener: (context, state) async {
         if (webViewController != null) {
           theData = MyFunctions.setBaseSize(cssCode: theData, fontSize: fontSizesInPixels[state.fontSizeIndex]);
-          log(':::::::::: the font size in markdown reader:  ${state.fontSizeIndex}  ::::::::::');
-
           await webViewController!.loadHtmlString(theData);
-          await webViewController!.reload();
-          setState(() {});
         }
       },
       child: Stack(
@@ -94,9 +91,7 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
             right: 0,
             left: 0,
             child: AnimatedCrossFade(
-              secondChild: const SizedBox(
-                width: double.maxFinite,
-              ),
+              secondChild: const SizedBox(width: double.maxFinite),
               firstCurve: Curves.bounceInOut,
               duration: const Duration(milliseconds: 300),
               crossFadeState: buttonshow ? CrossFadeState.showFirst : CrossFadeState.showSecond,

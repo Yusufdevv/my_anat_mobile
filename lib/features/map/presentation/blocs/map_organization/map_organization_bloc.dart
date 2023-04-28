@@ -411,7 +411,6 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
         ),
         animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
       );
-      log(':::::::::: place marks lenth:  ${placemarks.length}  ::::::::::');
       emit(
         state.copyWith(
           getCurrentLocationStatus: FormzStatus.submissionSuccess,
@@ -440,12 +439,10 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       StoreKeys.latitude,
       defValue: -1,
     );
-    log(':::::::::: GOTTEN LATITUDE: ${lat}  ::::::::::');
     var long = StorageRepository.getDouble(
       StoreKeys.longitude,
       defValue: -1,
     );
-    log(':::::::::: GOTTEN longitude: ${long}  ::::::::::');
     Position? currentPosition;
     if (lat == -1 || long == -1) {
       emit(state.copyWith(getCurrentLocationStatus: FormzStatus.submissionInProgress));

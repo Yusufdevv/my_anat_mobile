@@ -92,11 +92,7 @@ class PaymentWaiting extends StatelessWidget {
             isLoading: state.checkPaymentStatus.isSubmissionInProgress,
             margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
             onTap: () {
-              try {
-                paymentBloc.add(CheckPaymentStatus());
-              } catch (e) {
-                log('::::::::::  ${e.toString()}  ::::::::::');
-              }
+              paymentBloc.add(CheckPaymentStatus());
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

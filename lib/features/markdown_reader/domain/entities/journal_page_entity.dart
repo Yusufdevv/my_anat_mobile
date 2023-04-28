@@ -11,6 +11,7 @@ class JournalPageEntity extends Equatable {
   final String imgContent;
   final int page;
   final bool preview;
+
   const JournalPageEntity({
     this.page = 0,
     this.preview = false,
@@ -19,7 +20,8 @@ class JournalPageEntity extends Equatable {
     this.contentUz = '',
     this.imgContent = '',
   });
-  JournalPageEntity remizeContents({required double fontSize}) {
+
+  JournalPageEntity remizeContents({required num fontSize}) {
     final remizedRu = MyFunctions.changePXtoREM(contentRu);
     final remizedUz = MyFunctions.changePXtoREM(contentUz);
     final baseSizedRu = MyFunctions.setBaseSize(fontSize: fontSize, cssCode: remizedRu, selector: 'html');
@@ -34,9 +36,9 @@ class JournalPageEntity extends Equatable {
     );
   }
 
-  JournalPageEntity setSize({required double fontSize}) {
-    final baseSizedRu = MyFunctions.setBaseSize(fontSize: fontSize, cssCode: contentRu, selector: 'html');
-    final baseSizedUz = MyFunctions.setBaseSize(fontSize: fontSize, cssCode: contentUz, selector: 'html');
+  JournalPageEntity setSize({required num fontSize}) {
+    final baseSizedRu = MyFunctions.setBaseSize(fontSize: fontSize, cssCode: contentRu);
+    final baseSizedUz = MyFunctions.setBaseSize(fontSize: fontSize, cssCode: contentUz);
     return JournalPageEntity(
       page: page,
       contentRu: baseSizedRu,

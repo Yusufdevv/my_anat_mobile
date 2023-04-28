@@ -29,18 +29,13 @@ class SettingScreen extends StatelessWidget {
               icon: context.locale.languageCode == 'ru' ? AppIcons.flagRu : AppIcons.flagUz,
               onTap: () async {
                 showLanguageBottomSheet(context).then((value) {
-                  try {
-                    context.read<AuthenticationBloc>().add(
-                          AuthenticationStatusChanged(
-                            status:
-                                context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated
-                                    ? AuthenticationStatus.unauthenticated
-                                    : AuthenticationStatus.authenticated,
-                          ),
-                        );
-                  } catch (e) {
-                    log(':::::::::: Authentication exception  ${e.toString()}  ::::::::::');
-                  }
+                  context.read<AuthenticationBloc>().add(
+                        AuthenticationStatusChanged(
+                          status: context.read<AuthenticationBloc>().state.status == AuthenticationStatus.authenticated
+                              ? AuthenticationStatus.unauthenticated
+                              : AuthenticationStatus.authenticated,
+                        ),
+                      );
                 });
               },
             ),

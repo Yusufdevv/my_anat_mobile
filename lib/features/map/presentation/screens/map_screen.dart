@@ -70,7 +70,6 @@ class _MapScreenState extends State<MapScreen> {
                 },
                 mapObjects: state.mapObjects,
                 onMapCreated: (controller) async {
-                  log(':::::::::: the controller on create:  ${controller.runtimeType}  ::::::::::');
                   widget.mapOrganizationBloc.add(
                     MapOnCreateEvent(
                       onSuccess: widget.onMapCreateSuccess,

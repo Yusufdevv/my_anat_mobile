@@ -23,9 +23,7 @@ class PaginationRepository {
       if (query != null) {
         queryParams = query;
       }
-      if (url == '/mobile/doctor/map/') {
-        log(':::::::::: the query of doctors: ${query} / $queryParams ::::::::::');
-      }
+
       final result = await dio.get(
         next != null && next.isNotEmpty ? next : url,
         options: Options(
