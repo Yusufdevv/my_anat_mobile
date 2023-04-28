@@ -96,10 +96,13 @@ class OrgMapV2Entity extends Equatable {
 }
 
 extension OrgMapV2EntityExtention on OrgMapV2Entity {
-  List<ServiceOrSpecializationEntity> get getServiceOrSpecialization => [
-        ...specialization
-            .map((e) => ServiceOrSpecializationEntity(isService: false, id: e.id, title: e.title))
-            .toList(),
-        ...service.map((e) => ServiceOrSpecializationEntity(isService: false, id: e.id, title: e.name)).toList()
-      ];
+  List<ServiceOrSpecializationEntity> getServiceOrSpecialization({required String? pattern, bool unUsed = false}) {
+    if (pattern != null && pattern.isEmpty) return [];
+    final v = [
+      ...specialization.map((e) => ServiceOrSpecializationEntity(isService: false, id: e.id, title: e.title)).toList(),
+      ...service.map((e) => ServiceOrSpecializationEntity(isService: false, id: e.id, title: e.name)).toList()
+    ];
+    if (pattern == null) return v;
+    return v.where((element) => element.title.toLowerCase().contains(pattern.toLowerCase())).toList();
+  }
 }

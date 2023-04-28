@@ -94,35 +94,12 @@ class MapGetMoreDoctorsEvent extends MapEvent {
 
 class MapGetHospitalsEvent extends MapEvent {
   final BuildContext context;
-  final String? search;
-  final String? region;
-  final String? district;
-  final int? specializationId;
-  final String? service;
-  final int? limit;
-  final int? offset;
-  final double latitude;
-  final double longitude;
-  final String? title;
-  final String? next;
-  final String? previous;
-  final double radius;
+
+  final bool notToLoading;
 
   MapGetHospitalsEvent({
     required this.context,
-    required this.search,
-    required this.radius,
-    required this.latitude,
-    required this.longitude,
-    this.title,
-    this.service,
-    this.next,
-    this.district,
-    this.region,
-    this.previous,
-    this.offset,
-    this.limit,
-    this.specializationId,
+    this.notToLoading = true,
   });
 }
 

@@ -116,10 +116,6 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                         mapOrganizationBloc.add(MapUnFocusAndClearControllerEvent(notUnFocus: true));
                         mapOrganizationBloc.add(
                           MapGetHospitalsEvent(
-                            search: null,
-                            latitude: state.currentLat,
-                            longitude: state.currentLong,
-                            radius: 150,
                             context: context,
                           ),
                         );
@@ -137,10 +133,6 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                           if (state.tabController.index == 0) {
                             mapOrganizationBloc.add(
                               MapGetHospitalsEvent(
-                                search: null,
-                                latitude: state.currentLat,
-                                longitude: state.currentLong,
-                                radius: 150,
                                 context: context,
                               ),
                             );
@@ -151,10 +143,6 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                           mapOrganizationBloc
                             ..add(
                               MapGetHospitalsEvent(
-                                search: null,
-                                latitude: state.currentLat,
-                                longitude: state.currentLong,
-                                radius: 150,
                                 context: context,
                               ),
                             )

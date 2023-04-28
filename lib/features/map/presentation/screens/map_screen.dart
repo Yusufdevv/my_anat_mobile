@@ -41,10 +41,6 @@ class _MapScreenState extends State<MapScreen> {
         widget.mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
         widget.mapOrganizationBloc.add(MapGetHospitalsEvent(
           context: context,
-          search: null,
-          radius: 150,
-          latitude: state.currentLat,
-          longitude: state.currentLong,
         ));
       },
       builder: (context, state) {

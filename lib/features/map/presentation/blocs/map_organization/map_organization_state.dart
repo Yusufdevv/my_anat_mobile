@@ -4,7 +4,7 @@ class MapOrganizationState extends Equatable {
   final MapScreenStatus screenStatus;
   final List<OrgMapV2Model> hospitals;
   final List<DoctorMapEntity> doctors;
-  final List<TypeEntity> typess;
+  final List<TypeEntity> types;
   final List<TitlerModel> specializations;
   final List<SuggestionModel> suggestions;
 
@@ -25,8 +25,8 @@ class MapOrganizationState extends Equatable {
   final double zoomLevel;
   final String? hospitalsNext;
   final String? doctorsNext;
-  final bool isSuggestion;
   final bool isGetFocus;
+  final bool unUsed;
   final FocusNode focusNode;
   final TabController tabController;
   final TextEditingController searchController;
@@ -50,13 +50,13 @@ class MapOrganizationState extends Equatable {
     this.hospitals = const [],
     this.suggestions = const [],
     this.doctors = const [],
-    this.typess = const [],
+    this.types = const [],
     this.specializations = const [],
     this.getTypesStatus = FormzStatus.pure,
     this.radius = 150,
     this.typesCount = 0,
-    this.isSuggestion = false,
     this.isGetFocus = false,
+    this.unUsed = false,
     this.doctorsNext,
     this.typesStatus = FormzStatus.pure,
   });
@@ -66,7 +66,7 @@ class MapOrganizationState extends Equatable {
     MapScreenStatus? screenStatus,
     List<OrgMapV2Model>? hospitals,
     List<DoctorMapEntity>? doctors,
-    List<TypeEntity>? typess,
+    List<TypeEntity>? types,
     List<SuggestionModel>? suggestions,
     List<TitlerModel>? specializations,
     List<MapObject<dynamic>>? mapObjects,
@@ -85,8 +85,8 @@ class MapOrganizationState extends Equatable {
     double? zoomLevel,
     String? hospitalsNext,
     String? doctorsNext,
-    bool? isSuggestion,
     bool? isGetFocus,
+    bool? unUsed,
   }) =>
       MapOrganizationState(
         searchController: searchController ?? this.searchController,
@@ -108,23 +108,23 @@ class MapOrganizationState extends Equatable {
         tabChangingStatus: tabChangingStatus ?? this.tabChangingStatus,
         hospitals: hospitals ?? this.hospitals,
         doctors: doctors ?? this.doctors,
-        typess: typess ?? this.typess,
+        types: types ?? this.types,
         getTypesStatus: getTypesStatus ?? this.getTypesStatus,
         radius: radius ?? this.radius,
         typesCount: typesCount ?? this.typesCount,
-        isSuggestion: isSuggestion ?? this.isSuggestion,
         isGetFocus: isGetFocus ?? this.isGetFocus,
         focusNode: focusNode ?? this.focusNode,
+        unUsed: unUsed ?? this.unUsed,
       );
 
   @override
   List<Object?> get props => [
+        unUsed,
         focusNode,
         searchController,
         isGetFocus,
         suggestions,
         specializations,
-        isSuggestion,
         tabController,
         screenStatus,
         accuracy,
@@ -140,7 +140,7 @@ class MapOrganizationState extends Equatable {
         currentLong,
         hospitals,
         doctors,
-        typess,
+        types,
         getTypesStatus,
         radius,
         typesCount,

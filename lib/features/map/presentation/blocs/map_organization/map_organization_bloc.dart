@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
@@ -75,21 +76,15 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   }
 
   FutureOr<void> _getSuggestions(MapGetSuggestionsEvent event, Emitter<MapOrganizationState> emit) async {
-    emit(state.copyWith(
-      status: FormzStatus.submissionInProgress,
-    ));
+    log(':::::::::: text to suggestion:  ${state.searchController.text}  ::::::::::');
     final result = await suggestionsUseCase.call(SuggestionParam(
       where: 'Suggestion Bloc _GetSuggestions',
       isDoctor: state.tabController.index == 1,
       search: state.searchController.text,
     ));
     if (result.isRight) {
-      emit(state.copyWith(status: FormzStatus.submissionInProgress, suggestions: result.right));
-    } else {
-      emit(state.copyWith(
-        status: FormzStatus.submissionFailure,
-      ));
-    }
+      emit(state.copyWith(suggestions: result.right));
+    } else {}
   }
 
   FutureOr<void> _getSpecializations(MapGetSpecializationsEvent event, Emitter<MapOrganizationState> emit) async {
@@ -150,118 +145,117 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   }
 
   FutureOr<void> _changeTab(MapChangeTabEvent event, Emitter<MapOrganizationState> emit) async {
-    if (state.screenStatus.isList) return;
-    if (event.haveToLoading) {
-      emit(state.copyWith(tabChangingStatus: FormzStatus.submissionInProgress));
-      await Future.delayed(const Duration(milliseconds: 500));
-    }
-
-    if (event.tab == 0) {
-      await MyFunctions.addHospitals(
-        deviceWidth: deviceWidth,
-        points: state.hospitals,
-        context: event.context,
-        point: Point(latitude: state.currentLat, longitude: state.currentLong),
-        accuracy: event.acuracy,
-        onMapControllerChange: (lat, long) async {
-          await mapController.moveCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                target: Point(
-                  latitude: lat,
-                  longitude: long,
-                ),
-                zoom: 15,
-              ),
-            ),
-            animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
-          );
-        },
-      ).then((placemarkss) async {
-        await mapController.moveCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: Point(
-                latitude: state.currentLat,
-                longitude: state.currentLong,
-              ),
-              zoom: 15,
-            ),
-          ),
-          animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
-        );
-
-        emit(
-          state.copyWith(
-            tabChangingStatus: event.haveToLoading ? FormzStatus.submissionSuccess : state.tabChangingStatus,
-            mapObjects: placemarkss,
-          ),
-        );
-      });
+    if (state.screenStatus.isList) {
+      if (event.tab == 0) {
+        add(MapGetHospitalsEvent(context: event.context));
+      } else {
+        add(MapGetDoctorsEvent(context: event.context));
+      }
     } else {
-      await MyFunctions.addDoctors(
-        deviceWidth: deviceWidth,
-        points: state.doctors,
-        context: event.context,
-        point: Point(latitude: state.currentLat, longitude: state.currentLong),
-        accuracy: event.acuracy,
-        onMapControllerChange: (lat, long) async {
+      if (event.haveToLoading) {
+        emit(state.copyWith(tabChangingStatus: FormzStatus.submissionInProgress));
+        await Future.delayed(const Duration(milliseconds: 500));
+      }
+      if (event.tab == 0) {
+        await MyFunctions.addHospitals(
+          deviceWidth: deviceWidth,
+          points: state.hospitals,
+          context: event.context,
+          point: Point(latitude: state.currentLat, longitude: state.currentLong),
+          accuracy: event.acuracy,
+          onMapControllerChange: (lat, long) async {
+            await mapController.moveCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: Point(
+                    latitude: lat,
+                    longitude: long,
+                  ),
+                  zoom: 15,
+                ),
+              ),
+              animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+            );
+          },
+        ).then((placemarkss) async {
           await mapController.moveCamera(
             CameraUpdate.newCameraPosition(
               CameraPosition(
                 target: Point(
-                  latitude: lat,
-                  longitude: long,
+                  latitude: state.currentLat,
+                  longitude: state.currentLong,
                 ),
                 zoom: 15,
               ),
             ),
             animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
           );
-        },
-      ).then((placemarkss) async {
-        await mapController.moveCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: Point(
-                latitude: state.currentLat,
-                longitude: state.currentLong,
-              ),
-              zoom: 15,
-            ),
-          ),
-          animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
-        );
 
-        emit(
-          state.copyWith(
-            tabChangingStatus: event.haveToLoading ? FormzStatus.submissionSuccess : state.tabChangingStatus,
-            mapObjects: placemarkss,
-          ),
-        );
-      });
+          emit(
+            state.copyWith(
+              tabChangingStatus: event.haveToLoading ? FormzStatus.submissionSuccess : state.tabChangingStatus,
+              mapObjects: placemarkss,
+            ),
+          );
+        });
+      } else {
+        await MyFunctions.addDoctors(
+          deviceWidth: deviceWidth,
+          points: state.doctors,
+          context: event.context,
+          point: Point(latitude: state.currentLat, longitude: state.currentLong),
+          accuracy: event.acuracy,
+          onMapControllerChange: (lat, long) async {
+            await mapController.moveCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: Point(
+                    latitude: lat,
+                    longitude: long,
+                  ),
+                  zoom: 15,
+                ),
+              ),
+              animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+            );
+          },
+        ).then((placemarkss) async {
+          await mapController.moveCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: Point(
+                  latitude: state.currentLat,
+                  longitude: state.currentLong,
+                ),
+                zoom: 15,
+              ),
+            ),
+            animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+          );
+
+          emit(
+            state.copyWith(
+              tabChangingStatus: event.haveToLoading ? FormzStatus.submissionSuccess : state.tabChangingStatus,
+              mapObjects: placemarkss,
+            ),
+          );
+        });
+      }
     }
   }
 
   FutureOr<void> _getHospitals(MapGetHospitalsEvent event, Emitter<MapOrganizationState> emit) async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    if (!event.notToLoading) {
+      emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    }
     final result = await getHospitalsUseCase.call(MapV2Params(
-      radius: event.radius ?? 150,
+      radius: 150,
       longitude: state.currentLong,
       latitude: state.currentLat,
       search: state.searchController.text,
-      title: event.title,
-      offset: event.offset,
-      next: event.next,
-      district: event.district,
-      region: event.region,
-      limit: event.limit,
-      previous: event.previous,
-      service: event.service,
-      specializationId: event.specializationId,
     ));
     if (result.isRight) {
-      if (state.tabController?.index == 0) {
+      if (state.screenStatus.isMap) {
         await MyFunctions.addHospitals(
           deviceWidth: deviceWidth,
           points: result.right.results,
@@ -295,14 +289,15 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       } else {
         emit(
           state.copyWith(
+            unUsed: !state.unUsed,
             hospitalsNext: result.right.next ?? '',
             hospitals: result.right.results,
-            status: FormzStatus.submissionSuccess,
+            status: event.notToLoading ? null : FormzStatus.submissionSuccess,
           ),
         );
       }
     } else {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
+      emit(state.copyWith(status: event.notToLoading ? null : FormzStatus.submissionSuccess));
     }
   }
 
@@ -311,7 +306,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     final result = await getTypesUseCase.call(event.searchText);
     if (result.isRight) {
       emit(state.copyWith(
-        typess: result.right.results,
+        types: result.right.results,
         typesStatus: FormzStatus.submissionSuccess,
       ));
     } else {
@@ -323,7 +318,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     final result = await getTypesUseCase.call(event.searchText);
     if (result.isRight) {
-      emit(state.copyWith(typess: result.right.results, status: FormzStatus.submissionSuccess));
+      emit(state.copyWith(types: result.right.results, status: FormzStatus.submissionSuccess));
     } else {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
@@ -339,7 +334,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       ),
     );
     if (result.isRight) {
-      if (state.tabController?.index == 1) {
+      if (state.screenStatus.isMap) {
         await MyFunctions.addDoctors(
           deviceWidth: deviceWidth,
           points: result.right.results,

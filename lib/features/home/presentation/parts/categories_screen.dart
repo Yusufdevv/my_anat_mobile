@@ -128,7 +128,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   itemBuilder: (c, index) {
                     return HospitalItem(
                       entity: state.organizations[index],
-                      wrapItems: state.organizations[index].getServiceOrSpecialization,
+                      wrapItems: state.organizations[index].getServiceOrSpecialization(pattern: null),
                     );
                   },
                   itemCount: state.organizations.length,

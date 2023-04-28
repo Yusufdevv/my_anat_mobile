@@ -19,10 +19,6 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
   @override
   void initState() {
     context.read<MapOrganizationBloc>().add(MapGetHospitalsEvent(
-          radius: 150,
-          search: null,
-          latitude: widget.myLocation.latitude,
-          longitude: widget.myLocation.longitude,
           context: context,
         ));
 

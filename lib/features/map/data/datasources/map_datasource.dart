@@ -85,10 +85,10 @@ class MapDatasourceImpl extends MapDatasource {
     if (params.offset != null) {
       queryParams.putIfAbsent('offset', () => params.offset);
     }
-    if (params.latitude != null) {
+    if (params.latitude != 0) {
       queryParams.putIfAbsent('lat', () => params.latitude);
     }
-    if (params.longitude != null) {
+    if (params.longitude != 0) {
       queryParams.putIfAbsent('lon', () => params.longitude);
     }
     if (params.title != null && params.title!.isNotEmpty) {

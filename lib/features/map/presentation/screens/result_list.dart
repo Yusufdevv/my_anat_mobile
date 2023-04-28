@@ -25,13 +25,7 @@ class OrganizationList extends StatelessWidget {
           child: RefreshIndicator(
             onRefresh: () async {
               context.read<MapOrganizationBloc>().add(
-                    MapGetHospitalsEvent(
-                      context: context,
-                      radius: 150,
-                      longitude: state.currentLong,
-                      latitude: state.currentLat,
-                      search: null,
-                    ),
+                    MapGetHospitalsEvent(context: context),
                   );
 
               return await Future.delayed(const Duration(seconds: 1));
@@ -51,8 +45,11 @@ class OrganizationList extends StatelessWidget {
                 paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
                 itemBuilder: (c, index) {
                   return HospitalItem(
-                    wrapItems: state.hospitals[index].getServiceOrSpecialization,
+                    wrapItems: state.hospitals[index]
+                        .getServiceOrSpecialization(pattern: state.searchController.text, unUsed: state.unUsed),
                     entity: state.hospitals[index],
+                    searchText: state.searchController.text,
+                    isSuggestionItem: state.isSearching,
                   );
                 },
                 itemCount: state.hospitals.length,
