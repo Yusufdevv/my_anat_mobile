@@ -6,14 +6,12 @@ import 'package:anatomica/features/map/data/repositories/map_repository_impl.dar
 import 'package:anatomica/features/map/domain/repositories/map_repository.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 
-class GetMapHospitalsWithDistanceUseCase
-    extends UseCase<GenericPagination<OrgMapV2Model>, MapV2Params> {
+class GetHopitalsMapUseCase extends UseCase<GenericPagination<OrgMapV2Model>, MapV2Params> {
   final MapRepository mapRepository;
 
-  GetMapHospitalsWithDistanceUseCase({required this.mapRepository});
+  GetHopitalsMapUseCase({required this.mapRepository});
 
   @override
-  Future<Either<Failure, GenericPagination<OrgMapV2Model>>> call(
-          MapV2Params params) async =>
+  Future<Either<Failure, GenericPagination<OrgMapV2Model>>> call(MapV2Params params) async =>
       await mapRepository.getOrgMapV2(v2params: params);
 }

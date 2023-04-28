@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
@@ -13,7 +12,6 @@ import 'package:anatomica/features/map/data/repositories/map_repository_impl.dar
 import 'package:anatomica/features/map/domain/entities/doctor_map_entity.dart';
 import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
-import 'package:anatomica/features/map/domain/usecases/get_map_hospitals.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals_with_distance.dart';
 import 'package:anatomica/features/map/domain/usecases/get_specialization.dart';
 import 'package:anatomica/features/map/domain/usecases/get_suggestions.dart';
@@ -35,12 +33,11 @@ typedef OnMapControllerChange = Function(double lat, double long);
 
 class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   final GetSuggestionsUseCase suggestionsUseCase = GetSuggestionsUseCase();
-  final GetMapHospitalUseCase getHospitals = GetMapHospitalUseCase();
   final GetMapDoctorUseCase getDoctors = GetMapDoctorUseCase(repo: serviceLocator<GlobalRequestRepository>());
   final GetTypesUseCase getTypesUseCase = GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>());
   final GetSpecializationUseCase getSpecializationsUseCase = GetSpecializationUseCase();
-  final GetMapHospitalsWithDistanceUseCase hospitalsWithDistanceUseCase =
-      GetMapHospitalsWithDistanceUseCase(mapRepository: serviceLocator<MapRepositoryImpl>());
+  final GetHopitalsMapUseCase getHospitalsUseCase =
+      GetHopitalsMapUseCase(mapRepository: serviceLocator<MapRepositoryImpl>());
   final double deviceWidth;
   late YandexMapController mapController;
 
@@ -69,11 +66,19 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     on<MapGetSpecializationsEvent>(_getSpecializations);
     on<MapGetSuggestionsEvent>(_getSuggestions);
     on<MapChooseEvent>(_choose);
+    on<MapUnFocusAndClearControllerEvent>(_unFocus);
+  }
+
+  FutureOr<void> _unFocus(MapUnFocusAndClearControllerEvent event, Emitter<MapOrganizationState> emit) async {
+    if (!event.notUnFocus) {
+      state.focusNode.unfocus();
+    }
+    emit(state.copyWith(searchController: TextEditingController()));
   }
 
   FutureOr<void> _getSuggestions(MapGetSuggestionsEvent event, Emitter<MapOrganizationState> emit) async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress, searchText: event.text));
-    final result = await suggestionsUseCase(SuggestionParam(
+    final result = await suggestionsUseCase.call(SuggestionParam(
       where: 'Suggestion Bloc _GetSuggestions',
       isDoctor: state.tabController.index == 1,
       search: event.text,
@@ -103,7 +108,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
 
   FutureOr<void> _getMoreHospitalsWithDistance(
       MapGetMoreHospitalsWithDistanceEvent event, Emitter<MapOrganizationState> emit) async {
-    final result = await hospitalsWithDistanceUseCase(MapV2Params(next: state.next));
+    final result = await getHospitalsUseCase(MapV2Params(next: state.next));
     if (result.isRight) {
       emit(state.copyWith(
           hospitals: [...state.hospitals, ...result.right.results],
@@ -118,7 +123,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   FutureOr<void> _getHospitalsWithDistance(
       MapGetHospitalsWithDistance event, Emitter<MapOrganizationState> emit) async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    final result = await hospitalsWithDistanceUseCase.call(
+    final result = await getHospitalsUseCase.call(
       MapV2Params(
         search: event.search,
         latitude: event.myPoint.latitude,
@@ -149,7 +154,6 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       lat: event.lat,
       long: event.long,
       isGetFocus: event.isGetFocus,
-      isSuggestion: event.isSuggestion,
     ));
   }
 
@@ -267,20 +271,26 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
 
   FutureOr<void> _getHospitals(MapGetHospitalsEvent event, Emitter<MapOrganizationState> emit) async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    final result = await getHospitals(
-      state.searchText,
-      param: MapParameter(
-        lat: event.latitude ?? state.lat,
-        long: event.longitude ?? state.long,
-        // todo get hospital radius
-        radius: 150,
-      ),
-    );
+    final result = await getHospitalsUseCase.call(MapV2Params(
+      radius: event.radius ?? 150,
+      longitude: state.currentLong,
+      latitude: state.currentLat,
+      search: state.searchText,
+      title: event.title,
+      offset: event.offset,
+      next: event.next,
+      district: event.district,
+      region: event.region,
+      limit: event.limit,
+      previous: event.previous,
+      service: event.service,
+      specializationId: event.specializationId,
+    ));
     if (result.isRight) {
       if (state.tabController?.index == 0) {
         await MyFunctions.addHospitals(
           deviceWidth: deviceWidth,
-          points: result.right,
+          points: result.right.results,
           context: event.context,
           point: Point(latitude: state.currentLat, longitude: state.currentLong),
           accuracy: state.accuracy,
@@ -301,7 +311,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
         ).then((placemarks) {
           emit(
             state.copyWith(
-              hospitals: result.right,
+              hospitals: result.right.results,
               status: FormzStatus.submissionSuccess,
               mapObjects: placemarks,
             ),
@@ -310,7 +320,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       } else {
         emit(
           state.copyWith(
-            hospitals: result.right,
+            hospitals: result.right.results,
             status: FormzStatus.submissionSuccess,
           ),
         );
@@ -462,15 +472,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       ),
       animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
     );
-    final hospitalResult = await getHospitals(
-      state.searchText,
-      param: MapParameter(
-        lat: lat,
-        long: long,
-        // todo get hospital radius
-        radius: 150,
-      ),
-    );
+    final hospitalResult = await getHospitalsUseCase.call(MapV2Params(longitude: long, latitude: lat, radius: 150));
 
     final doctorsResult =
         await getDoctors(state.searchText, param: MapParameter(lat: state.lat, long: state.long, radius: 150));
@@ -479,7 +481,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       state.copyWith(
         getCurrentLocationStatus: FormzStatus.submissionSuccess,
         doctors: doctorsResult.isRight ? doctorsResult.right : [],
-        hospitals: hospitalResult.isRight ? hospitalResult.right : [],
+        hospitals: hospitalResult.isRight ? hospitalResult.right.results : [],
         zoomLevel: 15,
         lat: lat,
         long: long,

@@ -17,7 +17,7 @@ class ReaderControllerState extends Equatable {
     this.journalLang = 'ru',
     this.selectedTextColor = textColor,
     this.selectedFontFamily = 'Averta CY',
-    this.fontSizeIndex = 0,
+    this.fontSizeIndex = 3,
     this.changedWebPage = '',
     this.colorName = '',
     this.changedDataAsWebPage = '',

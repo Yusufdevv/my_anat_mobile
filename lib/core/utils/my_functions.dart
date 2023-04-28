@@ -32,11 +32,11 @@ abstract class MyFunctions {
   /// <p style="text-align:center"><span style="font-size:26px">&rarr;</span></p>
   static String changePXtoREM(String html) {
     String replacedString = html.replaceAllMapped(
-      RegExp(r'<span style="font-size:(\d+)px">'),
+      RegExp(r'style="font-size:(\d+)px">'),
       (match) {
         double currentFontSize = double.tryParse(match.group(1) ?? '0') ?? 0;
         double newFontSize = pxToRem(currentFontSize);
-        return '<span style="font-size:${newFontSize}rem">';
+        return 'style="font-size:${newFontSize}rem">';
       },
     );
 

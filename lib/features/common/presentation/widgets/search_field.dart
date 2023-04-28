@@ -33,12 +33,10 @@ class SearchField extends StatefulWidget {
 }
 
 class _SearchFieldState extends State<SearchField> {
-  late TextEditingController _controller;
   bool showClear = false;
 
   @override
   void initState() {
-    _controller = widget.controller;
     super.initState();
   }
 
@@ -50,7 +48,7 @@ class _SearchFieldState extends State<SearchField> {
         onTap: widget.onTap,
         key: widget.stateKey,
         focusNode: widget.focusNode,
-        controller: _controller,
+        controller: widget.controller,
         onChanged: (text) {
           widget.onChanged(text);
           if (text.isNotEmpty && !showClear) {
@@ -81,7 +79,9 @@ class _SearchFieldState extends State<SearchField> {
           suffixIcon: showClear
               ? WScaleAnimation(
                   onTap: () {
-                    _controller.clear();
+                    if (widget.onClear == null) {
+                      widget.controller.clear();
+                    }
                     setState(() {
                       showClear = false;
                     });

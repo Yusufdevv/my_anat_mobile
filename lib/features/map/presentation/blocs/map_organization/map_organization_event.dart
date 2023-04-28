@@ -2,6 +2,11 @@ part of 'map_organization_bloc.dart';
 
 abstract class MapEvent {}
 
+class MapUnFocusAndClearControllerEvent extends MapEvent {
+  final bool notUnFocus;
+  MapUnFocusAndClearControllerEvent({this.notUnFocus = false});
+}
+
 class MapGetSuggestionsEvent extends MapEvent {
   final String text;
 
@@ -58,7 +63,6 @@ class MapChooseEvent extends MapEvent {
   final int? radius;
   final double? lat;
   final double? long;
-  final bool? isSuggestion;
   final bool? isGetFocus;
   final MapScreenStatus? screenStatus;
   MapChooseEvent({
@@ -67,7 +71,6 @@ class MapChooseEvent extends MapEvent {
     this.radius,
     this.lat,
     this.long,
-    this.isSuggestion,
     this.isGetFocus,
   });
 }
@@ -104,15 +107,35 @@ class MapGetDoctorsEvent extends MapEvent {
 
 class MapGetHospitalsEvent extends MapEvent {
   final BuildContext context;
-  double? latitude;
-  double? longitude;
-  double? radius;
+  final String? search;
+  final String? region;
+  final String? district;
+  final int? specializationId;
+  final String? service;
+  final int? limit;
+  final int? offset;
+  final double latitude;
+  final double longitude;
+  final String? title;
+  final String? next;
+  final String? previous;
+  final double radius;
 
   MapGetHospitalsEvent({
     required this.context,
-    this.latitude,
-    this.longitude,
-    this.radius,
+    required this.search,
+    required this.radius,
+    required this.latitude,
+    required this.longitude,
+    this.title,
+    this.service,
+    this.next,
+    this.district,
+    this.region,
+    this.previous,
+    this.offset,
+    this.limit,
+    this.specializationId,
   });
 }
 

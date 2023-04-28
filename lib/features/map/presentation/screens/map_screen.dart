@@ -46,7 +46,13 @@ class _MapScreenState extends State<MapScreen> {
       listener: (context, state) {
         widget.searchController.text = state.searchText;
         widget.mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
-        widget.mapOrganizationBloc.add(MapGetHospitalsEvent(context: context));
+        widget.mapOrganizationBloc.add(MapGetHospitalsEvent(
+          context: context,
+          search: null,
+          radius: 150,
+          latitude: state.lat,
+          longitude: state.long,
+        ));
       },
       builder: (context, state) {
         return Stack(

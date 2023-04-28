@@ -19,8 +19,7 @@ class MapPage extends StatefulWidget {
   State<MapPage> createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage>
-    with TickerProviderStateMixin, WidgetsBindingObserver {
+class _MapPageState extends State<MapPage> with TickerProviderStateMixin, WidgetsBindingObserver {
   late TextEditingController _searchFieldController;
   late MapOrganizationBloc mapOrganizationBloc;
   late DoctorListBloc doctorListBloc;
@@ -64,8 +63,7 @@ class _MapPageState extends State<MapPage>
                         if (state.screenStatus.isMap) {
                           return MapScreen(
                             onMapCreateSuccess: (point) {
-                              doctorListBloc.add(DoctorListEvent.getDoctors(
-                                  myPoint: point, search: ''));
+                              doctorListBloc.add(DoctorListEvent.getDoctors(myPoint: point, search: ''));
                             },
                             mapOrganizationBloc: mapOrganizationBloc,
                             tabController: state.tabController,
@@ -75,9 +73,7 @@ class _MapPageState extends State<MapPage>
                         }
                         if (state.screenStatus.isList) {
                           return HospitalList(
-                            myLocation: Point(
-                                longitude: state.currentLong,
-                                latitude: state.currentLat),
+                            myLocation: Point(longitude: state.currentLong, latitude: state.currentLat),
                           );
                         }
                         return Center(
@@ -115,14 +111,11 @@ class _MapPageState extends State<MapPage>
                     right: 0,
                     child: TheSearchFieldOfHospitals(
                       onSearchFieldTap: () {
-                        mapOrganizationBloc.add(MapChooseEvent(
-                            screenStatus: MapScreenStatus.list,
-                            isGetFocus: true));
+                        mapOrganizationBloc.add(MapChooseEvent(screenStatus: MapScreenStatus.list, isGetFocus: true));
                       },
                       onLeftButtonPressed: () {
-                        mapOrganizationBloc.add(MapChooseEvent(
-                            screenStatus: state.screenStatus.switchIt,
-                            isGetFocus: false));
+                        mapOrganizationBloc
+                            .add(MapChooseEvent(screenStatus: state.screenStatus.switchIt, isGetFocus: false));
                       },
                       isMap: state.screenStatus.isMap,
                       mediaQuery: widget.mediaQuery,
@@ -130,40 +123,20 @@ class _MapPageState extends State<MapPage>
                       controller: state.searchController,
                       isSearching: state.isSearching,
                       onClear: () {
-                        state.searchController.clear();
-                        context
-                            .read<MapOrganizationBloc>()
-                            .add(MapGetHospitalsWithDistance(
-                              search: '',
-                              myPoint: state.myPoint,
-                            ));
-                        doctorListBloc.add(DoctorListEvent.getDoctors(
-                          search: '',
-                          myPoint: state.myPoint,
-                        ));
-                        context
-                            .read<MapOrganizationBloc>()
-                            .add(MapChooseEvent(isSuggestion: false));
-                        context.read<MapOrganizationBloc>().add(
-                            MapGetSuggestionsEvent(
-                                text: state.searchController.text));
+                        mapOrganizationBloc.add(MapUnFocusAndClearControllerEvent(notUnFocus: true));
+                        mapOrganizationBloc.add(MapGetHospitalsWithDistance(search: '', myPoint: state.myPoint));
+                        doctorListBloc.add(DoctorListEvent.getDoctors(search: '', myPoint: state.myPoint));
+
+                        mapOrganizationBloc.add(MapGetSuggestionsEvent(text: state.searchController.text));
                       },
                       onChanged: (value) {
-                        context
-                            .read<MapOrganizationBloc>()
-                            .add(MapGetSuggestionsEvent(text: value));
+                        mapOrganizationBloc.add(MapGetSuggestionsEvent(text: value));
                         if (value.isNotEmpty) {
-                          context
-                              .read<MapOrganizationBloc>()
-                              .add(MapChooseEvent(isSuggestion: true));
-
                           if (state.tabController.index == 0) {
-                            context
-                                .read<MapOrganizationBloc>()
-                                .add(MapGetHospitalsWithDistance(
-                                  search: value,
-                                  myPoint: state.myPoint,
-                                ));
+                            mapOrganizationBloc.add(MapGetHospitalsWithDistance(
+                              search: value,
+                              myPoint: state.myPoint,
+                            ));
                           } else {
                             doctorListBloc.add(DoctorListEvent.getDoctors(
                               search: value,
@@ -171,23 +144,18 @@ class _MapPageState extends State<MapPage>
                             ));
                           }
                         } else {
-                          context
-                              .read<MapOrganizationBloc>()
-                              .add(MapGetHospitalsWithDistance(
-                                search: '',
-                                myPoint: state.myPoint,
-                              ));
+                          mapOrganizationBloc.add(MapGetHospitalsWithDistance(
+                            search: '',
+                            myPoint: state.myPoint,
+                          ));
                           doctorListBloc.add(DoctorListEvent.getDoctors(
                             search: '',
                             myPoint: state.myPoint,
                           ));
-                          context
-                              .read<MapOrganizationBloc>()
-                              .add(MapChooseEvent(isSuggestion: false));
                         }
                       },
                       onCloseTap: () {
-                        state.focusNode.unfocus();
+                        mapOrganizationBloc.add(MapUnFocusAndClearControllerEvent());
                       },
                     ),
                   ),

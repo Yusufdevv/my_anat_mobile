@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
-class ResultList extends StatelessWidget {
+class OrganizationList extends StatelessWidget {
   final Point myPoint;
 
-  const ResultList({required this.myPoint, Key? key}) : super(key: key);
+  const OrganizationList({required this.myPoint, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -22,7 +22,7 @@ class JournalPagesState extends Equatable {
     this.getJournalContentsStatus = FormzStatus.pure,
     this.contentsFetchMore = false,
     this.contentsNext,
-    this.fontSizeIndex = 0,
+    this.fontSizeIndex = 3,
   });
 
   JournalPagesState copyWith({
