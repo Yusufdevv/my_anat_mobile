@@ -9,7 +9,6 @@ import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/map/data/models/suggestion.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_map_entity.dart';
-import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
 import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals_with_distance.dart';
 import 'package:anatomica/features/map/domain/usecases/get_specialization.dart';
@@ -312,7 +311,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     final result = await getTypesUseCase.call(event.searchText);
     if (result.isRight) {
       emit(state.copyWith(
-        types: result.right.results,
+        typess: result.right.results,
         typesStatus: FormzStatus.submissionSuccess,
       ));
     } else {
@@ -324,7 +323,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     final result = await getTypesUseCase.call(event.searchText);
     if (result.isRight) {
-      emit(state.copyWith(types: result.right.results, status: FormzStatus.submissionSuccess));
+      emit(state.copyWith(typess: result.right.results, status: FormzStatus.submissionSuccess));
     } else {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }

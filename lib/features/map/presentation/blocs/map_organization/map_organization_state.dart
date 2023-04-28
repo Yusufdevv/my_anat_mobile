@@ -4,7 +4,7 @@ class MapOrganizationState extends Equatable {
   final MapScreenStatus screenStatus;
   final List<OrgMapV2Model> hospitals;
   final List<DoctorMapEntity> doctors;
-  final List<TypeEntity> types;
+  final List<TypeEntity> typess;
   final List<TitlerModel> specializations;
   final List<SuggestionModel> suggestions;
 
@@ -50,7 +50,7 @@ class MapOrganizationState extends Equatable {
     this.hospitals = const [],
     this.suggestions = const [],
     this.doctors = const [],
-    this.types = const [],
+    this.typess = const [],
     this.specializations = const [],
     this.getTypesStatus = FormzStatus.pure,
     this.radius = 150,
@@ -66,7 +66,7 @@ class MapOrganizationState extends Equatable {
     MapScreenStatus? screenStatus,
     List<OrgMapV2Model>? hospitals,
     List<DoctorMapEntity>? doctors,
-    List<TypeEntity>? types,
+    List<TypeEntity>? typess,
     List<SuggestionModel>? suggestions,
     List<TitlerModel>? specializations,
     List<MapObject<dynamic>>? mapObjects,
@@ -108,7 +108,7 @@ class MapOrganizationState extends Equatable {
         tabChangingStatus: tabChangingStatus ?? this.tabChangingStatus,
         hospitals: hospitals ?? this.hospitals,
         doctors: doctors ?? this.doctors,
-        types: types ?? this.types,
+        typess: typess ?? this.typess,
         getTypesStatus: getTypesStatus ?? this.getTypesStatus,
         radius: radius ?? this.radius,
         typesCount: typesCount ?? this.typesCount,
@@ -140,7 +140,7 @@ class MapOrganizationState extends Equatable {
         currentLong,
         hospitals,
         doctors,
-        types,
+        typess,
         getTypesStatus,
         radius,
         typesCount,
