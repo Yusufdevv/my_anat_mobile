@@ -24,10 +24,15 @@ class OrganizationList extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: RefreshIndicator(
             onRefresh: () async {
-              context.read<MapOrganizationBloc>().add(MapGetHospitalsWithDistance(
-                    search: '',
-                    myPoint: myPoint,
-                  ));
+              context.read<MapOrganizationBloc>().add(
+                    MapGetHospitalsEvent(
+                      context: context,
+                      radius: 150,
+                      longitude: state.currentLong,
+                      latitude: state.currentLat,
+                      search: null,
+                    ),
+                  );
 
               return await Future.delayed(const Duration(seconds: 1));
             },
@@ -52,9 +57,9 @@ class OrganizationList extends StatelessWidget {
                 },
                 itemCount: state.hospitals.length,
                 fetchMoreFunction: () {
-                  context.read<MapOrganizationBloc>().add(MapGetMoreHospitalsWithDistanceEvent());
+                  context.read<MapOrganizationBloc>().add(MapGetMoreHospitalsEvent());
                 },
-                hasMoreToFetch: state.fetchMore,
+                hasMoreToFetch: state.hospitalsNext != null,
                 errorWidget: const SizedBox()),
           ),
         );

@@ -5,13 +5,12 @@ import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/entities/type_entity.dart';
 import 'package:anatomica/features/common/data/models/titler.dart';
-import 'package:anatomica/features/common/data/repository/global_requst_repository.dart';
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:anatomica/features/map/data/models/suggestion.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_map_entity.dart';
 import 'package:anatomica/features/map/domain/entities/map_parameter.dart';
-import 'package:anatomica/features/map/domain/usecases/get_map_doctors.dart';
+import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals_with_distance.dart';
 import 'package:anatomica/features/map/domain/usecases/get_specialization.dart';
 import 'package:anatomica/features/map/domain/usecases/get_suggestions.dart';
@@ -33,7 +32,7 @@ typedef OnMapControllerChange = Function(double lat, double long);
 
 class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   final GetSuggestionsUseCase suggestionsUseCase = GetSuggestionsUseCase();
-  final GetMapDoctorUseCase getDoctors = GetMapDoctorUseCase(repo: serviceLocator<GlobalRequestRepository>());
+  final GetDoctorsUseCase getDoctors = GetDoctorsUseCase();
   final GetTypesUseCase getTypesUseCase = GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>());
   final GetSpecializationUseCase getSpecializationsUseCase = GetSpecializationUseCase();
   final GetHopitalsMapUseCase getHospitalsUseCase =
@@ -60,9 +59,9 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     on<MapGetTypesEvent>(_getTypes);
     on<MapGetMoreTypesEvent>(_getMorTypes);
     on<MapGetDoctorsEvent>(_getDoctors);
+    on<MapGetMoreDoctorsEvent>(_getMoreDoctors);
     on<MapGetCurrentLocationEvent>(_getCurrentLocation);
-    on<MapGetHospitalsWithDistance>(_getHospitalsWithDistance);
-    on<MapGetMoreHospitalsWithDistanceEvent>(_getMoreHospitalsWithDistance);
+    on<MapGetMoreHospitalsEvent>(_getMoreHospitals);
     on<MapGetSpecializationsEvent>(_getSpecializations);
     on<MapGetSuggestionsEvent>(_getSuggestions);
     on<MapChooseEvent>(_choose);
@@ -77,11 +76,13 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   }
 
   FutureOr<void> _getSuggestions(MapGetSuggestionsEvent event, Emitter<MapOrganizationState> emit) async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress, searchText: event.text));
+    emit(state.copyWith(
+      status: FormzStatus.submissionInProgress,
+    ));
     final result = await suggestionsUseCase.call(SuggestionParam(
       where: 'Suggestion Bloc _GetSuggestions',
       isDoctor: state.tabController.index == 1,
-      search: event.text,
+      search: state.searchController.text,
     ));
     if (result.isRight) {
       emit(state.copyWith(status: FormzStatus.submissionInProgress, suggestions: result.right));
@@ -106,37 +107,14 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     }
   }
 
-  FutureOr<void> _getMoreHospitalsWithDistance(
-      MapGetMoreHospitalsWithDistanceEvent event, Emitter<MapOrganizationState> emit) async {
-    final result = await getHospitalsUseCase(MapV2Params(next: state.next));
+  FutureOr<void> _getMoreHospitals(MapGetMoreHospitalsEvent event, Emitter<MapOrganizationState> emit) async {
+    if (state.hospitalsNext == null) return;
+    final result = await getHospitalsUseCase(MapV2Params(next: state.hospitalsNext));
     if (result.isRight) {
       emit(state.copyWith(
-          hospitals: [...state.hospitals, ...result.right.results],
-          status: FormzStatus.submissionSuccess,
-          next: result.right.next,
-          fetchMore: result.right.next != null));
-    } else {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
-  }
-
-  FutureOr<void> _getHospitalsWithDistance(
-      MapGetHospitalsWithDistance event, Emitter<MapOrganizationState> emit) async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    final result = await getHospitalsUseCase.call(
-      MapV2Params(
-        search: event.search,
-        latitude: event.myPoint.latitude,
-        longitude: event.myPoint.longitude,
-        radius: 150,
-      ),
-    );
-    if (result.isRight) {
-      emit(state.copyWith(
-        hospitalsWithDistance: result.right.results,
+        hospitals: [...state.hospitals, ...result.right.results],
         status: FormzStatus.submissionSuccess,
-        next: result.right.next,
-        fetchMore: result.right.next != null,
+        hospitalsNext: result.right.next ?? '',
       ));
     } else {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
@@ -150,9 +128,6 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     emit(state.copyWith(
       screenStatus: event.screenStatus,
       radius: event.radius,
-      searchText: event.searchText,
-      lat: event.lat,
-      long: event.long,
       isGetFocus: event.isGetFocus,
     ));
   }
@@ -275,7 +250,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       radius: event.radius ?? 150,
       longitude: state.currentLong,
       latitude: state.currentLat,
-      search: state.searchText,
+      search: state.searchController.text,
       title: event.title,
       offset: event.offset,
       next: event.next,
@@ -311,6 +286,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
         ).then((placemarks) {
           emit(
             state.copyWith(
+              hospitalsNext: result.right.next ?? '',
               hospitals: result.right.results,
               status: FormzStatus.submissionSuccess,
               mapObjects: placemarks,
@@ -320,6 +296,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       } else {
         emit(
           state.copyWith(
+            hospitalsNext: result.right.next ?? '',
             hospitals: result.right.results,
             status: FormzStatus.submissionSuccess,
           ),
@@ -354,13 +331,19 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   }
 
   FutureOr<void> _getDoctors(MapGetDoctorsEvent event, Emitter<MapOrganizationState> emit) async {
-    final result =
-        await getDoctors(state.searchText, param: MapParameter(lat: state.lat, long: state.long, radius: 150));
+    final result = await getDoctors(
+      MapV2Params(
+        radius: 150,
+        longitude: state.currentLong,
+        latitude: state.currentLat,
+        search: state.searchController.text,
+      ),
+    );
     if (result.isRight) {
       if (state.tabController?.index == 1) {
         await MyFunctions.addDoctors(
           deviceWidth: deviceWidth,
-          points: result.right,
+          points: result.right.results,
           context: event.context,
           point: Point(latitude: state.currentLat, longitude: state.currentLong),
           accuracy: state.accuracy,
@@ -381,7 +364,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
         ).then((placemarks) {
           emit(
             state.copyWith(
-              doctors: result.right,
+              doctors: result.right.results,
               status: FormzStatus.submissionSuccess,
               mapObjects: placemarks,
             ),
@@ -390,11 +373,22 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       } else {
         emit(
           state.copyWith(
-            doctors: result.right,
+            doctors: result.right.results,
             status: FormzStatus.submissionSuccess,
           ),
         );
       }
+    } else {}
+  }
+
+  FutureOr<void> _getMoreDoctors(MapGetMoreDoctorsEvent event, Emitter<MapOrganizationState> emit) async {
+    final result = await getDoctors(
+      MapV2Params(next: state.doctorsNext),
+    );
+    if (result.isRight) {
+      emit(
+        state.copyWith(doctors: result.right.results),
+      );
     } else {}
   }
 
@@ -426,8 +420,6 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
           getCurrentLocationStatus: FormzStatus.submissionSuccess,
           mapObjects: placemarks,
           zoomLevel: 15,
-          lat: position.latitude,
-          long: position.longitude,
           currentLat: position.latitude,
           currentLong: position.longitude,
         ),
@@ -474,17 +466,22 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     );
     final hospitalResult = await getHospitalsUseCase.call(MapV2Params(longitude: long, latitude: lat, radius: 150));
 
-    final doctorsResult =
-        await getDoctors(state.searchText, param: MapParameter(lat: state.lat, long: state.long, radius: 150));
+    final doctorsResult = await getDoctors(
+      MapV2Params(
+        search: null,
+        latitude: lat,
+        longitude: long,
+        radius: 150,
+      ),
+    );
 
     emit(
       state.copyWith(
         getCurrentLocationStatus: FormzStatus.submissionSuccess,
-        doctors: doctorsResult.isRight ? doctorsResult.right : [],
+        doctors: doctorsResult.isRight ? doctorsResult.right.results : [],
         hospitals: hospitalResult.isRight ? hospitalResult.right.results : [],
+        hospitalsNext: hospitalResult.isRight ? hospitalResult.right.next ?? '' : null,
         zoomLevel: 15,
-        lat: lat,
-        long: long,
         currentLat: lat,
         currentLong: long,
         radius: MyFunctions.getRadiusFromZoom(camera.zoom).toInt(),
@@ -492,7 +489,6 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
         maxZoomLevel: maxZoomLevel,
       ),
     );
-    event.onSuccess(Point(latitude: lat, longitude: long));
     add(MapChangeTabEvent(
         context: event.context, tab: 0, acuracy: currentPosition?.accuracy ?? 20.0, haveToLoading: false));
   }

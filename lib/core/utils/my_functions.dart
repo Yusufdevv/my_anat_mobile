@@ -23,6 +23,12 @@ import 'package:jiffy/jiffy.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 abstract class MyFunctions {
+  static String? returnNullIfEmpty({required String? v, required String? origin}) => v == null
+      ? origin
+      : v.isEmpty
+          ? null
+          : v;
+
   static const clusterId = MapObjectId('big_cluster_id');
   static double pxToRem(double pxValue) {
     double baseFontSize = 16.0;

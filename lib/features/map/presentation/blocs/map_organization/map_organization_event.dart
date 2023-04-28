@@ -8,24 +8,11 @@ class MapUnFocusAndClearControllerEvent extends MapEvent {
 }
 
 class MapGetSuggestionsEvent extends MapEvent {
-  final String text;
-
-  MapGetSuggestionsEvent({required this.text});
+  MapGetSuggestionsEvent();
 }
 
 class MapGetSpecializationsEvent extends MapEvent {
   MapGetSpecializationsEvent();
-}
-
-class MapGetHospitalsWithDistance extends MapEvent {
-  final String search;
-  final Point myPoint;
-
-  MapGetHospitalsWithDistance({required this.search, required this.myPoint});
-}
-
-class MapGetMoreHospitalsWithDistanceEvent extends MapEvent {
-  MapGetMoreHospitalsWithDistanceEvent();
 }
 
 class MapGetCurrentLocationEvent extends MapEvent {
@@ -49,17 +36,14 @@ class MapZoomIn extends MapEvent {
 class MapOnCreateEvent extends MapEvent {
   final YandexMapController controller;
   final BuildContext context;
-  final Function(Point) onSuccess;
 
   MapOnCreateEvent({
     required this.controller,
     required this.context,
-    required this.onSuccess,
   });
 }
 
 class MapChooseEvent extends MapEvent {
-  final String? searchText;
   final int? radius;
   final double? lat;
   final double? long;
@@ -67,7 +51,6 @@ class MapChooseEvent extends MapEvent {
   final MapScreenStatus? screenStatus;
   MapChooseEvent({
     this.screenStatus,
-    this.searchText,
     this.radius,
     this.lat,
     this.long,
@@ -105,6 +88,10 @@ class MapGetDoctorsEvent extends MapEvent {
   });
 }
 
+class MapGetMoreDoctorsEvent extends MapEvent {
+  MapGetMoreDoctorsEvent();
+}
+
 class MapGetHospitalsEvent extends MapEvent {
   final BuildContext context;
   final String? search;
@@ -137,6 +124,10 @@ class MapGetHospitalsEvent extends MapEvent {
     this.limit,
     this.specializationId,
   });
+}
+
+class MapGetMoreHospitalsEvent extends MapEvent {
+  MapGetMoreHospitalsEvent();
 }
 
 class MapChangeTabEvent extends MapEvent {

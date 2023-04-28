@@ -18,9 +18,12 @@ class HospitalList extends StatefulWidget {
 class _HospitalListState extends State<HospitalList> with TickerProviderStateMixin {
   @override
   void initState() {
-    context.read<MapOrganizationBloc>().add(MapGetHospitalsWithDistance(
-          search: '',
-          myPoint: widget.myLocation,
+    context.read<MapOrganizationBloc>().add(MapGetHospitalsEvent(
+          radius: 150,
+          search: null,
+          latitude: widget.myLocation.latitude,
+          longitude: widget.myLocation.longitude,
+          context: context,
         ));
 
     super.initState();
@@ -41,7 +44,9 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                 children: [
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 150),
-                    child: OrganizationList(myPoint: widget.myLocation),
+                    child: OrganizationList(
+                      myPoint: widget.myLocation,
+                    ),
                   ),
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 150),
