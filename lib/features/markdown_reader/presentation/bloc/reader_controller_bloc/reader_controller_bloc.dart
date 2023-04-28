@@ -27,8 +27,8 @@ class ReaderControllerBloc extends Bloc<ReaderControllerEvent, ReaderControllerS
     });
     on<ChangeReaderLanguage>((event, emit) {
       print('isRussian => ${event.journalLang}');
-      emit(state.copyWith(journalLang: event.journalLang));
-      print('after isRussian => ${state.journalLang}');
+      emit(state.copyWith(journalLangg: event.journalLang));
+      print('after isRussian => ${state.journalLangg}');
     });
   }
 }
