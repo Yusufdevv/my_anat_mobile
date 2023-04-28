@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/presentation/bloc/login_sign_up_bloc/login_sign_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
@@ -18,14 +15,12 @@ class MapScreen extends StatefulWidget {
   final MediaQueryData mediaQuery;
   final TabController tabController;
   final MapOrganizationBloc mapOrganizationBloc;
-  final Function(Point) onMapCreateSuccess;
 
   const MapScreen(
       {required this.mediaQuery,
       required this.tabController,
       required this.searchController,
       required this.mapOrganizationBloc,
-      required this.onMapCreateSuccess,
       Key? key})
       : super(key: key);
 
@@ -38,20 +33,18 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<MapOrganizationBloc, MapOrganizationState>(
       listenWhen: (state1, state2) {
-        return state1.searchText != state2.searchText ||
-            state1.radius != state2.radius ||
-            state1.long != state2.long ||
-            state1.lat != state2.lat;
+        return state1.radius != state2.radius ||
+            state1.currentLong != state2.currentLong ||
+            state1.currentLat != state2.currentLat;
       },
       listener: (context, state) {
-        widget.searchController.text = state.searchText;
         widget.mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
         widget.mapOrganizationBloc.add(MapGetHospitalsEvent(
           context: context,
           search: null,
           radius: 150,
-          latitude: state.lat,
-          longitude: state.long,
+          latitude: state.currentLat,
+          longitude: state.currentLong,
         ));
       },
       builder: (context, state) {
@@ -78,7 +71,6 @@ class _MapScreenState extends State<MapScreen> {
                 onMapCreated: (controller) async {
                   widget.mapOrganizationBloc.add(
                     MapOnCreateEvent(
-                      onSuccess: widget.onMapCreateSuccess,
                       context: context,
                       controller: controller,
                     ),

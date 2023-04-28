@@ -1,6 +1,4 @@
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
-import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';
-import 'package:anatomica/features/map/presentation/blocs/doctor_list/doctor_list_bloc.dart';
 import 'package:anatomica/features/map/presentation/blocs/map_organization/map_organization_bloc.dart';
 import 'package:anatomica/features/map/presentation/screens/hospital_list.dart';
 import 'package:anatomica/features/map/presentation/screens/map_screen.dart';
@@ -22,11 +20,9 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> with TickerProviderStateMixin, WidgetsBindingObserver {
   late TextEditingController _searchFieldController;
   late MapOrganizationBloc mapOrganizationBloc;
-  late DoctorListBloc doctorListBloc;
 
   @override
   void initState() {
-    doctorListBloc = DoctorListBloc(GetDoctorsUseCase());
     mapOrganizationBloc = MapOrganizationBloc(
       deviceWidth: widget.mediaQuery.size.width,
       tickerProvider: this,
@@ -45,11 +41,8 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (c) => doctorListBloc),
-        BlocProvider(create: (c) => mapOrganizationBloc),
-      ],
+    return BlocProvider(
+      create: (context) => mapOrganizationBloc,
       child: CustomScreen(
         child: BlocBuilder<MapOrganizationBloc, MapOrganizationState>(
           builder: (context, state) {
@@ -62,9 +55,6 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                       builder: (context) {
                         if (state.screenStatus.isMap) {
                           return MapScreen(
-                            onMapCreateSuccess: (point) {
-                              doctorListBloc.add(DoctorListEvent.getDoctors(myPoint: point, search: ''));
-                            },
                             mapOrganizationBloc: mapOrganizationBloc,
                             tabController: state.tabController,
                             searchController: _searchFieldController,
@@ -124,34 +114,51 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                       isSearching: state.isSearching,
                       onClear: () {
                         mapOrganizationBloc.add(MapUnFocusAndClearControllerEvent(notUnFocus: true));
-                        mapOrganizationBloc.add(MapGetHospitalsWithDistance(search: '', myPoint: state.myPoint));
-                        doctorListBloc.add(DoctorListEvent.getDoctors(search: '', myPoint: state.myPoint));
+                        mapOrganizationBloc.add(
+                          MapGetHospitalsEvent(
+                            search: null,
+                            latitude: state.currentLat,
+                            longitude: state.currentLong,
+                            radius: 150,
+                            context: context,
+                          ),
+                        );
+                        mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
 
-                        mapOrganizationBloc.add(MapGetSuggestionsEvent(text: state.searchController.text));
+                        if (state.tabController.index == 0) {
+                          mapOrganizationBloc.add(MapGetSuggestionsEvent());
+                        }
                       },
                       onChanged: (value) {
-                        mapOrganizationBloc.add(MapGetSuggestionsEvent(text: value));
+                        if (state.tabController.index == 0) {
+                          mapOrganizationBloc.add(MapGetSuggestionsEvent());
+                        }
                         if (value.isNotEmpty) {
                           if (state.tabController.index == 0) {
-                            mapOrganizationBloc.add(MapGetHospitalsWithDistance(
-                              search: value,
-                              myPoint: state.myPoint,
-                            ));
+                            mapOrganizationBloc.add(
+                              MapGetHospitalsEvent(
+                                search: null,
+                                latitude: state.currentLat,
+                                longitude: state.currentLong,
+                                radius: 150,
+                                context: context,
+                              ),
+                            );
                           } else {
-                            doctorListBloc.add(DoctorListEvent.getDoctors(
-                              search: value,
-                              myPoint: state.myPoint,
-                            ));
+                            mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
                           }
                         } else {
-                          mapOrganizationBloc.add(MapGetHospitalsWithDistance(
-                            search: '',
-                            myPoint: state.myPoint,
-                          ));
-                          doctorListBloc.add(DoctorListEvent.getDoctors(
-                            search: '',
-                            myPoint: state.myPoint,
-                          ));
+                          mapOrganizationBloc
+                            ..add(
+                              MapGetHospitalsEvent(
+                                search: null,
+                                latitude: state.currentLat,
+                                longitude: state.currentLong,
+                                radius: 150,
+                                context: context,
+                              ),
+                            )
+                            ..add(MapGetDoctorsEvent(context: context));
                         }
                       },
                       onCloseTap: () {
