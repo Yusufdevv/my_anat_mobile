@@ -358,7 +358,8 @@ class CodegenLoader extends AssetLoader{
   "payment_failure_subtitle": "Процесс оплаты идет вне приложении",
   "all_vacancies": "Все вакансии",
   "go": "Перейти",
-  "activate": "Активировать"
+  "activate": "Активировать",
+  "all_specs": "Все специалисты"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -704,7 +705,8 @@ static const Map<String,dynamic> uz = {
   "payment_failure_subtitle": "Jarayon dasturdan tashqarida amalga oshirilyapti",
   "all_vacancies": "Hamma ish o'rinlari",
   "go": "O'tish",
-  "activate": "Faollashtirish"
+  "activate": "Faollashtirish",
+  "all_specs": "Barcha mutaxassislar"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

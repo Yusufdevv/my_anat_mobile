@@ -33,15 +33,19 @@ typedef OnMapControllerChange = Function(double lat, double long);
 
 class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   final GetSuggestionsUseCase suggestionsUseCase = GetSuggestionsUseCase();
-  final GetMapDoctorUseCase getDoctors = GetMapDoctorUseCase(repo: serviceLocator<GlobalRequestRepository>());
-  final GetTypesUseCase getTypesUseCase = GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>());
-  final GetSpecializationUseCase getSpecializationsUseCase = GetSpecializationUseCase();
+  final GetMapDoctorUseCase getDoctors =
+      GetMapDoctorUseCase(repo: serviceLocator<GlobalRequestRepository>());
+  final GetTypesUseCase getTypesUseCase =
+      GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>());
+  final GetSpecializationUseCase getSpecializationsUseCase =
+      GetSpecializationUseCase();
   final GetHopitalsMapUseCase getHospitalsUseCase =
       GetHopitalsMapUseCase(mapRepository: serviceLocator<MapRepositoryImpl>());
   final double deviceWidth;
   late YandexMapController mapController;
 
-  MapOrganizationBloc({required this.deviceWidth, required TickerProvider tickerProvider})
+  MapOrganizationBloc(
+      {required this.deviceWidth, required TickerProvider tickerProvider})
       : super(
           MapOrganizationState(
             focusNode: FocusNode(),
@@ -69,22 +73,26 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     on<MapUnFocusAndClearControllerEvent>(_unFocus);
   }
 
-  FutureOr<void> _unFocus(MapUnFocusAndClearControllerEvent event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _unFocus(MapUnFocusAndClearControllerEvent event,
+      Emitter<MapOrganizationState> emit) async {
     if (!event.notUnFocus) {
       state.focusNode.unfocus();
     }
     emit(state.copyWith(searchController: TextEditingController()));
   }
 
-  FutureOr<void> _getSuggestions(MapGetSuggestionsEvent event, Emitter<MapOrganizationState> emit) async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress, searchText: event.text));
+  FutureOr<void> _getSuggestions(
+      MapGetSuggestionsEvent event, Emitter<MapOrganizationState> emit) async {
+    emit(state.copyWith(
+        status: FormzStatus.submissionInProgress, searchText: event.text));
     final result = await suggestionsUseCase.call(SuggestionParam(
       where: 'Suggestion Bloc _GetSuggestions',
       isDoctor: state.tabController.index == 1,
       search: event.text,
     ));
     if (result.isRight) {
-      emit(state.copyWith(status: FormzStatus.submissionInProgress, suggestions: result.right));
+      emit(state.copyWith(
+          status: FormzStatus.submissionInProgress, suggestions: result.right));
     } else {
       emit(state.copyWith(
         status: FormzStatus.submissionFailure,
@@ -92,13 +100,16 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     }
   }
 
-  FutureOr<void> _getSpecializations(MapGetSpecializationsEvent event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _getSpecializations(MapGetSpecializationsEvent event,
+      Emitter<MapOrganizationState> emit) async {
     emit(state.copyWith(
       status: FormzStatus.submissionInProgress,
     ));
     final result = await getSpecializationsUseCase('');
     if (result.isRight) {
-      emit(state.copyWith(status: FormzStatus.submissionSuccess, specializations: result.right.results));
+      emit(state.copyWith(
+          status: FormzStatus.submissionSuccess,
+          specializations: result.right.results));
     } else {
       emit(state.copyWith(
         status: FormzStatus.submissionFailure,
@@ -107,7 +118,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   }
 
   FutureOr<void> _getMoreHospitalsWithDistance(
-      MapGetMoreHospitalsWithDistanceEvent event, Emitter<MapOrganizationState> emit) async {
+      MapGetMoreHospitalsWithDistanceEvent event,
+      Emitter<MapOrganizationState> emit) async {
     final result = await getHospitalsUseCase(MapV2Params(next: state.next));
     if (result.isRight) {
       emit(state.copyWith(
@@ -120,8 +132,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     }
   }
 
-  FutureOr<void> _getHospitalsWithDistance(
-      MapGetHospitalsWithDistance event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _getHospitalsWithDistance(MapGetHospitalsWithDistance event,
+      Emitter<MapOrganizationState> emit) async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     final result = await getHospitalsUseCase.call(
       MapV2Params(
@@ -143,7 +155,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     }
   }
 
-  FutureOr<void> _choose(MapChooseEvent event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _choose(
+      MapChooseEvent event, Emitter<MapOrganizationState> emit) async {
     if (event.isGetFocus ?? false) {
       state.focusNode.requestFocus();
     }
@@ -157,25 +170,30 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     ));
   }
 
-  FutureOr<void> _zoomIn(MapZoomIn event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _zoomIn(
+      MapZoomIn event, Emitter<MapOrganizationState> emit) async {
     if (state.maxZoomLevel > state.zoomLevel) {
       mapController.moveCamera(CameraUpdate.zoomTo(state.zoomLevel + 1),
-          animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth));
+          animation:
+              const MapAnimation(duration: 0.2, type: MapAnimationType.smooth));
       emit(state.copyWith(zoomLevel: state.zoomLevel + 1));
     }
   }
 
-  FutureOr<void> _zoomOut(MapZoomOut event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _zoomOut(
+      MapZoomOut event, Emitter<MapOrganizationState> emit) async {
     if (state.minZoomLevel < state.zoomLevel) {
       mapController.moveCamera(
         CameraUpdate.zoomTo(state.zoomLevel - 1),
-        animation: const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
+        animation:
+            const MapAnimation(duration: 0.2, type: MapAnimationType.smooth),
       );
       emit(state.copyWith(zoomLevel: state.zoomLevel - 1));
     }
   }
 
-  FutureOr<void> _changeTab(MapChangeTabEvent event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _changeTab(
+      MapChangeTabEvent event, Emitter<MapOrganizationState> emit) async {
     if (state.screenStatus.isList) return;
     if (event.haveToLoading) {
       emit(state.copyWith(tabChangingStatus: FormzStatus.submissionInProgress));
@@ -200,7 +218,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
                 zoom: 15,
               ),
             ),
-            animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+            animation: const MapAnimation(
+                duration: 0.15, type: MapAnimationType.smooth),
           );
         },
       ).then((placemarkss) async {
@@ -214,12 +233,15 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
               zoom: 15,
             ),
           ),
-          animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+          animation:
+              const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
         );
 
         emit(
           state.copyWith(
-            tabChangingStatus: event.haveToLoading ? FormzStatus.submissionSuccess : state.tabChangingStatus,
+            tabChangingStatus: event.haveToLoading
+                ? FormzStatus.submissionSuccess
+                : state.tabChangingStatus,
             mapObjects: placemarkss,
           ),
         );
@@ -242,7 +264,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
                 zoom: 15,
               ),
             ),
-            animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+            animation: const MapAnimation(
+                duration: 0.15, type: MapAnimationType.smooth),
           );
         },
       ).then((placemarkss) async {
@@ -256,12 +279,15 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
               zoom: 15,
             ),
           ),
-          animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+          animation:
+              const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
         );
 
         emit(
           state.copyWith(
-            tabChangingStatus: event.haveToLoading ? FormzStatus.submissionSuccess : state.tabChangingStatus,
+            tabChangingStatus: event.haveToLoading
+                ? FormzStatus.submissionSuccess
+                : state.tabChangingStatus,
             mapObjects: placemarkss,
           ),
         );
@@ -269,7 +295,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     }
   }
 
-  FutureOr<void> _getHospitals(MapGetHospitalsEvent event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _getHospitals(
+      MapGetHospitalsEvent event, Emitter<MapOrganizationState> emit) async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     final result = await getHospitalsUseCase.call(MapV2Params(
       radius: event.radius ?? 150,
@@ -292,7 +319,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
           deviceWidth: deviceWidth,
           points: result.right.results,
           context: event.context,
-          point: Point(latitude: state.currentLat, longitude: state.currentLong),
+          point:
+              Point(latitude: state.currentLat, longitude: state.currentLong),
           accuracy: state.accuracy,
           onMapControllerChange: (lat, long) async {
             await mapController.moveCamera(
@@ -305,7 +333,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
                   zoom: 15,
                 ),
               ),
-              animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+              animation: const MapAnimation(
+                  duration: 0.15, type: MapAnimationType.smooth),
             );
           },
         ).then((placemarks) {
@@ -330,7 +359,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     }
   }
 
-  FutureOr<void> _getTypes(MapGetTypesEvent event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _getTypes(
+      MapGetTypesEvent event, Emitter<MapOrganizationState> emit) async {
     emit(state.copyWith(typesStatus: FormzStatus.submissionInProgress));
     final result = await getTypesUseCase.call(event.searchText);
     if (result.isRight) {
@@ -343,26 +373,30 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     }
   }
 
-  FutureOr<void> _getMorTypes(MapGetMoreTypesEvent event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _getMorTypes(
+      MapGetMoreTypesEvent event, Emitter<MapOrganizationState> emit) async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     final result = await getTypesUseCase.call(event.searchText);
     if (result.isRight) {
-      emit(state.copyWith(types: result.right.results, status: FormzStatus.submissionSuccess));
+      emit(state.copyWith(
+          types: result.right.results, status: FormzStatus.submissionSuccess));
     } else {
       emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
 
-  FutureOr<void> _getDoctors(MapGetDoctorsEvent event, Emitter<MapOrganizationState> emit) async {
-    final result =
-        await getDoctors(state.searchText, param: MapParameter(lat: state.lat, long: state.long, radius: 150));
+  FutureOr<void> _getDoctors(
+      MapGetDoctorsEvent event, Emitter<MapOrganizationState> emit) async {
+    final result = await getDoctors(state.searchText,
+        param: MapParameter(lat: state.lat, long: state.long, radius: 150));
     if (result.isRight) {
       if (state.tabController?.index == 1) {
         await MyFunctions.addDoctors(
           deviceWidth: deviceWidth,
           points: result.right,
           context: event.context,
-          point: Point(latitude: state.currentLat, longitude: state.currentLong),
+          point:
+              Point(latitude: state.currentLat, longitude: state.currentLong),
           accuracy: state.accuracy,
           onMapControllerChange: (lat, long) async {
             await mapController.moveCamera(
@@ -375,7 +409,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
                   zoom: 15,
                 ),
               ),
-              animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+              animation: const MapAnimation(
+                  duration: 0.15, type: MapAnimationType.smooth),
             );
           },
         ).then((placemarks) {
@@ -398,14 +433,18 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     } else {}
   }
 
-  FutureOr<void> _getCurrentLocation(MapGetCurrentLocationEvent event, Emitter<MapOrganizationState> emit) async {
-    emit(state.copyWith(getCurrentLocationStatus: FormzStatus.submissionInProgress));
+  FutureOr<void> _getCurrentLocation(MapGetCurrentLocationEvent event,
+      Emitter<MapOrganizationState> emit) async {
+    emit(state.copyWith(
+        getCurrentLocationStatus: FormzStatus.submissionInProgress));
     try {
       final position = await MyFunctions.determinePosition();
 
       await StorageRepository.putDouble(StoreKeys.latitude, position.latitude);
-      await StorageRepository.putDouble(StoreKeys.longitude, position.longitude);
-      final myPoint = Point(latitude: position.latitude, longitude: position.longitude);
+      await StorageRepository.putDouble(
+          StoreKeys.longitude, position.longitude);
+      final myPoint =
+          Point(latitude: position.latitude, longitude: position.longitude);
       final myPlaceMark = await MyFunctions.getMyPoint(myPoint, event.context);
       var placemarks = [...state.mapObjects];
       placemarks.add(myPlaceMark);
@@ -419,7 +458,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
               ),
               zoom: 15),
         ),
-        animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+        animation:
+            const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
       );
       emit(
         state.copyWith(
@@ -434,11 +474,13 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       );
     } on ParsingException catch (e) {
       event.onError(e.errorMessage);
-      emit(state.copyWith(getCurrentLocationStatus: FormzStatus.submissionSuccess));
+      emit(state.copyWith(
+          getCurrentLocationStatus: FormzStatus.submissionSuccess));
     }
   }
 
-  FutureOr<void> _onMapCreated(MapOnCreateEvent event, Emitter<MapOrganizationState> emit) async {
+  FutureOr<void> _onMapCreated(
+      MapOnCreateEvent event, Emitter<MapOrganizationState> emit) async {
     mapController = event.controller;
 
     var maxZoomLevel = await mapController.getMaxZoom();
@@ -455,7 +497,8 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     );
     Position? currentPosition;
     if (lat == -1 || long == -1) {
-      emit(state.copyWith(getCurrentLocationStatus: FormzStatus.submissionInProgress));
+      emit(state.copyWith(
+          getCurrentLocationStatus: FormzStatus.submissionInProgress));
       currentPosition = await MyFunctions.determinePosition();
       lat = currentPosition.latitude;
       long = currentPosition.longitude;
@@ -470,12 +513,14 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
           zoom: 15,
         ),
       ),
-      animation: const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
+      animation:
+          const MapAnimation(duration: 0.15, type: MapAnimationType.smooth),
     );
-    final hospitalResult = await getHospitalsUseCase.call(MapV2Params(longitude: long, latitude: lat, radius: 150));
+    final hospitalResult = await getHospitalsUseCase
+        .call(MapV2Params(longitude: long, latitude: lat, radius: 150));
 
-    final doctorsResult =
-        await getDoctors(state.searchText, param: MapParameter(lat: state.lat, long: state.long, radius: 150));
+    final doctorsResult = await getDoctors(state.searchText,
+        param: MapParameter(lat: state.lat, long: state.long, radius: 150));
 
     emit(
       state.copyWith(
@@ -494,7 +539,10 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     );
     event.onSuccess(Point(latitude: lat, longitude: long));
     add(MapChangeTabEvent(
-        context: event.context, tab: 0, acuracy: currentPosition?.accuracy ?? 20.0, haveToLoading: false));
+        context: event.context,
+        tab: 0,
+        acuracy: currentPosition?.accuracy ?? 20.0,
+        haveToLoading: false));
   }
 
   EventTransformer<MyEvent> debounce<MyEvent>(Duration duration) =>
@@ -508,5 +556,6 @@ extension MapScreenStatusExtention on MapScreenStatus {
 
   bool get isMap => this == MapScreenStatus.map;
 
-  MapScreenStatus get switchIt => this == MapScreenStatus.map ? MapScreenStatus.list : MapScreenStatus.map;
+  MapScreenStatus get switchIt =>
+      this == MapScreenStatus.map ? MapScreenStatus.list : MapScreenStatus.map;
 }

@@ -1,4 +1,5 @@
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/hospital_single/presentation/bloc/hospital_specialist/hospital_specialist_bloc.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/all_hospital_items_screen.dart';
 import 'package:anatomica/features/hospital_single/presentation/parts/all_hospital_specialists.dart';
@@ -9,11 +10,15 @@ import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
 
 class HospitalSpecialists extends StatelessWidget {
-  const HospitalSpecialists({Key? key}) : super(key: key);
+  final int organizationId;
+  const HospitalSpecialists({required this.organizationId, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +40,8 @@ class HospitalSpecialists extends StatelessWidget {
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              if (index == 5) {
-                                return ShowAllButton(
+                              if (index == 10) {
+                                return GestureDetector(
                                   onTap: () {
                                     Navigator.of(context).push(
                                       fade(
@@ -46,15 +51,37 @@ class HospitalSpecialists extends StatelessWidget {
                                           child: AllHospitalSpecialists(
                                             hospitalSpecialistBloc: context
                                                 .read<HospitalSpecialistBloc>(),
+                                            organizationId: organizationId,
                                           ),
                                         ),
                                       ),
                                     );
                                   },
-                                  width:
-                                      MediaQuery.of(context).size.shortestSide -
-                                          58,
-                                  title: 'Все специалисты',
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(color: primary),
+                                    ),
+                                    padding:
+                                        const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                                    margin:
+                                        const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          LocaleKeys.all_specs.tr(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineMedium!
+                                              .copyWith(color: textColor),
+                                        ),
+                                        SvgPicture.asset(AppIcons.rightArrow),
+                                      ],
+                                    ),
+                                  ),
                                 );
                               }
                               return SizedBox(
@@ -72,8 +99,8 @@ class HospitalSpecialists extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(width: 8),
-                            itemCount: state.specialists.length > 5
-                                ? state.specialists.take(6).length
+                            itemCount: state.specialists.length > 10
+                                ? state.specialists.take(11).length
                                 : state.specialists.length,
                           ),
                         )

@@ -41,11 +41,13 @@ class JournalPagesState extends Equatable {
       JournalPagesState(
         fontSizeIndex: fontSizeIndex ?? this.fontSizeIndex,
         pages: pages ?? this.pages,
-        getJournalPagesStatus: getJournalPagesStatus ?? this.getJournalPagesStatus,
+        getJournalPagesStatus:
+            getJournalPagesStatus ?? this.getJournalPagesStatus,
         fetchMore: fetchMore ?? this.fetchMore,
-        next: next,
+        next: next ?? this.next,
         contents: contents ?? this.contents,
-        getJournalContentsStatus: getJournalContentsStatus ?? this.getJournalContentsStatus,
+        getJournalContentsStatus:
+            getJournalContentsStatus ?? this.getJournalContentsStatus,
         contentsFetchMore: contentsFetchMore ?? this.contentsFetchMore,
         contentsNext: contentsNext,
         slug: slug ?? this.slug,

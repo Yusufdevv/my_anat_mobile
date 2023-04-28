@@ -345,5 +345,6 @@ abstract class  LocaleKeys {
   static const all_vacancies = 'all_vacancies';
   static const go = 'go';
   static const activate = 'activate';
+  static const all_specs = 'all_specs';
 
 }
