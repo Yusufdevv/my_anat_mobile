@@ -108,8 +108,8 @@ class _HospitalContactsState extends State<HospitalContacts> {
   Widget build(BuildContext context) {
     return Container(
       color: white,
-      margin:
-          EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16),
+      margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).padding.bottom + 16, top: 16),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

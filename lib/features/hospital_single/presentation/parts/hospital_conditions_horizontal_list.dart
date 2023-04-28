@@ -25,7 +25,7 @@ class HospitalConditionsHorizontalList extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 12),
           color: white,
-          margin: const EdgeInsets.only(bottom: 16),
+          margin: const EdgeInsets.only(top: 16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

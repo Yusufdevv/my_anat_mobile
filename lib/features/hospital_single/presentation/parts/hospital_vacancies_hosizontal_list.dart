@@ -22,7 +22,7 @@ class HospitalVacanciesHorizontalList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: white,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(top: 16),
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

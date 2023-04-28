@@ -20,7 +20,7 @@ class HospitalSpecialists extends StatelessWidget {
     return BlocBuilder<HospitalSpecialistBloc, HospitalSpecialistState>(
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.only(top: 16),
           child: state.status.isSubmissionInProgress
               ? const SizedBox(
                   height: 116,
@@ -79,7 +79,7 @@ class HospitalSpecialists extends StatelessWidget {
                         )
                       : Container(
                           width: double.maxFinite,
-                          padding:const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           color: white,
                           child: EmptyWidget(
                             hasMargin: false,
