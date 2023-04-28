@@ -45,8 +45,8 @@ class _ReaderControllerState extends State<ReaderController> with SingleTickerPr
   @override
   Widget build(BuildContext context) => BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
         builder: (context, state) {
-          print('state => ${context.read<ReaderControllerBloc>().state.journalLangg}');
-          _tabController.animateTo(context.read<ReaderControllerBloc>().state.journalLangg == 'ru' ? 0 : 1);
+          print('state => ${context.read<ReaderControllerBloc>().state.journalLang}');
+          _tabController.animateTo(context.read<ReaderControllerBloc>().state.journalLang == 'ru' ? 0 : 1);
           return BlocBuilder<JournalPagesBloc, JournalPagesState>(
             builder: (context, journalState) {
               return Container(

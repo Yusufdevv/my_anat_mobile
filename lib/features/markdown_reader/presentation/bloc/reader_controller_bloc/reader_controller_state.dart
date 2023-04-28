@@ -10,11 +10,11 @@ class ReaderControllerState extends Equatable {
   final String changedDataAsWebPage;
   final String jsFunction;
   final int journalIndex;
-  final String journalLangg;
+  final String journalLang;
 
   const ReaderControllerState({
     this.selectedColor = white,
-    this.journalLangg = 'ru',
+    this.journalLang = 'ru',
     this.selectedTextColor = textColor,
     this.selectedFontFamily = 'Averta CY',
     this.fontSizeIndex = 0,
@@ -38,7 +38,7 @@ class ReaderControllerState extends Equatable {
     int? journalIndex,
   }) =>
       ReaderControllerState(
-        journalLangg: journalLangg ?? this.journalLangg,
+        journalLang: journalLangg ?? this.journalLang,
         selectedColor: selectedColor ?? this.selectedColor,
         changedDataAsWebPage: changedDataAsWebPage ?? this.changedDataAsWebPage,
         colorName: colorName ?? this.colorName,
@@ -53,7 +53,7 @@ class ReaderControllerState extends Equatable {
   @override
   List<Object?> get props => [
         selectedColor,
-        journalLangg,
+        journalLang,
         selectedTextColor,
         selectedFontFamily,
         fontSizeIndex,

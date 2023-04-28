@@ -229,7 +229,7 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                       builder: (context, readerControllerState) {
                                         return AnimatedCrossFade(
                                           duration: const Duration(milliseconds: 250),
-                                          crossFadeState: readerControllerState.journalLangg == 'ru'
+                                          crossFadeState: readerControllerState.journalLang == 'ru'
                                               ? CrossFadeState.showFirst
                                               : CrossFadeState.showSecond,
                                           secondChild: JournalMarkdownPage(
