@@ -114,67 +114,79 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
             controller: _scrollController,
             physics: const BouncingScrollPhysics(),
             slivers: [
-              SliverAppBar(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarIconBrightness:
-                        isShrink.value ? Brightness.dark : Brightness.light),
-                pinned: true,
-                backgroundColor: errorImageBackground,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(16),
-                )),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SvgPicture.asset(
-                      AppIcons.anatomica,
-                      width: 128,
-                      height: 28,
-                      color: isShrink.value ? black : white,
+              AnimatedBuilder(
+                builder: (context, child) {
+                  return SliverAppBar(
+                    systemOverlayStyle: SystemUiOverlayStyle(
+                        statusBarIconBrightness: isShrink.value
+                            ? Brightness.dark
+                            : Brightness.light),
+                    pinned: true,
+                    backgroundColor: errorImageBackground,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(16),
+                    )),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SvgPicture.asset(
+                          AppIcons.anatomica,
+                          width: 128,
+                          height: 28,
+                          color: isShrink.value ? black : white,
+                        ),
+                        context.read<AuthenticationBloc>().state.status !=
+                                AuthenticationStatus.authenticated
+                            ? const Spacer()
+                            : WScaleAnimation(
+                                child: true
+                                    ? SvgPicture.asset(
+                                        AppIcons.bell,
+                                        color: isShrink.value ? black : white,
+                                      )
+                                    : SvgPicture.asset(
+                                        isShrink.value
+                                            ? AppIcons
+                                                .blackNotificationWithRedDot
+                                            : AppIcons.notificationWithRedDot,
+                                      ),
+                                onTap: () =>
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(fade(
+                                            page: const NotificationsScreen())),
+                              ),
+                      ],
                     ),
-                    context.read<AuthenticationBloc>().state.status !=
-                            AuthenticationStatus.authenticated
-                        ? const Spacer()
-                        : WScaleAnimation(
-                            child: true
-                                ? SvgPicture.asset(
-                                    AppIcons.bell,
-                                    color: isShrink.value ? black : white,
-                                  )
-                                : SvgPicture.asset(
-                                    isShrink.value
-                                        ? AppIcons.blackNotificationWithRedDot
-                                        : AppIcons.notificationWithRedDot,
-                                  ),
-                            onTap: () => Navigator.of(context,
-                                    rootNavigator: true)
-                                .push(fade(page: const NotificationsScreen())),
-                          ),
-                  ],
-                ),
-                expandedHeight: 324,
-                elevation: 0,
-                scrolledUnderElevation: 0,
-                flexibleSpace: BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
-                  builder: (context, state) {
-                    return state.bannersStatus != FormzStatus.submissionSuccess
-                        ? const ShimmerContainer(
-                            width: double.maxFinite, height: 324)
-                        : BannerItem(
-                            ids: state.banners.map((e) => e.id).toList(),
-                            bloc: _homeArticlesBloc,
-                            isShrink: isShrink.value,
-                            images: state.banners
-                                .map((e) => e.image.middle)
-                                .toList(),
-                            subtitles:
-                                state.banners.map((e) => e.subtitle).toList(),
-                            titles: state.banners.map((e) => e.title).toList(),
-                            types: state.banners.map((e) => e.type).toList(),
-                          );
-                  },
-                ),
+                    expandedHeight: 324,
+                    elevation: 0,
+                    scrolledUnderElevation: 0,
+                    flexibleSpace:
+                        BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
+                      builder: (context, state) {
+                        return state.bannersStatus !=
+                                FormzStatus.submissionSuccess
+                            ? const ShimmerContainer(
+                                width: double.maxFinite, height: 324)
+                            : BannerItem(
+                                ids: state.banners.map((e) => e.id).toList(),
+                                isShrink: isShrink.value,
+                                images: state.banners
+                                    .map((e) => e.image.middle)
+                                    .toList(),
+                                subtitles: state.banners
+                                    .map((e) => e.subtitle)
+                                    .toList(),
+                                titles:
+                                    state.banners.map((e) => e.title).toList(),
+                                types:
+                                    state.banners.map((e) => e.type).toList(),
+                              );
+                      },
+                    ),
+                  );
+                },
+                animation: isShrink,
               ),
               // SliverToBoxAdapter(
               //   child: Padding(
@@ -305,7 +317,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                       fade(
                         page: const WebViewScreen(
                           page: '',
-                          url: 'https://anatomica.uz/article',
+                          url: 'https://anatomica.uz/articles',
                         ),
                       ),
                     );

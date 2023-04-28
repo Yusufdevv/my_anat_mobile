@@ -3,7 +3,7 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class MapTabBar extends StatelessWidget {
+class MapTabBar extends StatefulWidget {
   final MediaQueryData mediaQuery;
   final TabController tabController;
   final ValueChanged<int> onTabChanged;
@@ -19,18 +19,35 @@ class MapTabBar extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<MapTabBar> createState() => _MapTabBarState();
+}
+
+class _MapTabBarState extends State<MapTabBar> {
+  late ValueNotifier<int> tabNotifier;
+  @override
+  void initState() {
+    tabNotifier = ValueNotifier(widget.tabController.index);
+    widget.tabController.addListener(() {
+      if (widget.tabController.indexIsChanging) {
+        tabNotifier.value = widget.tabController.index;
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Positioned(
       left: 0,
       right: 0,
       top: 0,
       child: Container(
-        height: isMap ? 120 : 147,
-        width: mediaQuery.size.width,
+        height: widget.isMap ? 120 : 147,
+        width: widget.mediaQuery.size.width,
         alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
-          color: isMap ? Colors.transparent : white,
-          boxShadow: isMap
+          color: widget.isMap ? Colors.transparent : white,
+          boxShadow: widget.isMap
               ? null
               : [
                   BoxShadow(
@@ -44,14 +61,20 @@ class MapTabBar extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            if (!isMap) ...{
-              Text(
-                /// todo localization
-                isDoctor ? 'Список врачей' : 'Список организации',
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+            if (!widget.isMap) ...{
+              AnimatedBuilder(
+                animation: tabNotifier,
+                builder: (context, child) {
+                  return Text(
+                    widget.tabController.index == 1
+                        ? LocaleKeys.doctor_list.tr()
+                        : LocaleKeys.org_list.tr(),
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  );
+                },
               ),
               const SizedBox(height: 12),
             },
@@ -61,7 +84,7 @@ class MapTabBar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: white,
                 // color: Colors.teal,
-                boxShadow: isMap
+                boxShadow: widget.isMap
                     ? [
                         BoxShadow(
                           offset: const Offset(0, 8),
@@ -70,7 +93,7 @@ class MapTabBar extends StatelessWidget {
                         ),
                       ]
                     : null,
-                border: isMap ? Border.all(color: divider) : null,
+                border: widget.isMap ? Border.all(color: divider) : null,
                 borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.all(4),
@@ -82,20 +105,23 @@ class MapTabBar extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(2),
                 child: TabBar(
-                  controller: tabController,
+                  controller: widget.tabController,
                   padding: EdgeInsets.zero,
                   indicatorPadding: EdgeInsets.zero,
-                  indicator: BoxDecoration(color: white, borderRadius: BorderRadius.circular(6), boxShadow: [
-                    BoxShadow(
-                      offset: const Offset(0, 8),
-                      blurRadius: 24,
-                      color: chipShadowColor.withOpacity(0.19),
-                    ),
-                  ]),
+                  indicator: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(6),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: const Offset(0, 8),
+                          blurRadius: 24,
+                          color: chipShadowColor.withOpacity(0.19),
+                        ),
+                      ]),
                   labelPadding: EdgeInsets.zero,
                   labelStyle: Theme.of(context).textTheme.displaySmall,
                   labelColor: textColor,
-                  onTap: onTabChanged,
+                  onTap: widget.onTabChanged,
                   unselectedLabelColor: textSecondary,
                   tabs: [
                     Tab(text: LocaleKeys.organization.tr()),

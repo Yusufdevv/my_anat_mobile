@@ -65,8 +65,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 )
               : null,
           body: Padding(
-            padding:
-                EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom, top: MediaQuery.of(context).padding.top),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom,
+                top: MediaQuery.of(context).padding.top),
             child: InAppWebView(
               onWebViewCreated: (controller) async {
                 _controller = controller;
@@ -82,8 +83,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 // }
               },
               initialUrlRequest: URLRequest(
-                  url: Uri.parse(widget.url ??
-                      'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString(StoreKeys.token)}&' : ''}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}')),
+                url: Uri.parse(widget.url ??
+                    'https://anatomica.uz/mobile-auth/?${widget.sendToken ? 'token=${StorageRepository.getString(StoreKeys.token)}&' : ''}mobile=true&page=${widget.page}${widget.slug.isNotEmpty ? '&slug=${widget.slug}' : ''}'),
+              ),
             ),
           ),
         ),

@@ -348,7 +348,17 @@ class CodegenLoader extends AssetLoader{
   "enable_auto_payment": "Включить автоплатеж",
   "organizationn": "Организация",
   "doctorr": "Доктор",
-  "journals": "Журналы"
+  "journals": "Журналы",
+  "doctor_list": "Список врачей",
+  "org_list": "Список организации",
+  "payment_pending": "Оплата ожидается",
+  "payment_pending_subtitle": "Процесс оплаты идет вне приложении",
+  "payment_success": "Оплата прошла успешно",
+  "payment_failure": "Произошла ошибка",
+  "payment_failure_subtitle": "Процесс оплаты идет вне приложении",
+  "all_vacancies": "Все вакансии",
+  "go": "Перейти",
+  "activate": "Активировать"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -684,7 +694,17 @@ static const Map<String,dynamic> uz = {
   "enable_auto_payment": "Avtomatik toʻlovni yoqish",
   "organizationn": "Tashkilot",
   "doctorr": "Shifokor",
-  "journals": "Jurnallar"
+  "journals": "Jurnallar",
+  "doctor_list": "Shifokorlar ro'yxati",
+  "org_list": "Shifoxonalar ro'yxati",
+  "payment_pending": "To'lov kutilyapti",
+  "payment_pending_subtitle": "Jarayon dasturdan tashqarida amalga oshirilyapti",
+  "payment_success": "To'lov amalga oshirildi",
+  "payment_failure": "Nimadir xato ketdi",
+  "payment_failure_subtitle": "Jarayon dasturdan tashqarida amalga oshirilyapti",
+  "all_vacancies": "Hamma ish o'rinlari",
+  "go": "O'tish",
+  "activate": "Faollashtirish"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

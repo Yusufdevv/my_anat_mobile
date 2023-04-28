@@ -332,5 +332,15 @@
   "enable_auto_payment": "Включить автоплатеж",
   "organizationn": "Организация", 
   "doctorr": "Доктор",
-  "journals": "Журналы"
+  "journals": "Журналы",
+  "doctor_list": "Список врачей",
+  "org_list": "Список организации",
+  "payment_pending":"Оплата ожидается",
+  "payment_pending_subtitle":"Процесс оплаты идет вне приложении",
+  "payment_success":"Оплата прошла успешно",
+  "payment_failure":"Произошла ошибка",
+  "payment_failure_subtitle":"Процесс оплаты идет вне приложении",
+  "all_vacancies": "Все вакансии",
+  "go": "Перейти",
+  "activate": "Активировать"
 }

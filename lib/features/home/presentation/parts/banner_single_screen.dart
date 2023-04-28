@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
@@ -9,18 +11,19 @@ import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/ho
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/buy_subscription_payment_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:formz/formz.dart';
 
 class BannerSingleScreen extends StatefulWidget {
-  final HomeArticlesBloc bloc;
   final String image;
   final int id;
-  const BannerSingleScreen(
-      {required this.bloc, required this.image, required this.id, Key? key})
+  const BannerSingleScreen({required this.image, required this.id, Key? key})
       : super(key: key);
 
   @override
@@ -30,9 +33,12 @@ class BannerSingleScreen extends StatefulWidget {
 class _BannerSingleScreenState extends State<BannerSingleScreen> {
   late ScrollController _scrollController;
   ValueNotifier<bool> isShrink = ValueNotifier(false);
+  late HomeArticlesBloc bloc;
 
   @override
   void initState() {
+    bloc = HomeArticlesBloc()
+      ..add(HomeArticlesEvent.getBannerSingle(id: widget.id));
     _scrollController = ScrollController()
       ..addListener(() {
         if (_scrollController.offset > 200 - kToolbarHeight &&
@@ -53,9 +59,7 @@ class _BannerSingleScreenState extends State<BannerSingleScreen> {
           const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider.value(
-              value: widget.bloc
-                ..add(HomeArticlesEvent.getBannerSingle(id: widget.id))),
+          BlocProvider.value(value: bloc),
         ],
         child: Scaffold(
           backgroundColor: errorImageBackground,
@@ -65,9 +69,7 @@ class _BannerSingleScreenState extends State<BannerSingleScreen> {
               return BlocBuilder<JournalBloc, JournalState>(
                 builder: (context, journalState) {
                   return WButton(
-                    // width: double.maxFinite,
-                    // todo activate
-                    text: 'Активировать',
+                    text: LocaleKeys.activate.tr(),
                     onTap: () {
                       if (state.status == AuthenticationStatus.authenticated) {
                         Navigator.of(context, rootNavigator: true).push(
@@ -84,89 +86,93 @@ class _BannerSingleScreenState extends State<BannerSingleScreen> {
                       }
                     },
                     margin: EdgeInsets.fromLTRB(16, 16, 16,
-                        MediaQuery.of(context).viewInsets.bottom + 32),
+                        MediaQuery.of(context).viewInsets.bottom + 48),
                   );
                 },
               );
             },
           ),
-          body: CustomScrollView(
-            controller: _scrollController,
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarIconBrightness:
-                        isShrink.value ? Brightness.dark : Brightness.light),
-                pinned: true,
-                backgroundColor: errorImageBackground,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(16),
-                )),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    WScaleAnimation(
-                      child: SvgPicture.asset(AppIcons.arrowLeft),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    )
+          body: BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
+            builder: (context, homeState) {
+              if (homeState.bannerSingleStatus !=
+                  FormzStatus.submissionSuccess) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return CustomScrollView(
+                  controller: _scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    SliverAppBar(
+                      automaticallyImplyLeading: false,
+                      systemOverlayStyle: SystemUiOverlayStyle(
+                          statusBarIconBrightness: isShrink.value
+                              ? Brightness.dark
+                              : Brightness.light),
+                      pinned: true,
+                      backgroundColor: errorImageBackground,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(16),
+                      )),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          WScaleAnimation(
+                            child: SvgPicture.asset(AppIcons.arrowLeft),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      ),
+                      expandedHeight: 324,
+                      elevation: 0,
+                      scrolledUnderElevation: 0,
+                      flexibleSpace: AnimatedCrossFade(
+                        duration: const Duration(milliseconds: 500),
+                        crossFadeState: isShrink.value
+                            ? CrossFadeState.showSecond
+                            : CrossFadeState.showFirst,
+                        secondChild: Container(
+                          color: white,
+                          height: MediaQuery.of(context).size.height,
+                        ),
+                        firstChild: Container(
+                          foregroundDecoration: BoxDecoration(
+                            borderRadius: const BorderRadius.vertical(
+                              bottom: Radius.circular(16),
+                            ),
+                            gradient: LinearGradient(
+                              colors: [
+                                textColor.withOpacity(0.9),
+                                textColor.withOpacity(0.2),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                  homeState.bannerSingle?.image.middle ?? ''),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: homeState.bannerSingle != null
+                          ? Html(data: homeState.bannerSingle?.content)
+                          : const SizedBox(),
+                    ),
+                    SliverToBoxAdapter(
+                        child: SizedBox(
+                            height: MediaQuery.of(context).size.height * .125))
                   ],
-                ),
-                expandedHeight: 324,
-                elevation: 0,
-                scrolledUnderElevation: 0,
-                flexibleSpace: BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
-                  builder: (context, state) {
-                    return AnimatedCrossFade(
-                      duration: const Duration(milliseconds: 500),
-                      crossFadeState: isShrink.value
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
-                      secondChild: Container(
-                        color: white,
-                        height: MediaQuery.of(context).size.height,
-                      ),
-                      firstChild: Container(
-                        foregroundDecoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              textColor.withOpacity(0.9),
-                              textColor.withOpacity(0.2),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.vertical(
-                            bottom: Radius.circular(16),
-                          ),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                state.bannerSingle?.image.middle ?? ''),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
-                builder: (context, state) {
-                  return SliverToBoxAdapter(
-                    child: Html(data: state.bannerSingle?.content),
-                  );
-                },
-              ),
-              SliverToBoxAdapter(
-                  child: SizedBox(
-                      height: MediaQuery.of(context).size.height * .125))
-            ],
+                );
+              }
+            },
           ),
         ),
       ),

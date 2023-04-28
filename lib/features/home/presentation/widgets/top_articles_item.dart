@@ -33,14 +33,15 @@ class TopArticlesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('slug => https://anatomica.uz/article/$slug');
     return WScaleAnimation(
       onTap: () {
         Navigator.of(context, rootNavigator: true).push(
           fade(
             page: WebViewScreen(
-              shareValue: 'https://anatomica.uz/article/$slug',
-              page: 'ArticleSinglePage',
-              slug: slug,
+              shareValue: 'https://anatomica.uz/articles/$slug',
+              page: '',
+              url: 'https://anatomica.uz/articles/$slug',
             ),
           ),
         );
