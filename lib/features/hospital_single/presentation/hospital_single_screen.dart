@@ -33,13 +33,15 @@ class HospitalSingleScreen extends StatefulWidget {
   final String slug;
   final int id;
 
-  const HospitalSingleScreen({required this.id, required this.slug, Key? key}) : super(key: key);
+  const HospitalSingleScreen({required this.id, required this.slug, Key? key})
+      : super(key: key);
 
   @override
   State<HospitalSingleScreen> createState() => _HospitalSingleScreenState();
 }
 
-class _HospitalSingleScreenState extends State<HospitalSingleScreen> with TickerProviderStateMixin {
+class _HospitalSingleScreenState extends State<HospitalSingleScreen>
+    with TickerProviderStateMixin {
   late TabController _tabController;
   late HeaderManagerBloc _headerManagerBloc;
   late PageController _pageController;
@@ -58,15 +60,28 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
   bool hasVideo = true;
   int currentImage = 0;
   final tabs = <HospitalSingleWidgetType>[
-    HospitalSingleWidgetType(title: LocaleKeys.about_clinic, keyTitle: 'about_clinic', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.videos, keyTitle: 'videos', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.service, keyTitle: 'service', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.specialists, keyTitle: 'specialists', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.facility, keyTitle: 'facility', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.articles, keyTitle: 'articles', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.reviews, keyTitle: 'reviews', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.vacancy, keyTitle: 'vacancy', key: GlobalKey()),
-    HospitalSingleWidgetType(title: LocaleKeys.contact, keyTitle: 'contact', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.about_clinic,
+        keyTitle: 'about_clinic',
+        key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.videos, keyTitle: 'videos', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.service, keyTitle: 'service', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.specialists,
+        keyTitle: 'specialists',
+        key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.facility, keyTitle: 'facility', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.articles, keyTitle: 'articles', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.reviews, keyTitle: 'reviews', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.vacancy, keyTitle: 'vacancy', key: GlobalKey()),
+    HospitalSingleWidgetType(
+        title: LocaleKeys.contact, keyTitle: 'contact', key: GlobalKey()),
   ];
 
   @override
@@ -80,14 +95,21 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
   void initState() {
     super.initState();
     controller = AutoScrollController();
-    vacanciesBloc = HospitalVacanciesBloc()..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
-    articlesBloc = HArticlesBloc()..add(HArticlesEvent.getArticles(organizationId: widget.id));
-    facilitiesBloc = FacilitiesBloc()..add(FacilitiesEvent.getFacilities(organizationId: widget.id));
+    vacanciesBloc = HospitalVacanciesBloc()
+      ..add(HospitalVacanciesEvent.getVacancies(organizationId: widget.id));
+    articlesBloc = HArticlesBloc()
+      ..add(HArticlesEvent.getArticles(organizationId: widget.id));
+    facilitiesBloc = FacilitiesBloc()
+      ..add(FacilitiesEvent.getFacilities(organizationId: widget.id));
     hospitalSpecialistBloc = HospitalSpecialistBloc()
-      ..add(HospitalSpecialistDoctorsEvent.getSpecialistsDoctors(organizationId: widget.id));
-    servicesBloc = ServicesBloc()..add(ServicesEvent.getServicesSpecial(organizationId: widget.id));
-    commentsBloc = CommentsBloc()..add(CommentsEvent.getComments(organizationId: widget.id));
-    hospitalSingleBloc = HospitalSingleBloc()..add(HospitalSingleEvent.getHospital(widget.slug));
+      ..add(HospitalSpecialistDoctorsEvent.getSpecialistsDoctors(
+          organizationId: widget.id));
+    servicesBloc = ServicesBloc()
+      ..add(ServicesEvent.getServicesSpecial(organizationId: widget.id));
+    commentsBloc = CommentsBloc()
+      ..add(CommentsEvent.getComments(organizationId: widget.id));
+    hospitalSingleBloc = HospitalSingleBloc()
+      ..add(HospitalSingleEvent.getHospital(widget.slug));
     _tabController = TabController(length: tabs.length, vsync: this);
     _headerManagerBloc = HeaderManagerBloc();
     _pageController = PageController();
@@ -95,7 +117,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(ChangeHeaderScrollPosition(headerPosition: controller.offset));
+    _headerManagerBloc
+        .add(ChangeHeaderScrollPosition(headerPosition: controller.offset));
   }
 
   @override
@@ -134,9 +157,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                 listeners: [
                   BlocListener<ServicesBloc, ServicesState>(
                     listener: (context, state) {
-                      if (state.statusSpecial.isSubmissionSuccess && state.servicesSpecial.isEmpty) {
+                      if (state.statusSpecial.isSubmissionSuccess &&
+                          state.servicesSpecial.isEmpty) {
                         setState(() {
-                          tabs.removeWhere((element) => element.keyTitle == 'service');
+                          tabs.removeWhere(
+                              (element) => element.keyTitle == 'service');
                           hasServices = false;
                         });
                       }
@@ -144,9 +169,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                   ),
                   BlocListener<HArticlesBloc, HArticlesState>(
                     listener: (context, state) {
-                      if (state.status.isSubmissionSuccess && state.articles.isEmpty) {
+                      if (state.status.isSubmissionSuccess &&
+                          state.articles.isEmpty) {
                         setState(() {
-                          tabs.removeWhere((element) => element.keyTitle == 'articles');
+                          tabs.removeWhere(
+                              (element) => element.keyTitle == 'articles');
                           hasArticle = false;
                         });
                       }
@@ -154,9 +181,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                   ),
                   BlocListener<FacilitiesBloc, FacilitiesState>(
                     listener: (context, state) {
-                      if (state.status.isSubmissionSuccess && state.comforts.isEmpty) {
+                      if (state.status.isSubmissionSuccess &&
+                          state.comforts.isEmpty) {
                         setState(() {
-                          tabs.removeWhere((element) => element.keyTitle == 'facility');
+                          tabs.removeWhere(
+                              (element) => element.keyTitle == 'facility');
                           hasFacility = false;
                         });
                       }
@@ -164,9 +193,11 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                   ),
                   BlocListener<HospitalSpecialistBloc, HospitalSpecialistState>(
                     listener: (context, state) {
-                      if (state.status.isSubmissionSuccess && state.specialists.isEmpty) {
+                      if (state.status.isSubmissionSuccess &&
+                          state.specialists.isEmpty) {
                         setState(() {
-                          tabs.removeWhere((element) => element.keyTitle == 'specialists');
+                          tabs.removeWhere(
+                              (element) => element.keyTitle == 'specialists');
                           hasSpecialists = false;
                         });
                       }
@@ -179,7 +210,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                         state.hospital.videoLink.isEmpty &&
                         state.hospital.videos.isEmpty) {
                       setState(() {
-                        tabs.removeWhere((element) => element.keyTitle == 'videos');
+                        tabs.removeWhere(
+                            (element) => element.keyTitle == 'videos');
                         hasVideo = false;
                       });
                     }
@@ -194,7 +226,9 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                         controller: controller,
                         //throttleDuration: const Duration(milliseconds: 300),
                         slivers: [
-                          HospitalSingleAppBar(headerManagerBloc: _headerManagerBloc, pageController: _pageController),
+                          HospitalSingleAppBar(
+                              headerManagerBloc: _headerManagerBloc,
+                              pageController: _pageController),
                           if (!state.hospital.paid) ...{
                             SliverToBoxAdapter(
                               child: Column(
@@ -225,17 +259,22 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                             SliverList(
                               delegate: SliverChildListDelegate.fixed(
                                 [
-                                  const SizedBox(height: 20),
                                   BlocProvider.value(
                                     value: _headerManagerBloc,
-                                    child: BlocBuilder<HeaderManagerBloc, HeaderManagerState>(
+                                    child: BlocBuilder<HeaderManagerBloc,
+                                        HeaderManagerState>(
                                       builder: (context, headerManagerState) {
                                         return InViewNotifierWidget(
                                           id: '1',
                                           builder: (context, isInView, child) {
-                                            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                              if (isInView || !headerManagerState.isHeaderScrolled) {
-                                                DefaultTabController.of(context).animateTo(0);
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback(
+                                                    (timeStamp) {
+                                              if (isInView ||
+                                                  !headerManagerState
+                                                      .isHeaderScrolled) {
+                                                DefaultTabController.of(context)
+                                                    .animateTo(0);
                                               }
                                             });
                                             return child ?? const SizedBox();
@@ -244,7 +283,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                             controller: controller,
                                             key: const ValueKey(0),
                                             index: 0,
-                                            child: AboutHospital(hospital: state.hospital),
+                                            child: AboutHospital(
+                                                hospital: state.hospital),
                                           ),
                                         );
                                       },
@@ -254,10 +294,14 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                     InViewNotifierWidget(
                                       id: '2',
                                       builder: (context, isInView, child) {
-                                        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((timeStamp) {
                                           if (isInView) {
                                             DefaultTabController.of(context)
-                                                .animateTo(tabs.indexWhere((element) => element.keyTitle == 'videos'));
+                                                .animateTo(tabs.indexWhere(
+                                                    (element) =>
+                                                        element.keyTitle ==
+                                                        'videos'));
                                           }
                                         });
                                         return child ?? const SizedBox();
@@ -265,11 +309,13 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                       child: AutoScrollTag(
                                         controller: controller,
                                         key: const ValueKey(1),
-                                        index: tabs.indexWhere((element) => element.keyTitle == 'videos'),
+                                        index: tabs.indexWhere((element) =>
+                                            element.keyTitle == 'videos'),
                                         child: HospitalVideo(
                                           videoUrl: state.hospital.videoLink,
                                           videos: state.hospital.videos,
-                                          videoDescription: state.hospital.videoDescription,
+                                          videoDescription:
+                                              state.hospital.videoDescription,
                                           tabController: _tabController,
                                         ),
                                       ),
@@ -279,10 +325,15 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                     InViewNotifierWidget(
                                         id: '3',
                                         builder: (context, isInView, child) {
-                                          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback(
+                                                  (timeStamp) {
                                             if (isInView) {
-                                              DefaultTabController.of(context).animateTo(
-                                                  tabs.indexWhere((element) => element.keyTitle == 'service'));
+                                              DefaultTabController.of(context)
+                                                  .animateTo(tabs.indexWhere(
+                                                      (element) =>
+                                                          element.keyTitle ==
+                                                          'service'));
                                             }
                                           });
 
@@ -291,18 +342,24 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                         child: AutoScrollTag(
                                             controller: controller,
                                             key: const ValueKey(2),
-                                            index: tabs.indexWhere((element) => element.keyTitle == 'service'),
-                                            child: HospitalServices(servicesBloc: servicesBloc))),
+                                            index: tabs.indexWhere((element) =>
+                                                element.keyTitle == 'service'),
+                                            child: HospitalServices(
+                                                servicesBloc: servicesBloc))),
                                   },
                                   if (hasSpecialists) ...{
                                     InViewNotifierWidget(
                                         id: '4',
                                         builder: (context, isInView, child) {
-                                          WidgetsBinding.instance.addPostFrameCallback(
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback(
                                             (timeStamp) {
                                               if (isInView) {
-                                                DefaultTabController.of(context).animateTo(
-                                                    tabs.indexWhere((element) => element.keyTitle == 'specialists'));
+                                                DefaultTabController.of(context)
+                                                    .animateTo(tabs.indexWhere(
+                                                        (element) =>
+                                                            element.keyTitle ==
+                                                            'specialists'));
                                               }
                                             },
                                           );
@@ -311,17 +368,25 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                         child: AutoScrollTag(
                                             controller: controller,
                                             key: const ValueKey(3),
-                                            index: tabs.indexWhere((element) => element.keyTitle == 'specialists'),
-                                            child: const HospitalSpecialists())),
+                                            index: tabs.indexWhere((element) =>
+                                                element.keyTitle ==
+                                                'specialists'),
+                                            child:
+                                                const HospitalSpecialists())),
                                   },
                                   if (hasFacility) ...{
                                     InViewNotifierWidget(
                                         id: '5',
                                         builder: (context, isInView, child) {
-                                          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback(
+                                                  (timeStamp) {
                                             if (isInView) {
-                                              DefaultTabController.of(context).animateTo(
-                                                  tabs.indexWhere((element) => element.keyTitle == 'facility'));
+                                              DefaultTabController.of(context)
+                                                  .animateTo(tabs.indexWhere(
+                                                      (element) =>
+                                                          element.keyTitle ==
+                                                          'facility'));
                                             }
                                           });
                                           return child ?? const SizedBox();
@@ -329,17 +394,24 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                         child: AutoScrollTag(
                                             controller: controller,
                                             key: const ValueKey(4),
-                                            index: tabs.indexWhere((element) => element.keyTitle == 'facility'),
-                                            child: const HospitalConditionsHorizontalList()))
+                                            index: tabs.indexWhere((element) =>
+                                                element.keyTitle == 'facility'),
+                                            child:
+                                                const HospitalConditionsHorizontalList()))
                                   },
                                   if (hasArticle) ...{
                                     InViewNotifierWidget(
                                         id: '6',
                                         builder: (context, isInView, child) {
-                                          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback(
+                                                  (timeStamp) {
                                             if (isInView) {
-                                              DefaultTabController.of(context).animateTo(
-                                                  tabs.indexWhere((element) => element.keyTitle == 'articles'));
+                                              DefaultTabController.of(context)
+                                                  .animateTo(tabs.indexWhere(
+                                                      (element) =>
+                                                          element.keyTitle ==
+                                                          'articles'));
                                             }
                                           });
 
@@ -348,16 +420,23 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                         child: AutoScrollTag(
                                             controller: controller,
                                             key: const ValueKey(5),
-                                            index: tabs.indexWhere((element) => element.keyTitle == 'articles'),
-                                            child: HospitalArticlesHorizontalList(hospitalId: widget.id)))
+                                            index: tabs.indexWhere((element) =>
+                                                element.keyTitle == 'articles'),
+                                            child:
+                                                HospitalArticlesHorizontalList(
+                                                    hospitalId: widget.id)))
                                   },
                                   InViewNotifierWidget(
                                       id: '7',
                                       builder: (context, isInView, child) {
-                                        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((timeStamp) {
                                           if (isInView) {
                                             DefaultTabController.of(context)
-                                                .animateTo(tabs.indexWhere((element) => element.keyTitle == 'reviews'));
+                                                .animateTo(tabs.indexWhere(
+                                                    (element) =>
+                                                        element.keyTitle ==
+                                                        'reviews'));
                                           }
                                         });
 
@@ -366,15 +445,21 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                       child: AutoScrollTag(
                                           controller: controller,
                                           key: const ValueKey(6),
-                                          index: tabs.indexWhere((element) => element.keyTitle == 'reviews'),
-                                          child: HospitalCommentsHorizontalList(hospital: state.hospital))),
+                                          index: tabs.indexWhere((element) =>
+                                              element.keyTitle == 'reviews'),
+                                          child: HospitalCommentsHorizontalList(
+                                              hospital: state.hospital))),
                                   InViewNotifierWidget(
                                       id: '8',
                                       builder: (context, isInView, child) {
-                                        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((timeStamp) {
                                           if (isInView) {
                                             DefaultTabController.of(context)
-                                                .animateTo(tabs.indexWhere((element) => element.keyTitle == 'vacancy'));
+                                                .animateTo(tabs.indexWhere(
+                                                    (element) =>
+                                                        element.keyTitle ==
+                                                        'vacancy'));
                                           }
                                         });
                                         return child ?? const SizedBox();
@@ -382,15 +467,21 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                       child: AutoScrollTag(
                                           controller: controller,
                                           key: const ValueKey(7),
-                                          index: tabs.indexWhere((element) => element.keyTitle == 'vacancy'),
-                                          child: const HospitalVacanciesHorizontalList())),
+                                          index: tabs.indexWhere((element) =>
+                                              element.keyTitle == 'vacancy'),
+                                          child:
+                                              const HospitalVacanciesHorizontalList())),
                                   InViewNotifierWidget(
                                     id: '9',
                                     builder: (context, isInView, child) {
-                                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((timeStamp) {
                                         if (isInView) {
                                           DefaultTabController.of(context)
-                                              .animateTo(tabs.indexWhere((element) => element.keyTitle == 'contact'));
+                                              .animateTo(tabs.indexWhere(
+                                                  (element) =>
+                                                      element.keyTitle ==
+                                                      'contact'));
                                         }
                                       });
                                       return child ?? const SizedBox();
@@ -398,7 +489,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                     child: AutoScrollTag(
                                       controller: controller,
                                       key: const ValueKey(8),
-                                      index: tabs.indexWhere((element) => element.keyTitle == 'contact'),
+                                      index: tabs.indexWhere((element) =>
+                                          element.keyTitle == 'contact'),
                                       child: HospitalContacts(
                                         email: state.hospital.email,
                                         facebook: state.hospital.facebook,
@@ -406,7 +498,10 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                                         phone: state.hospital.phoneNumber,
                                         telegram: state.hospital.telegram,
                                         website: state.hospital.website,
-                                        phoneNumbers: state.hospital.phoneNumbers.map((e) => e.phoneNumber).toList(),
+                                        phoneNumbers: state
+                                            .hospital.phoneNumbers
+                                            .map((e) => e.phoneNumber)
+                                            .toList(),
                                       ),
                                     ),
                                   ),
@@ -415,8 +510,10 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen> with Ticker
                             ),
                           }
                         ],
-                        isInViewPortCondition: (double deltaTop, double deltaBottom, double viewPortDimension) =>
-                            deltaTop < (0.01 * viewPortDimension) && deltaBottom > (0.01 * viewPortDimension),
+                        isInViewPortCondition: (double deltaTop,
+                                double deltaBottom, double viewPortDimension) =>
+                            deltaTop < (0.01 * viewPortDimension) &&
+                            deltaBottom > (0.01 * viewPortDimension),
                       );
                     } else if (state.status.isSubmissionFailure) {
                       return const Center(

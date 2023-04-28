@@ -14,14 +14,15 @@ import 'package:formz/formz.dart';
 class HospitalServices extends StatelessWidget {
   final ServicesBloc servicesBloc;
 
-  const HospitalServices({required this.servicesBloc, Key? key}) : super(key: key);
+  const HospitalServices({required this.servicesBloc, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ServicesBloc, ServicesState>(
       builder: (context, state) {
         return Container(
-          margin: const EdgeInsets.only(bottom: 16, right: 16, left: 16),
+          margin: const EdgeInsets.only(top: 16, right: 16, left: 16),
           decoration: BoxDecoration(
             color: white,
             borderRadius: BorderRadius.circular(12),
@@ -48,7 +49,9 @@ class HospitalServices extends StatelessWidget {
                     child: EmptyWidget(
                       hasPadding: false,
                       hasMargin: false,
-                      title: state.searchQuery.isNotEmpty ? LocaleKeys.nothing.tr() : LocaleKeys.no_services.tr(),
+                      title: state.searchQuery.isNotEmpty
+                          ? LocaleKeys.nothing.tr()
+                          : LocaleKeys.no_services.tr(),
                       content: state.searchQuery.isNotEmpty
                           ? LocaleKeys.result_not_found.tr()
                           : LocaleKeys.no_services_in_this_hospital.tr(),
@@ -89,12 +92,16 @@ class HospitalServices extends StatelessWidget {
                                   page: HospitalServiceCategoriesScreen(
                                 appBarTitle: state.servicesSpecial[index].title,
                                 servicesBloc: servicesBloc,
-                                specializationId: state.servicesSpecial[index].id,
+                                specializationId:
+                                    state.servicesSpecial[index].id,
                               )));
                             },
                             hightlightedText: state.searchQuery,
                             isLast: index ==
-                                (state.servicesSpecial.length > 5 ? state.servicesSpecial.take(5).length : state.servicesSpecial.length) - 1,
+                                (state.servicesSpecial.length > 5
+                                        ? state.servicesSpecial.take(5).length
+                                        : state.servicesSpecial.length) -
+                                    1,
                             title: state.servicesSpecial[index].title,
                           );
                         },

@@ -34,18 +34,24 @@ class BannerItem extends StatefulWidget {
 }
 
 class _BannerItemState extends State<BannerItem> {
-  late PageController _pageController;
+  late PageController _pageController1;
+  late PageController _pageController2;
+  late ValueNotifier<PageController> _pageNotifier;
   int pageIndex = 0;
 
   @override
   void initState() {
-    _pageController = PageController();
+    _pageController1 = PageController();
+    _pageController2 = PageController();
+    _pageNotifier = ValueNotifier(_pageController1);
     super.initState();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _pageController1.dispose();
+    _pageController2.dispose();
+    _pageNotifier.dispose();
     super.dispose();
   }
 
@@ -65,12 +71,19 @@ class _BannerItemState extends State<BannerItem> {
           SizedBox(
             height: MediaQuery.of(context).size.height,
             child: PageView.builder(
-              controller: _pageController,
+              controller: _pageController1,
               itemCount: widget.images.length,
               onPageChanged: (value) {
+                _pageNotifier.value = _pageController1;
+                // _pageController1.page;
                 setState(() {
                   pageIndex = value;
                 });
+                _pageController2.animateToPage(
+                  pageIndex,
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.linear,
+                );
               },
               itemBuilder: (context, index) {
                 return CachedNetworkImage(
@@ -147,11 +160,24 @@ class _BannerItemState extends State<BannerItem> {
                           child: PageView.builder(
                               itemCount: widget.images.length,
                               onPageChanged: (value) {
+                                _pageNotifier.value = _pageController2;
+                                // _pageController2.animateToPage(
+                                //   pageIndex,
+                                //   duration: const Duration(milliseconds: 250),
+                                //   curve: Curves.linear,
+                                // );
+                                print(
+                                    'page => ${_pageController2.page!.round()}');
                                 setState(() {
                                   pageIndex = value;
                                 });
+                                _pageController1.animateToPage(
+                                  pageIndex,
+                                  duration: const Duration(milliseconds: 250),
+                                  curve: Curves.linear,
+                                );
                               },
-                              // controller: _pageController,
+                              controller: _pageController2,
                               itemBuilder: (context, index) {
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,16 +206,21 @@ class _BannerItemState extends State<BannerItem> {
                               }),
                         ),
                         // const SizedBox(height: 12),
-                        SmoothPageIndicator(
-                          controller: _pageController, // PageController
-                          count: widget.images.length,
-                          effect: const WormEffect(
-                            activeDotColor: white,
-                            dotHeight: 10,
-                            dotWidth: 10,
-                          ), // your preferred effect
-                          onDotClicked: (index) {},
-                        ),
+                        AnimatedBuilder(
+                            animation: _pageNotifier,
+                            builder: (context, child) {
+                              return SmoothPageIndicator(
+                                controller:
+                                    _pageNotifier.value, // PageController
+                                count: widget.images.length,
+                                effect: const WormEffect(
+                                  activeDotColor: white,
+                                  dotHeight: 10,
+                                  dotWidth: 10,
+                                ), // your preferred effect
+                                onDotClicked: (index) {},
+                              );
+                            }),
                       ],
                     ),
                   ),
