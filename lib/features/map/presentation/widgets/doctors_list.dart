@@ -14,9 +14,8 @@ import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class DoctorsList extends StatefulWidget {
   final TextEditingController textEditingController;
-  final Point myPoint;
 
-  const DoctorsList({required this.textEditingController, required this.myPoint, Key? key}) : super(key: key);
+  const DoctorsList({required this.textEditingController, Key? key}) : super(key: key);
 
   @override
   State<DoctorsList> createState() => _DoctorsListState();

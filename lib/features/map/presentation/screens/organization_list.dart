@@ -12,9 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class OrganizationList extends StatelessWidget {
-  final Point myPoint;
-
-  const OrganizationList({required this.myPoint, Key? key}) : super(key: key);
+  const OrganizationList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -62,9 +62,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                           );
                         }
                         if (state.screenStatus.isList) {
-                          return HospitalList(
-                            myLocation: Point(longitude: state.currentLong, latitude: state.currentLat),
-                          );
+                          return const HospitalList();
                         }
                         return Center(
                           child: Container(
