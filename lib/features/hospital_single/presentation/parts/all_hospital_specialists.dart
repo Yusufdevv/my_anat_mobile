@@ -7,19 +7,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AllHospitalSpecialists extends StatelessWidget {
   final HospitalSpecialistBloc hospitalSpecialistBloc;
-  const AllHospitalSpecialists({required this.hospitalSpecialistBloc, Key? key}) : super(key: key);
+  final int organizationId;
+  const AllHospitalSpecialists(
+      {required this.hospitalSpecialistBloc,
+      required this.organizationId,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: hospitalSpecialistBloc,
+      value: hospitalSpecialistBloc
+        ..add(HospitalSpecialistDoctorsEvent.getSpecialistsDoctors(
+            organizationId: organizationId)),
       child: BlocBuilder<HospitalSpecialistBloc, HospitalSpecialistState>(
         builder: (context, state) {
           return Paginator(
-            paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.status),
+            paginatorStatus:
+                MyFunctions.formzStatusToPaginatorStatus(state.status),
             errorWidget: const Text('error'),
             fetchMoreFunction: () {
-              context.read<HospitalSpecialistBloc>().add(HospitalSpecialistDoctorsEvent.getMoreSpecialistsDoctors());
+              hospitalSpecialistBloc.add(
+                  HospitalSpecialistDoctorsEvent.getMoreSpecialistsDoctors());
             },
             hasMoreToFetch: state.fetchMore,
             itemBuilder: (context, index) {
@@ -29,10 +38,12 @@ class AllHospitalSpecialists extends StatelessWidget {
                   showShadow: false,
                   showPosition: true,
                   entity: state.specialists[index],
+                  isLocationVisible: false,
                 ),
               );
             },
-            padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+            padding: const EdgeInsets.all(16)
+                .copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemCount: state.specialists.length,
           );

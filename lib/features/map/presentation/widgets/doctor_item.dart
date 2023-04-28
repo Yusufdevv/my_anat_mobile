@@ -11,11 +11,12 @@ class DoctorItem extends StatelessWidget {
   final HospitalDoctorsEntity entity;
   final bool showPosition;
   final bool showShadow;
-
+  final bool isLocationVisible;
   const DoctorItem({
     required this.entity,
     this.showPosition = false,
     this.showShadow = true,
+    this.isLocationVisible = true,
     Key? key,
   }) : super(key: key);
 
@@ -86,30 +87,44 @@ class DoctorItem extends StatelessWidget {
                               showPosition
                                   ? Text(
                                       entity.position,
-                                      style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 14),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium!
+                                          .copyWith(fontSize: 14),
                                       maxLines: 2,
                                     )
                                   : Wrap(
                                       children: [
-                                        for (int i = 0; i < entity.specializations.length; i++)
+                                        for (int i = 0;
+                                            i < entity.specializations.length;
+                                            i++)
                                           Text(
                                             '${entity.specializations[i].title} ',
-                                            style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 14),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineMedium!
+                                                .copyWith(fontSize: 14),
                                           ),
                                       ],
                                     ),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4, right: 4),
-                          child: SvgPicture.asset(AppIcons.location),
+                        Visibility(
+                          visible: isLocationVisible,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 4, right: 4),
+                            child: SvgPicture.asset(AppIcons.location),
+                          ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4, right: 8),
-                          child: Text(
-                            '${entity.distance.toStringAsFixed(2)} km',
-                            style: Theme.of(context).textTheme.headlineSmall,
+                        Visibility(
+                          visible: isLocationVisible,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 4, right: 8),
+                            child: Text(
+                              '${entity.distance.toStringAsFixed(2)} km',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
                           ),
                         ),
                       ],
@@ -142,7 +157,10 @@ class DoctorItem extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         (entity.rating > 5 ? 5.0 : entity.rating).toString(),
-                        style: Theme.of(context).textTheme.displayLarge!.copyWith(color: darkGreen, fontSize: 14),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(color: darkGreen, fontSize: 14),
                       ),
                     ],
                   ),

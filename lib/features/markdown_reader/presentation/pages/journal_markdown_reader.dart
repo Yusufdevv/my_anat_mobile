@@ -26,14 +26,20 @@ class JournalMarkdownPageReader extends StatefulWidget {
   final bool isPreview;
   final String title;
 
-  const JournalMarkdownPageReader({required this.slug, this.isPreview = false, required this.title, Key? key})
+  const JournalMarkdownPageReader(
+      {required this.slug,
+      this.isPreview = false,
+      required this.title,
+      Key? key})
       : super(key: key);
 
   @override
-  State<JournalMarkdownPageReader> createState() => _JournalMarkdownPageReaderState();
+  State<JournalMarkdownPageReader> createState() =>
+      _JournalMarkdownPageReaderState();
 }
 
-class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> with TickerProviderStateMixin {
+class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
+    with TickerProviderStateMixin {
   bool showController = false;
   bool showContents = false;
   bool showTableOfContents = false;
@@ -54,9 +60,7 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
       getJournalContentsUseCase: GetJournalContentsUseCase(
         repository: serviceLocator<JournalPagesRepositoryImpl>(),
       ),
-    )
-      ..add(GetJournalPages(slug: widget.slug))
-      ..add(GetJournalTableOfContents(slug: widget.slug));
+    );
     _pageController = PageController();
     _itemScrollController = ItemScrollController();
   }
@@ -66,7 +70,9 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => journalPagesBloc,
+          create: (context) => journalPagesBloc
+            ..add(GetJournalPages(slug: widget.slug))
+            ..add(GetJournalTableOfContents(slug: widget.slug)),
         ),
         BlocProvider(
           create: (context) => readerControllerBloc,
@@ -83,14 +89,15 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
               titleSpacing: 0,
               title: Text(
                 widget.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: controllerState.selectedTextColor, fontSize: 15),
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    color: controllerState.selectedTextColor, fontSize: 15),
               ),
               leading: WScaleAnimation(
                 onTap: () {
-                  if (showController || showSettings || showContents || showTableOfContents) {
+                  if (showController ||
+                      showSettings ||
+                      showContents ||
+                      showTableOfContents) {
                     setState(() {
                       showContents = false;
                       showTableOfContents = false;
@@ -118,7 +125,9 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6).copyWith(right: 20),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 16, horizontal: 6)
+                            .copyWith(right: 20),
                     child: SvgPicture.asset(
                       AppIcons.journalMenu,
                       width: 22,
@@ -143,18 +152,22 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                     child: CupertinoActivityIndicator(),
                   );
                 } else if (state.getJournalPagesStatus.isSubmissionSuccess) {
-                  print('succes => ${state.getJournalPagesStatus.isSubmissionSuccess}');
+                  print(
+                      'succes => ${state.getJournalPagesStatus.isSubmissionSuccess}');
                   return Stack(
                     children: [
                       Positioned.fill(
                         bottom: MediaQuery.of(context).padding.bottom,
                         child: AnimatedCrossFade(
                           duration: const Duration(milliseconds: 150),
-                          crossFadeState: showTableOfContents ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                          crossFadeState: showTableOfContents
+                              ? CrossFadeState.showFirst
+                              : CrossFadeState.showSecond,
                           firstChild: JournalTableOfContents(
                             onTap: (page) {
                               _pageController.animateToPage(page - 1,
-                                  duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                                  duration: const Duration(milliseconds: 150),
+                                  curve: Curves.linear);
                               setState(() {
                                 showTableOfContents = false;
                               });
@@ -166,12 +179,15 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                 height: 220,
                                 child: ScrollablePositionedList.separated(
                                   itemScrollController: _itemScrollController,
-                                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
                                     if (index == state.pages.length) {
                                       if (state.fetchMore) {
-                                        context.read<JournalPagesBloc>().add(GetMoreJournalPages());
+                                        context
+                                            .read<JournalPagesBloc>()
+                                            .add(GetMoreJournalPages());
                                         return const Center(
                                           child: CupertinoActivityIndicator(),
                                         );
@@ -183,18 +199,25 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                           showContents = !showContents;
                                         });
                                         _pageController.animateToPage(index,
-                                            duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                                            duration: const Duration(
+                                                milliseconds: 100),
+                                            curve: Curves.linear);
                                       },
                                       child: WImage(
                                         height: 220,
                                         width: 160,
                                         fit: BoxFit.cover,
-                                        imageUrl: state.pages.map((e) => e.imgContent).toList()[index],
+                                        imageUrl: state.pages
+                                            .map((e) => e.imgContent)
+                                            .toList()[index],
                                       ),
                                     );
                                   },
-                                  itemCount: state.fetchMore ? state.pages.length + 1 : state.pages.length,
-                                  separatorBuilder: (context, index) => const SizedBox(width: 12),
+                                  itemCount: state.fetchMore
+                                      ? state.pages.length + 1
+                                      : state.pages.length,
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(width: 12),
                                 ),
                               ),
                             ),
@@ -206,30 +229,45 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                               },
                               child: ConstrainedBox(
                                 constraints: BoxConstraints(
-                                    maxHeight: MediaQuery.of(context).size.height -
+                                    maxHeight: MediaQuery.of(context)
+                                            .size
+                                            .height -
                                         (MediaQuery.of(context).padding.bottom +
                                             MediaQuery.of(context).padding.top +
                                             kToolbarHeight)),
                                 child: PageView.builder(
                                   controller: _pageController,
                                   onPageChanged: (index) {
-                                    context.read<ReaderControllerBloc>().add(SetWebPage(index: index));
+                                    context
+                                        .read<ReaderControllerBloc>()
+                                        .add(SetWebPage(index: index));
                                   },
                                   itemBuilder: (context, index) {
-                                    if (index == state.getPages(isPreview: widget.isPreview).length) {
+                                    if (index ==
+                                        state
+                                            .getPages(
+                                                isPreview: widget.isPreview)
+                                            .length) {
                                       print('index ishladi');
                                       if (state.fetchMore) {
-                                        context.read<JournalPagesBloc>().add(GetMoreJournalPages());
+                                        context
+                                            .read<JournalPagesBloc>()
+                                            .add(GetMoreJournalPages());
                                         return const Center(
                                           child: CupertinoActivityIndicator(),
                                         );
                                       }
                                     }
-                                    return BlocBuilder<ReaderControllerBloc, ReaderControllerState>(
-                                      builder: (context, readerControllerState) {
+                                    return BlocBuilder<ReaderControllerBloc,
+                                        ReaderControllerState>(
+                                      builder:
+                                          (context, readerControllerState) {
                                         return AnimatedCrossFade(
-                                          duration: const Duration(milliseconds: 250),
-                                          crossFadeState: readerControllerState.journalLang == 'ru'
+                                          duration:
+                                              const Duration(milliseconds: 250),
+                                          crossFadeState: readerControllerState
+                                                      .journalLang ==
+                                                  'ru'
                                               ? CrossFadeState.showFirst
                                               : CrossFadeState.showSecond,
                                           secondChild: JournalMarkdownPage(
@@ -238,7 +276,11 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                                 showController = false;
                                               });
                                             },
-                                            data: state.getPages(isPreview: widget.isPreview)[index].contentUz,
+                                            data: state
+                                                .getPages(
+                                                    isPreview:
+                                                        widget.isPreview)[index]
+                                                .contentUz,
                                           ),
                                           firstChild: JournalMarkdownPage(
                                             onTap: () {
@@ -246,20 +288,32 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                                                 showController = false;
                                               });
                                             },
-                                            data: state.getPages(isPreview: widget.isPreview)[index].contentRu,
+                                            data: state
+                                                .getPages(
+                                                    isPreview:
+                                                        widget.isPreview)[index]
+                                                .contentRu,
                                           ),
                                         );
                                       },
                                     );
                                   },
                                   itemCount: state.fetchMore
-                                      ? state.getPages(isPreview: widget.isPreview).length + 1
-                                      : state.getPages(isPreview: widget.isPreview).length,
+                                      ? state
+                                              .getPages(
+                                                  isPreview: widget.isPreview)
+                                              .length +
+                                          1
+                                      : state
+                                          .getPages(isPreview: widget.isPreview)
+                                          .length,
                                 ),
                               ),
                             ),
                             duration: const Duration(milliseconds: 150),
-                            crossFadeState: showContents ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                            crossFadeState: showContents
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
                           ),
                         ),
                       ),
@@ -269,7 +323,9 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                         child: AnimatedCrossFade(
                           secondChild: const ReaderController(),
                           duration: const Duration(milliseconds: 150),
-                          crossFadeState: showSettings ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                          crossFadeState: showSettings
+                              ? CrossFadeState.showSecond
+                              : CrossFadeState.showFirst,
                           firstChild: AnimatedCrossFade(
                             firstChild: JournalMenu(
                               onContentTap: () {
@@ -293,7 +349,9 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader> w
                             ),
                             secondChild: const SizedBox(width: 217),
                             duration: const Duration(milliseconds: 200),
-                            crossFadeState: showController ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                            crossFadeState: showController
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
                           ),
                         ),
                       )

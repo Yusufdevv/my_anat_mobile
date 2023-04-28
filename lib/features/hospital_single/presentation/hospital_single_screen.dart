@@ -371,8 +371,8 @@ class _HospitalSingleScreenState extends State<HospitalSingleScreen>
                                             index: tabs.indexWhere((element) =>
                                                 element.keyTitle ==
                                                 'specialists'),
-                                            child:
-                                                const HospitalSpecialists())),
+                                            child: HospitalSpecialists(
+                                                organizationId: widget.id))),
                                   },
                                   if (hasFacility) ...{
                                     InViewNotifierWidget(
