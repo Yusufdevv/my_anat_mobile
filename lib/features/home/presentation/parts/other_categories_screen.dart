@@ -34,7 +34,8 @@ class OtherCategoriesScreen extends StatelessWidget {
                 child: WScaleAnimation(
                   onTap: () => Navigator.pop(context),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 14, horizontal: 16),
                     child: SvgPicture.asset(
                       AppIcons.chevronLeft,
                       color: textSecondary,
@@ -45,7 +46,10 @@ class OtherCategoriesScreen extends StatelessWidget {
             ),
             Text(
               LocaleKeys.others_categories.tr(),
-              style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .displayLarge!
+                  .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             const Spacer()
           ],
@@ -55,15 +59,21 @@ class OtherCategoriesScreen extends StatelessWidget {
         builder: (context, state) {
           return state.categories.isNotEmpty
               ? Container(
-                  margin: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                  margin: const EdgeInsets.all(16).copyWith(
+                      bottom: MediaQuery.of(context).padding.bottom + 16),
                   decoration: BoxDecoration(
-                      color: white, borderRadius: BorderRadius.circular(12), border: Border.all(color: lilyWhite)),
+                      color: white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: lilyWhite)),
                   child: Paginator(
                     hasMoreToFetch: state.categoriesFetchMore,
                     fetchMoreFunction: () {
-                      context.read<CategoryBloc>().add(const CategoryEvent.getMoreCategories());
+                      context
+                          .read<CategoryBloc>()
+                          .add(const CategoryEvent.getMoreCategories());
                     },
-                    paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.categoryStatus),
+                    paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
+                        state.categoryStatus),
                     errorWidget: const Center(child: Text('error')),
                     emptyWidget: SingleChildScrollView(
                       child: EmptyWidget(
@@ -77,12 +87,15 @@ class OtherCategoriesScreen extends StatelessWidget {
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: () {
-                            Navigator.of(context, rootNavigator: true).push(fade(
-                                page: BlocProvider.value(
+                            Navigator.of(context, rootNavigator: true)
+                                .push(fade(
+                                    page: BlocProvider.value(
                               value: context.read<CategoryBloc>(),
                               child: CategoriesScreen(
                                 selectedIndex: index,
-                                categoryItemSize: (MediaQuery.of(context).size.width - 48) / 3,
+                                categoryItemSize:
+                                    (MediaQuery.of(context).size.width - 48) /
+                                        3,
                               ),
                             )));
                           },
@@ -90,7 +103,8 @@ class OtherCategoriesScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(16),
                             child: Row(
                               children: [
-                                state.categories[index].icon.file.url.contains('http')
+                                state.categories[index].icon.file.url
+                                        .contains('http')
                                     ? SvgPicture.network(
                                         state.categories[index].icon.file.url,
                                         width: 24,
@@ -107,21 +121,24 @@ class OtherCategoriesScreen extends StatelessWidget {
                                 Expanded(
                                   child: Text(
                                     state.categories[index].title,
-                                    style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 15),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge!
+                                        .copyWith(fontSize: 15),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        if (index != state.categories.length - 1) const Divider(height: 1, indent: 50)
+                        if (index != state.categories.length - 1)
+                          const Divider(height: 1, indent: 50)
                       ],
                     ),
                   ))
               : Container(
                   color: white,
                   child: Center(
-                    // TOdo
                     child: EmptyWidget(
                       content: LocaleKeys.nothing.tr(),
                       title: LocaleKeys.result_not_found.tr(),

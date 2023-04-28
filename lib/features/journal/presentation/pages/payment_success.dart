@@ -64,68 +64,34 @@ class PaymentSuccess extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // SvgPicture.asset(AppIcons.success),
               SizedBox(
                   height: 180,
                   width: 180,
-                  child: Lottie.asset('assets/lotties/success_lottie.json', repeat: true)),
+                  child: Lottie.asset('assets/lotties/success_lottie.json',
+                      repeat: true)),
               const SizedBox(height: 16, width: double.maxFinite),
-              // TODO add to localization
               Text(
-                // LocaleKeys.success_purchase.tr(),
-                'Оплата прошла успешно',
+                LocaleKeys.payment_success.tr(),
                 style: Theme.of(context)
                     .textTheme
                     .displayLarge!
                     .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 4),
-              // TODO add to localization
               Text(
-                // LocaleKeys.realization_success.tr(args: [title]),
-                'Оплата прошла успешно',
+                LocaleKeys.payment_success.tr(),
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
                     .copyWith(fontWeight: FontWeight.w400),
                 textAlign: TextAlign.center,
               ),
-              // const SizedBox(height: 8),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     RichText(
-              //       text: TextSpan(
-              //         text: LocaleKeys.id_purchase.tr(),
-              //         style: Theme.of(context)
-              //             .textTheme
-              //             .displaySmall!
-              //             .copyWith(fontWeight: FontWeight.w400),
-              //         children: [
-              //           TextSpan(
-              //             text: state.paymentId.toString(),
-              //             style: Theme.of(context)
-              //                 .textTheme
-              //                 .headlineMedium!
-              //                 .copyWith(fontSize: 14),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //     IconButton(
-              //       icon: SvgPicture.asset(AppIcons.copy),
-              //       onPressed: () {
-              //         FlutterClipboard.copy(state.paymentId.toString());
-              //       },
-              //     )
-              //   ],
-              // ),
             ],
           ),
           bottomNavigationBar: WButton(
             text: LocaleKeys.to_main.tr(),
             margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).padding.bottom+16,
+                bottom: MediaQuery.of(context).padding.bottom + 16,
                 left: 16,
                 right: 16),
             onTap: () {

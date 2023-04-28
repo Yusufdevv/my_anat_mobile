@@ -335,5 +335,15 @@ abstract class  LocaleKeys {
   static const organizationn = 'organizationn';
   static const doctorr = 'doctorr';
   static const journals = 'journals';
+  static const doctor_list = 'doctor_list';
+  static const org_list = 'org_list';
+  static const payment_pending = 'payment_pending';
+  static const payment_pending_subtitle = 'payment_pending_subtitle';
+  static const payment_success = 'payment_success';
+  static const payment_failure = 'payment_failure';
+  static const payment_failure_subtitle = 'payment_failure_subtitle';
+  static const all_vacancies = 'all_vacancies';
+  static const go = 'go';
+  static const activate = 'activate';
 
 }

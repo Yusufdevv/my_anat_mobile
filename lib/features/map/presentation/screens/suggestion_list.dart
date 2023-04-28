@@ -20,7 +20,11 @@ class SuggestionListScreen extends StatelessWidget {
   final bool isDoctor;
 
   const SuggestionListScreen(
-      {required this.onTapItem, required this.isDoctor, required this.searchText, required this.myPoint, Key? key})
+      {required this.onTapItem,
+      required this.isDoctor,
+      required this.searchText,
+      required this.myPoint,
+      Key? key})
       : super(key: key);
 
   @override
@@ -44,19 +48,24 @@ class SuggestionListScreen extends StatelessWidget {
                 );
               }
               return Container(
-                color: Colors.indigo,
                 alignment: Alignment.topCenter,
                 child: ListView.separated(
-                  padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).viewInsets.bottom + 196),
-                  separatorBuilder: (context, index) => const SizedBox(height: 8),
+                  padding: EdgeInsets.fromLTRB(16, 16, 16,
+                      MediaQuery.of(context).viewInsets.bottom + 196),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     List<ServiceOrSpecializationEntity> wrapItems = [];
                     if (searchText.isNotEmpty) {
-                      wrapItems = state.hospitalsWithDistance[index].getServiceOrSpecialization
-                          .where((e) => e.title.toLowerCase().contains(state.searchText.toLowerCase()))
+                      wrapItems = state.hospitalsWithDistance[index]
+                          .getServiceOrSpecialization
+                          .where((e) => e.title
+                              .toLowerCase()
+                              .contains(state.searchText.toLowerCase()))
                           .toList();
                     } else {
-                      wrapItems = state.hospitalsWithDistance[index].getServiceOrSpecialization;
+                      wrapItems = state.hospitalsWithDistance[index]
+                          .getServiceOrSpecialization;
                     }
                     return GestureDetector(
                       behavior: HitTestBehavior.opaque,

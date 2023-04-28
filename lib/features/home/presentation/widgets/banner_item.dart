@@ -1,10 +1,14 @@
 import 'dart:ui';
 
 import 'package:anatomica/assets/colors/colors.dart';
+import 'package:anatomica/features/common/presentation/widgets/shimmer_container.dart';
 import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
 import 'package:anatomica/features/home/presentation/parts/banner_single_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class BannerItem extends StatefulWidget {
@@ -14,7 +18,6 @@ class BannerItem extends StatefulWidget {
   final List<String> subtitles;
   final List<String> types;
   final List<int> ids;
-  final HomeArticlesBloc bloc;
 
   const BannerItem(
       {required this.isShrink,
@@ -22,7 +25,6 @@ class BannerItem extends StatefulWidget {
       required this.subtitles,
       required this.titles,
       required this.types,
-      required this.bloc,
       required this.ids,
       Key? key})
       : super(key: key);
@@ -39,6 +41,12 @@ class _BannerItemState extends State<BannerItem> {
   void initState() {
     _pageController = PageController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -65,26 +73,42 @@ class _BannerItemState extends State<BannerItem> {
                 });
               },
               itemBuilder: (context, index) {
-                return Container(
-                  foregroundDecoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        textColor.withOpacity(0.9),
-                        textColor.withOpacity(0.2),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(
-                      bottom: Radius.circular(16),
-                    ),
-                    image: DecorationImage(
-                      image: NetworkImage(widget.images[index]),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                return CachedNetworkImage(
+                  imageUrl: widget.images[pageIndex],
+                  progressIndicatorBuilder: (context, url, progress) {
+                    return Shimmer.fromColors(
+                      baseColor: white,
+                      highlightColor: lilyWhite,
+                      child: Container(
+                        width: double.maxFinite,
+                        height: 324,
+                        color: Colors.red,
+                      ),
+                    );
+                  },
+                  imageBuilder: (context, imageProvider) {
+                    return Container(
+                      foregroundDecoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            textColor.withOpacity(0.9),
+                            textColor.withOpacity(0.2),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.vertical(
+                          bottom: Radius.circular(16),
+                        ),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  },
                 );
               },
             ),
@@ -98,7 +122,6 @@ class _BannerItemState extends State<BannerItem> {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: BannerSingleScreen(
-                      bloc: widget.bloc,
                       image: widget.images[pageIndex],
                       id: widget.ids[pageIndex],
                     ),
@@ -111,33 +134,52 @@ class _BannerItemState extends State<BannerItem> {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                   child: Container(
-                    // height: 106,
+                    height: 106,
                     decoration: BoxDecoration(
                       color: textColor.withOpacity(.5),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.types[pageIndex],
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(color: primary),
+                        Expanded(
+                          child: PageView.builder(
+                              itemCount: widget.images.length,
+                              onPageChanged: (value) {
+                                setState(() {
+                                  pageIndex = value;
+                                });
+                              },
+                              // controller: _pageController,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.types[pageIndex],
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall!
+                                          .copyWith(color: primary),
+                                    ),
+                                    // const SizedBox(height: 6),
+                                    Expanded(
+                                      child: Text(
+                                        widget.titles[pageIndex],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge!
+                                            .copyWith(color: white),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
                         ),
-                        const SizedBox(height: 6),
-                        Text(
-                          widget.titles[pageIndex],
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayLarge!
-                              .copyWith(color: white),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 12),
+                        // const SizedBox(height: 12),
                         SmoothPageIndicator(
                           controller: _pageController, // PageController
                           count: widget.images.length,
