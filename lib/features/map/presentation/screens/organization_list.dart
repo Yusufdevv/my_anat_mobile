@@ -23,7 +23,7 @@ class OrganizationList extends StatelessWidget {
           child: RefreshIndicator(
             onRefresh: () async {
               context.read<MapOrganizationBloc>().add(
-                    MapGetHospitalsEvent(context: context),
+                    MapGetHospitalsEvent(context: context, where: 'org list 26'),
                   );
 
               return await Future.delayed(const Duration(seconds: 1));

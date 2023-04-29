@@ -23,13 +23,13 @@ class MapTabBar extends StatefulWidget {
 }
 
 class _MapTabBarState extends State<MapTabBar> {
-  late ValueNotifier<int> tabNotifier;
+  late ValueNotifier<int> tabNotifierr;
   @override
   void initState() {
-    tabNotifier = ValueNotifier(widget.tabController.index);
+    tabNotifierr = ValueNotifier(widget.tabController.index);
     widget.tabController.addListener(() {
       if (widget.tabController.indexIsChanging) {
-        tabNotifier.value = widget.tabController.index;
+        tabNotifierr.value = widget.tabController.index;
       }
     });
     super.initState();
@@ -63,12 +63,10 @@ class _MapTabBarState extends State<MapTabBar> {
           children: [
             if (!widget.isMap) ...{
               AnimatedBuilder(
-                animation: tabNotifier,
+                animation: tabNotifierr,
                 builder: (context, child) {
                   return Text(
-                    widget.tabController.index == 1
-                        ? LocaleKeys.doctor_list.tr()
-                        : LocaleKeys.org_list.tr(),
+                    widget.tabController.index == 1 ? LocaleKeys.doctor_list.tr() : LocaleKeys.org_list.tr(),
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -108,16 +106,13 @@ class _MapTabBarState extends State<MapTabBar> {
                   controller: widget.tabController,
                   padding: EdgeInsets.zero,
                   indicatorPadding: EdgeInsets.zero,
-                  indicator: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: const Offset(0, 8),
-                          blurRadius: 24,
-                          color: chipShadowColor.withOpacity(0.19),
-                        ),
-                      ]),
+                  indicator: BoxDecoration(color: white, borderRadius: BorderRadius.circular(6), boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 8),
+                      blurRadius: 24,
+                      color: chipShadowColor.withOpacity(0.19),
+                    ),
+                  ]),
                   labelPadding: EdgeInsets.zero,
                   labelStyle: Theme.of(context).textTheme.displaySmall,
                   labelColor: textColor,

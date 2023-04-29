@@ -15,7 +15,7 @@ class HospitalList extends StatefulWidget {
 class _HospitalListState extends State<HospitalList> with TickerProviderStateMixin {
   @override
   void initState() {
-    context.read<MapOrganizationBloc>().add(MapGetHospitalsEvent(context: context));
+    context.read<MapOrganizationBloc>().add(MapGetHospitalsEvent(context: context, where: 'hospital list init state'));
 
     super.initState();
   }

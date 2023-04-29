@@ -114,6 +114,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                         mapOrganizationBloc.add(MapUnFocusAndClearControllerEvent(notUnFocus: true));
                         mapOrganizationBloc.add(
                           MapGetHospitalsEvent(
+                            where: 'on clear 117',
                             context: context,
                           ),
                         );
@@ -131,6 +132,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                           if (state.tabController.index == 0) {
                             mapOrganizationBloc.add(
                               MapGetHospitalsEvent(
+                                where: 'on changed 135',
                                 context: context,
                               ),
                             );
@@ -141,6 +143,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                           mapOrganizationBloc
                             ..add(
                               MapGetHospitalsEvent(
+                                where: 'on changed 146',
                                 context: context,
                               ),
                             )

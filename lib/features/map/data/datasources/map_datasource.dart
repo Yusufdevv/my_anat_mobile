@@ -97,13 +97,13 @@ class MapDatasourceImpl extends MapDatasource {
 
     try {
       final response = await _dio.get(
-        '/mobile/organization/map/v2/',
+        params.next ?? '/mobile/organization/map/v2/',
         options: Options(
           headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
               ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
-        queryParameters: queryParams,
+        queryParameters: params.next == null ? null : queryParams,
       );
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {

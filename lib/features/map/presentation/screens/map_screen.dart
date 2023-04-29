@@ -39,9 +39,12 @@ class _MapScreenState extends State<MapScreen> {
       },
       listener: (context, state) {
         widget.mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
-        widget.mapOrganizationBloc.add(MapGetHospitalsEvent(
-          context: context,
-        ));
+        widget.mapOrganizationBloc.add(
+          MapGetHospitalsEvent(
+            where: 'listener 43',
+            context: context,
+          ),
+        );
       },
       builder: (context, state) {
         return Stack(

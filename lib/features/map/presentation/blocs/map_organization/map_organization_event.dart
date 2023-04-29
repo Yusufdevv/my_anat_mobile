@@ -94,10 +94,12 @@ class MapGetMoreDoctorsEvent extends MapEvent {
 
 class MapGetHospitalsEvent extends MapEvent {
   final BuildContext context;
+  final String where;
 
   final bool notToLoading;
 
   MapGetHospitalsEvent({
+    required this.where,
     required this.context,
     this.notToLoading = true,
   });

@@ -145,9 +145,10 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
   }
 
   FutureOr<void> _changeTab(MapChangeTabEvent event, Emitter<MapOrganizationState> emit) async {
+    final v = event.tab;
     if (state.screenStatus.isList) {
       if (event.tab == 0) {
-        add(MapGetHospitalsEvent(context: event.context));
+        add(MapGetHospitalsEvent(context: event.context, where: 'bloc 150'));
       } else {
         add(MapGetDoctorsEvent(context: event.context));
       }
@@ -248,6 +249,7 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     if (!event.notToLoading) {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
     }
+    final v = event.where;
     final result = await getHospitalsUseCase.call(MapV2Params(
       radius: 150,
       longitude: state.currentLong,
