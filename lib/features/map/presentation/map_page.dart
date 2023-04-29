@@ -6,7 +6,6 @@ import 'package:anatomica/features/map/presentation/widgets/map_tab_bar.dart';
 import 'package:anatomica/features/map/presentation/widgets/the_search_field_of_hospitals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class MapPage extends StatefulWidget {
   final MediaQueryData mediaQuery;
@@ -26,7 +25,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
     mapOrganizationBloc = MapOrganizationBloc(
       deviceWidth: widget.mediaQuery.size.width,
       tickerProvider: this,
-    )..add(MapGetSpecializationsEvent());
+    );
 
     _searchFieldController = TextEditingController();
     WidgetsBinding.instance.addObserver(this);
@@ -119,15 +118,8 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                           ),
                         );
                         mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
-
-                        if (state.tabController.index == 0) {
-                          mapOrganizationBloc.add(MapGetSuggestionsEvent());
-                        }
                       },
                       onChanged: (value) {
-                        if (state.tabController.index == 0) {
-                          mapOrganizationBloc.add(MapGetSuggestionsEvent());
-                        }
                         if (value.isNotEmpty) {
                           if (state.tabController.index == 0) {
                             mapOrganizationBloc.add(

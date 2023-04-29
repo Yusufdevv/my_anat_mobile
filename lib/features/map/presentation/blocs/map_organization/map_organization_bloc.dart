@@ -1,20 +1,13 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
 import 'package:anatomica/core/exceptions/exceptions.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
-import 'package:anatomica/features/auth/domain/entities/type_entity.dart';
-import 'package:anatomica/features/common/data/models/titler.dart';
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
-import 'package:anatomica/features/map/data/models/suggestion.dart';
 import 'package:anatomica/features/map/data/repositories/map_repository_impl.dart';
 import 'package:anatomica/features/map/domain/entities/doctor_map_entity.dart';
 import 'package:anatomica/features/map/domain/usecases/get_doctors.dart';
 import 'package:anatomica/features/map/domain/usecases/get_map_hospitals_with_distance.dart';
-import 'package:anatomica/features/map/domain/usecases/get_specialization.dart';
-import 'package:anatomica/features/map/domain/usecases/get_suggestions.dart';
-import 'package:anatomica/features/map/domain/usecases/get_types_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +24,7 @@ part 'map_organization_state.dart';
 typedef OnMapControllerChange = Function(double lat, double long);
 
 class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
-  final GetSuggestionsUseCase suggestionsUseCase = GetSuggestionsUseCase();
   final GetDoctorsUseCase getDoctors = GetDoctorsUseCase();
-  final GetTypesUseCase getTypesUseCase = GetTypesUseCase(repository: serviceLocator<MapRepositoryImpl>());
-  final GetSpecializationUseCase getSpecializationsUseCase = GetSpecializationUseCase();
   final GetHopitalsMapUseCase getHospitalsUseCase =
       GetHopitalsMapUseCase(mapRepository: serviceLocator<MapRepositoryImpl>());
   final double deviceWidth;
@@ -56,14 +46,10 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
     on<MapZoomIn>(_zoomIn);
     on<MapZoomOut>(_zoomOut);
     on<MapGetHospitalsEvent>(_getHospitals);
-    on<MapGetTypesEvent>(_getTypes);
-    on<MapGetMoreTypesEvent>(_getMorTypes);
     on<MapGetDoctorsEvent>(_getDoctors);
     on<MapGetMoreDoctorsEvent>(_getMoreDoctors);
     on<MapGetCurrentLocationEvent>(_getCurrentLocation);
     on<MapGetMoreHospitalsEvent>(_getMoreHospitals);
-    on<MapGetSpecializationsEvent>(_getSpecializations);
-    on<MapGetSuggestionsEvent>(_getSuggestions);
     on<MapChooseEvent>(_choose);
     on<MapUnFocusAndClearControllerEvent>(_unFocus);
   }
@@ -73,32 +59,6 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       state.focusNode.unfocus();
     }
     emit(state.copyWith(searchController: TextEditingController()));
-  }
-
-  FutureOr<void> _getSuggestions(MapGetSuggestionsEvent event, Emitter<MapOrganizationState> emit) async {
-    log(':::::::::: text to suggestion:  ${state.searchController.text}  ::::::::::');
-    final result = await suggestionsUseCase.call(SuggestionParam(
-      where: 'Suggestion Bloc _GetSuggestions',
-      isDoctor: state.tabController.index == 1,
-      search: state.searchController.text,
-    ));
-    if (result.isRight) {
-      emit(state.copyWith(suggestions: result.right));
-    } else {}
-  }
-
-  FutureOr<void> _getSpecializations(MapGetSpecializationsEvent event, Emitter<MapOrganizationState> emit) async {
-    emit(state.copyWith(
-      status: FormzStatus.submissionInProgress,
-    ));
-    final result = await getSpecializationsUseCase('');
-    if (result.isRight) {
-      emit(state.copyWith(status: FormzStatus.submissionSuccess, specializations: result.right.results));
-    } else {
-      emit(state.copyWith(
-        status: FormzStatus.submissionFailure,
-      ));
-    }
   }
 
   FutureOr<void> _getMoreHospitals(MapGetMoreHospitalsEvent event, Emitter<MapOrganizationState> emit) async {
@@ -300,29 +260,6 @@ class MapOrganizationBloc extends Bloc<MapEvent, MapOrganizationState> {
       }
     } else {
       emit(state.copyWith(status: event.notToLoading ? null : FormzStatus.submissionSuccess));
-    }
-  }
-
-  FutureOr<void> _getTypes(MapGetTypesEvent event, Emitter<MapOrganizationState> emit) async {
-    emit(state.copyWith(typesStatus: FormzStatus.submissionInProgress));
-    final result = await getTypesUseCase.call(event.searchText);
-    if (result.isRight) {
-      emit(state.copyWith(
-        types: result.right.results,
-        typesStatus: FormzStatus.submissionSuccess,
-      ));
-    } else {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
-  }
-
-  FutureOr<void> _getMorTypes(MapGetMoreTypesEvent event, Emitter<MapOrganizationState> emit) async {
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    final result = await getTypesUseCase.call(event.searchText);
-    if (result.isRight) {
-      emit(state.copyWith(types: result.right.results, status: FormzStatus.submissionSuccess));
-    } else {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
 

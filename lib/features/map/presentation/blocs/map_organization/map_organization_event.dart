@@ -7,14 +7,6 @@ class MapUnFocusAndClearControllerEvent extends MapEvent {
   MapUnFocusAndClearControllerEvent({this.notUnFocus = false});
 }
 
-class MapGetSuggestionsEvent extends MapEvent {
-  MapGetSuggestionsEvent();
-}
-
-class MapGetSpecializationsEvent extends MapEvent {
-  MapGetSpecializationsEvent();
-}
-
 class MapGetCurrentLocationEvent extends MapEvent {
   final ValueChanged<String> onError;
   final BuildContext context;
@@ -55,22 +47,6 @@ class MapChooseEvent extends MapEvent {
     this.lat,
     this.long,
     this.isGetFocus,
-  });
-}
-
-class MapGetMoreTypesEvent extends MapEvent {
-  final String searchText;
-
-  MapGetMoreTypesEvent({
-    required this.searchText,
-  });
-}
-
-class MapGetTypesEvent extends MapEvent {
-  final String searchText;
-
-  MapGetTypesEvent({
-    required this.searchText,
   });
 }
 

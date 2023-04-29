@@ -4,21 +4,16 @@ class MapOrganizationState extends Equatable {
   final MapScreenStatus screenStatus;
   final List<OrgMapV2Model> hospitals;
   final List<DoctorMapEntity> doctors;
-  final List<TypeEntity> types;
-  final List<TitlerModel> specializations;
-  final List<SuggestionModel> suggestions;
-
-  final int typesCount;
   final List<MapObject<dynamic>> mapObjects;
-  final FormzStatus typesStatus;
   final FormzStatus tabChangingStatus;
-  final int radius;
   final FormzStatus status;
-  final FormzStatus getTypesStatus;
   final FormzStatus getCurrentLocationStatus;
+  final TabController tabController;
+  final TextEditingController searchController;
+  final FocusNode focusNode;
+  final int radius;
   final double maxZoomLevel;
   final double minZoomLevel;
-
   final double currentLat;
   final double currentLong;
   final double accuracy;
@@ -27,9 +22,6 @@ class MapOrganizationState extends Equatable {
   final String? doctorsNext;
   final bool isGetFocus;
   final bool unUsed;
-  final FocusNode focusNode;
-  final TabController tabController;
-  final TextEditingController searchController;
 
   const MapOrganizationState({
     required this.tabController,
@@ -48,34 +40,22 @@ class MapOrganizationState extends Equatable {
     this.currentLong = 0,
     this.tabChangingStatus = FormzStatus.pure,
     this.hospitals = const [],
-    this.suggestions = const [],
     this.doctors = const [],
-    this.types = const [],
-    this.specializations = const [],
-    this.getTypesStatus = FormzStatus.pure,
     this.radius = 150,
-    this.typesCount = 0,
     this.isGetFocus = false,
     this.unUsed = false,
     this.doctorsNext,
-    this.typesStatus = FormzStatus.pure,
   });
   MapOrganizationState copyWith({
-    FocusNode? focusNode,
-    TextEditingController? searchController,
-    MapScreenStatus? screenStatus,
     List<OrgMapV2Model>? hospitals,
     List<DoctorMapEntity>? doctors,
-    List<TypeEntity>? types,
-    List<SuggestionModel>? suggestions,
-    List<TitlerModel>? specializations,
     List<MapObject<dynamic>>? mapObjects,
-    FormzStatus? typesStatus,
+    MapScreenStatus? screenStatus,
+    TextEditingController? searchController,
+    FocusNode? focusNode,
     FormzStatus? tabChangingStatus,
     FormzStatus? status,
-    FormzStatus? getTypesStatus,
     FormzStatus? getCurrentLocationStatus,
-    int? typesCount,
     int? radius,
     double? maxZoomLevel,
     double? minZoomLevel,
@@ -90,8 +70,6 @@ class MapOrganizationState extends Equatable {
   }) =>
       MapOrganizationState(
         searchController: searchController ?? this.searchController,
-        suggestions: suggestions ?? this.suggestions,
-        specializations: specializations ?? this.specializations,
         tabController: tabController,
         screenStatus: screenStatus ?? this.screenStatus,
         accuracy: accuracy ?? this.accuracy,
@@ -108,10 +86,7 @@ class MapOrganizationState extends Equatable {
         tabChangingStatus: tabChangingStatus ?? this.tabChangingStatus,
         hospitals: hospitals ?? this.hospitals,
         doctors: doctors ?? this.doctors,
-        types: types ?? this.types,
-        getTypesStatus: getTypesStatus ?? this.getTypesStatus,
         radius: radius ?? this.radius,
-        typesCount: typesCount ?? this.typesCount,
         isGetFocus: isGetFocus ?? this.isGetFocus,
         focusNode: focusNode ?? this.focusNode,
         unUsed: unUsed ?? this.unUsed,
@@ -123,8 +98,6 @@ class MapOrganizationState extends Equatable {
         focusNode,
         searchController,
         isGetFocus,
-        suggestions,
-        specializations,
         tabController,
         screenStatus,
         accuracy,
@@ -140,11 +113,7 @@ class MapOrganizationState extends Equatable {
         currentLong,
         hospitals,
         doctors,
-        types,
-        getTypesStatus,
         radius,
-        typesCount,
-        typesStatus,
       ];
   /////////////////////////////////////
   bool get isSearching => focusNode.hasFocus;
