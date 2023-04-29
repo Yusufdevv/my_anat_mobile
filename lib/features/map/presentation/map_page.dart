@@ -120,26 +120,15 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                         mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
                       },
                       onChanged: (value) {
-                        if (value.isNotEmpty) {
-                          if (state.tabController.index == 0) {
-                            mapOrganizationBloc.add(
-                              MapGetHospitalsEvent(
-                                where: 'on changed 135',
-                                context: context,
-                              ),
-                            );
-                          } else {
-                            mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
-                          }
+                        if (state.tabController.index == 0) {
+                          mapOrganizationBloc.add(
+                            MapGetHospitalsEvent(
+                              where: 'on changed 135',
+                              context: context,
+                            ),
+                          );
                         } else {
-                          mapOrganizationBloc
-                            ..add(
-                              MapGetHospitalsEvent(
-                                where: 'on changed 146',
-                                context: context,
-                              ),
-                            )
-                            ..add(MapGetDoctorsEvent(context: context));
+                          mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
                         }
                       },
                       onCloseTap: () {

@@ -17,14 +17,11 @@ class ShimmerContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer(
-      gradient: const LinearGradient(colors: [
-        white,
-        lilyWhite,
-      ]),
+      gradient: const LinearGradient(colors: [white, lilyWhite]),
       child: Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(color: white, borderRadius: BorderRadius.circular(radius)),
+        decoration: BoxDecoration(color: darkerGreen, borderRadius: BorderRadius.circular(radius)),
       ),
     );
   }

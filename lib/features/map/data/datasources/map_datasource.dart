@@ -103,7 +103,7 @@ class MapDatasourceImpl extends MapDatasource {
               ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
               : {},
         ),
-        queryParameters: params.next == null ? null : queryParams,
+        queryParameters: params.next != null ? null : queryParams,
       );
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {

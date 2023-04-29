@@ -59,9 +59,7 @@ class _BannerItemState extends State<BannerItem> {
   Widget build(BuildContext context) {
     return AnimatedCrossFade(
       duration: const Duration(milliseconds: 500),
-      crossFadeState: widget.isShrink
-          ? CrossFadeState.showSecond
-          : CrossFadeState.showFirst,
+      crossFadeState: widget.isShrink ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       secondChild: Container(
         color: white,
         height: MediaQuery.of(context).size.height,
@@ -166,8 +164,7 @@ class _BannerItemState extends State<BannerItem> {
                                 //   duration: const Duration(milliseconds: 250),
                                 //   curve: Curves.linear,
                                 // );
-                                print(
-                                    'page => ${_pageController2.page!.round()}');
+                                print('page => ${_pageController2.page!.round()}');
                                 setState(() {
                                   pageIndex = value;
                                 });
@@ -184,19 +181,13 @@ class _BannerItemState extends State<BannerItem> {
                                   children: [
                                     Text(
                                       widget.types[pageIndex],
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall!
-                                          .copyWith(color: primary),
+                                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: primary),
                                     ),
                                     // const SizedBox(height: 6),
                                     Expanded(
                                       child: Text(
                                         widget.titles[pageIndex],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displayLarge!
-                                            .copyWith(color: white),
+                                        style: Theme.of(context).textTheme.displayLarge!.copyWith(color: white),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -210,8 +201,7 @@ class _BannerItemState extends State<BannerItem> {
                             animation: _pageNotifier,
                             builder: (context, child) {
                               return SmoothPageIndicator(
-                                controller:
-                                    _pageNotifier.value, // PageController
+                                controller: _pageNotifier.value, // PageController
                                 count: widget.images.length,
                                 effect: const WormEffect(
                                   activeDotColor: white,

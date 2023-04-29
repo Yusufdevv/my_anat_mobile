@@ -65,8 +65,7 @@ class IntroSlider extends StatefulWidget {
   State<IntroSlider> createState() => _IntroSliderState();
 }
 
-class _IntroSliderState extends State<IntroSlider>
-    with SingleTickerProviderStateMixin {
+class _IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
   bool isShowDotIndicator = true;
   double sizeDot = 8.0;
   late PageController _pageController;
@@ -84,11 +83,7 @@ class _IntroSliderState extends State<IntroSlider>
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(
-      initialPage: _currentPage,
-      keepPage: false,
-      viewportFraction: 0.55,
-    );
+    _pageController = PageController(initialPage: _currentPage, keepPage: false, viewportFraction: 0.55);
   }
 
   @override
@@ -106,11 +101,7 @@ class _IntroSliderState extends State<IntroSlider>
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Positioned(
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
+          Positioned.fill(
             child: Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -126,9 +117,7 @@ class _IntroSliderState extends State<IntroSlider>
             left: 0,
             bottom: 0,
             right: 0,
-            child: Container(
-              color: white.withOpacity(0.6),
-            ),
+            child: Container(color: white.withOpacity(0.6)),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -150,8 +139,7 @@ class _IntroSliderState extends State<IntroSlider>
                           },
                           physics: const BouncingScrollPhysics(),
                           controller: _pageController,
-                          itemBuilder: (context, index) =>
-                              CustomBuilderAnimation(
+                          itemBuilder: (context, index) => CustomBuilderAnimation(
                             index: index,
                             products: widget.product,
                             pageController: _pageController,
@@ -198,10 +186,7 @@ class _IntroSliderState extends State<IntroSlider>
                             const SizedBox(width: 8),
                             Text(
                               'Premium',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(fontSize: 20),
+                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontSize: 20),
                             )
                           ],
                         )
@@ -209,105 +194,90 @@ class _IntroSliderState extends State<IntroSlider>
                           widget.product[_currentPage].label,
                           key: UniqueKey(),
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall!
-                              .copyWith(fontSize: 20, color: textColor),
+                          style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 20, color: textColor),
                         ),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                const SizedBox(height: 8),
                 Text(
                   widget.product[_currentPage].subLabel,
                   key: UniqueKey(),
                   textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall!
-                      .copyWith(fontSize: 14, color: textColor),
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 14, color: textColor),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 48),
                 Row(
                   children: <Widget>[
                     Flexible(
-                        child: Stack(
-                      alignment: Alignment.centerRight,
-                      children: <Widget>[
-                        Positioned(
-                          left: 0,
-                          top: 0,
-                          bottom: 0,
-                          child: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 200),
-                            child: _currentPage > 0
-                                ? GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      _pageController.previousPage(
-                                          duration:
-                                              const Duration(milliseconds: 200),
-                                          curve: Curves.easeIn);
-                                    },
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color:
-                                              unFollowButton.withOpacity(0.1),
-                                          shape: BoxShape.circle),
-                                      child: SvgPicture.asset(
-                                        AppIcons.arrowLeft,
-                                        color: primary,
-                                        height: 24,
-                                        width: 24,
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: <Widget>[
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            bottom: 0,
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 200),
+                              child: _currentPage > 0
+                                  ? GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _pageController.previousPage(
+                                            duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            color: unFollowButton.withOpacity(0.1), shape: BoxShape.circle),
+                                        child: SvgPicture.asset(
+                                          AppIcons.arrowLeft,
+                                          color: primary,
+                                          height: 24,
+                                          width: 24,
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                : const SizedBox(),
-                          ),
-                        ),
-                        WScaleAnimation(
-                          onTap: () async {
-                            if (_currentPage < 3) {
-                              _pageController.nextPage(
-                                  duration: const Duration(milliseconds: 200),
-                                  curve: Curves.linear);
-                            } else {
-                              await StorageRepository.putBool(
-                                  key: 'onboarding', value: true);
-                              Navigator.of(context).pushReplacement(
-                                  fade(page: const HomeScreen()));
-                            }
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: widget.widthDoneBtn ??
-                                MediaQuery.of(context).size.width / 4,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: primary,
-                            ),
-                            child: SvgPicture.asset(
-                              AppIcons.rightArrow,
-                              height: 24,
-                              color: white,
+                                    )
+                                  : const SizedBox(),
                             ),
                           ),
-                        ),
-                        DotsIndicator(
-                          currentPage: _currentPage,
-                          itemCount: widget.product.length,
-                          color: widget.colorDot ?? Colors.transparent,
-                          dotSize: sizeDot,
-                          onPageSelected: (index) => jumpToPage(index),
-                          dotSpacing: 15,
-                          dotIncreaseSize: 1.5,
-                        ),
-                      ],
-                    )),
+                          WScaleAnimation(
+                            onTap: () async {
+                              if (_currentPage < 3) {
+                                _pageController.nextPage(
+                                    duration: const Duration(milliseconds: 200), curve: Curves.linear);
+                              } else {
+                                await StorageRepository.putBool(key: StoreKeys.onBoarding, value: true);
+                                Navigator.of(context).pushReplacement(fade(page: const HomeScreen()));
+                              }
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: widget.widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: primary,
+                              ),
+                              child: SvgPicture.asset(
+                                AppIcons.rightArrow,
+                                height: 24,
+                                color: white,
+                              ),
+                            ),
+                          ),
+                          DotsIndicator(
+                            currentPage: _currentPage,
+                            itemCount: widget.product.length,
+                            color: widget.colorDot ?? Colors.transparent,
+                            dotSize: sizeDot,
+                            onPageSelected: (index) => jumpToPage(index),
+                            dotSpacing: 15,
+                            dotIncreaseSize: 1.5,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -320,30 +290,26 @@ class _IntroSliderState extends State<IntroSlider>
   }
 
   Widget buildDoneButton() {
-    return GestureDetector(
-        onTap: () => widget.onDonePress, child: widget.renderDoneBtn);
+    return GestureDetector(onTap: () => widget.onDonePress, child: widget.renderDoneBtn);
   }
 
   Widget buildNextButton() {
     return GestureDetector(
       onTap: () {
-        _pageController.nextPage(
-            duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+        _pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
       },
       child: widget.renderNextBtn,
     );
   }
 
   void jumpToPage(int index) {
-    _pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+    _pageController.animateToPage(index, duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
   }
 }
 
 class MyBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
   }
 }
