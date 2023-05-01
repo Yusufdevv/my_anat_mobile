@@ -12,5 +12,6 @@ class CategoryState with _$CategoryState {
     @Default(false) bool categoriesFetchMore,
     @Default(false) bool organizationsFetchMore,
     @Default(-1) int selectedCategory,
+    @Default(CrossFadeState.showFirst) CrossFadeState categoriesCrossFade,
   }) = _CategoryState;
 }

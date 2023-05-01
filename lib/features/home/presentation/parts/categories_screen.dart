@@ -11,6 +11,7 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
@@ -29,16 +30,32 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   late final ScrollController categoryController;
+  late final ScrollController organizationsController;
 
   @override
   void initState() {
     super.initState();
     categoryController = ScrollController();
+    organizationsController = ScrollController()..addListener(_organizationsListener);
     context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(widget.selectedIndex));
     Future.delayed(const Duration(milliseconds: 200), () {
       categoryController.animateTo(widget.categoryItemSize * widget.selectedIndex,
           duration: const Duration(milliseconds: 100), curve: Curves.easeIn);
     });
+  }
+
+  _organizationsListener() {
+    /// tepaga ko'tarish
+    if (ScrollDirection.reverse == organizationsController.position.userScrollDirection &&
+        context.read<CategoryBloc>().state.categoriesCrossFade != CrossFadeState.showSecond) {
+      log(':::::::::: reverse  ${organizationsController.offset}  ::::::::::');
+      context.read<CategoryBloc>().add(CategoryEvent.changeCrossFade(CrossFadeState.showSecond));
+    }
+    if (ScrollDirection.forward == organizationsController.position.userScrollDirection &&
+        context.read<CategoryBloc>().state.categoriesCrossFade != CrossFadeState.showFirst) {
+      log(':::::::::: forward   ${organizationsController.offset}  ::::::::::');
+      context.read<CategoryBloc>().add(CategoryEvent.changeCrossFade(CrossFadeState.showFirst));
+    }
   }
 
   @override
@@ -48,6 +65,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         return Scaffold(
           backgroundColor: errorImageBackground,
           appBar: CategoriesAppBar(
+            crossFadeState: state.categoriesCrossFade,
             mediaQuery: widget.mediaQuery,
             selectedCategoryIndex: state.selectedCategory,
             onCategoryTap: (i) {
@@ -88,6 +106,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   return true;
                 },
                 child: ListView.separated(
+                    controller: organizationsController,
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
                     itemCount: state.organizations.length + 1,
                     separatorBuilder: (c, i) => const SizedBox(height: 12),

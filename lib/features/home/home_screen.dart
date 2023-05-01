@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/data/singletons/storage.dart';
@@ -7,14 +6,12 @@ import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
-import 'package:anatomica/features/common/presentation/widgets/search_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/shimmer_container.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/home/presentation/blocs/category_bloc/category_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/most_populars_bloc/most_populars_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
-import 'package:anatomica/features/home/presentation/parts/articles_part.dart';
 import 'package:anatomica/features/home/presentation/parts/categories_screen.dart';
 import 'package:anatomica/features/home/presentation/parts/news_part.dart';
 import 'package:anatomica/features/home/presentation/parts/notifications.dart';
@@ -33,14 +30,12 @@ import 'package:anatomica/features/journal/presentation/widgets/activate_premium
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/features/web_view/web_view_screen.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:formz/formz.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

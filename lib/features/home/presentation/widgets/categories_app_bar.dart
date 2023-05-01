@@ -18,6 +18,7 @@ class CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool hasFetchMore;
   final List<CategoryEntity> categories;
   final int selectedCategoryIndex;
+  final CrossFadeState crossFadeState;
 
   const CategoriesAppBar(
       {required this.mediaQuery,
@@ -28,92 +29,107 @@ class CategoriesAppBar extends StatelessWidget implements PreferredSizeWidget {
       required this.categories,
       required this.onCategoryTap,
       required this.selectedCategoryIndex,
-      Key? key})
+      Key? key,
+      required this.crossFadeState})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            WScaleAnimation(
-              onTap: () => Navigator.of(context).pop(),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: SvgPicture.asset(
-                  AppIcons.chevronRight,
-                  color: textSecondary,
-                ),
+    return Container(
+      color: errorImageBackground,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Expanded(
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  WScaleAnimation(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: SvgPicture.asset(
+                        AppIcons.chevronRight,
+                        color: textSecondary,
+                      ),
+                    ),
+                  ),
+                  SvgPicture.asset(AppIcons.mainLogo, height: 20),
+                  const SizedBox(width: 50)
+                ],
               ),
             ),
-            SvgPicture.asset(AppIcons.mainLogo, height: 20),
-            const SizedBox(width: 50)
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 4),
-          child: Stack(
-            children: [
-              Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: 45,
-                        color: white,
-                        width: double.maxFinite,
-                      ),
-                      Container(
-                        height: 7,
-                        width: double.maxFinite,
-                        decoration:
-                            const BoxDecoration(color: white, border: Border(top: BorderSide(color: lilyWhite))),
-                      ),
-                    ],
-                  )),
-              SizedBox(
-                height: 89,
-                child: Paginator(
-                  physics: const ClampingScrollPhysics(),
-                  controller: scrollController,
-                  fetchMoreFunction: onFetchMore,
-                  hasMoreToFetch: hasFetchMore,
-                  errorWidget: const SizedBox(),
-                  paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(status),
-                  padding: const EdgeInsets.only(top: 12, left: 16, right: 8),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: categories.length,
-                  itemBuilder: (ctx, i) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: CategoryItem(
-                        logo: categories[i].icon.file.url,
-                        title: categories[i].title,
-                        onTap: () {
-                          onCategoryTap(i);
-                        },
-                        isGreen: i == selectedCategoryIndex,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
           ),
-        ),
-      ],
+          AnimatedCrossFade(
+            crossFadeState: crossFadeState,
+            duration: const Duration(milliseconds: 300),
+            secondChild: const SizedBox(),
+            firstChild: Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Stack(
+                children: [
+                  Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            height: 45,
+                            color: white,
+                            width: double.maxFinite,
+                          ),
+                          Container(
+                            height: 7,
+                            width: double.maxFinite,
+                            decoration:
+                                const BoxDecoration(color: white, border: Border(top: BorderSide(color: lilyWhite))),
+                          ),
+                        ],
+                      )),
+                  SizedBox(
+                    height: 89,
+                    child: Paginator(
+                      physics: const ClampingScrollPhysics(),
+                      controller: scrollController,
+                      fetchMoreFunction: onFetchMore,
+                      hasMoreToFetch: hasFetchMore,
+                      errorWidget: const SizedBox(),
+                      paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(status),
+                      padding: const EdgeInsets.only(top: 12, left: 16, right: 8),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categories.length,
+                      itemBuilder: (ctx, i) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: CategoryItem(
+                            logo: categories[i].icon.file.url,
+                            title: categories[i].title,
+                            onTap: () {
+                              onCategoryTap(i);
+                            },
+                            isGreen: i == selectedCategoryIndex,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   @override
   Size get preferredSize => Size(
         mediaQuery.size.width,
-        mediaQuery.padding.top + 145,
+        mediaQuery.padding.top + (crossFadeState == CrossFadeState.showFirst ? 145 : 55),
       );
 }

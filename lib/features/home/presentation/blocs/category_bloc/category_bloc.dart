@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:anatomica/features/home/domain/entities/category_entity.dart';
 import 'package:anatomica/features/home/domain/usecases/category_usecase.dart';
 import 'package:anatomica/features/home/domain/usecases/get_organizations_usecase.dart';
 import 'package:anatomica/features/map/data/models/org_map_v2_model.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -19,6 +22,10 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<_GetMoreCategories>(_getMoreCategories);
     on<_GetOrganizations>(_getOrganizations);
     on<_GetMoreOrganizations>(_getMoreOrganizations);
+    on<_ChangeCrossFade>(_changeCrossFade);
+  }
+  FutureOr<void> _changeCrossFade(_ChangeCrossFade event, Emitter<CategoryState> emit) async {
+    emit(state.copyWith(categoriesCrossFade: event.crossFade));
   }
 
   _getCategories(_GetCategories event, Emitter<CategoryState> emit) async {

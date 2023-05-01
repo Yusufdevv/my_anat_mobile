@@ -22,6 +22,7 @@ mixin _$CategoryEvent {
     required TResult Function() getMoreCategories,
     required TResult Function(int type) getOrganizations,
     required TResult Function() getMoreOrganizations,
+    required TResult Function(CrossFadeState crossFade) changeCrossFade,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$CategoryEvent {
     TResult? Function()? getMoreCategories,
     TResult? Function(int type)? getOrganizations,
     TResult? Function()? getMoreOrganizations,
+    TResult? Function(CrossFadeState crossFade)? changeCrossFade,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$CategoryEvent {
     TResult Function()? getMoreCategories,
     TResult Function(int type)? getOrganizations,
     TResult Function()? getMoreOrganizations,
+    TResult Function(CrossFadeState crossFade)? changeCrossFade,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$CategoryEvent {
     required TResult Function(_GetMoreCategories value) getMoreCategories,
     required TResult Function(_GetOrganizations value) getOrganizations,
     required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
+    required TResult Function(_ChangeCrossFade value) changeCrossFade,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$CategoryEvent {
     TResult? Function(_GetMoreCategories value)? getMoreCategories,
     TResult? Function(_GetOrganizations value)? getOrganizations,
     TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult? Function(_ChangeCrossFade value)? changeCrossFade,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$CategoryEvent {
     TResult Function(_GetMoreCategories value)? getMoreCategories,
     TResult Function(_GetOrganizations value)? getOrganizations,
     TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult Function(_ChangeCrossFade value)? changeCrossFade,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -128,6 +134,7 @@ class _$_GetCategories implements _GetCategories {
     required TResult Function() getMoreCategories,
     required TResult Function(int type) getOrganizations,
     required TResult Function() getMoreOrganizations,
+    required TResult Function(CrossFadeState crossFade) changeCrossFade,
   }) {
     return getCategories();
   }
@@ -139,6 +146,7 @@ class _$_GetCategories implements _GetCategories {
     TResult? Function()? getMoreCategories,
     TResult? Function(int type)? getOrganizations,
     TResult? Function()? getMoreOrganizations,
+    TResult? Function(CrossFadeState crossFade)? changeCrossFade,
   }) {
     return getCategories?.call();
   }
@@ -150,6 +158,7 @@ class _$_GetCategories implements _GetCategories {
     TResult Function()? getMoreCategories,
     TResult Function(int type)? getOrganizations,
     TResult Function()? getMoreOrganizations,
+    TResult Function(CrossFadeState crossFade)? changeCrossFade,
     required TResult orElse(),
   }) {
     if (getCategories != null) {
@@ -165,6 +174,7 @@ class _$_GetCategories implements _GetCategories {
     required TResult Function(_GetMoreCategories value) getMoreCategories,
     required TResult Function(_GetOrganizations value) getOrganizations,
     required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
+    required TResult Function(_ChangeCrossFade value) changeCrossFade,
   }) {
     return getCategories(this);
   }
@@ -176,6 +186,7 @@ class _$_GetCategories implements _GetCategories {
     TResult? Function(_GetMoreCategories value)? getMoreCategories,
     TResult? Function(_GetOrganizations value)? getOrganizations,
     TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult? Function(_ChangeCrossFade value)? changeCrossFade,
   }) {
     return getCategories?.call(this);
   }
@@ -187,6 +198,7 @@ class _$_GetCategories implements _GetCategories {
     TResult Function(_GetMoreCategories value)? getMoreCategories,
     TResult Function(_GetOrganizations value)? getOrganizations,
     TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult Function(_ChangeCrossFade value)? changeCrossFade,
     required TResult orElse(),
   }) {
     if (getCategories != null) {
@@ -242,6 +254,7 @@ class _$_GetMoreCategories implements _GetMoreCategories {
     required TResult Function() getMoreCategories,
     required TResult Function(int type) getOrganizations,
     required TResult Function() getMoreOrganizations,
+    required TResult Function(CrossFadeState crossFade) changeCrossFade,
   }) {
     return getMoreCategories();
   }
@@ -253,6 +266,7 @@ class _$_GetMoreCategories implements _GetMoreCategories {
     TResult? Function()? getMoreCategories,
     TResult? Function(int type)? getOrganizations,
     TResult? Function()? getMoreOrganizations,
+    TResult? Function(CrossFadeState crossFade)? changeCrossFade,
   }) {
     return getMoreCategories?.call();
   }
@@ -264,6 +278,7 @@ class _$_GetMoreCategories implements _GetMoreCategories {
     TResult Function()? getMoreCategories,
     TResult Function(int type)? getOrganizations,
     TResult Function()? getMoreOrganizations,
+    TResult Function(CrossFadeState crossFade)? changeCrossFade,
     required TResult orElse(),
   }) {
     if (getMoreCategories != null) {
@@ -279,6 +294,7 @@ class _$_GetMoreCategories implements _GetMoreCategories {
     required TResult Function(_GetMoreCategories value) getMoreCategories,
     required TResult Function(_GetOrganizations value) getOrganizations,
     required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
+    required TResult Function(_ChangeCrossFade value) changeCrossFade,
   }) {
     return getMoreCategories(this);
   }
@@ -290,6 +306,7 @@ class _$_GetMoreCategories implements _GetMoreCategories {
     TResult? Function(_GetMoreCategories value)? getMoreCategories,
     TResult? Function(_GetOrganizations value)? getOrganizations,
     TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult? Function(_ChangeCrossFade value)? changeCrossFade,
   }) {
     return getMoreCategories?.call(this);
   }
@@ -301,6 +318,7 @@ class _$_GetMoreCategories implements _GetMoreCategories {
     TResult Function(_GetMoreCategories value)? getMoreCategories,
     TResult Function(_GetOrganizations value)? getOrganizations,
     TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult Function(_ChangeCrossFade value)? changeCrossFade,
     required TResult orElse(),
   }) {
     if (getMoreCategories != null) {
@@ -382,6 +400,7 @@ class _$_GetOrganizations implements _GetOrganizations {
     required TResult Function() getMoreCategories,
     required TResult Function(int type) getOrganizations,
     required TResult Function() getMoreOrganizations,
+    required TResult Function(CrossFadeState crossFade) changeCrossFade,
   }) {
     return getOrganizations(type);
   }
@@ -393,6 +412,7 @@ class _$_GetOrganizations implements _GetOrganizations {
     TResult? Function()? getMoreCategories,
     TResult? Function(int type)? getOrganizations,
     TResult? Function()? getMoreOrganizations,
+    TResult? Function(CrossFadeState crossFade)? changeCrossFade,
   }) {
     return getOrganizations?.call(type);
   }
@@ -404,6 +424,7 @@ class _$_GetOrganizations implements _GetOrganizations {
     TResult Function()? getMoreCategories,
     TResult Function(int type)? getOrganizations,
     TResult Function()? getMoreOrganizations,
+    TResult Function(CrossFadeState crossFade)? changeCrossFade,
     required TResult orElse(),
   }) {
     if (getOrganizations != null) {
@@ -419,6 +440,7 @@ class _$_GetOrganizations implements _GetOrganizations {
     required TResult Function(_GetMoreCategories value) getMoreCategories,
     required TResult Function(_GetOrganizations value) getOrganizations,
     required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
+    required TResult Function(_ChangeCrossFade value) changeCrossFade,
   }) {
     return getOrganizations(this);
   }
@@ -430,6 +452,7 @@ class _$_GetOrganizations implements _GetOrganizations {
     TResult? Function(_GetMoreCategories value)? getMoreCategories,
     TResult? Function(_GetOrganizations value)? getOrganizations,
     TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult? Function(_ChangeCrossFade value)? changeCrossFade,
   }) {
     return getOrganizations?.call(this);
   }
@@ -441,6 +464,7 @@ class _$_GetOrganizations implements _GetOrganizations {
     TResult Function(_GetMoreCategories value)? getMoreCategories,
     TResult Function(_GetOrganizations value)? getOrganizations,
     TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult Function(_ChangeCrossFade value)? changeCrossFade,
     required TResult orElse(),
   }) {
     if (getOrganizations != null) {
@@ -501,6 +525,7 @@ class _$_GetMoreOrganizations implements _GetMoreOrganizations {
     required TResult Function() getMoreCategories,
     required TResult Function(int type) getOrganizations,
     required TResult Function() getMoreOrganizations,
+    required TResult Function(CrossFadeState crossFade) changeCrossFade,
   }) {
     return getMoreOrganizations();
   }
@@ -512,6 +537,7 @@ class _$_GetMoreOrganizations implements _GetMoreOrganizations {
     TResult? Function()? getMoreCategories,
     TResult? Function(int type)? getOrganizations,
     TResult? Function()? getMoreOrganizations,
+    TResult? Function(CrossFadeState crossFade)? changeCrossFade,
   }) {
     return getMoreOrganizations?.call();
   }
@@ -523,6 +549,7 @@ class _$_GetMoreOrganizations implements _GetMoreOrganizations {
     TResult Function()? getMoreCategories,
     TResult Function(int type)? getOrganizations,
     TResult Function()? getMoreOrganizations,
+    TResult Function(CrossFadeState crossFade)? changeCrossFade,
     required TResult orElse(),
   }) {
     if (getMoreOrganizations != null) {
@@ -538,6 +565,7 @@ class _$_GetMoreOrganizations implements _GetMoreOrganizations {
     required TResult Function(_GetMoreCategories value) getMoreCategories,
     required TResult Function(_GetOrganizations value) getOrganizations,
     required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
+    required TResult Function(_ChangeCrossFade value) changeCrossFade,
   }) {
     return getMoreOrganizations(this);
   }
@@ -549,6 +577,7 @@ class _$_GetMoreOrganizations implements _GetMoreOrganizations {
     TResult? Function(_GetMoreCategories value)? getMoreCategories,
     TResult? Function(_GetOrganizations value)? getOrganizations,
     TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult? Function(_ChangeCrossFade value)? changeCrossFade,
   }) {
     return getMoreOrganizations?.call(this);
   }
@@ -560,6 +589,7 @@ class _$_GetMoreOrganizations implements _GetMoreOrganizations {
     TResult Function(_GetMoreCategories value)? getMoreCategories,
     TResult Function(_GetOrganizations value)? getOrganizations,
     TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult Function(_ChangeCrossFade value)? changeCrossFade,
     required TResult orElse(),
   }) {
     if (getMoreOrganizations != null) {
@@ -574,6 +604,159 @@ abstract class _GetMoreOrganizations implements CategoryEvent {
 }
 
 /// @nodoc
+abstract class _$$_ChangeCrossFadeCopyWith<$Res> {
+  factory _$$_ChangeCrossFadeCopyWith(
+          _$_ChangeCrossFade value, $Res Function(_$_ChangeCrossFade) then) =
+      __$$_ChangeCrossFadeCopyWithImpl<$Res>;
+  @useResult
+  $Res call({CrossFadeState crossFade});
+}
+
+/// @nodoc
+class __$$_ChangeCrossFadeCopyWithImpl<$Res>
+    extends _$CategoryEventCopyWithImpl<$Res, _$_ChangeCrossFade>
+    implements _$$_ChangeCrossFadeCopyWith<$Res> {
+  __$$_ChangeCrossFadeCopyWithImpl(
+      _$_ChangeCrossFade _value, $Res Function(_$_ChangeCrossFade) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? crossFade = null,
+  }) {
+    return _then(_$_ChangeCrossFade(
+      null == crossFade
+          ? _value.crossFade
+          : crossFade // ignore: cast_nullable_to_non_nullable
+              as CrossFadeState,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ChangeCrossFade implements _ChangeCrossFade {
+  const _$_ChangeCrossFade(this.crossFade);
+
+  @override
+  final CrossFadeState crossFade;
+
+  @override
+  String toString() {
+    return 'CategoryEvent.changeCrossFade(crossFade: $crossFade)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ChangeCrossFade &&
+            (identical(other.crossFade, crossFade) ||
+                other.crossFade == crossFade));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, crossFade);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ChangeCrossFadeCopyWith<_$_ChangeCrossFade> get copyWith =>
+      __$$_ChangeCrossFadeCopyWithImpl<_$_ChangeCrossFade>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getCategories,
+    required TResult Function() getMoreCategories,
+    required TResult Function(int type) getOrganizations,
+    required TResult Function() getMoreOrganizations,
+    required TResult Function(CrossFadeState crossFade) changeCrossFade,
+  }) {
+    return changeCrossFade(crossFade);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getCategories,
+    TResult? Function()? getMoreCategories,
+    TResult? Function(int type)? getOrganizations,
+    TResult? Function()? getMoreOrganizations,
+    TResult? Function(CrossFadeState crossFade)? changeCrossFade,
+  }) {
+    return changeCrossFade?.call(crossFade);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getCategories,
+    TResult Function()? getMoreCategories,
+    TResult Function(int type)? getOrganizations,
+    TResult Function()? getMoreOrganizations,
+    TResult Function(CrossFadeState crossFade)? changeCrossFade,
+    required TResult orElse(),
+  }) {
+    if (changeCrossFade != null) {
+      return changeCrossFade(crossFade);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetCategories value) getCategories,
+    required TResult Function(_GetMoreCategories value) getMoreCategories,
+    required TResult Function(_GetOrganizations value) getOrganizations,
+    required TResult Function(_GetMoreOrganizations value) getMoreOrganizations,
+    required TResult Function(_ChangeCrossFade value) changeCrossFade,
+  }) {
+    return changeCrossFade(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetCategories value)? getCategories,
+    TResult? Function(_GetMoreCategories value)? getMoreCategories,
+    TResult? Function(_GetOrganizations value)? getOrganizations,
+    TResult? Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult? Function(_ChangeCrossFade value)? changeCrossFade,
+  }) {
+    return changeCrossFade?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetCategories value)? getCategories,
+    TResult Function(_GetMoreCategories value)? getMoreCategories,
+    TResult Function(_GetOrganizations value)? getOrganizations,
+    TResult Function(_GetMoreOrganizations value)? getMoreOrganizations,
+    TResult Function(_ChangeCrossFade value)? changeCrossFade,
+    required TResult orElse(),
+  }) {
+    if (changeCrossFade != null) {
+      return changeCrossFade(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeCrossFade implements CategoryEvent {
+  const factory _ChangeCrossFade(final CrossFadeState crossFade) =
+      _$_ChangeCrossFade;
+
+  CrossFadeState get crossFade;
+  @JsonKey(ignore: true)
+  _$$_ChangeCrossFadeCopyWith<_$_ChangeCrossFade> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$CategoryState {
   List<CategoryEntity> get categories => throw _privateConstructorUsedError;
   List<OrgMapV2Model> get organizations => throw _privateConstructorUsedError;
@@ -584,6 +767,7 @@ mixin _$CategoryState {
   bool get categoriesFetchMore => throw _privateConstructorUsedError;
   bool get organizationsFetchMore => throw _privateConstructorUsedError;
   int get selectedCategory => throw _privateConstructorUsedError;
+  CrossFadeState get categoriesCrossFade => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CategoryStateCopyWith<CategoryState> get copyWith =>
@@ -605,7 +789,8 @@ abstract class $CategoryStateCopyWith<$Res> {
       String? organizationsNext,
       bool categoriesFetchMore,
       bool organizationsFetchMore,
-      int selectedCategory});
+      int selectedCategory,
+      CrossFadeState categoriesCrossFade});
 }
 
 /// @nodoc
@@ -630,6 +815,7 @@ class _$CategoryStateCopyWithImpl<$Res, $Val extends CategoryState>
     Object? categoriesFetchMore = null,
     Object? organizationsFetchMore = null,
     Object? selectedCategory = null,
+    Object? categoriesCrossFade = null,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
@@ -668,6 +854,10 @@ class _$CategoryStateCopyWithImpl<$Res, $Val extends CategoryState>
           ? _value.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
               as int,
+      categoriesCrossFade: null == categoriesCrossFade
+          ? _value.categoriesCrossFade
+          : categoriesCrossFade // ignore: cast_nullable_to_non_nullable
+              as CrossFadeState,
     ) as $Val);
   }
 }
@@ -689,7 +879,8 @@ abstract class _$$_CategoryStateCopyWith<$Res>
       String? organizationsNext,
       bool categoriesFetchMore,
       bool organizationsFetchMore,
-      int selectedCategory});
+      int selectedCategory,
+      CrossFadeState categoriesCrossFade});
 }
 
 /// @nodoc
@@ -712,6 +903,7 @@ class __$$_CategoryStateCopyWithImpl<$Res>
     Object? categoriesFetchMore = null,
     Object? organizationsFetchMore = null,
     Object? selectedCategory = null,
+    Object? categoriesCrossFade = null,
   }) {
     return _then(_$_CategoryState(
       categories: null == categories
@@ -750,6 +942,10 @@ class __$$_CategoryStateCopyWithImpl<$Res>
           ? _value.selectedCategory
           : selectedCategory // ignore: cast_nullable_to_non_nullable
               as int,
+      categoriesCrossFade: null == categoriesCrossFade
+          ? _value.categoriesCrossFade
+          : categoriesCrossFade // ignore: cast_nullable_to_non_nullable
+              as CrossFadeState,
     ));
   }
 }
@@ -766,7 +962,8 @@ class _$_CategoryState implements _CategoryState {
       this.organizationsNext,
       this.categoriesFetchMore = false,
       this.organizationsFetchMore = false,
-      this.selectedCategory = -1})
+      this.selectedCategory = -1,
+      this.categoriesCrossFade = CrossFadeState.showFirst})
       : _categories = categories,
         _organizations = organizations;
 
@@ -807,10 +1004,13 @@ class _$_CategoryState implements _CategoryState {
   @override
   @JsonKey()
   final int selectedCategory;
+  @override
+  @JsonKey()
+  final CrossFadeState categoriesCrossFade;
 
   @override
   String toString() {
-    return 'CategoryState(categories: $categories, organizations: $organizations, categoryStatus: $categoryStatus, organizationsStatus: $organizationsStatus, categoriesNext: $categoriesNext, organizationsNext: $organizationsNext, categoriesFetchMore: $categoriesFetchMore, organizationsFetchMore: $organizationsFetchMore, selectedCategory: $selectedCategory)';
+    return 'CategoryState(categories: $categories, organizations: $organizations, categoryStatus: $categoryStatus, organizationsStatus: $organizationsStatus, categoriesNext: $categoriesNext, organizationsNext: $organizationsNext, categoriesFetchMore: $categoriesFetchMore, organizationsFetchMore: $organizationsFetchMore, selectedCategory: $selectedCategory, categoriesCrossFade: $categoriesCrossFade)';
   }
 
   @override
@@ -835,7 +1035,9 @@ class _$_CategoryState implements _CategoryState {
             (identical(other.organizationsFetchMore, organizationsFetchMore) ||
                 other.organizationsFetchMore == organizationsFetchMore) &&
             (identical(other.selectedCategory, selectedCategory) ||
-                other.selectedCategory == selectedCategory));
+                other.selectedCategory == selectedCategory) &&
+            (identical(other.categoriesCrossFade, categoriesCrossFade) ||
+                other.categoriesCrossFade == categoriesCrossFade));
   }
 
   @override
@@ -849,7 +1051,8 @@ class _$_CategoryState implements _CategoryState {
       organizationsNext,
       categoriesFetchMore,
       organizationsFetchMore,
-      selectedCategory);
+      selectedCategory,
+      categoriesCrossFade);
 
   @JsonKey(ignore: true)
   @override
@@ -868,7 +1071,8 @@ abstract class _CategoryState implements CategoryState {
       final String? organizationsNext,
       final bool categoriesFetchMore,
       final bool organizationsFetchMore,
-      final int selectedCategory}) = _$_CategoryState;
+      final int selectedCategory,
+      final CrossFadeState categoriesCrossFade}) = _$_CategoryState;
 
   @override
   List<CategoryEntity> get categories;
@@ -888,6 +1092,8 @@ abstract class _CategoryState implements CategoryState {
   bool get organizationsFetchMore;
   @override
   int get selectedCategory;
+  @override
+  CrossFadeState get categoriesCrossFade;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryStateCopyWith<_$_CategoryState> get copyWith =>
