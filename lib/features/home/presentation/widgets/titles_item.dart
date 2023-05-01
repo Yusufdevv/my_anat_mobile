@@ -6,9 +6,7 @@ class TitlesItem extends StatelessWidget {
   final String? showAllTitle;
   final VoidCallback? showAllFunction;
 
-  const TitlesItem(
-      {required this.title, this.showAllFunction, this.showAllTitle, Key? key})
-      : super(key: key);
+  const TitlesItem({required this.title, this.showAllFunction, this.showAllTitle, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +18,7 @@ class TitlesItem extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context)
-                .textTheme
-                .displayLarge!
-                .copyWith(fontSize: 20),
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20),
           ),
           Offstage(
             offstage: showAllTitle == null,

@@ -39,21 +39,21 @@ class _TopHospitalItemState extends State<TopHospitalItem> {
   Widget build(BuildContext context) {
     return WScaleAnimation(
       onTap: () {
-        Navigator.of(context, rootNavigator: true).push(
-            fade(page: HospitalSingleScreen(slug: widget.slug, id: widget.id)));
+        Navigator.of(context, rootNavigator: true)
+            .push(fade(page: HospitalSingleScreen(slug: widget.slug, id: widget.id)));
       },
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              offset: const Offset(0, 8),
-              blurRadius: 24,
-              color: darkerGreen.withOpacity(0.09),
-            ),
+              color: darkerGreen.withOpacity(0.2),
+              offset: const Offset(0, 4),
+              blurRadius: 8,
+            )
           ],
         ),
         width: MediaQuery.of(context).size.width * .8,
-        margin: EdgeInsets.only(right: 16),
+        margin: const EdgeInsets.only(right: 16),
         child: Stack(
           children: [
             Container(
@@ -76,16 +76,13 @@ class _TopHospitalItemState extends State<TopHospitalItem> {
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.horizontal,
                               itemCount: widget.images.length,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(width: 8),
+                              separatorBuilder: (context, index) => const SizedBox(width: 8),
                               itemBuilder: (context, index) => ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: WImage(
                                   imageUrl: widget.images[index],
                                   fit: BoxFit.cover,
-                                  width:
-                                      MediaQuery.of(context).size.shortestSide /
-                                          2,
+                                  width: MediaQuery.of(context).size.shortestSide / 2,
                                   onErrorWidget: SvgPicture.asset(
                                     AppIcons.bigImageError,
                                     fit: BoxFit.cover,
@@ -95,9 +92,8 @@ class _TopHospitalItemState extends State<TopHospitalItem> {
                             )
                           : Container(
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: errorImageBackground),
+                              decoration:
+                                  BoxDecoration(borderRadius: BorderRadius.circular(8), color: errorImageBackground),
                               child: SvgPicture.asset(
                                 AppIcons.logo,
                                 height: 100,
@@ -120,10 +116,7 @@ class _TopHospitalItemState extends State<TopHospitalItem> {
                         const SizedBox(height: 4),
                         Text(
                           widget.address,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(color: textSecondary),
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: textSecondary),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -151,10 +144,7 @@ class _TopHospitalItemState extends State<TopHospitalItem> {
                       const SizedBox(width: 4),
                       Text(
                         widget.rating.toString(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(fontSize: 14),
+                        style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 14),
                       ),
                       const SizedBox(width: 8),
                       Container(

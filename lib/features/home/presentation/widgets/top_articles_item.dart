@@ -61,9 +61,9 @@ class TopArticlesItem extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: darkerGreen.withOpacity(0.09),
-              offset: const Offset(0, 8),
-              blurRadius: 24,
+              color: darkerGreen.withOpacity(0.2),
+              offset: const Offset(0, 4),
+              blurRadius: 8,
             )
           ],
         ),
@@ -97,8 +97,7 @@ class TopArticlesItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 14),
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(12)),
+                    borderRadius: const BorderRadius.vertical(bottom: Radius.circular(12)),
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                       child: Container(
@@ -112,20 +111,14 @@ class TopArticlesItem extends StatelessWidget {
                           children: [
                             Text(
                               title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayMedium!
-                                  .copyWith(fontSize: 14),
+                              style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 12),
                             Text(
                               createdAt,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(color: divider),
+                              style: Theme.of(context).textTheme.labelSmall!.copyWith(color: divider),
                             ),
                           ],
                         ),
@@ -139,10 +132,7 @@ class TopArticlesItem extends StatelessWidget {
                   child: Chip(
                     label: Text(
                       category,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(color: white),
+                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: white),
                     ),
                     elevation: 0,
                     backgroundColor: primary,
