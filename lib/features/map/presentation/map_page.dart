@@ -60,14 +60,8 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                             mediaQuery: widget.mediaQuery,
                           );
                         }
-                        if (state.screenStatus.isList) {
-                          return const HospitalList();
-                        }
-                        return Center(
-                          child: Container(
-                            color: Colors.teal,
-                          ),
-                        );
+
+                        return const HospitalList();
                       },
                     ),
                   ),
