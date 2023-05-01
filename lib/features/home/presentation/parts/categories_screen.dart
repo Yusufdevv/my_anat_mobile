@@ -88,6 +88,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   return true;
                 },
                 child: ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
                     itemCount: state.organizations.length + 1,
                     separatorBuilder: (c, i) => const SizedBox(height: 12),
                     itemBuilder: (context, index) {
@@ -107,12 +108,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           return const SizedBox();
                         }
                       }
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: HospitalItem(
-                          entity: state.organizations[index],
-                          wrapItems: state.organizations[index].getServiceOrSpecialization(pattern: null),
-                        ),
+                      return HospitalItem(
+                        entity: state.organizations[index],
+                        wrapItems: state.organizations[index].getServiceOrSpecialization(pattern: null),
                       );
                     }),
               );
