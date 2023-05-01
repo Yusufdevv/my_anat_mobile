@@ -5,8 +5,11 @@ import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
+import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/markdown_reader/presentation/bloc/journal_pages_bloc/journal_pages_bloc.dart';
 import 'package:anatomica/features/markdown_reader/presentation/bloc/reader_controller_bloc/reader_controller_bloc.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +43,9 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
   @override
   void initState() {
     super.initState();
+    if (widget.data.isEmpty) {
+      log(':::::::::: widget data init:  ${widget.data}  ::::::::::');
+    }
     webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -78,14 +84,23 @@ class _JournalMarkdownPageState extends State<JournalMarkdownPage> {
       },
       child: Stack(
         children: [
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: widget.onTap,
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: WebViewWidget(controller: webViewController!),
+          if (widget.data.isEmpty) ...{
+            SingleChildScrollView(
+              child: EmptyWidget(
+                title: LocaleKeys.no_specialists.tr(),
+                content: LocaleKeys.no_specialists.tr(),
+              ),
+            )
+          } else ...{
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: widget.onTap,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: WebViewWidget(controller: webViewController!),
+              ),
             ),
-          ),
+          },
           Positioned(
             bottom: 0,
             right: 0,

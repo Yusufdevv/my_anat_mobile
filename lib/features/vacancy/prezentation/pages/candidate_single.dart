@@ -32,8 +32,7 @@ class SingleCandidateScreen extends StatefulWidget {
   State<SingleCandidateScreen> createState() => _SingleCandidateScreenState();
 }
 
-class _SingleCandidateScreenState extends State<SingleCandidateScreen>
-    with TickerProviderStateMixin {
+class _SingleCandidateScreenState extends State<SingleCandidateScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   late ScrollController _scrollController;
   late HeaderManagerBloc _headerManagerBloc;
@@ -53,16 +52,12 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
     _headerManagerBloc = HeaderManagerBloc();
     _scrollController.addListener(_scrollListener);
     _candidateSingleBloc = CandidateSingleBloc(
-        relatedCandidateListUseCase: RelatedCandidateListUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateWorkUseCase: CandidateWorkUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateEducationFilesUseCase: CandidateEducationFilesUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateEducationUseCase: CandidateEducationUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()),
-        candidateSingleUseCase: CandidateSingleUseCase(
-            repository: serviceLocator<VacancyRepositoryImpl>()));
+        relatedCandidateListUseCase: RelatedCandidateListUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateWorkUseCase: CandidateWorkUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateEducationFilesUseCase:
+            CandidateEducationFilesUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateEducationUseCase: CandidateEducationUseCase(repository: serviceLocator<VacancyRepositoryImpl>()),
+        candidateSingleUseCase: CandidateSingleUseCase(repository: serviceLocator<VacancyRepositoryImpl>()));
     _candidateSingleBloc.add(GetRelatedCandidateListEvent(id: widget.id));
   }
 
@@ -75,8 +70,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
   }
 
   _scrollListener() {
-    _headerManagerBloc.add(
-        ChangeVacancyScrollPosition(headerPosition: _scrollController.offset));
+    _headerManagerBloc.add(ChangeVacancyScrollPosition(headerPosition: _scrollController.offset));
   }
 
   @override
@@ -90,9 +84,7 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
         body: BlocBuilder<CandidateSingleBloc, CandidateSingleState>(
           builder: (context, state) {
             if (state.status.isPure) {
-              context
-                  .read<CandidateSingleBloc>()
-                  .add(GetCandidateSingleEvent(id: widget.id));
+              context.read<CandidateSingleBloc>().add(GetCandidateSingleEvent(id: widget.id));
             } else if (state.status.isSubmissionInProgress) {
               return const Center(child: CupertinoActivityIndicator());
             } else if (state.status.isSubmissionFailure) {
@@ -132,38 +124,30 @@ class _SingleCandidateScreenState extends State<SingleCandidateScreen>
                       isRelatedEmpty: state.candidateList.isEmpty,
                     ),
                     ListView(
-                      padding: EdgeInsets.fromLTRB(
-                          16, 16, 16, 16 + mediaQuery.padding.bottom),
+                      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
                       children: [
                         EducationItemList(candidateId: widget.id),
                         if (state.candidateList.isNotEmpty) ...[
-                          const SizedBox(height: 24),
-                          VacancyTitleText(
-                              title: LocaleKeys.candidates.tr(), fontSize: 18),
+                          Container(color: Colors.orange, height: 24),
+                          VacancyTitleText(title: LocaleKeys.candidates.tr(), fontSize: 18),
                           const SizedBox(height: 16),
-                          RelatedCandidateList(
-                              id: widget.id, margin: EdgeInsets.zero)
+                          RelatedCandidateList(id: widget.id, margin: EdgeInsets.zero)
                         ],
                       ],
                     ),
                     ListView(
-                      padding: EdgeInsets.fromLTRB(
-                          16, 16, 16, 16 + mediaQuery.padding.bottom),
+                      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + mediaQuery.padding.bottom),
                       children: [
                         LicenceItemList(candidateId: state.candidate.id),
                         if (state.candidateList.isNotEmpty) ...[
                           const SizedBox(height: 24),
-                          VacancyTitleText(
-                              title: LocaleKeys.candidates.tr(), fontSize: 18),
+                          VacancyTitleText(title: LocaleKeys.candidates.tr(), fontSize: 18),
                           const SizedBox(height: 16),
-                          RelatedCandidateList(
-                              id: widget.id, margin: EdgeInsets.zero)
+                          RelatedCandidateList(id: widget.id, margin: EdgeInsets.zero)
                         ]
                       ],
                     ),
-                    SingleChildScrollView(
-                        child:
-                            CandidateContactInfo(candidate: state.candidate)),
+                    SingleChildScrollView(child: CandidateContactInfo(candidate: state.candidate)),
                   ],
                 ),
               );

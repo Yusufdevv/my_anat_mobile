@@ -51,16 +51,10 @@ class MapChooseEvent extends MapEvent {
 }
 
 class MapGetDoctorsEvent extends MapEvent {
-  double? latitude;
-  double? longitude;
-  double? radius;
   final BuildContext context;
 
   MapGetDoctorsEvent({
     required this.context,
-    this.latitude,
-    this.longitude,
-    this.radius,
   });
 }
 

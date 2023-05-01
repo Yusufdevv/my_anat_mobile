@@ -16,6 +16,7 @@ class EducationItem extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 16, 20, 14),
       decoration: BoxDecoration(
         color: white,
+        // color: Colors.orange,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(width: 1, color: lilyWhite),
         boxShadow: [
@@ -43,10 +44,7 @@ class EducationItem extends StatelessWidget {
                       entity.course,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context)
-                          .textTheme
-                          .displaySmall!
-                          .copyWith(fontWeight: FontWeight.w400),
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.w400),
                     )
                   ],
                 ),
@@ -57,18 +55,12 @@ class EducationItem extends StatelessWidget {
           Text(
             entity.degree,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: darkGreen),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: darkGreen),
           ),
           const SizedBox(height: 8),
           Text(
             '${Jiffy(entity.startDate).year} - ${Jiffy(entity.endDate).year}',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: darkGreen),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: darkGreen),
           ),
         ],
       ),

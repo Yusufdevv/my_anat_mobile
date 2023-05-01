@@ -38,13 +38,18 @@ class _MapScreenState extends State<MapScreen> {
             state1.currentLat != state2.currentLat;
       },
       listener: (context, state) {
-        widget.mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
-        widget.mapOrganizationBloc.add(
-          MapGetHospitalsEvent(
-            where: 'listener 43',
+        if (state.tabController.index == 1) {
+          widget.mapOrganizationBloc.add(MapGetDoctorsEvent(
             context: context,
-          ),
-        );
+          ));
+        } else {
+          widget.mapOrganizationBloc.add(
+            MapGetHospitalsEvent(
+              where: 'listener 43',
+              context: context,
+            ),
+          );
+        }
       },
       builder: (context, state) {
         return Stack(

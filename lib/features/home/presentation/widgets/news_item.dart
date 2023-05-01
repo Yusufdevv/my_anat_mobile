@@ -30,8 +30,7 @@ class NewsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return WScaleAnimation(
       onTap: () {
-        Navigator.of(context, rootNavigator: true)
-            .push(fade(page: NewSingleScreen(bloc: newsBloc, slug: slug)));
+        Navigator.of(context, rootNavigator: true).push(fade(page: NewSingleScreen(bloc: newsBloc, slug: slug)));
       },
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -59,9 +58,9 @@ class NewsItem extends StatelessWidget {
                 image,
                 errorBuilder: (a, b, c) => const SizedBox(
                   width: 82,
-                  height: 100,
+                  height: 82,
                 ),
-                height: 100,
+                height: 82,
                 width: 82,
                 fit: BoxFit.cover,
               ),
@@ -85,10 +84,7 @@ class NewsItem extends StatelessWidget {
                       const SizedBox(width: 6),
                       Text(
                         MyFunctions.safeDateFormat(createdAt, 'dd MMMM yyyy'),
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall!
-                            .copyWith(fontSize: 13),
+                        style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 13),
                       ),
                     ],
                   ),

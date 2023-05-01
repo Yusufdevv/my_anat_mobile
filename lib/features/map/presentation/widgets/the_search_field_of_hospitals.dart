@@ -91,7 +91,7 @@ class TheSearchFieldOfHospitals extends StatelessWidget {
                   onChanged: onChanged,
                 ),
               ),
-              isSearching
+              isSearching || controller.text.isNotEmpty
                   ? GestureDetector(
                       onTap: onCloseTap,
                       child: Container(
