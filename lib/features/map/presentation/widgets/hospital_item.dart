@@ -28,7 +28,8 @@ class HospitalItem extends StatelessWidget {
         Navigator.of(context, rootNavigator: true)
             .push(fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id)));
       },
-      child: DecoratedBox(
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(offset: const Offset(0, 8), blurRadius: 24, color: darkerGreen.withOpacity(0.09)),

@@ -12,7 +12,7 @@ import 'package:anatomica/features/home/presentation/blocs/category_bloc/categor
 import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/most_populars_bloc/most_populars_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
-import 'package:anatomica/features/home/presentation/parts/categories_screen.dart';
+import 'package:anatomica/features/home/presentation/widgets/categories_screen.dart';
 import 'package:anatomica/features/home/presentation/parts/news_part.dart';
 import 'package:anatomica/features/home/presentation/parts/notifications.dart';
 import 'package:anatomica/features/home/presentation/parts/other_categories_screen.dart';

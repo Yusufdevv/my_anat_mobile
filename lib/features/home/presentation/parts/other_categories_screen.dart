@@ -4,7 +4,7 @@ import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/home/presentation/blocs/category_bloc/category_bloc.dart';
-import 'package:anatomica/features/home/presentation/parts/categories_screen.dart';
+import 'package:anatomica/features/home/presentation/widgets/categories_screen.dart';
 import 'package:anatomica/features/map/presentation/widgets/empty_widget.dart';
 import 'package:anatomica/features/map/presentation/widgets/sevice_item.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
