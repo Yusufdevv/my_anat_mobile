@@ -46,6 +46,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   _getOrganizations(_GetOrganizations event, Emitter<CategoryState> emit) async {
+    final int v = event.type;
     final int type = state.categories[event.type].id;
     emit(state.copyWith(organizationsStatus: FormzStatus.submissionInProgress, selectedCategory: event.type));
     final response = await organizationsUsecase.call(OrganizationParams(type: type));

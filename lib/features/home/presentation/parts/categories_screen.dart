@@ -1,29 +1,35 @@
+import 'dart:developer';
+
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
-import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/common/presentation/widgets/empty_page.dart';
-import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
 import 'package:anatomica/features/home/presentation/blocs/category_bloc/category_bloc.dart';
-import 'package:anatomica/features/home/presentation/widgets/category_item.dart';
+import 'package:anatomica/features/home/presentation/widgets/categories_app_bar.dart';
 import 'package:anatomica/features/map/domain/entities/org_map_v2_entity.dart';
 import 'package:anatomica/features/map/presentation/widgets/hospital_item.dart';
-import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({required this.selectedIndex, required this.categoryItemSize, super.key});
+  final MediaQueryData mediaQuery;
+
+  const CategoriesScreen(
+      {required this.selectedIndex, required this.mediaQuery, required this.categoryItemSize, super.key});
+
   final int selectedIndex;
   final double categoryItemSize;
+
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   late final ScrollController categoryController;
+
   @override
   void initState() {
     super.initState();
@@ -37,116 +43,83 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: errorImageBackground,
-      appBar: AppBar(
-        titleSpacing: 0,
-        leadingWidth: 0,
-        automaticallyImplyLeading: false,
-        elevation: 0.5,
-        title: const HospitalSingleAppBarBody(),
-        shadowColor: textFieldColor,
-      ),
-      body: BlocBuilder<CategoryBloc, CategoryState>(
-        builder: (context, state) {
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              height: 45,
-                              color: white,
-                              width: double.maxFinite,
+    return BlocBuilder<CategoryBloc, CategoryState>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: errorImageBackground,
+          appBar: CategoriesAppBar(
+            mediaQuery: widget.mediaQuery,
+            selectedCategoryIndex: state.selectedCategory,
+            onCategoryTap: (i) {
+              context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(i));
+            },
+            categories: state.categories,
+            status: state.categoryStatus,
+            hasFetchMore: state.categoriesFetchMore,
+            scrollController: categoryController,
+            onFetchMore: () {
+              context.read<CategoryBloc>().add(const CategoryEvent.getMoreCategories());
+            },
+          ),
+          body: Builder(
+            builder: (context) {
+              if (state.organizationsStatus.isSubmissionInProgress) {
+                return const Padding(
+                  padding: EdgeInsets.only(top: 200),
+                  child: Center(child: CupertinoActivityIndicator()),
+                );
+              }
+              if (state.organizations.isEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: Center(
+                    child: EmptyPage(
+                      title: LocaleKeys.nothing.tr(),
+                      desc: LocaleKeys.result_not_found.tr(),
+                      iconPath: AppIcons.emptyA,
+                    ),
+                  ),
+                );
+              }
+
+              return NotificationListener<OverscrollIndicatorNotification>(
+                onNotification: (overscroll) {
+                  overscroll.disallowIndicator();
+                  return true;
+                },
+                child: ListView.separated(
+                    itemCount: state.organizations.length + 1,
+                    separatorBuilder: (c, i) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      if (state.organizations.isEmpty) {}
+
+                      if (index == state.organizations.length) {
+                        if (state.organizationsFetchMore) {
+                          context.read<CategoryBloc>().add(const CategoryEvent.getMoreOrganizations());
+
+                          return const SizedBox(
+                            height: 140,
+                            child: Center(
+                              child: CupertinoActivityIndicator(),
                             ),
-                            Container(
-                              height: 7,
-                              width: double.maxFinite,
-                              decoration:
-                                  const BoxDecoration(color: white, border: Border(top: BorderSide(color: lilyWhite))),
-                            ),
-                          ],
-                        )),
-                    SizedBox(
-                      height: 89,
-                      child: NotificationListener<OverscrollIndicatorNotification>(
-                        onNotification: (overscroll) {
-                          overscroll.disallowIndicator();
-                          return true;
-                        },
-                        child: Paginator(
-                          physics: const ClampingScrollPhysics(),
-                          controller: categoryController,
-                          fetchMoreFunction: () {
-                            context.read<CategoryBloc>().add(const CategoryEvent.getMoreCategories());
-                          },
-                          hasMoreToFetch: state.categoriesFetchMore,
-                          errorWidget: const SizedBox(),
-                          paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.categoryStatus),
-                          padding: const EdgeInsets.only(top: 12, left: 16, right: 8),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: state.categories.length,
-                          itemBuilder: (ctx, i) {
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 8),
-                              child: CategoryItem(
-                                logo: state.categories[i].icon.file.url,
-                                title: state.categories[i].title,
-                                onTap: () {
-                                  context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(i));
-                                },
-                                isGreen: i == state.selectedCategory,
-                              ),
-                            );
-                          },
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: HospitalItem(
+                          entity: state.organizations[index],
+                          wrapItems: state.organizations[index].getServiceOrSpecialization(pattern: null),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-                Paginator(
-                  separatorBuilder: (context, index) => const SizedBox(height: 12),
-                  padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
-                  emptyWidget: Padding(
-                    padding: const EdgeInsets.only(top: 100),
-                    child: Center(
-                      child: EmptyPage(
-                          title: LocaleKeys.nothing.tr(),
-                          desc: LocaleKeys.result_not_found.tr(),
-                          iconPath: AppIcons.emptyA),
-                    ),
-                  ),
-                  paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(state.organizationsStatus),
-                  itemBuilder: (c, index) {
-                    return HospitalItem(
-                      entity: state.organizations[index],
-                      wrapItems: state.organizations[index].getServiceOrSpecialization(pattern: null),
-                    );
-                  },
-                  itemCount: state.organizations.length,
-                  fetchMoreFunction: () {
-                    context.read<CategoryBloc>().add(const CategoryEvent.getMoreOrganizations());
-                  },
-                  hasMoreToFetch: state.organizationsFetchMore,
-                  errorWidget: const SizedBox(),
-                  loadingWidget: const Padding(
-                    padding: EdgeInsets.only(top: 200),
-                    child: Center(child: CupertinoActivityIndicator()),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+                      );
+                    }),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

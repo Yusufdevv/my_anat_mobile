@@ -203,6 +203,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                           page: BlocProvider.value(
                                         value: _categoryBloc,
                                         child: CategoriesScreen(
+                                          mediaQuery: MediaQuery.of(context),
                                           selectedIndex: index,
                                           categoryItemSize: (MediaQuery.of(context).size.width - 48) / 3,
                                         ),
