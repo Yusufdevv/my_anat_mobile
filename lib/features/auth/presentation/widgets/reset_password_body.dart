@@ -65,7 +65,6 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody>
               ),
               Text.rich(
                 TextSpan(
-                  text: LocaleKeys.recovery_from.tr(),
                   style: Theme.of(context).textTheme.displaySmall,
                   children: [
                     WidgetSpan(
@@ -110,7 +109,11 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody>
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    TextSpan(
+                      text: LocaleKeys.recovery_from.tr(),
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
                   ],
                 ),
               ),

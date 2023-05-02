@@ -386,115 +386,152 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                           ],
                         ),
                       ),
-                      WButton(
-                        isLoading: paymentState
-                            .orderCreateStatus.isSubmissionInProgress,
-                        height: 40,
-                        margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).padding.bottom + 16,
-                            left: 16,
-                            right: 16),
-                        color: paymentState.selectedPayment == null
-                            ? textSecondary
-                            : primary,
-                        onTap: () {
-                          if (paymentState.selectedPayment == null) {
-                            context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                message: LocaleKeys.no_payment_provider.tr()));
-                          } else {
-                            if (widget.isJournal) {
-                              showCustomDialog(
-                                  context: context,
-                                  subTitle: LocaleKeys
-                                      .are_you_sure_you_want_to_make_this_payment
-                                      .tr(),
-                                  title: LocaleKeys.payment.tr(),
-                                  onConfirmTap: () {
-                                    Navigator.pop(context);
-                                    context.read<PaymentBloc>().add(
-                                          OrderCreateJournal(
-                                            card: context
-                                                    .read<PaymentCardsBloc>()
-                                                    .state
-                                                    .selectedCard
-                                                    ?.id ??
-                                                -1,
-                                            journalId: widget.id,
-                                            price: widget.price,
-                                            isRegistered: widget.isRegistered,
-                                            phone: isPhone
-                                                ? "+998${phoneController.text.replaceAll(' ', '')}"
-                                                : '',
-                                            email: !isPhone
-                                                ? emailController.text
-                                                : '',
-                                            paymentProvider: paymentState
-                                                .selectedPayment!.provider,
-                                            onSuccess: (value) async {
-                                              if (!(paymentState.selectedPayment
-                                                      ?.isCard ??
-                                                  false)) {
-                                                launchUrlString(
-                                                    value
-                                                        .transactionCheckoutUrl,
-                                                    mode: LaunchMode
-                                                        .externalApplication);
-                                                Navigator.popUntil(context,
-                                                    (route) => route.isFirst);
+                      BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
+                        builder: (context, payState) {
+                          return BlocBuilder<PaymentBloc, PaymentState>(
+                            builder: (context, paymentState) {
+                              return WButton(
+                                isLoading: paymentState
+                                    .orderCreateStatus.isSubmissionInProgress,
+                                height: 40,
+                                isDisabled:
+                                    paymentState.selectedPayment == null ||
+                                        paymentState.selectedPayment ==
+                                            PaymentType.card ||
+                                        payState.selectedCard == null ||
+                                        payState.paymentCards.isEmpty,
+                                margin: EdgeInsets.only(
+                                    bottom:
+                                        MediaQuery.of(context).padding.bottom +
+                                            16,
+                                    left: 16,
+                                    right: 16),
+                                color: paymentState.selectedPayment == null
+                                    ? textSecondary
+                                    : primary,
+                                onTap: () {
+                                  if (paymentState.selectedPayment == null) {
+                                    context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                        message: LocaleKeys.no_payment_provider
+                                            .tr()));
+                                  } else {
+                                    if (widget.isJournal) {
+                                      showCustomDialog(
+                                          context: context,
+                                          subTitle: LocaleKeys
+                                              .are_you_sure_you_want_to_make_this_payment
+                                              .tr(),
+                                          title: LocaleKeys.payment.tr(),
+                                          onConfirmTap: () {
+                                            Navigator.pop(context);
+                                            context.read<PaymentBloc>().add(
+                                                  OrderCreateJournal(
+                                                    card: context
+                                                            .read<
+                                                                PaymentCardsBloc>()
+                                                            .state
+                                                            .selectedCard
+                                                            ?.id ??
+                                                        -1,
+                                                    journalId: widget.id,
+                                                    price: widget.price,
+                                                    isRegistered:
+                                                        widget.isRegistered,
+                                                    phone: isPhone
+                                                        ? "+998${phoneController.text.replaceAll(' ', '')}"
+                                                        : '',
+                                                    email: !isPhone
+                                                        ? emailController.text
+                                                        : '',
+                                                    paymentProvider:
+                                                        paymentState
+                                                            .selectedPayment!
+                                                            .provider,
+                                                    onSuccess: (value) async {
+                                                      if (!(paymentState
+                                                              .selectedPayment
+                                                              ?.isCard ??
+                                                          false)) {
+                                                        launchUrlString(
+                                                            value
+                                                                .transactionCheckoutUrl,
+                                                            mode: LaunchMode
+                                                                .externalApplication);
+                                                        Navigator.popUntil(
+                                                            context,
+                                                            (route) =>
+                                                                route.isFirst);
 
-                                                final payBloc = PaymentBloc(
-                                                    paymentId: value.id);
-                                                Navigator.of(context).push(
-                                                  fade(
-                                                    page: BlocProvider(
-                                                      create: (context) =>
-                                                          payBloc,
-                                                      child:
-                                                          PaymentResultScreen(
-                                                        title: widget.title,
-                                                        isRegistered:
-                                                            widget.isRegistered,
-                                                        bloc: payBloc,
-                                                      ),
-                                                    ),
+                                                        final payBloc =
+                                                            PaymentBloc(
+                                                                paymentId:
+                                                                    value.id);
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          fade(
+                                                            page: BlocProvider(
+                                                              create:
+                                                                  (context) =>
+                                                                      payBloc,
+                                                              child:
+                                                                  PaymentResultScreen(
+                                                                title: widget
+                                                                    .title,
+                                                                isRegistered: widget
+                                                                    .isRegistered,
+                                                                bloc: payBloc,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      } else if (paymentState
+                                                              .selectedPayment
+                                                              ?.isCard ??
+                                                          false) {
+                                                        if (value.status ==
+                                                            'confirmed') {
+                                                          context
+                                                              .read<
+                                                                  ShowPopUpBloc>()
+                                                              .add(ShowPopUp(
+                                                                  message:
+                                                                      LocaleKeys
+                                                                          .payment_successed
+                                                                          .tr(),
+                                                                  isSuccess:
+                                                                      true));
+                                                          await Future.delayed(
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          3000))
+                                                              .then((value) {
+                                                            widget
+                                                                .onPaymentSuccess();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(true);
+                                                          });
+                                                        }
+                                                      }
+                                                    },
+                                                    onError: (message) {
+                                                      context
+                                                          .read<ShowPopUpBloc>()
+                                                          .add(ShowPopUp(
+                                                              message:
+                                                                  message));
+                                                    },
                                                   ),
                                                 );
-                                              } else if (paymentState
-                                                      .selectedPayment
-                                                      ?.isCard ??
-                                                  false) {
-                                                if (value.status ==
-                                                    'confirmed') {
-                                                  context
-                                                      .read<ShowPopUpBloc>()
-                                                      .add(ShowPopUp(
-                                                          message: LocaleKeys
-                                                              .payment_successed
-                                                              .tr(),
-                                                          isSuccess: true));
-                                                  await Future.delayed(
-                                                          const Duration(
-                                                              milliseconds:
-                                                                  3000))
-                                                      .then((value) {
-                                                    widget.onPaymentSuccess();
-                                                    Navigator.of(context)
-                                                        .pop(true);
-                                                  });
-                                                }
-                                              }
-                                            },
-                                            onError: (message) {
-                                              context.read<ShowPopUpBloc>().add(
-                                                  ShowPopUp(message: message));
-                                            },
-                                          ),
-                                        );
-                                  });
-                            }
-                          }
+                                          });
+                                    }
+                                  }
+                                },
+                                text: LocaleKeys.confirm.tr(),
+                              );
+                            },
+                          );
                         },
-                        text: LocaleKeys.confirm.tr(),
                       ),
                     ],
                   ),

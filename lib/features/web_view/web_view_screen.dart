@@ -32,6 +32,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('url link => ${widget.url}');
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(statusBarColor: white),
       child: WillPopScope(

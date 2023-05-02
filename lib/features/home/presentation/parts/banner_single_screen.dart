@@ -149,26 +149,31 @@ class _BannerSingleScreenState extends State<BannerSingleScreen> {
                               color: white,
                               height: MediaQuery.of(context).size.height,
                             ),
-                            firstChild: Container(
-                              foregroundDecoration: BoxDecoration(
-                                borderRadius: const BorderRadius.vertical(
-                                  bottom: Radius.circular(16),
-                                ),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    textColor.withOpacity(0.9),
-                                    textColor.withOpacity(0.2),
-                                  ],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                ),
+                            firstChild: ClipRRect(
+                              borderRadius: const BorderRadius.vertical(
+                                bottom: Radius.circular(16),
                               ),
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      homeState.bannerSingle?.image.middle ??
-                                          ''),
-                                  fit: BoxFit.cover,
+                              child: Container(
+                                foregroundDecoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.vertical(
+                                    bottom: Radius.circular(16),
+                                  ),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      textColor.withOpacity(0.9),
+                                      textColor.withOpacity(0.2),
+                                    ],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        homeState.bannerSingle?.image.middle ??
+                                            ''),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),

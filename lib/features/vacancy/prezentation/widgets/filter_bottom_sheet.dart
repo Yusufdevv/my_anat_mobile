@@ -78,7 +78,17 @@ class FilterBottomSheet extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium!
-                                .copyWith(fontSize: 13),
+                                .copyWith(
+                                  fontSize: 13,
+                                  color: (state.salaryKey != null &&
+                                              state.experienceKey != null) &&
+                                          (state.salaryKey!.isNotEmpty ||
+                                              state.experienceKey!.isNotEmpty ||
+                                              state.districtList.isNotEmpty ||
+                                              state.selectCategoryId.isNotEmpty)
+                                      ? primary
+                                      : textSecondary,
+                                ),
                           ),
                         ),
                       ),
@@ -129,18 +139,21 @@ class FilterBottomSheet extends StatelessWidget {
                       context, vacancyBloc, state.selectCategoryId);
                 },
                 title: LocaleKeys.professions.tr(),
+                selectedItem: state.selectCategoryId.length,
               ),
               const SizedBox(height: 12),
               if (hasSalary) ...[
                 FilterItem(
-                    onTap: () {
-                      showSalaryBottomSheet(
-                        context: context,
-                        vacancyBloc: vacancyBloc,
-                        list: state.salaryKey ?? [],
-                      );
-                    },
-                    title: LocaleKeys.salary.tr()),
+                  onTap: () {
+                    showSalaryBottomSheet(
+                      context: context,
+                      vacancyBloc: vacancyBloc,
+                      list: state.salaryKey ?? [],
+                    );
+                  },
+                  title: LocaleKeys.salary.tr(),
+                  selectedItem: state.salaryKey?.length ?? 0,
+                ),
                 const SizedBox(height: 12),
               ],
               FilterItem(
@@ -149,6 +162,7 @@ class FilterBottomSheet extends StatelessWidget {
                       context, vacancyBloc, state.experienceKey ?? []);
                 },
                 title: LocaleKeys.experience.tr(),
+                selectedItem: state.experienceKey?.length ?? 0,
               ),
               const SizedBox(height: 12),
               FilterItem(
@@ -161,6 +175,7 @@ class FilterBottomSheet extends StatelessWidget {
                   );
                 },
                 title: LocaleKeys.city_district.tr(),
+                selectedItem: state.districtList.length,
               ),
               const SizedBox(height: 20),
             ],

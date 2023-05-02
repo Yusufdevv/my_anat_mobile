@@ -19,6 +19,8 @@ class NotificationEvent with _$NotificationEvent {
       VoidCallback? onError,
       required int id}) = _ReadNotification;
 
+  const factory NotificationEvent.unreadNotifications() = _UnreadNotifications;
+
   const factory NotificationEvent.postDeviceId({required int deviceId}) =
       _PostDeviceId;
 }

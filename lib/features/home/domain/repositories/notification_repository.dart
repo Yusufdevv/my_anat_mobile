@@ -2,6 +2,7 @@ import 'package:anatomica/core/exceptions/failures.dart';
 import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/home/data/models/device_id_model.dart';
 import 'package:anatomica/features/home/data/models/notification_model.dart';
+import 'package:anatomica/features/home/data/models/unread_notifications_model.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 
 abstract class NotificationRepository {
@@ -12,6 +13,8 @@ abstract class NotificationRepository {
       {required int id});
 
   Future<Either<Failure, void>> readAllNotificattions();
+
+  Future<Either<Failure, UnreadNotificationsModel>> unreadNotifications();
 
   Future<Either<Failure, void>> readNotification({required int id});
 

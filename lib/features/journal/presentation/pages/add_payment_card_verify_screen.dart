@@ -140,14 +140,16 @@ class _AddPaymentCardVerifyScreenState
                     WButton(
                       onTap: () {
                         context.read<PaymentCardsBloc>().add(
-                            ConfirmPaymentCardEvent(
+                              ConfirmPaymentCardEvent(
                                 onSucces: () {
-                                  Navigator.pop(context);
-                                  context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                        // todo locale
-                                        message: 'Карта успешно добавлена',
-                                        isSuccess: true,
-                                      ));
+                                  Navigator.of(context).pop();
+                                  context.read<ShowPopUpBloc>().add(
+                                        ShowPopUp(
+                                          // todo locale
+                                          message: 'Карта успешно добавлена',
+                                          isSuccess: true,
+                                        ),
+                                      );
                                 },
                                 onError: (message) {
                                   hasError = true;
@@ -155,9 +157,12 @@ class _AddPaymentCardVerifyScreenState
                                       message: message, isSuccess: false));
                                 },
                                 param: ConfirmCardParam(
-                                    cardNumber: widget.cardNumber,
-                                    session: 0,
-                                    otp: pinCodeController.text)));
+                                  cardNumber: widget.cardNumber,
+                                  session: 0,
+                                  otp: pinCodeController.text,
+                                ),
+                              ),
+                            );
                       },
                       height: 40,
                       margin: const EdgeInsets.only(bottom: 16),

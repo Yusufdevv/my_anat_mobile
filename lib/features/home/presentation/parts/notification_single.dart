@@ -80,7 +80,12 @@ class NotificationSingle extends StatelessWidget {
                       )
                     : state.notificationSingleStatus ==
                             FormzStatus.submissionInProgress
-                        ? const CupertinoActivityIndicator()
+                        ? const SizedBox(
+                            width: double.maxFinite,
+                            child: Center(
+                              child: CupertinoActivityIndicator(),
+                            ),
+                          )
                         : const SizedBox(),
               )
             ],

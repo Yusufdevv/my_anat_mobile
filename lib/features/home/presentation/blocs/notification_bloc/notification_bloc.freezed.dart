@@ -26,6 +26,7 @@ mixin _$NotificationEvent {
     required TResult Function(
             VoidCallback? onSuccess, VoidCallback? onError, int id)
         readNotification,
+    required TResult Function() unreadNotifications,
     required TResult Function(int deviceId) postDeviceId,
   }) =>
       throw _privateConstructorUsedError;
@@ -38,6 +39,7 @@ mixin _$NotificationEvent {
         readAllNotificattions,
     TResult? Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult? Function()? unreadNotifications,
     TResult? Function(int deviceId)? postDeviceId,
   }) =>
       throw _privateConstructorUsedError;
@@ -50,6 +52,7 @@ mixin _$NotificationEvent {
         readAllNotificattions,
     TResult Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult Function()? unreadNotifications,
     TResult Function(int deviceId)? postDeviceId,
     required TResult orElse(),
   }) =>
@@ -63,6 +66,7 @@ mixin _$NotificationEvent {
     required TResult Function(_ReadAllNotificattions value)
         readAllNotificattions,
     required TResult Function(_ReadNotification value) readNotification,
+    required TResult Function(_UnreadNotifications value) unreadNotifications,
     required TResult Function(_PostDeviceId value) postDeviceId,
   }) =>
       throw _privateConstructorUsedError;
@@ -73,6 +77,7 @@ mixin _$NotificationEvent {
     TResult? Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult? Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult? Function(_ReadNotification value)? readNotification,
+    TResult? Function(_UnreadNotifications value)? unreadNotifications,
     TResult? Function(_PostDeviceId value)? postDeviceId,
   }) =>
       throw _privateConstructorUsedError;
@@ -83,6 +88,7 @@ mixin _$NotificationEvent {
     TResult Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult Function(_ReadNotification value)? readNotification,
+    TResult Function(_UnreadNotifications value)? unreadNotifications,
     TResult Function(_PostDeviceId value)? postDeviceId,
     required TResult orElse(),
   }) =>
@@ -153,6 +159,7 @@ class _$_GetNotifications implements _GetNotifications {
     required TResult Function(
             VoidCallback? onSuccess, VoidCallback? onError, int id)
         readNotification,
+    required TResult Function() unreadNotifications,
     required TResult Function(int deviceId) postDeviceId,
   }) {
     return getNotifications();
@@ -168,6 +175,7 @@ class _$_GetNotifications implements _GetNotifications {
         readAllNotificattions,
     TResult? Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult? Function()? unreadNotifications,
     TResult? Function(int deviceId)? postDeviceId,
   }) {
     return getNotifications?.call();
@@ -183,6 +191,7 @@ class _$_GetNotifications implements _GetNotifications {
         readAllNotificattions,
     TResult Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult Function()? unreadNotifications,
     TResult Function(int deviceId)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -202,6 +211,7 @@ class _$_GetNotifications implements _GetNotifications {
     required TResult Function(_ReadAllNotificattions value)
         readAllNotificattions,
     required TResult Function(_ReadNotification value) readNotification,
+    required TResult Function(_UnreadNotifications value) unreadNotifications,
     required TResult Function(_PostDeviceId value) postDeviceId,
   }) {
     return getNotifications(this);
@@ -215,6 +225,7 @@ class _$_GetNotifications implements _GetNotifications {
     TResult? Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult? Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult? Function(_ReadNotification value)? readNotification,
+    TResult? Function(_UnreadNotifications value)? unreadNotifications,
     TResult? Function(_PostDeviceId value)? postDeviceId,
   }) {
     return getNotifications?.call(this);
@@ -228,6 +239,7 @@ class _$_GetNotifications implements _GetNotifications {
     TResult Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult Function(_ReadNotification value)? readNotification,
+    TResult Function(_UnreadNotifications value)? unreadNotifications,
     TResult Function(_PostDeviceId value)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -288,6 +300,7 @@ class _$_GetMoreNotifications implements _GetMoreNotifications {
     required TResult Function(
             VoidCallback? onSuccess, VoidCallback? onError, int id)
         readNotification,
+    required TResult Function() unreadNotifications,
     required TResult Function(int deviceId) postDeviceId,
   }) {
     return getMoreNotifications();
@@ -303,6 +316,7 @@ class _$_GetMoreNotifications implements _GetMoreNotifications {
         readAllNotificattions,
     TResult? Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult? Function()? unreadNotifications,
     TResult? Function(int deviceId)? postDeviceId,
   }) {
     return getMoreNotifications?.call();
@@ -318,6 +332,7 @@ class _$_GetMoreNotifications implements _GetMoreNotifications {
         readAllNotificattions,
     TResult Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult Function()? unreadNotifications,
     TResult Function(int deviceId)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -337,6 +352,7 @@ class _$_GetMoreNotifications implements _GetMoreNotifications {
     required TResult Function(_ReadAllNotificattions value)
         readAllNotificattions,
     required TResult Function(_ReadNotification value) readNotification,
+    required TResult Function(_UnreadNotifications value) unreadNotifications,
     required TResult Function(_PostDeviceId value) postDeviceId,
   }) {
     return getMoreNotifications(this);
@@ -350,6 +366,7 @@ class _$_GetMoreNotifications implements _GetMoreNotifications {
     TResult? Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult? Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult? Function(_ReadNotification value)? readNotification,
+    TResult? Function(_UnreadNotifications value)? unreadNotifications,
     TResult? Function(_PostDeviceId value)? postDeviceId,
   }) {
     return getMoreNotifications?.call(this);
@@ -363,6 +380,7 @@ class _$_GetMoreNotifications implements _GetMoreNotifications {
     TResult Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult Function(_ReadNotification value)? readNotification,
+    TResult Function(_UnreadNotifications value)? unreadNotifications,
     TResult Function(_PostDeviceId value)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -450,6 +468,7 @@ class _$_GetNotificationSingle implements _GetNotificationSingle {
     required TResult Function(
             VoidCallback? onSuccess, VoidCallback? onError, int id)
         readNotification,
+    required TResult Function() unreadNotifications,
     required TResult Function(int deviceId) postDeviceId,
   }) {
     return getNotificationSingle(id);
@@ -465,6 +484,7 @@ class _$_GetNotificationSingle implements _GetNotificationSingle {
         readAllNotificattions,
     TResult? Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult? Function()? unreadNotifications,
     TResult? Function(int deviceId)? postDeviceId,
   }) {
     return getNotificationSingle?.call(id);
@@ -480,6 +500,7 @@ class _$_GetNotificationSingle implements _GetNotificationSingle {
         readAllNotificattions,
     TResult Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult Function()? unreadNotifications,
     TResult Function(int deviceId)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -499,6 +520,7 @@ class _$_GetNotificationSingle implements _GetNotificationSingle {
     required TResult Function(_ReadAllNotificattions value)
         readAllNotificattions,
     required TResult Function(_ReadNotification value) readNotification,
+    required TResult Function(_UnreadNotifications value) unreadNotifications,
     required TResult Function(_PostDeviceId value) postDeviceId,
   }) {
     return getNotificationSingle(this);
@@ -512,6 +534,7 @@ class _$_GetNotificationSingle implements _GetNotificationSingle {
     TResult? Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult? Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult? Function(_ReadNotification value)? readNotification,
+    TResult? Function(_UnreadNotifications value)? unreadNotifications,
     TResult? Function(_PostDeviceId value)? postDeviceId,
   }) {
     return getNotificationSingle?.call(this);
@@ -525,6 +548,7 @@ class _$_GetNotificationSingle implements _GetNotificationSingle {
     TResult Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult Function(_ReadNotification value)? readNotification,
+    TResult Function(_UnreadNotifications value)? unreadNotifications,
     TResult Function(_PostDeviceId value)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -627,6 +651,7 @@ class _$_ReadAllNotificattions implements _ReadAllNotificattions {
     required TResult Function(
             VoidCallback? onSuccess, VoidCallback? onError, int id)
         readNotification,
+    required TResult Function() unreadNotifications,
     required TResult Function(int deviceId) postDeviceId,
   }) {
     return readAllNotificattions(onSuccess, onError);
@@ -642,6 +667,7 @@ class _$_ReadAllNotificattions implements _ReadAllNotificattions {
         readAllNotificattions,
     TResult? Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult? Function()? unreadNotifications,
     TResult? Function(int deviceId)? postDeviceId,
   }) {
     return readAllNotificattions?.call(onSuccess, onError);
@@ -657,6 +683,7 @@ class _$_ReadAllNotificattions implements _ReadAllNotificattions {
         readAllNotificattions,
     TResult Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult Function()? unreadNotifications,
     TResult Function(int deviceId)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -676,6 +703,7 @@ class _$_ReadAllNotificattions implements _ReadAllNotificattions {
     required TResult Function(_ReadAllNotificattions value)
         readAllNotificattions,
     required TResult Function(_ReadNotification value) readNotification,
+    required TResult Function(_UnreadNotifications value) unreadNotifications,
     required TResult Function(_PostDeviceId value) postDeviceId,
   }) {
     return readAllNotificattions(this);
@@ -689,6 +717,7 @@ class _$_ReadAllNotificattions implements _ReadAllNotificattions {
     TResult? Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult? Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult? Function(_ReadNotification value)? readNotification,
+    TResult? Function(_UnreadNotifications value)? unreadNotifications,
     TResult? Function(_PostDeviceId value)? postDeviceId,
   }) {
     return readAllNotificattions?.call(this);
@@ -702,6 +731,7 @@ class _$_ReadAllNotificattions implements _ReadAllNotificattions {
     TResult Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult Function(_ReadNotification value)? readNotification,
+    TResult Function(_UnreadNotifications value)? unreadNotifications,
     TResult Function(_PostDeviceId value)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -813,6 +843,7 @@ class _$_ReadNotification implements _ReadNotification {
     required TResult Function(
             VoidCallback? onSuccess, VoidCallback? onError, int id)
         readNotification,
+    required TResult Function() unreadNotifications,
     required TResult Function(int deviceId) postDeviceId,
   }) {
     return readNotification(onSuccess, onError, id);
@@ -828,6 +859,7 @@ class _$_ReadNotification implements _ReadNotification {
         readAllNotificattions,
     TResult? Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult? Function()? unreadNotifications,
     TResult? Function(int deviceId)? postDeviceId,
   }) {
     return readNotification?.call(onSuccess, onError, id);
@@ -843,6 +875,7 @@ class _$_ReadNotification implements _ReadNotification {
         readAllNotificattions,
     TResult Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult Function()? unreadNotifications,
     TResult Function(int deviceId)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -862,6 +895,7 @@ class _$_ReadNotification implements _ReadNotification {
     required TResult Function(_ReadAllNotificattions value)
         readAllNotificattions,
     required TResult Function(_ReadNotification value) readNotification,
+    required TResult Function(_UnreadNotifications value) unreadNotifications,
     required TResult Function(_PostDeviceId value) postDeviceId,
   }) {
     return readNotification(this);
@@ -875,6 +909,7 @@ class _$_ReadNotification implements _ReadNotification {
     TResult? Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult? Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult? Function(_ReadNotification value)? readNotification,
+    TResult? Function(_UnreadNotifications value)? unreadNotifications,
     TResult? Function(_PostDeviceId value)? postDeviceId,
   }) {
     return readNotification?.call(this);
@@ -888,6 +923,7 @@ class _$_ReadNotification implements _ReadNotification {
     TResult Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult Function(_ReadNotification value)? readNotification,
+    TResult Function(_UnreadNotifications value)? unreadNotifications,
     TResult Function(_PostDeviceId value)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -910,6 +946,147 @@ abstract class _ReadNotification implements NotificationEvent {
   @JsonKey(ignore: true)
   _$$_ReadNotificationCopyWith<_$_ReadNotification> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_UnreadNotificationsCopyWith<$Res> {
+  factory _$$_UnreadNotificationsCopyWith(_$_UnreadNotifications value,
+          $Res Function(_$_UnreadNotifications) then) =
+      __$$_UnreadNotificationsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_UnreadNotificationsCopyWithImpl<$Res>
+    extends _$NotificationEventCopyWithImpl<$Res, _$_UnreadNotifications>
+    implements _$$_UnreadNotificationsCopyWith<$Res> {
+  __$$_UnreadNotificationsCopyWithImpl(_$_UnreadNotifications _value,
+      $Res Function(_$_UnreadNotifications) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_UnreadNotifications implements _UnreadNotifications {
+  const _$_UnreadNotifications();
+
+  @override
+  String toString() {
+    return 'NotificationEvent.unreadNotifications()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_UnreadNotifications);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getNotifications,
+    required TResult Function() getMoreNotifications,
+    required TResult Function(int id) getNotificationSingle,
+    required TResult Function(VoidCallback? onSuccess, VoidCallback? onError)
+        readAllNotificattions,
+    required TResult Function(
+            VoidCallback? onSuccess, VoidCallback? onError, int id)
+        readNotification,
+    required TResult Function() unreadNotifications,
+    required TResult Function(int deviceId) postDeviceId,
+  }) {
+    return unreadNotifications();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getNotifications,
+    TResult? Function()? getMoreNotifications,
+    TResult? Function(int id)? getNotificationSingle,
+    TResult? Function(VoidCallback? onSuccess, VoidCallback? onError)?
+        readAllNotificattions,
+    TResult? Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
+        readNotification,
+    TResult? Function()? unreadNotifications,
+    TResult? Function(int deviceId)? postDeviceId,
+  }) {
+    return unreadNotifications?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getNotifications,
+    TResult Function()? getMoreNotifications,
+    TResult Function(int id)? getNotificationSingle,
+    TResult Function(VoidCallback? onSuccess, VoidCallback? onError)?
+        readAllNotificattions,
+    TResult Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
+        readNotification,
+    TResult Function()? unreadNotifications,
+    TResult Function(int deviceId)? postDeviceId,
+    required TResult orElse(),
+  }) {
+    if (unreadNotifications != null) {
+      return unreadNotifications();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetNotifications value) getNotifications,
+    required TResult Function(_GetMoreNotifications value) getMoreNotifications,
+    required TResult Function(_GetNotificationSingle value)
+        getNotificationSingle,
+    required TResult Function(_ReadAllNotificattions value)
+        readAllNotificattions,
+    required TResult Function(_ReadNotification value) readNotification,
+    required TResult Function(_UnreadNotifications value) unreadNotifications,
+    required TResult Function(_PostDeviceId value) postDeviceId,
+  }) {
+    return unreadNotifications(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetNotifications value)? getNotifications,
+    TResult? Function(_GetMoreNotifications value)? getMoreNotifications,
+    TResult? Function(_GetNotificationSingle value)? getNotificationSingle,
+    TResult? Function(_ReadAllNotificattions value)? readAllNotificattions,
+    TResult? Function(_ReadNotification value)? readNotification,
+    TResult? Function(_UnreadNotifications value)? unreadNotifications,
+    TResult? Function(_PostDeviceId value)? postDeviceId,
+  }) {
+    return unreadNotifications?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetNotifications value)? getNotifications,
+    TResult Function(_GetMoreNotifications value)? getMoreNotifications,
+    TResult Function(_GetNotificationSingle value)? getNotificationSingle,
+    TResult Function(_ReadAllNotificattions value)? readAllNotificattions,
+    TResult Function(_ReadNotification value)? readNotification,
+    TResult Function(_UnreadNotifications value)? unreadNotifications,
+    TResult Function(_PostDeviceId value)? postDeviceId,
+    required TResult orElse(),
+  }) {
+    if (unreadNotifications != null) {
+      return unreadNotifications(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UnreadNotifications implements NotificationEvent {
+  const factory _UnreadNotifications() = _$_UnreadNotifications;
 }
 
 /// @nodoc
@@ -985,6 +1162,7 @@ class _$_PostDeviceId implements _PostDeviceId {
     required TResult Function(
             VoidCallback? onSuccess, VoidCallback? onError, int id)
         readNotification,
+    required TResult Function() unreadNotifications,
     required TResult Function(int deviceId) postDeviceId,
   }) {
     return postDeviceId(deviceId);
@@ -1000,6 +1178,7 @@ class _$_PostDeviceId implements _PostDeviceId {
         readAllNotificattions,
     TResult? Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult? Function()? unreadNotifications,
     TResult? Function(int deviceId)? postDeviceId,
   }) {
     return postDeviceId?.call(deviceId);
@@ -1015,6 +1194,7 @@ class _$_PostDeviceId implements _PostDeviceId {
         readAllNotificattions,
     TResult Function(VoidCallback? onSuccess, VoidCallback? onError, int id)?
         readNotification,
+    TResult Function()? unreadNotifications,
     TResult Function(int deviceId)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -1034,6 +1214,7 @@ class _$_PostDeviceId implements _PostDeviceId {
     required TResult Function(_ReadAllNotificattions value)
         readAllNotificattions,
     required TResult Function(_ReadNotification value) readNotification,
+    required TResult Function(_UnreadNotifications value) unreadNotifications,
     required TResult Function(_PostDeviceId value) postDeviceId,
   }) {
     return postDeviceId(this);
@@ -1047,6 +1228,7 @@ class _$_PostDeviceId implements _PostDeviceId {
     TResult? Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult? Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult? Function(_ReadNotification value)? readNotification,
+    TResult? Function(_UnreadNotifications value)? unreadNotifications,
     TResult? Function(_PostDeviceId value)? postDeviceId,
   }) {
     return postDeviceId?.call(this);
@@ -1060,6 +1242,7 @@ class _$_PostDeviceId implements _PostDeviceId {
     TResult Function(_GetNotificationSingle value)? getNotificationSingle,
     TResult Function(_ReadAllNotificattions value)? readAllNotificattions,
     TResult Function(_ReadNotification value)? readNotification,
+    TResult Function(_UnreadNotifications value)? unreadNotifications,
     TResult Function(_PostDeviceId value)? postDeviceId,
     required TResult orElse(),
   }) {
@@ -1090,6 +1273,8 @@ mixin _$NotificationState {
       throw _privateConstructorUsedError;
   String? get notificationsNext => throw _privateConstructorUsedError;
   bool get notificationsFetchMore => throw _privateConstructorUsedError;
+  UnreadNotificationsEntity? get unreadNotification =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NotificationStateCopyWith<NotificationState> get copyWith =>
@@ -1108,7 +1293,8 @@ abstract class $NotificationStateCopyWith<$Res> {
       FormzStatus notificationsStatus,
       FormzStatus notificationSingleStatus,
       String? notificationsNext,
-      bool notificationsFetchMore});
+      bool notificationsFetchMore,
+      UnreadNotificationsEntity? unreadNotification});
 }
 
 /// @nodoc
@@ -1130,6 +1316,7 @@ class _$NotificationStateCopyWithImpl<$Res, $Val extends NotificationState>
     Object? notificationSingleStatus = null,
     Object? notificationsNext = freezed,
     Object? notificationsFetchMore = null,
+    Object? unreadNotification = freezed,
   }) {
     return _then(_value.copyWith(
       notifications: null == notifications
@@ -1156,6 +1343,10 @@ class _$NotificationStateCopyWithImpl<$Res, $Val extends NotificationState>
           ? _value.notificationsFetchMore
           : notificationsFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      unreadNotification: freezed == unreadNotification
+          ? _value.unreadNotification
+          : unreadNotification // ignore: cast_nullable_to_non_nullable
+              as UnreadNotificationsEntity?,
     ) as $Val);
   }
 }
@@ -1174,7 +1365,8 @@ abstract class _$$_NotificationStateCopyWith<$Res>
       FormzStatus notificationsStatus,
       FormzStatus notificationSingleStatus,
       String? notificationsNext,
-      bool notificationsFetchMore});
+      bool notificationsFetchMore,
+      UnreadNotificationsEntity? unreadNotification});
 }
 
 /// @nodoc
@@ -1194,6 +1386,7 @@ class __$$_NotificationStateCopyWithImpl<$Res>
     Object? notificationSingleStatus = null,
     Object? notificationsNext = freezed,
     Object? notificationsFetchMore = null,
+    Object? unreadNotification = freezed,
   }) {
     return _then(_$_NotificationState(
       notifications: null == notifications
@@ -1220,6 +1413,10 @@ class __$$_NotificationStateCopyWithImpl<$Res>
           ? _value.notificationsFetchMore
           : notificationsFetchMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      unreadNotification: freezed == unreadNotification
+          ? _value.unreadNotification
+          : unreadNotification // ignore: cast_nullable_to_non_nullable
+              as UnreadNotificationsEntity?,
     ));
   }
 }
@@ -1233,7 +1430,8 @@ class _$_NotificationState implements _NotificationState {
       this.notificationsStatus = FormzStatus.pure,
       this.notificationSingleStatus = FormzStatus.pure,
       this.notificationsNext,
-      this.notificationsFetchMore = false})
+      this.notificationsFetchMore = false,
+      this.unreadNotification})
       : _notifications = notifications;
 
   final List<NotificationModel> _notifications;
@@ -1258,10 +1456,12 @@ class _$_NotificationState implements _NotificationState {
   @override
   @JsonKey()
   final bool notificationsFetchMore;
+  @override
+  final UnreadNotificationsEntity? unreadNotification;
 
   @override
   String toString() {
-    return 'NotificationState(notifications: $notifications, notificationSingle: $notificationSingle, notificationsStatus: $notificationsStatus, notificationSingleStatus: $notificationSingleStatus, notificationsNext: $notificationsNext, notificationsFetchMore: $notificationsFetchMore)';
+    return 'NotificationState(notifications: $notifications, notificationSingle: $notificationSingle, notificationsStatus: $notificationsStatus, notificationSingleStatus: $notificationSingleStatus, notificationsNext: $notificationsNext, notificationsFetchMore: $notificationsFetchMore, unreadNotification: $unreadNotification)';
   }
 
   @override
@@ -1281,7 +1481,9 @@ class _$_NotificationState implements _NotificationState {
             (identical(other.notificationsNext, notificationsNext) ||
                 other.notificationsNext == notificationsNext) &&
             (identical(other.notificationsFetchMore, notificationsFetchMore) ||
-                other.notificationsFetchMore == notificationsFetchMore));
+                other.notificationsFetchMore == notificationsFetchMore) &&
+            (identical(other.unreadNotification, unreadNotification) ||
+                other.unreadNotification == unreadNotification));
   }
 
   @override
@@ -1292,7 +1494,8 @@ class _$_NotificationState implements _NotificationState {
       notificationsStatus,
       notificationSingleStatus,
       notificationsNext,
-      notificationsFetchMore);
+      notificationsFetchMore,
+      unreadNotification);
 
   @JsonKey(ignore: true)
   @override
@@ -1304,12 +1507,14 @@ class _$_NotificationState implements _NotificationState {
 
 abstract class _NotificationState implements NotificationState {
   factory _NotificationState(
-      {final List<NotificationModel> notifications,
-      final NotificationModel? notificationSingle,
-      final FormzStatus notificationsStatus,
-      final FormzStatus notificationSingleStatus,
-      final String? notificationsNext,
-      final bool notificationsFetchMore}) = _$_NotificationState;
+          {final List<NotificationModel> notifications,
+          final NotificationModel? notificationSingle,
+          final FormzStatus notificationsStatus,
+          final FormzStatus notificationSingleStatus,
+          final String? notificationsNext,
+          final bool notificationsFetchMore,
+          final UnreadNotificationsEntity? unreadNotification}) =
+      _$_NotificationState;
 
   @override
   List<NotificationModel> get notifications;
@@ -1323,6 +1528,8 @@ abstract class _NotificationState implements NotificationState {
   String? get notificationsNext;
   @override
   bool get notificationsFetchMore;
+  @override
+  UnreadNotificationsEntity? get unreadNotification;
   @override
   @JsonKey(ignore: true)
   _$$_NotificationStateCopyWith<_$_NotificationState> get copyWith =>

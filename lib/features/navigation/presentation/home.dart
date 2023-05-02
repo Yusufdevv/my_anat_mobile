@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         indicator: const CustomTabIndicator(
                                             radius: 3,
                                             color: primary,
-                                            horizontalPadding: 35),
+                                            horizontalPadding: 25),
                                         labelPadding: EdgeInsets.zero,
                                         tabs: List.generate(
                                           lables.length,

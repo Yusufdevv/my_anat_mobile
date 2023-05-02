@@ -7,8 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 class FilterItem extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
+  final int selectedItem;
 
-  const FilterItem({this.title = '', required this.onTap, Key? key})
+  const FilterItem(
+      {this.title = '', this.selectedItem = 0, required this.onTap, Key? key})
       : super(key: key);
 
   @override
@@ -29,6 +31,24 @@ class FilterItem extends StatelessWidget {
               title,
               style: Theme.of(context).textTheme.displayLarge!.copyWith(),
             ),
+            const SizedBox(width: 8),
+            if (selectedItem > 0) ...{
+              Container(
+                height: 18,
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text(
+                  selectedItem.toString(),
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+              )
+            },
             const Spacer(),
             SvgPicture.asset(AppIcons.arrowRight, color: textSecondary),
           ],

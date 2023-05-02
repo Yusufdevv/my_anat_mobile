@@ -114,24 +114,26 @@ class _BannerItemState extends State<BannerItem> {
                     );
                   },
                   imageBuilder: (context, imageProvider) {
-                    return Container(
-                      foregroundDecoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            textColor.withOpacity(0.9),
-                            textColor.withOpacity(0.2),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
+                    return ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(16),
                       ),
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(16),
+                      child: Container(
+                        foregroundDecoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              textColor.withOpacity(0.9),
+                              textColor.withOpacity(0.2),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
                         ),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     );

@@ -9,5 +9,6 @@ class NotificationState with _$NotificationState {
     @Default(FormzStatus.pure) FormzStatus notificationSingleStatus,
     String? notificationsNext,
     @Default(false) bool notificationsFetchMore,
+    UnreadNotificationsEntity? unreadNotification,
   }) = _NotificationState;
 }

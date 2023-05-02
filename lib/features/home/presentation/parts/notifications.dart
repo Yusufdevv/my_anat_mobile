@@ -16,25 +16,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NotificationsScreen extends StatefulWidget {
-  const NotificationsScreen({Key? key}) : super(key: key);
+  final NotificationBloc notificationBloc;
+  const NotificationsScreen({required this.notificationBloc, Key? key})
+      : super(key: key);
 
   @override
   State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  late NotificationBloc _notificationBloc;
-  @override
-  void initState() {
-    _notificationBloc = NotificationBloc()
-      ..add(const NotificationEvent.getNotifications());
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: _notificationBloc,
+      value: widget.notificationBloc
+        ..add(const NotificationEvent.getNotifications()),
       child: Scaffold(
         appBar: AppBar(
           elevation: 1,
@@ -87,23 +82,28 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
                   state.notificationsStatus),
               itemBuilder: (c, index) {
-                log('notif => ${state.notifications[index]}');
-                return NotificationItem(
-                  isRead: state.notifications[index].read,
-                  time: MyFunctions.getPublishedDate(
-                      state.notifications[index].createdAt),
-                  title: state.notifications[index].title,
-                  onDetailsTap: () {
-                    _notificationBloc.add(
-                        NotificationEvent.getNotificationSingle(
-                            id: state.notifications[index].id));
-                    showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      isScrollControlled: true,
-                      builder: (ctx) {
-                        return NotificationSingle(
-                            notificationBloc: _notificationBloc);
+                return BlocBuilder<NotificationBloc, NotificationState>(
+                  builder: (context, state) {
+                    print(
+                        "notification => ${index} ${state.notifications[index].read}");
+                    return NotificationItem(
+                      isRead: !state.notifications[index].read,
+                      time: MyFunctions.getPublishedDate(
+                          state.notifications[index].createdAt),
+                      title: state.notifications[index].title,
+                      onDetailsTap: () {
+                        widget.notificationBloc.add(
+                            NotificationEvent.getNotificationSingle(
+                                id: state.notifications[index].id));
+                        showModalBottomSheet(
+                          context: context,
+                          backgroundColor: Colors.transparent,
+                          isScrollControlled: true,
+                          builder: (ctx) {
+                            return NotificationSingle(
+                                notificationBloc: widget.notificationBloc);
+                          },
+                        );
                       },
                     );
                   },
@@ -111,7 +111,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               },
               itemCount: state.notifications.length,
               fetchMoreFunction: () {
-                _notificationBloc
+                widget.notificationBloc
                     .add(const NotificationEvent.getMoreNotifications());
               },
               hasMoreToFetch: state.notificationsFetchMore,

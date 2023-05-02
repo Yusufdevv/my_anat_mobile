@@ -4,6 +4,7 @@ import 'package:anatomica/core/utils/either.dart';
 import 'package:anatomica/features/home/data/datasources/notification_datasource.dart';
 import 'package:anatomica/features/home/data/models/device_id_model.dart';
 import 'package:anatomica/features/home/data/models/notification_model.dart';
+import 'package:anatomica/features/home/data/models/unread_notifications_model.dart';
 import 'package:anatomica/features/home/domain/repositories/notification_repository.dart';
 import 'package:anatomica/features/pagination/data/models/generic_pagination.dart';
 
@@ -17,6 +18,22 @@ class NotificationRepoImpl extends NotificationRepository {
       getNotifications({String? next}) async {
     try {
       final result = await datasource.getNotifications(next: next);
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+          errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UnreadNotificationsModel>>
+      unreadNotifications() async {
+    try {
+      final result = await datasource.unreadNotifications();
       return Right(result);
     } on DioException {
       return Left(DioFailure());

@@ -12,9 +12,8 @@ import 'package:anatomica/features/home/presentation/blocs/category_bloc/categor
 import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/most_populars_bloc/most_populars_bloc.dart';
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
+import 'package:anatomica/features/home/presentation/blocs/notification_bloc/notification_bloc.dart';
 import 'package:anatomica/features/home/presentation/widgets/categories_screen.dart';
-import 'package:anatomica/features/home/presentation/parts/articles_part.dart';
-import 'package:anatomica/features/home/presentation/parts/categories_screen.dart';
 import 'package:anatomica/features/home/presentation/parts/main_search.dart';
 import 'package:anatomica/features/home/presentation/parts/news_part.dart';
 import 'package:anatomica/features/home/presentation/parts/notifications.dart';
@@ -52,6 +51,7 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   late CategoryBloc _categoryBloc;
   late HomeArticlesBloc _homeArticlesBloc;
   late MostPopularsBloc _mostPopularsBloc;
+  late NotificationBloc _notificationBloc;
   late NewsBloc _newsBloc;
   late ScrollController _scrollController;
   ValueNotifier<bool> isShrink = ValueNotifier(false);
@@ -64,14 +64,19 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
     _homeArticlesBloc = HomeArticlesBloc()
       ..add(const HomeArticlesEvent.getHomeArticles())
       ..add(const HomeArticlesEvent.getBanners());
-    _mostPopularsBloc = MostPopularsBloc()..add(const MostPopularsEvent.getPopularOrgs());
+    _mostPopularsBloc = MostPopularsBloc()
+      ..add(const MostPopularsEvent.getPopularOrgs());
+    _notificationBloc = NotificationBloc()
+      ..add(const NotificationEvent.unreadNotifications());
     getDoctors();
     _newsBloc = NewsBloc()..add(const NewsEvent.getNews());
     _scrollController = ScrollController()
       ..addListener(() {
-        if (_scrollController.offset > 200 - kToolbarHeight && !isShrink.value) {
+        if (_scrollController.offset > 200 - kToolbarHeight &&
+            !isShrink.value) {
           isShrink.value = true;
-        } else if (_scrollController.offset < 200 - kToolbarHeight && isShrink.value) {
+        } else if (_scrollController.offset < 200 - kToolbarHeight &&
+            isShrink.value) {
           isShrink.value = false;
         }
       });
@@ -93,13 +98,15 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-      value: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+      value:
+          const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: _categoryBloc),
           BlocProvider.value(value: _mostPopularsBloc),
           BlocProvider.value(value: _newsBloc),
           BlocProvider.value(value: _homeArticlesBloc),
+          BlocProvider.value(value: _notificationBloc),
         ],
         child: Scaffold(
           backgroundColor: errorImageBackground,
@@ -111,21 +118,24 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 builder: (context, child) {
                   return SliverAppBar(
                     systemOverlayStyle: SystemUiOverlayStyle(
-                        statusBarIconBrightness: isShrink.value ? Brightness.dark : Brightness.light),
+                        statusBarIconBrightness: isShrink.value
+                            ? Brightness.dark
+                            : Brightness.light),
                     pinned: true,
                     backgroundColor: errorImageBackground,
                     shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(16),
-                    )),
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(16),
+                      ),
+                    ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
-                          builder: (context, state) {
-                            print('state => ${state.isDownloaded}');
+                          builder: (context, homeArticleState) {
+                            print('state => ${homeArticleState.isDownloaded}');
                             return AnimatedCrossFade(
-                              crossFadeState: !state.isDownloaded
+                              crossFadeState: !homeArticleState.isDownloaded
                                   ? CrossFadeState.showSecond
                                   : CrossFadeState.showFirst,
                               secondChild: SvgPicture.asset(
@@ -144,38 +154,62 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                             );
                           },
                         ),
-                        context.read<AuthenticationBloc>().state.status != AuthenticationStatus.authenticated
-                            ? const Spacer()
-                            : WScaleAnimation(
-                                child: true
+                        if (context.read<AuthenticationBloc>().state.status !=
+                            AuthenticationStatus.authenticated) ...{
+                          const Spacer()
+                        } else ...{
+                          BlocBuilder<NotificationBloc, NotificationState>(
+                            builder: (context, notificationState) {
+                              return WScaleAnimation(
+                                child: notificationState.unreadNotification !=
+                                            null &&
+                                        notificationState
+                                            .unreadNotification!.unread
                                     ? SvgPicture.asset(
-                                        AppIcons.bell,
-                                        color: isShrink.value ? black : white,
+                                        isShrink.value
+                                            ? AppIcons
+                                                .blackNotificationWithRedDot
+                                            : AppIcons.notificationWithRedDot,
                                       )
                                     : SvgPicture.asset(
-                                        isShrink.value
-                                            ? AppIcons.blackNotificationWithRedDot
-                                            : AppIcons.notificationWithRedDot,
+                                        AppIcons.bell,
+                                        color: isShrink.value ? black : white,
                                       ),
-                                onTap: () => Navigator.of(context, rootNavigator: true)
-                                    .push(fade(page: const NotificationsScreen())),
-                              ),
+                                onTap: () =>
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(fade(
+                                            page: NotificationsScreen(
+                                                notificationBloc:
+                                                    _notificationBloc))),
+                              );
+                            },
+                          )
+                        },
                       ],
                     ),
                     expandedHeight: 324,
                     elevation: 0,
                     scrolledUnderElevation: 0,
-                    flexibleSpace: BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
+                    flexibleSpace:
+                        BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
                       builder: (context, state) {
-                        return state.bannersStatus != FormzStatus.submissionSuccess
-                            ? const ShimmerContainer(width: double.maxFinite, height: 324)
+                        return state.bannersStatus !=
+                                FormzStatus.submissionSuccess
+                            ? const ShimmerContainer(
+                                width: double.maxFinite, height: 324)
                             : BannerItem(
                                 ids: state.banners.map((e) => e.id).toList(),
                                 isShrink: isShrink.value,
-                                images: state.banners.map((e) => e.image.middle).toList(),
-                                subtitles: state.banners.map((e) => e.subtitle).toList(),
-                                titles: state.banners.map((e) => e.title).toList(),
-                                types: state.banners.map((e) => e.type).toList(),
+                                images: state.banners
+                                    .map((e) => e.image.middle)
+                                    .toList(),
+                                subtitles: state.banners
+                                    .map((e) => e.subtitle)
+                                    .toList(),
+                                titles:
+                                    state.banners.map((e) => e.title).toList(),
+                                types:
+                                    state.banners.map((e) => e.type).toList(),
                               );
                       },
                     ),
@@ -205,11 +239,15 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                   return SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16, top: 16),
-                      child: state.categoryStatus != FormzStatus.submissionSuccess
+                      child: state.categoryStatus !=
+                              FormzStatus.submissionSuccess
                           ? Wrap(
                               runSpacing: 8,
                               spacing: 8,
-                              children: [...List.generate(6, (index) => const CategoryShimmer())],
+                              children: [
+                                ...List.generate(
+                                    6, (index) => const CategoryShimmer())
+                              ],
                             )
                           : Wrap(
                               runSpacing: 8,
