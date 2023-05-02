@@ -17,10 +17,7 @@ class CategoriesScreen extends StatefulWidget {
   final MediaQueryData mediaQuery;
 
   const CategoriesScreen(
-      {required this.selectedIndex,
-      required this.mediaQuery,
-      required this.categoryItemSize,
-      super.key});
+      {required this.selectedIndex, required this.mediaQuery, required this.categoryItemSize, super.key});
 
   final int selectedIndex;
   final double categoryItemSize;
@@ -36,14 +33,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void initState() {
     super.initState();
     categoryController = ScrollController();
-    context
-        .read<CategoryBloc>()
-        .add(CategoryEvent.getOrganizations(widget.selectedIndex));
+    context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(widget.selectedIndex));
     Future.delayed(const Duration(milliseconds: 200), () {
-      categoryController.animateTo(
-          widget.categoryItemSize * widget.selectedIndex,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeIn);
+      categoryController.animateTo(widget.categoryItemSize * widget.selectedIndex,
+          duration: const Duration(milliseconds: 100), curve: Curves.easeIn);
     });
   }
 
@@ -78,18 +71,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   title: CategoriesList(
                     selectedCategoryIndex: state.selectedCategory,
                     onCategoryTap: (i) {
-                      context
-                          .read<CategoryBloc>()
-                          .add(CategoryEvent.getOrganizations(i));
+                      context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(i));
                     },
                     categories: state.categories,
                     status: state.categoryStatus,
                     hasFetchMore: state.categoriesFetchMore,
                     scrollController: categoryController,
                     onFetchMore: () {
-                      context
-                          .read<CategoryBloc>()
-                          .add(const CategoryEvent.getMoreCategories());
+                      context.read<CategoryBloc>().add(const CategoryEvent.getMoreCategories());
                     },
                   ),
                 ),
@@ -120,8 +109,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       (context, index) {
                         if (index == state.organizations.length) {
                           if (state.organizationsFetchMore) {
-                            context.read<CategoryBloc>().add(
-                                const CategoryEvent.getMoreOrganizations());
+                            context.read<CategoryBloc>().add(const CategoryEvent.getMoreOrganizations());
 
                             return const SizedBox(
                               height: 140,
@@ -134,14 +122,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           }
                         }
                         return HospitalItem(
+                          margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                           entity: state.organizations[index],
-                          wrapItems: state.organizations[index]
-                              .getServiceOrSpecialization(pattern: null),
+                          wrapItems: state.organizations[index].getServiceOrSpecialization(pattern: null),
                         );
                       },
                     ),
                   )
                 },
+                const SliverToBoxAdapter(child: SizedBox(height: 64)),
               ],
             ),
           ),

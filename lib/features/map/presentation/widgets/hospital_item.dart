@@ -15,9 +15,15 @@ class HospitalItem extends StatelessWidget {
   final bool isSuggestionItem;
   final String searchText;
   final List<ServiceOrSpecializationEntity> wrapItems;
+  final EdgeInsetsGeometry? margin;
 
   const HospitalItem(
-      {required this.entity, this.isSuggestionItem = false, this.searchText = '', required this.wrapItems, Key? key})
+      {required this.entity,
+      this.margin,
+      this.isSuggestionItem = false,
+      this.searchText = '',
+      required this.wrapItems,
+      Key? key})
       : super(key: key);
 
   @override
@@ -29,7 +35,7 @@ class HospitalItem extends StatelessWidget {
             .push(fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id)));
       },
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+        margin: margin,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(offset: const Offset(0, 8), blurRadius: 24, color: darkerGreen.withOpacity(0.09)),

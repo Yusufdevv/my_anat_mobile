@@ -30,7 +30,7 @@ class OrganizationList extends StatelessWidget {
             },
             child: Paginator(
                 separatorBuilder: (context, index) => const SizedBox(height: 12),
-                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).viewInsets.bottom + 136),
+                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).viewInsets.bottom + 186),
                 emptyWidget: Center(
                   child: SingleChildScrollView(
                     child: EmptyPage(

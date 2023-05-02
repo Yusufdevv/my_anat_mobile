@@ -33,15 +33,9 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                 physics: const NeverScrollableScrollPhysics(),
                 controller: state.tabController,
                 children: [
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 150),
-                    child: OrganizationList(),
-                  ),
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 150),
-                    child: DoctorsList(
-                      textEditingController: state.searchController,
-                    ),
+                  const OrganizationList(),
+                  DoctorsList(
+                    textEditingController: state.searchController,
                   ),
                 ],
               ),
