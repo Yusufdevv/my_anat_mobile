@@ -17,6 +17,7 @@ class JournalArticleEntity extends Equatable {
   final bool isBought;
   final bool isPaidForPublish;
   final String moderationStatus;
+  final List<String?> authors;
 
   const JournalArticleEntity({
     this.redaction = '',
@@ -31,6 +32,7 @@ class JournalArticleEntity extends Equatable {
     this.isPaidForPublish = false,
     this.title = '',
     this.viewCount = 0,
+    this.authors = const [],
   });
 
   @override
@@ -47,5 +49,6 @@ class JournalArticleEntity extends Equatable {
         isPaidForPublish,
         title,
         viewCount,
+        authors,
       ];
 }

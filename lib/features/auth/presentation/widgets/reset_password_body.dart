@@ -51,11 +51,23 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody>
                     ? PhoneTextField(
                         title: LocaleKeys.phone_number.tr(),
                         controller: phoneController,
+                        onChanged: (value) {
+                          print('phone => ${phoneController.text.length}');
+                          if (phoneController.text.length > 10) {
+                            setState(() {});
+                          }
+                        },
                       )
                     : DefaultTextField(
                         title: LocaleKeys.mail.tr(),
                         controller: emailController,
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          print("email => ${emailController.text.length}");
+                          if (emailController.text.length > 5 &&
+                              emailController.text.length < 8) {
+                            setState(() {});
+                          }
+                        },
                         prefix: Padding(
                           padding: const EdgeInsets.only(left: 12, right: 8),
                           child: SvgPicture.asset(AppIcons.mail),
@@ -119,8 +131,13 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody>
               ),
               const Spacer(),
               WButton(
+                isDisabled: isPhone
+                    ? phoneController.text.length != 12
+                    : emailController.text.length < 7,
                 text: LocaleKeys.next.tr(),
                 isLoading: state.createNewStateStatus.isSubmissionInProgress,
+                margin: EdgeInsets.fromLTRB(
+                    0, 0, 0, MediaQuery.of(context).viewInsets.bottom + 8),
                 onTap: () {
                   if (state.confirmationType == 'phone') {
                     if (state.emailPhoneNumber.isNotEmpty) {

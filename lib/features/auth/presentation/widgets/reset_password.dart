@@ -31,7 +31,8 @@ class _ResetPasswordState extends State<ResetPassword> {
     return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.fromLTRB(
+              16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
           child: Column(
             children: [
               PasswordTextField(
@@ -58,7 +59,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                           confirmPassword: confirmPasswordController.text,
                           password: passwordController.text,
                           onError: (message) {
-                            context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                            context
+                                .read<ShowPopUpBloc>()
+                                .add(ShowPopUp(message: message));
                           },
                         ),
                       );

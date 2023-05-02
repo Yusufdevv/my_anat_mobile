@@ -6,7 +6,8 @@ class RegistrationHeader extends SliverPersistentHeaderDelegate {
   final int currentPage;
   const RegistrationHeader({required this.currentPage});
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       color: darkGreen,
       alignment: Alignment.bottomCenter,

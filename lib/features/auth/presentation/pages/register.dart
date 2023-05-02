@@ -66,12 +66,13 @@ class _RegisterScreenState extends State<RegisterScreen>
                 child: Column(
                   children: [
                     WScaleAnimation(
-                        onTap: () => Navigator.of(context).pop(),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              right: 16, bottom: 16, left: 16),
-                          child: SvgPicture.asset(AppIcons.chevronLeft),
-                        )),
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 16, bottom: 16, left: 16),
+                        child: SvgPicture.asset(AppIcons.chevronLeft),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 16),
                       child: SvgPicture.asset(AppIcons.logo),

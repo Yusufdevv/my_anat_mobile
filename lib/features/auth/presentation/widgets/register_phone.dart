@@ -38,6 +38,7 @@ class _RegisterPhoneState extends State<RegisterPhone>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
       builder: (context, state) {
         return Column(

@@ -68,43 +68,45 @@ class _NewsPartState extends State<NewsPart> {
             ],
           ),
         ),
-        body: BlocBuilder<NewsBloc, NewsState>(
-          builder: (context, state) {
-            return state.newsStatus != FormzStatus.submissionSuccess
-                ? ListView.separated(
-                    itemCount: 10,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 12),
-                    itemBuilder: (context, index) => const NewsShimmer(),
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                  )
-                // TODO edit params
-                : Paginator(
-                    hasMoreToFetch: state.newsFetchMore,
-                    fetchMoreFunction: () {
-                      bloc.add(const NewsEvent.getMoreNews());
-                    },
-                    paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
-                        state.newsStatus),
-                    errorWidget: const Text('error'),
-                    emptyWidget: const SizedBox(),
-                    itemCount: state.news.length,
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.all(16).copyWith(
-                        bottom: MediaQuery.of(context).padding.bottom + 16),
-                    itemBuilder: (context, index) => NewsItem(
-                      image: state.news[index].image.middle,
-                      slug: state.news[index].slug,
-                      newsBloc: bloc,
-                      createdAt: MyFunctions.getPublishedDate(
-                          state.news[index].publishDate),
-                      title: state.news[index].title,
-                    ),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 16),
-                  );
-          },
+        body: SafeArea(
+          top: false,
+          child: BlocBuilder<NewsBloc, NewsState>(
+            builder: (context, state) {
+              return state.newsStatus != FormzStatus.submissionSuccess
+                  ? ListView.separated(
+                      itemCount: 10,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 12),
+                      itemBuilder: (context, index) => const NewsShimmer(),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                    )
+                  : Paginator(
+                      hasMoreToFetch: state.newsFetchMore,
+                      fetchMoreFunction: () {
+                        bloc.add(const NewsEvent.getMoreNews());
+                      },
+                      paginatorStatus: MyFunctions.formzStatusToPaginatorStatus(
+                          state.newsStatus),
+                      errorWidget: const Text('error'),
+                      emptyWidget: const SizedBox(),
+                      itemCount: state.news.length,
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.all(16).copyWith(
+                          bottom: MediaQuery.of(context).padding.bottom + 16),
+                      itemBuilder: (context, index) => NewsItem(
+                        image: state.news[index].image.middle,
+                        slug: state.news[index].slug,
+                        newsBloc: bloc,
+                        createdAt: MyFunctions.getPublishedDate(
+                            state.news[index].publishDate),
+                        title: state.news[index].title,
+                      ),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 16),
+                    );
+            },
+          ),
         ),
       ),
     );

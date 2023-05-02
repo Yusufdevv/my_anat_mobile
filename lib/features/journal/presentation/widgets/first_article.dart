@@ -34,7 +34,7 @@ class FirstArticle extends StatelessWidget {
                           fade(
                             page: WebViewScreen(
                               shareValue:
-                                  'https://anatomica.uz/article/${state.firstArticle.slug}',
+                                  'https://anatomica.uz/articles/${state.firstArticle.slug}',
                               page: 'ArticleSinglePage',
                               slug: state.firstArticle.slug,
                             ),
@@ -73,9 +73,9 @@ class FirstArticle extends StatelessWidget {
                             page: WebViewScreen(
                               sendToken: false,
                               shareValue:
-                                  'https://anatomica.uz/article/${state.firstArticle.slug}',
+                                  'https://anatomica.uz/articles/${state.firstArticle.slug}',
                               url:
-                                  'https://anatomica.uz/article/${state.firstArticle.slug}',
+                                  'https://anatomica.uz/articles/${state.firstArticle.slug}',
                               page: 'ArticleSinglePage',
                               slug: state.firstArticle.slug,
                             ),

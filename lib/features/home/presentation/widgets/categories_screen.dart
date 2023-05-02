@@ -17,7 +17,10 @@ class CategoriesScreen extends StatefulWidget {
   final MediaQueryData mediaQuery;
 
   const CategoriesScreen(
-      {required this.selectedIndex, required this.mediaQuery, required this.categoryItemSize, super.key});
+      {required this.selectedIndex,
+      required this.mediaQuery,
+      required this.categoryItemSize,
+      super.key});
 
   final int selectedIndex;
   final double categoryItemSize;
@@ -33,10 +36,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void initState() {
     super.initState();
     categoryController = ScrollController();
-    context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(widget.selectedIndex));
+    context
+        .read<CategoryBloc>()
+        .add(CategoryEvent.getOrganizations(widget.selectedIndex));
     Future.delayed(const Duration(milliseconds: 200), () {
-      categoryController.animateTo(widget.categoryItemSize * widget.selectedIndex,
-          duration: const Duration(milliseconds: 100), curve: Curves.easeIn);
+      categoryController.animateTo(
+          widget.categoryItemSize * widget.selectedIndex,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.easeIn);
     });
   }
 
@@ -59,79 +66,86 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               overscroll.disallowIndicator();
               return true;
             },
-            child: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  elevation: 0,
-                  backgroundColor: errorImageBackground,
-                  toolbarHeight: 93,
-                  titleSpacing: 0.0,
-                  floating: true,
-                  leadingWidth: 0,
-                  title: CategoriesList(
-                    selectedCategoryIndex: state.selectedCategory,
-                    onCategoryTap: (i) {
-                      context.read<CategoryBloc>().add(CategoryEvent.getOrganizations(i));
-                    },
-                    categories: state.categories,
-                    status: state.categoryStatus,
-                    hasFetchMore: state.categoriesFetchMore,
-                    scrollController: categoryController,
-                    onFetchMore: () {
-                      context.read<CategoryBloc>().add(const CategoryEvent.getMoreCategories());
-                    },
-                  ),
-                ),
-                if (state.organizationsStatus.isSubmissionInProgress) ...{
-                  const SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 200),
-                      child: Center(child: CupertinoActivityIndicator()),
+            child: SafeArea(
+              top: false,
+              child: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    elevation: 0,
+                    backgroundColor: errorImageBackground,
+                    toolbarHeight: 93,
+                    titleSpacing: 0.0,
+                    floating: true,
+                    leadingWidth: 0,
+                    title: CategoriesList(
+                      selectedCategoryIndex: state.selectedCategory,
+                      onCategoryTap: (i) {
+                        context
+                            .read<CategoryBloc>()
+                            .add(CategoryEvent.getOrganizations(i));
+                      },
+                      categories: state.categories,
+                      status: state.categoryStatus,
+                      hasFetchMore: state.categoriesFetchMore,
+                      scrollController: categoryController,
+                      onFetchMore: () {
+                        context
+                            .read<CategoryBloc>()
+                            .add(const CategoryEvent.getMoreCategories());
+                      },
                     ),
                   ),
-                } else if (state.organizations.isEmpty) ...{
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 100),
-                      child: Center(
-                        child: EmptyPage(
-                          title: LocaleKeys.nothing.tr(),
-                          desc: LocaleKeys.result_not_found.tr(),
-                          iconPath: AppIcons.emptyA,
+                  if (state.organizationsStatus.isSubmissionInProgress) ...{
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 200),
+                        child: Center(child: CupertinoActivityIndicator()),
+                      ),
+                    ),
+                  } else if (state.organizations.isEmpty) ...{
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 100),
+                        child: Center(
+                          child: EmptyPage(
+                            title: LocaleKeys.nothing.tr(),
+                            desc: LocaleKeys.result_not_found.tr(),
+                            iconPath: AppIcons.emptyA,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                } else ...{
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      childCount: state.organizations.length + 1,
-                      (context, index) {
-                        if (index == state.organizations.length) {
-                          if (state.organizationsFetchMore) {
-                            context.read<CategoryBloc>().add(const CategoryEvent.getMoreOrganizations());
+                  } else ...{
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        childCount: state.organizations.length + 1,
+                        (context, index) {
+                          if (index == state.organizations.length) {
+                            if (state.organizationsFetchMore) {
+                              context.read<CategoryBloc>().add(
+                                  const CategoryEvent.getMoreOrganizations());
 
-                            return const SizedBox(
-                              height: 140,
-                              child: Center(
-                                child: CupertinoActivityIndicator(),
-                              ),
-                            );
-                          } else {
-                            return const SizedBox();
+                              return const SizedBox(
+                                height: 140,
+                                child: Center(
+                                  child: CupertinoActivityIndicator(),
+                                ),
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
                           }
-                        }
-                        return HospitalItem(
-                          margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                          entity: state.organizations[index],
-                          wrapItems: state.organizations[index].getServiceOrSpecialization(pattern: null),
-                        );
-                      },
-                    ),
-                  )
-                },
-                const SliverToBoxAdapter(child: SizedBox(height: 64)),
-              ],
+                          return HospitalItem(
+                            entity: state.organizations[index],
+                            wrapItems: state.organizations[index]
+                                .getServiceOrSpecialization(pattern: null),
+                          );
+                        },
+                      ),
+                    )
+                  },
+                ],
+              ),
             ),
           ),
         );

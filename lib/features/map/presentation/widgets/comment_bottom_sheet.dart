@@ -105,6 +105,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                     starSpacing: 12,
                     allowHalfRating: false,
                     onChanged: (value) {
+                      print('value rating => ${value}');
                       setState(() {
                         rating = value;
                       });
@@ -127,13 +128,21 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                 maxLines: 40,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  if (_controller.text.isEmpty) {
+                    setState(() {});
+                  } else if (_controller.text.isNotEmpty &&
+                      _controller.text.length < 2) {
+                    setState(() {});
+                  }
+                },
                 title: LocaleKeys.opinion.tr(),
                 height: 120,
                 hintText: LocaleKeys.enter_opinion.tr(),
               ),
             ),
             WButton(
+              isDisabled: _controller.text.isEmpty,
               onTap: () {
                 if (!widget.isDoctor) {
                   if (widget.commentsBloc != null) {
@@ -163,6 +172,13 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                       comment: _controller.text,
                       onSuccess: () {
                         Navigator.of(context).pop();
+                        if (widget.commentsBloc != null &&
+                            widget.doctor != null) {
+                          widget.commentsBloc!.add(
+                              CommentsEvent.getDoctorComments(
+                                  doctorId: widget.doctor!));
+                        }
+
                         showModalBottomSheet(
                           context: widget.parentContext,
                           backgroundColor: Colors.transparent,

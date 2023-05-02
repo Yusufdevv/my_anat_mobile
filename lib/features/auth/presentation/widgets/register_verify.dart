@@ -44,69 +44,70 @@ class _RegisterVerifyState extends State<RegisterVerify> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                  child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  Row(
-                    children: [
-                      WScaleAnimation(
-                        onTap: () {
-                          context
-                              .read<LoginSignUpBloc>()
-                              .add(SetTimer(secondsLeft: secondsLeft));
-                          widget.pageController.previousPage(
-                              duration: const Duration(milliseconds: 150),
-                              curve: Curves.linear);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
-                          height: 34,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: primary.withOpacity(0.12),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 24,
-                                offset: const Offset(0, 8),
-                                color: chipShadowColor.withOpacity(0.19),
-                              ),
-                            ],
-                            border: Border.all(width: 1, color: primary),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                state.phoneEmail,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(),
-                              ),
-                              const SizedBox(width: 8),
-                              SvgPicture.asset(AppIcons.edit),
-                            ],
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    Row(
+                      children: [
+                        WScaleAnimation(
+                          onTap: () {
+                            context
+                                .read<LoginSignUpBloc>()
+                                .add(SetTimer(secondsLeft: secondsLeft));
+                            widget.pageController.previousPage(
+                                duration: const Duration(milliseconds: 150),
+                                curve: Curves.linear);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
+                            height: 34,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: primary.withOpacity(0.12),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 24,
+                                  offset: const Offset(0, 8),
+                                  color: chipShadowColor.withOpacity(0.19),
+                                ),
+                              ],
+                              border: Border.all(width: 1, color: primary),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  state.phoneEmail,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .copyWith(),
+                                ),
+                                const SizedBox(width: 8),
+                                SvgPicture.asset(AppIcons.edit),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  PinCodeBody(
-                    onChanged: (v) {},
-                    onTimeChanged: (seconds) {
-                      secondsLeft = seconds;
-                    },
-                    hasError: state.submitCodeStatus.isSubmissionFailure,
-                    errorText: errorMessage,
-                    pinCodeController: pinCodeController,
-                    secondsLeft: state.secondsLeft,
-                    onRefresh: () {
-                      context.read<LoginSignUpBloc>().add(ResendCode());
-                    },
-                  ),
-                ],
-              )),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    PinCodeBody(
+                      onChanged: (v) {},
+                      onTimeChanged: (seconds) {
+                        secondsLeft = seconds;
+                      },
+                      hasError: state.submitCodeStatus.isSubmissionFailure,
+                      errorText: errorMessage,
+                      pinCodeController: pinCodeController,
+                      secondsLeft: state.secondsLeft,
+                      onRefresh: () {
+                        context.read<LoginSignUpBloc>().add(ResendCode());
+                      },
+                    ),
+                  ],
+                ),
+              ),
               WButton(
                 text: LocaleKeys.confirm.tr(),
                 isLoading: state.submitCodeStatus.isSubmissionInProgress,

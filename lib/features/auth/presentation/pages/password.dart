@@ -18,6 +18,7 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreenState extends State<PasswordScreen> {
   late TextEditingController passwordController;
   late TextEditingController confirmPasswordController;
+  bool isObscure = true;
 
   @override
   void initState() {
@@ -40,6 +41,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 controller: passwordController,
                 onChanged: (value) {},
                 hintText: LocaleKeys.write_password.tr(),
+                isObscure: isObscure,
+                suffixTap: () {
+                  print('suffix => 1 ${isObscure}');
+                  setState(() {
+                    isObscure = !isObscure;
+                  });
+                },
               ),
               const SizedBox(height: 16),
               PasswordTextField(
@@ -47,6 +55,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 controller: confirmPasswordController,
                 onChanged: (value) {},
                 hintText: LocaleKeys.confirm_password.tr(),
+                isObscure: isObscure,
+                suffixTap: () {
+                  print('suffix => 1 ${isObscure}');
+                  setState(() {
+                    isObscure = !isObscure;
+                  });
+                },
               ),
               const Spacer(),
               WButton(

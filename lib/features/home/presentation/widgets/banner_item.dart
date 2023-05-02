@@ -204,11 +204,13 @@ class _BannerItemState extends State<BannerItem> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      widget.types[pageIndex],
+                                      widget.subtitles[pageIndex],
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineSmall!
                                           .copyWith(color: primary),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     // const SizedBox(height: 6),
                                     Expanded(

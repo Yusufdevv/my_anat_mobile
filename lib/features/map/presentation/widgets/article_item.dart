@@ -52,7 +52,7 @@ class HospitalArticleItem extends StatelessWidget {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: WebViewScreen(
-                      url: 'https://anatomica.uz/article/${entity.slug}',
+                      url: 'https://anatomica.uz/articles/${entity.slug}',
                       page: '',
                     ),
                   ),

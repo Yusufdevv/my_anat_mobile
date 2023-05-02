@@ -26,6 +26,10 @@ JournalArticleModel _$JournalArticleModelFromJson(Map<String, dynamic> json) =>
       isBought: json['is_bought'] as bool? ?? false,
       moderationStatus: json['moderation_status'] as String? ?? '',
       isPaidForPublish: json['is_paid_for_publish'] as bool? ?? false,
+      authors: (json['authors'] as List<dynamic>?)
+              ?.map((e) => e as String?)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$JournalArticleModelToJson(
@@ -43,4 +47,5 @@ Map<String, dynamic> _$JournalArticleModelToJson(
       'is_bought': instance.isBought,
       'is_paid_for_publish': instance.isPaidForPublish,
       'moderation_status': instance.moderationStatus,
+      'authors': instance.authors,
     };

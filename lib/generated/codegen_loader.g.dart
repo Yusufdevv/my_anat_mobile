@@ -359,7 +359,8 @@ class CodegenLoader extends AssetLoader{
   "all_vacancies": "Все вакансии",
   "go": "Перейти",
   "activate": "Активировать",
-  "all_specs": "Все специалисты"
+  "all_specs": "Все специалисты",
+  "card_successfully_added": "Карта успешно добавлена"
 };
 static const Map<String,dynamic> uz = {
   "realization_expect": "Jurnal sotib olish bo'yicha\n“{}” kutish jarayonida",
@@ -516,7 +517,7 @@ static const Map<String,dynamic> uz = {
   "rus": "Русский",
   "uzb_kr": "Ўзбекча",
   "uzb": "O'zbekcha",
-  "apply": "Murojaat qilish",
+  "apply": "Tasdiqlash",
   "you_sure": "Haqiqatan ham hisobingizdan chiqmoqchimisiz?",
   "no": "Yo'q",
   "yes": "Ha",
@@ -667,7 +668,7 @@ static const Map<String,dynamic> uz = {
   "cards": "Kartalar",
   "card_term": "Karta muddati",
   "enter_card_number": "Karta raqamini kiriting",
-  "enter_card_term": "Karda muddatini kiriting",
+  "enter_card_term": "Karta muddatini kiriting",
   "payment_with_card": "Karta bilan to'lov",
   "my_cards": "Mening kartalarim",
   "read_snippet": "Parchani o'qish",
@@ -706,7 +707,8 @@ static const Map<String,dynamic> uz = {
   "all_vacancies": "Hamma ish o'rinlari",
   "go": "O'tish",
   "activate": "Faollashtirish",
-  "all_specs": "Barcha mutaxassislar"
+  "all_specs": "Barcha mutaxassislar",
+  "card_successfully_added": "Karta muvaffaqiyatli qo'shildi"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru, "uz": uz};
 }

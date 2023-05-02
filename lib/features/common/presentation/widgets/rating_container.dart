@@ -43,7 +43,9 @@ class RatingStars extends StatelessWidget {
       ),
       glow: false,
       ignoreGestures: readOnly,
-      onRatingUpdate: (rating) => onChanged,
+      onRatingUpdate: (rating) {
+        onChanged!(rating);
+      },
     );
   }
 }

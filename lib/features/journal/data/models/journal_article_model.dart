@@ -20,6 +20,8 @@ class JournalArticleModel extends JournalArticleEntity {
     required super.isBought,
     required super.moderationStatus,
     required super.isPaidForPublish,
+    required super.authors,
   });
-  factory JournalArticleModel.fromJson(Map<String, dynamic> json) => _$JournalArticleModelFromJson(json);
+  factory JournalArticleModel.fromJson(Map<String, dynamic> json) =>
+      _$JournalArticleModelFromJson(json);
 }

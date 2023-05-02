@@ -21,8 +21,8 @@ class HospitalArticleSingle extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ArticleSingleBloc(
-          getJournalArticleSingleUseCase:
-              GetJournalArticleSingleUseCase(repository: serviceLocator<JournalRepositoryImpl>()))
+          getJournalArticleSingleUseCase: GetJournalArticleSingleUseCase(
+              repository: serviceLocator<JournalRepositoryImpl>()))
         ..add(
           ArticleSingleEvent.getSingleArticle(slug: slug),
         ),
@@ -38,7 +38,7 @@ class HospitalArticleSingle extends StatelessWidget {
           automaticallyImplyLeading: false,
           elevation: 1,
           title: HospitalSingleAppBarBody(
-            shareValue: 'https://anatomica.uz/article/$slug',
+            shareValue: 'https://anatomica.uz/articles/$slug',
           ),
           shadowColor: textFieldColor,
         ),
@@ -46,7 +46,8 @@ class HospitalArticleSingle extends StatelessWidget {
           builder: (context, state) {
             if (state.getSingleStatus.isSubmissionSuccess) {
               return ListView(
-                padding: const EdgeInsets.all(16).copyWith(bottom: MediaQuery.of(context).padding.bottom + 16),
+                padding: const EdgeInsets.all(16).copyWith(
+                    bottom: MediaQuery.of(context).padding.bottom + 16),
                 children: [
                   WImage(
                     imageUrl: state.articleSingle.image.middle,

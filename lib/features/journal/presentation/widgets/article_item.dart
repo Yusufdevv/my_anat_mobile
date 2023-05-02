@@ -26,6 +26,9 @@ class ArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
+        final List list = magazineItemEntity.authors;
+        list.removeWhere((element) => element == null);
+        final String authors = list.join(", ");
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () async {
@@ -36,7 +39,7 @@ class ArticleItem extends StatelessWidget {
                   fade(
                     page: WebViewScreen(
                       shareValue:
-                          'https://anatomica.uz/article/${magazineItemEntity.slug}',
+                          'https://anatomica.uz/articles/${magazineItemEntity.slug}',
                       page: 'ArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),
@@ -75,9 +78,9 @@ class ArticleItem extends StatelessWidget {
                     page: WebViewScreen(
                       sendToken: false,
                       shareValue:
-                          'https://anatomica.uz/article/${magazineItemEntity.slug}',
+                          'https://anatomica.uz/articles/${magazineItemEntity.slug}',
                       url:
-                          'https://anatomica.uz/article/${magazineItemEntity.slug}',
+                          'https://anatomica.uz/articles/${magazineItemEntity.slug}',
                       page: 'ArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),
@@ -127,33 +130,55 @@ class ArticleItem extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       const Spacer(),
-                      Row(
-                        children: [
-                          Text(
-                            magazineItemEntity.category.title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall!
-                                .copyWith(
-                                    fontSize: 13, fontWeight: FontWeight.w400),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 4),
-                            height: 3,
-                            width: 3,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: textSecondary),
-                          ),
-                          Text(
-                            MyFunctions.getPublishedDate(
-                                magazineItemEntity.publishDate),
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall!
-                                .copyWith(
-                                    fontSize: 13, fontWeight: FontWeight.w400),
-                          ),
-                        ],
+                      Text.rich(
+                        textAlign: TextAlign.center,
+                        TextSpan(
+                          children: [
+                            WidgetSpan(
+                              child: Visibility(
+                                visible: authors.isNotEmpty,
+                                child: Text(
+                                  authors,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall!
+                                      .copyWith(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                            WidgetSpan(
+                              child: Visibility(
+                                visible: authors.isNotEmpty,
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 4),
+                                  height: 3,
+                                  width: 3,
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: textSecondary),
+                                ),
+                              ),
+                              alignment: PlaceholderAlignment.middle,
+                            ),
+                            TextSpan(
+                              text: MyFunctions.getPublishedDate(
+                                  magazineItemEntity.publishDate),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displaySmall!
+                                  .copyWith(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 12),
                       const Divider(height: 1),

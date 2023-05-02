@@ -346,5 +346,6 @@ abstract class  LocaleKeys {
   static const go = 'go';
   static const activate = 'activate';
   static const all_specs = 'all_specs';
+  static const card_successfully_added = 'card_successfully_added';
 
 }

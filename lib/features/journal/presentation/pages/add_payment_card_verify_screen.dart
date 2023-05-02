@@ -125,8 +125,8 @@ class _AddPaymentCardVerifyScreenState
                               CreatePaymentCardEvent(
                                 onSucces: () {},
                                 onError: (message) {
-                                  context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                      message: message, isSuccess: false));
+                                  // context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                  //     message: message, isSuccess: false));
                                 },
                                 param: CreateCardParam(
                                   cardNumber: widget.cardNumber,
@@ -142,11 +142,14 @@ class _AddPaymentCardVerifyScreenState
                         context.read<PaymentCardsBloc>().add(
                               ConfirmPaymentCardEvent(
                                 onSucces: () {
-                                  Navigator.of(context).pop();
+                                  Navigator.of(context)
+                                    ..pop()
+                                    ..pop();
                                   context.read<ShowPopUpBloc>().add(
                                         ShowPopUp(
-                                          // todo locale
-                                          message: 'Карта успешно добавлена',
+                                          message: LocaleKeys
+                                              .card_successfully_added
+                                              .tr(),
                                           isSuccess: true,
                                         ),
                                       );
