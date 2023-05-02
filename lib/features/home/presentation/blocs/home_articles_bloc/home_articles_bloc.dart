@@ -24,6 +24,7 @@ class HomeArticlesBloc extends Bloc<HomeArticlesEvent, HomeArticlesState> {
     on<_GetMoreHomeArticles>(_getMoreHomeArticles);
     on<_GetBanners>(_getBanners);
     on<_GetBannerSingle>(_getBannerSingle);
+    on<_DownloadBannerImage>(_downloadBannerImage);
     on<_GetMoreBanners>(_getMoreBanners);
   }
 
@@ -55,6 +56,11 @@ class HomeArticlesBloc extends Bloc<HomeArticlesEvent, HomeArticlesState> {
         ),
       );
     }
+  }
+
+  _downloadBannerImage(
+      _DownloadBannerImage event, Emitter<HomeArticlesState> emit) async {
+    emit(state.copyWith(isDownloaded: event.isDownloaded));
   }
 
   _getMoreHomeArticles(

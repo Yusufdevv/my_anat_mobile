@@ -33,6 +33,7 @@ class ShowAllButton extends StatelessWidget {
                   .textTheme
                   .headlineMedium!
                   .copyWith(color: textColor),
+              textAlign: TextAlign.center,
             ),
             SvgPicture.asset(AppIcons.rightArrow),
           ],

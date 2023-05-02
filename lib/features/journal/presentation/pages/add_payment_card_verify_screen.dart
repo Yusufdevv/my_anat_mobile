@@ -16,15 +16,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddPaymentCardVerifyScreen extends StatefulWidget {
-  const AddPaymentCardVerifyScreen({required this.cardNumber, required this.expiredDate, Key? key}) : super(key: key);
+  const AddPaymentCardVerifyScreen(
+      {required this.cardNumber, required this.expiredDate, Key? key})
+      : super(key: key);
   final String cardNumber;
   final String expiredDate;
 
   @override
-  State<AddPaymentCardVerifyScreen> createState() => _AddPaymentCardVerifyScreenState();
+  State<AddPaymentCardVerifyScreen> createState() =>
+      _AddPaymentCardVerifyScreenState();
 }
 
-class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen> {
+class _AddPaymentCardVerifyScreenState
+    extends State<AddPaymentCardVerifyScreen> {
   late TextEditingController pinCodeController;
 
   int secondsLeft = 0;
@@ -45,16 +49,21 @@ class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen>
           appBar: WAppBar(title: LocaleKeys.add_card.tr(), hasUnderline: true),
           body: BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
             builder: (context, state) {
+              print(
+                  'state 2 => ${context.read<PaymentCardsBloc>().state.createCardResponseModel}');
               return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: MediaQuery.of(context).padding.bottom),
+                padding: const EdgeInsets.symmetric(horizontal: 16)
+                    .copyWith(bottom: MediaQuery.of(context).padding.bottom),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
                     Text(
                       LocaleKeys.confirm.tr(),
-                      style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayLarge!
+                          .copyWith(fontSize: 20),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -87,8 +96,11 @@ class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen>
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              state.createCardResponseModel?.otpSentPhone ?? '',
-                              style: Theme.of(context).textTheme.displayLarge!.copyWith(),
+                              '${state.createCardResponseModel?.otpSentPhone}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(),
                             ),
                           ],
                         ),
@@ -109,31 +121,43 @@ class _AddPaymentCardVerifyScreenState extends State<AddPaymentCardVerifyScreen>
                       pinCodeController: pinCodeController,
                       secondsLeft: secondsLeft,
                       onRefresh: () {
-                        context.read<PaymentCardsBloc>().add(CreatePaymentCardEvent(
-                            onSucces: () {},
-                            onError: (message) {
-                              context.read<ShowPopUpBloc>().add(ShowPopUp(message: message, isSuccess: false));
-                            },
-                            param: CreateCardParam(cardNumber: widget.cardNumber, expireDate: widget.expiredDate)));
+                        context.read<PaymentCardsBloc>().add(
+                              CreatePaymentCardEvent(
+                                onSucces: () {},
+                                onError: (message) {
+                                  context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                      message: message, isSuccess: false));
+                                },
+                                param: CreateCardParam(
+                                  cardNumber: widget.cardNumber,
+                                  expireDate: widget.expiredDate,
+                                ),
+                              ),
+                            );
                       },
                     ),
                     const Spacer(),
                     WButton(
                       onTap: () {
-                        context.read<PaymentCardsBloc>().add(ConfirmPaymentCardEvent(
-                            onSucces: () {
-                              Navigator.pop(context);
-                              context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                    message: 'Карта успешно добавлена',
-                                    isSuccess: true,
-                                  ));
-                            },
-                            onError: (message) {
-                              hasError = true;
-                              context.read<ShowPopUpBloc>().add(ShowPopUp(message: message, isSuccess: false));
-                            },
-                            param: ConfirmCardParam(
-                                cardNumber: widget.cardNumber, session: 0, otp: pinCodeController.text)));
+                        context.read<PaymentCardsBloc>().add(
+                            ConfirmPaymentCardEvent(
+                                onSucces: () {
+                                  Navigator.pop(context);
+                                  context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                        // todo locale
+                                        message: 'Карта успешно добавлена',
+                                        isSuccess: true,
+                                      ));
+                                },
+                                onError: (message) {
+                                  hasError = true;
+                                  context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                      message: message, isSuccess: false));
+                                },
+                                param: ConfirmCardParam(
+                                    cardNumber: widget.cardNumber,
+                                    session: 0,
+                                    otp: pinCodeController.text)));
                       },
                       height: 40,
                       margin: const EdgeInsets.only(bottom: 16),

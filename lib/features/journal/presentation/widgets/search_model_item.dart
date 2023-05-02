@@ -44,9 +44,11 @@ class SearchedModelsItem extends StatelessWidget {
                 .textTheme
                 .displayLarge!
                 .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
-            allText: magazineItemEntity.redaction,
+            allText: magazineItemEntity.name,
             highlightedText: controller.text,
             highlightColor: yellowHighlightedText,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 4),
           Text(
@@ -61,7 +63,7 @@ class SearchedModelsItem extends StatelessWidget {
             margin: const EdgeInsets.only(top: 12),
             onTap: () {},
             child: Text(
-              LocaleKeys.journal_more.tr(),
+              MyFunctions.getFormatCostFromInt(magazineItemEntity.price),
               style: Theme.of(context)
                   .textTheme
                   .displayMedium!

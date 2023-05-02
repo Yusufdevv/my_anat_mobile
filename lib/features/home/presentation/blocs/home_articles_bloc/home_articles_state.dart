@@ -13,5 +13,6 @@ class HomeArticlesState with _$HomeArticlesState {
     @Default(FormzStatus.pure) FormzStatus bannersStatus,
     String? bannersNext,
     @Default(false) bool bannersFetchMore,
+    @Default(false) bool isDownloaded,
   }) = _HomeArticlesState;
 }

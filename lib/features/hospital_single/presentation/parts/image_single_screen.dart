@@ -1,6 +1,7 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
 import 'package:anatomica/features/auth/domain/entities/image_entity.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,14 +33,29 @@ class _ImageSingleScreenState extends State<ImageSingleScreen> {
       appBar: AppBar(
         backgroundColor: dark,
         elevation: 0,
-        leading: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => Navigator.of(context).pop(),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(child: SvgPicture.asset(AppIcons.chevronLeft)),
-          ),
-        ),
+        automaticallyImplyLeading: false,
+        actions: [
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => Navigator.of(context).pop(),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                16,
+                24,
+                16,
+                8,
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  AppIcons.close,
+                  color: white,
+                  width: 21,
+                  height: 21,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
       backgroundColor: dark,
       extendBodyBehindAppBar: true,
@@ -49,9 +65,8 @@ class _ImageSingleScreenState extends State<ImageSingleScreen> {
           // controller: pageController,
           itemCount: widget.images.length,
           builder: (context, index) => PhotoViewGalleryPageOptions(
-            imageProvider: NetworkImage(
-              widget.images[index].middle,
-            ),
+            imageProvider:
+                CachedNetworkImageProvider(widget.images[index].middle),
             gestureDetectorBehavior: HitTestBehavior.opaque,
           ),
           loadingBuilder: (_, __) => const CupertinoActivityIndicator(),

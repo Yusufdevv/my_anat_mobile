@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:anatomica/assets/colors/colors.dart';
-import 'package:anatomica/features/common/presentation/widgets/shimmer_container.dart';
+import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
 import 'package:anatomica/features/home/presentation/parts/banner_single_screen.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -79,6 +79,11 @@ class _BannerItemState extends State<BannerItem> {
                 setState(() {
                   pageIndex = value;
                 });
+                _pageController1.animateToPage(
+                  pageIndex,
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.linear,
+                );
                 _pageController2.animateToPage(
                   pageIndex,
                   duration: const Duration(milliseconds: 250),
@@ -87,16 +92,25 @@ class _BannerItemState extends State<BannerItem> {
               },
               itemBuilder: (context, index) {
                 return CachedNetworkImage(
-                  imageUrl: widget.images[pageIndex],
+                  imageUrl: widget.images[index],
                   progressIndicatorBuilder: (context, url, progress) {
-                    return Shimmer.fromColors(
-                      baseColor: white,
-                      highlightColor: lilyWhite,
-                      child: Container(
-                        width: double.maxFinite,
-                        height: 324,
-                        color: Colors.red,
-                      ),
+                    print(
+                        'progress => ${progress.downloaded / (progress.totalSize ?? 1)}');
+                    if (progress.downloaded / (progress.totalSize ?? 1) == 1) {
+                      context.read<HomeArticlesBloc>().add(
+                          const HomeArticlesEvent.downloadBannerImage(
+                              isDownloaded: true));
+                    } else if (progress.downloaded / (progress.totalSize ?? 1) >
+                            0 &&
+                        progress.downloaded / (progress.totalSize ?? 1) < 1) {
+                      context.read<HomeArticlesBloc>().add(
+                          const HomeArticlesEvent.downloadBannerImage(
+                              isDownloaded: false));
+                    }
+                    return Image.asset(
+                      AppImages.placeHolderMainAppBar,
+                      fit: BoxFit.cover,
+                      height: MediaQuery.of(context).size.height,
                     );
                   },
                   imageBuilder: (context, imageProvider) {
@@ -176,6 +190,11 @@ class _BannerItemState extends State<BannerItem> {
                                   duration: const Duration(milliseconds: 250),
                                   curve: Curves.linear,
                                 );
+                                _pageController2.animateToPage(
+                                  pageIndex,
+                                  duration: const Duration(milliseconds: 250),
+                                  curve: Curves.linear,
+                                );
                               },
                               controller: _pageController2,
                               itemBuilder: (context, index) {
@@ -210,8 +229,7 @@ class _BannerItemState extends State<BannerItem> {
                             animation: _pageNotifier,
                             builder: (context, child) {
                               return SmoothPageIndicator(
-                                controller:
-                                    _pageNotifier.value, // PageController
+                                controller: _pageController1, // PageController
                                 count: widget.images.length,
                                 effect: const WormEffect(
                                   activeDotColor: white,

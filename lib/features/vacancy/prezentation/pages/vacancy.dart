@@ -46,13 +46,21 @@ class _VacancyScreenState extends State<VacancyScreen>
   bool hasFilter = false;
   late VacancyBloc vacancyBloc;
   late RegionBloc regionBloc;
+  late ValueNotifier<int> tabNotifier;
 
   @override
   initState() {
     tabController = TabController(length: 2, vsync: this)
       ..addListener(() {
         setState(() {});
+        tabNotifier.value = tabController.index;
       });
+    tabNotifier = ValueNotifier(tabController.index)
+      ..addListener(() {
+        print('tab notifier => ${tabNotifier.value}');
+        tabController.animateTo(tabNotifier.value);
+      });
+
     vacancyBloc = VacancyBloc(
       vacancyFilterUseCase: VacancyFilterUseCase(
           repository: serviceLocator<VacancyRepositoryImpl>()),
@@ -105,9 +113,10 @@ class _VacancyScreenState extends State<VacancyScreen>
       child: CustomScreen(
         child: Scaffold(
           backgroundColor: white,
-          appBar: const PreferredSize(
-            preferredSize: Size.fromHeight(64),
-            child: VacancyAppBar(),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(64),
+            child: VacancyAppBar(
+                tabInitialIndex: tabController.index, tabNotifier: tabNotifier),
           ),
           body: NestedScrollView(
             physics: const BouncingScrollPhysics(),
@@ -174,6 +183,24 @@ class _VacancyScreenState extends State<VacancyScreen>
                                           state.organizationVacancyList.isEmpty
                                               ? const SizedBox()
                                               : const VacancyCardList(),
+                                          Positioned(
+                                            bottom: 0,
+                                            right: 0,
+                                            child: Container(
+                                              width: 20,
+                                              height: 143,
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    white.withOpacity(0),
+                                                    white
+                                                  ],
+                                                  end: Alignment.centerRight,
+                                                  begin: Alignment.centerLeft,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],

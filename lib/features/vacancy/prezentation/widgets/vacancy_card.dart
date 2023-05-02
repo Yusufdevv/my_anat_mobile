@@ -26,10 +26,16 @@ class VacancyCard extends StatelessWidget {
         margin: const EdgeInsets.only(left: 12),
         padding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
         decoration: BoxDecoration(
-          color: lilyWhite,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(width: 1, color: pattensBlue),
-        ),
+            color: lilyWhite,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(width: 1, color: const Color(0xffEAF0EE)),
+            boxShadow: [
+              BoxShadow(
+                color: darkerGreen.withOpacity(0.04),
+                blurRadius: 6,
+                offset: const Offset(0, 4),
+              )
+            ]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -50,7 +56,10 @@ class VacancyCard extends StatelessWidget {
                     .headlineMedium!
                     .copyWith(fontSize: 13, fontWeight: FontWeight.w400)),
             const SizedBox(height: 1),
-            const WDivider(margin: EdgeInsets.symmetric(vertical: 10)),
+            const WDivider(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              color: diwiderColor,
+            ),
             const SizedBox(height: 10),
             VacancyItemTextWidget(
                 title: '${vacancyListEntity.experienceFrom} - '

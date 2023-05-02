@@ -6,6 +6,8 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:anatomica/features/home/presentation/widgets/news_item.dart';
 import 'package:anatomica/features/home/presentation/widgets/news_shimmer.dart';
+import 'package:anatomica/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -55,7 +57,7 @@ class _NewsPartState extends State<NewsPart> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Новости',
+                    LocaleKeys.news.tr(),
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -95,7 +97,8 @@ class _NewsPartState extends State<NewsPart> {
                       image: state.news[index].image.middle,
                       slug: state.news[index].slug,
                       newsBloc: bloc,
-                      createdAt: state.news[index].publishDate,
+                      createdAt: MyFunctions.getPublishedDate(
+                          state.news[index].publishDate),
                       title: state.news[index].title,
                     ),
                     separatorBuilder: (context, index) =>

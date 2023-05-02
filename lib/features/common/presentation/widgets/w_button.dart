@@ -27,7 +27,7 @@ class WButton extends StatelessWidget {
     this.color = primary,
     this.textColor = white,
     this.borderRadius = 6,
-    this.disabledColor = Colors.green,
+    this.disabledColor = divider,
     this.isDisabled = false,
     this.isLoading = false,
     this.width,
@@ -70,10 +70,12 @@ class WButton extends StatelessWidget {
             : AnimatedDefaultTextStyle(
                 duration: const Duration(milliseconds: 200),
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 14,
-                    fontWeight: isDisabled ? FontWeight.w700 : FontWeight.w600,
-                    height: 1.36,
-                    color: textColor),
+                      fontSize: 14,
+                      fontWeight:
+                          isDisabled ? FontWeight.w700 : FontWeight.w600,
+                      height: 1.36,
+                      color: isDisabled ? disableTextColor : textColor,
+                    ),
                 child: child ??
                     Text(
                       text,

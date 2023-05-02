@@ -10,6 +10,7 @@ import 'package:anatomica/features/common/presentation/widgets/w_scale_animation
 import 'package:anatomica/features/home/presentation/blocs/home_articles_bloc/home_articles_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/pages/buy_subscription_payment_screen.dart';
+import 'package:anatomica/features/map/presentation/widgets/hospital_single_app_bar_body.dart';
 import 'package:anatomica/features/navigation/presentation/navigator.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -41,10 +42,10 @@ class _BannerSingleScreenState extends State<BannerSingleScreen> {
       ..add(HomeArticlesEvent.getBannerSingle(id: widget.id));
     _scrollController = ScrollController()
       ..addListener(() {
-        if (_scrollController.offset > 200 - kToolbarHeight &&
+        if (_scrollController.offset > 200 + kToolbarHeight &&
             !isShrink.value) {
           isShrink.value = true;
-        } else if (_scrollController.offset < 200 - kToolbarHeight &&
+        } else if (_scrollController.offset < 200 + kToolbarHeight &&
             isShrink.value) {
           isShrink.value = false;
         }
@@ -102,64 +103,78 @@ class _BannerSingleScreenState extends State<BannerSingleScreen> {
                   controller: _scrollController,
                   physics: const BouncingScrollPhysics(),
                   slivers: [
-                    SliverAppBar(
-                      automaticallyImplyLeading: false,
-                      systemOverlayStyle: SystemUiOverlayStyle(
-                          statusBarIconBrightness: isShrink.value
-                              ? Brightness.dark
-                              : Brightness.light),
-                      pinned: true,
-                      backgroundColor: errorImageBackground,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(16),
-                      )),
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          WScaleAnimation(
-                            child: SvgPicture.asset(AppIcons.arrowLeft),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          )
-                        ],
-                      ),
-                      expandedHeight: 324,
-                      elevation: 0,
-                      scrolledUnderElevation: 0,
-                      flexibleSpace: AnimatedCrossFade(
-                        duration: const Duration(milliseconds: 500),
-                        crossFadeState: isShrink.value
-                            ? CrossFadeState.showSecond
-                            : CrossFadeState.showFirst,
-                        secondChild: Container(
-                          color: white,
-                          height: MediaQuery.of(context).size.height,
-                        ),
-                        firstChild: Container(
-                          foregroundDecoration: BoxDecoration(
-                            borderRadius: const BorderRadius.vertical(
+                    AnimatedBuilder(
+                      animation: isShrink,
+                      builder: (context, child) {
+                        return SliverAppBar(
+                          automaticallyImplyLeading: false,
+                          systemOverlayStyle: SystemUiOverlayStyle(
+                              statusBarIconBrightness: isShrink.value
+                                  ? Brightness.dark
+                                  : Brightness.light),
+                          pinned: true,
+                          backgroundColor: errorImageBackground,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
                               bottom: Radius.circular(16),
                             ),
-                            gradient: LinearGradient(
-                              colors: [
-                                textColor.withOpacity(0.9),
-                                textColor.withOpacity(0.2),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
+                          ),
+                          title: isShrink.value
+                              ? HospitalSingleAppBarBody(
+                                  shareValue:
+                                      'https://anatomica.uz/banners/${widget.id}',
+                                )
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    WScaleAnimation(
+                                      child:
+                                          SvgPicture.asset(AppIcons.arrowLeft),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ],
+                                ),
+                          expandedHeight: 324,
+                          elevation: 0,
+                          scrolledUnderElevation: 0,
+                          flexibleSpace: AnimatedCrossFade(
+                            duration: const Duration(milliseconds: 500),
+                            crossFadeState: isShrink.value
+                                ? CrossFadeState.showSecond
+                                : CrossFadeState.showFirst,
+                            secondChild: Container(
+                              color: white,
+                              height: MediaQuery.of(context).size.height,
+                            ),
+                            firstChild: Container(
+                              foregroundDecoration: BoxDecoration(
+                                borderRadius: const BorderRadius.vertical(
+                                  bottom: Radius.circular(16),
+                                ),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    textColor.withOpacity(0.9),
+                                    textColor.withOpacity(0.2),
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      homeState.bannerSingle?.image.middle ??
+                                          ''),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                  homeState.bannerSingle?.image.middle ?? ''),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                     SliverToBoxAdapter(
                       child: homeState.bannerSingle != null

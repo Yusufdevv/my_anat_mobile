@@ -1,6 +1,5 @@
 part of 'payment_cards_bloc.dart';
 
-@immutable
 class PaymentCardsState {
   final List<PaymentCardEntity> paymentCards;
   final PaymentCardEntity? selectedCard;
@@ -36,7 +35,8 @@ class PaymentCardsState {
         status: status ?? this.status,
         secondStatus: secondStatus ?? this.secondStatus,
         selectedCard: selectedCard ?? this.selectedCard,
-        createCardResponseModel: createCardResponseModel ?? this.createCardResponseModel,
+        createCardResponseModel:
+            createCardResponseModel ?? this.createCardResponseModel,
       );
 
   List<Object?> get props => [

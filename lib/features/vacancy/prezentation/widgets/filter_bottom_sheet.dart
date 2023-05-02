@@ -1,5 +1,7 @@
+import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/features/common/presentation/widgets/scrolled_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/vacancy/domain/entities/vacancy_params.dart';
 import 'package:anatomica/features/vacancy/domain/usecases/candidate_list.dart';
 import 'package:anatomica/features/vacancy/prezentation/blocs/region_bloc/region_bloc.dart';
@@ -35,16 +37,57 @@ class FilterBottomSheet extends StatelessWidget {
           return ScrolledBottomSheet(
             title: LocaleKeys.filter.tr(),
             hasHeader: true,
+            header: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              alignment: Alignment.centerLeft,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                  color: white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  )),
+              height: 55,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    LocaleKeys.filter.tr(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: WScaleAnimation(
+                        onTap: () {
+                          vacancyBloc.add(SelectSalaryFilterEvent(
+                              salaryKey: const [], onSuccess: () {}));
+                          vacancyBloc.add(SelectExperienceEvent(
+                              onSuccess: () {}, experienceKey: const []));
+                          vacancyBloc.add(SelectDistrictEvent(
+                              onSuccess: () {}, districtList: const []));
+                          vacancyBloc.add(SelectCategoryEvent(id: const []));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            LocaleKeys.clean.tr(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(fontSize: 13),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
             showClear: true,
-            onClear: () {
-              vacancyBloc.add(SelectSalaryFilterEvent(
-                  salaryKey: const [], onSuccess: () {}));
-              vacancyBloc.add(SelectExperienceEvent(
-                  onSuccess: () {}, experienceKey: const []));
-              vacancyBloc.add(SelectDistrictEvent(
-                  onSuccess: () {}, districtList: const []));
-              vacancyBloc.add(SelectCategoryEvent(id: const []));
-            },
             stackedWButton: WButton(
               padding: EdgeInsets.zero,
               margin: const EdgeInsets.symmetric(horizontal: 16),

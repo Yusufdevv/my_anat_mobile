@@ -16,6 +16,7 @@ import 'package:anatomica/features/home/presentation/blocs/most_populars_bloc/mo
 import 'package:anatomica/features/home/presentation/blocs/news_bloc/news_bloc.dart';
 import 'package:anatomica/features/home/presentation/parts/articles_part.dart';
 import 'package:anatomica/features/home/presentation/parts/categories_screen.dart';
+import 'package:anatomica/features/home/presentation/parts/main_search.dart';
 import 'package:anatomica/features/home/presentation/parts/news_part.dart';
 import 'package:anatomica/features/home/presentation/parts/notifications.dart';
 import 'package:anatomica/features/home/presentation/parts/other_categories_screen.dart';
@@ -86,7 +87,6 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
   getDoctors() async {
     try {
       await MyFunctions.determinePosition().then((value) async {
-        log('::::::::::  in home 86:   lat: ${value.latitude} / long: ${value.longitude}  ::::::::::');
         await StorageRepository.putDouble(StoreKeys.latitude, value.latitude);
         await StorageRepository.putDouble(StoreKeys.longitude, value.longitude);
         _mostPopularsBloc.add(const MostPopularsEvent.getPopularDoctors());
@@ -130,11 +130,28 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SvgPicture.asset(
-                          AppIcons.anatomica,
-                          width: 128,
-                          height: 28,
-                          color: isShrink.value ? black : white,
+                        BlocBuilder<HomeArticlesBloc, HomeArticlesState>(
+                          builder: (context, state) {
+                            print('state => ${state.isDownloaded}');
+                            return AnimatedCrossFade(
+                              crossFadeState: !state.isDownloaded
+                                  ? CrossFadeState.showSecond
+                                  : CrossFadeState.showFirst,
+                              secondChild: SvgPicture.asset(
+                                AppIcons.anatomica,
+                                width: 128,
+                                height: 28,
+                                color: black,
+                              ),
+                              firstChild: SvgPicture.asset(
+                                AppIcons.anatomica,
+                                width: 128,
+                                height: 28,
+                                color: isShrink.value ? black : white,
+                              ),
+                              duration: const Duration(milliseconds: 250),
+                            );
+                          },
                         ),
                         context.read<AuthenticationBloc>().state.status !=
                                 AuthenticationStatus.authenticated
@@ -188,15 +205,23 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                 },
                 animation: isShrink,
               ),
-              // SliverToBoxAdapter(
-              //   child: Padding(
-              //     padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              //     child: SearchField(
-              //       controller: searchController,
-              //       onChanged: (value) {},
-              //     ),
-              //   ),
-              // ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: MainSearchPart(
+                    onTap: () {
+                      Navigator.of(context, rootNavigator: true).push(
+                        fade(
+                          page: const WebViewScreen(
+                            page: '',
+                            url: 'https://anatomica.uz/search',
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   return SliverToBoxAdapter(
@@ -298,7 +323,8 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                     newsBloc: _newsBloc,
                                     slug: state.news[index].slug,
                                     title: state.news[index].title,
-                                    createdAt: state.news[index].publishDate,
+                                    createdAt: MyFunctions.getPublishedDate(
+                                        state.news[index].publishDate),
                                     image: state.news[index].image.middle,
                                   ),
                             physics: const NeverScrollableScrollPhysics(),

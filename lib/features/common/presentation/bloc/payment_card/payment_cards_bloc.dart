@@ -16,10 +16,14 @@ part 'payment_cards_event.dart';
 part 'payment_cards_state.dart';
 
 class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
-  final GetPaymentCardsUseCase _getPaymentCardUsecase = GetPaymentCardsUseCase();
-  final CreatePaymentCardsUseCase _createPaymentCardsUseCase = CreatePaymentCardsUseCase();
-  final ConfirmPaymentCardsUseCase _confirmPaymentCardsUseCase = ConfirmPaymentCardsUseCase();
-  final DeletePaymentCardsUseCase _deletePaymentCardsUseCase = DeletePaymentCardsUseCase();
+  final GetPaymentCardsUseCase _getPaymentCardUsecase =
+      GetPaymentCardsUseCase();
+  final CreatePaymentCardsUseCase _createPaymentCardsUseCase =
+      CreatePaymentCardsUseCase();
+  final ConfirmPaymentCardsUseCase _confirmPaymentCardsUseCase =
+      ConfirmPaymentCardsUseCase();
+  final DeletePaymentCardsUseCase _deletePaymentCardsUseCase =
+      DeletePaymentCardsUseCase();
 
   PaymentCardsBloc() : super(const PaymentCardsState.empty()) {
     on<GetPaymentCardsEvent>(_getPaymentCards);
@@ -28,7 +32,8 @@ class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
     on<SetSelectedPaymentCardEvent>(_setSelectedPaymentCard);
     on<DeletePaymentCard>(_deletePaymentCard);
   }
-  FutureOr<void> _getPaymentCards(GetPaymentCardsEvent event, Emitter<PaymentCardsState> emit) async {
+  FutureOr<void> _getPaymentCards(
+      GetPaymentCardsEvent event, Emitter<PaymentCardsState> emit) async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     final result = await _getPaymentCardUsecase.call(null);
     if (result.isRight) {
@@ -44,14 +49,21 @@ class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
     }
   }
 
-  FutureOr<void> _createPaymentCard(CreatePaymentCardEvent event, Emitter<PaymentCardsState> emit) async {
+  FutureOr<void> _createPaymentCard(
+      CreatePaymentCardEvent event, Emitter<PaymentCardsState> emit) async {
     emit(state.copyWith(secondStatus: FormzStatus.submissionInProgress));
 
-    final result = await _createPaymentCardsUseCase
-        .call(CreateCardParam(expireDate: event.param.expireDate, cardNumber: event.param.cardNumber));
+    final result = await _createPaymentCardsUseCase.call(CreateCardParam(
+        expireDate: event.param.expireDate,
+        cardNumber: event.param.cardNumber));
     if (result.isRight) {
+      print('model => ${result.right.otpSentPhone}');
+
+      emit(state.copyWith(
+          createCardResponseModel: result.right,
+          secondStatus: FormzStatus.submissionSuccess));
+      print('state card => ${state.createCardResponseModel?.otpSentPhone}');
       event.onSucces();
-      emit(state.copyWith(createCardResponseModel: result.right, secondStatus: FormzStatus.submissionSuccess));
     } else {
       final error = (result.left as ServerFailure).errorMessage;
       event.onError(error.toString());
@@ -59,7 +71,8 @@ class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
     }
   }
 
-  FutureOr<void> _confirmPaymentCard(ConfirmPaymentCardEvent event, Emitter<PaymentCardsState> emit) async {
+  FutureOr<void> _confirmPaymentCard(
+      ConfirmPaymentCardEvent event, Emitter<PaymentCardsState> emit) async {
     emit(state.copyWith(secondStatus: FormzStatus.submissionInProgress));
     final result = await _confirmPaymentCardsUseCase.call(
       ConfirmCardParam(
@@ -78,20 +91,26 @@ class PaymentCardsBloc extends Bloc<PaymentCardsEvent, PaymentCardsState> {
     }
   }
 
-  FutureOr<void> _setSelectedPaymentCard(SetSelectedPaymentCardEvent event, Emitter<PaymentCardsState> emit) async {
-    final selectedCard = state.paymentCards.firstWhere((element) => element.id == event.id);
+  FutureOr<void> _setSelectedPaymentCard(SetSelectedPaymentCardEvent event,
+      Emitter<PaymentCardsState> emit) async {
+    final selectedCard =
+        state.paymentCards.firstWhere((element) => element.id == event.id);
     emit(state.copyWith(selectedCard: selectedCard));
   }
 
-  FutureOr<void> _deletePaymentCard(DeletePaymentCard event, Emitter<PaymentCardsState> emit) async {
+  FutureOr<void> _deletePaymentCard(
+      DeletePaymentCard event, Emitter<PaymentCardsState> emit) async {
     emit(state.copyWith(secondStatus: FormzStatus.submissionInProgress));
 
     final result = await _deletePaymentCardsUseCase.call(event.id);
     if (result.isRight) {
       final cards = state.paymentCards;
-      final index = state.paymentCards.indexWhere((element) => element.id == event.id);
+      final index =
+          state.paymentCards.indexWhere((element) => element.id == event.id);
       cards.removeAt(index);
-      emit(state.copyWith(paymentCards: [...cards], secondStatus: FormzStatus.submissionSuccess));
+      emit(state.copyWith(
+          paymentCards: [...cards],
+          secondStatus: FormzStatus.submissionSuccess));
     } else {
       event.onError(result.left.toString());
       emit(state.copyWith(secondStatus: FormzStatus.submissionFailure));

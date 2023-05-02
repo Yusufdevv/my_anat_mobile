@@ -1,6 +1,8 @@
 import 'package:anatomica/assets/constants/app_images.dart';
 import 'package:anatomica/features/common/presentation/widgets/paginator.dart';
+import 'package:anatomica/features/journal/presentation/bloc/journal_bloc/journal_bloc.dart';
 import 'package:anatomica/features/journal/presentation/bloc/journal_search_bloc/journal_search_bloc.dart';
+import 'package:anatomica/features/journal/presentation/widgets/journal_small_item.dart';
 import 'package:anatomica/features/journal/presentation/widgets/search_model_item.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -47,9 +49,14 @@ class SearchedJournals extends StatelessWidget {
                   }
                   return const SizedBox.shrink();
                 } else {
-                  return SearchedModelsItem(
+                  return MagazineSmallItem(
                     controller: _searchController,
-                    magazineItemEntity: state.searchJournals[index],
+                    journalEntity: state.searchJournals[index],
+                    onPaymentSuccess: () {
+                      context.read<JournalBloc>()
+                        ..add(GetJournals())
+                        ..add(GetJournalArticles());
+                    },
                   );
                 }
               },
