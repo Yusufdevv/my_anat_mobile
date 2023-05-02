@@ -37,7 +37,8 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
   Widget build(BuildContext context) {
     return WBottomSheet(
       hasBackButton: false,
-      contentPadding: EdgeInsets.only(left: 16, top: 14, bottom: 4 + MediaQuery.of(context).padding.bottom),
+      contentPadding: EdgeInsets.only(
+          left: 16, top: 14, bottom: 4 + MediaQuery.of(context).padding.bottom),
       children: [
         ValueListenableBuilder(
             valueListenable: groupValue,
@@ -47,8 +48,10 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
                 children: [
                   Text(
                     LocaleKeys.cards.tr(),
-                    style:
-                        Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 12),
                   const WDivider(),
@@ -78,7 +81,8 @@ class _CardsBottomSheetState extends State<CardsBottomSheet> {
                   const SizedBox(height: 20),
                   WButton(
                     onTap: () {
-                      Navigator.pop(context, {'selectedCardId': groupValue.value});
+                      Navigator.pop(
+                          context, {'selectedCardId': groupValue.value});
                     },
                     height: 40,
                     margin: const EdgeInsets.only(
@@ -131,7 +135,13 @@ class CardRadioTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              cardType == 'humo' ? SvgPicture.asset(AppImages.humo) : SvgPicture.asset(AppImages.uzcard),
+              cardType == 'humo'
+                  ? Image.asset(
+                      AppImages.humo,
+                      width: 28,
+                      height: 28,
+                    )
+                  : SvgPicture.asset(AppImages.uzcard),
               const SizedBox(width: 8),
               Text(cardNumber, style: Theme.of(context).textTheme.displayLarge)
             ],

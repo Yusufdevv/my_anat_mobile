@@ -22,7 +22,11 @@ class CardItem extends StatelessWidget {
         child: Row(
           children: [
             cardType == 'humo'
-                ? SvgPicture.asset(AppImages.humo)
+                ? Image.asset(
+                    AppImages.humo,
+                    width: 28,
+                    height: 28,
+                  )
                 : SvgPicture.asset(AppImages.uzcard),
             const SizedBox(width: 8),
             Text(cardNumber, style: Theme.of(context).textTheme.displayLarge),

@@ -69,7 +69,7 @@ class AboutDoctor extends StatelessWidget {
                       )),
               WButton(
                 onTap: () {
-                  controller.animateTo(3);
+                  controller.animateTo(4);
                 },
                 margin: const EdgeInsets.all(16)
                     .copyWith(bottom: MediaQuery.of(context).padding.bottom),

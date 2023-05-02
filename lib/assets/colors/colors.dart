@@ -59,6 +59,8 @@ const successBorder = _celadon;
 const successCloseIcon = _osloGrey;
 const tacao = _tacao;
 const bottomSheetHeader = _veryLightGrey;
+const disableTextColor = _disableTextColor;
+const diwiderColor = _dividerColor;
 
 //  http://www.color-blindness.com/color-name-hue/
 
@@ -119,3 +121,5 @@ const _osloGrey = Color(0xff898B8B);
 const _tacao = Color(0xffF8B76B);
 const _robRoy = Color(0xffDAA14B);
 const _veryLightGrey = Color(0xffC9C9C9);
+const _disableTextColor = Color(0xff828F89);
+const _dividerColor = Color(0xffE3EAE7);

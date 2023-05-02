@@ -8,7 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 class FilterContainer extends StatelessWidget {
   final VoidCallback onTap;
   final double? margin;
-  const FilterContainer({required this.onTap, this.margin = 0, Key? key}) : super(key: key);
+  const FilterContainer({required this.onTap, this.margin = 0, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,13 @@ class FilterContainer extends StatelessWidget {
           children: [
             SvgPicture.asset(AppIcons.filter),
             const SizedBox(width: 12),
-            Text(LocaleKeys.filter.tr()),
+            Text(
+              LocaleKeys.filter.tr(),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(fontWeight: FontWeight.w600),
+            ),
             const Spacer(),
             SvgPicture.asset(AppIcons.arrowRight)
           ],

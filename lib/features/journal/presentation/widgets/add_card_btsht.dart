@@ -7,6 +7,7 @@ import 'package:anatomica/features/common/presentation/widgets/default_text_fiel
 import 'package:anatomica/features/common/presentation/widgets/w_bottom_sheet.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_divider.dart';
+import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/features/profile/domain/usecases/create_payment_cards_usecase.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -19,7 +20,9 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 class AddCardBtsht extends StatefulWidget {
   final bool isWaiting;
   final Function(CreateCardParam) onAddCardSuccess;
-  const AddCardBtsht({required this.onAddCardSuccess, required this.isWaiting, Key? key}) : super(key: key);
+  const AddCardBtsht(
+      {required this.onAddCardSuccess, required this.isWaiting, Key? key})
+      : super(key: key);
 
   @override
   State<AddCardBtsht> createState() => _AddCardBtshtState();
@@ -28,11 +31,9 @@ class AddCardBtsht extends StatefulWidget {
 class _AddCardBtshtState extends State<AddCardBtsht> {
   late TextEditingController cardController;
   late TextEditingController dateController;
-  late PaymentCardsBloc paymentCardsBloc;
 
   @override
   void initState() {
-    paymentCardsBloc = PaymentCardsBloc();
     cardController = TextEditingController();
     dateController = TextEditingController();
     super.initState();
@@ -47,119 +48,138 @@ class _AddCardBtshtState extends State<AddCardBtsht> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => paymentCardsBloc,
-      child: FractionallySizedBox(
-        alignment: Alignment.bottomCenter,
-        heightFactor: .97,
-        widthFactor: 1,
-        child: BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
-          builder: (context, state) {
-            return CustomScreen(
-              color: Colors.transparent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  WBottomSheet(
-                    hasBackButton: false,
-                    contentPadding:
-                        EdgeInsets.only(left: 16, top: 14, bottom: 4 + MediaQuery.of(context).padding.bottom),
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(AppIcons.leftArrow),
-                              const SizedBox(width: 8),
-                              Text(
-                                LocaleKeys.add_card.tr(),
-                                style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 20),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          const WDivider(),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 16, 0),
-                            child: DefaultTextField(
-                              title: LocaleKeys.number_card.tr(),
-                              controller: cardController,
-                              hasError: false,
-                              onChanged: (value) {
-                                setState(() {});
+    return FractionallySizedBox(
+      alignment: Alignment.bottomCenter,
+      heightFactor: .97,
+      widthFactor: 1,
+      child: BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
+        builder: (context, state) {
+          return CustomScreen(
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                WBottomSheet(
+                  hasBackButton: false,
+                  contentPadding: EdgeInsets.only(
+                      left: 16,
+                      top: 14,
+                      bottom: 4 + MediaQuery.of(context).padding.bottom),
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            WScaleAnimation(
+                              onTap: () {
+                                Navigator.pop(context);
                               },
-                              prefix: Padding(
-                                padding: const EdgeInsets.only(left: 12, right: 8),
-                                child: SvgPicture.asset(AppIcons.creditCard),
-                              ),
-                              hintText: LocaleKeys.enter_card_number.tr(),
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [cardNumberFormatter],
+                              child: SvgPicture.asset(AppIcons.leftArrow),
                             ),
-                          ),
-                          const SizedBox(height: 16),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                            child: DefaultTextField(
-                              title: LocaleKeys.card_term.tr(),
-                              controller: dateController,
-                              hasError: false,
-                              onChanged: (value) {
-                                setState(() {});
-                              },
-                              prefix: Padding(
-                                padding: const EdgeInsets.only(left: 12, right: 8),
-                                child: SvgPicture.asset(AppIcons.clock),
-                              ),
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [cardExpirationDateFormatter],
-                              hintText: LocaleKeys.enter_card_term.tr(),
+                            const SizedBox(width: 8),
+                            Text(
+                              LocaleKeys.add_card.tr(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(fontSize: 20),
                             ),
-                          ),
-                          const SizedBox(height: 24),
-                          WButton(
-                            isDisabled: !(cardController.text.length == 19 && dateController.text.length == 5),
-                            isLoading: state.secondStatus.isSubmissionInProgress,
-                            onTap: () {
-                              final creatCardParam = CreateCardParam(
-                                cardNumber: cardController.text.replaceAll(' ', ''),
-                                expireDate: dateController.text.replaceAll('/', ''),
-                              );
-                              context.read<PaymentCardsBloc>().add(CreatePaymentCardEvent(
-                                    param: creatCardParam,
-                                    onSucces: () {
-                                      widget.onAddCardSuccess(creatCardParam);
-                                    },
-                                    onError: (message) {
-                                      context.read<ShowPopUpBloc>().add(ShowPopUp(message: message, isSuccess: false));
-                                    },
-                                  ));
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        const WDivider(),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 16, 0),
+                          child: DefaultTextField(
+                            title: LocaleKeys.number_card.tr(),
+                            controller: cardController,
+                            hasError: false,
+                            onChanged: (value) {
+                              setState(() {});
                             },
-                            height: 40,
-                            disabledColor: textSecondary,
-                            margin: EdgeInsets.only(
-                              bottom: 16 + MediaQuery.of(context).viewInsets.bottom,
-                              right: 16,
+                            prefix: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 12, right: 8),
+                              child: SvgPicture.asset(AppIcons.creditCard),
                             ),
-                            text: LocaleKeys.apply.tr(),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                            hintText: LocaleKeys.enter_card_number.tr(),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [cardNumberFormatter],
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                          child: DefaultTextField(
+                            title: LocaleKeys.card_term.tr(),
+                            controller: dateController,
+                            hasError: false,
+                            onChanged: (value) {
+                              setState(() {});
+                            },
+                            prefix: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 12, right: 8),
+                              child: SvgPicture.asset(AppIcons.clock),
+                            ),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [cardExpirationDateFormatter],
+                            hintText: LocaleKeys.enter_card_term.tr(),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        WButton(
+                          isDisabled: !(cardController.text.length == 19 &&
+                              dateController.text.length == 5),
+                          isLoading: state.secondStatus.isSubmissionInProgress,
+                          onTap: () {
+                            final creatCardParam = CreateCardParam(
+                              cardNumber:
+                                  cardController.text.replaceAll(' ', ''),
+                              expireDate:
+                                  dateController.text.replaceAll('/', ''),
+                            );
+                            context
+                                .read<PaymentCardsBloc>()
+                                .add(CreatePaymentCardEvent(
+                                  param: creatCardParam,
+                                  onSucces: () {
+                                    widget.onAddCardSuccess(creatCardParam);
+                                  },
+                                  onError: (message) {
+                                    context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                        message: message, isSuccess: false));
+                                  },
+                                ));
+                          },
+                          height: 40,
+                          margin: EdgeInsets.only(
+                            bottom:
+                                16 + MediaQuery.of(context).viewInsets.bottom,
+                            right: 16,
+                          ),
+                          text: LocaleKeys.apply.tr(),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
   static final cardNumberFormatter = MaskTextInputFormatter(
-      mask: '#### #### #### ####', filter: {"#": RegExp(r'\d')}, type: MaskAutoCompletionType.lazy);
+      mask: '#### #### #### ####',
+      filter: {"#": RegExp(r'\d')},
+      type: MaskAutoCompletionType.lazy);
 
-  static final cardExpirationDateFormatter =
-      MaskTextInputFormatter(mask: '##/##', filter: {"#": RegExp(r'\d')}, type: MaskAutoCompletionType.lazy);
+  static final cardExpirationDateFormatter = MaskTextInputFormatter(
+      mask: '##/##',
+      filter: {"#": RegExp(r'\d')},
+      type: MaskAutoCompletionType.lazy);
 }

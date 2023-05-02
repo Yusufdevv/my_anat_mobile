@@ -23,7 +23,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 
 class VacancySearchScreen extends StatefulWidget {
-  const VacancySearchScreen({Key? key}) : super(key: key);
+  final int tabInitialIndex;
+  const VacancySearchScreen({required this.tabInitialIndex, Key? key})
+      : super(key: key);
 
   @override
   State<VacancySearchScreen> createState() => _VacancySearchScreenState();
@@ -38,7 +40,8 @@ class _VacancySearchScreenState extends State<VacancySearchScreen>
 
   @override
   initState() {
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(
+        length: 2, vsync: this, initialIndex: widget.tabInitialIndex);
     controller = TextEditingController();
     _focusNode = FocusNode()..requestFocus();
     vacancySearchBloc = VacancySearchBloc(
@@ -118,7 +121,7 @@ class _VacancySearchScreenState extends State<VacancySearchScreen>
                       const SizedBox(width: 12),
                       WScaleAnimation(
                         onTap: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(tabController.index);
                         },
                         child: Text(
                           LocaleKeys.cancel.tr(),

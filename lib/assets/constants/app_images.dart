@@ -12,7 +12,7 @@ class AppImages {
   static const click = 'assets/images/click.svg';
   static const paylov = 'assets/images/paylov.svg';
   static const uzum = 'assets/images/uzum.svg';
-  static const humo = 'assets/images/humo.svg';
+  static const humo = 'assets/images/humo.png';
   static const uzcard = 'assets/images/uzcard.svg';
   static const doctor = 'assets/images/doctor.png';
   static const organization = 'assets/images/organization.png';
@@ -27,4 +27,6 @@ class AppImages {
   static const onbooarding3 = 'assets/images/onboarding_3.png';
   static const onbooarding4 = 'assets/images/onboarding_4.png';
   static const myPlacemark = 'assets/icons/map_screen/my_placemark.png';
+  static const placeHolderMainAppBar =
+      'assets/images/place_holder_main_app_bar.png';
 }

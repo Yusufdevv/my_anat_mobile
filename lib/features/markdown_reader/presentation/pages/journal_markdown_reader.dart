@@ -117,25 +117,27 @@ class _JournalMarkdownPageReaderState extends State<JournalMarkdownPageReader>
                 ),
               ),
               actions: [
-                WScaleAnimation(
-                  onTap: () {
-                    setState(() {
-                      showSettings = false;
-                      showController = !showController;
-                    });
-                  },
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 16, horizontal: 6)
-                            .copyWith(right: 20),
-                    child: SvgPicture.asset(
-                      AppIcons.journalMenu,
-                      width: 22,
-                      height: 22,
-                      fit: BoxFit.none,
+                if (!showTableOfContents && !showContents) ...{
+                  WScaleAnimation(
+                    onTap: () {
+                      setState(() {
+                        showSettings = false;
+                        showController = !showController;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 6)
+                          .copyWith(right: 20),
+                      child: SvgPicture.asset(
+                        AppIcons.journalMenu,
+                        width: 22,
+                        height: 22,
+                        fit: BoxFit.none,
+                      ),
                     ),
-                  ),
-                ),
+                  )
+                },
               ],
             ),
             body: BlocConsumer<JournalPagesBloc, JournalPagesState>(

@@ -9,7 +9,11 @@ import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class VacancyAppBar extends StatelessWidget {
-  const VacancyAppBar({Key? key}) : super(key: key);
+  final int tabInitialIndex;
+  final ValueNotifier<int> tabNotifier;
+  const VacancyAppBar(
+      {required this.tabInitialIndex, required this.tabNotifier, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +43,10 @@ class VacancyAppBar extends StatelessWidget {
           ),
           const Spacer(),
           WScaleAnimation(
-            onTap: () {
-              Navigator.of(context)
-                  .push(fade(page: const VacancySearchScreen()));
+            onTap: () async {
+              final int result = await Navigator.of(context).push(fade(
+                  page: VacancySearchScreen(tabInitialIndex: tabInitialIndex)));
+              tabNotifier.value = result;
             },
             child: Container(
               height: 40,

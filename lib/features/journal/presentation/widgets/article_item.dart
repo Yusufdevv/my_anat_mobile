@@ -15,7 +15,11 @@ class ArticleItem extends StatelessWidget {
   final EdgeInsets margin;
   final String searchString;
 
-  const ArticleItem({required this.magazineItemEntity, this.margin = EdgeInsets.zero, this.searchString = '', Key? key})
+  const ArticleItem(
+      {required this.magazineItemEntity,
+      this.margin = EdgeInsets.zero,
+      this.searchString = '',
+      Key? key})
       : super(key: key);
 
   @override
@@ -26,11 +30,13 @@ class ArticleItem extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: () async {
             if (state.status == AuthenticationStatus.authenticated) {
-              if (!magazineItemEntity.isPremium || magazineItemEntity.isBought) {
+              if (!magazineItemEntity.isPremium ||
+                  magazineItemEntity.isBought) {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: WebViewScreen(
-                      shareValue: 'https://anatomica.uz/article/${magazineItemEntity.slug}',
+                      shareValue:
+                          'https://anatomica.uz/article/${magazineItemEntity.slug}',
                       page: 'ArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),
@@ -40,7 +46,8 @@ class ArticleItem extends StatelessWidget {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: WebViewScreen(
-                      shareValue: 'https://anatomica.uz/premium-article/${magazineItemEntity.slug}',
+                      shareValue:
+                          'https://anatomica.uz/premium-article/${magazineItemEntity.slug}',
                       page: 'PremiumArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),
@@ -53,8 +60,10 @@ class ArticleItem extends StatelessWidget {
                   fade(
                     page: WebViewScreen(
                       sendToken: false,
-                      shareValue: 'https://anatomica.uz/premium-article/${magazineItemEntity.slug}',
-                      url: 'https://anatomica.uz/premium-article/${magazineItemEntity.slug}',
+                      shareValue:
+                          'https://anatomica.uz/premium-article/${magazineItemEntity.slug}',
+                      url:
+                          'https://anatomica.uz/premium-article/${magazineItemEntity.slug}',
                       page: 'PremiumArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),
@@ -65,8 +74,10 @@ class ArticleItem extends StatelessWidget {
                   fade(
                     page: WebViewScreen(
                       sendToken: false,
-                      shareValue: 'https://anatomica.uz/article/${magazineItemEntity.slug}',
-                      url: 'https://anatomica.uz/article/${magazineItemEntity.slug}',
+                      shareValue:
+                          'https://anatomica.uz/article/${magazineItemEntity.slug}',
+                      url:
+                          'https://anatomica.uz/article/${magazineItemEntity.slug}',
                       page: 'ArticleSinglePage',
                       slug: magazineItemEntity.slug,
                     ),
@@ -82,7 +93,9 @@ class ArticleItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: divider),
+                      borderRadius: BorderRadius.circular(8)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: CachedNetworkImage(
@@ -101,9 +114,14 @@ class ArticleItem extends StatelessWidget {
                       HighlightedText(
                         allText: magazineItemEntity.title,
                         highlightedText: searchString,
-                        textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(fontWeight: FontWeight.w600),
-                        textStyleHighlight:
-                            Theme.of(context).textTheme.displayLarge!.copyWith(fontWeight: FontWeight.w600),
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(fontWeight: FontWeight.w600),
+                        textStyleHighlight: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(fontWeight: FontWeight.w600),
                         highlightColor: yellowHighlightedText,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -112,24 +130,28 @@ class ArticleItem extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            magazineItemEntity.redaction,
+                            magazineItemEntity.category.title,
                             style: Theme.of(context)
                                 .textTheme
                                 .displaySmall!
-                                .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                                .copyWith(
+                                    fontSize: 13, fontWeight: FontWeight.w400),
                           ),
                           Container(
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             height: 3,
                             width: 3,
-                            decoration: const BoxDecoration(shape: BoxShape.circle, color: textSecondary),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle, color: textSecondary),
                           ),
                           Text(
-                            MyFunctions.getPublishedDate(magazineItemEntity.publishDate),
+                            MyFunctions.getPublishedDate(
+                                magazineItemEntity.publishDate),
                             style: Theme.of(context)
                                 .textTheme
                                 .displaySmall!
-                                .copyWith(fontSize: 13, fontWeight: FontWeight.w400),
+                                .copyWith(
+                                    fontSize: 13, fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),

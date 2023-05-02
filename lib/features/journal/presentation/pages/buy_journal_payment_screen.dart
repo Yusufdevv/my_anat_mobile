@@ -56,12 +56,13 @@ class OneTimePaymentScreen extends StatefulWidget {
 }
 
 class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+    with TickerProviderStateMixin {
   late TabController controller;
   late TextEditingController phoneController;
   late TextEditingController emailController;
   bool isPhone = true;
-  final ValueNotifier _inputState = ValueNotifier<CrossFadeState>(CrossFadeState.showFirst);
+  final ValueNotifier _inputState =
+      ValueNotifier<CrossFadeState>(CrossFadeState.showFirst);
   late PaymentBloc paymentBloc;
 
   @override
@@ -99,9 +100,8 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return BlocProvider(
-      create: (context) => paymentBloc,
+    return BlocProvider.value(
+      value: paymentBloc,
       child: BlocBuilder<PaymentBloc, PaymentState>(
         builder: (context, paymentState) {
           return CustomScreen(
@@ -120,8 +120,9 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                 physics: const BouncingScrollPhysics(),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                      maxHeight:
-                          MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - kToolbarHeight),
+                      maxHeight: MediaQuery.of(context).size.height -
+                          MediaQuery.of(context).padding.top -
+                          kToolbarHeight),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -132,20 +133,26 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                         slug: widget.slug,
                       ),
                       if (!widget.isRegistered) ...[
-                        const Divider(height: 0, thickness: 1, color: textFieldColor),
+                        const Divider(
+                            height: 0, thickness: 1, color: textFieldColor),
                         Container(
                           height: 36,
                           padding: const EdgeInsets.all(2),
                           margin: const EdgeInsets.all(16).copyWith(bottom: 0),
-                          decoration: BoxDecoration(color: textFieldColor, borderRadius: BorderRadius.circular(8)),
+                          decoration: BoxDecoration(
+                              color: textFieldColor,
+                              borderRadius: BorderRadius.circular(8)),
                           child: TabBar(
                             physics: const BouncingScrollPhysics(),
                             controller: controller,
                             padding: EdgeInsets.zero,
                             indicatorPadding: EdgeInsets.zero,
-                            indicator: BoxDecoration(color: white, borderRadius: BorderRadius.circular(6)),
+                            indicator: BoxDecoration(
+                                color: white,
+                                borderRadius: BorderRadius.circular(6)),
                             labelPadding: EdgeInsets.zero,
-                            labelStyle: Theme.of(context).textTheme.displaySmall,
+                            labelStyle:
+                                Theme.of(context).textTheme.displaySmall,
                             labelColor: textColor,
                             onTap: (index) {
                               if (index == 0) {
@@ -155,7 +162,10 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                               }
                             },
                             unselectedLabelColor: textSecondary,
-                            tabs: [Tab(text: LocaleKeys.phone_number.tr()), Tab(text: LocaleKeys.mail.tr())],
+                            tabs: [
+                              Tab(text: LocaleKeys.phone_number.tr()),
+                              Tab(text: LocaleKeys.mail.tr())
+                            ],
                           ),
                         ),
                         ValueListenableBuilder(
@@ -165,22 +175,27 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                               duration: const Duration(milliseconds: 150),
                               crossFadeState: _inputState.value,
                               firstChild: Padding(
-                                padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                                padding:
+                                    const EdgeInsets.fromLTRB(16, 20, 16, 24),
                                 child: PhoneTextField(
-                                  hasError: paymentState.orderCreateStatus.isSubmissionFailure,
+                                  hasError: paymentState
+                                      .orderCreateStatus.isSubmissionFailure,
                                   controller: phoneController,
                                   title: LocaleKeys.phone_number.tr(),
                                 ),
                               ),
                               secondChild: Padding(
-                                padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+                                padding:
+                                    const EdgeInsets.fromLTRB(16, 20, 16, 24),
                                 child: DefaultTextField(
                                     title: LocaleKeys.mail.tr(),
                                     controller: emailController,
-                                    hasError: paymentState.orderCreateStatus.isSubmissionFailure,
+                                    hasError: paymentState
+                                        .orderCreateStatus.isSubmissionFailure,
                                     onChanged: (value) {},
                                     prefix: Padding(
-                                        padding: const EdgeInsets.only(left: 12, right: 8),
+                                        padding: const EdgeInsets.only(
+                                            left: 12, right: 8),
                                         child: SvgPicture.asset(AppIcons.mail)),
                                     hintText: 'example@anatomica.uz'),
                               ),
@@ -200,10 +215,15 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                             SizedBox(
                               height: 124,
                               child: GridView(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2, crossAxisSpacing: 15, mainAxisSpacing: 16, mainAxisExtent: 54),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 15,
+                                        mainAxisSpacing: 16,
+                                        mainAxisExtent: 54),
                                 children: PaymentType.values.map(
                                   (e) {
                                     if (e.isCard) {
@@ -211,10 +231,12 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                                     }
                                     return PaymentMethod(
                                       onTap: (value) {
-                                        paymentBloc.add(PaymentChooseEvent(selectedPayment: e));
+                                        paymentBloc.add(PaymentChooseEvent(
+                                            selectedPayment: e));
                                       },
                                       icon: e.icon,
-                                      isSelected: paymentState.selectedPayment == e,
+                                      isSelected:
+                                          paymentState.selectedPayment == e,
                                       paymentMethod: e.provider,
                                       iconHeight: e.iconHeight,
                                     );
@@ -224,14 +246,20 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                             ),
                             if (widget.isRegistered)
                               PaymentMethod(
-                                margin: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                                margin:
+                                    const EdgeInsets.fromLTRB(16, 16, 16, 12),
                                 onTap: (value) {
-                                  paymentBloc.add(PaymentChooseEvent(selectedPayment: PaymentType.card));
+                                  paymentBloc.add(PaymentChooseEvent(
+                                      selectedPayment: PaymentType.card));
                                 },
-                                isSelected: paymentState.selectedPayment?.isCard ?? false,
+                                isSelected:
+                                    paymentState.selectedPayment?.isCard ??
+                                        false,
                                 paymentMethod: 'card',
                                 title: Text(LocaleKeys.payment_with_card.tr(),
-                                    style: Theme.of(context).textTheme.displayLarge),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge),
                               ),
                             if (widget.isRegistered)
                               BlocBuilder<PaymentCardsBloc, PaymentCardsState>(
@@ -239,23 +267,33 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                                   return AnimatedCrossFade(
                                     firstChild: cardsState.paymentCards.isEmpty
                                         ? Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16),
                                             child: AddCardWidget(
                                               onTap: () {
                                                 showModalBottomSheet(
                                                   context: context,
-                                                  backgroundColor: Colors.transparent,
+                                                  backgroundColor:
+                                                      Colors.transparent,
                                                   useRootNavigator: true,
                                                   isScrollControlled: true,
-                                                  builder: (context) => AddCardBtsht(
-                                                    isWaiting: cardsState.secondStatus.isSubmissionInProgress,
-                                                    onAddCardSuccess: (cardInfo) {
+                                                  builder: (context) =>
+                                                      AddCardBtsht(
+                                                    isWaiting: cardsState
+                                                        .secondStatus
+                                                        .isSubmissionInProgress,
+                                                    onAddCardSuccess:
+                                                        (cardInfo) {
                                                       Navigator.push(
                                                           context,
                                                           fade(
-                                                              page: AddPaymentCardVerifyScreen(
-                                                            expiredDate: cardInfo.cardNumber,
-                                                            cardNumber: cardInfo.expireDate,
+                                                              page:
+                                                                  AddPaymentCardVerifyScreen(
+                                                            expiredDate:
+                                                                cardInfo
+                                                                    .expireDate,
+                                                            cardNumber: cardInfo
+                                                                .cardNumber,
                                                           )));
                                                     },
                                                   ),
@@ -264,51 +302,82 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                                             ),
                                           )
                                         : PaymentCardItem(
-                                            cardType: cardsState.selectedCard?.cardType,
-                                            cardNumber: cardsState.selectedCard?.cardNumber,
+                                            cardType: cardsState
+                                                .selectedCard?.cardType,
+                                            cardNumber: cardsState
+                                                .selectedCard?.cardNumber,
                                             onTap: () {
                                               showModalBottomSheet(
                                                   context: context,
-                                                  backgroundColor: Colors.transparent,
+                                                  backgroundColor:
+                                                      Colors.transparent,
                                                   useRootNavigator: true,
                                                   isScrollControlled: true,
-                                                  builder: (context) => CardsBottomSheet(
+                                                  builder: (context) =>
+                                                      CardsBottomSheet(
                                                         onAddCardPressed: () {
                                                           // Navigator.pop(context);
                                                           showModalBottomSheet(
                                                             context: context,
-                                                            backgroundColor: Colors.transparent,
-                                                            useRootNavigator: true,
-                                                            isScrollControlled: true,
-                                                            builder: (addContext) => AddCardBtsht(
-                                                              isWaiting: cardsState.secondStatus.isSubmissionInProgress,
-                                                              onAddCardSuccess: (cardInfo) {
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            useRootNavigator:
+                                                                true,
+                                                            isScrollControlled:
+                                                                true,
+                                                            builder:
+                                                                (addContext) =>
+                                                                    AddCardBtsht(
+                                                              isWaiting: cardsState
+                                                                  .secondStatus
+                                                                  .isSubmissionInProgress,
+                                                              onAddCardSuccess:
+                                                                  (cardInfo) {
                                                                 Navigator.push(
-                                                                    context,
-                                                                    fade(
-                                                                        page: AddPaymentCardVerifyScreen(
-                                                                      expiredDate: cardInfo.cardNumber,
-                                                                      cardNumber: cardInfo.expireDate,
-                                                                    )));
+                                                                  context,
+                                                                  fade(
+                                                                    page: BlocProvider
+                                                                        .value(
+                                                                      value:
+                                                                          paymentBloc,
+                                                                      child:
+                                                                          AddPaymentCardVerifyScreen(
+                                                                        expiredDate:
+                                                                            cardInfo.expireDate,
+                                                                        cardNumber:
+                                                                            cardInfo.cardNumber,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                );
                                                               },
                                                             ),
                                                           );
                                                         },
-                                                        cards: cardsState.paymentCards,
-                                                        selectedCard: cardsState.selectedCard,
+                                                        cards: cardsState
+                                                            .paymentCards,
+                                                        selectedCard: cardsState
+                                                            .selectedCard,
                                                       )).then((value) => {
                                                     if (value != null)
                                                       {
-                                                        context.read<PaymentCardsBloc>().add(
-                                                            SetSelectedPaymentCardEvent(id: value['selectedCardId']))
+                                                        context
+                                                            .read<
+                                                                PaymentCardsBloc>()
+                                                            .add(SetSelectedPaymentCardEvent(
+                                                                id: value[
+                                                                    'selectedCardId']))
                                                       }
                                                   });
                                             },
                                           ),
                                     secondChild: const SizedBox(),
-                                    crossFadeState: paymentState.selectedPayment?.isCard ?? false
-                                        ? CrossFadeState.showFirst
-                                        : CrossFadeState.showSecond,
+                                    crossFadeState:
+                                        paymentState.selectedPayment?.isCard ??
+                                                false
+                                            ? CrossFadeState.showFirst
+                                            : CrossFadeState.showSecond,
                                     firstCurve: Curves.slowMiddle,
                                     duration: const Duration(milliseconds: 300),
                                   );
@@ -318,64 +387,106 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
                         ),
                       ),
                       WButton(
-                        isLoading: paymentState.orderCreateStatus.isSubmissionInProgress,
+                        isLoading: paymentState
+                            .orderCreateStatus.isSubmissionInProgress,
                         height: 40,
-                        margin:
-                            EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 16, left: 16, right: 16),
-                        color: paymentState.selectedPayment == null ? textSecondary : primary,
+                        margin: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).padding.bottom + 16,
+                            left: 16,
+                            right: 16),
+                        color: paymentState.selectedPayment == null
+                            ? textSecondary
+                            : primary,
                         onTap: () {
                           if (paymentState.selectedPayment == null) {
-                            context.read<ShowPopUpBloc>().add(ShowPopUp(message: LocaleKeys.no_payment_provider.tr()));
+                            context.read<ShowPopUpBloc>().add(ShowPopUp(
+                                message: LocaleKeys.no_payment_provider.tr()));
                           } else {
                             if (widget.isJournal) {
                               showCustomDialog(
                                   context: context,
-                                  subTitle: LocaleKeys.are_you_sure_you_want_to_make_this_payment.tr(),
+                                  subTitle: LocaleKeys
+                                      .are_you_sure_you_want_to_make_this_payment
+                                      .tr(),
                                   title: LocaleKeys.payment.tr(),
                                   onConfirmTap: () {
                                     Navigator.pop(context);
                                     context.read<PaymentBloc>().add(
                                           OrderCreateJournal(
-                                            card: context.read<PaymentCardsBloc>().state.selectedCard?.id ?? -1,
+                                            card: context
+                                                    .read<PaymentCardsBloc>()
+                                                    .state
+                                                    .selectedCard
+                                                    ?.id ??
+                                                -1,
                                             journalId: widget.id,
                                             price: widget.price,
                                             isRegistered: widget.isRegistered,
-                                            phone: isPhone ? "+998${phoneController.text.replaceAll(' ', '')}" : '',
-                                            email: !isPhone ? emailController.text : '',
-                                            paymentProvider: paymentState.selectedPayment!.provider,
+                                            phone: isPhone
+                                                ? "+998${phoneController.text.replaceAll(' ', '')}"
+                                                : '',
+                                            email: !isPhone
+                                                ? emailController.text
+                                                : '',
+                                            paymentProvider: paymentState
+                                                .selectedPayment!.provider,
                                             onSuccess: (value) async {
-                                              if (!(paymentState.selectedPayment?.isCard ?? false)) {
-                                                launchUrlString(value.transactionCheckoutUrl,
-                                                    mode: LaunchMode.externalApplication);
-                                                Navigator.popUntil(context, (route) => route.isFirst);
+                                              if (!(paymentState.selectedPayment
+                                                      ?.isCard ??
+                                                  false)) {
+                                                launchUrlString(
+                                                    value
+                                                        .transactionCheckoutUrl,
+                                                    mode: LaunchMode
+                                                        .externalApplication);
+                                                Navigator.popUntil(context,
+                                                    (route) => route.isFirst);
 
-                                                final payBloc = PaymentBloc(paymentId: value.id);
+                                                final payBloc = PaymentBloc(
+                                                    paymentId: value.id);
                                                 Navigator.of(context).push(
                                                   fade(
                                                     page: BlocProvider(
-                                                      create: (context) => payBloc,
-                                                      child: PaymentResultScreen(
+                                                      create: (context) =>
+                                                          payBloc,
+                                                      child:
+                                                          PaymentResultScreen(
                                                         title: widget.title,
-                                                        isRegistered: widget.isRegistered,
+                                                        isRegistered:
+                                                            widget.isRegistered,
                                                         bloc: payBloc,
                                                       ),
                                                     ),
                                                   ),
                                                 );
-                                              } else if (paymentState.selectedPayment?.isCard ?? false) {
-                                                if (value.status == 'confirmed') {
-                                                  context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                                      message: LocaleKeys.payment_successed.tr(), isSuccess: true));
-                                                  await Future.delayed(const Duration(milliseconds: 3000))
+                                              } else if (paymentState
+                                                      .selectedPayment
+                                                      ?.isCard ??
+                                                  false) {
+                                                if (value.status ==
+                                                    'confirmed') {
+                                                  context
+                                                      .read<ShowPopUpBloc>()
+                                                      .add(ShowPopUp(
+                                                          message: LocaleKeys
+                                                              .payment_successed
+                                                              .tr(),
+                                                          isSuccess: true));
+                                                  await Future.delayed(
+                                                          const Duration(
+                                                              milliseconds:
+                                                                  3000))
                                                       .then((value) {
                                                     widget.onPaymentSuccess();
-                                                    Navigator.of(context).pop(true);
+                                                    Navigator.of(context)
+                                                        .pop(true);
                                                   });
                                                 }
                                               }
                                             },
                                             onError: (message) {
-                                              context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
+                                              context.read<ShowPopUpBloc>().add(
+                                                  ShowPopUp(message: message));
                                             },
                                           ),
                                         );
@@ -395,7 +506,4 @@ class _OneTimePaymentScreenState extends State<OneTimePaymentScreen>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -15,7 +15,8 @@ import 'package:formz/formz.dart';
 class RegisterVerify extends StatefulWidget {
   final PageController pageController;
 
-  const RegisterVerify({required this.pageController, Key? key}) : super(key: key);
+  const RegisterVerify({required this.pageController, Key? key})
+      : super(key: key);
 
   @override
   State<RegisterVerify> createState() => _RegisterVerifyState();
@@ -24,6 +25,7 @@ class RegisterVerify extends StatefulWidget {
 class _RegisterVerifyState extends State<RegisterVerify> {
   late TextEditingController pinCodeController;
   int secondsLeft = 0;
+  String errorMessage = '';
 
   @override
   initState() {
@@ -36,7 +38,8 @@ class _RegisterVerifyState extends State<RegisterVerify> {
     return BlocBuilder<LoginSignUpBloc, LoginSignUpState>(
       builder: (context, state) {
         return Padding(
-          padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
+          padding: EdgeInsets.fromLTRB(
+              16, 0, 16, 16 + MediaQuery.of(context).padding.bottom),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -48,9 +51,12 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                     children: [
                       WScaleAnimation(
                         onTap: () {
-                          context.read<LoginSignUpBloc>().add(SetTimer(secondsLeft: secondsLeft));
-                          widget.pageController
-                              .previousPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                          context
+                              .read<LoginSignUpBloc>()
+                              .add(SetTimer(secondsLeft: secondsLeft));
+                          widget.pageController.previousPage(
+                              duration: const Duration(milliseconds: 150),
+                              curve: Curves.linear);
                         },
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
@@ -72,7 +78,10 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                             children: [
                               Text(
                                 state.phoneEmail,
-                                style: Theme.of(context).textTheme.displayLarge!.copyWith(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(),
                               ),
                               const SizedBox(width: 8),
                               SvgPicture.asset(AppIcons.edit),
@@ -89,6 +98,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                       secondsLeft = seconds;
                     },
                     hasError: state.submitCodeStatus.isSubmissionFailure,
+                    errorText: errorMessage,
                     pinCodeController: pinCodeController,
                     secondsLeft: state.secondsLeft,
                     onRefresh: () {
@@ -100,17 +110,22 @@ class _RegisterVerifyState extends State<RegisterVerify> {
               WButton(
                 text: LocaleKeys.confirm.tr(),
                 isLoading: state.submitCodeStatus.isSubmissionInProgress,
+                isDisabled: pinCodeController.text.length < 6,
                 onTap: () {
                   context.read<LoginSignUpBloc>().add(
                         SubmitCode(
                           code: pinCodeController.text,
                           onSuccess: () {
-                            widget.pageController
-                                .nextPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
+                            widget.pageController.nextPage(
+                                duration: const Duration(milliseconds: 150),
+                                curve: Curves.linear);
                           },
                           onError: (message) {
+                            errorMessage = message;
                             context.read<ShowPopUpBloc>().add(
-                                  ShowPopUp(message: message.replaceAll(RegExp(r'\{?\[?\]?\.?}?'), '')),
+                                  ShowPopUp(
+                                      message: message.replaceAll(
+                                          RegExp(r'\{?\[?\]?\.?}?'), '')),
                                 );
                           },
                         ),

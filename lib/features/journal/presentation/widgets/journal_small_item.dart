@@ -3,6 +3,7 @@ import 'package:anatomica/core/utils/my_functions.dart';
 import 'package:anatomica/features/auth/domain/entities/authentication_status.dart';
 import 'package:anatomica/features/auth/presentation/bloc/authentication_bloc/authentication_bloc.dart';
 import 'package:anatomica/features/auth/presentation/pages/register.dart';
+import 'package:anatomica/features/common/presentation/widgets/highlighted_text.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/journal/domain/entities/journal_entity.dart';
 import 'package:anatomica/features/journal/presentation/pages/buy_journal_payment_screen.dart';
@@ -19,12 +20,14 @@ class MagazineSmallItem extends StatelessWidget {
   final JournalEntity journalEntity;
   final EdgeInsets margin;
   final VoidCallback onPaymentSuccess;
+  final TextEditingController? controller;
 
   const MagazineSmallItem({
     required this.journalEntity,
     this.margin = EdgeInsets.zero,
     Key? key,
     required this.onPaymentSuccess,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -37,7 +40,9 @@ class MagazineSmallItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                decoration: BoxDecoration(border: Border.all(color: divider), borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(
+                    border: Border.all(color: divider),
+                    borderRadius: BorderRadius.circular(8)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
@@ -49,19 +54,40 @@ class MagazineSmallItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              Text(
-                journalEntity.redaction,
-                maxLines: 1,
-                style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
+              if (controller == null) ...{
+                Text(
+                  journalEntity.name,
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                  overflow: TextOverflow.ellipsis,
+                )
+              } else ...{
+                HighlightedText(
+                  textStyleHighlight: Theme.of(context)
+                      .textTheme
+                      .displayLarge!
+                      .copyWith(fontWeight: FontWeight.w600),
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .displayLarge!
+                      .copyWith(fontWeight: FontWeight.w600),
+                  allText: journalEntity.name,
+                  highlightedText: controller?.text,
+                  highlightColor: yellowHighlightedText,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                )
+              },
               const SizedBox(height: 8),
               if (!(journalEntity.isBought || !journalEntity.isPremium)) ...{
                 Text(
                   MyFunctions.getFormatCostFromInt(journalEntity.price),
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(fontSize: 13, fontWeight: FontWeight.w700),
                 ),
               } else ...{
                 Text(
@@ -70,10 +96,10 @@ class MagazineSmallItem extends StatelessWidget {
                       : journalEntity.isBought
                           ? LocaleKeys.bought.tr()
                           : '',
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w600, color: primary),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: primary),
                 ),
               }
             ],
@@ -115,7 +141,8 @@ class MagazineSmallItem extends StatelessWidget {
                             );
                           },
                           onRegistrationTap: () {
-                            Navigator.of(context).push(fade(page: const RegisterScreen()));
+                            Navigator.of(context)
+                                .push(fade(page: const RegisterScreen()));
                           },
                         ),
                       );
@@ -139,8 +166,13 @@ class MagazineSmallItem extends StatelessWidget {
                   }
                 },
                 child: Text(
-                  journalEntity.isBought || !journalEntity.isPremium ? LocaleKeys.read.tr() : LocaleKeys.buy.tr(),
-                  style: Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                  journalEntity.isBought || !journalEntity.isPremium
+                      ? LocaleKeys.read.tr()
+                      : LocaleKeys.buy.tr(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium!
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
               );
             },

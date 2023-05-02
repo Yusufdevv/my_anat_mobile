@@ -126,8 +126,7 @@ class HospitalArticleItem extends StatelessWidget {
                           SvgPicture.asset(AppIcons.mapCalendar),
                           const SizedBox(width: 6),
                           Text(
-                            MyFunctions.safeDateFormat(
-                                entity.publishDate, 'dd MMMM yyyy'),
+                            MyFunctions.getPublishedDate(entity.publishDate),
                             style: Theme.of(context)
                                 .textTheme
                                 .displaySmall!

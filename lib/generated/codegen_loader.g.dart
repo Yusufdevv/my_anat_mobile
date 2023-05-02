@@ -628,7 +628,7 @@ static const Map<String,dynamic> uz = {
   "clean": "Tozalash",
   "journal_more": "Batafsil",
   "e_magazine": "Elektron jurnal",
-  "not_registered_account": "Ushbu \nakkaunt ro'yxatdan o'tmagan",
+  "not_registered_account": "Ushbu akkaunt ro'yxatdan o'tmagan",
   "download": "Yuklab olish",
   "resend_code": "Yana yuborish",
   "restore_things": "Sotib olingan maqolalar/nashrlarni roʻyxatdan oʻtmasdan tiklash",

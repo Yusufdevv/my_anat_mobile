@@ -12,4 +12,6 @@ class HomeArticlesEvent with _$HomeArticlesEvent {
 
   const factory HomeArticlesEvent.getBannerSingle({required int id}) =
       _GetBannerSingle;
+  const factory HomeArticlesEvent.downloadBannerImage(
+      {required bool isDownloaded}) = _DownloadBannerImage;
 }

@@ -29,16 +29,26 @@ class PaymentCardItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          cardType == 'humo' ? SvgPicture.asset(AppImages.humo) : SvgPicture.asset(AppImages.uzcard),
+          cardType == 'humo'
+              ? Image.asset(
+                  AppImages.humo,
+                  width: 28,
+                  height: 28,
+                )
+              : SvgPicture.asset(AppImages.uzcard),
           const SizedBox(width: 12),
-          Expanded(child: Text(cardNumber ?? '', style: Theme.of(context).textTheme.displayLarge)),
+          Expanded(
+              child: Text(cardNumber ?? '',
+                  style: Theme.of(context).textTheme.displayLarge)),
           WScaleAnimation(
             onTap: onTap,
             child: Container(
               height: 36,
               width: 36,
               padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(color: textSecondary.withOpacity(.16), borderRadius: BorderRadius.circular(6)),
+              decoration: BoxDecoration(
+                  color: textSecondary.withOpacity(.16),
+                  borderRadius: BorderRadius.circular(6)),
               child: SvgPicture.asset(AppIcons.chevronsUpDown),
             ),
           ),
