@@ -5,7 +5,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class RefreshPanel extends StatefulWidget {
-  const RefreshPanel({Key? key}) : super(key: key);
+  final VoidCallback? onSuccess;
+  final String? phone;
+  const RefreshPanel({this.onSuccess, this.phone, Key? key}) : super(key: key);
 
   @override
   State<RefreshPanel> createState() => _RefreshPanelState();
@@ -29,10 +31,14 @@ class _RefreshPanelState extends State<RefreshPanel> {
           ),
           if (timeComplete)
             RefreshButton(
+              phone: widget.phone,
               onSucces: () {
                 setState(() {
                   timeComplete = false;
                 });
+                if (widget.onSuccess != null) {
+                  widget.onSuccess!();
+                }
               },
             )
           else

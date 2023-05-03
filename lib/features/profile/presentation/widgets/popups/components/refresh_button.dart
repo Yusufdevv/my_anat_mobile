@@ -6,18 +6,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class RefreshButton extends StatefulWidget {
   final VoidCallback onSucces;
+  final String? phone;
 
-
-  const RefreshButton({Key? key, required this.onSucces, }) : super(key: key);
+  const RefreshButton({
+    Key? key,
+    required this.onSucces,
+    this.phone,
+  }) : super(key: key);
 
   @override
   State<RefreshButton> createState() => _RefreshButtonState();
 }
 
-class _RefreshButtonState extends State<RefreshButton> with TickerProviderStateMixin {
+class _RefreshButtonState extends State<RefreshButton>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -32,8 +36,10 @@ class _RefreshButtonState extends State<RefreshButton> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: () {
           context.read<RestoreBloc>().add(RestoreEvent.resendCode(
+              phone: widget.phone,
               onSuccess: () {
                 _controller.repeat().whenCompleteOrCancel(() {});
                 Timer(const Duration(milliseconds: 1000), () {

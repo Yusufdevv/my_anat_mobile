@@ -18,8 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RestoreEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
-    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)
+        sendCode,
+    required TResult Function(VoidCallback onSuccess, String? phone) resendCode,
     required TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)
         verifyCode,
@@ -33,8 +35,10 @@ mixin _$RestoreEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult? Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -47,8 +51,10 @@ mixin _$RestoreEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -120,7 +126,8 @@ abstract class _$$_SendCodeCopyWith<$Res> {
           _$_SendCode value, $Res Function(_$_SendCode) then) =
       __$$_SendCodeCopyWithImpl<$Res>;
   @useResult
-  $Res call({String phone, VoidCallback onSuccess});
+  $Res call(
+      {String phone, VoidCallback onSuccess, ValueChanged<String> onError});
 }
 
 /// @nodoc
@@ -136,6 +143,7 @@ class __$$_SendCodeCopyWithImpl<$Res>
   $Res call({
     Object? phone = null,
     Object? onSuccess = null,
+    Object? onError = null,
   }) {
     return _then(_$_SendCode(
       phone: null == phone
@@ -146,6 +154,10 @@ class __$$_SendCodeCopyWithImpl<$Res>
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as VoidCallback,
+      onError: null == onError
+          ? _value.onError
+          : onError // ignore: cast_nullable_to_non_nullable
+              as ValueChanged<String>,
     ));
   }
 }
@@ -153,16 +165,19 @@ class __$$_SendCodeCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SendCode implements _SendCode {
-  _$_SendCode({required this.phone, required this.onSuccess});
+  _$_SendCode(
+      {required this.phone, required this.onSuccess, required this.onError});
 
   @override
   final String phone;
   @override
   final VoidCallback onSuccess;
+  @override
+  final ValueChanged<String> onError;
 
   @override
   String toString() {
-    return 'RestoreEvent.sendCode(phone: $phone, onSuccess: $onSuccess)';
+    return 'RestoreEvent.sendCode(phone: $phone, onSuccess: $onSuccess, onError: $onError)';
   }
 
   @override
@@ -172,11 +187,12 @@ class _$_SendCode implements _SendCode {
             other is _$_SendCode &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.onSuccess, onSuccess) ||
-                other.onSuccess == onSuccess));
+                other.onSuccess == onSuccess) &&
+            (identical(other.onError, onError) || other.onError == onError));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, phone, onSuccess);
+  int get hashCode => Object.hash(runtimeType, phone, onSuccess, onError);
 
   @JsonKey(ignore: true)
   @override
@@ -187,8 +203,10 @@ class _$_SendCode implements _SendCode {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
-    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)
+        sendCode,
+    required TResult Function(VoidCallback onSuccess, String? phone) resendCode,
     required TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)
         verifyCode,
@@ -199,14 +217,16 @@ class _$_SendCode implements _SendCode {
     required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
     required TResult Function() clear,
   }) {
-    return sendCode(phone, onSuccess);
+    return sendCode(phone, onSuccess, onError);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult? Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -216,14 +236,16 @@ class _$_SendCode implements _SendCode {
     TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult? Function()? clear,
   }) {
-    return sendCode?.call(phone, onSuccess);
+    return sendCode?.call(phone, onSuccess, onError);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -235,7 +257,7 @@ class _$_SendCode implements _SendCode {
     required TResult orElse(),
   }) {
     if (sendCode != null) {
-      return sendCode(phone, onSuccess);
+      return sendCode(phone, onSuccess, onError);
     }
     return orElse();
   }
@@ -290,10 +312,12 @@ class _$_SendCode implements _SendCode {
 abstract class _SendCode implements RestoreEvent {
   factory _SendCode(
       {required final String phone,
-      required final VoidCallback onSuccess}) = _$_SendCode;
+      required final VoidCallback onSuccess,
+      required final ValueChanged<String> onError}) = _$_SendCode;
 
   String get phone;
   VoidCallback get onSuccess;
+  ValueChanged<String> get onError;
   @JsonKey(ignore: true)
   _$$_SendCodeCopyWith<_$_SendCode> get copyWith =>
       throw _privateConstructorUsedError;
@@ -305,7 +329,7 @@ abstract class _$$_ResendCodeCopyWith<$Res> {
           _$_ResendCode value, $Res Function(_$_ResendCode) then) =
       __$$_ResendCodeCopyWithImpl<$Res>;
   @useResult
-  $Res call({VoidCallback onSuccess});
+  $Res call({VoidCallback onSuccess, String? phone});
 }
 
 /// @nodoc
@@ -320,12 +344,17 @@ class __$$_ResendCodeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? onSuccess = null,
+    Object? phone = freezed,
   }) {
     return _then(_$_ResendCode(
       onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
               as VoidCallback,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -333,14 +362,16 @@ class __$$_ResendCodeCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ResendCode implements _ResendCode {
-  _$_ResendCode({required this.onSuccess});
+  _$_ResendCode({required this.onSuccess, this.phone});
 
   @override
   final VoidCallback onSuccess;
+  @override
+  final String? phone;
 
   @override
   String toString() {
-    return 'RestoreEvent.resendCode(onSuccess: $onSuccess)';
+    return 'RestoreEvent.resendCode(onSuccess: $onSuccess, phone: $phone)';
   }
 
   @override
@@ -349,11 +380,12 @@ class _$_ResendCode implements _ResendCode {
         (other.runtimeType == runtimeType &&
             other is _$_ResendCode &&
             (identical(other.onSuccess, onSuccess) ||
-                other.onSuccess == onSuccess));
+                other.onSuccess == onSuccess) &&
+            (identical(other.phone, phone) || other.phone == phone));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, onSuccess);
+  int get hashCode => Object.hash(runtimeType, onSuccess, phone);
 
   @JsonKey(ignore: true)
   @override
@@ -364,8 +396,10 @@ class _$_ResendCode implements _ResendCode {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
-    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)
+        sendCode,
+    required TResult Function(VoidCallback onSuccess, String? phone) resendCode,
     required TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)
         verifyCode,
@@ -376,14 +410,16 @@ class _$_ResendCode implements _ResendCode {
     required TResult Function(MyPaymentsParams? params) getMoreMyPayHistory,
     required TResult Function() clear,
   }) {
-    return resendCode(onSuccess);
+    return resendCode(onSuccess, phone);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult? Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -393,14 +429,16 @@ class _$_ResendCode implements _ResendCode {
     TResult? Function(MyPaymentsParams? params)? getMoreMyPayHistory,
     TResult? Function()? clear,
   }) {
-    return resendCode?.call(onSuccess);
+    return resendCode?.call(onSuccess, phone);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -412,7 +450,7 @@ class _$_ResendCode implements _ResendCode {
     required TResult orElse(),
   }) {
     if (resendCode != null) {
-      return resendCode(onSuccess);
+      return resendCode(onSuccess, phone);
     }
     return orElse();
   }
@@ -465,9 +503,12 @@ class _$_ResendCode implements _ResendCode {
 }
 
 abstract class _ResendCode implements RestoreEvent {
-  factory _ResendCode({required final VoidCallback onSuccess}) = _$_ResendCode;
+  factory _ResendCode(
+      {required final VoidCallback onSuccess,
+      final String? phone}) = _$_ResendCode;
 
   VoidCallback get onSuccess;
+  String? get phone;
   @JsonKey(ignore: true)
   _$$_ResendCodeCopyWith<_$_ResendCode> get copyWith =>
       throw _privateConstructorUsedError;
@@ -558,8 +599,10 @@ class _$_VerifyCode implements _VerifyCode {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
-    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)
+        sendCode,
+    required TResult Function(VoidCallback onSuccess, String? phone) resendCode,
     required TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)
         verifyCode,
@@ -576,8 +619,10 @@ class _$_VerifyCode implements _VerifyCode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult? Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -593,8 +638,10 @@ class _$_VerifyCode implements _VerifyCode {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -758,8 +805,10 @@ class _$_SendRestore implements _SendRestore {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
-    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)
+        sendCode,
+    required TResult Function(VoidCallback onSuccess, String? phone) resendCode,
     required TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)
         verifyCode,
@@ -776,8 +825,10 @@ class _$_SendRestore implements _SendRestore {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult? Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -793,8 +844,10 @@ class _$_SendRestore implements _SendRestore {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -936,8 +989,10 @@ class _$_GetMyPayHistory implements _GetMyPayHistory {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
-    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)
+        sendCode,
+    required TResult Function(VoidCallback onSuccess, String? phone) resendCode,
     required TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)
         verifyCode,
@@ -954,8 +1009,10 @@ class _$_GetMyPayHistory implements _GetMyPayHistory {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult? Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -971,8 +1028,10 @@ class _$_GetMyPayHistory implements _GetMyPayHistory {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -1111,8 +1170,10 @@ class _$_GetMoreMyPayHistory implements _GetMoreMyPayHistory {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
-    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)
+        sendCode,
+    required TResult Function(VoidCallback onSuccess, String? phone) resendCode,
     required TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)
         verifyCode,
@@ -1129,8 +1190,10 @@ class _$_GetMoreMyPayHistory implements _GetMoreMyPayHistory {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult? Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -1146,8 +1209,10 @@ class _$_GetMoreMyPayHistory implements _GetMoreMyPayHistory {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -1257,8 +1322,10 @@ class _$_Clear implements _Clear {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone, VoidCallback onSuccess) sendCode,
-    required TResult Function(VoidCallback onSuccess) resendCode,
+    required TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)
+        sendCode,
+    required TResult Function(VoidCallback onSuccess, String? phone) resendCode,
     required TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)
         verifyCode,
@@ -1275,8 +1342,10 @@ class _$_Clear implements _Clear {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult? Function(VoidCallback onSuccess)? resendCode,
+    TResult? Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult? Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult? Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,
@@ -1292,8 +1361,10 @@ class _$_Clear implements _Clear {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone, VoidCallback onSuccess)? sendCode,
-    TResult Function(VoidCallback onSuccess)? resendCode,
+    TResult Function(
+            String phone, VoidCallback onSuccess, ValueChanged<String> onError)?
+        sendCode,
+    TResult Function(VoidCallback onSuccess, String? phone)? resendCode,
     TResult Function(String code, dynamic Function(String) onSuccess,
             dynamic Function(String) onError)?
         verifyCode,

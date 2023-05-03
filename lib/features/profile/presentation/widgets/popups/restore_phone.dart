@@ -1,5 +1,6 @@
 import 'package:anatomica/assets/colors/colors.dart';
 import 'package:anatomica/assets/constants/app_icons.dart';
+import 'package:anatomica/features/common/presentation/bloc/show_pop_up/show_pop_up_bloc.dart';
 import 'package:anatomica/features/common/presentation/widgets/phone_text_field.dart';
 import 'package:anatomica/features/common/presentation/widgets/w_button.dart';
 import 'package:anatomica/features/profile/presentation/blocs/restore/restore_bloc.dart';
@@ -90,12 +91,20 @@ class _RestorePhoneDialogState extends State<RestorePhoneDialog> {
                 padding: EdgeInsets.zero,
                 onTap: () {
                   if (controller.text.length == 12) {
-                    context.read<RestoreBloc>().add(RestoreEvent.sendCode(
-                        phone: '+998${controller.text.replaceAll(' ', '')}',
-                        onSuccess: () async {
-                          Navigator.pop(context, true);
-                          widget.onSucces();
-                        }));
+                    context.read<RestoreBloc>().add(
+                          RestoreEvent.sendCode(
+                            phone: '+998${controller.text.replaceAll(' ', '')}',
+                            onSuccess: () async {
+                              Navigator.pop(context, true);
+                              widget.onSucces();
+                            },
+                            onError: (error) {
+                              context
+                                  .read<ShowPopUpBloc>()
+                                  .add(ShowPopUp(message: error));
+                            },
+                          ),
+                        );
                   }
                 },
                 height: 40,

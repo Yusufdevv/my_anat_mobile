@@ -29,46 +29,13 @@ class HospitalVideo extends StatefulWidget {
 }
 
 class _HospitalVideoState extends State<HospitalVideo> {
-  late List<YoutubePlayerController> controllers;
-  late YoutubePlayer player;
-
   @override
   void initState() {
     super.initState();
-    controllers = [];
-
-    for (int i = 0; i < widget.videos.length; i++) {
-      controllers = List.generate(
-        widget.videos.length,
-        (index) => YoutubePlayerController(
-          initialVideoId:
-              YoutubePlayer.convertUrlToId(widget.videos[index]) ?? '',
-          flags: const YoutubePlayerFlags(
-            autoPlay: false,
-            disableDragSeek: true,
-            hideControls: true,
-          ),
-        ),
-      );
-    }
-    if (widget.videoUrl.isNotEmpty) {
-      controllers = controllers
-        ..add(
-          YoutubePlayerController(
-            initialVideoId: YoutubePlayer.convertUrlToId(widget.videoUrl) ?? '',
-            flags: const YoutubePlayerFlags(
-              autoPlay: false,
-              disableDragSeek: true,
-              hideControls: true,
-            ),
-          ),
-        );
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    log('videos => ${widget.videos} video link => ${widget.videoUrl}');
     if (widget.videoUrl.isNotEmpty || widget.videos.isNotEmpty) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -84,122 +51,98 @@ class _HospitalVideoState extends State<HospitalVideo> {
                   .headlineMedium!
                   .copyWith(color: textColor),
             ),
-            for (int i = 0; i < widget.videos.length; i++)
-              if (widget.videos.isNotEmpty && controllers.isNotEmpty) ...{
-                Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  color: white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (widget.videos.isNotEmpty &&
-                          controllers.isNotEmpty) ...{
-                        Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: SizedBox(
-                                height: 140,
-                                width: double.maxFinite,
-                                child: YoutubePlayerBuilder(
-                                  player: YoutubePlayer(
-                                    controller: controllers[i],
-                                  ),
-                                  builder: (context, player) => player,
-                                ),
-                              ),
-                            ),
-                            Positioned.fill(
-                              child: GestureDetector(
-                                onTap: () async {
-                                  if (await canLaunchUrlString(
-                                      widget.videos[i])) {
-                                    await launchUrlString(widget.videos[i],
-                                        mode: LaunchMode.externalApplication);
-                                  }
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: textColor.withOpacity(0.47),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                      height: 36,
-                                      width: 36,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: white.withOpacity(0.4)),
-                                      child:
-                                          SvgPicture.asset(AppIcons.playIcon)),
-                                ),
-                              ),
-                            )
-                          ],
+            if (widget.videos.isNotEmpty)
+              ...List.generate(
+                widget.videos.length,
+                (i) => GestureDetector(
+                  onTap: () async {
+                    if (await canLaunchUrlString(widget.videos[i])) {
+                      await launchUrlString(widget.videos[i],
+                          mode: LaunchMode.externalApplication);
+                    }
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    height: 140,
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          YoutubePlayer.getThumbnail(
+                            videoId: YoutubePlayer.convertUrlToId(
+                                    widget.videos[i]) ??
+                                '',
+                          ),
                         ),
-                      },
-                    ],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: textColor.withOpacity(0.47),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 36,
+                        width: 36,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: white.withOpacity(0.4),
+                        ),
+                        child: SvgPicture.asset(AppIcons.playIcon),
+                      ),
+                    ),
                   ),
                 ),
-              } else
-                ...{},
-            if (widget.videoUrl.isNotEmpty) ...{
-              Container(
-                padding: const EdgeInsets.only(top: 20),
-                color: white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (widget.videoUrl.isNotEmpty) ...{
-                      Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: SizedBox(
-                              height: 140,
-                              width: double.maxFinite,
-                              child: YoutubePlayerBuilder(
-                                player: YoutubePlayer(
-                                  controller: controllers[0],
-                                ),
-                                builder: (context, player) => player,
-                              ),
-                            ),
-                          ),
-                          Positioned.fill(
-                            child: GestureDetector(
-                              onTap: () async {
-                                if (await canLaunchUrlString(widget.videoUrl)) {
-                                  await launchUrlString(widget.videoUrl,
-                                      mode: LaunchMode.externalApplication);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: textColor.withOpacity(0.47),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                alignment: Alignment.center,
-                                child: Container(
-                                    height: 36,
-                                    width: 36,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: white.withOpacity(0.4)),
-                                    child: SvgPicture.asset(AppIcons.playIcon)),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    },
-                  ],
-                ),
               ),
-            } else
-              ...{},
+            if (widget.videoUrl.isNotEmpty) ...{
+              GestureDetector(
+                onTap: () async {
+                  if (await canLaunchUrlString(widget.videoUrl)) {
+                    await launchUrlString(widget.videoUrl,
+                        mode: LaunchMode.externalApplication);
+                  }
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  height: 140,
+                  decoration: BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        YoutubePlayer.getThumbnail(
+                          videoId:
+                              YoutubePlayer.convertUrlToId(widget.videoUrl) ??
+                                  '',
+                        ),
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: textColor.withOpacity(0.47),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: 36,
+                      width: 36,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: white.withOpacity(0.4),
+                      ),
+                      child: SvgPicture.asset(AppIcons.playIcon),
+                    ),
+                  ),
+                ),
+              )
+            },
           ],
         ),
       );

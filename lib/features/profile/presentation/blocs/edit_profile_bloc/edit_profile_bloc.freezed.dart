@@ -25,8 +25,21 @@ mixin _$EditProfileEvent {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -41,8 +54,21 @@ mixin _$EditProfileEvent {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) =>
@@ -56,8 +82,21 @@ mixin _$EditProfileEvent {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -74,6 +113,7 @@ mixin _$EditProfileEvent {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) =>
       throw _privateConstructorUsedError;
@@ -88,6 +128,7 @@ mixin _$EditProfileEvent {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) =>
       throw _privateConstructorUsedError;
@@ -102,6 +143,7 @@ mixin _$EditProfileEvent {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) =>
@@ -197,8 +239,21 @@ class _$_ChangeName implements _ChangeName {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -216,8 +271,21 @@ class _$_ChangeName implements _ChangeName {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -234,8 +302,21 @@ class _$_ChangeName implements _ChangeName {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -258,6 +339,7 @@ class _$_ChangeName implements _ChangeName {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeName(this);
@@ -275,6 +357,7 @@ class _$_ChangeName implements _ChangeName {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeName?.call(this);
@@ -292,6 +375,7 @@ class _$_ChangeName implements _ChangeName {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -382,8 +466,21 @@ class _$_ChangeSurname implements _ChangeSurname {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -401,8 +498,21 @@ class _$_ChangeSurname implements _ChangeSurname {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -419,8 +529,21 @@ class _$_ChangeSurname implements _ChangeSurname {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -443,6 +566,7 @@ class _$_ChangeSurname implements _ChangeSurname {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeSurname(this);
@@ -460,6 +584,7 @@ class _$_ChangeSurname implements _ChangeSurname {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeSurname?.call(this);
@@ -477,6 +602,7 @@ class _$_ChangeSurname implements _ChangeSurname {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -568,8 +694,21 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -587,8 +726,21 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -605,8 +757,21 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -629,6 +794,7 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changePhoneNumber(this);
@@ -646,6 +812,7 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changePhoneNumber?.call(this);
@@ -663,6 +830,7 @@ class _$_ChangePhoneNumber implements _ChangePhoneNumber {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -753,8 +921,21 @@ class _$_ChangeEmail implements _ChangeEmail {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -772,8 +953,21 @@ class _$_ChangeEmail implements _ChangeEmail {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -790,8 +984,21 @@ class _$_ChangeEmail implements _ChangeEmail {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -814,6 +1021,7 @@ class _$_ChangeEmail implements _ChangeEmail {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeEmail(this);
@@ -831,6 +1039,7 @@ class _$_ChangeEmail implements _ChangeEmail {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeEmail?.call(this);
@@ -848,6 +1057,7 @@ class _$_ChangeEmail implements _ChangeEmail {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -938,8 +1148,21 @@ class _$_ChangeDate implements _ChangeDate {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -957,8 +1180,21 @@ class _$_ChangeDate implements _ChangeDate {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -975,8 +1211,21 @@ class _$_ChangeDate implements _ChangeDate {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -999,6 +1248,7 @@ class _$_ChangeDate implements _ChangeDate {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeDate(this);
@@ -1016,6 +1266,7 @@ class _$_ChangeDate implements _ChangeDate {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeDate?.call(this);
@@ -1033,6 +1284,7 @@ class _$_ChangeDate implements _ChangeDate {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -1123,8 +1375,21 @@ class _$_ChangeImage implements _ChangeImage {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -1142,8 +1407,21 @@ class _$_ChangeImage implements _ChangeImage {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -1160,8 +1438,21 @@ class _$_ChangeImage implements _ChangeImage {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -1184,6 +1475,7 @@ class _$_ChangeImage implements _ChangeImage {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return changeImage(this);
@@ -1201,6 +1493,7 @@ class _$_ChangeImage implements _ChangeImage {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return changeImage?.call(this);
@@ -1218,6 +1511,7 @@ class _$_ChangeImage implements _ChangeImage {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -1308,8 +1602,21 @@ class _$_VerifyOTPCode implements _VerifyOTPCode {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -1327,8 +1634,21 @@ class _$_VerifyOTPCode implements _VerifyOTPCode {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -1345,8 +1665,21 @@ class _$_VerifyOTPCode implements _VerifyOTPCode {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -1369,6 +1702,7 @@ class _$_VerifyOTPCode implements _VerifyOTPCode {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return verifyOTPCode(this);
@@ -1386,6 +1720,7 @@ class _$_VerifyOTPCode implements _VerifyOTPCode {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return verifyOTPCode?.call(this);
@@ -1403,6 +1738,7 @@ class _$_VerifyOTPCode implements _VerifyOTPCode {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -1428,7 +1764,8 @@ abstract class _$$_EditPhoneCopyWith<$Res> {
           _$_EditPhone value, $Res Function(_$_EditPhone) then) =
       __$$_EditPhoneCopyWithImpl<$Res>;
   @useResult
-  $Res call({String phone});
+  $Res call(
+      {String phone, ValueChanged<String> onError, VoidCallback onSuccess});
 }
 
 /// @nodoc
@@ -1443,12 +1780,22 @@ class __$$_EditPhoneCopyWithImpl<$Res>
   @override
   $Res call({
     Object? phone = null,
+    Object? onError = null,
+    Object? onSuccess = null,
   }) {
     return _then(_$_EditPhone(
       phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
+      onError: null == onError
+          ? _value.onError
+          : onError // ignore: cast_nullable_to_non_nullable
+              as ValueChanged<String>,
+      onSuccess: null == onSuccess
+          ? _value.onSuccess
+          : onSuccess // ignore: cast_nullable_to_non_nullable
+              as VoidCallback,
     ));
   }
 }
@@ -1456,14 +1803,19 @@ class __$$_EditPhoneCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_EditPhone implements _EditPhone {
-  _$_EditPhone({required this.phone});
+  _$_EditPhone(
+      {required this.phone, required this.onError, required this.onSuccess});
 
   @override
   final String phone;
+  @override
+  final ValueChanged<String> onError;
+  @override
+  final VoidCallback onSuccess;
 
   @override
   String toString() {
-    return 'EditProfileEvent.editPhone(phone: $phone)';
+    return 'EditProfileEvent.editPhone(phone: $phone, onError: $onError, onSuccess: $onSuccess)';
   }
 
   @override
@@ -1471,11 +1823,14 @@ class _$_EditPhone implements _EditPhone {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EditPhone &&
-            (identical(other.phone, phone) || other.phone == phone));
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.onError, onError) || other.onError == onError) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, phone);
+  int get hashCode => Object.hash(runtimeType, phone, onError, onSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -1493,13 +1848,26 @@ class _$_EditPhone implements _EditPhone {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
   }) {
-    return editPhone(phone);
+    return editPhone(phone, onError, onSuccess);
   }
 
   @override
@@ -1512,12 +1880,25 @@ class _$_EditPhone implements _EditPhone {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
-    return editPhone?.call(phone);
+    return editPhone?.call(phone, onError, onSuccess);
   }
 
   @override
@@ -1530,14 +1911,27 @@ class _$_EditPhone implements _EditPhone {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
   }) {
     if (editPhone != null) {
-      return editPhone(phone);
+      return editPhone(phone, onError, onSuccess);
     }
     return orElse();
   }
@@ -1554,6 +1948,7 @@ class _$_EditPhone implements _EditPhone {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return editPhone(this);
@@ -1571,6 +1966,7 @@ class _$_EditPhone implements _EditPhone {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return editPhone?.call(this);
@@ -1588,6 +1984,7 @@ class _$_EditPhone implements _EditPhone {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -1599,9 +1996,14 @@ class _$_EditPhone implements _EditPhone {
 }
 
 abstract class _EditPhone implements EditProfileEvent {
-  factory _EditPhone({required final String phone}) = _$_EditPhone;
+  factory _EditPhone(
+      {required final String phone,
+      required final ValueChanged<String> onError,
+      required final VoidCallback onSuccess}) = _$_EditPhone;
 
   String get phone;
+  ValueChanged<String> get onError;
+  VoidCallback get onSuccess;
   @JsonKey(ignore: true)
   _$$_EditPhoneCopyWith<_$_EditPhone> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1613,7 +2015,8 @@ abstract class _$$_EditEmailCopyWith<$Res> {
           _$_EditEmail value, $Res Function(_$_EditEmail) then) =
       __$$_EditEmailCopyWithImpl<$Res>;
   @useResult
-  $Res call({String email});
+  $Res call(
+      {String email, ValueChanged<String> onError, VoidCallback onSuccess});
 }
 
 /// @nodoc
@@ -1628,12 +2031,22 @@ class __$$_EditEmailCopyWithImpl<$Res>
   @override
   $Res call({
     Object? email = null,
+    Object? onError = null,
+    Object? onSuccess = null,
   }) {
     return _then(_$_EditEmail(
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      onError: null == onError
+          ? _value.onError
+          : onError // ignore: cast_nullable_to_non_nullable
+              as ValueChanged<String>,
+      onSuccess: null == onSuccess
+          ? _value.onSuccess
+          : onSuccess // ignore: cast_nullable_to_non_nullable
+              as VoidCallback,
     ));
   }
 }
@@ -1641,14 +2054,19 @@ class __$$_EditEmailCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_EditEmail implements _EditEmail {
-  _$_EditEmail({required this.email});
+  _$_EditEmail(
+      {required this.email, required this.onError, required this.onSuccess});
 
   @override
   final String email;
+  @override
+  final ValueChanged<String> onError;
+  @override
+  final VoidCallback onSuccess;
 
   @override
   String toString() {
-    return 'EditProfileEvent.editEmail(email: $email)';
+    return 'EditProfileEvent.editEmail(email: $email, onError: $onError, onSuccess: $onSuccess)';
   }
 
   @override
@@ -1656,11 +2074,14 @@ class _$_EditEmail implements _EditEmail {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EditEmail &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.onError, onError) || other.onError == onError) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email);
+  int get hashCode => Object.hash(runtimeType, email, onError, onSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -1678,13 +2099,26 @@ class _$_EditEmail implements _EditEmail {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
   }) {
-    return editEmail(email);
+    return editEmail(email, onError, onSuccess);
   }
 
   @override
@@ -1697,12 +2131,25 @@ class _$_EditEmail implements _EditEmail {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
-    return editEmail?.call(email);
+    return editEmail?.call(email, onError, onSuccess);
   }
 
   @override
@@ -1715,14 +2162,27 @@ class _$_EditEmail implements _EditEmail {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
   }) {
     if (editEmail != null) {
-      return editEmail(email);
+      return editEmail(email, onError, onSuccess);
     }
     return orElse();
   }
@@ -1739,6 +2199,7 @@ class _$_EditEmail implements _EditEmail {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return editEmail(this);
@@ -1756,6 +2217,7 @@ class _$_EditEmail implements _EditEmail {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return editEmail?.call(this);
@@ -1773,6 +2235,7 @@ class _$_EditEmail implements _EditEmail {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {
@@ -1784,11 +2247,324 @@ class _$_EditEmail implements _EditEmail {
 }
 
 abstract class _EditEmail implements EditProfileEvent {
-  factory _EditEmail({required final String email}) = _$_EditEmail;
+  factory _EditEmail(
+      {required final String email,
+      required final ValueChanged<String> onError,
+      required final VoidCallback onSuccess}) = _$_EditEmail;
 
   String get email;
+  ValueChanged<String> get onError;
+  VoidCallback get onSuccess;
   @JsonKey(ignore: true)
   _$$_EditEmailCopyWith<_$_EditEmail> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_VerifyOtpCodeCopyWith<$Res> {
+  factory _$$_VerifyOtpCodeCopyWith(
+          _$_VerifyOtpCode value, $Res Function(_$_VerifyOtpCode) then) =
+      __$$_VerifyOtpCodeCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {String? email,
+      String? phone,
+      String type,
+      String signature,
+      String code,
+      ValueChanged<String> onError,
+      VoidCallback onSuccess});
+}
+
+/// @nodoc
+class __$$_VerifyOtpCodeCopyWithImpl<$Res>
+    extends _$EditProfileEventCopyWithImpl<$Res, _$_VerifyOtpCode>
+    implements _$$_VerifyOtpCodeCopyWith<$Res> {
+  __$$_VerifyOtpCodeCopyWithImpl(
+      _$_VerifyOtpCode _value, $Res Function(_$_VerifyOtpCode) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = freezed,
+    Object? phone = freezed,
+    Object? type = null,
+    Object? signature = null,
+    Object? code = null,
+    Object? onError = null,
+    Object? onSuccess = null,
+  }) {
+    return _then(_$_VerifyOtpCode(
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      signature: null == signature
+          ? _value.signature
+          : signature // ignore: cast_nullable_to_non_nullable
+              as String,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      onError: null == onError
+          ? _value.onError
+          : onError // ignore: cast_nullable_to_non_nullable
+              as ValueChanged<String>,
+      onSuccess: null == onSuccess
+          ? _value.onSuccess
+          : onSuccess // ignore: cast_nullable_to_non_nullable
+              as VoidCallback,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_VerifyOtpCode implements _VerifyOtpCode {
+  _$_VerifyOtpCode(
+      {this.email,
+      this.phone,
+      required this.type,
+      required this.signature,
+      required this.code,
+      required this.onError,
+      required this.onSuccess});
+
+  @override
+  final String? email;
+  @override
+  final String? phone;
+  @override
+  final String type;
+  @override
+  final String signature;
+  @override
+  final String code;
+  @override
+  final ValueChanged<String> onError;
+  @override
+  final VoidCallback onSuccess;
+
+  @override
+  String toString() {
+    return 'EditProfileEvent.verifyOtpCode(email: $email, phone: $phone, type: $type, signature: $signature, code: $code, onError: $onError, onSuccess: $onSuccess)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_VerifyOtpCode &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.signature, signature) ||
+                other.signature == signature) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.onError, onError) || other.onError == onError) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, email, phone, type, signature, code, onError, onSuccess);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VerifyOtpCodeCopyWith<_$_VerifyOtpCode> get copyWith =>
+      __$$_VerifyOtpCodeCopyWithImpl<_$_VerifyOtpCode>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text) changeName,
+    required TResult Function(String text) changeSurname,
+    required TResult Function(String text) changePhoneNumber,
+    required TResult Function(String text) changeEmail,
+    required TResult Function(String text) changeDate,
+    required TResult Function(String image) changeImage,
+    required TResult Function(String code) verifyOTPCode,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
+    required TResult Function(
+            ValueChanged<String> onError, VoidCallback onSuccess)
+        saveData,
+  }) {
+    return verifyOtpCode(
+        email, phone, type, signature, code, onError, onSuccess);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String text)? changeName,
+    TResult? Function(String text)? changeSurname,
+    TResult? Function(String text)? changePhoneNumber,
+    TResult? Function(String text)? changeEmail,
+    TResult? Function(String text)? changeDate,
+    TResult? Function(String image)? changeImage,
+    TResult? Function(String code)? verifyOTPCode,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
+    TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+        saveData,
+  }) {
+    return verifyOtpCode?.call(
+        email, phone, type, signature, code, onError, onSuccess);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text)? changeName,
+    TResult Function(String text)? changeSurname,
+    TResult Function(String text)? changePhoneNumber,
+    TResult Function(String text)? changeEmail,
+    TResult Function(String text)? changeDate,
+    TResult Function(String image)? changeImage,
+    TResult Function(String code)? verifyOTPCode,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
+    TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
+        saveData,
+    required TResult orElse(),
+  }) {
+    if (verifyOtpCode != null) {
+      return verifyOtpCode(
+          email, phone, type, signature, code, onError, onSuccess);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ChangeName value) changeName,
+    required TResult Function(_ChangeSurname value) changeSurname,
+    required TResult Function(_ChangePhoneNumber value) changePhoneNumber,
+    required TResult Function(_ChangeEmail value) changeEmail,
+    required TResult Function(_ChangeDate value) changeDate,
+    required TResult Function(_ChangeImage value) changeImage,
+    required TResult Function(_VerifyOTPCode value) verifyOTPCode,
+    required TResult Function(_EditPhone value) editPhone,
+    required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
+    required TResult Function(_SaveData value) saveData,
+  }) {
+    return verifyOtpCode(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ChangeName value)? changeName,
+    TResult? Function(_ChangeSurname value)? changeSurname,
+    TResult? Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult? Function(_ChangeEmail value)? changeEmail,
+    TResult? Function(_ChangeDate value)? changeDate,
+    TResult? Function(_ChangeImage value)? changeImage,
+    TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
+    TResult? Function(_EditPhone value)? editPhone,
+    TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
+    TResult? Function(_SaveData value)? saveData,
+  }) {
+    return verifyOtpCode?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ChangeName value)? changeName,
+    TResult Function(_ChangeSurname value)? changeSurname,
+    TResult Function(_ChangePhoneNumber value)? changePhoneNumber,
+    TResult Function(_ChangeEmail value)? changeEmail,
+    TResult Function(_ChangeDate value)? changeDate,
+    TResult Function(_ChangeImage value)? changeImage,
+    TResult Function(_VerifyOTPCode value)? verifyOTPCode,
+    TResult Function(_EditPhone value)? editPhone,
+    TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
+    TResult Function(_SaveData value)? saveData,
+    required TResult orElse(),
+  }) {
+    if (verifyOtpCode != null) {
+      return verifyOtpCode(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _VerifyOtpCode implements EditProfileEvent {
+  factory _VerifyOtpCode(
+      {final String? email,
+      final String? phone,
+      required final String type,
+      required final String signature,
+      required final String code,
+      required final ValueChanged<String> onError,
+      required final VoidCallback onSuccess}) = _$_VerifyOtpCode;
+
+  String? get email;
+  String? get phone;
+  String get type;
+  String get signature;
+  String get code;
+  ValueChanged<String> get onError;
+  VoidCallback get onSuccess;
+  @JsonKey(ignore: true)
+  _$$_VerifyOtpCodeCopyWith<_$_VerifyOtpCode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1872,8 +2648,21 @@ class _$_SaveData implements _SaveData {
     required TResult Function(String text) changeDate,
     required TResult Function(String image) changeImage,
     required TResult Function(String code) verifyOTPCode,
-    required TResult Function(String phone) editPhone,
-    required TResult Function(String email) editEmail,
+    required TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)
+        editPhone,
+    required TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)
+        editEmail,
+    required TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)
+        verifyOtpCode,
     required TResult Function(
             ValueChanged<String> onError, VoidCallback onSuccess)
         saveData,
@@ -1891,8 +2680,21 @@ class _$_SaveData implements _SaveData {
     TResult? Function(String text)? changeDate,
     TResult? Function(String image)? changeImage,
     TResult? Function(String code)? verifyOTPCode,
-    TResult? Function(String phone)? editPhone,
-    TResult? Function(String email)? editEmail,
+    TResult? Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult? Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult? Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult? Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
   }) {
@@ -1909,8 +2711,21 @@ class _$_SaveData implements _SaveData {
     TResult Function(String text)? changeDate,
     TResult Function(String image)? changeImage,
     TResult Function(String code)? verifyOTPCode,
-    TResult Function(String phone)? editPhone,
-    TResult Function(String email)? editEmail,
+    TResult Function(
+            String phone, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editPhone,
+    TResult Function(
+            String email, ValueChanged<String> onError, VoidCallback onSuccess)?
+        editEmail,
+    TResult Function(
+            String? email,
+            String? phone,
+            String type,
+            String signature,
+            String code,
+            ValueChanged<String> onError,
+            VoidCallback onSuccess)?
+        verifyOtpCode,
     TResult Function(ValueChanged<String> onError, VoidCallback onSuccess)?
         saveData,
     required TResult orElse(),
@@ -1933,6 +2748,7 @@ class _$_SaveData implements _SaveData {
     required TResult Function(_VerifyOTPCode value) verifyOTPCode,
     required TResult Function(_EditPhone value) editPhone,
     required TResult Function(_EditEmail value) editEmail,
+    required TResult Function(_VerifyOtpCode value) verifyOtpCode,
     required TResult Function(_SaveData value) saveData,
   }) {
     return saveData(this);
@@ -1950,6 +2766,7 @@ class _$_SaveData implements _SaveData {
     TResult? Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult? Function(_EditPhone value)? editPhone,
     TResult? Function(_EditEmail value)? editEmail,
+    TResult? Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult? Function(_SaveData value)? saveData,
   }) {
     return saveData?.call(this);
@@ -1967,6 +2784,7 @@ class _$_SaveData implements _SaveData {
     TResult Function(_VerifyOTPCode value)? verifyOTPCode,
     TResult Function(_EditPhone value)? editPhone,
     TResult Function(_EditEmail value)? editEmail,
+    TResult Function(_VerifyOtpCode value)? verifyOtpCode,
     TResult Function(_SaveData value)? saveData,
     required TResult orElse(),
   }) {

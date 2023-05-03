@@ -30,6 +30,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController passwordController;
   late TextEditingController loginController;
+  bool hasLoginError = false;
 
   @override
   void initState() {
@@ -88,8 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               title: LocaleKeys.login.tr(),
                               controller: loginController,
                               maxLines: 1,
-                              onChanged: (value) {},
-                              hasError: state.loginStatus.isSubmissionFailure,
+                              onChanged: (value) {
+                                if (hasLoginError) {
+                                  setState(() {
+                                    hasLoginError = false;
+                                  });
+                                }
+                              },
+                              hasError: hasLoginError &&
+                                  state.loginStatus.isSubmissionFailure,
                               hintText: LocaleKeys.write_login.tr(),
                               prefix: Padding(
                                 padding:
@@ -101,8 +109,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             PasswordTextField(
                               title: LocaleKeys.password.tr(),
                               hintText: LocaleKeys.write_password.tr(),
-                              hasError: state.loginStatus.isSubmissionFailure,
-                              onChanged: (value) {},
+                              hasError: hasLoginError &&
+                                  state.loginStatus.isSubmissionFailure,
+                              onChanged: (value) {
+                                if (hasLoginError) {
+                                  setState(() {
+                                    hasLoginError = false;
+                                  });
+                                }
+                              },
                               controller: passwordController,
                             ),
                             WScaleAnimation(
@@ -134,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       username: loginController.text,
                                       password: passwordController.text,
                                       onError: (message) {
+                                        hasLoginError = true;
                                         context.read<ShowPopUpBloc>().add(
                                               ShowPopUp(
                                                   message: message.replaceAll(

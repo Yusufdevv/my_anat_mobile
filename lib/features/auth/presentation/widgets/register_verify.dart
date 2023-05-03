@@ -26,6 +26,7 @@ class _RegisterVerifyState extends State<RegisterVerify> {
   late TextEditingController pinCodeController;
   int secondsLeft = 0;
   String errorMessage = '';
+  bool hasError = false;
 
   @override
   initState() {
@@ -93,11 +94,17 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                     ),
                     const SizedBox(height: 20),
                     PinCodeBody(
-                      onChanged: (v) {},
+                      onChanged: (v) {
+                        if (pinCodeController.text.length < 6) {
+                          hasError = false;
+                          setState(() {});
+                        }
+                      },
                       onTimeChanged: (seconds) {
                         secondsLeft = seconds;
                       },
-                      hasError: state.submitCodeStatus.isSubmissionFailure,
+                      hasError: hasError &&
+                          state.submitCodeStatus.isSubmissionFailure,
                       errorText: errorMessage,
                       pinCodeController: pinCodeController,
                       secondsLeft: state.secondsLeft,
@@ -123,11 +130,12 @@ class _RegisterVerifyState extends State<RegisterVerify> {
                           },
                           onError: (message) {
                             errorMessage = message;
-                            context.read<ShowPopUpBloc>().add(
-                                  ShowPopUp(
-                                      message: message.replaceAll(
-                                          RegExp(r'\{?\[?\]?\.?}?'), '')),
-                                );
+                            hasError = true;
+                            // context.read<ShowPopUpBloc>().add(
+                            //       ShowPopUp(
+                            //           message: message.replaceAll(
+                            //               RegExp(r'\{?\[?\]?\.?}?'), '')),
+                            //     );
                           },
                         ),
                       );

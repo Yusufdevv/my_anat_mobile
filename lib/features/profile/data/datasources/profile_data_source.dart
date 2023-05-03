@@ -43,6 +43,14 @@ abstract class ProfileDatasource {
     String? purpose,
     String? status,
   });
+
+  Future<void> verifyOtpCode({
+    required String type,
+    required String signature,
+    required String code,
+    String? phone,
+    String? email,
+  });
 }
 
 class ProfileDatasourceImpl extends ProfileDatasource {
@@ -51,12 +59,86 @@ class ProfileDatasourceImpl extends ProfileDatasource {
   ProfileDatasourceImpl(this._dio);
 
   @override
+  Future<void> verifyOtpCode({
+    required String type,
+    required String signature,
+    required String code,
+    String? phone,
+    String? email,
+  }) async {
+    Map<String, dynamic> data = {
+      "type": type,
+      "signature": signature,
+      "code": code.toString(),
+    };
+    if (phone != null) {
+      data.putIfAbsent("phone", () => "+998907445529");
+    }
+
+    if (email != null) {
+      data.putIfAbsent("email", () => email);
+    }
+    print('data => $data');
+    try {
+      final response = await _dio.post("/confirmation/code/verify/",
+          data: data,
+          options: (Options(headers: {
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
+          })));
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        // return (response.data as Map<String, dynamic>)['signature'];
+      } else {
+        final errorMessage;
+        print('errror => ${response.data}');
+        if ((response.data as Map).values.isNotEmpty) {
+          if ((response.data as Map).values.first is Map) {
+            if (((response.data as Map).values.first as Map).values.first
+                is List) {
+              errorMessage = (((response.data as Map).values.first as Map)
+                      .values
+                      .first as List)
+                  .first;
+            } else {
+              errorMessage =
+                  ((response.data as Map).values.first as Map).values.first;
+            }
+          } else if ((response.data as Map).values.first is List) {
+            errorMessage = ((response.data as Map).values.first as List).first;
+          } else {
+            errorMessage = (response.data as Map).values.first;
+          }
+        } else {
+          errorMessage = 'Unknown error';
+        }
+        throw ServerException(
+            errorMessage: errorMessage.toString(),
+            statusCode: response.statusCode ?? 0);
+      }
+    } on ServerException {
+      rethrow;
+    } on DioError catch (error) {
+      throw ServerException(
+        errorMessage:
+            'Authentication Repository Dio Error. Error message: ${error.message}',
+        statusCode: 141,
+      );
+    } on Exception catch (error) {
+      throw ServerException(
+        errorMessage: 'Authentication Repository Error. Error message: $error',
+        statusCode: 141,
+      );
+    }
+  }
+
+  @override
   Future<GenericPagination<VacancyListModel>> getLikedVacancyList(
       {String? next}) async {
     try {
       final results = await _dio.get(next ?? '/vacancy/vacancy/liked',
           options: (Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           })));
 
       return GenericPagination.fromJson(
@@ -81,11 +163,11 @@ class ProfileDatasourceImpl extends ProfileDatasource {
 
   @override
   Future<UserModel> getProfile() async {
-    print('======= shu yer');
     try {
       final response = await _dio.get('/user/profile/',
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode != null &&
           response.statusCode! >= 200 &&
@@ -111,7 +193,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
       final response = await _dio.patch('/user/profile/update/',
           data: FormData.fromMap(data),
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
       } else {
@@ -145,7 +228,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
       final response = await _dio.post('/image/create/',
           data: formData,
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return UploadedImageModel.fromJson(response.data);
@@ -173,7 +257,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.get(next ?? '/payments/user-purchases/',
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(response.data, (p0) {
@@ -202,7 +287,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
             'new_password': newPassword
           },
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         if (!(response.data['success'] as bool)) {
@@ -235,7 +321,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
         data: {"device_id": deviceId},
         options: Options(
           headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           },
         ),
       );
@@ -259,7 +346,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.delete('/user/profile/delete/',
           options: Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           }));
       if (!(response.statusCode! >= 200 && response.statusCode! < 300)) {
         throw ServerException(
@@ -302,7 +390,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     try {
       final response = await _dio.get(next ?? '/doctor/liked/',
           options: (Options(headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           })));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return GenericPagination.fromJson(
@@ -334,15 +423,38 @@ class ProfileDatasourceImpl extends ProfileDatasource {
         },
         options: Options(
           headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           },
         ),
       );
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return (response.data as Map<String, dynamic>)['signature'];
       } else {
+        final errorMessage;
+        print('errror => ${response.data}');
+        if ((response.data as Map).values.isNotEmpty) {
+          if ((response.data as Map).values.first is Map) {
+            if (((response.data as Map).values.first as Map).values.first
+                is List) {
+              errorMessage = (((response.data as Map).values.first as Map)
+                      .values
+                      .first as List)
+                  .first;
+            } else {
+              errorMessage =
+                  ((response.data as Map).values.first as Map).values.first;
+            }
+          } else if ((response.data as Map).values.first is List) {
+            errorMessage = ((response.data as Map).values.first as List).first;
+          } else {
+            errorMessage = (response.data as Map).values.first;
+          }
+        } else {
+          errorMessage = 'Unknown error';
+        }
         throw ServerException(
-            errorMessage: response.data.toString(),
+            errorMessage: errorMessage.toString(),
             statusCode: response.statusCode ?? 0);
       }
     } on ServerException {
@@ -365,7 +477,8 @@ class ProfileDatasourceImpl extends ProfileDatasource {
         },
         options: Options(
           headers: {
-            'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'
+            'Authorization':
+                'Token ${StorageRepository.getString(StoreKeys.token)}'
           },
         ),
       );

@@ -22,6 +22,7 @@ class DefaultTextField extends StatelessWidget {
   final String title;
   final double height;
   final int? maxLines;
+  final String errorText;
   const DefaultTextField({
     required this.controller,
     required this.onChanged,
@@ -38,6 +39,7 @@ class DefaultTextField extends StatelessWidget {
     this.isObscure = false,
     this.hasError = false,
     this.prefixText = '',
+    this.errorText = '',
     this.inputDecoration,
     this.keyboardType,
     this.height = 40,
@@ -51,12 +53,32 @@ class DefaultTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title.isNotEmpty) ...[
-          Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .displaySmall!
-                .copyWith(color: textColor),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(color: textColor),
+              ),
+              if (hasError) ...[
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    errorText,
+                    textAlign: TextAlign.right,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall!
+                        .copyWith(color: red),
+                  ),
+                )
+              ]
+            ],
           ),
           const SizedBox(height: 8),
         ],

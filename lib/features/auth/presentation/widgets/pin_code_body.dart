@@ -64,6 +64,7 @@ class _PinCodeBodyState extends State<PinCodeBody> {
 
   @override
   Widget build(BuildContext context) {
+    print('hasError => ${widget.hasError}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

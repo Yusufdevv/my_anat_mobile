@@ -1,8 +1,12 @@
+import 'package:anatomica/core/data/singletons/service_locator.dart';
 import 'package:anatomica/core/exceptions/failures.dart';
+import 'package:anatomica/features/journal/presentation/pages/payment_failure.dart';
+import 'package:anatomica/features/profile/data/repositories/profile_impl.dart';
 import 'package:anatomica/features/profile/domain/usecases/edit_profile.dart';
 import 'package:anatomica/features/profile/domain/usecases/send_code_to_email_usecase.dart';
 import 'package:anatomica/features/profile/domain/usecases/send_code_to_phone_usecase.dart';
 import 'package:anatomica/features/profile/domain/usecases/upload_img.dart';
+import 'package:anatomica/features/profile/domain/usecases/verify_otp_code_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -21,7 +25,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   final UploadImageUseCase _uploadUseCase;
   final SendCodeToEmailUseCase _sendCodeToEmailUseCase;
   final SendCodeToPhoneUseCase _sendCodeToPhoneUseCase;
-
+  final VerifyOtpCodeUsecase _verifyOtpCodeUsecase =
+      VerifyOtpCodeUsecase(repository: serviceLocator<ProfileRepositoryImpl>());
 
   EditProfileBloc(
     this._editProfileUseCase,
@@ -70,13 +75,38 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           emit(state.copyWith(status: FormzStatus.submissionFailure));
           if (result.left is ServerFailure) {
             event.onError((result.left as ServerFailure).errorMessage);
-          } else  if (result.left is ParsingFailure) {
+          } else if (result.left is ParsingFailure) {
             event.onError((result.left as ParsingFailure).errorMessage);
           }
         }
       }
     });
     on<_EditEmail>((event, emit) {});
+    on<_EditPhone>((event, emit) async {
+      final result = await _sendCodeToPhoneUseCase.call(event.phone);
+      if (result.isRight) {
+        print("signature => ${result.right}");
+        event.onSuccess();
+        emit(state.copyWith(signature: result.right));
+      } else {
+        print('result left => ${result.left}');
+        if (result.left is ServerFailure) {
+          print(
+              'server failure => ${(result.left as ServerFailure).errorMessage}');
+          event.onError((result.left as ServerFailure).errorMessage);
+        } else if (result.left is DioFailure) {
+          event.onError("Dio Failure");
+        } else if (result.left is ParsingFailure) {
+          event.onError((result.left as ParsingFailure).errorMessage);
+        } else if (result.left is CacheFailure) {
+          event.onError("Caching Failure");
+        } else if (result.left is PaymentFailure) {
+          event.onError((result.left as PaymentFailure).title);
+        } else {
+          event.onError((result.left.toString()));
+        }
+      }
+    });
     on<_ChangeImage>((event, emit) async {
       var formData = FormData();
 
@@ -108,6 +138,42 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     });
     on<_ChangeName>((event, emit) {
       emit(state.copyWith(firstName: event.text));
+    });
+
+    on<_VerifyOtpCode>((event, emit) async {
+      final result = await _verifyOtpCodeUsecase.call(
+        VerifyOtpCodeParams(
+          type: event.type,
+          signature: event.signature,
+          code: event.code,
+          phone: event.phone,
+          email: event.email,
+        ),
+      );
+      if (result.isRight) {
+        event.onSuccess();
+        if (event.phone != null) {
+          emit(state.copyWith(phoneNumber: event.phone));
+        } else if (event.email != null) {
+          emit(state.copyWith(email: event.email));
+        }
+      } else {
+        if (result.left is ServerFailure) {
+          print(
+              'server failure edit verify => ${(result.left as ServerFailure).errorMessage}');
+          event.onError((result.left as ServerFailure).errorMessage);
+        } else if (result.left is DioFailure) {
+          event.onError("Dio Failure");
+        } else if (result.left is ParsingFailure) {
+          event.onError((result.left as ParsingFailure).errorMessage);
+        } else if (result.left is CacheFailure) {
+          event.onError("Caching Failure");
+        } else if (result.left is PaymentFailure) {
+          event.onError((result.left as PaymentFailure).title);
+        } else {
+          event.onError((result.left.toString()));
+        }
+      }
     });
   }
 }

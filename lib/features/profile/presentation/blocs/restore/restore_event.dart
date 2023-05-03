@@ -3,10 +3,12 @@ part of 'restore_bloc.dart';
 @Freezed()
 class RestoreEvent with _$RestoreEvent {
   factory RestoreEvent.sendCode(
-      {required String phone, required VoidCallback onSuccess}) = _SendCode;
+      {required String phone,
+      required VoidCallback onSuccess,
+      required ValueChanged<String> onError}) = _SendCode;
 
-  factory RestoreEvent.resendCode({required VoidCallback onSuccess}) =
-      _ResendCode;
+  factory RestoreEvent.resendCode(
+      {required VoidCallback onSuccess, String? phone}) = _ResendCode;
 
   factory RestoreEvent.verifyCode(
       {required String code,

@@ -16,10 +16,26 @@ class EditProfileEvent with _$EditProfileEvent {
 
   factory EditProfileEvent.verifyOTPCode(String code) = _VerifyOTPCode;
 
-  factory EditProfileEvent.editPhone({required String phone}) = _EditPhone;
+  factory EditProfileEvent.editPhone(
+      {required String phone,
+      required ValueChanged<String> onError,
+      required VoidCallback onSuccess}) = _EditPhone;
 
-  factory EditProfileEvent.editEmail({required String email}) = _EditEmail;
+  factory EditProfileEvent.editEmail(
+      {required String email,
+      required ValueChanged<String> onError,
+      required VoidCallback onSuccess}) = _EditEmail;
 
-  factory EditProfileEvent.saveData({required ValueChanged<String> onError, required VoidCallback onSuccess}) =
-      _SaveData;
+  factory EditProfileEvent.verifyOtpCode(
+      {String? email,
+      String? phone,
+      required String type,
+      required String signature,
+      required String code,
+      required ValueChanged<String> onError,
+      required VoidCallback onSuccess}) = _VerifyOtpCode;
+
+  factory EditProfileEvent.saveData(
+      {required ValueChanged<String> onError,
+      required VoidCallback onSuccess}) = _SaveData;
 }

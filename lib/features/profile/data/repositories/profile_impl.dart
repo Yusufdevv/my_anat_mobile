@@ -204,4 +204,30 @@ class ProfileRepositoryImpl extends ProfileRepository {
           errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> verifyOtpCode({
+    required String type,
+    required String signature,
+    required String code,
+    String? phone,
+    String? email,
+  }) async {
+    try {
+      final result = await profileDatasource.verifyOtpCode(
+          type: type,
+          signature: signature,
+          code: code,
+          phone: phone,
+          email: email);
+      return Right(result);
+    } on DioException {
+      return Left(DioFailure());
+    } on ParsingException catch (e) {
+      return Left(ParsingFailure(errorMessage: e.errorMessage));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+          errorMessage: e.errorMessage, statusCode: e.statusCode));
+    }
+  }
 }

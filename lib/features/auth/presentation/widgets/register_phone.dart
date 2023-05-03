@@ -28,6 +28,10 @@ class _RegisterPhoneState extends State<RegisterPhone>
     with AutomaticKeepAliveClientMixin {
   late TextEditingController phoneController;
   late TextEditingController emailController;
+  bool hasErrorPhone = false;
+  bool hasErrorEmail = false;
+  String errorMessagePhone = '';
+  String errorMessageEmail = '';
 
   @override
   void initState() {
@@ -100,9 +104,18 @@ class _RegisterPhoneState extends State<RegisterPhone>
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                     child: PhoneTextField(
+                      onChanged: (value) {
+                        if (hasErrorPhone) {
+                          setState(() {
+                            hasErrorPhone = false;
+                          });
+                        }
+                      },
                       title: LocaleKeys.phone_number.tr(),
                       controller: phoneController,
-                      hasError: state.confirmationType == 'phone' &&
+                      errorText: errorMessagePhone,
+                      hasError: hasErrorPhone &&
+                          state.confirmationType == 'phone' &&
                           state.submitPhoneEmailStatus.isSubmissionFailure,
                     ),
                   ),
@@ -112,9 +125,17 @@ class _RegisterPhoneState extends State<RegisterPhone>
                       maxLines: 1,
                       title: LocaleKeys.mail.tr(),
                       controller: emailController,
-                      hasError: state.confirmationType == 'email' &&
+                      errorText: errorMessageEmail,
+                      hasError: hasErrorEmail &&
+                          state.confirmationType == 'email' &&
                           state.submitPhoneEmailStatus.isSubmissionFailure,
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        if (hasErrorEmail) {
+                          setState(() {
+                            hasErrorEmail = false;
+                          });
+                        }
+                      },
                       prefix: Padding(
                         padding: const EdgeInsets.only(left: 12, right: 8),
                         child: SvgPicture.asset(AppIcons.mail),
@@ -129,10 +150,11 @@ class _RegisterPhoneState extends State<RegisterPhone>
               margin: EdgeInsets.fromLTRB(
                   16, 16, 16, 16 + MediaQuery.of(context).padding.bottom),
               isLoading: state.submitPhoneEmailStatus.isSubmissionInProgress,
-              isDisabled: widget.tabController.index == 0
+              isDisabled: state.confirmationType == 'phone'
                   ? phoneController.text.length != 12
                   : emailController.text.length < 5,
               onTap: () {
+                print('state confirm => ${state.confirmationType}');
                 if (state.confirmationType == 'phone') {
                   if (state.phoneEmail.isNotEmpty) {
                     if (state.phoneEmail
@@ -165,9 +187,8 @@ class _RegisterPhoneState extends State<RegisterPhone>
                             phone:
                                 '+998${phoneController.text.replaceAll(RegExp(r' '), '')}',
                             onError: (message) {
-                              context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                  message: message.replaceAll(
-                                      RegExp(r'\{?\[?\]?\.?}?'), '')));
+                              errorMessagePhone = message;
+                              hasErrorPhone = true;
                             },
                             onSuccess: () {
                               widget.pageController.nextPage(
@@ -205,9 +226,12 @@ class _RegisterPhoneState extends State<RegisterPhone>
                           SubmitEmail(
                             email: emailController.text,
                             onError: (message) {
-                              context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                  message: message.replaceAll(
-                                      RegExp(r'\{?\[?\]?\.?}?'), '')));
+                              print('error => ${message}');
+                              hasErrorEmail = true;
+                              errorMessageEmail = message;
+                              // context.read<ShowPopUpBloc>().add(ShowPopUp(
+                              //     message: message.replaceAll(
+                              //         RegExp(r'\{?\[?\]?\.?}?'), '')));
                             },
                             onSuccess: () {
                               widget.pageController.nextPage(

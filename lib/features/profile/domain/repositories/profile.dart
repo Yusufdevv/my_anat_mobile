@@ -43,4 +43,12 @@ abstract class ProfileRepository {
     String? purpose,
     String? status,
   });
+
+  Future<Either<Failure, void>> verifyOtpCode({
+    required String type,
+    required String signature,
+    required String code,
+    String? phone,
+    String? email,
+  });
 }

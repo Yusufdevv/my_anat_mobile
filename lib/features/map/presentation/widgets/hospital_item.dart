@@ -31,14 +31,17 @@ class HospitalItem extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        Navigator.of(context, rootNavigator: true)
-            .push(fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id)));
+        Navigator.of(context, rootNavigator: true).push(
+            fade(page: HospitalSingleScreen(slug: entity.slug, id: entity.id)));
       },
       child: Container(
         margin: margin,
         decoration: BoxDecoration(
           boxShadow: [
-            BoxShadow(offset: const Offset(0, 8), blurRadius: 24, color: darkerGreen.withOpacity(0.09)),
+            BoxShadow(
+                offset: const Offset(0, 8),
+                blurRadius: 24,
+                color: darkerGreen.withOpacity(0.09)),
           ],
         ),
         child: Stack(
@@ -46,7 +49,9 @@ class HospitalItem extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: white, border: Border.all(color: textFieldColor), borderRadius: BorderRadius.circular(12)),
+                  color: white,
+                  border: Border.all(color: textFieldColor),
+                  borderRadius: BorderRadius.circular(12)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,13 +65,16 @@ class HospitalItem extends StatelessWidget {
                               padding: EdgeInsets.zero,
                               scrollDirection: Axis.horizontal,
                               itemCount: entity.images.length,
-                              separatorBuilder: (context, index) => const SizedBox(width: 8),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 8),
                               itemBuilder: (context, index) => ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: WImage(
                                   imageUrl: entity.images[index].middle,
                                   fit: BoxFit.cover,
-                                  width: MediaQuery.of(context).size.shortestSide / 2,
+                                  width:
+                                      MediaQuery.of(context).size.shortestSide /
+                                          2,
                                   onErrorWidget: SvgPicture.asset(
                                     AppIcons.bigImageError,
                                     fit: BoxFit.cover,
@@ -76,8 +84,9 @@ class HospitalItem extends StatelessWidget {
                             )
                           : Container(
                               alignment: Alignment.center,
-                              decoration:
-                                  BoxDecoration(borderRadius: BorderRadius.circular(8), color: errorImageBackground),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: errorImageBackground),
                               child: SvgPicture.asset(
                                 AppIcons.logo,
                                 height: 100,
@@ -103,7 +112,9 @@ class HospitalItem extends StatelessWidget {
                                 width: 32,
                                 imageUrl: entity.logo.middle,
                                 borderRadius: BorderRadius.circular(6),
-                                onErrorWidget: SvgPicture.asset(AppIcons.smallImageError, fit: BoxFit.cover),
+                                onErrorWidget: SvgPicture.asset(
+                                    AppIcons.smallImageError,
+                                    fit: BoxFit.cover),
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -113,15 +124,22 @@ class HospitalItem extends StatelessWidget {
                                       allText: entity.title,
                                       highlightedText: searchText,
                                       highlightColor: tongerineYellow,
-                                      textStyle: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 15),
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .copyWith(fontSize: 15),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      textStyleHighlight:
-                                          Theme.of(context).textTheme.displayMedium!.copyWith(fontSize: 15),
+                                      textStyleHighlight: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium!
+                                          .copyWith(fontSize: 15),
                                     )
                                   : Text(
                                       entity.title,
-                                      style: Theme.of(context).textTheme.displayLarge,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -134,7 +152,10 @@ class HospitalItem extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(entity.address,
-                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: textSecondary),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(color: textSecondary),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis),
                             ),
@@ -174,7 +195,10 @@ class HospitalItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(13),
                     border: Border.all(color: textFieldColor),
                     boxShadow: [
-                      BoxShadow(offset: const Offset(0, 8), blurRadius: 24, color: chipShadowColor.withOpacity(0.19))
+                      BoxShadow(
+                          offset: const Offset(0, 8),
+                          blurRadius: 24,
+                          color: chipShadowColor.withOpacity(0.19))
                     ],
                   ),
                   child: Row(
@@ -186,7 +210,10 @@ class HospitalItem extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         entity.rating.toString(),
-                        style: Theme.of(context).textTheme.displayLarge!.copyWith(color: black, fontSize: 13),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(color: black, fontSize: 13),
                       ),
                       const SizedBox(width: 4),
                     ],
@@ -206,15 +233,22 @@ class HospitalItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(13),
                       border: Border.all(color: textFieldColor),
                       boxShadow: [
-                        BoxShadow(offset: const Offset(0, 8), blurRadius: 24, color: chipShadowColor.withOpacity(0.19))
+                        BoxShadow(
+                            offset: const Offset(0, 8),
+                            blurRadius: 24,
+                            color: chipShadowColor.withOpacity(0.19))
                       ]),
                   child: Row(
                     children: [
-                      SvgPicture.asset(AppIcons.locationGreen, height: 16, width: 16),
+                      SvgPicture.asset(AppIcons.locationGreen,
+                          height: 16, width: 16),
                       const SizedBox(width: 4),
                       Text(
                         '${entity.distance.toStringAsFixed(1)} КМ',
-                        style: Theme.of(context).textTheme.displayLarge!.copyWith(color: black, fontSize: 13),
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .copyWith(color: black, fontSize: 13),
                       ),
                       const SizedBox(width: 4),
                     ],

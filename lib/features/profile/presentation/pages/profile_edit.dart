@@ -26,6 +26,7 @@ import 'package:anatomica/features/profile/presentation/blocs/restore/restore_bl
 import 'package:anatomica/features/profile/presentation/widgets/popups/components/refresh_panel.dart';
 import 'package:anatomica/features/profile/presentation/widgets/profile_image.dart';
 import 'package:anatomica/features/profile/presentation/widgets/upload_image_cupertino.dart';
+import 'package:anatomica/features/profile/presentation/widgets/verify_changed_phone_dialog.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,7 +59,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   late EditProfileBloc editBloc;
   late ImagePicker imagePicker;
   late UserEntity _localUser;
-  late StreamController<ErrorAnimationType> _errorController;
+
   late RestoreBloc restoreBloc;
 
   Future<String> getImage(bool isGallery) async {
@@ -67,9 +68,19 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           source: ImageSource.gallery, imageQuality: 100);
       return photo!.path;
     } else {
-      var photo = await imagePicker.pickImage(
-          source: ImageSource.camera, imageQuality: 100);
-      return photo!.path;
+      return getImageFromCamera();
+    }
+  }
+
+  Future<String> getImageFromCamera() async {
+    try {
+      final image = await ImagePicker()
+          .pickImage(source: ImageSource.camera, imageQuality: 100);
+      if (image == null) return '';
+      return image.path;
+    } catch (error) {
+      print("catch error error: $error");
+      return '';
     }
   }
 
@@ -81,7 +92,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       text: widget.userEntity.fullName,
     );
     smsCodeController = TextEditingController();
-    _errorController = StreamController<ErrorAnimationType>();
+
     _localUser = widget.userEntity;
     date = Jiffy(widget.userEntity.birthDay.isNotEmpty
             ? widget.userEntity.birthDay
@@ -141,308 +152,44 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     return Scaffold(
                       appBar: WAppBar(title: LocaleKeys.edit.tr()),
                       bottomNavigationBar: WButton(
-                        margin: EdgeInsets.fromLTRB(
-                            16, 0, 16, 12 + mediaQuery.padding.bottom),
-                        text: LocaleKeys.save.tr(),
-                        isLoading: state.status.isSubmissionInProgress,
-                        onTap: () async {
-                          if (phoneController.text.replaceAll(' ', '') !=
-                                  widget.userEntity.phoneNumber
-                                      .replaceAll('+998', '') ||
-                              nameController.text !=
-                                  widget.userEntity.fullName ||
-                              emailController.text != widget.userEntity.email) {
-                            restoreBloc.add(
-                              RestoreEvent.sendCode(
-                                phone:
-                                    '+998${phoneController.text.replaceAll(' ', '')}',
-                                onSuccess: () async {
-                                  await showDialog(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (context) => MultiBlocProvider(
-                                      providers: [
-                                        BlocProvider.value(value: restoreBloc),
-                                      ],
-                                      child: BlocBuilder<RestoreBloc,
-                                          RestoreState>(
-                                        builder: (context, restoreState) {
-                                          return Dialog(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12)),
-                                            child: Container(
-                                              width: double.maxFinite,
-                                              padding: const EdgeInsets.all(16),
-                                              child: SingleChildScrollView(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          LocaleKeys.verify
-                                                              .tr(),
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .headlineMedium!
-                                                              .copyWith(
-                                                                  color: black,
-                                                                  fontSize: 20),
-                                                        ),
-                                                        const Spacer(),
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child:
-                                                              SvgPicture.asset(
-                                                            AppIcons.close,
-                                                            width: 24,
-                                                            height: 24,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(height: 12),
-                                                    Text(
-                                                      LocaleKeys.write_sent_code
-                                                          .tr(),
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyLarge!
-                                                          .copyWith(
-                                                              color:
-                                                                  textSecondary),
-                                                    ),
-                                                    Container(
-                                                      margin: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 20),
-                                                      decoration: BoxDecoration(
-                                                          boxShadow: const [
-                                                            BoxShadow(
-                                                                color: Color(
-                                                                    0x292B8364),
-                                                                blurRadius: 12,
-                                                                offset: Offset(
-                                                                    0, 4))
-                                                          ],
-                                                          color: const Color(
-                                                              0x1F43B7B1),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(12),
-                                                          border: Border.all(
-                                                              color: primary)),
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 6),
-                                                      child: Text(
-                                                        phoneController
-                                                                .text.isEmpty
-                                                            ? '**************'
-                                                            : '+998 ${phoneController.text.replaceRange(6, 11, '******')}',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyLarge!
-                                                            .copyWith(
-                                                                color: black),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      LocaleKeys.write_code
-                                                          .tr(),
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyLarge!
-                                                          .copyWith(
-                                                              color: black),
-                                                    ),
-                                                    const SizedBox(height: 12),
-                                                    PinCodeTextField(
-                                                      onChanged: (value) {},
-                                                      controller:
-                                                          smsCodeController,
-                                                      errorAnimationController:
-                                                          _errorController,
-                                                      length: 6,
-                                                      pinTheme: PinTheme(
-                                                          inactiveFillColor:
-                                                              const Color(
-                                                                  0xffD9DBD9),
-                                                          selectedColor:
-                                                              primary,
-                                                          selectedFillColor:
-                                                              black,
-                                                          inactiveColor:
-                                                              const Color(
-                                                                  0xffD9DBD9),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                          disabledColor:
-                                                              const Color(
-                                                                  0xffD9DBD9),
-                                                          activeColor:
-                                                              const Color(
-                                                                  0xffD9DBD9),
-                                                          activeFillColor:
-                                                              black,
-                                                          fieldHeight: 50,
-                                                          fieldWidth: 42,
-                                                          shape:
-                                                              PinCodeFieldShape
-                                                                  .box),
-                                                      cursorColor: white,
-                                                      keyboardType:
-                                                          TextInputType.number,
-                                                      textStyle:
-                                                          Theme.of(context)
-                                                              .textTheme
-                                                              .displaySmall!
-                                                              .copyWith(
-                                                                  fontSize: 18),
-                                                      hintStyle:
-                                                          Theme.of(context)
-                                                              .textTheme
-                                                              .bodyMedium!
-                                                              .copyWith(
-                                                                  fontSize: 4),
-                                                      appContext: context,
-                                                      showCursor: true,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                    ),
-                                                    const RefreshPanel(),
-                                                    const SizedBox(height: 20),
-                                                    WButton(
-                                                      padding: EdgeInsets.zero,
-                                                      onTap: () {
-                                                        if (smsCodeController
-                                                                .text.length ==
-                                                            6) {
-                                                          context
-                                                              .read<
-                                                                  RestoreBloc>()
-                                                              .add(RestoreEvent
-                                                                  .verifyCode(
-                                                                      code: smsCodeController
-                                                                          .text,
-                                                                      onSuccess:
-                                                                          (signature) async {
-                                                                        if (phoneController.text.replaceAll(' ',
-                                                                                '') !=
-                                                                            widget.userEntity.phoneNumber.replaceAll('+998',
-                                                                                '')) {
-                                                                          editBloc
-                                                                              .add(EditProfileEvent.changePhoneNumber('+998${phoneController.text.replaceAll(' ', '')}'));
-                                                                        } else if (nameController.text !=
-                                                                            widget
-                                                                                .userEntity.fullName) {
-                                                                          editBloc
-                                                                              .add(EditProfileEvent.changeName(nameController.text));
-                                                                        } else if (emailController.text !=
-                                                                            widget.userEntity.email) {
-                                                                          editBloc
-                                                                              .add(EditProfileEvent.changeEmail(emailController.text));
-                                                                        }
-                                                                        if (date.toString() !=
-                                                                            widget.userEntity.birthDay) {
-                                                                          editBloc
-                                                                              .add(EditProfileEvent.changeDate('${date.year}-${date.month}-${date.day}'));
-                                                                        }
-                                                                        editBloc
-                                                                            .add(
-                                                                          EditProfileEvent
-                                                                              .saveData(
-                                                                            onSuccess:
-                                                                                () {
-                                                                              widget.profileBloc.add(
-                                                                                UpdateProfileEvent(
-                                                                                  profileEntity: _localUser.copyWith(
-                                                                                    birthDate: '${date.year}-${date.month}-${date.day}',
-                                                                                    fullName: nameController.text,
-                                                                                    phoneNumber: '+998${phoneController.text.replaceAll(' ', '')}',
-                                                                                    email: emailController.text,
-                                                                                    img: state.imageUrl.isNotEmpty ? ImageEntity(middle: state.imageUrl) : _localUser.img,
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                              Navigator.pop(context);
-                                                                            },
-                                                                            onError:
-                                                                                (message) {
-                                                                              context.read<ShowPopUpBloc>().add(ShowPopUp(message: message));
-                                                                            },
-                                                                          ),
-                                                                        );
-
-                                                                        // context.read<RestoreBloc>().add(
-                                                                        //             context
-                                                                        //                 .read<
-                                                                        //                 PurchasedJournalBloc>()
-                                                                        //                 .add(
-                                                                        //                 PurchasedJournalEvent
-                                                                        //                     .getArticle(
-                                                                        //                     isRefresh: false));
-                                                                        //           } else {
-                                                                        //             context
-                                                                        //                 .read<
-                                                                        //                 PurchasedArticleBloc>()
-                                                                        //                 .add(
-                                                                        //                 PurchasedArticleEvent
-                                                                        //                     .getArticle(
-                                                                        //                     isRefresh: false));
-                                                                        //           }
-                                                                        //           Navigator.pop(
-                                                                        //               context);
-                                                                        //         },
-                                                                        //         signature: signature));
-                                                                      },
-                                                                      onError:
-                                                                          (error) {
-                                                                        _errorController
-                                                                            .sink
-                                                                            .add(ErrorAnimationType.shake);
-                                                                      }));
-                                                        } else {
-                                                          _errorController.sink.add(
-                                                              ErrorAnimationType
-                                                                  .shake);
-                                                        }
-                                                      },
-                                                      height: 40,
-                                                      borderRadius: 6,
-                                                      text:
-                                                          LocaleKeys.next.tr(),
-                                                      textColor: white,
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                          margin: EdgeInsets.fromLTRB(
+                              16, 0, 16, 12 + mediaQuery.padding.bottom),
+                          text: LocaleKeys.save.tr(),
+                          isLoading: state.status.isSubmissionInProgress,
+                          onTap: () {
+                            if (phoneController.text.replaceAll(' ', '') !=
+                                widget.userEntity.phoneNumber
+                                    .replaceAll('+998', '')) {
+                              editBloc.add(
+                                EditProfileEvent.editPhone(
+                                  phone:
+                                      '+998${phoneController.text.replaceAll(' ', '')}',
+                                  onSuccess: () async {
+                                    await showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (context) => MultiBlocProvider(
+                                        providers: [
+                                          BlocProvider.value(value: editBloc),
+                                          BlocProvider.value(
+                                              value: restoreBloc),
+                                        ],
+                                        child: VerifyChangedPhoneDialog(
+                                            isEmail: false,
+                                            phonenumber: phoneController.text),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          } else {
-                            Navigator.pop(context);
-                          }
-                        },
-                      ),
+                                    );
+                                  },
+                                  onError: (error) {
+                                    print('error message => ${error}');
+                                    context
+                                        .read<ShowPopUpBloc>()
+                                        .add(ShowPopUp(message: error));
+                                  },
+                                ),
+                              );
+                            }
+                          }),
                       body: ListView(
                         padding: EdgeInsets.fromLTRB(
                             16, 24, 16, 12 + mediaQuery.padding.bottom),

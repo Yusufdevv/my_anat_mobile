@@ -6,7 +6,6 @@ import 'package:anatomica/features/auth/presentation/widgets/register_feed.dart'
 import 'package:anatomica/features/auth/presentation/widgets/register_phone.dart';
 import 'package:anatomica/features/auth/presentation/widgets/register_verify.dart';
 import 'package:anatomica/features/common/presentation/widgets/custom_screen.dart';
-import 'package:anatomica/features/common/presentation/widgets/w_scale_animation.dart';
 import 'package:anatomica/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -43,17 +42,17 @@ class _RegisterScreenState extends State<RegisterScreen>
   Widget build(BuildContext context) {
     return CustomScreen(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         backgroundColor: darkGreen,
-        body: NestedScrollView(
-          headerSliverBuilder: (context, isHeaderScrolled) => [
+        body: CustomScrollView(
+          slivers: [
             SliverAppBar(
               stretch: true,
               expandedHeight: 180 + MediaQuery.of(context).padding.top,
               titleSpacing: 0,
               leadingWidth: 0,
               elevation: 0,
-              pinned: true,
+              pinned: false,
               floating: true,
               centerTitle: false,
               collapsedHeight: 80 + MediaQuery.of(context).padding.top,
@@ -62,17 +61,18 @@ class _RegisterScreenState extends State<RegisterScreen>
               backgroundColor: darkGreen,
               title: Padding(
                 padding:
-                    EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                    EdgeInsets.only(top: MediaQuery.of(context).viewInsets.top),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    WScaleAnimation(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: 16, bottom: 16, left: 16),
-                        child: SvgPicture.asset(AppIcons.chevronLeft),
-                      ),
-                    ),
+                    // WScaleAnimation(
+                    //   onTap: () => Navigator.of(context).pop(),
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(
+                    //         right: 16, bottom: 16, left: 16),
+                    //     child: SvgPicture.asset(AppIcons.chevronLeft),
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.only(left: 16),
                       child: SvgPicture.asset(AppIcons.logo),
@@ -111,40 +111,46 @@ class _RegisterScreenState extends State<RegisterScreen>
             SliverPersistentHeader(
               pinned: true,
               delegate: RegistrationHeader(currentPage: currentPage),
-            )
-          ],
-          body: Container(
-            color: primary,
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                color: white,
-              ),
-              padding: const EdgeInsets.only(top: 16),
-              child: PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: (index) {
-                  setState(() {
-                    currentPage = index;
-                  });
-                },
-                controller: pageController,
-                children: [
-                  RegisterFeed(
-                    pageController: pageController,
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                height: MediaQuery.of(context).size.height -
+                    (180 + MediaQuery.of(context).padding.top) -
+                    94,
+                color: primary,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(16)),
+                    color: white,
                   ),
-                  RegisterPhone(
-                    tabController: tabController,
-                    pageController: pageController,
+                  padding: const EdgeInsets.only(top: 16),
+                  child: PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    onPageChanged: (index) {
+                      setState(() {
+                        currentPage = index;
+                      });
+                    },
+                    controller: pageController,
+                    children: [
+                      RegisterFeed(
+                        pageController: pageController,
+                      ),
+                      RegisterPhone(
+                        tabController: tabController,
+                        pageController: pageController,
+                      ),
+                      RegisterVerify(
+                        pageController: pageController,
+                      ),
+                      const PasswordScreen()
+                    ],
                   ),
-                  RegisterVerify(
-                    pageController: pageController,
-                  ),
-                  const PasswordScreen()
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
       //

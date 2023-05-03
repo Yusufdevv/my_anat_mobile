@@ -12,7 +12,8 @@ abstract class MapDatasource {
 
   Future<List<ServiceSpecSuggestModel>> getServices({String? searchedText});
 
-  Future<GenericPagination<OrgMapV2Model>> getOrgV2({required MapV2Params params});
+  Future<GenericPagination<OrgMapV2Model>> getOrgV2(
+      {required MapV2Params params});
 }
 
 class MapDatasourceImpl extends MapDatasource {
@@ -26,12 +27,17 @@ class MapDatasourceImpl extends MapDatasource {
       final response = await _dio.get('/organization/specialization/',
           options: Options(
               headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
-                  ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
+                  ? {
+                      'Authorization':
+                          'Token ${StorageRepository.getString(StoreKeys.token)}'
+                    }
                   : {}));
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data, (p0) => TypeModel.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(response.data,
+            (p0) => TypeModel.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data);
+        throw ServerException(
+            statusCode: response.statusCode!, errorMessage: response.data);
       }
     } on ServerException {
       rethrow;
@@ -43,14 +49,19 @@ class MapDatasourceImpl extends MapDatasource {
   }
 
   @override
-  Future<List<ServiceSpecSuggestModel>> getServices({String? searchedText}) async {
+  Future<List<ServiceSpecSuggestModel>> getServices(
+      {String? searchedText}) async {
     try {
-      final response =
-          await _dio.get('/mobile/organization/service_spec_suggest/', queryParameters: {"search": searchedText});
+      final response = await _dio.get(
+          '/mobile/organization/service_spec_suggest/',
+          queryParameters: {"search": searchedText});
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return response.data.map((e) => ServiceSpecSuggestModel.fromJson(e)).toList();
+        return response.data
+            .map((e) => ServiceSpecSuggestModel.fromJson(e))
+            .toList();
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data);
+        throw ServerException(
+            statusCode: response.statusCode!, errorMessage: response.data);
       }
     } on ServerException {
       rethrow;
@@ -62,7 +73,8 @@ class MapDatasourceImpl extends MapDatasource {
   }
 
   @override
-  Future<GenericPagination<OrgMapV2Model>> getOrgV2({required MapV2Params params}) async {
+  Future<GenericPagination<OrgMapV2Model>> getOrgV2(
+      {required MapV2Params params}) async {
     final Map<String, dynamic> queryParams = {};
     if (params.specializationId != null) {
       queryParams.putIfAbsent('specialization', () => params.specializationId);
@@ -97,19 +109,24 @@ class MapDatasourceImpl extends MapDatasource {
 
     try {
       final response = await _dio.get(
-        params.next ?? '/mobile/organization/map/v2/',
+        params.next ?? '/mobile/organization/map/search/',
         options: Options(
           headers: StorageRepository.getString(StoreKeys.token).isNotEmpty
-              ? {'Authorization': 'Token ${StorageRepository.getString(StoreKeys.token)}'}
+              ? {
+                  'Authorization':
+                      'Token ${StorageRepository.getString(StoreKeys.token)}'
+                }
               : {},
         ),
         queryParameters: params.next != null ? null : queryParams,
       );
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        return GenericPagination.fromJson(response.data, (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));
+        return GenericPagination.fromJson(response.data,
+            (p0) => OrgMapV2Model.fromJson(p0 as Map<String, dynamic>));
       } else {
-        throw ServerException(statusCode: response.statusCode!, errorMessage: response.data);
+        throw ServerException(
+            statusCode: response.statusCode!, errorMessage: response.data);
       }
     } on ServerException {
       rethrow;
