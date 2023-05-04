@@ -15,8 +15,7 @@ class MapRepositoryImpl extends MapRepository {
   MapRepositoryImpl({required this.datasource});
 
   @override
-  Future<Either<Failure, GenericPagination<TypeEntity>>> getTypes(
-      {String? next}) async {
+  Future<Either<Failure, GenericPagination<TypeEntity>>> getTypes({String? next}) async {
     try {
       final result = await datasource.getTypes(next: next);
       return Right(result);
@@ -25,14 +24,12 @@ class MapRepositoryImpl extends MapRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, List<ServiceSpecSuggestModel>>> getServices(
-      {String? searchText}) async {
+  Future<Either<Failure, List<ServiceSpecSuggestModel>>> getServices({String? searchText}) async {
     try {
       final result = await datasource.getServices(searchedText: searchText);
       return Right(result);
@@ -41,14 +38,12 @@ class MapRepositoryImpl extends MapRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 
   @override
-  Future<Either<Failure, GenericPagination<OrgMapV2Model>>> getOrgMapV2(
-      {required MapV2Params v2params}) async {
+  Future<Either<Failure, GenericPagination<OrgMapV2Model>>> getOrgMapV2({required MapV2Params v2params}) async {
     try {
       final result = await datasource.getOrgV2(params: v2params);
       return Right(result);
@@ -57,8 +52,7 @@ class MapRepositoryImpl extends MapRepository {
     } on ParsingException catch (e) {
       return Left(ParsingFailure(errorMessage: e.errorMessage));
     } on ServerException catch (e) {
-      return Left(ServerFailure(
-          errorMessage: e.errorMessage, statusCode: e.statusCode));
+      return Left(ServerFailure(errorMessage: e.errorMessage, statusCode: e.statusCode));
     }
   }
 }
@@ -76,9 +70,11 @@ class MapV2Params extends Equatable {
   final String? title;
   final String? next;
   final String? previous;
+  final String where;
   final double radius;
 
   const MapV2Params({
+    required this.where,
     this.title,
     this.longitude = 69,
     this.latitude = 41,
@@ -107,5 +103,6 @@ class MapV2Params extends Equatable {
         limit,
         specializationId,
         radius,
+        where,
       ];
 }

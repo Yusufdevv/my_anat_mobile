@@ -5,20 +5,8 @@ import 'package:anatomica/features/map/presentation/widgets/doctors_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HospitalList extends StatefulWidget {
+class HospitalList extends StatelessWidget {
   const HospitalList({Key? key}) : super(key: key);
-
-  @override
-  State<HospitalList> createState() => _HospitalListState();
-}
-
-class _HospitalListState extends State<HospitalList> with TickerProviderStateMixin {
-  @override
-  void initState() {
-    context.read<MapOrganizationBloc>().add(MapGetHospitalsEvent(context: context, where: 'hospital list init state'));
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +22,7 @@ class _HospitalListState extends State<HospitalList> with TickerProviderStateMix
                 controller: state.tabController,
                 children: [
                   const OrganizationList(),
-                  DoctorsList(
-                    textEditingController: state.searchController,
-                  ),
+                  DoctorsList(textEditingController: state.searchController),
                 ],
               ),
             );
