@@ -98,9 +98,11 @@ class _VerifyChangedPhoneDialogState extends State<VerifyChangedPhoneDialog> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   child: Text(
-                    widget.phonenumber.isEmpty
-                        ? '**************'
-                        : '+998 ${widget.phonenumber.replaceRange(6, 11, '******')}',
+                    widget.isEmail
+                        ? widget.phonenumber
+                        : widget.phonenumber.isEmpty
+                            ? '**************'
+                            : '+998 ${widget.phonenumber.replaceRange(6, 11, '******')}',
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
@@ -166,7 +168,7 @@ class _VerifyChangedPhoneDialogState extends State<VerifyChangedPhoneDialog> {
                       .copyWith(fontSize: 4),
                   appContext: context,
                   showCursor: true,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 ),
                 BlocBuilder<RestoreBloc, RestoreState>(
                   builder: (context, state) {

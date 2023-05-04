@@ -81,7 +81,31 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         }
       }
     });
-    on<_EditEmail>((event, emit) {});
+    on<_EditEmail>((event, emit) async {
+      final result = await _sendCodeToEmailUseCase.call(event.email);
+      if (result.isRight) {
+        print("signature => ${result.right}");
+        event.onSuccess();
+        emit(state.copyWith(signature: result.right));
+      } else {
+        print('result left => ${result.left}');
+        if (result.left is ServerFailure) {
+          print(
+              'server failure => ${(result.left as ServerFailure).errorMessage}');
+          event.onError((result.left as ServerFailure).errorMessage);
+        } else if (result.left is DioFailure) {
+          event.onError("Dio Failure");
+        } else if (result.left is ParsingFailure) {
+          event.onError((result.left as ParsingFailure).errorMessage);
+        } else if (result.left is CacheFailure) {
+          event.onError("Caching Failure");
+        } else if (result.left is PaymentFailure) {
+          event.onError((result.left as PaymentFailure).title);
+        } else {
+          event.onError((result.left.toString()));
+        }
+      }
+    });
     on<_EditPhone>((event, emit) async {
       final result = await _sendCodeToPhoneUseCase.call(event.phone);
       if (result.isRight) {

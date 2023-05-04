@@ -188,6 +188,52 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   },
                                 ),
                               );
+                            } else if (emailController.text !=
+                                widget.userEntity.email) {
+                              editBloc.add(
+                                EditProfileEvent.editEmail(
+                                  email: emailController.text,
+                                  onSuccess: () async {
+                                    await showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (context) => MultiBlocProvider(
+                                        providers: [
+                                          BlocProvider.value(value: editBloc),
+                                          BlocProvider.value(
+                                              value: restoreBloc),
+                                        ],
+                                        child: VerifyChangedPhoneDialog(
+                                          isEmail: true,
+                                          phonenumber: emailController.text,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  onError: (error) {
+                                    print('error message => ${error}');
+                                    context
+                                        .read<ShowPopUpBloc>()
+                                        .add(ShowPopUp(message: error));
+                                  },
+                                ),
+                              );
+                            } else {
+                              editBloc.add(
+                                EditProfileEvent.saveData(
+                                  onError: (error) {
+                                    context
+                                        .read<ShowPopUpBloc>()
+                                        .add(ShowPopUp(message: error));
+                                  },
+                                  onSuccess: () {
+                                    context
+                                        .read<ProfileBloc>()
+                                        .add(GetProfileEvent());
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              );
                             }
                           }),
                       body: ListView(
