@@ -38,6 +38,8 @@ class ArticleItem extends StatelessWidget {
                 Navigator.of(context, rootNavigator: true).push(
                   fade(
                     page: WebViewScreen(
+                      url:
+                          'https://anatomica.uz/articles/${magazineItemEntity.slug}',
                       shareValue:
                           'https://anatomica.uz/articles/${magazineItemEntity.slug}',
                       page: 'ArticleSinglePage',

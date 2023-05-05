@@ -19,7 +19,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final EditProfileUseCase _editProfileUseCase =
       EditProfileUseCase(repository: serviceLocator<ProfileRepositoryImpl>());
 
-  ProfileBloc({required GetProfileUseCase getProfileUseCase, required DeleteAccountUseCase deleteAccountUsecase})
+  ProfileBloc(
+      {required GetProfileUseCase getProfileUseCase,
+      required DeleteAccountUseCase deleteAccountUsecase})
       : _getProfileUseCase = getProfileUseCase,
         _deleteAccountUseCase = deleteAccountUsecase,
         super(const ProfileState.empty()) {
@@ -27,7 +29,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(state.copyWith(getProfileStatus: FormzStatus.submissionInProgress));
       final getProfileResult = await _getProfileUseCase.call(NoParams());
       if (getProfileResult.isRight) {
-        emit(state.copyWith(profileEntity: getProfileResult.right, getProfileStatus: FormzStatus.submissionSuccess));
+        emit(state.copyWith(
+            profileEntity: getProfileResult.right,
+            getProfileStatus: FormzStatus.submissionSuccess));
       } else {
         emit(state.copyWith(getProfileStatus: (FormzStatus.submissionFailure)));
       }
@@ -40,9 +44,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         "auto_renew_organization": event.profileEntity.autoRenewOrganization,
         "auto_renew_journal": event.profileEntity.autoRenewJournal
       };
-      final result = await _editProfileUseCase.call(EditProfileParams(data: map));
+      final result =
+          await _editProfileUseCase.call(EditProfileParams(data: map));
       if (result.isRight) {
-        print('=======UpdateUserAutoPayStatusEvent ${result.isRight}');
         // emit(state.copyWith(status: FormzStatus.submissionSuccess));
         // event.onSuccess();
       } else {

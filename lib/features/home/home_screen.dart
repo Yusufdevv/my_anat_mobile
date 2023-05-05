@@ -47,7 +47,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
-  late TextEditingController searchController;
   late CategoryBloc _categoryBloc;
   late HomeArticlesBloc _homeArticlesBloc;
   late MostPopularsBloc _mostPopularsBloc;
@@ -58,7 +57,6 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    searchController = TextEditingController();
     _categoryBloc = CategoryBloc()..add(const CategoryEvent.getCategories());
     context.read<JournalBloc>().add(GetJournals());
     _homeArticlesBloc = HomeArticlesBloc()
@@ -177,10 +175,13 @@ class _HomeScreenState extends State<HomePage> with TickerProviderStateMixin {
                                       ),
                                 onTap: () =>
                                     Navigator.of(context, rootNavigator: true)
-                                        .push(fade(
-                                            page: NotificationsScreen(
-                                                notificationBloc:
-                                                    _notificationBloc))),
+                                        .push(
+                                  fade(
+                                    page: NotificationsScreen(
+                                      notificationBloc: _notificationBloc,
+                                    ),
+                                  ),
+                                ),
                               );
                             },
                           )

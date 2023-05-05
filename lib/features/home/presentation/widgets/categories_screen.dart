@@ -139,6 +139,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             entity: state.organizations[index],
                             wrapItems: state.organizations[index]
                                 .getServiceOrSpecialization(pattern: null),
+                            margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                           );
                         },
                       ),

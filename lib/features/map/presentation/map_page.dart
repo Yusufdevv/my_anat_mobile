@@ -16,7 +16,8 @@ class MapPage extends StatefulWidget {
   State<MapPage> createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage> with TickerProviderStateMixin, WidgetsBindingObserver {
+class _MapPageState extends State<MapPage>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late TextEditingController _searchFieldController;
   late MapOrganizationBloc mapOrganizationBloc;
 
@@ -92,11 +93,14 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                     right: 0,
                     child: TheSearchFieldOfHospitals(
                       onSearchFieldTap: () {
-                        mapOrganizationBloc.add(MapChooseEvent(screenStatus: MapScreenStatus.list, isGetFocus: true));
+                        mapOrganizationBloc.add(MapChooseEvent(
+                            screenStatus: MapScreenStatus.list,
+                            isGetFocus: true));
                       },
                       onLeftButtonPressed: () {
-                        mapOrganizationBloc
-                            .add(MapChooseEvent(screenStatus: state.screenStatus.switchIt, isGetFocus: false));
+                        mapOrganizationBloc.add(MapChooseEvent(
+                            screenStatus: state.screenStatus.switchIt,
+                            isGetFocus: false));
                       },
                       isMap: state.screenStatus.isMap,
                       mediaQuery: widget.mediaQuery,
@@ -104,14 +108,17 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                       controller: state.searchController,
                       isSearching: state.isSearching,
                       onClear: () {
-                        mapOrganizationBloc.add(MapUnFocusAndClearControllerEvent(notUnFocus: true));
+                        mapOrganizationBloc.add(
+                            MapUnFocusAndClearControllerEvent(
+                                notUnFocus: true));
                         mapOrganizationBloc.add(
                           MapGetHospitalsEvent(
                             where: 'on clear 117',
                             context: context,
                           ),
                         );
-                        mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
+                        mapOrganizationBloc
+                            .add(MapGetDoctorsEvent(context: context));
                       },
                       onChanged: (value) {
                         if (state.tabController.index == 0) {
@@ -122,11 +129,23 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin, Widget
                             ),
                           );
                         } else {
-                          mapOrganizationBloc.add(MapGetDoctorsEvent(context: context));
+                          mapOrganizationBloc
+                              .add(MapGetDoctorsEvent(context: context));
                         }
                       },
                       onCloseTap: () {
-                        mapOrganizationBloc.add(MapUnFocusAndClearControllerEvent());
+                        print('map org close');
+                        mapOrganizationBloc.add(
+                            MapUnFocusAndClearControllerEvent(
+                                notUnFocus: true));
+                        mapOrganizationBloc.add(
+                          MapGetHospitalsEvent(
+                            where: 'on clear 117',
+                            context: context,
+                          ),
+                        );
+                        mapOrganizationBloc
+                            .add(MapGetDoctorsEvent(context: context));
                       },
                     ),
                   ),

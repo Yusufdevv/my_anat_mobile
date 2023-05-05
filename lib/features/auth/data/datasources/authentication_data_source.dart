@@ -36,34 +36,34 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
 
   @override
   Future<void> sendDeviceId() async {
-    try {
-      String? deviceId = StorageRepository.getString(StoreKeys.deviceId);
-      print("device id:$deviceId");
-      // String? deviceId = await PlatformDeviceId.getDeviceId;
-      if (deviceId.isEmpty) return;
-      final response = await _dio.post(
-        '/notifications/device-id/',
-        data: {"device_id": deviceId},
-        options: Options(
-          headers: {
-            'Authorization':
-                'Token ${StorageRepository.getString(StoreKeys.token)}'
-          },
-        ),
-      );
-      if (response.statusCode != null &&
-          response.statusCode! >= 200 &&
-          response.statusCode! < 300) {
-      } else {
-        throw const ServerException(statusCode: 404, errorMessage: "Error");
-      }
-    } on ServerException {
-      rethrow;
-    } on DioError {
-      throw DioException();
-    } on Exception catch (e) {
-      throw ParsingException(errorMessage: e.toString());
-    }
+    // try {
+    String? deviceId = StorageRepository.getString(StoreKeys.deviceId);
+    print("device id:$deviceId");
+    // String? deviceId = await PlatformDeviceId.getDeviceId;
+    if (deviceId.isEmpty) return;
+    final response = await _dio.post(
+      '/notifications/device-id/',
+      data: {"device_id": deviceId},
+      options: Options(
+        headers: {
+          'Authorization':
+              'Token ${StorageRepository.getString(StoreKeys.token)}'
+        },
+      ),
+    );
+    //   if (response.statusCode != null &&
+    //       response.statusCode! >= 200 &&
+    //       response.statusCode! < 300) {
+    //   } else {
+    //     throw const ServerException(statusCode: 404, errorMessage: "Error");
+    //   }
+    // } on ServerException {
+    //   rethrow;
+    // } on DioError {
+    //   throw DioException();
+    // } on Exception catch (e) {
+    //   throw ParsingException(errorMessage: e.toString());
+    // }
   }
 
   @override
@@ -112,7 +112,7 @@ class AuthenticationDataSourceImpl extends AuthenticationDataSource {
           response.statusCode! < 300) {
         await StorageRepository.putString(
             StoreKeys.token, response.data[StoreKeys.token]);
-        // await sendDeviceId();
+        await sendDeviceId();
       } else if (response.statusCode != null &&
           response.statusCode! >= 400 &&
           response.statusCode! < 500) {

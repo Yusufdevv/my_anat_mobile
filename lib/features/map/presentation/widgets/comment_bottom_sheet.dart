@@ -42,7 +42,10 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _controller = TextEditingController()
+      ..addListener(() {
+        setState(() {});
+      });
   }
 
   @override

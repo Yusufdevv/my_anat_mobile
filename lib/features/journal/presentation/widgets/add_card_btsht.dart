@@ -140,18 +140,22 @@ class _AddCardBtshtState extends State<AddCardBtsht> {
                               expireDate:
                                   dateController.text.replaceAll('/', ''),
                             );
-                            context
-                                .read<PaymentCardsBloc>()
-                                .add(CreatePaymentCardEvent(
-                                  param: creatCardParam,
-                                  onSucces: () {
-                                    widget.onAddCardSuccess(creatCardParam);
-                                  },
-                                  onError: (message) {
-                                    context.read<ShowPopUpBloc>().add(ShowPopUp(
-                                        message: message, isSuccess: false));
-                                  },
-                                ));
+                            context.read<PaymentCardsBloc>().add(
+                                  CreatePaymentCardEvent(
+                                    param: creatCardParam,
+                                    onSucces: () {
+                                      widget.onAddCardSuccess(creatCardParam);
+                                    },
+                                    onError: (message) {
+                                      context.read<ShowPopUpBloc>().add(
+                                            ShowPopUp(
+                                              message: message,
+                                              isSuccess: false,
+                                            ),
+                                          );
+                                    },
+                                  ),
+                                );
                           },
                           height: 40,
                           margin: EdgeInsets.only(
