@@ -1,0 +1,14 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+DiplomModel _$DiplomModelFromJson(Map<String, dynamic> json) => DiplomModel(
+      url: json['url'] as String? ?? '',
+      size: json['size'] as int? ?? 0,
+    );
+
+Map<String, dynamic> _$DiplomModelToJson(DiplomModel instance) =>
+    <String, dynamic>{
+      'url': instance.url,
+      'size': instance.size,
+    };
